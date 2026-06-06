@@ -1,0 +1,311 @@
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "postgresql"
+}
+
+enum UserRole {
+  ADMIN
+  CUSTOMER
+}
+
+enum UserStatus {
+  ACTIVE
+  INACTIVE
+  LOCKED
+  PENDING_VERIFICATION
+}
+
+enum ProjectStatus {
+  DRAFT
+  ACTIVE
+  IN_PROGRESS
+  COMPLETED
+  CANCELLED
+}
+
+enum CustomizationStatus {
+  PENDING
+  UNDER_REVIEW
+  APPROVED
+  REJECTED
+}
+
+enum QuotationStatus {
+  DRAFT
+  SENT
+  ACCEPTED
+  REJECTED
+  EXPIRED
+}
+
+enum PaymentStatus {
+  PENDING
+  PAID
+  FAILED
+  REFUNDED
+}
+
+enum PaymentMethod {
+  STRIPE
+  PAYPAL
+}
+
+model User {
+  id                     String    @id @default(uuid())
+  name                   String
+  email                  String    @unique
+  passwordHash           String    @map("password_hash")
+  role                   UserRole  @default(CUSTOMER)
+  status                 UserStatus @default(PENDING_VERIFICATION)
+  emailVerified          Boolean   @default(false) @map("email_verified")
+  emailVerificationToken String?   @map("email_verification_token")
+  passwordResetToken     String?   @map("password_reset_token")
+  passwordResetExpires   DateTime? @map("password_reset_expires")
+  failedLoginAttempts    Int       @default(0) @map("failed_login_attempts")
+  lockedUntil            DateTime? @map("locked_until")
+  createdAt              DateTime  @default(now()) @map("created_at")
+  updatedAt              DateTime  @updatedAt @map("updated_at")
+
+  sessions               Session[]
+  projects               Project[]
+  customizationRequests  CustomizationRequest[]
+  payments               Payment[]
+  favorites              Favorite[]
+
+  @@index([email])
+  @@index([role])
+  @@map("users")
+}
+
+model Session {
+  id           String   @id @default(uuid())
+  userId       String   @map("user_id")
+  refreshToken String   @unique @map("refresh_token")
+  expiresAt    DateTime @map("expires_at")
+  createdAt    DateTime @default(now()) @map("created_at")
+
+  user User @relation(fields: [userId], references: [id], onDelete: Cascade)
+
+  @@index([userId])
+  @@index([expiresAt])
+  @@map("sessions")
+}
+
+model Category {
+  id          String   @id @default(uuid())
+  name        String   @unique
+  slug        String   @unique
+  description String?
+  createdAt   DateTime @default(now()) @map("created_at")
+  updatedAt   DateTime @updatedAt @map("updated_at")
+
+  roomDesigns    RoomDesign[]
+  furnitureItems FurnitureItem[]
+
+  @@map("categories")
+}
+
+model RoomDesign {
+  id          String   @id @default(uuid())
+  categoryId  String   @map("category_id")
+  title       String
+  description String?
+  coverImage  String?  @map("cover_image")
+  vrEnabled   Boolean  @default(false) @map("vr_enabled")
+  vrSceneId   String?  @map("vr_scene_id")
+  createdAt   DateTime @default(now()) @map("created_at")
+  updatedAt   DateTime @updatedAt @map("updated_at")
+
+  category     Category      @relation(fields: [categoryId], references: [id], onDelete: Cascade)
+  projectRooms ProjectRoom[]
+
+  @@index([categoryId])
+  @@index([vrEnabled])
+  @@map("room_designs")
+}
+
+model FurnitureItem {
+  id            String   @id @default(uuid())
+  categoryId    String   @map("category_id")
+  name          String
+  description   String?
+  material      String?
+  dimensions    String?
+  price         Decimal  @db.Decimal(12, 2)
+  imageUrl      String?  @map("image_url")
+  model3dUrl    String?  @map("model3d_url")
+  vrInteractive Boolean  @default(false) @map("vr_interactive")
+  createdAt     DateTime @default(now()) @map("created_at")
+  updatedAt     DateTime @updatedAt @map("updated_at")
+
+  category              Category               @relation(fields: [categoryId], references: [id], onDelete: Cascade)
+  projectItems          ProjectItem[]
+  customizationRequests CustomizationRequest[]
+  favorites             Favorite[]
+  vrSceneFurniture      VrSceneFurniture[]
+
+  @@index([categoryId])
+  @@index([name])
+  @@map("furniture_items")
+}
+
+model Project {
+  id        String        @id @default(uuid())
+  userId    String        @map("user_id")
+  title     String
+  status    ProjectStatus @default(DRAFT)
+  createdAt DateTime      @default(now()) @map("created_at")
+  updatedAt DateTime      @updatedAt @map("updated_at")
+
+  user        User          @relation(fields: [userId], references: [id], onDelete: Cascade)
+  projectRooms ProjectRoom[]
+  projectItems ProjectItem[]
+  quotations   Quotation[]
+
+  @@index([userId])
+  @@index([status])
+  @@map("projects")
+}
+
+model ProjectRoom {
+  id           String @id @default(uuid())
+  projectId    String @map("project_id")
+  roomDesignId String @map("room_design_id")
+
+  project    Project    @relation(fields: [projectId], references: [id], onDelete: Cascade)
+  roomDesign RoomDesign @relation(fields: [roomDesignId], references: [id], onDelete: Cascade)
+
+  @@unique([projectId, roomDesignId])
+  @@map("project_rooms")
+}
+
+model ProjectItem {
+  id          String @id @default(uuid())
+  projectId   String @map("project_id")
+  furnitureId String @map("furniture_id")
+
+  project   Project       @relation(fields: [projectId], references: [id], onDelete: Cascade)
+  furniture FurnitureItem @relation(fields: [furnitureId], references: [id], onDelete: Cascade)
+
+  @@unique([projectId, furnitureId])
+  @@map("project_items")
+}
+
+model CustomizationRequest {
+  id               String              @id @default(uuid())
+  userId           String              @map("user_id")
+  furnitureId      String              @map("furniture_id")
+  material         String?
+  color            String?
+  notes            String?
+  referenceImageUrl String?            @map("reference_image_url")
+  status           CustomizationStatus @default(PENDING)
+  createdAt        DateTime            @default(now()) @map("created_at")
+  updatedAt        DateTime            @updatedAt @map("updated_at")
+
+  user      User          @relation(fields: [userId], references: [id], onDelete: Cascade)
+  furniture FurnitureItem @relation(fields: [furnitureId], references: [id], onDelete: Cascade)
+
+  @@index([userId])
+  @@index([status])
+  @@map("customization_requests")
+}
+
+model Quotation {
+  id              String          @id @default(uuid())
+  projectId       String          @map("project_id")
+  quotationNumber String          @unique @map("quotation_number")
+  totalAmount     Decimal         @db.Decimal(12, 2) @map("total_amount")
+  status          QuotationStatus @default(DRAFT)
+  validUntil      DateTime?       @map("valid_until")
+  createdAt       DateTime        @default(now()) @map("created_at")
+  updatedAt       DateTime        @updatedAt @map("updated_at")
+
+  project  Project         @relation(fields: [projectId], references: [id], onDelete: Cascade)
+  items    QuotationItem[]
+  payments Payment[]
+
+  @@index([projectId])
+  @@index([status])
+  @@map("quotations")
+}
+
+model QuotationItem {
+  id          String  @id @default(uuid())
+  quotationId String  @map("quotation_id")
+  description String
+  quantity    Int     @default(1)
+  price       Decimal @db.Decimal(12, 2)
+
+  quotation Quotation @relation(fields: [quotationId], references: [id], onDelete: Cascade)
+
+  @@index([quotationId])
+  @@map("quotation_items")
+}
+
+model Payment {
+  id            String        @id @default(uuid())
+  userId        String        @map("user_id")
+  quotationId   String        @map("quotation_id")
+  amount        Decimal       @db.Decimal(12, 2)
+  paymentMethod PaymentMethod @map("payment_method")
+  transactionId String?       @map("transaction_id")
+  receiptUrl    String?       @map("receipt_url")
+  status        PaymentStatus @default(PENDING)
+  createdAt     DateTime      @default(now()) @map("created_at")
+  updatedAt     DateTime      @updatedAt @map("updated_at")
+
+  user      User      @relation(fields: [userId], references: [id], onDelete: Cascade)
+  quotation Quotation @relation(fields: [quotationId], references: [id], onDelete: Cascade)
+
+  @@index([userId])
+  @@index([quotationId])
+  @@index([status])
+  @@map("payments")
+}
+
+model Favorite {
+  id          String @id @default(uuid())
+  userId      String @map("user_id")
+  furnitureId String @map("furniture_id")
+  createdAt   DateTime @default(now()) @map("created_at")
+
+  user      User          @relation(fields: [userId], references: [id], onDelete: Cascade)
+  furniture FurnitureItem @relation(fields: [furnitureId], references: [id], onDelete: Cascade)
+
+  @@unique([userId, furnitureId])
+  @@map("favorites")
+}
+
+model VrScene {
+  id          String   @id @default(uuid())
+  slug        String   @unique
+  name        String
+  categorySlug String  @map("category_slug")
+  hdrUrl      String?  @map("hdr_url")
+  modelUrl    String?  @map("model_url")
+  createdAt   DateTime @default(now()) @map("created_at")
+  updatedAt   DateTime @updatedAt @map("updated_at")
+
+  furniture VrSceneFurniture[]
+
+  @@map("vr_scenes")
+}
+
+model VrSceneFurniture {
+  id          String @id @default(uuid())
+  vrSceneId   String @map("vr_scene_id")
+  furnitureId String @map("furniture_id")
+  positionX   Float  @default(0) @map("position_x")
+  positionY   Float  @default(0) @map("position_y")
+  positionZ   Float  @default(0) @map("position_z")
+
+  vrScene   VrScene       @relation(fields: [vrSceneId], references: [id], onDelete: Cascade)
+  furniture FurnitureItem @relation(fields: [furnitureId], references: [id], onDelete: Cascade)
+
+  @@unique([vrSceneId, furnitureId])
+  @@map("vr_scene_furniture")
+}

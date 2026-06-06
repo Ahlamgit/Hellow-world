@@ -1,0 +1,62 @@
+services:
+  postgres:
+    image: postgres:16-alpine
+    container_name: trendy-postgres
+    restart: unless-stopped
+    environment:
+      POSTGRES_USER: trendy
+      POSTGRES_PASSWORD: trendy_secret
+      POSTGRES_DB: trendy_interiors
+    ports:
+      - "5432:5432"
+    volumes:
+      - postgres_data:/var/lib/postgresql/data
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U trendy -d trendy_interiors"]
+      interval: 5s
+      timeout: 5s
+      retries: 10
+
+  backend:
+    build:
+      context: ./backend
+      dockerfile: Dockerfile
+    container_name: trendy-backend
+    restart: unless-stopped
+    depends_on:
+      postgres:
+        condition: service_healthy
+    environment:
+      DATABASE_URL: postgresql://trendy:trendy_secret@postgres:5432/trendy_interiors
+      JWT_ACCESS_SECRET: ${JWT_ACCESS_SECRET:-dev-access-secret-change-in-production}
+      JWT_REFRESH_SECRET: ${JWT_REFRESH_SECRET:-dev-refresh-secret-change-in-production}
+      JWT_ACCESS_EXPIRES: 15m
+      JWT_REFRESH_EXPIRES: 7d
+      FRONTEND_URL: http://localhost:3000
+      STORAGE_PROVIDER: local
+      STORAGE_LOCAL_PATH: /app/uploads
+      MAX_UPLOAD_SIZE_MB: 10
+      STRIPE_SECRET_KEY: ${STRIPE_SECRET_KEY:-sk_test_placeholder}
+      PAYPAL_CLIENT_ID: ${PAYPAL_CLIENT_ID:-placeholder}
+      PAYPAL_CLIENT_SECRET: ${PAYPAL_CLIENT_SECRET:-placeholder}
+    ports:
+      - "4000:4000"
+    volumes:
+      - uploads_data:/app/uploads
+
+  frontend:
+    build:
+      context: ./frontend
+      dockerfile: Dockerfile
+    container_name: trendy-frontend
+    restart: unless-stopped
+    depends_on:
+      - backend
+    environment:
+      NEXT_PUBLIC_API_URL: http://localhost:4000/api
+    ports:
+      - "3000:3000"
+
+volumes:
+  postgres_data:
+  uploads_data:
