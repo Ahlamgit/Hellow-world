@@ -6,6 +6,7 @@ import { Brightness4, Brightness7, Language } from '@mui/icons-material';
 import { Link, useNavigate } from 'react-router-dom';
 import { useTranslation } from 'react-i18next';
 import { useAuth } from '../context/AuthContext';
+import { hasAdminAccess } from '../utils/roles';
 import { useThemeMode } from '../theme/ThemeContext';
 import { useState } from 'react';
 
@@ -40,7 +41,7 @@ export default function Navbar() {
           {isAuthenticated && (
             <Button component={Link} to="/bookings" color="inherit">{t('booking.myBookings')}</Button>
           )}
-          {isAuthenticated && user?.role === 'Administrator' && (
+          {isAuthenticated && hasAdminAccess(user) && (
             <Button component={Link} to="/admin" color="inherit">Admin</Button>
           )}
 

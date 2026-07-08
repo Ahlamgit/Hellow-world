@@ -68,6 +68,8 @@ export interface UserDto {
   email: string;
   phone: string;
   role: string;
+  primaryRole?: string;
+  roles?: string[];
   status: string;
   verificationStatus: string;
   subscriptionStatus: string;
