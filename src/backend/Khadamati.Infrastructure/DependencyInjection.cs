@@ -44,6 +44,11 @@ public static class DependencyInjection
         services.AddScoped<IAdminService, AdminService>();
         services.AddScoped<IUserManagementService, UserManagementService>();
         services.AddScoped<IAdminExportService, AdminExportService>();
+        services.AddScoped<ICraftsmanService, CraftsmanPortalService>();
+        services.AddScoped<IStoreService, StoreService>();
+        services.AddScoped<ICouponService, CouponService>();
+        services.AddScoped<ISupportService, SupportService>();
+        services.AddScoped<IPaymentGateway, Khadamati.Infrastructure.Services.Payments.DevelopmentPaymentGateway>();
         services.AddScoped<ITokenService, TokenService>();
         services.AddScoped<IPasswordHasher, PasswordHasher>();
         services.AddScoped<IOtpService, OtpService>();

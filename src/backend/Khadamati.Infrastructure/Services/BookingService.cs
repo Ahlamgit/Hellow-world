@@ -1,5 +1,6 @@
 using Khadamati.Application.Common;
 using Khadamati.Application.DTOs.Bookings;
+using Khadamati.Application.DTOs.Payments;
 using Khadamati.Application.Interfaces;
 using Khadamati.Domain.Common;
 using Khadamati.Domain.Entities;
@@ -12,11 +13,13 @@ public class BookingService : IBookingService
 {
     private readonly IBookingRepository _repository;
     private readonly IUnitOfWork _unitOfWork;
+    private readonly IPaymentGateway _paymentGateway;
 
-    public BookingService(IBookingRepository repository, IUnitOfWork unitOfWork)
+    public BookingService(IBookingRepository repository, IUnitOfWork unitOfWork, IPaymentGateway paymentGateway)
     {
         _repository = repository;
         _unitOfWork = unitOfWork;
+        _paymentGateway = paymentGateway;
     }
 
     public async Task<IReadOnlyList<CraftsmanOptionDto>> GetCraftsmenForServiceAsync(Guid serviceId, CancellationToken cancellationToken = default)
@@ -82,7 +85,7 @@ public class BookingService : IBookingService
             .FirstOrDefaultAsync(cp => cp.UserId == dto.CraftsmanId && !cp.IsDeleted, cancellationToken)
             ?? throw new NotFoundException("Craftsman not found.");
 
-        var craftsmanService = await _unitOfWork.Repository<CraftsmanService>()
+        var craftsmanService = await _unitOfWork.Repository<Domain.Entities.CraftsmanService>()
             .FirstOrDefaultAsync(cs => cs.CraftsmanProfileId == craftsmanProfile.Id && cs.ServiceId == dto.ServiceId && cs.IsAvailable, cancellationToken)
             ?? throw new ConflictException("Craftsman does not offer this service.");
 
@@ -138,7 +141,7 @@ public class BookingService : IBookingService
 
         var existing = await _repository.GetPaymentByBookingIdAsync(bookingId, cancellationToken);
         if (existing is { Status: PaymentStatus.Pending or PaymentStatus.Processing })
-            return MapPaymentDto(existing);
+            return MapPaymentDto(existing, existing.TransactionReference);
 
         var payment = new BookingPayment
         {
@@ -153,7 +156,22 @@ public class BookingService : IBookingService
 
         await _repository.AddPaymentAsync(payment, cancellationToken);
         await _unitOfWork.SaveChangesAsync(cancellationToken);
-        return MapPaymentDto(payment);
+
+        var customer = await _unitOfWork.Repository<User>().GetByIdAsync(userId, cancellationToken);
+        var session = await _paymentGateway.CreateSessionAsync(new PaymentSessionRequest
+        {
+            PaymentId = payment.Id,
+            Amount = payment.Amount,
+            Currency = payment.Currency,
+            Description = $"Booking {booking.BookingReference}",
+            CustomerEmail = customer?.Email ?? string.Empty,
+        }, cancellationToken);
+
+        payment.Status = PaymentStatus.Processing;
+        payment.TransactionReference = session.SessionId;
+        _unitOfWork.Repository<BookingPayment>().Update(payment);
+        await _unitOfWork.SaveChangesAsync(cancellationToken);
+        return MapPaymentDto(payment, session.SessionId, session.CheckoutUrl, session.Provider);
     }
 
     public async Task<BookingDto> ConfirmPaymentAsync(Guid bookingId, Guid userId, ConfirmPaymentDto dto, CancellationToken cancellationToken = default)
@@ -171,8 +189,17 @@ public class BookingService : IBookingService
         if (await _repository.IsSlotBookedAsync(booking.CraftsmanId, booking.ScheduledAt, booking.SlotEnd, bookingId, cancellationToken))
             throw new ConflictException("Time slot was booked by another customer. Please select a different time.");
 
+        var verification = await _paymentGateway.VerifyAsync(
+            dto.TransactionReference,
+            payment.Amount,
+            payment.Currency,
+            cancellationToken);
+
+        if (!verification.IsSuccessful)
+            throw new ConflictException(verification.FailureReason ?? "Payment verification failed.");
+
         payment.Status = PaymentStatus.Completed;
-        payment.TransactionReference = dto.TransactionReference;
+        payment.TransactionReference = verification.TransactionReference ?? dto.TransactionReference;
         payment.PaidAt = DateTime.UtcNow;
 
         await TransitionAsync(booking, ServiceRequestStatus.PaymentConfirmed, userId, "Payment confirmed", cancellationToken);
@@ -475,14 +502,21 @@ public class BookingService : IBookingService
         string.IsNullOrWhiteSpace(status) ? null :
         Enum.TryParse<ServiceRequestStatus>(status, true, out var s) ? s : null;
 
-    private static BookingPaymentDto MapPaymentDto(BookingPayment p) => new()
+    private static BookingPaymentDto MapPaymentDto(
+        BookingPayment p,
+        string? sessionId = null,
+        string? checkoutUrl = null,
+        string? provider = null) => new()
     {
         Id = p.Id,
         Amount = p.Amount,
         Currency = p.Currency,
         Status = p.Status.ToString(),
         PaymentMethod = p.PaymentMethod,
-        TransactionReference = p.TransactionReference,
+        TransactionReference = p.Status == PaymentStatus.Completed ? p.TransactionReference : null,
+        SessionId = sessionId ?? (p.Status != PaymentStatus.Completed ? p.TransactionReference : null),
+        CheckoutUrl = checkoutUrl,
+        Provider = provider,
         PaidAt = p.PaidAt
     };
 

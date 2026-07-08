@@ -183,6 +183,9 @@ export interface BookingPayment {
   status: string;
   paymentMethod: string;
   transactionReference?: string;
+  sessionId?: string;
+  checkoutUrl?: string;
+  provider?: string;
   paidAt?: string;
 }
 
@@ -227,7 +230,8 @@ export const authApi = {
     api.post<ApiResponse<{ message: string }>>('/auth/verify-email', { token }),
   resendEmailVerification: (email: string) =>
     api.post<ApiResponse<{ message: string }>>('/auth/resend-email-verification', { email }),
-  getMe: () => api.get<ApiResponse<UserDto>>('/auth/me'),
+  getMe: () => api.get<ApiResponse<{ permissions: string[] }>>('/auth/me'),
+  getPermissions: () => api.get<ApiResponse<string[]>>('/auth/permissions'),
 };
 
 export const identityApi = {
@@ -248,7 +252,36 @@ export const servicesApi = {
 
 export const usersApi = {
   getProfile: () => api.get<ApiResponse<UserDto>>('/users/me'),
+  listAddresses: () => api.get<ApiResponse<AddressDto[]>>('/users/me/addresses'),
+  addAddress: (data: CreateAddressDto) => api.post<ApiResponse<AddressDto>>('/users/me/addresses', data),
+  updateAddress: (id: string, data: CreateAddressDto) => api.put<ApiResponse<AddressDto>>(`/users/me/addresses/${id}`, data),
+  deleteAddress: (id: string) => api.delete(`/users/me/addresses/${id}`),
 };
+
+export interface AddressDto {
+  id: string;
+  label: string;
+  street: string;
+  city: string;
+  district?: string;
+  postalCode?: string;
+  country: string;
+  latitude?: number;
+  longitude?: number;
+  isDefault: boolean;
+}
+
+export interface CreateAddressDto {
+  label: string;
+  street: string;
+  city: string;
+  district?: string;
+  postalCode?: string;
+  country: string;
+  latitude?: number;
+  longitude?: number;
+  isDefault: boolean;
+}
 
 export const bookingsApi = {
   getCraftsmen: (serviceId: string) =>
@@ -275,6 +308,8 @@ export const bookingsApi = {
   reschedule: (id: string, newScheduledAt: string, reason?: string) =>
     api.post<ApiResponse<Booking>>(`/bookings/${id}/reschedule`, { newScheduledAt, reason }),
   noShow: (id: string) => api.post<ApiResponse<Booking>>(`/bookings/${id}/no-show`),
+  submitReview: (id: string, rating: number, review?: string) =>
+    api.post<ApiResponse<Booking>>(`/bookings/${id}/review`, { rating, review }),
 };
 
 export interface Notification {
@@ -306,3 +341,140 @@ export const notificationsApi = {
     return res.data.data.totalCount;
   },
 };
+
+export const craftsmanApi = {
+  getProfile: () => api.get<ApiResponse<CraftsmanProfile>>('/me/craftsman'),
+  updateProfile: (data: Partial<CraftsmanProfile>) => api.put<ApiResponse<CraftsmanProfile>>('/me/craftsman', data),
+  upsertService: (data: { serviceId: string; customPrice: number; isAvailable: boolean }) =>
+    api.post<ApiResponse<CraftsmanServiceItem>>('/me/craftsman/services', data),
+  deleteService: (id: string) => api.delete(`/me/craftsman/services/${id}`),
+  upsertWorkingHour: (data: { dayOfWeek: number; startTime: string; endTime: string; isActive: boolean }) =>
+    api.post<ApiResponse<CraftsmanWorkingHour>>('/me/craftsman/working-hours', data),
+  deleteWorkingHour: (id: string) => api.delete(`/me/craftsman/working-hours/${id}`),
+};
+
+export interface CraftsmanProfile {
+  id: string;
+  userId: string;
+  specialization?: string;
+  yearsOfExperience: number;
+  rating: number;
+  totalReviews: number;
+  completedJobs: number;
+  isAvailable: boolean;
+  serviceRadiusKm?: number;
+  licenseNumber?: string;
+  services: CraftsmanServiceItem[];
+  workingHours: CraftsmanWorkingHour[];
+}
+
+export interface CraftsmanServiceItem {
+  id: string;
+  serviceId: string;
+  serviceNameEn: string;
+  serviceNameAr: string;
+  customPrice: number;
+  isAvailable: boolean;
+}
+
+export interface CraftsmanWorkingHour {
+  id: string;
+  dayOfWeek: number;
+  startTime: string;
+  endTime: string;
+  isActive: boolean;
+}
+
+export const storeApi = {
+  getProfile: () => api.get<ApiResponse<StoreProfile>>('/me/store'),
+  updateProfile: (data: Partial<StoreProfile>) => api.put<ApiResponse<StoreProfile>>('/me/store', data),
+  createProduct: (data: StoreProductInput) => api.post<ApiResponse<StoreProduct>>('/me/store/products', data),
+  updateProduct: (id: string, data: StoreProductInput) => api.put<ApiResponse<StoreProduct>>(`/me/store/products/${id}`, data),
+  deleteProduct: (id: string) => api.delete(`/me/store/products/${id}`),
+};
+
+export interface StoreProfile {
+  id: string;
+  userId: string;
+  storeName: string;
+  commercialRegistration?: string;
+  description?: string;
+  rating: number;
+  totalReviews: number;
+  isOpen: boolean;
+  openingTime?: string;
+  closingTime?: string;
+  products: StoreProduct[];
+}
+
+export interface StoreProduct {
+  id: string;
+  nameAr: string;
+  nameEn: string;
+  descriptionAr?: string;
+  descriptionEn?: string;
+  price: number;
+  stockQuantity: number;
+  sku?: string;
+  imageUrl?: string;
+  isActive: boolean;
+}
+
+export interface StoreProductInput {
+  nameAr: string;
+  nameEn: string;
+  descriptionAr?: string;
+  descriptionEn?: string;
+  price: number;
+  stockQuantity: number;
+  sku?: string;
+  imageUrl?: string;
+  isActive: boolean;
+}
+
+export const supportApi = {
+  createComplaint: (data: { subject: string; description: string; priority?: string }) =>
+    api.post<ApiResponse<Complaint>>('/complaints', data),
+  myComplaints: () => api.get<ApiResponse<Complaint[]>>('/complaints/mine'),
+  createTicket: (data: { subject: string; description: string; category?: string; priority?: string }) =>
+    api.post<ApiResponse<SupportTicket>>('/support-tickets', data),
+  myTickets: () => api.get<ApiResponse<SupportTicket[]>>('/support-tickets/mine'),
+  validateCoupon: (code: string, amount: number) =>
+    api.get<ApiResponse<CouponValidation>>('/coupons/validate', { params: { code, amount } }),
+  getAds: (placement = 'HomePage') => api.get<ApiResponse<Advertisement[]>>('/advertisements', { params: { placement } }),
+};
+
+export interface Complaint {
+  id: string;
+  subject: string;
+  description: string;
+  status: string;
+  priority: string;
+  createdAt: string;
+}
+
+export interface SupportTicket {
+  id: string;
+  ticketNumber: string;
+  subject: string;
+  description: string;
+  status: string;
+  priority: string;
+  category: string;
+  createdAt: string;
+}
+
+export interface CouponValidation {
+  isValid: boolean;
+  code: string;
+  discountAmount: number;
+  finalAmount: number;
+  message?: string;
+}
+
+export interface Advertisement {
+  id: string;
+  titleEn: string;
+  titleAr: string;
+  placement: string;
+}

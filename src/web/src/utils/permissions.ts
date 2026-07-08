@@ -49,7 +49,7 @@ export function hasAdminPortalAccess(
 
 /** Legacy admin roles or any portal permission. */
 export function canAccessAdmin(
-  user: Parameters<typeof hasLegacyAdminRole>[0] & { permissions?: string[] },
+  user: (Parameters<typeof hasLegacyAdminRole>[0] & { permissions?: string[] }) | null | undefined,
 ): boolean {
   if (!user) return false;
   if (hasLegacyAdminRole(user)) return true;
@@ -101,7 +101,7 @@ export function viewPermissionForModule(module: string): string {
 }
 
 export function canViewModule(
-  user: Parameters<typeof canAccessAdmin>[0],
+  user: (Parameters<typeof canAccessAdmin>[0]),
   module: string,
 ): boolean {
   if (!user) return false;
@@ -120,7 +120,7 @@ export function permissionForAdminPath(path: string): string | null {
 }
 
 export function canAccessAdminPath(
-  user: Parameters<typeof canAccessAdmin>[0],
+  user: (Parameters<typeof canAccessAdmin>[0]),
   path: string,
 ): boolean {
   if (!canAccessAdmin(user)) return false;

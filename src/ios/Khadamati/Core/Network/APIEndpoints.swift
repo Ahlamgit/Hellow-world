@@ -59,6 +59,14 @@ enum APIEndpoints {
         static func confirmPayment(_ id: UUID) -> URL { baseURL.appendingPathComponent("bookings/\(id.uuidString)/payment/confirm") }
         static func accept(_ id: UUID) -> URL { baseURL.appendingPathComponent("bookings/\(id.uuidString)/accept") }
         static func reject(_ id: UUID) -> URL { baseURL.appendingPathComponent("bookings/\(id.uuidString)/reject") }
+        static func cancel(_ id: UUID) -> URL { baseURL.appendingPathComponent("bookings/\(id.uuidString)/cancel") }
+        static func complete(_ id: UUID) -> URL { baseURL.appendingPathComponent("bookings/\(id.uuidString)/complete") }
+        static func reschedule(_ id: UUID) -> URL { baseURL.appendingPathComponent("bookings/\(id.uuidString)/reschedule") }
+        static func noShow(_ id: UUID) -> URL { baseURL.appendingPathComponent("bookings/\(id.uuidString)/no-show") }
+    }
+
+    enum Notifications {
+        static let list = baseURL.appendingPathComponent("notifications")
     }
 
     enum Health {

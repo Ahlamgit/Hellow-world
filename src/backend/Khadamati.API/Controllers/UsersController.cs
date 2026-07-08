@@ -51,6 +51,31 @@ public class UsersController : ControllerBase
         var result = await _mediator.Send(new AddAddressCommand(userId, request), cancellationToken);
         return Created(string.Empty, ApiResponse<AddressDto>.Ok(result));
     }
+
+    [HttpGet("me/addresses")]
+    [ProducesResponseType(typeof(ApiResponse<IReadOnlyList<AddressDto>>), StatusCodes.Status200OK)]
+    public async Task<IActionResult> ListAddresses(CancellationToken cancellationToken)
+    {
+        var userId = _currentUser.UserId ?? throw new UnauthorizedException("User not authenticated.");
+        return Ok(ApiResponse<IReadOnlyList<AddressDto>>.Ok(await _mediator.Send(new GetMyAddressesQuery(userId), cancellationToken)));
+    }
+
+    [HttpPut("me/addresses/{id:guid}")]
+    [ProducesResponseType(typeof(ApiResponse<AddressDto>), StatusCodes.Status200OK)]
+    public async Task<IActionResult> UpdateAddress(Guid id, [FromBody] CreateAddressDto request, CancellationToken cancellationToken)
+    {
+        var userId = _currentUser.UserId ?? throw new UnauthorizedException("User not authenticated.");
+        return Ok(ApiResponse<AddressDto>.Ok(await _mediator.Send(new UpdateAddressCommand(userId, id, request), cancellationToken)));
+    }
+
+    [HttpDelete("me/addresses/{id:guid}")]
+    [ProducesResponseType(typeof(ApiResponse<object>), StatusCodes.Status200OK)]
+    public async Task<IActionResult> DeleteAddress(Guid id, CancellationToken cancellationToken)
+    {
+        var userId = _currentUser.UserId ?? throw new UnauthorizedException("User not authenticated.");
+        await _mediator.Send(new DeleteAddressCommand(userId, id), cancellationToken);
+        return Ok(ApiResponse<object>.Ok(new { }, "Address deleted."));
+    }
 }
 
 [ApiController]

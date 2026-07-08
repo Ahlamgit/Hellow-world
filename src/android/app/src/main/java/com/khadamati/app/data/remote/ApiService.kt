@@ -94,4 +94,29 @@ interface ApiService {
         @retrofit2.http.Path("id") id: String,
         @Body request: RejectBookingRequestDto,
     ): ApiResponse<BookingDto>
+
+    @POST("bookings/{id}/cancel")
+    suspend fun cancelBooking(
+        @retrofit2.http.Path("id") id: String,
+        @Body request: com.khadamati.app.data.remote.dto.CancelBookingRequestDto,
+    ): ApiResponse<BookingDto>
+
+    @POST("bookings/{id}/complete")
+    suspend fun completeBooking(@retrofit2.http.Path("id") id: String): ApiResponse<BookingDto>
+
+    @POST("bookings/{id}/reschedule")
+    suspend fun rescheduleBooking(
+        @retrofit2.http.Path("id") id: String,
+        @Body request: com.khadamati.app.data.remote.dto.RescheduleBookingRequestDto,
+    ): ApiResponse<BookingDto>
+
+    @POST("bookings/{id}/no-show")
+    suspend fun noShowBooking(@retrofit2.http.Path("id") id: String): ApiResponse<BookingDto>
+
+    @GET("notifications")
+    suspend fun getNotifications(
+        @Query("unreadOnly") unreadOnly: Boolean = false,
+        @Query("page") page: Int = 1,
+        @Query("pageSize") pageSize: Int = 20,
+    ): ApiResponse<PagedResultDto<com.khadamati.app.data.remote.dto.NotificationDto>>
 }

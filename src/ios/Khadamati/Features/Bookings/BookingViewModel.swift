@@ -98,22 +98,38 @@ final class BookingViewModel: ObservableObject {
 
     func pay(bookingId: UUID) async {
         do {
-            let _: ApiResponse<BookingPayment> = try await apiClient.request(
+            let paymentResponse: ApiResponse<BookingPayment> = try await apiClient.request(
                 url: APIEndpoints.Bookings.payment(bookingId),
                 method: .post,
                 body: ["paymentMethod": "Card"],
                 requiresAuth: true
             )
+            let sessionId = paymentResponse.data.sessionId ?? paymentResponse.data.transactionReference ?? ""
             let _: ApiResponse<Booking> = try await apiClient.request(
                 url: APIEndpoints.Bookings.confirmPayment(bookingId),
                 method: .post,
-                body: ["transactionReference": "TXN-\(Int(Date().timeIntervalSince1970))"],
+                body: ["transactionReference": sessionId],
                 requiresAuth: true
             )
             await loadBookings()
         } catch {
             errorMessage = error.localizedDescription
         }
+    }
+
+    func cancel(bookingId: UUID, reason: String) async {
+        try? await apiClient.requestVoid(url: APIEndpoints.Bookings.cancel(bookingId), method: .post, body: ["reason": reason], requiresAuth: true)
+        await loadBookings()
+    }
+
+    func complete(bookingId: UUID) async {
+        try? await apiClient.requestVoid(url: APIEndpoints.Bookings.complete(bookingId), method: .post, requiresAuth: true)
+        await loadBookings()
+    }
+
+    func noShow(bookingId: UUID) async {
+        try? await apiClient.requestVoid(url: APIEndpoints.Bookings.noShow(bookingId), method: .post, requiresAuth: true)
+        await loadBookings()
     }
 
     func accept(bookingId: UUID) async {
