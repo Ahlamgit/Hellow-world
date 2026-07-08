@@ -36,6 +36,9 @@ export default function LoginPage() {
           <Box component="form" onSubmit={handleSubmit} sx={{ display: 'flex', flexDirection: 'column', gap: 2 }}>
             <TextField label={t('auth.email')} type="email" value={email} onChange={(e) => setEmail(e.target.value)} required fullWidth />
             <TextField label={t('auth.password')} type="password" value={password} onChange={(e) => setPassword(e.target.value)} required fullWidth />
+            <Box sx={{ textAlign: 'right' }}>
+              <Link to="/forgot-password">{t('identity.forgotPassword')}</Link>
+            </Box>
             <Button type="submit" variant="contained" size="large" disabled={loading}>
               {loading ? t('common.loading') : t('nav.login')}
             </Button>

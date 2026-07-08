@@ -10,6 +10,8 @@ export const api = axios.create({
 api.interceptors.request.use((config) => {
   const token = localStorage.getItem('accessToken');
   if (token) config.headers.Authorization = `Bearer ${token}`;
+  const sessionId = localStorage.getItem('sessionId');
+  if (sessionId) config.headers['X-Session-Id'] = sessionId;
   return config;
 });
 
@@ -29,6 +31,7 @@ api.interceptors.response.use(
           });
           localStorage.setItem('accessToken', data.data.accessToken);
           localStorage.setItem('refreshToken', data.data.refreshToken);
+          if (data.data.sessionId) localStorage.setItem('sessionId', data.data.sessionId);
           original.headers.Authorization = `Bearer ${data.data.accessToken}`;
           return api(original);
         } catch {
@@ -60,6 +63,7 @@ export interface AuthResponse {
   accessToken: string;
   refreshToken: string;
   expiresAt: string;
+  sessionId: string;
   user: UserDto;
 }
 
@@ -77,6 +81,58 @@ export interface UserDto {
   lastName: string;
   profilePictureUrl?: string;
   preferredLanguage: string;
+  emailVerified?: boolean;
+  phoneVerified?: boolean;
+  requiresEmailVerification?: boolean;
+}
+
+export interface ProfileDto {
+  id: string;
+  email: string;
+  phone: string;
+  firstName: string;
+  lastName: string;
+  fullName: string;
+  gender?: string;
+  birthDate?: string;
+  nationality?: string;
+  profilePictureUrl?: string;
+  addressLine?: string;
+  country?: string;
+  city?: string;
+  region?: string;
+  preferredLanguage: string;
+  timezone: string;
+  emailVerified: boolean;
+  phoneVerified: boolean;
+}
+
+export interface SessionDto {
+  id: string;
+  deviceName?: string;
+  platform?: string;
+  browser?: string;
+  ipAddress?: string;
+  rememberMe: boolean;
+  createdAt: string;
+  lastActivityAt?: string;
+  expiresAt: string;
+  isCurrent: boolean;
+}
+
+export interface UpdateProfileRequest {
+  firstName: string;
+  lastName: string;
+  gender?: string;
+  birthDate?: string;
+  nationality?: string;
+  profilePictureUrl?: string;
+  addressLine?: string;
+  country?: string;
+  city?: string;
+  region?: string;
+  preferredLanguage: string;
+  timezone: string;
 }
 
 export interface ServiceCategory {
@@ -155,11 +211,32 @@ export interface Booking {
 }
 
 export const authApi = {
-  login: (email: string, password: string) =>
-    api.post<ApiResponse<AuthResponse>>('/auth/login', { email, password }),
+  login: (email: string, password: string, rememberMe = false) =>
+    api.post<ApiResponse<AuthResponse>>('/auth/login', { email, password, rememberMe }),
   register: (data: Record<string, string>) =>
     api.post<ApiResponse<AuthResponse>>('/auth/register', data),
-  logout: () => api.post('/auth/revoke', localStorage.getItem('refreshToken')),
+  logout: () => api.post('/auth/revoke', { refreshToken: localStorage.getItem('refreshToken') }),
+  forgotPassword: (email: string) =>
+    api.post<ApiResponse<{ message: string }>>('/auth/forgot-password', { email }),
+  resetPassword: (token: string, newPassword: string, confirmPassword: string) =>
+    api.post<ApiResponse<{ message: string }>>('/auth/reset-password', { token, newPassword, confirmPassword }),
+  changePassword: (currentPassword: string, newPassword: string, confirmPassword: string) =>
+    api.post<ApiResponse<{ message: string }>>('/auth/change-password', { currentPassword, newPassword, confirmPassword }),
+  verifyEmail: (token: string) =>
+    api.post<ApiResponse<{ message: string }>>('/auth/verify-email', { token }),
+  resendEmailVerification: (email: string) =>
+    api.post<ApiResponse<{ message: string }>>('/auth/resend-email-verification', { email }),
+  getMe: () => api.get<ApiResponse<UserDto>>('/auth/me'),
+};
+
+export const identityApi = {
+  getProfile: () => api.get<ApiResponse<ProfileDto>>('/profile'),
+  updateProfile: (data: UpdateProfileRequest) =>
+    api.put<ApiResponse<ProfileDto>>('/profile', data),
+  getSessions: () => api.get<ApiResponse<SessionDto[]>>('/sessions'),
+  revokeSession: (sessionId: string) => api.delete(`/sessions/${sessionId}`),
+  revokeOtherSessions: () => api.delete('/sessions/others'),
+  revokeAllSessions: () => api.delete('/sessions'),
 };
 
 export const servicesApi = {

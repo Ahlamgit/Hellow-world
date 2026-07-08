@@ -10,6 +10,10 @@ import ServicesPage from './pages/ServicesPage';
 import DashboardPage from './pages/DashboardPage';
 import LoginPage, { RegisterPage } from './pages/AuthPages';
 import { BookingWizardPage, MyBookingsPage, BookingDetailPage, BookingPaymentPage } from './pages/BookingPages';
+import {
+  ForgotPasswordPage, ResetPasswordPage, VerifyEmailPage, ChangePasswordPage, SessionsPage,
+} from './pages/IdentityPages';
+import ProfilePage from './pages/ProfilePage';
 
 function AppContent() {
   const location = useLocation();
@@ -25,9 +29,15 @@ function AppContent() {
           <Route element={<PublicRoute />}>
             <Route path="/login" element={<LoginPage />} />
             <Route path="/register" element={<RegisterPage />} />
+            <Route path="/forgot-password" element={<ForgotPasswordPage />} />
+            <Route path="/reset-password" element={<ResetPasswordPage />} />
+            <Route path="/verify-email" element={<VerifyEmailPage />} />
           </Route>
           <Route element={<ProtectedRoute />}>
             <Route path="/dashboard" element={<DashboardPage />} />
+            <Route path="/profile" element={<ProfilePage />} />
+            <Route path="/change-password" element={<ChangePasswordPage />} />
+            <Route path="/sessions" element={<SessionsPage />} />
             <Route path="/bookings" element={<MyBookingsPage />} />
             <Route path="/bookings/new" element={<BookingWizardPage />} />
             <Route path="/bookings/:id" element={<BookingDetailPage />} />
