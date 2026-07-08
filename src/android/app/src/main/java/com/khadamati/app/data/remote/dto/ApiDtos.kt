@@ -140,8 +140,24 @@ data class BookingPaymentDto(
     val currency: String,
     val status: String,
     val paymentMethod: String,
+    val sessionId: String? = null,
+    val checkoutUrl: String? = null,
 )
+
+data class CancelBookingRequestDto(val reason: String)
+data class RescheduleBookingRequestDto(val newScheduledAt: String, val reason: String? = null)
 
 data class ConfirmPaymentRequestDto(val transactionReference: String)
 data class InitiatePaymentRequestDto(val paymentMethod: String)
 data class RejectBookingRequestDto(val reason: String)
+
+data class NotificationDto(
+    val id: String,
+    val titleEn: String,
+    val titleAr: String,
+    val messageEn: String,
+    val messageAr: String,
+    val notificationType: String,
+    val isRead: Boolean,
+    val createdAt: String,
+)

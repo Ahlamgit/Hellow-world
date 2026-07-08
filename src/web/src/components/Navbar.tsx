@@ -7,7 +7,7 @@ import { Brightness4, Brightness7, Language, Notifications } from '@mui/icons-ma
 import { Link, useLocation } from 'react-router-dom';
 import { useTranslation } from 'react-i18next';
 import { useAuth } from '../context/AuthContext';
-import { hasAdminAccess } from '../utils/roles';
+import { canAccessAdmin } from '../utils/permissions';
 import { useThemeMode } from '../theme/ThemeContext';
 import { notificationsApi } from '../services/api';
 
@@ -56,8 +56,14 @@ export default function Navbar() {
           {isAuthenticated && (user?.role === 'Craftsman' || user?.role === 'Store' || user?.primaryRole === 'StoreOwner') && (
             <Button component={Link} to="/subscriptions" color="inherit">{t('subscription.nav')}</Button>
           )}
-          {isAuthenticated && hasAdminAccess(user) && (
+          {isAuthenticated && canAccessAdmin(user) && (
             <Button component={Link} to="/admin" color="inherit">Admin</Button>
+          )}
+          {isAuthenticated && user?.role === 'Craftsman' && (
+            <Button component={Link} to="/craftsman" color="inherit">Craftsman</Button>
+          )}
+          {isAuthenticated && (user?.role === 'Store' || user?.primaryRole === 'StoreOwner') && (
+            <Button component={Link} to="/store" color="inherit">Store</Button>
           )}
 
           <IconButton onClick={(e) => setLangAnchor(e.currentTarget)} color="inherit">

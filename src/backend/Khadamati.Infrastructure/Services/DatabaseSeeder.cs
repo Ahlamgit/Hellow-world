@@ -75,7 +75,158 @@ public class DatabaseSeeder
         }
 
         await SeedAdminDataAsync(context, cancellationToken);
+        await SeedCraftsmenAndStoresAsync(context, passwordHasher, cancellationToken);
         await IdentitySeeder.SeedAsync(context, _logger, cancellationToken);
+    }
+
+    private static async Task SeedCraftsmenAndStoresAsync(
+        ApplicationDbContext context,
+        IPasswordHasher passwordHasher,
+        CancellationToken cancellationToken)
+    {
+        if (await context.CraftsmanProfiles.AnyAsync(cancellationToken))
+            return;
+
+        var services = await context.Services.OrderBy(s => s.NameEn).ToListAsync(cancellationToken);
+        if (services.Count == 0) return;
+
+        var craftsmanRole = await context.Roles.FirstOrDefaultAsync(r => r.Name == Domain.Constants.RoleNames.Craftsman, cancellationToken);
+        var storeRole = await context.Roles.FirstOrDefaultAsync(r => r.Name == Domain.Constants.RoleNames.StoreOwner, cancellationToken);
+
+        var craftsmenData = new[]
+        {
+            ("craftsman1@khadamati.com", "+966500000101", "Ahmed", "Al-Otaibi", "Plumbing", 0, 1),
+            ("craftsman2@khadamati.com", "+966500000102", "Khalid", "Al-Harbi", "Electrical", 1, 2),
+            ("craftsman3@khadamati.com", "+966500000103", "Faisal", "Al-Qahtani", "HVAC", 2, 3),
+        };
+
+        foreach (var (email, phone, first, last, spec, svcIdx, phoneSuffix) in craftsmenData)
+        {
+            var user = new User
+            {
+                Email = email,
+                Phone = phone,
+                PasswordHash = passwordHasher.Hash("Craftsman@123"),
+                Role = UserRole.Craftsman,
+                Status = UserStatus.Active,
+                VerificationStatus = VerificationStatus.Verified,
+                SubscriptionStatus = SubscriptionStatus.Active,
+                EmailVerifiedAt = DateTime.UtcNow,
+                Profile = new UserProfile { FirstName = first, LastName = last, PreferredLanguage = "ar" },
+            };
+            context.Users.Add(user);
+            await context.SaveChangesAsync(cancellationToken);
+
+            if (craftsmanRole is not null)
+            {
+                context.UserRoles.Add(new Domain.Entities.Identity.UserRoleAssignment
+                {
+                    UserId = user.Id,
+                    RoleId = craftsmanRole.Id,
+                    IsPrimary = true,
+                    AssignedBy = "Seeder",
+                });
+                user.PrimaryRoleId = craftsmanRole.Id;
+            }
+
+            var profile = new CraftsmanProfile
+            {
+                UserId = user.Id,
+                Specialization = spec,
+                YearsOfExperience = 5 + phoneSuffix,
+                Rating = 4.5m,
+                TotalReviews = 10,
+                CompletedJobs = 25,
+                IsAvailable = true,
+                ServiceRadiusKm = 30,
+            };
+            context.CraftsmanProfiles.Add(profile);
+            await context.SaveChangesAsync(cancellationToken);
+
+            var service = services[Math.Min(svcIdx, services.Count - 1)];
+            context.CraftsmanServices.Add(new Domain.Entities.CraftsmanService
+            {
+                CraftsmanProfileId = profile.Id,
+                ServiceId = service.Id,
+                CustomPrice = service.BasePrice,
+                IsAvailable = true,
+            });
+
+            for (var day = DayOfWeek.Sunday; day <= DayOfWeek.Thursday; day++)
+            {
+                context.CraftsmanWorkingHours.Add(new CraftsmanWorkingHour
+                {
+                    CraftsmanId = user.Id,
+                    DayOfWeek = day,
+                    StartTime = new TimeOnly(9, 0),
+                    EndTime = new TimeOnly(18, 0),
+                    IsActive = true,
+                });
+            }
+        }
+
+        var storeUser = new User
+        {
+            Email = "store@khadamati.com",
+            Phone = "+966500000201",
+            PasswordHash = passwordHasher.Hash("Store@123456"),
+            Role = UserRole.Store,
+            Status = UserStatus.Active,
+            VerificationStatus = VerificationStatus.Verified,
+            SubscriptionStatus = SubscriptionStatus.Active,
+            EmailVerifiedAt = DateTime.UtcNow,
+            Profile = new UserProfile { FirstName = "Demo", LastName = "Store", PreferredLanguage = "ar" },
+        };
+        context.Users.Add(storeUser);
+        await context.SaveChangesAsync(cancellationToken);
+
+        if (storeRole is not null)
+        {
+            context.UserRoles.Add(new Domain.Entities.Identity.UserRoleAssignment
+            {
+                UserId = storeUser.Id,
+                RoleId = storeRole.Id,
+                IsPrimary = true,
+                AssignedBy = "Seeder",
+            });
+            storeUser.PrimaryRoleId = storeRole.Id;
+        }
+
+        var storeProfile = new StoreProfile
+        {
+            UserId = storeUser.Id,
+            StoreName = "Khadamati Hardware",
+            Description = "Demo store for tools and supplies",
+            IsOpen = true,
+            OpeningTime = new TimeOnly(8, 0),
+            ClosingTime = new TimeOnly(22, 0),
+        };
+        context.StoreProfiles.Add(storeProfile);
+        await context.SaveChangesAsync(cancellationToken);
+
+        context.StoreProducts.AddRange(
+            new StoreProduct
+            {
+                StoreProfileId = storeProfile.Id,
+                NameEn = "Pipe Wrench",
+                NameAr = "مفتاح أنابيب",
+                Price = 85,
+                StockQuantity = 50,
+                Sku = "TOOL-001",
+                IsActive = true,
+            },
+            new StoreProduct
+            {
+                StoreProfileId = storeProfile.Id,
+                NameEn = "Electrical Tape",
+                NameAr = "شريط عازل",
+                Price = 15,
+                StockQuantity = 200,
+                Sku = "TOOL-002",
+                IsActive = true,
+            });
+
+        await context.SaveChangesAsync(cancellationToken);
     }
 
     private async Task SeedAdminDataAsync(ApplicationDbContext context, CancellationToken cancellationToken)

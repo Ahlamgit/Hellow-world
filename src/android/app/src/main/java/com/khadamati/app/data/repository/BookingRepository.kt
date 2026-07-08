@@ -27,10 +27,18 @@ class BookingRepository(private val apiService: ApiService) {
         apiService.getBooking(id).data ?: error("Booking not found")
 
     suspend fun pay(id: String) {
-        apiService.initiatePayment(id, com.khadamati.app.data.remote.dto.InitiatePaymentRequestDto("Card"))
-        apiService.confirmPayment(id, com.khadamati.app.data.remote.dto.ConfirmPaymentRequestDto("TXN-${System.currentTimeMillis()}"))
+        val payment = apiService.initiatePayment(id, com.khadamati.app.data.remote.dto.InitiatePaymentRequestDto("Card")).data
+            ?: error("Payment initiation failed")
+        val sessionId = payment.sessionId ?: error("Missing payment session")
+        apiService.confirmPayment(id, com.khadamati.app.data.remote.dto.ConfirmPaymentRequestDto(sessionId))
     }
 
     suspend fun accept(id: String) { apiService.acceptBooking(id) }
     suspend fun reject(id: String, reason: String) { apiService.rejectBooking(id, com.khadamati.app.data.remote.dto.RejectBookingRequestDto(reason)) }
+    suspend fun cancel(id: String, reason: String) { apiService.cancelBooking(id, com.khadamati.app.data.remote.dto.CancelBookingRequestDto(reason)) }
+    suspend fun complete(id: String) { apiService.completeBooking(id) }
+    suspend fun reschedule(id: String, newScheduledAt: String, reason: String?) {
+        apiService.rescheduleBooking(id, com.khadamati.app.data.remote.dto.RescheduleBookingRequestDto(newScheduledAt, reason))
+    }
+    suspend fun noShow(id: String) { apiService.noShowBooking(id) }
 }

@@ -16,6 +16,9 @@ import {
 } from './pages/IdentityPages';
 import ProfilePage from './pages/ProfilePage';
 import NotificationsPage from './pages/NotificationsPage';
+import { CraftsmanPortalPage } from './pages/CraftsmanPortalPage';
+import { StorePortalPage } from './pages/StorePortalPage';
+import SupportPage from './pages/SupportPage';
 
 function AppContent() {
   const location = useLocation();
@@ -48,6 +51,9 @@ function AppContent() {
             <Route path="/subscriptions/:planId" element={<SubscribePage />} />
             <Route path="/subscription" element={<MySubscriptionPage />} />
             <Route path="/notifications" element={<NotificationsPage />} />
+            <Route path="/craftsman" element={<CraftsmanPortalPage />} />
+            <Route path="/store" element={<StorePortalPage />} />
+            <Route path="/support" element={<SupportPage />} />
           </Route>
           <Route element={<AdminRoute />}>
             <Route path="/admin/*" element={<AdminRoutes />} />

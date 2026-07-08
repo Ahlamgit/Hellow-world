@@ -22,6 +22,9 @@ struct BookingPayment: Codable {
     let currency: String
     let status: String
     let paymentMethod: String
+    let sessionId: String?
+    let transactionReference: String?
+    let checkoutUrl: String?
 }
 
 struct CraftsmanOption: Codable, Identifiable {

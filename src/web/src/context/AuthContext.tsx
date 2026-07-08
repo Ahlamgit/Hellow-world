@@ -21,26 +21,46 @@ function persistAuth(data: { accessToken: string; refreshToken: string; sessionI
   localStorage.setItem('userRole', data.user.role || data.user.primaryRole || '');
 }
 
+async function loadPermissions(user: UserDto): Promise<UserDto> {
+  try {
+    const { data } = await authApi.getPermissions();
+    return { ...user, permissions: data.data };
+  } catch {
+    return user;
+  }
+}
+
 export function AuthProvider({ children }: { children: ReactNode }) {
   const [user, setUser] = useState<UserDto | null>(null);
   const [isLoading, setIsLoading] = useState(true);
 
   useEffect(() => {
-    const stored = localStorage.getItem('user');
-    if (stored) setUser(JSON.parse(stored));
-    setIsLoading(false);
+    const init = async () => {
+      const stored = localStorage.getItem('user');
+      const token = localStorage.getItem('accessToken');
+      if (stored && token) {
+        const parsed: UserDto = JSON.parse(stored);
+        const withPermissions = await loadPermissions(parsed);
+        setUser(withPermissions);
+        localStorage.setItem('user', JSON.stringify(withPermissions));
+      }
+      setIsLoading(false);
+    };
+    init();
   }, []);
 
   const login = async (email: string, password: string, rememberMe = false) => {
     const { data } = await authApi.login(email, password, rememberMe);
-    persistAuth(data.data);
-    setUser(data.data.user);
+    const withPermissions = await loadPermissions(data.data.user);
+    persistAuth({ ...data.data, user: withPermissions });
+    setUser(withPermissions);
   };
 
   const register = async (formData: Record<string, string>) => {
     const { data } = await authApi.register(formData);
-    persistAuth(data.data);
-    setUser(data.data.user);
+    const withPermissions = await loadPermissions(data.data.user);
+    persistAuth({ ...data.data, user: withPermissions });
+    setUser(withPermissions);
   };
 
   const logout = () => {
@@ -63,6 +83,10 @@ export function AuthProvider({ children }: { children: ReactNode }) {
         phoneVerified: profile.phoneVerified,
       };
       localStorage.setItem('user', JSON.stringify(updated));
+      loadPermissions(updated).then((withPermissions) => {
+        setUser(withPermissions);
+        localStorage.setItem('user', JSON.stringify(withPermissions));
+      });
       return updated;
     });
   };

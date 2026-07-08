@@ -514,13 +514,27 @@ export function BookingPaymentPage() {
   const { t } = useTranslation();
   const navigate = useNavigate();
   const [loading, setLoading] = useState(false);
+  const [sessionId, setSessionId] = useState<string | null>(null);
+  const [checkoutUrl, setCheckoutUrl] = useState<string | null>(null);
+  const [amount, setAmount] = useState<number | null>(null);
 
-  const pay = async () => {
+  const initiate = async () => {
     if (!id) return;
     setLoading(true);
     try {
-      await bookingsApi.initiatePayment(id, 'Card');
-      await bookingsApi.confirmPayment(id, `TXN-${Date.now()}`);
+      const { data } = await bookingsApi.initiatePayment(id, 'Card');
+      const payment = data.data;
+      setSessionId(payment.sessionId ?? null);
+      setCheckoutUrl(payment.checkoutUrl ?? null);
+      setAmount(payment.amount);
+    } finally { setLoading(false); }
+  };
+
+  const confirm = async () => {
+    if (!id || !sessionId) return;
+    setLoading(true);
+    try {
+      await bookingsApi.confirmPayment(id, sessionId);
       navigate(`/bookings/${id}`);
     } finally { setLoading(false); }
   };
@@ -530,9 +544,24 @@ export function BookingPaymentPage() {
       <Typography variant="h4" sx={{ fontWeight: 700 }} gutterBottom>{t('booking.payment')}</Typography>
       <Card><CardContent>
         <Typography gutterBottom>{t('booking.paymentPending')}</Typography>
-        <Button variant="contained" fullWidth onClick={pay} disabled={loading}>
-          {loading ? <CircularProgress size={24} /> : t('booking.confirmPayment')}
-        </Button>
+        {amount != null && <Typography sx={{ mb: 2, fontWeight: 600 }}>{amount} SAR</Typography>}
+        {!sessionId ? (
+          <Button variant="contained" fullWidth onClick={initiate} disabled={loading}>
+            {loading ? <CircularProgress size={24} /> : 'Start payment'}
+          </Button>
+        ) : (
+          <Box sx={{ display: 'flex', flexDirection: 'column', gap: 1 }}>
+            {checkoutUrl && (
+              <Button variant="outlined" href={checkoutUrl} target="_blank" rel="noreferrer">
+                Open checkout
+              </Button>
+            )}
+            <Typography variant="caption" color="text.secondary">Session: {sessionId}</Typography>
+            <Button variant="contained" fullWidth onClick={confirm} disabled={loading}>
+              {loading ? <CircularProgress size={24} /> : t('booking.confirmPayment')}
+            </Button>
+          </Box>
+        )}
       </CardContent></Card>
     </Container>
   );

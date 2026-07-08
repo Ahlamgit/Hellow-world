@@ -72,4 +72,7 @@ class BookingViewModel(private val repository: BookingRepository) : ViewModel() 
     fun pay(bookingId: String) = viewModelScope.launch { repository.pay(bookingId); loadBookings() }
     fun accept(bookingId: String) = viewModelScope.launch { repository.accept(bookingId); loadBookings() }
     fun reject(bookingId: String, reason: String) = viewModelScope.launch { repository.reject(bookingId, reason); loadBookings() }
+    fun cancel(bookingId: String, reason: String) = viewModelScope.launch { repository.cancel(bookingId, reason); loadBookings() }
+    fun complete(bookingId: String) = viewModelScope.launch { repository.complete(bookingId); loadBookings() }
+    fun noShow(bookingId: String) = viewModelScope.launch { repository.noShow(bookingId); loadBookings() }
 }
