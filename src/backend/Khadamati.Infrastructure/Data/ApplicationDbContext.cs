@@ -25,6 +25,11 @@ public class ApplicationDbContext : DbContext
     public DbSet<SubscriptionPlan> SubscriptionPlans => Set<SubscriptionPlan>();
     public DbSet<PlanBillingOption> PlanBillingOptions => Set<PlanBillingOption>();
     public DbSet<UserSubscription> UserSubscriptions => Set<UserSubscription>();
+    public DbSet<BookingSlotReservation> BookingSlotReservations => Set<BookingSlotReservation>();
+    public DbSet<CraftsmanWorkingHour> CraftsmanWorkingHours => Set<CraftsmanWorkingHour>();
+    public DbSet<BookingPayment> BookingPayments => Set<BookingPayment>();
+    public DbSet<Notification> Notifications => Set<Notification>();
+    public DbSet<ServiceRequestStatusHistory> ServiceRequestStatusHistories => Set<ServiceRequestStatusHistory>();
 
     protected override void OnModelCreating(ModelBuilder modelBuilder)
     {
@@ -55,6 +60,11 @@ public class ApplicationDbContext : DbContext
         modelBuilder.Entity<SubscriptionPlan>().HasQueryFilter(e => !e.IsDeleted);
         modelBuilder.Entity<PlanBillingOption>().HasQueryFilter(e => !e.IsDeleted);
         modelBuilder.Entity<UserSubscription>().HasQueryFilter(e => !e.IsDeleted);
+        modelBuilder.Entity<BookingSlotReservation>().HasQueryFilter(e => !e.IsDeleted);
+        modelBuilder.Entity<CraftsmanWorkingHour>().HasQueryFilter(e => !e.IsDeleted);
+        modelBuilder.Entity<BookingPayment>().HasQueryFilter(e => !e.IsDeleted);
+        modelBuilder.Entity<Notification>().HasQueryFilter(e => !e.IsDeleted);
+        modelBuilder.Entity<ServiceRequestStatusHistory>().HasQueryFilter(e => !e.IsDeleted);
     }
 
     public override Task<int> SaveChangesAsync(CancellationToken cancellationToken = default)

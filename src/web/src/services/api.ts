@@ -48,6 +48,14 @@ export interface ApiResponse<T> {
   errors?: string[];
 }
 
+export interface PagedResult<T> {
+  items: T[];
+  totalCount: number;
+  page: number;
+  pageSize: number;
+  totalPages: number;
+}
+
 export interface AuthResponse {
   accessToken: string;
   refreshToken: string;
@@ -91,6 +99,59 @@ export interface Service {
   estimatedDurationMinutes: number;
 }
 
+export interface CraftsmanOption {
+  id: string;
+  firstName: string;
+  lastName: string;
+  specialization?: string;
+  rating: number;
+  totalReviews: number;
+  completedJobs: number;
+  price: number;
+  isAvailable: boolean;
+}
+
+export interface TimeSlot {
+  start: string;
+  end: string;
+  isAvailable: boolean;
+}
+
+export interface BookingPayment {
+  id: string;
+  amount: number;
+  currency: string;
+  status: string;
+  paymentMethod: string;
+  transactionReference?: string;
+  paidAt?: string;
+}
+
+export interface Booking {
+  id: string;
+  bookingReference: string;
+  serviceId: string;
+  serviceName: string;
+  customerId: string;
+  customerName: string;
+  craftsmanId: string;
+  craftsmanName: string;
+  status: string;
+  description?: string;
+  scheduledAt: string;
+  slotEnd: string;
+  completedAt?: string;
+  paymentDueAt?: string;
+  expiresAt?: string;
+  estimatedPrice: number;
+  finalPrice?: number;
+  notes?: string;
+  rejectionReason?: string;
+  cancellationReason?: string;
+  payment?: BookingPayment;
+  statusHistory: { oldStatus?: string; newStatus: string; notes?: string; createdAt: string }[];
+}
+
 export const authApi = {
   login: (email: string, password: string) =>
     api.post<ApiResponse<AuthResponse>>('/auth/login', { email, password }),
@@ -107,4 +168,36 @@ export const servicesApi = {
 
 export const usersApi = {
   getProfile: () => api.get<ApiResponse<UserDto>>('/users/me'),
+};
+
+export const bookingsApi = {
+  getCraftsmen: (serviceId: string) =>
+    api.get<ApiResponse<CraftsmanOption[]>>('/bookings/craftsmen', { params: { serviceId } }),
+  getAvailability: (craftsmanId: string, serviceId: string, date: string) =>
+    api.get<ApiResponse<TimeSlot[]>>('/bookings/availability', { params: { craftsmanId, serviceId, date } }),
+  create: (data: { serviceId: string; craftsmanId: string; scheduledAt: string; addressId?: string; description?: string }) =>
+    api.post<ApiResponse<Booking>>('/bookings', data),
+  list: (params?: { status?: string; page?: number; pageSize?: number }) =>
+    api.get<ApiResponse<PagedResult<Booking>>>('/bookings', { params }),
+  getById: (id: string) => api.get<ApiResponse<Booking>>(`/bookings/${id}`),
+  confirm: (id: string, notes?: string) =>
+    api.post<ApiResponse<Booking>>(`/bookings/${id}/confirm`, { notes }),
+  initiatePayment: (id: string, paymentMethod: string) =>
+    api.post<ApiResponse<BookingPayment>>(`/bookings/${id}/payment`, { paymentMethod }),
+  confirmPayment: (id: string, transactionReference: string) =>
+    api.post<ApiResponse<Booking>>(`/bookings/${id}/payment/confirm`, { transactionReference }),
+  accept: (id: string) => api.post<ApiResponse<Booking>>(`/bookings/${id}/accept`),
+  reject: (id: string, reason: string) =>
+    api.post<ApiResponse<Booking>>(`/bookings/${id}/reject`, { reason }),
+  cancel: (id: string, reason: string) =>
+    api.post<ApiResponse<Booking>>(`/bookings/${id}/cancel`, { reason }),
+  complete: (id: string) => api.post<ApiResponse<Booking>>(`/bookings/${id}/complete`),
+  reschedule: (id: string, newScheduledAt: string, reason?: string) =>
+    api.post<ApiResponse<Booking>>(`/bookings/${id}/reschedule`, { newScheduledAt, reason }),
+};
+
+export const notificationsApi = {
+  list: (unreadOnly = false) =>
+    api.get<ApiResponse<PagedResult<{ id: string; titleEn: string; titleAr: string; messageEn: string; messageAr: string; isRead: boolean }>>>('/notifications', { params: { unreadOnly } }),
+  markRead: (id: string) => api.post(`/notifications/${id}/read`),
 };

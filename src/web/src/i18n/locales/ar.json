@@ -40,15 +40,55 @@
   },
   "services": {
     "title": "خدماتنا",
-    "request": "طلب الخدمة",
+    "request": "احجز الآن",
     "price": "يبدأ من",
     "duration": "المدة"
+  },
+  "booking": {
+    "title": "حجز خدمة",
+    "myBookings": "حجوزاتي",
+    "steps": {
+      "service": "الخدمة",
+      "craftsman": "الحرفي",
+      "datetime": "التاريخ والوقت",
+      "confirm": "التأكيد"
+    },
+    "selectDate": "اختر التاريخ",
+    "loadSlots": "عرض الأوقات المتاحة",
+    "summary": "ملخص الحجز",
+    "confirmAndPay": "تأكيد والدفع",
+    "payment": "الدفع",
+    "paymentPending": "أكمل الدفع لحجز الموعد",
+    "confirmPayment": "ادفع الآن",
+    "pay": "متابعة الدفع",
+    "accept": "قبول",
+    "reject": "رفض",
+    "complete": "إتمام",
+    "reference": "المرجع",
+    "craftsman": "الحرفي",
+    "scheduled": "الموعد",
+    "price": "السعر",
+    "status": {
+      "Pending": "قيد الانتظار",
+      "AwaitingPayment": "في انتظار الدفع",
+      "PaymentConfirmed": "تم تأكيد الدفع",
+      "PendingCraftsmanConfirmation": "في انتظار التأكيد",
+      "Confirmed": "مؤكد",
+      "Completed": "مكتمل",
+      "Cancelled": "ملغي",
+      "Rejected": "مرفوض",
+      "Expired": "منتهي",
+      "NoShow": "لم يحضر",
+      "Rescheduled": "أعيد جدولته"
+    }
   },
   "common": {
     "loading": "جاري التحميل...",
     "error": "حدث خطأ",
     "save": "حفظ",
     "cancel": "إلغاء",
+    "back": "رجوع",
+    "next": "التالي",
     "minutes": "دقيقة"
   }
 }

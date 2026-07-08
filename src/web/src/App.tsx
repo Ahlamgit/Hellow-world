@@ -7,6 +7,7 @@ import HomePage from './pages/HomePage';
 import ServicesPage from './pages/ServicesPage';
 import DashboardPage from './pages/DashboardPage';
 import LoginPage, { RegisterPage } from './pages/AuthPages';
+import { BookingWizardPage, MyBookingsPage, BookingDetailPage, BookingPaymentPage } from './pages/BookingPages';
 
 function App() {
   return (
@@ -23,6 +24,10 @@ function App() {
             </Route>
             <Route element={<ProtectedRoute />}>
               <Route path="/dashboard" element={<DashboardPage />} />
+              <Route path="/bookings" element={<MyBookingsPage />} />
+              <Route path="/bookings/new" element={<BookingWizardPage />} />
+              <Route path="/bookings/:id" element={<BookingDetailPage />} />
+              <Route path="/bookings/:id/payment" element={<BookingPaymentPage />} />
             </Route>
           </Routes>
         </Box>

@@ -11,7 +11,6 @@ namespace Khadamati.Application.Features.Services.Queries;
 
 public record GetServiceCategoriesQuery : IRequest<IReadOnlyList<ServiceCategoryDto>>;
 public record GetServicesQuery(Guid? CategoryId) : IRequest<IReadOnlyList<ServiceDto>>;
-public record GetServiceRequestsQuery(Guid UserId, int Page = 1, int PageSize = 20) : IRequest<PagedResult<ServiceRequestDto>>;
 
 public class GetServiceCategoriesQueryHandler : IRequestHandler<GetServiceCategoriesQuery, IReadOnlyList<ServiceCategoryDto>>
 {
@@ -51,46 +50,5 @@ public class GetServicesQueryHandler : IRequestHandler<GetServicesQuery, IReadOn
                 (request.CategoryId == null || s.CategoryId == request.CategoryId), cancellationToken);
 
         return _mapper.Map<IReadOnlyList<ServiceDto>>(services);
-    }
-}
-
-public class CreateServiceRequestCommand : IRequest<ServiceRequestDto>
-{
-    public Guid CustomerId { get; init; }
-    public CreateServiceRequestDto Request { get; init; } = null!;
-}
-
-public class CreateServiceRequestCommandHandler : IRequestHandler<CreateServiceRequestCommand, ServiceRequestDto>
-{
-    private readonly IUnitOfWork _unitOfWork;
-    private readonly IMapper _mapper;
-
-    public CreateServiceRequestCommandHandler(IUnitOfWork unitOfWork, IMapper mapper)
-    {
-        _unitOfWork = unitOfWork;
-        _mapper = mapper;
-    }
-
-    public async Task<ServiceRequestDto> Handle(CreateServiceRequestCommand request, CancellationToken cancellationToken)
-    {
-        var service = await _unitOfWork.Repository<Service>().GetByIdAsync(request.Request.ServiceId, cancellationToken)
-            ?? throw new NotFoundException("Service not found.");
-
-        var serviceRequest = new ServiceRequest
-        {
-            CustomerId = request.CustomerId,
-            ServiceId = request.Request.ServiceId,
-            AddressId = request.Request.AddressId,
-            Description = request.Request.Description,
-            ScheduledAt = request.Request.ScheduledAt,
-            EstimatedPrice = service.BasePrice,
-            Status = ServiceRequestStatus.Pending
-        };
-
-        await _unitOfWork.Repository<ServiceRequest>().AddAsync(serviceRequest, cancellationToken);
-        await _unitOfWork.SaveChangesAsync(cancellationToken);
-
-        serviceRequest.Service = service;
-        return _mapper.Map<ServiceRequestDto>(serviceRequest);
     }
 }

@@ -32,6 +32,11 @@ private struct MainTabView: View {
                     Label(L10n.Nav.services, systemImage: "wrench.and.screwdriver.fill")
                 }
 
+            MyBookingsView()
+                .tabItem {
+                    Label("Bookings", systemImage: "calendar")
+                }
+
             ProfileView()
                 .tabItem {
                     Label(L10n.Nav.profile, systemImage: "person.fill")

@@ -6,8 +6,10 @@ import com.khadamati.app.data.local.KhadamatiDatabase
 import com.khadamati.app.data.preferences.TokenManager
 import com.khadamati.app.data.remote.RetrofitClient
 import com.khadamati.app.data.repository.AuthRepository
+import com.khadamati.app.data.repository.BookingRepository
 import com.khadamati.app.data.repository.ServicesRepository
 import com.khadamati.app.ui.viewmodel.AuthViewModel
+import com.khadamati.app.ui.viewmodel.BookingViewModel
 import com.khadamati.app.ui.viewmodel.ServicesViewModel
 
 /**
@@ -51,9 +53,16 @@ class AppContainer(context: Context) {
         )
     }
 
+    val bookingRepository: BookingRepository by lazy {
+        BookingRepository(apiService)
+    }
+
     fun provideAuthViewModel(): AuthViewModel =
         AuthViewModel(authRepository)
 
     fun provideServicesViewModel(): ServicesViewModel =
         ServicesViewModel(servicesRepository)
+
+    fun provideBookingViewModel(): BookingViewModel =
+        BookingViewModel(bookingRepository)
 }

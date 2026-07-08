@@ -33,6 +33,33 @@ enum APIEndpoints {
         }
     }
 
+    enum Bookings {
+        static let list = baseURL.appendingPathComponent("bookings")
+
+        static func craftsmen(serviceId: UUID) -> URL {
+            var components = URLComponents(url: baseURL.appendingPathComponent("bookings/craftsmen"), resolvingAgainstBaseURL: false)!
+            components.queryItems = [URLQueryItem(name: "serviceId", value: serviceId.uuidString)]
+            return components.url!
+        }
+
+        static func availability(craftsmanId: UUID, serviceId: UUID, date: String) -> URL {
+            var components = URLComponents(url: baseURL.appendingPathComponent("bookings/availability"), resolvingAgainstBaseURL: false)!
+            components.queryItems = [
+                URLQueryItem(name: "craftsmanId", value: craftsmanId.uuidString),
+                URLQueryItem(name: "serviceId", value: serviceId.uuidString),
+                URLQueryItem(name: "date", value: date),
+            ]
+            return components.url!
+        }
+
+        static func detail(_ id: UUID) -> URL { baseURL.appendingPathComponent("bookings/\(id.uuidString)") }
+        static func confirm(_ id: UUID) -> URL { baseURL.appendingPathComponent("bookings/\(id.uuidString)/confirm") }
+        static func payment(_ id: UUID) -> URL { baseURL.appendingPathComponent("bookings/\(id.uuidString)/payment") }
+        static func confirmPayment(_ id: UUID) -> URL { baseURL.appendingPathComponent("bookings/\(id.uuidString)/payment/confirm") }
+        static func accept(_ id: UUID) -> URL { baseURL.appendingPathComponent("bookings/\(id.uuidString)/accept") }
+        static func reject(_ id: UUID) -> URL { baseURL.appendingPathComponent("bookings/\(id.uuidString)/reject") }
+    }
+
     enum Health {
         static let check = baseURL.appendingPathComponent("health")
     }

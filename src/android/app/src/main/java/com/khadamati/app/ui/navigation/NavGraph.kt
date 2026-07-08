@@ -18,19 +18,24 @@ import androidx.compose.ui.res.stringResource
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import androidx.lifecycle.viewmodel.compose.viewModel
 import androidx.navigation.NavGraph.Companion.findStartDestination
+import androidx.navigation.NavType
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import androidx.navigation.compose.currentBackStackEntryAsState
 import androidx.navigation.compose.rememberNavController
+import androidx.navigation.navArgument
 import com.khadamati.app.R
 import com.khadamati.app.di.AppContainer
 import com.khadamati.app.ui.screens.HomeScreen
 import com.khadamati.app.ui.screens.LoginScreen
+import com.khadamati.app.ui.screens.BookingDetailScreen
+import com.khadamati.app.ui.screens.MyBookingsScreen
 import com.khadamati.app.ui.screens.ProfileScreen
 import com.khadamati.app.ui.screens.RegisterScreen
 import com.khadamati.app.ui.screens.ServicesScreen
 import com.khadamati.app.ui.screens.SplashScreen
 import com.khadamati.app.ui.viewmodel.AuthViewModel
+import com.khadamati.app.ui.viewmodel.BookingViewModel
 import com.khadamati.app.ui.viewmodel.ServicesViewModel
 
 @Composable
@@ -38,11 +43,12 @@ fun KhadamatiNavGraph(container: AppContainer) {
     val navController = rememberNavController()
     val authViewModel: AuthViewModel = viewModel(factory = AppViewModelFactory(container) { container.provideAuthViewModel() })
     val servicesViewModel: ServicesViewModel = viewModel(factory = AppViewModelFactory(container) { container.provideServicesViewModel() })
+    val bookingViewModel: BookingViewModel = viewModel(factory = AppViewModelFactory(container) { container.provideBookingViewModel() })
 
     val navBackStackEntry by navController.currentBackStackEntryAsState()
     val currentRoute = navBackStackEntry?.destination?.route
 
-    val bottomNavRoutes = remember { setOf(Routes.HOME, Routes.SERVICES, Routes.PROFILE) }
+    val bottomNavRoutes = remember { setOf(Routes.HOME, Routes.SERVICES, Routes.BOOKINGS, Routes.PROFILE) }
     val showBottomBar = currentRoute in bottomNavRoutes
 
     Scaffold(
@@ -127,6 +133,27 @@ fun KhadamatiNavGraph(container: AppContainer) {
                 ServicesScreen(viewModel = servicesViewModel)
             }
 
+            composable(Routes.BOOKINGS) {
+                MyBookingsScreen(
+                    viewModel = bookingViewModel,
+                    onBookingClick = { id -> navController.navigate("booking/$id") },
+                )
+            }
+
+            composable(
+                route = Routes.BOOKING_DETAIL,
+                arguments = listOf(navArgument("bookingId") { type = NavType.StringType }),
+            ) { backStack ->
+                val bookingId = backStack.arguments?.getString("bookingId") ?: return@composable
+                val authState by authViewModel.uiState.collectAsStateWithLifecycle()
+                BookingDetailScreen(
+                    bookingId = bookingId,
+                    viewModel = bookingViewModel,
+                    userRole = authState.currentUser?.role ?: "Customer",
+                    onPay = { navController.navigate(Routes.BOOKINGS) },
+                )
+            }
+
             composable(Routes.PROFILE) {
                 val authState by authViewModel.uiState.collectAsStateWithLifecycle()
                 ProfileScreen(
@@ -160,6 +187,12 @@ private fun KhadamatiBottomBar(
             onClick = { onNavigate(Routes.SERVICES) },
             icon = { Icon(Icons.Default.Build, contentDescription = null) },
             label = { Text(stringResource(R.string.nav_services)) },
+        )
+        NavigationBarItem(
+            selected = currentRoute == Routes.BOOKINGS,
+            onClick = { onNavigate(Routes.BOOKINGS) },
+            icon = { Icon(Icons.Default.Build, contentDescription = null) },
+            label = { Text(stringResource(R.string.nav_bookings)) },
         )
         NavigationBarItem(
             selected = currentRoute == Routes.PROFILE,

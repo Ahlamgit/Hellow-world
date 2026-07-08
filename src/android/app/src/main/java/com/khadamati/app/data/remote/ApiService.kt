@@ -1,6 +1,15 @@
 package com.khadamati.app.data.remote
 
 import com.khadamati.app.data.remote.dto.ApiResponse
+import com.khadamati.app.data.remote.dto.BookingDto
+import com.khadamati.app.data.remote.dto.BookingPaymentDto
+import com.khadamati.app.data.remote.dto.ConfirmPaymentRequestDto
+import com.khadamati.app.data.remote.dto.CraftsmanOptionDto
+import com.khadamati.app.data.remote.dto.CreateBookingRequestDto
+import com.khadamati.app.data.remote.dto.InitiatePaymentRequestDto
+import com.khadamati.app.data.remote.dto.PagedResultDto
+import com.khadamati.app.data.remote.dto.RejectBookingRequestDto
+import com.khadamati.app.data.remote.dto.TimeSlotDto
 import com.khadamati.app.data.remote.dto.AuthResponseDto
 import com.khadamati.app.data.remote.dto.LoginRequestDto
 import com.khadamati.app.data.remote.dto.RefreshTokenRequestDto
@@ -39,4 +48,50 @@ interface ApiService {
 
     @GET("services")
     suspend fun getServices(@Query("categoryId") categoryId: String? = null): ApiResponse<List<ServiceDto>>
+
+    @GET("bookings/craftsmen")
+    suspend fun getCraftsmen(@Query("serviceId") serviceId: String): ApiResponse<List<CraftsmanOptionDto>>
+
+    @GET("bookings/availability")
+    suspend fun getAvailability(
+        @Query("craftsmanId") craftsmanId: String,
+        @Query("serviceId") serviceId: String,
+        @Query("date") date: String,
+    ): ApiResponse<List<TimeSlotDto>>
+
+    @POST("bookings")
+    suspend fun createBooking(@Body request: CreateBookingRequestDto): ApiResponse<BookingDto>
+
+    @GET("bookings")
+    suspend fun getBookings(
+        @Query("page") page: Int = 1,
+        @Query("pageSize") pageSize: Int = 20,
+    ): ApiResponse<PagedResultDto<BookingDto>>
+
+    @GET("bookings/{id}")
+    suspend fun getBooking(@retrofit2.http.Path("id") id: String): ApiResponse<BookingDto>
+
+    @POST("bookings/{id}/confirm")
+    suspend fun confirmBooking(@retrofit2.http.Path("id") id: String): ApiResponse<BookingDto>
+
+    @POST("bookings/{id}/payment")
+    suspend fun initiatePayment(
+        @retrofit2.http.Path("id") id: String,
+        @Body request: InitiatePaymentRequestDto,
+    ): ApiResponse<BookingPaymentDto>
+
+    @POST("bookings/{id}/payment/confirm")
+    suspend fun confirmPayment(
+        @retrofit2.http.Path("id") id: String,
+        @Body request: ConfirmPaymentRequestDto,
+    ): ApiResponse<BookingDto>
+
+    @POST("bookings/{id}/accept")
+    suspend fun acceptBooking(@retrofit2.http.Path("id") id: String): ApiResponse<BookingDto>
+
+    @POST("bookings/{id}/reject")
+    suspend fun rejectBooking(
+        @retrofit2.http.Path("id") id: String,
+        @Body request: RejectBookingRequestDto,
+    ): ApiResponse<BookingDto>
 }

@@ -7,4 +7,6 @@ object Routes {
     const val HOME = "home"
     const val SERVICES = "services"
     const val PROFILE = "profile"
+    const val BOOKINGS = "bookings"
+    const val BOOKING_DETAIL = "booking/{bookingId}"
 }

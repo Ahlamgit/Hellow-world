@@ -1,12 +1,16 @@
 import { useEffect, useState } from 'react';
 import { Container, Typography, Card, CardContent, CardActions, Button, Chip, CircularProgress, Box } from '@mui/material';
 import Grid from '@mui/material/Grid';
+import { useNavigate } from 'react-router-dom';
 import { useTranslation } from 'react-i18next';
+import { useAuth } from '../context/AuthContext';
 import { servicesApi, type Service } from '../services/api';
 
 export default function ServicesPage() {
   const { t, i18n } = useTranslation();
   const isAr = i18n.language === 'ar';
+  const navigate = useNavigate();
+  const { isAuthenticated } = useAuth();
   const [services, setServices] = useState<Service[]>([]);
   const [loading, setLoading] = useState(true);
 
@@ -45,7 +49,10 @@ export default function ServicesPage() {
                 </Box>
               </CardContent>
               <CardActions sx={{ p: 2, pt: 0 }}>
-                <Button variant="contained" fullWidth>{t('services.request')}</Button>
+                <Button variant="contained" fullWidth onClick={() => {
+                  if (!isAuthenticated) { navigate('/login'); return; }
+                  navigate(`/bookings/new?serviceId=${service.id}`);
+                }}>{t('services.request')}</Button>
               </CardActions>
             </Card>
           </Grid>

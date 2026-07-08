@@ -84,16 +84,6 @@ public class ServicesController : ControllerBase
         var result = await _mediator.Send(new GetServicesQuery(categoryId), cancellationToken);
         return Ok(ApiResponse<IReadOnlyList<ServiceDto>>.Ok(result));
     }
-
-    [HttpPost("requests")]
-    [Authorize(Roles = "Customer")]
-    [ProducesResponseType(typeof(ApiResponse<ServiceRequestDto>), StatusCodes.Status201Created)]
-    public async Task<IActionResult> CreateRequest([FromBody] CreateServiceRequestDto request, CancellationToken cancellationToken)
-    {
-        var userId = _currentUser.UserId ?? throw new UnauthorizedException("User not authenticated.");
-        var result = await _mediator.Send(new CreateServiceRequestCommand { CustomerId = userId, Request = request }, cancellationToken);
-        return Created(string.Empty, ApiResponse<ServiceRequestDto>.Ok(result));
-    }
 }
 
 [ApiController]

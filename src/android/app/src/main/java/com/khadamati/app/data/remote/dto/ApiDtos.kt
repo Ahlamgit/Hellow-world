@@ -84,3 +84,64 @@ data class ServiceDto(
     val imageUrl: String?,
     val estimatedDurationMinutes: Int,
 )
+
+data class PagedResultDto<T>(
+    val items: List<T>,
+    val totalCount: Int,
+    val page: Int,
+    val pageSize: Int,
+)
+
+data class CraftsmanOptionDto(
+    val id: String,
+    val firstName: String,
+    val lastName: String,
+    val specialization: String?,
+    val rating: Double,
+    val totalReviews: Int,
+    val completedJobs: Int,
+    val price: Double,
+    val isAvailable: Boolean,
+)
+
+data class TimeSlotDto(
+    val start: String,
+    val end: String,
+    val isAvailable: Boolean,
+)
+
+data class CreateBookingRequestDto(
+    val serviceId: String,
+    val craftsmanId: String,
+    val scheduledAt: String,
+    val addressId: String? = null,
+    val description: String? = null,
+)
+
+data class BookingDto(
+    val id: String,
+    val bookingReference: String,
+    val serviceId: String,
+    val serviceName: String,
+    val customerId: String,
+    val customerName: String,
+    val craftsmanId: String,
+    val craftsmanName: String,
+    val status: String,
+    val scheduledAt: String,
+    val slotEnd: String,
+    val estimatedPrice: Double,
+    val payment: BookingPaymentDto?,
+)
+
+data class BookingPaymentDto(
+    val id: String,
+    val amount: Double,
+    val currency: String,
+    val status: String,
+    val paymentMethod: String,
+)
+
+data class ConfirmPaymentRequestDto(val transactionReference: String)
+data class InitiatePaymentRequestDto(val paymentMethod: String)
+data class RejectBookingRequestDto(val reason: String)

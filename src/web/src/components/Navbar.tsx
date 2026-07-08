@@ -37,6 +37,9 @@ export default function Navbar() {
 
           <Button component={Link} to="/" color="inherit">{t('nav.home')}</Button>
           <Button component={Link} to="/services" color="inherit">{t('nav.services')}</Button>
+          {isAuthenticated && (
+            <Button component={Link} to="/bookings" color="inherit">{t('booking.myBookings')}</Button>
+          )}
 
           <IconButton onClick={(e) => setLangAnchor(e.currentTarget)} color="inherit">
             <Language />

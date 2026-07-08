@@ -27,6 +27,7 @@ export function AuthProvider({ children }: { children: ReactNode }) {
     localStorage.setItem('accessToken', data.data.accessToken);
     localStorage.setItem('refreshToken', data.data.refreshToken);
     localStorage.setItem('user', JSON.stringify(data.data.user));
+    localStorage.setItem('userRole', data.data.user.role);
     setUser(data.data.user);
   };
 
@@ -35,6 +36,7 @@ export function AuthProvider({ children }: { children: ReactNode }) {
     localStorage.setItem('accessToken', data.data.accessToken);
     localStorage.setItem('refreshToken', data.data.refreshToken);
     localStorage.setItem('user', JSON.stringify(data.data.user));
+    localStorage.setItem('userRole', data.data.user.role);
     setUser(data.data.user);
   };
 

@@ -105,11 +105,17 @@ public class ServiceRequestConfiguration : IEntityTypeConfiguration<ServiceReque
     {
         builder.ToTable("ServiceRequests");
         builder.HasKey(r => r.Id);
+        builder.HasIndex(r => r.BookingReference).IsUnique();
         builder.HasIndex(r => r.CustomerId);
         builder.HasIndex(r => r.CraftsmanId);
         builder.HasIndex(r => r.Status);
+        builder.HasIndex(r => r.ScheduledAt);
+        builder.Property(r => r.BookingReference).HasMaxLength(30).IsRequired();
+        builder.Property(r => r.Status).HasConversion<int>();
         builder.Property(r => r.EstimatedPrice).HasPrecision(18, 2);
         builder.Property(r => r.FinalPrice).HasPrecision(18, 2);
+        builder.Property(r => r.RejectionReason).HasMaxLength(500);
+        builder.Property(r => r.CancellationReason).HasMaxLength(500);
 
         builder.HasOne(r => r.Customer)
             .WithMany(u => u.CustomerRequests)
@@ -119,7 +125,7 @@ public class ServiceRequestConfiguration : IEntityTypeConfiguration<ServiceReque
         builder.HasOne(r => r.Craftsman)
             .WithMany(u => u.AssignedRequests)
             .HasForeignKey(r => r.CraftsmanId)
-            .OnDelete(DeleteBehavior.SetNull);
+            .OnDelete(DeleteBehavior.Restrict);
 
         builder.HasOne(r => r.Service)
             .WithMany(s => s.Requests)
@@ -130,6 +136,19 @@ public class ServiceRequestConfiguration : IEntityTypeConfiguration<ServiceReque
             .WithMany()
             .HasForeignKey(r => r.AddressId)
             .OnDelete(DeleteBehavior.SetNull);
+
+        builder.HasOne(r => r.RescheduledFrom)
+            .WithMany()
+            .HasForeignKey(r => r.RescheduledFromId)
+            .OnDelete(DeleteBehavior.SetNull);
+
+        builder.HasOne(r => r.Payment)
+            .WithOne(p => p.ServiceRequest)
+            .HasForeignKey<BookingPayment>(p => p.ServiceRequestId);
+
+        builder.HasOne(r => r.SlotReservation)
+            .WithOne(s => s.ServiceRequest)
+            .HasForeignKey<BookingSlotReservation>(s => s.ServiceRequestId);
     }
 }
 
@@ -273,5 +292,73 @@ public class UserSubscriptionConfiguration : IEntityTypeConfiguration<UserSubscr
         builder.Property(s => s.CouponCode).HasMaxLength(50);
         builder.HasOne(s => s.User).WithMany().HasForeignKey(s => s.UserId);
         builder.HasOne(s => s.BillingOption).WithMany().HasForeignKey(s => s.BillingOptionId).OnDelete(DeleteBehavior.SetNull);
+    }
+}
+
+public class BookingSlotReservationConfiguration : IEntityTypeConfiguration<BookingSlotReservation>
+{
+    public void Configure(EntityTypeBuilder<BookingSlotReservation> builder)
+    {
+        builder.ToTable("BookingSlotReservations");
+        builder.HasKey(r => r.Id);
+        builder.HasIndex(r => new { r.CraftsmanId, r.SlotStart }).IsUnique()
+            .HasFilter("[IsActive] = 1 AND [IsDeleted] = 0");
+        builder.HasIndex(r => r.ServiceRequestId).IsUnique();
+    }
+}
+
+public class CraftsmanWorkingHourConfiguration : IEntityTypeConfiguration<CraftsmanWorkingHour>
+{
+    public void Configure(EntityTypeBuilder<CraftsmanWorkingHour> builder)
+    {
+        builder.ToTable("CraftsmanWorkingHours");
+        builder.HasKey(w => w.Id);
+        builder.HasIndex(w => new { w.CraftsmanId, w.DayOfWeek });
+        builder.HasOne(w => w.Craftsman).WithMany().HasForeignKey(w => w.CraftsmanId);
+    }
+}
+
+public class BookingPaymentConfiguration : IEntityTypeConfiguration<BookingPayment>
+{
+    public void Configure(EntityTypeBuilder<BookingPayment> builder)
+    {
+        builder.ToTable("BookingPayments");
+        builder.HasKey(p => p.Id);
+        builder.HasIndex(p => p.ServiceRequestId).IsUnique();
+        builder.Property(p => p.Amount).HasPrecision(18, 2);
+        builder.Property(p => p.Currency).HasMaxLength(3);
+        builder.Property(p => p.Status).HasConversion<int>();
+        builder.Property(p => p.PaymentMethod).HasMaxLength(50);
+        builder.Property(p => p.TransactionReference).HasMaxLength(200);
+        builder.HasOne(p => p.Payer).WithMany().HasForeignKey(p => p.PayerUserId).OnDelete(DeleteBehavior.Restrict);
+        builder.HasOne(p => p.Payee).WithMany().HasForeignKey(p => p.PayeeUserId).OnDelete(DeleteBehavior.Restrict);
+    }
+}
+
+public class NotificationConfiguration : IEntityTypeConfiguration<Notification>
+{
+    public void Configure(EntityTypeBuilder<Notification> builder)
+    {
+        builder.ToTable("Notifications");
+        builder.HasKey(n => n.Id);
+        builder.HasIndex(n => new { n.UserId, n.IsRead });
+        builder.Property(n => n.TitleEn).HasMaxLength(200).IsRequired();
+        builder.Property(n => n.TitleAr).HasMaxLength(200).IsRequired();
+        builder.Property(n => n.NotificationType).HasMaxLength(50);
+        builder.HasOne(n => n.User).WithMany().HasForeignKey(n => n.UserId);
+    }
+}
+
+public class ServiceRequestStatusHistoryConfiguration : IEntityTypeConfiguration<ServiceRequestStatusHistory>
+{
+    public void Configure(EntityTypeBuilder<ServiceRequestStatusHistory> builder)
+    {
+        builder.ToTable("ServiceRequestStatusHistories");
+        builder.HasKey(h => h.Id);
+        builder.HasIndex(h => h.ServiceRequestId);
+        builder.Property(h => h.OldStatus).HasConversion<int>();
+        builder.Property(h => h.NewStatus).HasConversion<int>();
+        builder.HasOne(h => h.ServiceRequest).WithMany(r => r.StatusHistory).HasForeignKey(h => h.ServiceRequestId);
+        builder.HasOne(h => h.ChangedByUser).WithMany().HasForeignKey(h => h.ChangedByUserId).OnDelete(DeleteBehavior.SetNull);
     }
 }

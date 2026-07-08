@@ -40,15 +40,55 @@
   },
   "services": {
     "title": "Our Services",
-    "request": "Request Service",
+    "request": "Book Now",
     "price": "Starting from",
     "duration": "Duration"
+  },
+  "booking": {
+    "title": "Book a Service",
+    "myBookings": "My Bookings",
+    "steps": {
+      "service": "Service",
+      "craftsman": "Craftsman",
+      "datetime": "Date & Time",
+      "confirm": "Confirm"
+    },
+    "selectDate": "Select Date",
+    "loadSlots": "Show Available Times",
+    "summary": "Booking Summary",
+    "confirmAndPay": "Confirm & Pay",
+    "payment": "Payment",
+    "paymentPending": "Complete payment to reserve your slot",
+    "confirmPayment": "Pay Now",
+    "pay": "Proceed to Payment",
+    "accept": "Accept",
+    "reject": "Reject",
+    "complete": "Mark Complete",
+    "reference": "Reference",
+    "craftsman": "Craftsman",
+    "scheduled": "Scheduled",
+    "price": "Price",
+    "status": {
+      "Pending": "Pending",
+      "AwaitingPayment": "Awaiting Payment",
+      "PaymentConfirmed": "Payment Confirmed",
+      "PendingCraftsmanConfirmation": "Awaiting Confirmation",
+      "Confirmed": "Confirmed",
+      "Completed": "Completed",
+      "Cancelled": "Cancelled",
+      "Rejected": "Rejected",
+      "Expired": "Expired",
+      "NoShow": "No Show",
+      "Rescheduled": "Rescheduled"
+    }
   },
   "common": {
     "loading": "Loading...",
     "error": "An error occurred",
     "save": "Save",
     "cancel": "Cancel",
+    "back": "Back",
+    "next": "Next",
     "minutes": "minutes"
   }
 }

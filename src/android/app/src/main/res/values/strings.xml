@@ -6,6 +6,7 @@
   <!-- Navigation -->
   <string name="nav_home">Home</string>
   <string name="nav_services">Services</string>
+  <string name="nav_bookings">Bookings</string>
   <string name="nav_profile">Profile</string>
   <string name="nav_login">Login</string>
   <string name="nav_register">Register</string>
