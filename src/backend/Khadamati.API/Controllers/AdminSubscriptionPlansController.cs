@@ -1,8 +1,10 @@
+using Khadamati.Application.Authorization;
 using Khadamati.Application.Common;
 using Khadamati.Application.DTOs.Subscriptions;
 using Khadamati.Application.Features.Subscriptions.Commands;
 using Khadamati.Application.Features.Subscriptions.Queries;
 using Khadamati.Application.Interfaces;
+using Khadamati.Domain.Constants;
 using MediatR;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
@@ -16,7 +18,7 @@ namespace Khadamati.API.Controllers;
 /// </summary>
 [ApiController]
 [Route("api/v1/admin/subscription-plans")]
-[Authorize(Policy = "AdminOnly")]
+[Authorize]
 [Produces("application/json")]
 public class AdminSubscriptionPlansController : ControllerBase
 {
@@ -31,6 +33,7 @@ public class AdminSubscriptionPlansController : ControllerBase
 
     /// <summary>List subscription plans with search, filter, and pagination.</summary>
     [HttpGet]
+    [HasPermission(PermissionCodes.SubscriptionsView)]
     [SwaggerOperation(Summary = "List subscription plans", Description = "Search and filter plans. Administrators can include archived plans.")]
     [ProducesResponseType(typeof(ApiResponse<PagedResult<SubscriptionPlanDto>>), StatusCodes.Status200OK)]
     public async Task<IActionResult> List([FromQuery] SubscriptionPlanListQueryDto query, CancellationToken cancellationToken)
@@ -41,6 +44,7 @@ public class AdminSubscriptionPlansController : ControllerBase
 
     /// <summary>Get a subscription plan by ID.</summary>
     [HttpGet("{id:guid}")]
+    [HasPermission(PermissionCodes.SubscriptionsView)]
     [SwaggerOperation(Summary = "Get subscription plan by ID")]
     [ProducesResponseType(typeof(ApiResponse<SubscriptionPlanDto>), StatusCodes.Status200OK)]
     [ProducesResponseType(typeof(ApiResponse<object>), StatusCodes.Status404NotFound)]
@@ -52,6 +56,7 @@ public class AdminSubscriptionPlansController : ControllerBase
 
     /// <summary>Create a new subscription plan with billing options and feature limits.</summary>
     [HttpPost]
+    [HasPermission(PermissionCodes.SubscriptionsCreate)]
     [SwaggerOperation(Summary = "Create subscription plan", Description = "Create unlimited plans with monthly/quarterly/semi-annual/annual/lifetime billing options.")]
     [ProducesResponseType(typeof(ApiResponse<SubscriptionPlanDto>), StatusCodes.Status201Created)]
     [ProducesResponseType(typeof(ApiResponse<object>), StatusCodes.Status400BadRequest)]
@@ -64,6 +69,7 @@ public class AdminSubscriptionPlansController : ControllerBase
 
     /// <summary>Update an existing subscription plan.</summary>
     [HttpPut("{id:guid}")]
+    [HasPermission(PermissionCodes.SubscriptionsEdit)]
     [SwaggerOperation(Summary = "Update subscription plan")]
     [ProducesResponseType(typeof(ApiResponse<SubscriptionPlanDto>), StatusCodes.Status200OK)]
     [ProducesResponseType(typeof(ApiResponse<object>), StatusCodes.Status404NotFound)]
@@ -75,6 +81,7 @@ public class AdminSubscriptionPlansController : ControllerBase
 
     /// <summary>Soft-delete a subscription plan.</summary>
     [HttpDelete("{id:guid}")]
+    [HasPermission(PermissionCodes.SubscriptionsEdit)]
     [SwaggerOperation(Summary = "Delete subscription plan", Description = "Soft-deletes the plan. Existing subscriptions are preserved.")]
     [ProducesResponseType(typeof(ApiResponse<object>), StatusCodes.Status200OK)]
     [ProducesResponseType(typeof(ApiResponse<object>), StatusCodes.Status404NotFound)]
@@ -86,6 +93,7 @@ public class AdminSubscriptionPlansController : ControllerBase
 
     /// <summary>Clone an existing plan with a new plan code.</summary>
     [HttpPost("{id:guid}/clone")]
+    [HasPermission(PermissionCodes.SubscriptionsCreate)]
     [SwaggerOperation(Summary = "Clone subscription plan", Description = "Creates a copy of the plan with Inactive status.")]
     [ProducesResponseType(typeof(ApiResponse<SubscriptionPlanDto>), StatusCodes.Status201Created)]
     public async Task<IActionResult> Clone(Guid id, [FromBody] CloneSubscriptionPlanDto request, CancellationToken cancellationToken)
@@ -96,6 +104,7 @@ public class AdminSubscriptionPlansController : ControllerBase
 
     /// <summary>Activate a subscription plan.</summary>
     [HttpPost("{id:guid}/activate")]
+    [HasPermission(PermissionCodes.SubscriptionsEdit)]
     [SwaggerOperation(Summary = "Activate subscription plan")]
     [ProducesResponseType(typeof(ApiResponse<PlanActionResponseDto>), StatusCodes.Status200OK)]
     public async Task<IActionResult> Activate(Guid id, CancellationToken cancellationToken)
@@ -106,6 +115,7 @@ public class AdminSubscriptionPlansController : ControllerBase
 
     /// <summary>Deactivate a subscription plan.</summary>
     [HttpPost("{id:guid}/deactivate")]
+    [HasPermission(PermissionCodes.SubscriptionsEdit)]
     [SwaggerOperation(Summary = "Deactivate subscription plan")]
     [ProducesResponseType(typeof(ApiResponse<PlanActionResponseDto>), StatusCodes.Status200OK)]
     public async Task<IActionResult> Deactivate(Guid id, CancellationToken cancellationToken)
@@ -116,6 +126,7 @@ public class AdminSubscriptionPlansController : ControllerBase
 
     /// <summary>Suspend a subscription plan.</summary>
     [HttpPost("{id:guid}/suspend")]
+    [HasPermission(PermissionCodes.SubscriptionsEdit)]
     [SwaggerOperation(Summary = "Suspend subscription plan", Description = "Temporarily suspends the plan from new subscriptions.")]
     [ProducesResponseType(typeof(ApiResponse<PlanActionResponseDto>), StatusCodes.Status200OK)]
     public async Task<IActionResult> Suspend(Guid id, CancellationToken cancellationToken)
@@ -126,6 +137,7 @@ public class AdminSubscriptionPlansController : ControllerBase
 
     /// <summary>Archive a subscription plan.</summary>
     [HttpPost("{id:guid}/archive")]
+    [HasPermission(PermissionCodes.SubscriptionsEdit)]
     [SwaggerOperation(Summary = "Archive subscription plan", Description = "Archives the plan. Hidden from default listings.")]
     [ProducesResponseType(typeof(ApiResponse<PlanActionResponseDto>), StatusCodes.Status200OK)]
     public async Task<IActionResult> Archive(Guid id, CancellationToken cancellationToken)

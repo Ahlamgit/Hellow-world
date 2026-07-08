@@ -84,6 +84,7 @@ export interface UserDto {
   emailVerified?: boolean;
   phoneVerified?: boolean;
   requiresEmailVerification?: boolean;
+  permissions?: string[];
 }
 
 export interface ProfileDto {

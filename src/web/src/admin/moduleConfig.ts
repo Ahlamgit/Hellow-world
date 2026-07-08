@@ -62,6 +62,8 @@ export interface ModuleConfig {
   columns: { key: string; label: string; sortable?: boolean }[];
   bulkActions?: string[];
   filters?: { key: string; label: string; options?: string[] }[];
+  /** View permission code (informational; enforcement uses permissions.ts map). */
+  viewPermission?: string;
 }
 
 export const ADMIN_MODULES: ModuleConfig[] = [
