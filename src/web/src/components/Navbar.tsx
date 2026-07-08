@@ -40,6 +40,9 @@ export default function Navbar() {
           {isAuthenticated && (
             <Button component={Link} to="/bookings" color="inherit">{t('booking.myBookings')}</Button>
           )}
+          {isAuthenticated && user?.role === 'Administrator' && (
+            <Button component={Link} to="/admin" color="inherit">Admin</Button>
+          )}
 
           <IconButton onClick={(e) => setLangAnchor(e.currentTarget)} color="inherit">
             <Language />

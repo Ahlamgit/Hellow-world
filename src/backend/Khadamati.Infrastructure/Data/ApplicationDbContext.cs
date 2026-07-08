@@ -30,6 +30,17 @@ public class ApplicationDbContext : DbContext
     public DbSet<BookingPayment> BookingPayments => Set<BookingPayment>();
     public DbSet<Notification> Notifications => Set<Notification>();
     public DbSet<ServiceRequestStatusHistory> ServiceRequestStatusHistories => Set<ServiceRequestStatusHistory>();
+    public DbSet<Advertisement> Advertisements => Set<Advertisement>();
+    public DbSet<Coupon> Coupons => Set<Coupon>();
+    public DbSet<Complaint> Complaints => Set<Complaint>();
+    public DbSet<SupportTicket> SupportTickets => Set<SupportTicket>();
+    public DbSet<Region> Regions => Set<Region>();
+    public DbSet<City> Cities => Set<City>();
+    public DbSet<SystemSetting> SystemSettings => Set<SystemSetting>();
+    public DbSet<Permission> Permissions => Set<Permission>();
+    public DbSet<RolePermission> RolePermissions => Set<RolePermission>();
+    public DbSet<ActivityLog> ActivityLogs => Set<ActivityLog>();
+    public DbSet<BackupJob> BackupJobs => Set<BackupJob>();
 
     protected override void OnModelCreating(ModelBuilder modelBuilder)
     {
@@ -65,6 +76,17 @@ public class ApplicationDbContext : DbContext
         modelBuilder.Entity<BookingPayment>().HasQueryFilter(e => !e.IsDeleted);
         modelBuilder.Entity<Notification>().HasQueryFilter(e => !e.IsDeleted);
         modelBuilder.Entity<ServiceRequestStatusHistory>().HasQueryFilter(e => !e.IsDeleted);
+        modelBuilder.Entity<Advertisement>().HasQueryFilter(e => !e.IsDeleted);
+        modelBuilder.Entity<Coupon>().HasQueryFilter(e => !e.IsDeleted);
+        modelBuilder.Entity<Complaint>().HasQueryFilter(e => !e.IsDeleted);
+        modelBuilder.Entity<SupportTicket>().HasQueryFilter(e => !e.IsDeleted);
+        modelBuilder.Entity<Region>().HasQueryFilter(e => !e.IsDeleted);
+        modelBuilder.Entity<City>().HasQueryFilter(e => !e.IsDeleted);
+        modelBuilder.Entity<SystemSetting>().HasQueryFilter(e => !e.IsDeleted);
+        modelBuilder.Entity<Permission>().HasQueryFilter(e => !e.IsDeleted);
+        modelBuilder.Entity<RolePermission>().HasQueryFilter(e => !e.IsDeleted);
+        modelBuilder.Entity<ActivityLog>().HasQueryFilter(e => !e.IsDeleted);
+        modelBuilder.Entity<BackupJob>().HasQueryFilter(e => !e.IsDeleted);
     }
 
     public override Task<int> SaveChangesAsync(CancellationToken cancellationToken = default)

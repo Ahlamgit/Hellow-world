@@ -73,5 +73,121 @@ public class DatabaseSeeder
 
             _logger.LogInformation("Seed data created successfully.");
         }
+
+        await SeedAdminDataAsync(context, cancellationToken);
+    }
+
+    private async Task SeedAdminDataAsync(ApplicationDbContext context, CancellationToken cancellationToken)
+    {
+        if (!await context.Regions.AnyAsync(cancellationToken))
+        {
+            var riyadh = new Region { NameEn = "Riyadh Region", NameAr = "منطقة الرياض", Code = "RYD", IsActive = true };
+            var makkah = new Region { NameEn = "Makkah Region", NameAr = "منطقة مكة", Code = "MKK", IsActive = true };
+            context.Regions.AddRange(riyadh, makkah);
+            await context.SaveChangesAsync(cancellationToken);
+
+            context.Cities.AddRange(
+                new City { RegionId = riyadh.Id, NameEn = "Riyadh", NameAr = "الرياض", Code = "RYD-01", IsActive = true },
+                new City { RegionId = riyadh.Id, NameEn = "Diriyah", NameAr = "الدرعية", Code = "RYD-02", IsActive = true },
+                new City { RegionId = makkah.Id, NameEn = "Jeddah", NameAr = "جدة", Code = "MKK-01", IsActive = true },
+                new City { RegionId = makkah.Id, NameEn = "Makkah", NameAr = "مكة", Code = "MKK-02", IsActive = true });
+            await context.SaveChangesAsync(cancellationToken);
+        }
+
+        if (!await context.Permissions.AnyAsync(cancellationToken))
+        {
+            var modules = new[] { "users", "bookings", "subscriptions", "payments", "settings", "reports" };
+            foreach (var mod in modules)
+            {
+                context.Permissions.Add(new Permission
+                {
+                    Code = $"{mod}.manage",
+                    NameEn = $"Manage {mod}",
+                    NameAr = $"إدارة {mod}",
+                    Module = mod,
+                });
+            }
+            await context.SaveChangesAsync(cancellationToken);
+        }
+
+        if (!await context.SystemSettings.AnyAsync(cancellationToken))
+        {
+            context.SystemSettings.AddRange(
+                new SystemSetting { SettingKey = "platform.name", SettingValue = "Khadamati", Category = "General" },
+                new SystemSetting { SettingKey = "booking.payment_timeout_minutes", SettingValue = "30", Category = "Booking" },
+                new SystemSetting { SettingKey = "notification.email_enabled", SettingValue = "true", Category = "Notifications" });
+            await context.SaveChangesAsync(cancellationToken);
+        }
+
+        if (!await context.Advertisements.AnyAsync(cancellationToken))
+        {
+            context.Advertisements.Add(new Advertisement
+            {
+                TitleEn = "Summer Promotion",
+                TitleAr = "عرض الصيف",
+                Placement = "HomePage",
+                StartDate = DateTime.UtcNow.AddDays(-7),
+                EndDate = DateTime.UtcNow.AddDays(30),
+                IsActive = true,
+            });
+            await context.SaveChangesAsync(cancellationToken);
+        }
+
+        if (!await context.Coupons.AnyAsync(cancellationToken))
+        {
+            context.Coupons.Add(new Coupon
+            {
+                Code = "WELCOME10",
+                DescriptionEn = "10% off first booking",
+                DescriptionAr = "خصم 10% على أول حجز",
+                DiscountPercentage = 10,
+                MaxUses = 1000,
+                ValidFrom = DateTime.UtcNow.AddDays(-30),
+                ValidTo = DateTime.UtcNow.AddDays(90),
+                IsActive = true,
+            });
+            await context.SaveChangesAsync(cancellationToken);
+        }
+
+        var adminUser = await context.Users.FirstOrDefaultAsync(u => u.Role == UserRole.Administrator, cancellationToken);
+        if (adminUser != null && !await context.Complaints.AnyAsync(cancellationToken))
+        {
+            context.Complaints.Add(new Complaint
+            {
+                ComplainantUserId = adminUser.Id,
+                Subject = "Sample complaint for testing",
+                Description = "This is a seeded complaint record.",
+                Status = "Open",
+                Priority = "Normal",
+            });
+            await context.SaveChangesAsync(cancellationToken);
+        }
+
+        if (adminUser != null && !await context.SupportTickets.AnyAsync(cancellationToken))
+        {
+            context.SupportTickets.Add(new SupportTicket
+            {
+                UserId = adminUser.Id,
+                TicketNumber = "TKT-00001",
+                Subject = "Sample support ticket",
+                Description = "Seeded support ticket for admin dashboard.",
+                Status = "Open",
+                Priority = "Normal",
+                Category = "General",
+            });
+            await context.SaveChangesAsync(cancellationToken);
+        }
+
+        if (!await context.BackupJobs.AnyAsync(cancellationToken))
+        {
+            context.BackupJobs.Add(new BackupJob
+            {
+                Name = "initial-backup",
+                Status = "Completed",
+                SizeBytes = 512000,
+                CompletedAt = DateTime.UtcNow.AddDays(-1),
+            });
+            await context.SaveChangesAsync(cancellationToken);
+        }
     }
 }
