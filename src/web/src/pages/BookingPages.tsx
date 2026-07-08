@@ -1,4 +1,4 @@
-import { useEffect, useState } from 'react';
+import { useEffect, useState, type ReactNode } from 'react';
 import { useNavigate, useParams, useSearchParams } from 'react-router-dom';
 import {
   Box, Button, Card, CardContent, Chip, CircularProgress, Container, Step, StepLabel, Stepper,
@@ -6,10 +6,14 @@ import {
 } from '@mui/material';
 import Grid from '@mui/material/Grid';
 import { useTranslation } from 'react-i18next';
+import { useAuth } from '../context/AuthContext';
 import {
   bookingsApi, type Booking, type CraftsmanOption, type Service, type TimeSlot,
 } from '../services/api';
 import { servicesApi } from '../services/api';
+import { getApiErrorMessage } from '../utils/apiError';
+
+const CANCELLABLE_STATUSES = new Set(['Pending', 'AwaitingPayment', 'Confirmed', 'Rescheduled']);
 
 const STEPS = ['service', 'craftsman', 'datetime', 'confirm'];
 
@@ -201,42 +205,205 @@ export function BookingDetailPage() {
   const { id } = useParams<{ id: string }>();
   const { t } = useTranslation();
   const navigate = useNavigate();
+  const { user } = useAuth();
   const [booking, setBooking] = useState<Booking | null>(null);
+  const [error, setError] = useState('');
+  const [actionLoading, setActionLoading] = useState(false);
+
   const [rejectOpen, setRejectOpen] = useState(false);
   const [reason, setReason] = useState('');
 
-  const reload = () => { if (id) bookingsApi.getById(id).then((res) => setBooking(res.data.data)); };
+  const [cancelOpen, setCancelOpen] = useState(false);
+  const [cancelReason, setCancelReason] = useState('');
+
+  const [rescheduleOpen, setRescheduleOpen] = useState(false);
+  const [rescheduleDate, setRescheduleDate] = useState('');
+  const [rescheduleSlots, setRescheduleSlots] = useState<TimeSlot[]>([]);
+  const [selectedRescheduleSlot, setSelectedRescheduleSlot] = useState<TimeSlot | null>(null);
+  const [rescheduleReason, setRescheduleReason] = useState('');
+
+  const [noShowOpen, setNoShowOpen] = useState(false);
+
+  const reload = () => {
+    if (!id) return;
+    bookingsApi.getById(id).then((res) => setBooking(res.data.data)).catch((e) => {
+      setError(getApiErrorMessage(e, t('common.error')));
+    });
+  };
+
   useEffect(() => { reload(); }, [id]);
 
   if (!booking) return <CircularProgress sx={{ m: 4 }} />;
 
-  const role = localStorage.getItem('userRole') ?? 'Customer';
+  const role = user?.role || user?.primaryRole || 'Customer';
+  const isCustomer = role === 'Customer';
+  const isCraftsman = role === 'Craftsman';
+
+  const loadRescheduleSlots = async () => {
+    if (!rescheduleDate || !booking) return;
+    setActionLoading(true);
+    setError('');
+    try {
+      const res = await bookingsApi.getAvailability(booking.craftsmanId, booking.serviceId, rescheduleDate);
+      setRescheduleSlots(res.data.data.filter((s) => s.isAvailable));
+      setSelectedRescheduleSlot(null);
+    } catch (e) {
+      setError(getApiErrorMessage(e, t('common.error')));
+    } finally {
+      setActionLoading(false);
+    }
+  };
+
+  const handleCancel = async () => {
+    if (!cancelReason.trim()) return;
+    setActionLoading(true);
+    setError('');
+    try {
+      await bookingsApi.cancel(booking.id, cancelReason);
+      setCancelOpen(false);
+      setCancelReason('');
+      reload();
+    } catch (e) {
+      setError(getApiErrorMessage(e, t('common.error')));
+    } finally {
+      setActionLoading(false);
+    }
+  };
+
+  const handleReschedule = async () => {
+    if (!selectedRescheduleSlot) return;
+    setActionLoading(true);
+    setError('');
+    try {
+      const res = await bookingsApi.reschedule(
+        booking.id,
+        selectedRescheduleSlot.start,
+        rescheduleReason || undefined,
+      );
+      setRescheduleOpen(false);
+      setRescheduleDate('');
+      setRescheduleSlots([]);
+      setSelectedRescheduleSlot(null);
+      setRescheduleReason('');
+      if (res.data.data.status === 'AwaitingPayment') {
+        navigate(`/bookings/${booking.id}/payment`);
+      } else {
+        reload();
+      }
+    } catch (e) {
+      setError(getApiErrorMessage(e, t('common.error')));
+    } finally {
+      setActionLoading(false);
+    }
+  };
+
+  const handleNoShow = async () => {
+    setActionLoading(true);
+    setError('');
+    try {
+      await bookingsApi.noShow(booking.id);
+      setNoShowOpen(false);
+      reload();
+    } catch (e) {
+      setError(getApiErrorMessage(e, t('common.error')));
+    } finally {
+      setActionLoading(false);
+    }
+  };
 
   const actions = () => {
-    if (booking.status === 'AwaitingPayment' && role === 'Customer')
-      return <Button variant="contained" onClick={() => navigate(`/bookings/${id}/payment`)}>{t('booking.pay')}</Button>;
-    if (booking.status === 'PendingCraftsmanConfirmation' && role === 'Craftsman') return (
-      <Box sx={{ display: 'flex', gap: 1 }}>
-        <Button variant="contained" onClick={() => { bookingsApi.accept(booking.id).then(() => reload()); }}>{t('booking.accept')}</Button>
-        <Button color="error" onClick={() => setRejectOpen(true)}>{t('booking.reject')}</Button>
-      </Box>
-    );
-    if (booking.status === 'Confirmed' && role === 'Craftsman')
-      return <Button variant="contained" onClick={() => { bookingsApi.complete(booking.id).then(() => reload()); }}>{t('booking.complete')}</Button>;
-    return null;
+    const buttons: ReactNode[] = [];
+
+    if (booking.status === 'AwaitingPayment' && isCustomer) {
+      buttons.push(
+        <Button key="pay" variant="contained" onClick={() => navigate(`/bookings/${id}/payment`)}>
+          {t('booking.pay')}
+        </Button>,
+      );
+    }
+
+    if (booking.status === 'PendingCraftsmanConfirmation' && isCraftsman) {
+      buttons.push(
+        <Button key="accept" variant="contained" onClick={async () => {
+          setActionLoading(true);
+          try { await bookingsApi.accept(booking.id); reload(); }
+          catch (e) { setError(getApiErrorMessage(e, t('common.error'))); }
+          finally { setActionLoading(false); }
+        }}>{t('booking.accept')}</Button>,
+        <Button key="reject" color="error" onClick={() => setRejectOpen(true)}>{t('booking.reject')}</Button>,
+      );
+    }
+
+    if (booking.status === 'Confirmed' && isCraftsman) {
+      buttons.push(
+        <Button key="complete" variant="contained" onClick={async () => {
+          setActionLoading(true);
+          try { await bookingsApi.complete(booking.id); reload(); }
+          catch (e) { setError(getApiErrorMessage(e, t('common.error'))); }
+          finally { setActionLoading(false); }
+        }}>{t('booking.complete')}</Button>,
+        <Button key="no-show" color="warning" onClick={() => setNoShowOpen(true)}>{t('booking.noShow')}</Button>,
+      );
+    }
+
+    if (CANCELLABLE_STATUSES.has(booking.status) && (isCustomer || isCraftsman)) {
+      buttons.push(
+        <Button key="cancel" color="error" variant="outlined" onClick={() => setCancelOpen(true)}>
+          {t('booking.cancel')}
+        </Button>,
+      );
+    }
+
+    if (booking.status === 'Confirmed' && (isCustomer || isCraftsman)) {
+      buttons.push(
+        <Button key="reschedule" variant="outlined" onClick={() => setRescheduleOpen(true)}>
+          {t('booking.reschedule')}
+        </Button>,
+      );
+    }
+
+    if (buttons.length === 0) return null;
+    return <Box sx={{ display: 'flex', gap: 1, flexWrap: 'wrap' }}>{buttons}</Box>;
   };
 
   return (
     <Container maxWidth="md" sx={{ py: 4 }}>
       <Typography variant="h4" sx={{ fontWeight: 700 }}>{booking.serviceName}</Typography>
       <Chip label={t(`booking.status.${booking.status}`)} color={statusColor(booking.status)} sx={{ my: 2 }} />
+      {error && <Alert severity="error" sx={{ mb: 2 }}>{error}</Alert>}
       <Card sx={{ mb: 2 }}><CardContent>
         <Typography><strong>{t('booking.reference')}:</strong> {booking.bookingReference}</Typography>
         <Typography><strong>{t('booking.craftsman')}:</strong> {booking.craftsmanName}</Typography>
         <Typography><strong>{t('booking.scheduled')}:</strong> {new Date(booking.scheduledAt).toLocaleString()}</Typography>
         <Typography><strong>{t('booking.price')}:</strong> {booking.estimatedPrice} SAR</Typography>
+        {booking.cancellationReason && (
+          <Typography color="error" sx={{ mt: 1 }}>
+            <strong>{t('booking.cancelReason')}:</strong> {booking.cancellationReason}
+          </Typography>
+        )}
       </CardContent></Card>
+
+      {booking.statusHistory.length > 0 && (
+        <Card sx={{ mb: 2 }}>
+          <CardContent>
+            <Typography variant="h6" gutterBottom>{t('booking.statusHistory')}</Typography>
+            {booking.statusHistory.map((entry, index) => (
+              <Box key={`${entry.createdAt}-${index}`} sx={{ mb: 1 }}>
+                <Typography variant="body2">
+                  {entry.oldStatus ? `${entry.oldStatus} → ` : ''}{entry.newStatus}
+                  {' · '}{new Date(entry.createdAt).toLocaleString()}
+                </Typography>
+                {entry.notes && (
+                  <Typography variant="caption" color="text.secondary">{entry.notes}</Typography>
+                )}
+              </Box>
+            ))}
+          </CardContent>
+        </Card>
+      )}
+
       {actions()}
+
       <Dialog open={rejectOpen} onClose={() => setRejectOpen(false)}>
         <DialogTitle>{t('booking.reject')}</DialogTitle>
         <DialogContent>
@@ -244,7 +411,98 @@ export function BookingDetailPage() {
         </DialogContent>
         <DialogActions>
           <Button onClick={() => setRejectOpen(false)}>{t('common.cancel')}</Button>
-          <Button color="error" onClick={() => { bookingsApi.reject(booking.id, reason).then(() => { setRejectOpen(false); reload(); }); }}>{t('booking.reject')}</Button>
+          <Button color="error" disabled={actionLoading || !reason.trim()} onClick={async () => {
+            setActionLoading(true);
+            try {
+              await bookingsApi.reject(booking.id, reason);
+              setRejectOpen(false);
+              setReason('');
+              reload();
+            } catch (e) { setError(getApiErrorMessage(e, t('common.error'))); }
+            finally { setActionLoading(false); }
+          }}>{t('booking.reject')}</Button>
+        </DialogActions>
+      </Dialog>
+
+      <Dialog open={cancelOpen} onClose={() => setCancelOpen(false)} maxWidth="sm" fullWidth>
+        <DialogTitle>{t('booking.cancelTitle')}</DialogTitle>
+        <DialogContent>
+          <Typography variant="body2" color="text.secondary" sx={{ mb: 2 }}>{t('booking.cancelHint')}</Typography>
+          <TextField
+            fullWidth
+            multiline
+            rows={3}
+            label={t('booking.cancelReason')}
+            value={cancelReason}
+            onChange={(e) => setCancelReason(e.target.value)}
+            required
+          />
+        </DialogContent>
+        <DialogActions>
+          <Button onClick={() => setCancelOpen(false)}>{t('common.cancel')}</Button>
+          <Button color="error" disabled={actionLoading || !cancelReason.trim()} onClick={handleCancel}>
+            {t('booking.confirmCancel')}
+          </Button>
+        </DialogActions>
+      </Dialog>
+
+      <Dialog open={rescheduleOpen} onClose={() => setRescheduleOpen(false)} maxWidth="sm" fullWidth>
+        <DialogTitle>{t('booking.rescheduleTitle')}</DialogTitle>
+        <DialogContent>
+          <Typography variant="body2" color="text.secondary" sx={{ mb: 2 }}>{t('booking.rescheduleHint')}</Typography>
+          <TextField
+            type="date"
+            label={t('booking.selectDate')}
+            fullWidth
+            sx={{ mb: 2 }}
+            value={rescheduleDate}
+            onChange={(e) => setRescheduleDate(e.target.value)}
+            slotProps={{ inputLabel: { shrink: true } }}
+          />
+          <Button variant="outlined" onClick={loadRescheduleSlots} disabled={!rescheduleDate || actionLoading} sx={{ mb: 2 }}>
+            {t('booking.loadSlots')}
+          </Button>
+          <Grid container spacing={1}>
+            {rescheduleSlots.map((slot) => (
+              <Grid key={slot.start} size={{ xs: 6 }}>
+                <Button
+                  fullWidth
+                  variant={selectedRescheduleSlot?.start === slot.start ? 'contained' : 'outlined'}
+                  onClick={() => setSelectedRescheduleSlot(slot)}
+                >
+                  {new Date(slot.start).toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' })}
+                </Button>
+              </Grid>
+            ))}
+          </Grid>
+          <TextField
+            fullWidth
+            multiline
+            rows={2}
+            label={t('booking.rescheduleReason')}
+            value={rescheduleReason}
+            onChange={(e) => setRescheduleReason(e.target.value)}
+            sx={{ mt: 2 }}
+          />
+        </DialogContent>
+        <DialogActions>
+          <Button onClick={() => setRescheduleOpen(false)}>{t('common.cancel')}</Button>
+          <Button variant="contained" disabled={actionLoading || !selectedRescheduleSlot} onClick={handleReschedule}>
+            {t('booking.confirmReschedule')}
+          </Button>
+        </DialogActions>
+      </Dialog>
+
+      <Dialog open={noShowOpen} onClose={() => setNoShowOpen(false)}>
+        <DialogTitle>{t('booking.noShowTitle')}</DialogTitle>
+        <DialogContent>
+          <Typography>{t('booking.noShowHint')}</Typography>
+        </DialogContent>
+        <DialogActions>
+          <Button onClick={() => setNoShowOpen(false)}>{t('common.cancel')}</Button>
+          <Button color="warning" disabled={actionLoading} onClick={handleNoShow}>
+            {t('booking.confirmNoShow')}
+          </Button>
         </DialogActions>
       </Dialog>
     </Container>
