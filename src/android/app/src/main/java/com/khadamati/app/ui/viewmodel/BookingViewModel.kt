@@ -34,20 +34,38 @@ class BookingViewModel(private val repository: BookingRepository) : ViewModel() 
     }
 
     fun loadCraftsmen(serviceId: String) = viewModelScope.launch {
-        _uiState.value = _uiState.value.copy(craftsmen = repository.getCraftsmen(serviceId))
+        _uiState.value = _uiState.value.copy(isLoading = true, error = null)
+        try {
+            _uiState.value = _uiState.value.copy(
+                craftsmen = repository.getCraftsmen(serviceId),
+                isLoading = false,
+            )
+        } catch (e: Exception) {
+            _uiState.value = _uiState.value.copy(error = e.message, isLoading = false)
+        }
     }
 
     fun loadSlots(craftsmanId: String, serviceId: String, date: String) = viewModelScope.launch {
-        _uiState.value = _uiState.value.copy(slots = repository.getAvailability(craftsmanId, serviceId, date))
+        _uiState.value = _uiState.value.copy(isLoading = true, error = null)
+        try {
+            _uiState.value = _uiState.value.copy(
+                slots = repository.getAvailability(craftsmanId, serviceId, date),
+                isLoading = false,
+            )
+        } catch (e: Exception) {
+            _uiState.value = _uiState.value.copy(error = e.message, isLoading = false)
+        }
     }
 
     fun createBooking(serviceId: String, craftsmanId: String, scheduledAt: String, onSuccess: (String) -> Unit) =
         viewModelScope.launch {
+            _uiState.value = _uiState.value.copy(isLoading = true, error = null)
             try {
                 val booking = repository.createAndConfirm(serviceId, craftsmanId, scheduledAt)
+                _uiState.value = _uiState.value.copy(isLoading = false)
                 onSuccess(booking.id)
             } catch (e: Exception) {
-                _uiState.value = _uiState.value.copy(error = e.message)
+                _uiState.value = _uiState.value.copy(error = e.message, isLoading = false)
             }
         }
 

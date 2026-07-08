@@ -35,6 +35,7 @@ enum APIEndpoints {
 
     enum Bookings {
         static let list = baseURL.appendingPathComponent("bookings")
+        static let create = baseURL.appendingPathComponent("bookings")
 
         static func craftsmen(serviceId: UUID) -> URL {
             var components = URLComponents(url: baseURL.appendingPathComponent("bookings/craftsmen"), resolvingAgainstBaseURL: false)!

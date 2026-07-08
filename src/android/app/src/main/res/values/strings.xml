@@ -70,4 +70,20 @@
   <string name="common_retry">Retry</string>
   <string name="common_minutes">minutes</string>
   <string name="common_currency">SAR</string>
+  <string name="common_back">Back</string>
+  <string name="common_next">Next</string>
+
+  <!-- Booking -->
+  <string name="booking_title">Book a Service</string>
+  <string name="booking_step_service">Service</string>
+  <string name="booking_step_craftsman">Craftsman</string>
+  <string name="booking_step_datetime">Date &amp; Time</string>
+  <string name="booking_step_confirm">Confirm</string>
+  <string name="booking_select_date">Select date</string>
+  <string name="booking_load_slots">Load available times</string>
+  <string name="booking_summary">Booking Summary</string>
+  <string name="booking_confirm_and_pay">Confirm &amp; Pay</string>
+  <string name="booking_new">New booking</string>
+  <string name="booking_no_craftsmen">No craftsmen available for this service</string>
+  <string name="booking_no_slots">No time slots available for this date</string>
 </resources>

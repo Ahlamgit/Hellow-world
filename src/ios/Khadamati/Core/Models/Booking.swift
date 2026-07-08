@@ -55,3 +55,9 @@ struct CreateBookingRequest: Codable {
     let craftsmanId: UUID
     let scheduledAt: Date
 }
+
+struct CreateBookingBody: Codable {
+    let serviceId: UUID
+    let craftsmanId: UUID
+    let scheduledAt: String
+}

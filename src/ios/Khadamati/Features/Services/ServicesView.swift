@@ -69,8 +69,12 @@ struct ServicesView: View {
             Spacer()
         } else {
             List(viewModel.services) { service in
-                ServiceRow(service: service)
-                    .listRowSeparator(.hidden)
+                NavigationLink {
+                    BookingWizardView(preselectedServiceId: service.id)
+                } label: {
+                    ServiceRow(service: service)
+                }
+                .listRowSeparator(.hidden)
                     .listRowBackground(Color.clear)
                     .listRowInsets(EdgeInsets(
                         top: AppTheme.Spacing.xs,

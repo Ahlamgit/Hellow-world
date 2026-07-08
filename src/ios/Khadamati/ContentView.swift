@@ -34,7 +34,7 @@ private struct MainTabView: View {
 
             MyBookingsView()
                 .tabItem {
-                    Label("Bookings", systemImage: "calendar")
+                    Label(L10n.Nav.bookings, systemImage: "calendar")
                 }
 
             ProfileView()

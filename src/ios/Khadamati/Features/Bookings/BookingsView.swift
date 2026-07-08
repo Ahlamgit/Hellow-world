@@ -22,7 +22,17 @@ struct MyBookingsView: View {
                     }
                 }
             }
-            .navigationTitle("My Bookings")
+            .navigationTitle(L10n.Booking.myBookings)
+            .toolbar {
+                ToolbarItem(placement: .topBarTrailing) {
+                    NavigationLink {
+                        BookingWizardView()
+                    } label: {
+                        Image(systemName: "plus")
+                    }
+                    .accessibilityLabel(L10n.Booking.newBooking)
+                }
+            }
             .navigationDestination(for: Booking.self) { booking in
                 BookingDetailView(booking: booking, viewModel: viewModel)
             }

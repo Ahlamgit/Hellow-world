@@ -30,6 +30,9 @@ final class BookingViewModel: ObservableObject {
     }
 
     func loadCraftsmen(serviceId: UUID) async {
+        isLoading = true
+        errorMessage = nil
+        defer { isLoading = false }
         do {
             let response: ApiResponse<[CraftsmanOption]> = try await apiClient.request(
                 url: APIEndpoints.Bookings.craftsmen(serviceId: serviceId),
@@ -43,6 +46,9 @@ final class BookingViewModel: ObservableObject {
     }
 
     func loadSlots(craftsmanId: UUID, serviceId: UUID, date: Date) async {
+        isLoading = true
+        errorMessage = nil
+        defer { isLoading = false }
         let formatter = ISO8601DateFormatter()
         formatter.formatOptions = [.withFullDate]
         do {
@@ -54,6 +60,39 @@ final class BookingViewModel: ObservableObject {
             slots = response.data.filter { $0.isAvailable }
         } catch {
             errorMessage = error.localizedDescription
+        }
+    }
+
+    func createBooking(serviceId: UUID, craftsmanId: UUID, scheduledAt: Date) async -> Booking? {
+        isLoading = true
+        errorMessage = nil
+        defer { isLoading = false }
+
+        let formatter = ISO8601DateFormatter()
+        formatter.formatOptions = [.withInternetDateTime]
+
+        let body = CreateBookingBody(
+            serviceId: serviceId,
+            craftsmanId: craftsmanId,
+            scheduledAt: formatter.string(from: scheduledAt)
+        )
+
+        do {
+            let created: ApiResponse<Booking> = try await apiClient.request(
+                url: APIEndpoints.Bookings.create,
+                method: .post,
+                body: body,
+                requiresAuth: true
+            )
+            let confirmed: ApiResponse<Booking> = try await apiClient.request(
+                url: APIEndpoints.Bookings.confirm(created.data.id),
+                method: .post,
+                requiresAuth: true
+            )
+            return confirmed.data
+        } catch {
+            errorMessage = error.localizedDescription
+            return nil
         }
     }
 

@@ -1,5 +1,6 @@
 package com.khadamati.app.ui.screens
 
+import androidx.compose.foundation.clickable
 import androidx.compose.foundation.horizontalScroll
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
@@ -41,7 +42,10 @@ import java.util.Locale
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
-fun ServicesScreen(viewModel: ServicesViewModel) {
+fun ServicesScreen(
+    viewModel: ServicesViewModel,
+    onServiceClick: (String) -> Unit = {},
+) {
     val uiState by viewModel.uiState.collectAsStateWithLifecycle()
     val isArabic = LocalConfiguration.current.locales[0].language == "ar"
 
@@ -114,7 +118,11 @@ fun ServicesScreen(viewModel: ServicesViewModel) {
                         verticalArrangement = Arrangement.spacedBy(12.dp),
                     ) {
                         items(uiState.services, key = { it.id }) { service ->
-                            ServiceCard(service = service, isArabic = isArabic)
+                            ServiceCard(
+                                service = service,
+                                isArabic = isArabic,
+                                onClick = { onServiceClick(service.id) },
+                            )
                         }
                     }
                 }
@@ -124,9 +132,11 @@ fun ServicesScreen(viewModel: ServicesViewModel) {
 }
 
 @Composable
-private fun ServiceCard(service: Service, isArabic: Boolean) {
+private fun ServiceCard(service: Service, isArabic: Boolean, onClick: () -> Unit) {
     Card(
-        modifier = Modifier.fillMaxWidth(),
+        modifier = Modifier
+            .fillMaxWidth()
+            .clickable(onClick = onClick),
         colors = CardDefaults.cardColors(containerColor = MaterialTheme.colorScheme.surface),
         elevation = CardDefaults.cardElevation(defaultElevation = 2.dp),
     ) {

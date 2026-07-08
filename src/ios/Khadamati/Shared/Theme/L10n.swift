@@ -9,6 +9,7 @@ enum L10n {
     enum Nav {
         static let home = NSLocalizedString("nav.home", comment: "Home tab")
         static let services = NSLocalizedString("nav.services", comment: "Services tab")
+        static let bookings = NSLocalizedString("nav.bookings", comment: "Bookings tab")
         static let login = NSLocalizedString("nav.login", comment: "Login")
         static let register = NSLocalizedString("nav.register", comment: "Register")
         static let profile = NSLocalizedString("nav.profile", comment: "Profile tab")
@@ -59,11 +60,29 @@ enum L10n {
         static let arabic = NSLocalizedString("profile.arabic", comment: "Arabic language")
     }
 
+    enum Booking {
+        static let title = NSLocalizedString("booking.title", comment: "Booking wizard title")
+        static let myBookings = NSLocalizedString("booking.myBookings", comment: "My bookings title")
+        static let newBooking = NSLocalizedString("booking.new", comment: "New booking")
+        static let stepService = NSLocalizedString("booking.stepService", comment: "Service step")
+        static let stepCraftsman = NSLocalizedString("booking.stepCraftsman", comment: "Craftsman step")
+        static let stepDateTime = NSLocalizedString("booking.stepDateTime", comment: "Date time step")
+        static let stepConfirm = NSLocalizedString("booking.stepConfirm", comment: "Confirm step")
+        static let selectDate = NSLocalizedString("booking.selectDate", comment: "Select date")
+        static let loadSlots = NSLocalizedString("booking.loadSlots", comment: "Load slots")
+        static let summary = NSLocalizedString("booking.summary", comment: "Booking summary")
+        static let confirmAndPay = NSLocalizedString("booking.confirmAndPay", comment: "Confirm and pay")
+        static let noCraftsmen = NSLocalizedString("booking.noCraftsmen", comment: "No craftsmen")
+        static let noSlots = NSLocalizedString("booking.noSlots", comment: "No slots")
+    }
+
     enum Common {
         static let loading = NSLocalizedString("common.loading", comment: "Loading indicator")
         static let error = NSLocalizedString("common.error", comment: "Generic error")
         static let save = NSLocalizedString("common.save", comment: "Save button")
         static let cancel = NSLocalizedString("common.cancel", comment: "Cancel button")
+        static let back = NSLocalizedString("common.back", comment: "Back button")
+        static let next = NSLocalizedString("common.next", comment: "Next button")
         static let minutes = NSLocalizedString("common.minutes", comment: "Minutes unit")
         static let retry = NSLocalizedString("common.retry", comment: "Retry button")
     }

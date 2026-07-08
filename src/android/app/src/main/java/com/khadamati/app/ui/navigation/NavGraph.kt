@@ -29,6 +29,7 @@ import com.khadamati.app.di.AppContainer
 import com.khadamati.app.ui.screens.HomeScreen
 import com.khadamati.app.ui.screens.LoginScreen
 import com.khadamati.app.ui.screens.BookingDetailScreen
+import com.khadamati.app.ui.screens.BookingWizardScreen
 import com.khadamati.app.ui.screens.MyBookingsScreen
 import com.khadamati.app.ui.screens.ProfileScreen
 import com.khadamati.app.ui.screens.RegisterScreen
@@ -130,13 +131,51 @@ fun KhadamatiNavGraph(container: AppContainer) {
             }
 
             composable(Routes.SERVICES) {
-                ServicesScreen(viewModel = servicesViewModel)
+                ServicesScreen(
+                    viewModel = servicesViewModel,
+                    onServiceClick = { serviceId ->
+                        navController.navigate("booking-wizard/$serviceId")
+                    },
+                )
+            }
+
+            composable(Routes.BOOKING_WIZARD) {
+                BookingWizardScreen(
+                    servicesViewModel = servicesViewModel,
+                    bookingViewModel = bookingViewModel,
+                    preselectedServiceId = null,
+                    onNavigateBack = { navController.popBackStack() },
+                    onBookingCreated = { bookingId ->
+                        navController.navigate("booking/$bookingId") {
+                            popUpTo(Routes.BOOKINGS)
+                        }
+                    },
+                )
+            }
+
+            composable(
+                route = Routes.BOOKING_WIZARD_WITH_SERVICE,
+                arguments = listOf(navArgument("serviceId") { type = NavType.StringType }),
+            ) { backStack ->
+                val serviceId = backStack.arguments?.getString("serviceId") ?: return@composable
+                BookingWizardScreen(
+                    servicesViewModel = servicesViewModel,
+                    bookingViewModel = bookingViewModel,
+                    preselectedServiceId = serviceId,
+                    onNavigateBack = { navController.popBackStack() },
+                    onBookingCreated = { bookingId ->
+                        navController.navigate("booking/$bookingId") {
+                            popUpTo(Routes.SERVICES)
+                        }
+                    },
+                )
             }
 
             composable(Routes.BOOKINGS) {
                 MyBookingsScreen(
                     viewModel = bookingViewModel,
                     onBookingClick = { id -> navController.navigate("booking/$id") },
+                    onNewBooking = { navController.navigate(Routes.BOOKING_WIZARD) },
                 )
             }
 

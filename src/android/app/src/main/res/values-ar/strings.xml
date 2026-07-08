@@ -70,4 +70,20 @@
   <string name="common_retry">إعادة المحاولة</string>
   <string name="common_minutes">دقيقة</string>
   <string name="common_currency">ر.س</string>
+  <string name="common_back">رجوع</string>
+  <string name="common_next">التالي</string>
+
+  <!-- Booking -->
+  <string name="booking_title">حجز خدمة</string>
+  <string name="booking_step_service">الخدمة</string>
+  <string name="booking_step_craftsman">الحرفي</string>
+  <string name="booking_step_datetime">التاريخ والوقت</string>
+  <string name="booking_step_confirm">تأكيد</string>
+  <string name="booking_select_date">اختر التاريخ</string>
+  <string name="booking_load_slots">عرض الأوقات المتاحة</string>
+  <string name="booking_summary">ملخص الحجز</string>
+  <string name="booking_confirm_and_pay">تأكيد والدفع</string>
+  <string name="booking_new">حجز جديد</string>
+  <string name="booking_no_craftsmen">لا يوجد حرفيون متاحون لهذه الخدمة</string>
+  <string name="booking_no_slots">لا توجد أوقات متاحة لهذا التاريخ</string>
 </resources>

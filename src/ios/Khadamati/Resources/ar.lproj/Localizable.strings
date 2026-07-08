@@ -52,3 +52,21 @@
 "common.cancel" = "إلغاء";
 "common.minutes" = "دقيقة";
 "common.retry" = "إعادة المحاولة";
+"common.back" = "رجوع";
+"common.next" = "التالي";
+
+"nav.bookings" = "الحجوزات";
+
+"booking.title" = "حجز خدمة";
+"booking.myBookings" = "حجوزاتي";
+"booking.new" = "حجز جديد";
+"booking.stepService" = "الخدمة";
+"booking.stepCraftsman" = "الحرفي";
+"booking.stepDateTime" = "التاريخ والوقت";
+"booking.stepConfirm" = "تأكيد";
+"booking.selectDate" = "اختر التاريخ";
+"booking.loadSlots" = "عرض الأوقات المتاحة";
+"booking.summary" = "ملخص الحجز";
+"booking.confirmAndPay" = "تأكيد والدفع";
+"booking.noCraftsmen" = "لا يوجد حرفيون متاحون لهذه الخدمة";
+"booking.noSlots" = "لا توجد أوقات متاحة لهذا التاريخ";

@@ -52,3 +52,21 @@
 "common.cancel" = "Cancel";
 "common.minutes" = "minutes";
 "common.retry" = "Retry";
+"common.back" = "Back";
+"common.next" = "Next";
+
+"nav.bookings" = "Bookings";
+
+"booking.title" = "Book a Service";
+"booking.myBookings" = "My Bookings";
+"booking.new" = "New booking";
+"booking.stepService" = "Service";
+"booking.stepCraftsman" = "Craftsman";
+"booking.stepDateTime" = "Date & Time";
+"booking.stepConfirm" = "Confirm";
+"booking.selectDate" = "Select date";
+"booking.loadSlots" = "Load available times";
+"booking.summary" = "Booking Summary";
+"booking.confirmAndPay" = "Confirm & Pay";
+"booking.noCraftsmen" = "No craftsmen available for this service";
+"booking.noSlots" = "No time slots available for this date";

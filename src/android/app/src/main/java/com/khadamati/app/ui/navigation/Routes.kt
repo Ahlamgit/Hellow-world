@@ -9,4 +9,6 @@ object Routes {
     const val PROFILE = "profile"
     const val BOOKINGS = "bookings"
     const val BOOKING_DETAIL = "booking/{bookingId}"
+    const val BOOKING_WIZARD = "booking-wizard"
+    const val BOOKING_WIZARD_WITH_SERVICE = "booking-wizard/{serviceId}"
 }
