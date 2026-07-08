@@ -53,7 +53,8 @@ const NAV_SECTIONS: { title: string; titleAr: string; items: NavItem[] }[] = [
       { path: '/admin/categories', label: 'Categories', labelAr: 'الفئات', icon: <Category /> },
       { path: '/admin/services', label: 'Services', labelAr: 'الخدمات', icon: <Handyman /> },
       { path: '/admin/bookings', label: 'Bookings', labelAr: 'الحجوزات', icon: <EventNote /> },
-      { path: '/admin/subscriptions', label: 'Subscriptions', labelAr: 'الاشتراكات', icon: <CardMembership /> },
+      { path: '/admin/subscriptions', label: 'Plans', labelAr: 'الباقات', icon: <CardMembership /> },
+      { path: '/admin/user-subscriptions', label: 'User Subscriptions', labelAr: 'اشتراكات المستخدمين', icon: <CardMembership /> },
     ],
   },
   {

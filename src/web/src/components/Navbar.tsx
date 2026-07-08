@@ -40,6 +40,9 @@ export default function Navbar() {
           {isAuthenticated && (
             <Button component={Link} to="/bookings" color="inherit">{t('booking.myBookings')}</Button>
           )}
+          {isAuthenticated && (user?.role === 'Craftsman' || user?.role === 'Store' || user?.primaryRole === 'StoreOwner') && (
+            <Button component={Link} to="/subscriptions" color="inherit">{t('subscription.nav')}</Button>
+          )}
           {isAuthenticated && hasAdminAccess(user) && (
             <Button component={Link} to="/admin" color="inherit">Admin</Button>
           )}
