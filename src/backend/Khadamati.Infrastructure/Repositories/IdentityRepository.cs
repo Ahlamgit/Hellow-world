@@ -93,6 +93,55 @@ public class IdentityRepository : IIdentityRepository
         }
     }
 
+    public async Task SetUserRolesAsync(Guid userId, IReadOnlyList<string> roleNames, string primaryRoleName, string? assignedBy, CancellationToken cancellationToken = default)
+    {
+        var normalized = roleNames.Select(r => r.Trim()).Distinct(StringComparer.OrdinalIgnoreCase).ToList();
+        var roles = await _context.Roles.Where(r => normalized.Contains(r.Name)).ToListAsync(cancellationToken);
+        if (roles.Count != normalized.Count)
+            throw new InvalidOperationException("One or more roles were not found.");
+
+        var primary = roles.FirstOrDefault(r => r.Name.Equals(primaryRoleName, StringComparison.OrdinalIgnoreCase))
+            ?? throw new InvalidOperationException("Primary role not found.");
+
+        var existing = await _context.Set<UserRoleAssignment>()
+            .Where(ur => ur.UserId == userId)
+            .ToListAsync(cancellationToken);
+
+        foreach (var assignment in existing)
+        {
+            if (!roles.Any(r => r.Id == assignment.RoleId))
+                _context.Set<UserRoleAssignment>().Remove(assignment);
+        }
+
+        foreach (var role in roles)
+        {
+            var assignment = existing.FirstOrDefault(a => a.RoleId == role.Id);
+            var isPrimary = role.Id == primary.Id;
+            if (assignment == null)
+            {
+                await _context.Set<UserRoleAssignment>().AddAsync(new UserRoleAssignment
+                {
+                    UserId = userId,
+                    RoleId = role.Id,
+                    IsPrimary = isPrimary,
+                    AssignedBy = assignedBy,
+                }, cancellationToken);
+            }
+            else
+            {
+                assignment.IsPrimary = isPrimary;
+                assignment.AssignedBy = assignedBy;
+            }
+        }
+
+        var user = await _context.Users.FindAsync([userId], cancellationToken);
+        if (user != null)
+        {
+            user.PrimaryRoleId = primary.Id;
+            user.Role = Khadamati.Domain.Constants.RoleNames.MapToLegacyEnum(primary.Name);
+        }
+    }
+
     public async Task AddLoginHistoryAsync(LoginHistory entry, CancellationToken cancellationToken = default)
     {
         await _context.Set<LoginHistory>().AddAsync(entry, cancellationToken);

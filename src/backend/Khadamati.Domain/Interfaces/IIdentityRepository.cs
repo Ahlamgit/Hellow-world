@@ -11,6 +11,7 @@ public interface IIdentityRepository
     Task<IReadOnlyList<string>> GetUserPermissionCodesAsync(Guid userId, CancellationToken cancellationToken = default);
     Task<IReadOnlyList<string>> GetUserRoleNamesAsync(Guid userId, CancellationToken cancellationToken = default);
     Task AssignRoleAsync(Guid userId, Guid roleId, bool isPrimary, string? assignedBy, CancellationToken cancellationToken = default);
+    Task SetUserRolesAsync(Guid userId, IReadOnlyList<string> roleNames, string primaryRoleName, string? assignedBy, CancellationToken cancellationToken = default);
     Task AddLoginHistoryAsync(LoginHistory entry, CancellationToken cancellationToken = default);
     Task AddSecurityLogAsync(SecurityLog entry, CancellationToken cancellationToken = default);
     Task AddPasswordHistoryAsync(PasswordHistory entry, CancellationToken cancellationToken = default);

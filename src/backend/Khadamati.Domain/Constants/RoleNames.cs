@@ -28,4 +28,13 @@ public static class RoleNames
         "Store" => StoreOwner,
         _ => legacyRole
     };
+
+    /// <summary>Maps identity role name to legacy UserRole enum for JWT/backward compatibility.</summary>
+    public static Domain.Enums.UserRole MapToLegacyEnum(string roleName) => roleName switch
+    {
+        Craftsman => Domain.Enums.UserRole.Craftsman,
+        StoreOwner or StoreEmployee => Domain.Enums.UserRole.Store,
+        Admin or SuperAdmin or SupportAgent or Moderator => Domain.Enums.UserRole.Administrator,
+        _ => Domain.Enums.UserRole.Customer,
+    };
 }
