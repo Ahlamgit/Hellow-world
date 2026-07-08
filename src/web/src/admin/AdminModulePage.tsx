@@ -3,6 +3,7 @@ import { Alert, Box } from '@mui/material';
 import AdminDataTable from './AdminDataTable';
 import AdminUsersPage from './AdminUsersPage';
 import AdminUserSubscriptionsPage from './AdminUserSubscriptionsPage';
+import AdminPageGuard from './AdminPageGuard';
 import { getModuleConfig } from './moduleConfig';
 import AdminBackupPage from './AdminSpecialPages';
 
@@ -11,11 +12,19 @@ export default function AdminModulePage() {
   const config = moduleKey ? getModuleConfig(moduleKey) : undefined;
 
   if (moduleKey === 'users') {
-    return <AdminUsersPage />;
+    return (
+      <AdminPageGuard module="users">
+        <AdminUsersPage />
+      </AdminPageGuard>
+    );
   }
 
   if (moduleKey === 'user-subscriptions') {
-    return <AdminUserSubscriptionsPage />;
+    return (
+      <AdminPageGuard module="user-subscriptions">
+        <AdminUserSubscriptionsPage />
+      </AdminPageGuard>
+    );
   }
 
   if (!config) {
@@ -23,12 +32,18 @@ export default function AdminModulePage() {
   }
 
   if (moduleKey === 'backup') {
-    return <AdminBackupPage />;
+    return (
+      <AdminPageGuard module="backup">
+        <AdminBackupPage />
+      </AdminPageGuard>
+    );
   }
 
   return (
-    <Box>
-      <AdminDataTable config={config} />
-    </Box>
+    <AdminPageGuard module={moduleKey!}>
+      <Box>
+        <AdminDataTable config={config} />
+      </Box>
+    </AdminPageGuard>
   );
 }

@@ -1,7 +1,9 @@
+using Khadamati.Application.Authorization;
 using Khadamati.Application.Common;
 using Khadamati.Application.DTOs.Bookings;
 using Khadamati.Application.Features.Bookings.Commands;
 using Khadamati.Application.Interfaces;
+using Khadamati.Domain.Constants;
 using MediatR;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
@@ -181,7 +183,7 @@ public class BookingsController : ControllerBase
 /// <summary>Administrator booking monitoring.</summary>
 [ApiController]
 [Route("api/v1/admin/bookings")]
-[Authorize(Policy = "AdminOnly")]
+[Authorize]
 [Produces("application/json")]
 public class AdminBookingsController : ControllerBase
 {
@@ -190,6 +192,7 @@ public class AdminBookingsController : ControllerBase
     public AdminBookingsController(IMediator mediator) => _mediator = mediator;
 
     [HttpGet]
+    [HasPermission(PermissionCodes.BookingsView)]
     [SwaggerOperation(Summary = "Monitor all bookings")]
     public async Task<IActionResult> List([FromQuery] BookingListQueryDto query, CancellationToken cancellationToken)
     {
@@ -198,6 +201,7 @@ public class AdminBookingsController : ControllerBase
     }
 
     [HttpGet("stats")]
+    [HasPermission(PermissionCodes.BookingsView)]
     [SwaggerOperation(Summary = "Booking statistics dashboard")]
     public async Task<IActionResult> Stats(CancellationToken cancellationToken)
     {
