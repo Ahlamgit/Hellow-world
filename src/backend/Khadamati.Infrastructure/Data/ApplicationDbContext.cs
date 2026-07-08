@@ -25,6 +25,13 @@ public class ApplicationDbContext : DbContext
         base.OnModelCreating(modelBuilder);
         modelBuilder.ApplyConfigurationsFromAssembly(typeof(ApplicationDbContext).Assembly);
 
+        foreach (var entityType in modelBuilder.Model.GetEntityTypes()
+            .Where(e => typeof(Domain.Common.BaseEntity).IsAssignableFrom(e.ClrType)))
+        {
+            var builder = modelBuilder.Entity(entityType.ClrType);
+            AuditColumnConfiguration.ConfigureAuditColumns(builder);
+        }
+
         modelBuilder.Entity<User>().HasQueryFilter(e => !e.IsDeleted);
         modelBuilder.Entity<UserProfile>().HasQueryFilter(e => !e.IsDeleted);
         modelBuilder.Entity<Address>().HasQueryFilter(e => !e.IsDeleted);
