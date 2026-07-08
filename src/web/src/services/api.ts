@@ -273,6 +273,7 @@ export const bookingsApi = {
   complete: (id: string) => api.post<ApiResponse<Booking>>(`/bookings/${id}/complete`),
   reschedule: (id: string, newScheduledAt: string, reason?: string) =>
     api.post<ApiResponse<Booking>>(`/bookings/${id}/reschedule`, { newScheduledAt, reason }),
+  noShow: (id: string) => api.post<ApiResponse<Booking>>(`/bookings/${id}/no-show`),
 };
 
 export const notificationsApi = {
