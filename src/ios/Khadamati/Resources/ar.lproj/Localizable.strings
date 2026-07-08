@@ -1,0 +1,54 @@
+/* Arabic localization for KHADAMATI */
+
+"app.name" = "خدماتي";
+"app.tagline" = "سوق خدمات الصيانة والمنزل";
+
+"nav.home" = "الرئيسية";
+"nav.services" = "الخدمات";
+"nav.login" = "تسجيل الدخول";
+"nav.register" = "إنشاء حساب";
+"nav.profile" = "الملف الشخصي";
+"nav.logout" = "تسجيل الخروج";
+
+"home.hero" = "خدمات منزلية احترافية عند بابك";
+"home.subtitle" = "تواصل مع حرفيين ومتاجر موثوقة لجميع احتياجات الصيانة";
+"home.browseServices" = "تصفح الخدمات";
+"home.getStarted" = "ابدأ الآن";
+"home.categories" = "فئات الخدمات";
+"home.howItWorks" = "كيف يعمل";
+"home.step1" = "اختر الخدمة";
+"home.step2" = "احجز حرفي";
+"home.step3" = "أنجز المهمة";
+
+"auth.email" = "البريد الإلكتروني";
+"auth.password" = "كلمة المرور";
+"auth.phone" = "رقم الهاتف";
+"auth.firstName" = "الاسم الأول";
+"auth.lastName" = "اسم العائلة";
+"auth.role" = "نوع الحساب";
+"auth.customer" = "عميل";
+"auth.craftsman" = "حرفي";
+"auth.store" = "متجر";
+"auth.loginTitle" = "تسجيل الدخول";
+"auth.registerTitle" = "إنشاء حساب";
+"auth.noAccount" = "ليس لديك حساب؟";
+"auth.hasAccount" = "لديك حساب بالفعل؟";
+
+"services.title" = "خدماتنا";
+"services.request" = "طلب الخدمة";
+"services.price" = "يبدأ من";
+"services.duration" = "المدة";
+"services.allCategories" = "جميع الفئات";
+
+"profile.title" = "الملف الشخصي";
+"profile.accountInfo" = "معلومات الحساب";
+"profile.language" = "اللغة";
+"profile.english" = "الإنجليزية";
+"profile.arabic" = "العربية";
+
+"common.loading" = "جاري التحميل...";
+"common.error" = "حدث خطأ";
+"common.save" = "حفظ";
+"common.cancel" = "إلغاء";
+"common.minutes" = "دقيقة";
+"common.retry" = "إعادة المحاولة";

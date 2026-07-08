@@ -1,0 +1,72 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+  <string name="app_name">KHADAMATI</string>
+  <string name="app_tagline">Maintenance &amp; Home Services Marketplace</string>
+
+  <!-- Navigation -->
+  <string name="nav_home">Home</string>
+  <string name="nav_services">Services</string>
+  <string name="nav_profile">Profile</string>
+  <string name="nav_login">Login</string>
+  <string name="nav_register">Register</string>
+  <string name="nav_logout">Logout</string>
+
+  <!-- Home -->
+  <string name="home_hero">Professional Home Services at Your Doorstep</string>
+  <string name="home_subtitle">Connect with verified craftsmen and stores for all your maintenance needs</string>
+  <string name="home_browse_services">Browse Services</string>
+  <string name="home_get_started">Get Started</string>
+  <string name="home_categories">Service Categories</string>
+  <string name="home_how_it_works">How It Works</string>
+  <string name="home_step1">Choose a Service</string>
+  <string name="home_step2">Book a Craftsman</string>
+  <string name="home_step3">Get It Done</string>
+
+  <!-- Auth -->
+  <string name="auth_email">Email</string>
+  <string name="auth_password">Password</string>
+  <string name="auth_phone">Phone</string>
+  <string name="auth_first_name">First Name</string>
+  <string name="auth_last_name">Last Name</string>
+  <string name="auth_role">Account Type</string>
+  <string name="auth_role_customer">Customer</string>
+  <string name="auth_role_craftsman">Craftsman</string>
+  <string name="auth_role_store">Store</string>
+  <string name="auth_login_title">Sign In</string>
+  <string name="auth_register_title">Create Account</string>
+  <string name="auth_no_account">Don\'t have an account?</string>
+  <string name="auth_has_account">Already have an account?</string>
+  <string name="auth_sign_in">Sign In</string>
+  <string name="auth_sign_up">Sign Up</string>
+  <string name="auth_preferred_language">Preferred Language</string>
+  <string name="auth_language_en">English</string>
+  <string name="auth_language_ar">Arabic</string>
+
+  <!-- Services -->
+  <string name="services_title">Our Services</string>
+  <string name="services_request">Request Service</string>
+  <string name="services_price_from">Starting from</string>
+  <string name="services_duration">Duration</string>
+  <string name="services_all_categories">All Categories</string>
+  <string name="services_empty">No services available</string>
+
+  <!-- Profile -->
+  <string name="profile_title">My Profile</string>
+  <string name="profile_email">Email</string>
+  <string name="profile_phone">Phone</string>
+  <string name="profile_role">Role</string>
+  <string name="profile_language">Language</string>
+  <string name="profile_not_logged_in">Please sign in to view your profile</string>
+
+  <!-- Splash -->
+  <string name="splash_loading">Loading…</string>
+
+  <!-- Common -->
+  <string name="common_loading">Loading…</string>
+  <string name="common_error">An error occurred</string>
+  <string name="common_save">Save</string>
+  <string name="common_cancel">Cancel</string>
+  <string name="common_retry">Retry</string>
+  <string name="common_minutes">minutes</string>
+  <string name="common_currency">SAR</string>
+</resources>

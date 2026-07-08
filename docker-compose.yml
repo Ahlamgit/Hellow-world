@@ -1,0 +1,47 @@
+services:
+  sqlserver:
+    image: mcr.microsoft.com/mssql/server:2022-latest
+    container_name: khadamati-sqlserver
+    environment:
+      ACCEPT_EULA: "Y"
+      MSSQL_SA_PASSWORD: "Khadamati@2024!"
+    ports:
+      - "1433:1433"
+    volumes:
+      - sqlserver_data:/var/opt/mssql
+    healthcheck:
+      test: /opt/mssql-tools18/bin/sqlcmd -S localhost -U sa -P "Khadamati@2024!" -C -Q "SELECT 1" || exit 1
+      interval: 10s
+      timeout: 5s
+      retries: 10
+      start_period: 30s
+
+  api:
+    build:
+      context: ./src/backend
+      dockerfile: Dockerfile
+    container_name: khadamati-api
+    environment:
+      ASPNETCORE_ENVIRONMENT: Development
+      ConnectionStrings__DefaultConnection: "Server=sqlserver,1433;Database=KhadamatiDb;User Id=sa;Password=Khadamati@2024!;TrustServerCertificate=True;MultipleActiveResultSets=true"
+      Jwt__Secret: "Khadamati-Super-Secret-Key-Minimum-32-Characters-Long-2024!"
+      Jwt__Issuer: "https://api.khadamati.com"
+      Jwt__Audience: "https://khadamati.com"
+    ports:
+      - "5000:8080"
+    depends_on:
+      sqlserver:
+        condition: service_healthy
+
+  web:
+    build:
+      context: ./src/web
+      dockerfile: Dockerfile
+    container_name: khadamati-web
+    ports:
+      - "3000:80"
+    depends_on:
+      - api
+
+volumes:
+  sqlserver_data:

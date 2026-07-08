@@ -1,0 +1,54 @@
+/* English localization for KHADAMATI */
+
+"app.name" = "KHADAMATI";
+"app.tagline" = "Maintenance & Home Services Marketplace";
+
+"nav.home" = "Home";
+"nav.services" = "Services";
+"nav.login" = "Login";
+"nav.register" = "Register";
+"nav.profile" = "Profile";
+"nav.logout" = "Logout";
+
+"home.hero" = "Professional Home Services at Your Doorstep";
+"home.subtitle" = "Connect with verified craftsmen and stores for all your maintenance needs";
+"home.browseServices" = "Browse Services";
+"home.getStarted" = "Get Started";
+"home.categories" = "Service Categories";
+"home.howItWorks" = "How It Works";
+"home.step1" = "Choose a Service";
+"home.step2" = "Book a Craftsman";
+"home.step3" = "Get It Done";
+
+"auth.email" = "Email";
+"auth.password" = "Password";
+"auth.phone" = "Phone";
+"auth.firstName" = "First Name";
+"auth.lastName" = "Last Name";
+"auth.role" = "Account Type";
+"auth.customer" = "Customer";
+"auth.craftsman" = "Craftsman";
+"auth.store" = "Store";
+"auth.loginTitle" = "Sign In";
+"auth.registerTitle" = "Create Account";
+"auth.noAccount" = "Don't have an account?";
+"auth.hasAccount" = "Already have an account?";
+
+"services.title" = "Our Services";
+"services.request" = "Request Service";
+"services.price" = "Starting from";
+"services.duration" = "Duration";
+"services.allCategories" = "All Categories";
+
+"profile.title" = "Profile";
+"profile.accountInfo" = "Account Information";
+"profile.language" = "Language";
+"profile.english" = "English";
+"profile.arabic" = "Arabic";
+
+"common.loading" = "Loading...";
+"common.error" = "An error occurred";
+"common.save" = "Save";
+"common.cancel" = "Cancel";
+"common.minutes" = "minutes";
+"common.retry" = "Retry";

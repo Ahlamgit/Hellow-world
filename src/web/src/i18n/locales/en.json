@@ -1,0 +1,54 @@
+{
+  "app": {
+    "name": "KHADAMATI",
+    "tagline": "Maintenance & Home Services Marketplace"
+  },
+  "nav": {
+    "home": "Home",
+    "services": "Services",
+    "login": "Login",
+    "register": "Register",
+    "dashboard": "Dashboard",
+    "profile": "Profile",
+    "logout": "Logout"
+  },
+  "home": {
+    "hero": "Professional Home Services at Your Doorstep",
+    "subtitle": "Connect with verified craftsmen and stores for all your maintenance needs",
+    "browseServices": "Browse Services",
+    "getStarted": "Get Started",
+    "categories": "Service Categories",
+    "howItWorks": "How It Works",
+    "step1": "Choose a Service",
+    "step2": "Book a Craftsman",
+    "step3": "Get It Done"
+  },
+  "auth": {
+    "email": "Email",
+    "password": "Password",
+    "phone": "Phone",
+    "firstName": "First Name",
+    "lastName": "Last Name",
+    "role": "Account Type",
+    "customer": "Customer",
+    "craftsman": "Craftsman",
+    "store": "Store",
+    "loginTitle": "Sign In",
+    "registerTitle": "Create Account",
+    "noAccount": "Don't have an account?",
+    "hasAccount": "Already have an account?"
+  },
+  "services": {
+    "title": "Our Services",
+    "request": "Request Service",
+    "price": "Starting from",
+    "duration": "Duration"
+  },
+  "common": {
+    "loading": "Loading...",
+    "error": "An error occurred",
+    "save": "Save",
+    "cancel": "Cancel",
+    "minutes": "minutes"
+  }
+}

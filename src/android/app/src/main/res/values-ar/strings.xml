@@ -1,0 +1,72 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+  <string name="app_name">خدماتي</string>
+  <string name="app_tagline">سوق الصيانة والخدمات المنزلية</string>
+
+  <!-- Navigation -->
+  <string name="nav_home">الرئيسية</string>
+  <string name="nav_services">الخدمات</string>
+  <string name="nav_profile">الملف الشخصي</string>
+  <string name="nav_login">تسجيل الدخول</string>
+  <string name="nav_register">إنشاء حساب</string>
+  <string name="nav_logout">تسجيل الخروج</string>
+
+  <!-- Home -->
+  <string name="home_hero">خدمات منزلية احترافية عند بابك</string>
+  <string name="home_subtitle">تواصل مع حرفيين ومتاجر موثوقة لجميع احتياجات الصيانة</string>
+  <string name="home_browse_services">تصفح الخدمات</string>
+  <string name="home_get_started">ابدأ الآن</string>
+  <string name="home_categories">فئات الخدمات</string>
+  <string name="home_how_it_works">كيف يعمل</string>
+  <string name="home_step1">اختر خدمة</string>
+  <string name="home_step2">احجز حرفي</string>
+  <string name="home_step3">أنجز المهمة</string>
+
+  <!-- Auth -->
+  <string name="auth_email">البريد الإلكتروني</string>
+  <string name="auth_password">كلمة المرور</string>
+  <string name="auth_phone">الهاتف</string>
+  <string name="auth_first_name">الاسم الأول</string>
+  <string name="auth_last_name">اسم العائلة</string>
+  <string name="auth_role">نوع الحساب</string>
+  <string name="auth_role_customer">عميل</string>
+  <string name="auth_role_craftsman">حرفي</string>
+  <string name="auth_role_store">متجر</string>
+  <string name="auth_login_title">تسجيل الدخول</string>
+  <string name="auth_register_title">إنشاء حساب</string>
+  <string name="auth_no_account">ليس لديك حساب؟</string>
+  <string name="auth_has_account">لديك حساب بالفعل؟</string>
+  <string name="auth_sign_in">دخول</string>
+  <string name="auth_sign_up">تسجيل</string>
+  <string name="auth_preferred_language">اللغة المفضلة</string>
+  <string name="auth_language_en">الإنجليزية</string>
+  <string name="auth_language_ar">العربية</string>
+
+  <!-- Services -->
+  <string name="services_title">خدماتنا</string>
+  <string name="services_request">طلب خدمة</string>
+  <string name="services_price_from">يبدأ من</string>
+  <string name="services_duration">المدة</string>
+  <string name="services_all_categories">جميع الفئات</string>
+  <string name="services_empty">لا توجد خدمات متاحة</string>
+
+  <!-- Profile -->
+  <string name="profile_title">ملفي الشخصي</string>
+  <string name="profile_email">البريد الإلكتروني</string>
+  <string name="profile_phone">الهاتف</string>
+  <string name="profile_role">الدور</string>
+  <string name="profile_language">اللغة</string>
+  <string name="profile_not_logged_in">يرجى تسجيل الدخول لعرض ملفك الشخصي</string>
+
+  <!-- Splash -->
+  <string name="splash_loading">جاري التحميل…</string>
+
+  <!-- Common -->
+  <string name="common_loading">جاري التحميل…</string>
+  <string name="common_error">حدث خطأ</string>
+  <string name="common_save">حفظ</string>
+  <string name="common_cancel">إلغاء</string>
+  <string name="common_retry">إعادة المحاولة</string>
+  <string name="common_minutes">دقيقة</string>
+  <string name="common_currency">ر.س</string>
+</resources>
