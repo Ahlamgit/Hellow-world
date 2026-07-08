@@ -151,5 +151,46 @@
     "back": "Back",
     "next": "Next",
     "minutes": "minutes"
+  },
+  "subscription": {
+    "nav": "Subscriptions",
+    "plansTitle": "Subscription Plans",
+    "mySubscription": "My Subscription",
+    "subscribeTitle": "Subscribe to Plan",
+    "choosePlan": "Choose Plan",
+    "alreadySubscribed": "Already Subscribed",
+    "noPlans": "No plans available for your account type.",
+    "planNotFound": "Plan not found.",
+    "billingCycle": "Billing cycle",
+    "autoRenew": "Auto-renew",
+    "confirmSubscribe": "Confirm Subscription",
+    "noActive": "You don't have an active subscription.",
+    "browsePlans": "Browse Plans",
+    "startDate": "Start date",
+    "endDate": "End date",
+    "cancel": "Cancel Subscription",
+    "cancelTitle": "Cancel Subscription",
+    "cancelHint": "Your subscription will be cancelled. You may retain access until the end of the billing period.",
+    "cancelReason": "Reason (optional)",
+    "confirmCancel": "Confirm Cancel",
+    "history": "Subscription History",
+    "manage": "Manage",
+    "activePlan": "Active plan: {{plan}} ({{status}})",
+    "featured": "Featured",
+    "maxServices": "Up to {{count}} services",
+    "cycle": {
+      "Monthly": "Monthly",
+      "Quarterly": "Quarterly",
+      "SemiAnnual": "Semi-Annual",
+      "Annual": "Annual",
+      "Lifetime": "Lifetime"
+    },
+    "status": {
+      "None": "None",
+      "Trial": "Trial",
+      "Active": "Active",
+      "Expired": "Expired",
+      "Cancelled": "Cancelled"
+    }
   }
 }

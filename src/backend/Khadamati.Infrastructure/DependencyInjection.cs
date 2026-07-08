@@ -27,6 +27,7 @@ public static class DependencyInjection
         services.AddScoped<IIdentityRepository, IdentityRepository>();
         services.AddScoped<ISessionRepository, SessionRepository>();
         services.AddScoped<ISubscriptionPlanRepository, SubscriptionPlanRepository>();
+        services.AddScoped<IUserSubscriptionRepository, UserSubscriptionRepository>();
         services.AddScoped<IBookingRepository, BookingRepository>();
         services.AddScoped<IUserRepository, UserRepository>();
 
@@ -38,6 +39,7 @@ public static class DependencyInjection
         services.AddScoped<IPasswordPolicyService, PasswordPolicyService>();
         services.AddScoped<IAuditService, AuditService>();
         services.AddScoped<ISubscriptionPlanService, SubscriptionPlanService>();
+        services.AddScoped<IUserSubscriptionService, UserSubscriptionService>();
         services.AddScoped<IBookingService, BookingService>();
         services.AddScoped<IAdminService, AdminService>();
         services.AddScoped<IUserManagementService, UserManagementService>();

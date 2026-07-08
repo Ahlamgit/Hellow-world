@@ -44,6 +44,9 @@ export default function DashboardPage() {
               </Typography>
               <Box sx={{ display: 'flex', gap: 1, flexWrap: 'wrap', mt: 2 }}>
                 <Button component={Link} to="/profile" variant="contained" size="small">{t('identity.editProfile')}</Button>
+                {(user?.role === 'Craftsman' || user?.role === 'Store' || user?.primaryRole === 'StoreOwner') && (
+                  <Button component={Link} to="/subscription" variant="outlined" size="small">{t('subscription.mySubscription')}</Button>
+                )}
                 <Button component={Link} to="/sessions" variant="outlined" size="small">{t('identity.sessionsTitle')}</Button>
                 <Button component={Link} to="/change-password" variant="outlined" size="small">{t('identity.changePassword')}</Button>
               </Box>

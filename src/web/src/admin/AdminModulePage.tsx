@@ -2,6 +2,7 @@ import { useParams } from 'react-router-dom';
 import { Alert, Box } from '@mui/material';
 import AdminDataTable from './AdminDataTable';
 import AdminUsersPage from './AdminUsersPage';
+import AdminUserSubscriptionsPage from './AdminUserSubscriptionsPage';
 import { getModuleConfig } from './moduleConfig';
 import AdminBackupPage from './AdminSpecialPages';
 
@@ -11,6 +12,10 @@ export default function AdminModulePage() {
 
   if (moduleKey === 'users') {
     return <AdminUsersPage />;
+  }
+
+  if (moduleKey === 'user-subscriptions') {
+    return <AdminUserSubscriptionsPage />;
   }
 
   if (!config) {

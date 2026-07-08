@@ -10,6 +10,7 @@ import ServicesPage from './pages/ServicesPage';
 import DashboardPage from './pages/DashboardPage';
 import LoginPage, { RegisterPage } from './pages/AuthPages';
 import { BookingWizardPage, MyBookingsPage, BookingDetailPage, BookingPaymentPage } from './pages/BookingPages';
+import { SubscriptionPlansPage, SubscribePage, MySubscriptionPage } from './pages/SubscriptionPages';
 import {
   ForgotPasswordPage, ResetPasswordPage, VerifyEmailPage, ChangePasswordPage, SessionsPage,
 } from './pages/IdentityPages';
@@ -42,6 +43,9 @@ function AppContent() {
             <Route path="/bookings/new" element={<BookingWizardPage />} />
             <Route path="/bookings/:id" element={<BookingDetailPage />} />
             <Route path="/bookings/:id/payment" element={<BookingPaymentPage />} />
+            <Route path="/subscriptions" element={<SubscriptionPlansPage />} />
+            <Route path="/subscriptions/:planId" element={<SubscribePage />} />
+            <Route path="/subscription" element={<MySubscriptionPage />} />
           </Route>
           <Route element={<AdminRoute />}>
             <Route path="/admin/*" element={<AdminRoutes />} />

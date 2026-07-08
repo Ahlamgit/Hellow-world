@@ -151,5 +151,46 @@
     "back": "رجوع",
     "next": "التالي",
     "minutes": "دقيقة"
+  },
+  "subscription": {
+    "nav": "الاشتراكات",
+    "plansTitle": "باقات الاشتراك",
+    "mySubscription": "اشتراكي",
+    "subscribeTitle": "الاشتراك في الباقة",
+    "choosePlan": "اختر الباقة",
+    "alreadySubscribed": "مشترك بالفعل",
+    "noPlans": "لا توجد باقات متاحة لنوع حسابك.",
+    "planNotFound": "الباقة غير موجودة.",
+    "billingCycle": "دورة الفوترة",
+    "autoRenew": "تجديد تلقائي",
+    "confirmSubscribe": "تأكيد الاشتراك",
+    "noActive": "ليس لديك اشتراك نشط.",
+    "browsePlans": "تصفح الباقات",
+    "startDate": "تاريخ البدء",
+    "endDate": "تاريخ الانتهاء",
+    "cancel": "إلغاء الاشتراك",
+    "cancelTitle": "إلغاء الاشتراك",
+    "cancelHint": "سيتم إلغاء اشتراكك. قد تحتفظ بالوصول حتى نهاية فترة الفوترة.",
+    "cancelReason": "السبب (اختياري)",
+    "confirmCancel": "تأكيد الإلغاء",
+    "history": "سجل الاشتراكات",
+    "manage": "إدارة",
+    "activePlan": "الباقة النشطة: {{plan}} ({{status}})",
+    "featured": "مميز",
+    "maxServices": "حتى {{count}} خدمة",
+    "cycle": {
+      "Monthly": "شهري",
+      "Quarterly": "ربع سنوي",
+      "SemiAnnual": "نصف سنوي",
+      "Annual": "سنوي",
+      "Lifetime": "مدى الحياة"
+    },
+    "status": {
+      "None": "لا يوجد",
+      "Trial": "تجريبي",
+      "Active": "نشط",
+      "Expired": "منتهي",
+      "Cancelled": "ملغى"
+    }
   }
 }
