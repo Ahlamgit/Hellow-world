@@ -15,6 +15,7 @@ import {
   ForgotPasswordPage, ResetPasswordPage, VerifyEmailPage, ChangePasswordPage, SessionsPage,
 } from './pages/IdentityPages';
 import ProfilePage from './pages/ProfilePage';
+import NotificationsPage from './pages/NotificationsPage';
 
 function AppContent() {
   const location = useLocation();
@@ -46,6 +47,7 @@ function AppContent() {
             <Route path="/subscriptions" element={<SubscriptionPlansPage />} />
             <Route path="/subscriptions/:planId" element={<SubscribePage />} />
             <Route path="/subscription" element={<MySubscriptionPage />} />
+            <Route path="/notifications" element={<NotificationsPage />} />
           </Route>
           <Route element={<AdminRoute />}>
             <Route path="/admin/*" element={<AdminRoutes />} />

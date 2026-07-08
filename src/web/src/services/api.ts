@@ -276,8 +276,32 @@ export const bookingsApi = {
   noShow: (id: string) => api.post<ApiResponse<Booking>>(`/bookings/${id}/no-show`),
 };
 
+export interface Notification {
+  id: string;
+  titleEn: string;
+  titleAr: string;
+  messageEn: string;
+  messageAr: string;
+  notificationType: string;
+  referenceId?: string;
+  isRead: boolean;
+  createdAt: string;
+}
+
 export const notificationsApi = {
-  list: (unreadOnly = false) =>
-    api.get<ApiResponse<PagedResult<{ id: string; titleEn: string; titleAr: string; messageEn: string; messageAr: string; isRead: boolean }>>>('/notifications', { params: { unreadOnly } }),
-  markRead: (id: string) => api.post(`/notifications/${id}/read`),
+  list: (params?: { unreadOnly?: boolean; page?: number; pageSize?: number }) =>
+    api.get<ApiResponse<PagedResult<Notification>>>('/notifications', {
+      params: {
+        unreadOnly: params?.unreadOnly ?? false,
+        page: params?.page ?? 1,
+        pageSize: params?.pageSize ?? 20,
+      },
+    }),
+  markRead: (id: string) => api.post<ApiResponse<object>>(`/notifications/${id}/read`),
+  unreadCount: async () => {
+    const res = await api.get<ApiResponse<PagedResult<Notification>>>('/notifications', {
+      params: { unreadOnly: true, page: 1, pageSize: 1 },
+    });
+    return res.data.data.totalCount;
+  },
 };
