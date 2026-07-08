@@ -1,5 +1,6 @@
 using System.Reflection;
 using FluentValidation;
+using Khadamati.Application.Behaviors;
 using Khadamati.Application.Mappings;
 using Microsoft.Extensions.DependencyInjection;
 
@@ -11,7 +12,11 @@ public static class DependencyInjection
     {
         services.AddAutoMapper(typeof(MappingProfile));
         services.AddValidatorsFromAssembly(Assembly.GetExecutingAssembly());
-        services.AddMediatR(cfg => cfg.RegisterServicesFromAssembly(Assembly.GetExecutingAssembly()));
+        services.AddMediatR(cfg =>
+        {
+            cfg.RegisterServicesFromAssembly(Assembly.GetExecutingAssembly());
+            cfg.AddOpenBehavior(typeof(ValidationBehavior<,>));
+        });
         return services;
     }
 }

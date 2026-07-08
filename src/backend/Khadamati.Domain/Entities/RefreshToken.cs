@@ -12,6 +12,7 @@ public class RefreshToken : BaseEntity
     public string? ReplacedByToken { get; set; }
     public string? CreatedByIp { get; set; }
     public string? RevokedByIp { get; set; }
+    public bool RememberMe { get; set; }
     public bool IsExpired => DateTime.UtcNow >= ExpiresAt;
     public bool IsRevoked => RevokedAt != null;
     public bool IsActive => !IsRevoked && !IsExpired;

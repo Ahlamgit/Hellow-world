@@ -19,7 +19,7 @@ jobs:
       - name: Build
         run: dotnet build src/backend/Khadamati.sln --no-restore -c Release
       - name: Test
-        run: dotnet test src/backend/Khadamati.sln --no-build -c Release --verbosity normal || true
+        run: dotnet test src/backend/Khadamati.sln -c Release --verbosity normal
 
   frontend:
     runs-on: ubuntu-latest

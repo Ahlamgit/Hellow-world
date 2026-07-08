@@ -11,6 +11,9 @@ public class ApplicationDbContext : DbContext
     public DbSet<UserProfile> UserProfiles => Set<UserProfile>();
     public DbSet<Address> Addresses => Set<Address>();
     public DbSet<RefreshToken> RefreshTokens => Set<RefreshToken>();
+    public DbSet<EmailVerificationToken> EmailVerificationTokens => Set<EmailVerificationToken>();
+    public DbSet<PasswordResetToken> PasswordResetTokens => Set<PasswordResetToken>();
+    public DbSet<PhoneOtpToken> PhoneOtpTokens => Set<PhoneOtpToken>();
     public DbSet<AuditLog> AuditLogs => Set<AuditLog>();
     public DbSet<CraftsmanProfile> CraftsmanProfiles => Set<CraftsmanProfile>();
     public DbSet<StoreProfile> StoreProfiles => Set<StoreProfile>();
@@ -36,6 +39,9 @@ public class ApplicationDbContext : DbContext
         modelBuilder.Entity<UserProfile>().HasQueryFilter(e => !e.IsDeleted);
         modelBuilder.Entity<Address>().HasQueryFilter(e => !e.IsDeleted);
         modelBuilder.Entity<RefreshToken>().HasQueryFilter(e => !e.IsDeleted);
+        modelBuilder.Entity<EmailVerificationToken>().HasQueryFilter(e => !e.IsDeleted);
+        modelBuilder.Entity<PasswordResetToken>().HasQueryFilter(e => !e.IsDeleted);
+        modelBuilder.Entity<PhoneOtpToken>().HasQueryFilter(e => !e.IsDeleted);
         modelBuilder.Entity<CraftsmanProfile>().HasQueryFilter(e => !e.IsDeleted);
         modelBuilder.Entity<StoreProfile>().HasQueryFilter(e => !e.IsDeleted);
         modelBuilder.Entity<ServiceCategory>().HasQueryFilter(e => !e.IsDeleted);

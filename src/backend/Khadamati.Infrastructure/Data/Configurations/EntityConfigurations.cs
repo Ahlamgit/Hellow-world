@@ -19,6 +19,8 @@ public class UserConfiguration : IEntityTypeConfiguration<User>
         builder.Property(u => u.Status).HasConversion<int>();
         builder.Property(u => u.VerificationStatus).HasConversion<int>();
         builder.Property(u => u.SubscriptionStatus).HasConversion<int>();
+        builder.Property(u => u.EmailVerifiedAt);
+        builder.Property(u => u.PhoneVerifiedAt);
 
         builder.HasOne(u => u.Profile).WithOne(p => p.User).HasForeignKey<UserProfile>(p => p.UserId);
         builder.HasOne(u => u.CraftsmanProfile).WithOne(c => c.User).HasForeignKey<CraftsmanProfile>(c => c.UserId);
@@ -59,6 +61,7 @@ public class RefreshTokenConfiguration : IEntityTypeConfiguration<RefreshToken>
         builder.HasKey(r => r.Id);
         builder.HasIndex(r => r.Token).IsUnique();
         builder.HasIndex(r => r.UserId);
+        builder.Property(r => r.RememberMe).HasDefaultValue(false);
     }
 }
 
@@ -172,5 +175,45 @@ public class CraftsmanServiceConfiguration : IEntityTypeConfiguration<CraftsmanS
         builder.HasKey(cs => cs.Id);
         builder.HasIndex(cs => new { cs.CraftsmanProfileId, cs.ServiceId }).IsUnique();
         builder.Property(cs => cs.CustomPrice).HasPrecision(18, 2);
+    }
+}
+
+public class EmailVerificationTokenConfiguration : IEntityTypeConfiguration<EmailVerificationToken>
+{
+    public void Configure(EntityTypeBuilder<EmailVerificationToken> builder)
+    {
+        builder.ToTable("EmailVerificationTokens");
+        builder.HasKey(t => t.Id);
+        builder.HasIndex(t => t.UserId);
+        builder.HasIndex(t => t.ExpiresAt);
+        builder.Property(t => t.TokenHash).HasMaxLength(512).IsRequired();
+        builder.HasOne(t => t.User).WithMany(u => u.EmailVerificationTokens).HasForeignKey(t => t.UserId);
+    }
+}
+
+public class PasswordResetTokenConfiguration : IEntityTypeConfiguration<PasswordResetToken>
+{
+    public void Configure(EntityTypeBuilder<PasswordResetToken> builder)
+    {
+        builder.ToTable("PasswordResetTokens");
+        builder.HasKey(t => t.Id);
+        builder.HasIndex(t => t.UserId);
+        builder.HasIndex(t => t.ExpiresAt);
+        builder.Property(t => t.TokenHash).HasMaxLength(512).IsRequired();
+        builder.HasOne(t => t.User).WithMany(u => u.PasswordResetTokens).HasForeignKey(t => t.UserId);
+    }
+}
+
+public class PhoneOtpTokenConfiguration : IEntityTypeConfiguration<PhoneOtpToken>
+{
+    public void Configure(EntityTypeBuilder<PhoneOtpToken> builder)
+    {
+        builder.ToTable("PhoneOtpTokens");
+        builder.HasKey(t => t.Id);
+        builder.HasIndex(t => new { t.UserId, t.Phone });
+        builder.HasIndex(t => t.ExpiresAt);
+        builder.Property(t => t.OtpHash).HasMaxLength(512).IsRequired();
+        builder.Property(t => t.Phone).HasMaxLength(20).IsRequired();
+        builder.HasOne(t => t.User).WithMany(u => u.PhoneOtpTokens).HasForeignKey(t => t.UserId);
     }
 }

@@ -40,7 +40,15 @@ builder.Services.AddAuthentication(JwtBearerDefaults.AuthenticationScheme)
         };
     });
 
-builder.Services.AddAuthorization();
+builder.Services.AddAuthorization(options =>
+{
+    options.AddPolicy("CustomerOnly", policy => policy.RequireRole("Customer"));
+    options.AddPolicy("CraftsmanOnly", policy => policy.RequireRole("Craftsman"));
+    options.AddPolicy("StoreOnly", policy => policy.RequireRole("Store"));
+    options.AddPolicy("AdminOnly", policy => policy.RequireRole("Administrator"));
+    options.AddPolicy("CraftsmanOrStore", policy => policy.RequireRole("Craftsman", "Store"));
+    options.AddPolicy("VerifiedUser", policy => policy.RequireAuthenticatedUser());
+});
 
 builder.Services.AddControllers();
 builder.Services.AddEndpointsApiExplorer();
@@ -50,8 +58,9 @@ builder.Services.AddSwaggerGen(c =>
     {
         Title = "KHADAMATI API",
         Version = "v1",
-        Description = "Maintenance and Home Services Marketplace REST API"
+        Description = "Maintenance and Home Services Marketplace REST API. Authentication uses JWT Bearer tokens with SQL Server + BCrypt."
     });
+    c.EnableAnnotations();
     c.AddSecurityDefinition("Bearer", new OpenApiSecurityScheme
     {
         Description = "JWT Authorization header using the Bearer scheme.",
