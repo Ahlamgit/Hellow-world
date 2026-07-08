@@ -1,7 +1,8 @@
 using System.Reflection;
 using FluentValidation;
-using Khadamati.Application.Behaviors;
+using Khadamati.Application.Authorization;
 using Khadamati.Application.Mappings;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.Extensions.DependencyInjection;
 
 namespace Khadamati.Application;
@@ -15,8 +16,12 @@ public static class DependencyInjection
         services.AddMediatR(cfg =>
         {
             cfg.RegisterServicesFromAssembly(Assembly.GetExecutingAssembly());
-            cfg.AddOpenBehavior(typeof(ValidationBehavior<,>));
+            cfg.AddOpenBehavior(typeof(Behaviors.ValidationBehavior<,>));
         });
+
+        services.AddScoped<IAuthorizationHandler, PermissionAuthorizationHandler>();
+        services.AddSingleton<IAuthorizationPolicyProvider, PermissionPolicyProvider>();
+
         return services;
     }
 }

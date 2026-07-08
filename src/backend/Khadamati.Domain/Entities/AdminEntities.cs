@@ -94,12 +94,18 @@ public class Permission : BaseEntity
     public string NameAr { get; set; } = string.Empty;
     public string Module { get; set; } = string.Empty;
     public string? Description { get; set; }
+    public bool RequiresEmailVerification { get; set; }
+
+    public ICollection<RolePermission> RolePermissions { get; set; } = new List<RolePermission>();
+    public ICollection<Identity.UserPermission> UserPermissions { get; set; } = new List<Identity.UserPermission>();
 }
 
 public class RolePermission : BaseEntity
 {
-    public string Role { get; set; } = string.Empty;
+    public Guid RoleId { get; set; }
     public Guid PermissionId { get; set; }
+
+    public Identity.Role Role { get; set; } = null!;
     public Permission Permission { get; set; } = null!;
 }
 

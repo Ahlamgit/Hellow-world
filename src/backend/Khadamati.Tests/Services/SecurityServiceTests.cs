@@ -1,5 +1,5 @@
 using FluentAssertions;
-using Khadamati.Infrastructure.Services;
+using Khadamati.Infrastructure.Services.Identity;
 using Microsoft.Extensions.Configuration;
 
 namespace Khadamati.Tests.Services;
@@ -91,7 +91,8 @@ public class TokenServiceTests
 
         var tokenService = new TokenService(config);
         var userId = Guid.NewGuid();
-        var (token, jwtId, expiresAt) = tokenService.GenerateAccessToken(userId, "test@khadamati.com", "Customer");
+        var (token, jwtId, expiresAt) = tokenService.GenerateAccessToken(
+            userId, "test@khadamati.com", ["Customer"], ["Users.View"], true);
 
         token.Should().NotBeNullOrEmpty();
         jwtId.Should().NotBeNullOrEmpty();

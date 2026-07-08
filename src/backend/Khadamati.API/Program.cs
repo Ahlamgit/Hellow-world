@@ -42,11 +42,12 @@ builder.Services.AddAuthentication(JwtBearerDefaults.AuthenticationScheme)
 
 builder.Services.AddAuthorization(options =>
 {
+    // Legacy role policies for backward compatibility with existing modules
     options.AddPolicy("CustomerOnly", policy => policy.RequireRole("Customer"));
     options.AddPolicy("CraftsmanOnly", policy => policy.RequireRole("Craftsman"));
-    options.AddPolicy("StoreOnly", policy => policy.RequireRole("Store"));
-    options.AddPolicy("AdminOnly", policy => policy.RequireRole("Administrator"));
-    options.AddPolicy("CraftsmanOrStore", policy => policy.RequireRole("Craftsman", "Store"));
+    options.AddPolicy("StoreOnly", policy => policy.RequireRole("StoreOwner", "Store"));
+    options.AddPolicy("AdminOnly", policy => policy.RequireRole("Admin", "SuperAdmin", "Administrator"));
+    options.AddPolicy("CraftsmanOrStore", policy => policy.RequireRole("Craftsman", "StoreOwner", "Store"));
     options.AddPolicy("VerifiedUser", policy => policy.RequireAuthenticatedUser());
 });
 

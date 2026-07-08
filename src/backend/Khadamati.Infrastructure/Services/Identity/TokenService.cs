@@ -1,30 +1,40 @@
+using System.Security.Claims;
 using System.Security.Cryptography;
 using System.Text;
 using Khadamati.Application.Interfaces;
+using Microsoft.Extensions.Configuration;
 
-namespace Khadamati.Infrastructure.Services;
+namespace Khadamati.Infrastructure.Services.Identity;
 
 public class TokenService : ITokenService
 {
-    private readonly Microsoft.Extensions.Configuration.IConfiguration _configuration;
+    private readonly IConfiguration _configuration;
 
-    public TokenService(Microsoft.Extensions.Configuration.IConfiguration configuration) => _configuration = configuration;
+    public TokenService(IConfiguration configuration) => _configuration = configuration;
 
-    public (string Token, string JwtId, DateTime ExpiresAt) GenerateAccessToken(Guid userId, string email, string role)
+    public (string Token, string JwtId, DateTime ExpiresAt) GenerateAccessToken(
+        Guid userId, string email, IReadOnlyList<string> roles, IReadOnlyList<string> permissions, bool emailVerified)
     {
         var jwtId = Guid.NewGuid().ToString();
         var key = new Microsoft.IdentityModel.Tokens.SymmetricSecurityKey(
             Encoding.UTF8.GetBytes(_configuration["Jwt:Secret"]!));
-        var credentials = new Microsoft.IdentityModel.Tokens.SigningCredentials(key, Microsoft.IdentityModel.Tokens.SecurityAlgorithms.HmacSha256);
-        var expiresAt = DateTime.UtcNow.AddMinutes(int.Parse(_configuration["Jwt:AccessTokenExpirationMinutes"] ?? "15"));
+        var credentials = new Microsoft.IdentityModel.Tokens.SigningCredentials(
+            key, Microsoft.IdentityModel.Tokens.SecurityAlgorithms.HmacSha256);
+        var expiresAt = DateTime.UtcNow.AddMinutes(_configuration.GetValue("Jwt:AccessTokenExpirationMinutes", 15));
 
-        var claims = new[]
+        var claims = new List<Claim>
         {
-            new System.Security.Claims.Claim(System.IdentityModel.Tokens.Jwt.JwtRegisteredClaimNames.Sub, userId.ToString()),
-            new System.Security.Claims.Claim(System.IdentityModel.Tokens.Jwt.JwtRegisteredClaimNames.Email, email),
-            new System.Security.Claims.Claim(System.Security.Claims.ClaimTypes.Role, role),
-            new System.Security.Claims.Claim(System.IdentityModel.Tokens.Jwt.JwtRegisteredClaimNames.Jti, jwtId)
+            new(ClaimTypes.NameIdentifier, userId.ToString()),
+            new(ClaimTypes.Email, email),
+            new(System.IdentityModel.Tokens.Jwt.JwtRegisteredClaimNames.Jti, jwtId),
+            new("email_verified", emailVerified.ToString().ToLowerInvariant()),
         };
+
+        foreach (var role in roles.Distinct(StringComparer.OrdinalIgnoreCase))
+            claims.Add(new Claim(ClaimTypes.Role, role));
+
+        foreach (var permission in permissions.Distinct(StringComparer.OrdinalIgnoreCase))
+            claims.Add(new Claim("permission", permission));
 
         var token = new System.IdentityModel.Tokens.Jwt.JwtSecurityToken(
             issuer: _configuration["Jwt:Issuer"],
@@ -53,7 +63,6 @@ public class TokenService : ITokenService
     }
 
     public string HashToken(string token) => BCrypt.Net.BCrypt.HashPassword(token, workFactor: 12);
-
     public bool VerifyToken(string token, string hash) => BCrypt.Net.BCrypt.Verify(token, hash);
 }
 
@@ -65,11 +74,7 @@ public class PasswordHasher : IPasswordHasher
 
 public class OtpService : IOtpService
 {
-    public string GenerateOtp()
-    {
-        return RandomNumberGenerator.GetInt32(100000, 999999).ToString();
-    }
-
+    public string GenerateOtp() => RandomNumberGenerator.GetInt32(100000, 999999).ToString();
     public string HashOtp(string otp) => BCrypt.Net.BCrypt.HashPassword(otp, workFactor: 12);
     public bool VerifyOtp(string otp, string hash) => BCrypt.Net.BCrypt.Verify(otp, hash);
 }

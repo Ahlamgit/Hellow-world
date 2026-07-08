@@ -97,7 +97,9 @@ public class RolePermissionConfiguration : IEntityTypeConfiguration<RolePermissi
     {
         builder.ToTable("RolePermissions");
         builder.HasKey(r => r.Id);
-        builder.HasOne(r => r.Permission).WithMany().HasForeignKey(r => r.PermissionId);
+        builder.HasIndex(r => new { r.RoleId, r.PermissionId }).IsUnique();
+        builder.HasOne(r => r.Role).WithMany(role => role.RolePermissions).HasForeignKey(r => r.RoleId);
+        builder.HasOne(r => r.Permission).WithMany(p => p.RolePermissions).HasForeignKey(r => r.PermissionId);
     }
 }
 

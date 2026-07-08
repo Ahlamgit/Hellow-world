@@ -1,4 +1,5 @@
 using Khadamati.Domain.Entities;
+using Khadamati.Domain.Entities.Identity;
 using Microsoft.EntityFrameworkCore;
 
 namespace Khadamati.Infrastructure.Data;
@@ -37,6 +38,12 @@ public class ApplicationDbContext : DbContext
     public DbSet<Region> Regions => Set<Region>();
     public DbSet<City> Cities => Set<City>();
     public DbSet<SystemSetting> SystemSettings => Set<SystemSetting>();
+    public DbSet<Role> Roles => Set<Role>();
+    public DbSet<UserRoleAssignment> UserRoles => Set<UserRoleAssignment>();
+    public DbSet<UserPermission> UserPermissions => Set<UserPermission>();
+    public DbSet<LoginHistory> LoginHistory => Set<LoginHistory>();
+    public DbSet<SecurityLog> SecurityLogs => Set<SecurityLog>();
+    public DbSet<PasswordHistory> PasswordHistory => Set<PasswordHistory>();
     public DbSet<Permission> Permissions => Set<Permission>();
     public DbSet<RolePermission> RolePermissions => Set<RolePermission>();
     public DbSet<ActivityLog> ActivityLogs => Set<ActivityLog>();
@@ -87,6 +94,10 @@ public class ApplicationDbContext : DbContext
         modelBuilder.Entity<RolePermission>().HasQueryFilter(e => !e.IsDeleted);
         modelBuilder.Entity<ActivityLog>().HasQueryFilter(e => !e.IsDeleted);
         modelBuilder.Entity<BackupJob>().HasQueryFilter(e => !e.IsDeleted);
+        modelBuilder.Entity<Role>().HasQueryFilter(e => !e.IsDeleted);
+        modelBuilder.Entity<UserRoleAssignment>().HasQueryFilter(e => !e.IsDeleted);
+        modelBuilder.Entity<UserPermission>().HasQueryFilter(e => !e.IsDeleted);
+        modelBuilder.Entity<PasswordHistory>().HasQueryFilter(e => !e.IsDeleted);
     }
 
     public override Task<int> SaveChangesAsync(CancellationToken cancellationToken = default)

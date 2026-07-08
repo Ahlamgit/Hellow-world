@@ -21,6 +21,8 @@ public class UserConfiguration : IEntityTypeConfiguration<User>
         builder.Property(u => u.SubscriptionStatus).HasConversion<int>();
         builder.Property(u => u.EmailVerifiedAt);
         builder.Property(u => u.PhoneVerifiedAt);
+        builder.Property(u => u.PasswordChangedAt);
+        builder.HasOne(u => u.PrimaryRole).WithMany().HasForeignKey(u => u.PrimaryRoleId).OnDelete(DeleteBehavior.SetNull);
 
         builder.HasOne(u => u.Profile).WithOne(p => p.User).HasForeignKey<UserProfile>(p => p.UserId);
         builder.HasOne(u => u.CraftsmanProfile).WithOne(c => c.User).HasForeignKey<CraftsmanProfile>(c => c.UserId);
@@ -38,6 +40,16 @@ public class UserProfileConfiguration : IEntityTypeConfiguration<UserProfile>
         builder.Property(p => p.FirstName).HasMaxLength(100).IsRequired();
         builder.Property(p => p.LastName).HasMaxLength(100).IsRequired();
         builder.Property(p => p.PreferredLanguage).HasMaxLength(5).HasDefaultValue("ar");
+        builder.Property(p => p.Timezone).HasMaxLength(50).HasDefaultValue("Asia/Riyadh");
+        builder.Property(p => p.Gender).HasMaxLength(20);
+        builder.Property(p => p.Nationality).HasMaxLength(100);
+        builder.Property(p => p.Country).HasMaxLength(100);
+        builder.Property(p => p.City).HasMaxLength(100);
+        builder.Property(p => p.Region).HasMaxLength(100);
+        builder.Property(p => p.AddressLine).HasMaxLength(500);
+        builder.Property(p => p.Latitude).HasPrecision(10, 7);
+        builder.Property(p => p.Longitude).HasPrecision(10, 7);
+        builder.Ignore(p => p.FullName);
     }
 }
 
@@ -61,7 +73,13 @@ public class RefreshTokenConfiguration : IEntityTypeConfiguration<RefreshToken>
         builder.HasKey(r => r.Id);
         builder.HasIndex(r => r.Token).IsUnique();
         builder.HasIndex(r => r.UserId);
+        builder.HasIndex(r => r.DeviceId);
         builder.Property(r => r.RememberMe).HasDefaultValue(false);
+        builder.Property(r => r.DeviceName).HasMaxLength(200);
+        builder.Property(r => r.Platform).HasMaxLength(50);
+        builder.Property(r => r.Browser).HasMaxLength(100);
+        builder.Property(r => r.UserAgent).HasMaxLength(500);
+        builder.Property(r => r.DeviceId).HasMaxLength(100);
     }
 }
 

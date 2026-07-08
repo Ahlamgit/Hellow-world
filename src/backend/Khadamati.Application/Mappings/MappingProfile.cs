@@ -1,5 +1,5 @@
 using AutoMapper;
-using Khadamati.Application.DTOs.Auth;
+using Khadamati.Application.DTOs.Identity;
 using Khadamati.Application.DTOs.Services;
 using Khadamati.Application.DTOs.Subscriptions;
 using Khadamati.Application.DTOs.Users;
@@ -13,16 +13,23 @@ public class MappingProfile : Profile
     public MappingProfile()
     {
         CreateMap<User, UserDto>()
-            .ForMember(d => d.Role, o => o.MapFrom(s => s.Role.ToString()))
+            .ForMember(d => d.PrimaryRole, o => o.MapFrom(s => s.PrimaryRole != null ? s.PrimaryRole.Name : s.Role.ToString()))
+            .ForMember(d => d.Role, o => o.MapFrom(s => s.PrimaryRole != null ? s.PrimaryRole.Name : s.Role.ToString()))
             .ForMember(d => d.Status, o => o.MapFrom(s => s.Status.ToString()))
             .ForMember(d => d.VerificationStatus, o => o.MapFrom(s => s.VerificationStatus.ToString()))
             .ForMember(d => d.SubscriptionStatus, o => o.MapFrom(s => s.SubscriptionStatus.ToString()))
             .ForMember(d => d.FirstName, o => o.MapFrom(s => s.Profile != null ? s.Profile.FirstName : string.Empty))
             .ForMember(d => d.LastName, o => o.MapFrom(s => s.Profile != null ? s.Profile.LastName : string.Empty))
+            .ForMember(d => d.FullName, o => o.MapFrom(s => s.Profile != null ? s.Profile.FullName : string.Empty))
             .ForMember(d => d.ProfilePictureUrl, o => o.MapFrom(s => s.Profile != null ? s.Profile.ProfilePictureUrl : null))
             .ForMember(d => d.PreferredLanguage, o => o.MapFrom(s => s.Profile != null ? s.Profile.PreferredLanguage : "ar"))
+            .ForMember(d => d.Timezone, o => o.MapFrom(s => s.Profile != null ? s.Profile.Timezone : "Asia/Riyadh"))
             .ForMember(d => d.EmailVerified, o => o.MapFrom(s => s.EmailVerifiedAt != null))
-            .ForMember(d => d.PhoneVerified, o => o.MapFrom(s => s.PhoneVerifiedAt != null));
+            .ForMember(d => d.PhoneVerified, o => o.MapFrom(s => s.PhoneVerifiedAt != null))
+            .ForMember(d => d.Roles, o => o.Ignore())
+            .ForMember(d => d.Permissions, o => o.Ignore())
+            .ForMember(d => d.RequiresEmailVerification, o => o.Ignore())
+            .ForMember(d => d.RequiresPhoneVerification, o => o.Ignore());
 
         CreateMap<User, UserProfileDto>()
             .ForMember(d => d.FirstName, o => o.MapFrom(s => s.Profile!.FirstName))

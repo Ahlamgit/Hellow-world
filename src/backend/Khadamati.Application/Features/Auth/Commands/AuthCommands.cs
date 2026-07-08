@@ -1,5 +1,5 @@
 using Khadamati.Application.Common;
-using Khadamati.Application.DTOs.Auth;
+using Khadamati.Application.DTOs.Identity;
 using Khadamati.Application.Interfaces;
 using MediatR;
 
@@ -11,7 +11,7 @@ public record RefreshTokenCommand(RefreshTokenRequestDto Request, string? IpAddr
 public record RevokeTokenCommand(string RefreshToken, string? IpAddress) : IRequest<Unit>;
 public record ForgotPasswordCommand(ForgotPasswordRequestDto Request, string? IpAddress) : IRequest<MessageResponseDto>;
 public record ResetPasswordCommand(ResetPasswordRequestDto Request, string? IpAddress) : IRequest<MessageResponseDto>;
-public record ChangePasswordCommand(Guid UserId, ChangePasswordRequestDto Request) : IRequest<MessageResponseDto>;
+public record ChangePasswordCommand(Guid UserId, ChangePasswordRequestDto Request, string? IpAddress) : IRequest<MessageResponseDto>;
 public record VerifyEmailCommand(VerifyEmailRequestDto Request) : IRequest<MessageResponseDto>;
 public record ResendEmailVerificationCommand(ResendEmailVerificationRequestDto Request, string? IpAddress) : IRequest<MessageResponseDto>;
 public record SendPhoneOtpCommand(Guid UserId, SendPhoneOtpRequestDto Request, string? IpAddress) : IRequest<OtpSentResponseDto>;
@@ -73,7 +73,7 @@ public class ChangePasswordCommandHandler : IRequestHandler<ChangePasswordComman
     private readonly IAuthService _authService;
     public ChangePasswordCommandHandler(IAuthService authService) => _authService = authService;
     public Task<MessageResponseDto> Handle(ChangePasswordCommand request, CancellationToken cancellationToken) =>
-        _authService.ChangePasswordAsync(request.UserId, request.Request, cancellationToken);
+        _authService.ChangePasswordAsync(request.UserId, request.Request, request.IpAddress, cancellationToken);
 }
 
 public class VerifyEmailCommandHandler : IRequestHandler<VerifyEmailCommand, MessageResponseDto>

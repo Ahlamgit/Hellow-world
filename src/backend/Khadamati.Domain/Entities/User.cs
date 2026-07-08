@@ -1,5 +1,6 @@
 using Khadamati.Domain.Common;
 using Khadamati.Domain.Enums;
+using Khadamati.Domain.Entities.Identity;
 
 namespace Khadamati.Domain.Entities;
 
@@ -9,6 +10,7 @@ public class User : BaseEntity
     public string Phone { get; set; } = string.Empty;
     public string PasswordHash { get; set; } = string.Empty;
     public UserRole Role { get; set; }
+    public Guid? PrimaryRoleId { get; set; }
     public UserStatus Status { get; set; } = UserStatus.Pending;
     public VerificationStatus VerificationStatus { get; set; } = VerificationStatus.Unverified;
     public SubscriptionStatus SubscriptionStatus { get; set; } = SubscriptionStatus.None;
@@ -18,15 +20,21 @@ public class User : BaseEntity
     public DateTime? LockoutEnd { get; set; }
     public DateTime? EmailVerifiedAt { get; set; }
     public DateTime? PhoneVerifiedAt { get; set; }
+    public DateTime? PasswordChangedAt { get; set; }
     public bool IsEmailVerified => EmailVerifiedAt.HasValue;
     public bool IsPhoneVerified => PhoneVerifiedAt.HasValue;
 
+    public Role? PrimaryRole { get; set; }
     public UserProfile? Profile { get; set; }
     public ICollection<Address> Addresses { get; set; } = new List<Address>();
     public ICollection<RefreshToken> RefreshTokens { get; set; } = new List<RefreshToken>();
     public ICollection<EmailVerificationToken> EmailVerificationTokens { get; set; } = new List<EmailVerificationToken>();
     public ICollection<PasswordResetToken> PasswordResetTokens { get; set; } = new List<PasswordResetToken>();
     public ICollection<PhoneOtpToken> PhoneOtpTokens { get; set; } = new List<PhoneOtpToken>();
+    public ICollection<UserRoleAssignment> UserRoles { get; set; } = new List<UserRoleAssignment>();
+    public ICollection<UserPermission> DirectPermissions { get; set; } = new List<UserPermission>();
+    public ICollection<PasswordHistory> PasswordHistories { get; set; } = new List<PasswordHistory>();
+    public ICollection<LoginHistory> LoginHistories { get; set; } = new List<LoginHistory>();
     public CraftsmanProfile? CraftsmanProfile { get; set; }
     public StoreProfile? StoreProfile { get; set; }
     public ICollection<ServiceRequest> CustomerRequests { get; set; } = new List<ServiceRequest>();

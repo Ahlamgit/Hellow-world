@@ -75,6 +75,7 @@ public class DatabaseSeeder
         }
 
         await SeedAdminDataAsync(context, cancellationToken);
+        await IdentitySeeder.SeedAsync(context, _logger, cancellationToken);
     }
 
     private async Task SeedAdminDataAsync(ApplicationDbContext context, CancellationToken cancellationToken)
@@ -96,18 +97,7 @@ public class DatabaseSeeder
 
         if (!await context.Permissions.AnyAsync(cancellationToken))
         {
-            var modules = new[] { "users", "bookings", "subscriptions", "payments", "settings", "reports" };
-            foreach (var mod in modules)
-            {
-                context.Permissions.Add(new Permission
-                {
-                    Code = $"{mod}.manage",
-                    NameEn = $"Manage {mod}",
-                    NameAr = $"إدارة {mod}",
-                    Module = mod,
-                });
-            }
-            await context.SaveChangesAsync(cancellationToken);
+            // Permissions seeded by IdentitySeeder
         }
 
         if (!await context.SystemSettings.AnyAsync(cancellationToken))
