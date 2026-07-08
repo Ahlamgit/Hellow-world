@@ -1,6 +1,7 @@
 using AutoMapper;
 using Khadamati.Application.DTOs.Auth;
 using Khadamati.Application.DTOs.Services;
+using Khadamati.Application.DTOs.Subscriptions;
 using Khadamati.Application.DTOs.Users;
 using Khadamati.Domain.Entities;
 using Khadamati.Domain.Enums;
@@ -46,5 +47,23 @@ public class MappingProfile : Profile
                 s.Craftsman != null && s.Craftsman.Profile != null
                     ? $"{s.Craftsman.Profile.FirstName} {s.Craftsman.Profile.LastName}"
                     : null));
+
+        CreateMap<CreateSubscriptionPlanDto, SubscriptionPlan>()
+            .ForMember(d => d.TargetRole, o => o.MapFrom(s => Enum.Parse<UserRole>(s.TargetRole, true)))
+            .ForMember(d => d.Status, o => o.MapFrom(s => Enum.Parse<PlanStatus>(s.Status, true)))
+            .ForMember(d => d.BillingOptions, o => o.Ignore())
+            .ForMember(d => d.PaymentMethods, o => o.Ignore());
+
+        CreateMap<UpdateSubscriptionPlanDto, SubscriptionPlan>()
+            .ForMember(d => d.TargetRole, o => o.MapFrom(s => Enum.Parse<UserRole>(s.TargetRole, true)))
+            .ForMember(d => d.Status, o => o.MapFrom(s => Enum.Parse<PlanStatus>(s.Status, true)))
+            .ForMember(d => d.BillingOptions, o => o.Ignore())
+            .ForMember(d => d.PaymentMethods, o => o.Ignore());
+
+        CreateMap<SubscriptionPlan, SubscriptionPlanDto>()
+            .ForMember(d => d.TargetRole, o => o.MapFrom(s => s.TargetRole.ToString()))
+            .ForMember(d => d.Status, o => o.MapFrom(s => s.Status.ToString()))
+            .ForMember(d => d.BillingOptions, o => o.Ignore())
+            .ForMember(d => d.PaymentMethods, o => o.Ignore());
     }
 }

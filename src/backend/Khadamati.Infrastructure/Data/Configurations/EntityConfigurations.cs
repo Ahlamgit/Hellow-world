@@ -217,3 +217,61 @@ public class PhoneOtpTokenConfiguration : IEntityTypeConfiguration<PhoneOtpToken
         builder.HasOne(t => t.User).WithMany(u => u.PhoneOtpTokens).HasForeignKey(t => t.UserId);
     }
 }
+
+public class SubscriptionPlanConfiguration : IEntityTypeConfiguration<SubscriptionPlan>
+{
+    public void Configure(EntityTypeBuilder<SubscriptionPlan> builder)
+    {
+        builder.ToTable("SubscriptionPlans");
+        builder.HasKey(p => p.Id);
+        builder.HasIndex(p => p.PlanCode).IsUnique();
+        builder.HasIndex(p => p.Status);
+        builder.HasIndex(p => p.TargetRole);
+        builder.HasIndex(p => p.DisplayPriority);
+        builder.Property(p => p.PlanCode).HasMaxLength(50).IsRequired();
+        builder.Property(p => p.NameEn).HasMaxLength(150).IsRequired();
+        builder.Property(p => p.NameAr).HasMaxLength(150).IsRequired();
+        builder.Property(p => p.DescriptionEn).HasMaxLength(2000);
+        builder.Property(p => p.DescriptionAr).HasMaxLength(2000);
+        builder.Property(p => p.Currency).HasMaxLength(3).HasDefaultValue("SAR");
+        builder.Property(p => p.TargetRole).HasConversion<int>();
+        builder.Property(p => p.Status).HasConversion<int>();
+        builder.Property(p => p.DiscountPercentage).HasPrecision(5, 2);
+        builder.Property(p => p.TaxRate).HasPrecision(5, 2);
+        builder.Property(p => p.VatRate).HasPrecision(5, 2);
+        builder.Property(p => p.PaymentMethods).HasMaxLength(1000);
+        builder.Property(p => p.PlanColor).HasMaxLength(20);
+        builder.Property(p => p.PlanIcon).HasMaxLength(500);
+        builder.HasMany(p => p.BillingOptions).WithOne(b => b.Plan).HasForeignKey(b => b.PlanId);
+        builder.HasMany(p => p.UserSubscriptions).WithOne(s => s.Plan).HasForeignKey(s => s.PlanId);
+    }
+}
+
+public class PlanBillingOptionConfiguration : IEntityTypeConfiguration<PlanBillingOption>
+{
+    public void Configure(EntityTypeBuilder<PlanBillingOption> builder)
+    {
+        builder.ToTable("PlanBillingOptions");
+        builder.HasKey(b => b.Id);
+        builder.HasIndex(b => new { b.PlanId, b.Cycle }).IsUnique();
+        builder.Property(b => b.Cycle).HasConversion<int>();
+        builder.Property(b => b.Price).HasPrecision(18, 2);
+    }
+}
+
+public class UserSubscriptionConfiguration : IEntityTypeConfiguration<UserSubscription>
+{
+    public void Configure(EntityTypeBuilder<UserSubscription> builder)
+    {
+        builder.ToTable("UserSubscriptions");
+        builder.HasKey(s => s.Id);
+        builder.HasIndex(s => s.UserId);
+        builder.HasIndex(s => s.PlanId);
+        builder.Property(s => s.Status).HasConversion<int>();
+        builder.Property(s => s.AmountPaid).HasPrecision(18, 2);
+        builder.Property(s => s.Currency).HasMaxLength(3);
+        builder.Property(s => s.CouponCode).HasMaxLength(50);
+        builder.HasOne(s => s.User).WithMany().HasForeignKey(s => s.UserId);
+        builder.HasOne(s => s.BillingOption).WithMany().HasForeignKey(s => s.BillingOptionId).OnDelete(DeleteBehavior.SetNull);
+    }
+}

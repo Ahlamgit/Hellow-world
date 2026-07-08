@@ -22,6 +22,9 @@ public class ApplicationDbContext : DbContext
     public DbSet<CraftsmanService> CraftsmanServices => Set<CraftsmanService>();
     public DbSet<ServiceRequest> ServiceRequests => Set<ServiceRequest>();
     public DbSet<StoreProduct> StoreProducts => Set<StoreProduct>();
+    public DbSet<SubscriptionPlan> SubscriptionPlans => Set<SubscriptionPlan>();
+    public DbSet<PlanBillingOption> PlanBillingOptions => Set<PlanBillingOption>();
+    public DbSet<UserSubscription> UserSubscriptions => Set<UserSubscription>();
 
     protected override void OnModelCreating(ModelBuilder modelBuilder)
     {
@@ -49,6 +52,9 @@ public class ApplicationDbContext : DbContext
         modelBuilder.Entity<CraftsmanService>().HasQueryFilter(e => !e.IsDeleted);
         modelBuilder.Entity<ServiceRequest>().HasQueryFilter(e => !e.IsDeleted);
         modelBuilder.Entity<StoreProduct>().HasQueryFilter(e => !e.IsDeleted);
+        modelBuilder.Entity<SubscriptionPlan>().HasQueryFilter(e => !e.IsDeleted);
+        modelBuilder.Entity<PlanBillingOption>().HasQueryFilter(e => !e.IsDeleted);
+        modelBuilder.Entity<UserSubscription>().HasQueryFilter(e => !e.IsDeleted);
     }
 
     public override Task<int> SaveChangesAsync(CancellationToken cancellationToken = default)
