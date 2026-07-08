@@ -158,6 +158,16 @@
       "Rescheduled": "أعيد جدولته"
     }
   },
+  "notifications": {
+    "title": "الإشعارات",
+    "all": "الكل",
+    "unread": "غير مقروء",
+    "unreadBadge": "جديد",
+    "empty": "لا توجد إشعارات بعد.",
+    "emptyUnread": "لا توجد إشعارات غير مقروءة.",
+    "markAllRead": "تعليم الكل كمقروء",
+    "viewBooking": "عرض الحجز"
+  },
   "common": {
     "loading": "جاري التحميل...",
     "error": "حدث خطأ",

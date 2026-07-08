@@ -1,20 +1,33 @@
+import { useEffect, useState } from 'react';
 import {
   AppBar, Toolbar, Typography, Button, IconButton, Container,
-  Menu, MenuItem,
+  Menu, MenuItem, Badge,
 } from '@mui/material';
-import { Brightness4, Brightness7, Language } from '@mui/icons-material';
-import { Link } from 'react-router-dom';
+import { Brightness4, Brightness7, Language, Notifications } from '@mui/icons-material';
+import { Link, useLocation } from 'react-router-dom';
 import { useTranslation } from 'react-i18next';
 import { useAuth } from '../context/AuthContext';
 import { hasAdminAccess } from '../utils/roles';
 import { useThemeMode } from '../theme/ThemeContext';
-import { useState } from 'react';
+import { notificationsApi } from '../services/api';
 
 export default function Navbar() {
   const { t, i18n } = useTranslation();
+  const location = useLocation();
   const { isAuthenticated, user, logout } = useAuth();
   const { mode, toggleMode } = useThemeMode();
   const [langAnchor, setLangAnchor] = useState<null | HTMLElement>(null);
+  const [unreadCount, setUnreadCount] = useState(0);
+
+  useEffect(() => {
+    if (!isAuthenticated) {
+      setUnreadCount(0);
+      return;
+    }
+    notificationsApi.unreadCount()
+      .then(setUnreadCount)
+      .catch(() => setUnreadCount(0));
+  }, [isAuthenticated, location.pathname]);
 
   const changeLanguage = (lng: string) => {
     i18n.changeLanguage(lng);
@@ -61,6 +74,11 @@ export default function Navbar() {
 
           {isAuthenticated ? (
             <>
+              <IconButton component={Link} to="/notifications" color="inherit" aria-label={t('notifications.title')}>
+                <Badge badgeContent={unreadCount} color="error" max={99}>
+                  <Notifications />
+                </Badge>
+              </IconButton>
               <Button component={Link} to="/dashboard" color="inherit">{t('nav.dashboard')}</Button>
               <Button component={Link} to="/profile" color="inherit">{t('nav.profile')}</Button>
               <Button onClick={logout} variant="outlined" size="small">{t('nav.logout')}</Button>

@@ -158,6 +158,16 @@
       "Rescheduled": "Rescheduled"
     }
   },
+  "notifications": {
+    "title": "Notifications",
+    "all": "All",
+    "unread": "Unread",
+    "unreadBadge": "Unread",
+    "empty": "No notifications yet.",
+    "emptyUnread": "You're all caught up — no unread notifications.",
+    "markAllRead": "Mark all as read",
+    "viewBooking": "View booking"
+  },
   "common": {
     "loading": "Loading...",
     "error": "An error occurred",

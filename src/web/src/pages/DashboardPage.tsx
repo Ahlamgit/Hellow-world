@@ -48,6 +48,7 @@ export default function DashboardPage() {
                   <Button component={Link} to="/subscription" variant="outlined" size="small">{t('subscription.mySubscription')}</Button>
                 )}
                 <Button component={Link} to="/sessions" variant="outlined" size="small">{t('identity.sessionsTitle')}</Button>
+                <Button component={Link} to="/notifications" variant="outlined" size="small">{t('notifications.title')}</Button>
                 <Button component={Link} to="/change-password" variant="outlined" size="small">{t('identity.changePassword')}</Button>
               </Box>
             </CardContent>
