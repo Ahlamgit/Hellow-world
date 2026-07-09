@@ -77,6 +77,62 @@ public class IdentityRepository : IIdentityRepository
             .Distinct()
             .ToListAsync(cancellationToken);
 
+    public async Task<IReadOnlyList<Guid>> GetUserRoleIdsAsync(Guid userId, CancellationToken cancellationToken = default) =>
+        await _context.Set<UserRoleAssignment>()
+            .Where(ur => ur.UserId == userId)
+            .Select(ur => ur.RoleId)
+            .ToListAsync(cancellationToken);
+
+    public async Task<IReadOnlyList<(Guid Id, string Code, string NameEn, string Module)>> GetAllPermissionsAsync(CancellationToken cancellationToken = default) =>
+        await _context.Permissions
+            .OrderBy(p => p.Module).ThenBy(p => p.Code)
+            .Select(p => new ValueTuple<Guid, string, string, string>(p.Id, p.Code, p.NameEn, p.Module))
+            .ToListAsync(cancellationToken);
+
+    public async Task<IReadOnlyList<Guid>> GetRolePermissionIdsAsync(IReadOnlyList<Guid> roleIds, CancellationToken cancellationToken = default)
+    {
+        if (roleIds.Count == 0) return Array.Empty<Guid>();
+        return await _context.RolePermissions
+            .Where(rp => roleIds.Contains(rp.RoleId))
+            .Select(rp => rp.PermissionId)
+            .Distinct()
+            .ToListAsync(cancellationToken);
+    }
+
+    public async Task<IReadOnlyList<UserPermission>> GetUserPermissionOverridesAsync(Guid userId, CancellationToken cancellationToken = default) =>
+        await _context.Set<UserPermission>()
+            .Where(up => up.UserId == userId && (up.ExpiresAt == null || up.ExpiresAt > DateTime.UtcNow))
+            .ToListAsync(cancellationToken);
+
+    public async Task SetUserPermissionOverridesAsync(
+        Guid userId,
+        IReadOnlyList<(Guid PermissionId, bool IsGranted)> overrides,
+        string? grantedBy,
+        CancellationToken cancellationToken = default)
+    {
+        var existing = await _context.Set<UserPermission>()
+            .Where(up => up.UserId == userId)
+            .ToListAsync(cancellationToken);
+        _context.Set<UserPermission>().RemoveRange(existing);
+
+        var validIds = await _context.Permissions
+            .Where(p => overrides.Select(o => o.PermissionId).Contains(p.Id))
+            .Select(p => p.Id)
+            .ToListAsync(cancellationToken);
+
+        foreach (var (permissionId, isGranted) in overrides.Where(o => validIds.Contains(o.PermissionId)).DistinctBy(o => o.PermissionId))
+        {
+            await _context.Set<UserPermission>().AddAsync(new UserPermission
+            {
+                UserId = userId,
+                PermissionId = permissionId,
+                IsGranted = isGranted,
+                GrantedBy = grantedBy,
+                GrantedAt = DateTime.UtcNow,
+            }, cancellationToken);
+        }
+    }
+
     public async Task AssignRoleAsync(Guid userId, Guid roleId, bool isPrimary, string? assignedBy, CancellationToken cancellationToken = default)
     {
         var exists = await _context.Set<UserRoleAssignment>()

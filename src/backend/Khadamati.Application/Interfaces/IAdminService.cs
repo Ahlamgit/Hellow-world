@@ -20,6 +20,16 @@ public interface IAdminService
     Task<IReadOnlyList<AdminRoleDto>> ListRbacRolesAsync(CancellationToken cancellationToken = default);
     Task<RolePermissionMatrixDto> GetRolePermissionMatrixAsync(Guid roleId, CancellationToken cancellationToken = default);
     Task<RolePermissionMatrixDto> UpdateRolePermissionsAsync(Guid roleId, UpdateRolePermissionsDto request, string? userId, CancellationToken cancellationToken = default);
+    Task<PagedResult<CategoryDto>> ListCategoriesAsync(CategoryListQueryDto query, CancellationToken cancellationToken = default);
+    Task<CategoryDto> GetCategoryAsync(Guid id, CancellationToken cancellationToken = default);
+    Task<CategoryDto> CreateCategoryAsync(CreateCategoryDto request, string? userId, CancellationToken cancellationToken = default);
+    Task<CategoryDto> UpdateCategoryAsync(Guid id, UpdateCategoryDto request, string? userId, CancellationToken cancellationToken = default);
+    Task DeleteCategoryAsync(Guid id, string? userId, CancellationToken cancellationToken = default);
+    Task<PagedResult<ServiceDto>> ListServicesAsync(ServiceListQueryDto query, CancellationToken cancellationToken = default);
+    Task<ServiceDto> GetServiceAsync(Guid id, CancellationToken cancellationToken = default);
+    Task<ServiceDto> CreateServiceAsync(CreateServiceDto request, string? userId, CancellationToken cancellationToken = default);
+    Task<ServiceDto> UpdateServiceAsync(Guid id, UpdateServiceDto request, string? userId, CancellationToken cancellationToken = default);
+    Task DeleteServiceAsync(Guid id, string? userId, CancellationToken cancellationToken = default);
 }
 
 public interface IAdminExportService

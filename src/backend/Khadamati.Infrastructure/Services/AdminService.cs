@@ -611,4 +611,246 @@ public class AdminService : IAdminService
 
         return await GetRolePermissionMatrixAsync(roleId, cancellationToken);
     }
+
+    public async Task<PagedResult<CategoryDto>> ListCategoriesAsync(CategoryListQueryDto query, CancellationToken cancellationToken = default)
+    {
+        var q = _context.ServiceCategories.Include(c => c.ParentCategory).AsQueryable();
+        if (!string.IsNullOrWhiteSpace(query.Search))
+        {
+            var s = query.Search.ToLower();
+            q = q.Where(c => c.NameEn.ToLower().Contains(s) || c.NameAr.Contains(s));
+        }
+        if (query.IsActive.HasValue) q = q.Where(c => c.IsActive == query.IsActive.Value);
+
+        var total = await q.CountAsync(cancellationToken);
+        var items = await q.OrderBy(c => c.DisplayOrder).ThenBy(c => c.NameEn)
+            .Skip((query.Page - 1) * query.PageSize).Take(query.PageSize)
+            .Select(c => new CategoryDto
+            {
+                Id = c.Id,
+                NameEn = c.NameEn,
+                NameAr = c.NameAr,
+                DescriptionEn = c.DescriptionEn,
+                DescriptionAr = c.DescriptionAr,
+                IconUrl = c.IconUrl,
+                DisplayOrder = c.DisplayOrder,
+                IsActive = c.IsActive,
+                ParentCategoryId = c.ParentCategoryId,
+                ParentCategoryName = c.ParentCategory != null ? c.ParentCategory.NameEn : null,
+                ServiceCount = c.Services.Count,
+            })
+            .AsNoTracking()
+            .ToListAsync(cancellationToken);
+
+        return new PagedResult<CategoryDto>
+        {
+            Items = items,
+            TotalCount = total,
+            Page = query.Page,
+            PageSize = query.PageSize,
+        };
+    }
+
+    public async Task<CategoryDto> GetCategoryAsync(Guid id, CancellationToken cancellationToken = default)
+    {
+        var c = await _context.ServiceCategories.Include(x => x.ParentCategory)
+            .AsNoTracking()
+            .FirstOrDefaultAsync(x => x.Id == id, cancellationToken)
+            ?? throw new Application.Common.NotFoundException("Category not found.");
+        var dto = MapCategory(c);
+        dto.ServiceCount = await _context.Services.CountAsync(s => s.CategoryId == id, cancellationToken);
+        return dto;
+    }
+
+    public async Task<CategoryDto> CreateCategoryAsync(CreateCategoryDto request, string? userId, CancellationToken cancellationToken = default)
+    {
+        if (request.ParentCategoryId.HasValue &&
+            !await _context.ServiceCategories.AnyAsync(c => c.Id == request.ParentCategoryId.Value, cancellationToken))
+            throw new Application.Common.ValidationException(["Parent category not found."]);
+
+        var category = new ServiceCategory
+        {
+            NameEn = request.NameEn.Trim(),
+            NameAr = request.NameAr.Trim(),
+            DescriptionEn = request.DescriptionEn,
+            DescriptionAr = request.DescriptionAr,
+            IconUrl = request.IconUrl,
+            DisplayOrder = request.DisplayOrder,
+            IsActive = request.IsActive,
+            ParentCategoryId = request.ParentCategoryId,
+        };
+        await _context.ServiceCategories.AddAsync(category, cancellationToken);
+        await LogActivityAsync(userId, "create", "categories", category.Id.ToString(), cancellationToken);
+        await _context.SaveChangesAsync(cancellationToken);
+        return await GetCategoryAsync(category.Id, cancellationToken);
+    }
+
+    public async Task<CategoryDto> UpdateCategoryAsync(Guid id, UpdateCategoryDto request, string? userId, CancellationToken cancellationToken = default)
+    {
+        var category = await _context.ServiceCategories.FirstOrDefaultAsync(c => c.Id == id, cancellationToken)
+            ?? throw new Application.Common.NotFoundException("Category not found.");
+
+        if (request.ParentCategoryId == id)
+            throw new Application.Common.ValidationException(["Category cannot be its own parent."]);
+        if (request.ParentCategoryId.HasValue &&
+            !await _context.ServiceCategories.AnyAsync(c => c.Id == request.ParentCategoryId.Value, cancellationToken))
+            throw new Application.Common.ValidationException(["Parent category not found."]);
+
+        category.NameEn = request.NameEn.Trim();
+        category.NameAr = request.NameAr.Trim();
+        category.DescriptionEn = request.DescriptionEn;
+        category.DescriptionAr = request.DescriptionAr;
+        category.IconUrl = request.IconUrl;
+        category.DisplayOrder = request.DisplayOrder;
+        category.IsActive = request.IsActive;
+        category.ParentCategoryId = request.ParentCategoryId;
+
+        await LogActivityAsync(userId, "update", "categories", id.ToString(), cancellationToken);
+        await _context.SaveChangesAsync(cancellationToken);
+        return await GetCategoryAsync(id, cancellationToken);
+    }
+
+    public async Task DeleteCategoryAsync(Guid id, string? userId, CancellationToken cancellationToken = default)
+    {
+        var category = await _context.ServiceCategories.FirstOrDefaultAsync(c => c.Id == id, cancellationToken)
+            ?? throw new Application.Common.NotFoundException("Category not found.");
+        category.IsDeleted = true;
+        category.DeletedAt = DateTime.UtcNow;
+        await LogActivityAsync(userId, "delete", "categories", id.ToString(), cancellationToken);
+        await _context.SaveChangesAsync(cancellationToken);
+    }
+
+    public async Task<PagedResult<ServiceDto>> ListServicesAsync(ServiceListQueryDto query, CancellationToken cancellationToken = default)
+    {
+        var q = _context.Services.Include(s => s.Category).AsQueryable();
+        if (!string.IsNullOrWhiteSpace(query.Search))
+        {
+            var s = query.Search.ToLower();
+            q = q.Where(x => x.NameEn.ToLower().Contains(s) || x.NameAr.Contains(s));
+        }
+        if (query.CategoryId.HasValue) q = q.Where(x => x.CategoryId == query.CategoryId.Value);
+        if (query.IsActive.HasValue) q = q.Where(x => x.IsActive == query.IsActive.Value);
+
+        var total = await q.CountAsync(cancellationToken);
+        var items = await q.OrderBy(x => x.NameEn)
+            .Skip((query.Page - 1) * query.PageSize).Take(query.PageSize)
+            .Select(s => new ServiceDto
+            {
+                Id = s.Id,
+                CategoryId = s.CategoryId,
+                CategoryName = s.Category.NameEn,
+                NameEn = s.NameEn,
+                NameAr = s.NameAr,
+                DescriptionEn = s.DescriptionEn,
+                DescriptionAr = s.DescriptionAr,
+                BasePrice = s.BasePrice,
+                ImageUrl = s.ImageUrl,
+                IsActive = s.IsActive,
+                EstimatedDurationMinutes = s.EstimatedDurationMinutes,
+            })
+            .AsNoTracking()
+            .ToListAsync(cancellationToken);
+
+        return new PagedResult<ServiceDto>
+        {
+            Items = items,
+            TotalCount = total,
+            Page = query.Page,
+            PageSize = query.PageSize,
+        };
+    }
+
+    public async Task<ServiceDto> GetServiceAsync(Guid id, CancellationToken cancellationToken = default)
+    {
+        var s = await _context.Services.Include(x => x.Category).AsNoTracking()
+            .FirstOrDefaultAsync(x => x.Id == id, cancellationToken)
+            ?? throw new Application.Common.NotFoundException("Service not found.");
+        return MapService(s);
+    }
+
+    public async Task<ServiceDto> CreateServiceAsync(CreateServiceDto request, string? userId, CancellationToken cancellationToken = default)
+    {
+        if (!await _context.ServiceCategories.AnyAsync(c => c.Id == request.CategoryId, cancellationToken))
+            throw new Application.Common.ValidationException(["Category not found."]);
+
+        var service = new Service
+        {
+            CategoryId = request.CategoryId,
+            NameEn = request.NameEn.Trim(),
+            NameAr = request.NameAr.Trim(),
+            DescriptionEn = request.DescriptionEn,
+            DescriptionAr = request.DescriptionAr,
+            BasePrice = request.BasePrice,
+            ImageUrl = request.ImageUrl,
+            IsActive = request.IsActive,
+            EstimatedDurationMinutes = request.EstimatedDurationMinutes,
+        };
+        await _context.Services.AddAsync(service, cancellationToken);
+        await LogActivityAsync(userId, "create", "services", service.Id.ToString(), cancellationToken);
+        await _context.SaveChangesAsync(cancellationToken);
+        return await GetServiceAsync(service.Id, cancellationToken);
+    }
+
+    public async Task<ServiceDto> UpdateServiceAsync(Guid id, UpdateServiceDto request, string? userId, CancellationToken cancellationToken = default)
+    {
+        var service = await _context.Services.FirstOrDefaultAsync(s => s.Id == id, cancellationToken)
+            ?? throw new Application.Common.NotFoundException("Service not found.");
+
+        if (!await _context.ServiceCategories.AnyAsync(c => c.Id == request.CategoryId, cancellationToken))
+            throw new Application.Common.ValidationException(["Category not found."]);
+
+        service.CategoryId = request.CategoryId;
+        service.NameEn = request.NameEn.Trim();
+        service.NameAr = request.NameAr.Trim();
+        service.DescriptionEn = request.DescriptionEn;
+        service.DescriptionAr = request.DescriptionAr;
+        service.BasePrice = request.BasePrice;
+        service.ImageUrl = request.ImageUrl;
+        service.IsActive = request.IsActive;
+        service.EstimatedDurationMinutes = request.EstimatedDurationMinutes;
+
+        await LogActivityAsync(userId, "update", "services", id.ToString(), cancellationToken);
+        await _context.SaveChangesAsync(cancellationToken);
+        return await GetServiceAsync(id, cancellationToken);
+    }
+
+    public async Task DeleteServiceAsync(Guid id, string? userId, CancellationToken cancellationToken = default)
+    {
+        var service = await _context.Services.FirstOrDefaultAsync(s => s.Id == id, cancellationToken)
+            ?? throw new Application.Common.NotFoundException("Service not found.");
+        service.IsDeleted = true;
+        service.DeletedAt = DateTime.UtcNow;
+        await LogActivityAsync(userId, "delete", "services", id.ToString(), cancellationToken);
+        await _context.SaveChangesAsync(cancellationToken);
+    }
+
+    private static CategoryDto MapCategory(ServiceCategory c) => new()
+    {
+        Id = c.Id,
+        NameEn = c.NameEn,
+        NameAr = c.NameAr,
+        DescriptionEn = c.DescriptionEn,
+        DescriptionAr = c.DescriptionAr,
+        IconUrl = c.IconUrl,
+        DisplayOrder = c.DisplayOrder,
+        IsActive = c.IsActive,
+        ParentCategoryId = c.ParentCategoryId,
+        ParentCategoryName = c.ParentCategory?.NameEn,
+        ServiceCount = c.Services?.Count ?? 0,
+    };
+
+    private static ServiceDto MapService(Service s) => new()
+    {
+        Id = s.Id,
+        CategoryId = s.CategoryId,
+        CategoryName = s.Category?.NameEn ?? string.Empty,
+        NameEn = s.NameEn,
+        NameAr = s.NameAr,
+        DescriptionEn = s.DescriptionEn,
+        DescriptionAr = s.DescriptionAr,
+        BasePrice = s.BasePrice,
+        ImageUrl = s.ImageUrl,
+        IsActive = s.IsActive,
+        EstimatedDurationMinutes = s.EstimatedDurationMinutes,
+    };
 }

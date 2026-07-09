@@ -110,4 +110,20 @@ public class AdminUsersController : ControllerBase
         var result = await _mediator.Send(new AdminVerifyUserEmailCommand(id, adminId), ct);
         return Ok(ApiResponse<MessageResponseDto>.Ok(result));
     }
+
+    [HttpGet("{id:guid}/permissions")]
+    [HasPermission(PermissionCodes.UsersView)]
+    [SwaggerOperation(Summary = "Get user permission matrix with overrides")]
+    public async Task<IActionResult> GetPermissions(Guid id, CancellationToken ct) =>
+        Ok(ApiResponse<UserPermissionMatrixDto>.Ok(await _mediator.Send(new GetUserPermissionMatrixQuery(id), ct)));
+
+    [HttpPut("{id:guid}/permissions")]
+    [HasPermission(PermissionCodes.PermissionsManage)]
+    [SwaggerOperation(Summary = "Set per-user permission overrides")]
+    public async Task<IActionResult> UpdatePermissions(Guid id, [FromBody] UpdateUserPermissionsDto request, CancellationToken ct)
+    {
+        var adminId = _currentUser.UserId ?? throw new UnauthorizedException("Not authenticated.");
+        var result = await _mediator.Send(new UpdateUserPermissionsCommand(id, request, adminId), ct);
+        return Ok(ApiResponse<UserPermissionMatrixDto>.Ok(result, "User permissions updated."));
+    }
 }

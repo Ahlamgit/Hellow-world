@@ -1,6 +1,7 @@
 using Khadamati.Application.DTOs.Admin;
 using Khadamati.Application.Interfaces;
 using MediatR;
+using Khadamati.Application.Common;
 
 namespace Khadamati.Application.Features.Admin.Commands;
 
@@ -19,6 +20,16 @@ public record UpdateSystemSettingCommand(Guid Id, UpdateSystemSettingDto Request
 public record ListRbacRolesQuery() : IRequest<IReadOnlyList<AdminRoleDto>>;
 public record GetRolePermissionMatrixQuery(Guid RoleId) : IRequest<RolePermissionMatrixDto>;
 public record UpdateRolePermissionsCommand(Guid RoleId, UpdateRolePermissionsDto Request, string? UserId) : IRequest<RolePermissionMatrixDto>;
+public record ListCategoriesQuery(CategoryListQueryDto Query) : IRequest<PagedResult<CategoryDto>>;
+public record GetCategoryQuery(Guid Id) : IRequest<CategoryDto>;
+public record CreateCategoryCommand(CreateCategoryDto Request, string? UserId) : IRequest<CategoryDto>;
+public record UpdateCategoryCommand(Guid Id, UpdateCategoryDto Request, string? UserId) : IRequest<CategoryDto>;
+public record DeleteCategoryCommand(Guid Id, string? UserId) : IRequest<Unit>;
+public record ListServicesQuery(ServiceListQueryDto Query) : IRequest<PagedResult<ServiceDto>>;
+public record GetServiceQuery(Guid Id) : IRequest<ServiceDto>;
+public record CreateServiceCommand(CreateServiceDto Request, string? UserId) : IRequest<ServiceDto>;
+public record UpdateServiceCommand(Guid Id, UpdateServiceDto Request, string? UserId) : IRequest<ServiceDto>;
+public record DeleteServiceCommand(Guid Id, string? UserId) : IRequest<Unit>;
 
 public class GetAdminDashboardQueryHandler : IRequestHandler<GetAdminDashboardQuery, AdminDashboardDto>
 {
@@ -126,4 +137,90 @@ public class UpdateRolePermissionsCommandHandler : IRequestHandler<UpdateRolePer
     public UpdateRolePermissionsCommandHandler(IAdminService admin) => _admin = admin;
     public Task<RolePermissionMatrixDto> Handle(UpdateRolePermissionsCommand request, CancellationToken ct) =>
         _admin.UpdateRolePermissionsAsync(request.RoleId, request.Request, request.UserId, ct);
+}
+
+public class ListCategoriesQueryHandler : IRequestHandler<ListCategoriesQuery, PagedResult<CategoryDto>>
+{
+    private readonly IAdminService _admin;
+    public ListCategoriesQueryHandler(IAdminService admin) => _admin = admin;
+    public Task<PagedResult<CategoryDto>> Handle(ListCategoriesQuery request, CancellationToken ct) =>
+        _admin.ListCategoriesAsync(request.Query, ct);
+}
+
+public class GetCategoryQueryHandler : IRequestHandler<GetCategoryQuery, CategoryDto>
+{
+    private readonly IAdminService _admin;
+    public GetCategoryQueryHandler(IAdminService admin) => _admin = admin;
+    public Task<CategoryDto> Handle(GetCategoryQuery request, CancellationToken ct) =>
+        _admin.GetCategoryAsync(request.Id, ct);
+}
+
+public class CreateCategoryCommandHandler : IRequestHandler<CreateCategoryCommand, CategoryDto>
+{
+    private readonly IAdminService _admin;
+    public CreateCategoryCommandHandler(IAdminService admin) => _admin = admin;
+    public Task<CategoryDto> Handle(CreateCategoryCommand request, CancellationToken ct) =>
+        _admin.CreateCategoryAsync(request.Request, request.UserId, ct);
+}
+
+public class UpdateCategoryCommandHandler : IRequestHandler<UpdateCategoryCommand, CategoryDto>
+{
+    private readonly IAdminService _admin;
+    public UpdateCategoryCommandHandler(IAdminService admin) => _admin = admin;
+    public Task<CategoryDto> Handle(UpdateCategoryCommand request, CancellationToken ct) =>
+        _admin.UpdateCategoryAsync(request.Id, request.Request, request.UserId, ct);
+}
+
+public class DeleteCategoryCommandHandler : IRequestHandler<DeleteCategoryCommand, Unit>
+{
+    private readonly IAdminService _admin;
+    public DeleteCategoryCommandHandler(IAdminService admin) => _admin = admin;
+    public async Task<Unit> Handle(DeleteCategoryCommand request, CancellationToken ct)
+    {
+        await _admin.DeleteCategoryAsync(request.Id, request.UserId, ct);
+        return Unit.Value;
+    }
+}
+
+public class ListServicesQueryHandler : IRequestHandler<ListServicesQuery, PagedResult<ServiceDto>>
+{
+    private readonly IAdminService _admin;
+    public ListServicesQueryHandler(IAdminService admin) => _admin = admin;
+    public Task<PagedResult<ServiceDto>> Handle(ListServicesQuery request, CancellationToken ct) =>
+        _admin.ListServicesAsync(request.Query, ct);
+}
+
+public class GetServiceQueryHandler : IRequestHandler<GetServiceQuery, ServiceDto>
+{
+    private readonly IAdminService _admin;
+    public GetServiceQueryHandler(IAdminService admin) => _admin = admin;
+    public Task<ServiceDto> Handle(GetServiceQuery request, CancellationToken ct) =>
+        _admin.GetServiceAsync(request.Id, ct);
+}
+
+public class CreateServiceCommandHandler : IRequestHandler<CreateServiceCommand, ServiceDto>
+{
+    private readonly IAdminService _admin;
+    public CreateServiceCommandHandler(IAdminService admin) => _admin = admin;
+    public Task<ServiceDto> Handle(CreateServiceCommand request, CancellationToken ct) =>
+        _admin.CreateServiceAsync(request.Request, request.UserId, ct);
+}
+
+public class UpdateServiceCommandHandler : IRequestHandler<UpdateServiceCommand, ServiceDto>
+{
+    private readonly IAdminService _admin;
+    public UpdateServiceCommandHandler(IAdminService admin) => _admin = admin;
+    public Task<ServiceDto> Handle(UpdateServiceCommand request, CancellationToken ct) =>
+        _admin.UpdateServiceAsync(request.Id, request.Request, request.UserId, ct);
+}
+
+public class DeleteServiceCommandHandler : IRequestHandler<DeleteServiceCommand, Unit>
+{
+    private readonly IAdminService _admin;
+    public DeleteServiceCommandHandler(IAdminService admin) => _admin = admin;
+    public async Task<Unit> Handle(DeleteServiceCommand request, CancellationToken ct)
+    {
+        await _admin.DeleteServiceAsync(request.Id, request.UserId, ct);
+        return Unit.Value;
+    }
 }

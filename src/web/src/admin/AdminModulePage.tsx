@@ -6,6 +6,8 @@ import AdminUserSubscriptionsPage from './AdminUserSubscriptionsPage';
 import AdminSubscriptionPlansPage from './AdminSubscriptionPlansPage';
 import AdminSettingsPage from './AdminSettingsPage';
 import AdminRbacMatrixPage from './AdminRbacMatrixPage';
+import AdminCategoriesPage from './AdminCategoriesPage';
+import AdminServicesPage from './AdminServicesPage';
 import AdminPageGuard from './AdminPageGuard';
 import { getModuleConfig } from './moduleConfig';
 import AdminBackupPage from './AdminSpecialPages';
@@ -50,6 +52,22 @@ export default function AdminModulePage() {
     return (
       <AdminPageGuard module="roles">
         <AdminRbacMatrixPage />
+      </AdminPageGuard>
+    );
+  }
+
+  if (moduleKey === 'categories') {
+    return (
+      <AdminPageGuard module="categories">
+        <AdminCategoriesPage />
+      </AdminPageGuard>
+    );
+  }
+
+  if (moduleKey === 'services') {
+    return (
+      <AdminPageGuard module="services">
+        <AdminServicesPage />
       </AdminPageGuard>
     );
   }

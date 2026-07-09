@@ -13,4 +13,6 @@ public interface IUserManagementService
     Task<UserActionResponseDto> SuspendAsync(Guid id, SuspendUserDto dto, Guid adminUserId, CancellationToken cancellationToken = default);
     Task<UserActionResponseDto> ActivateAsync(Guid id, Guid adminUserId, CancellationToken cancellationToken = default);
     Task<AdminUserDetailDto> AssignRolesAsync(Guid id, AssignUserRolesDto dto, Guid adminUserId, CancellationToken cancellationToken = default);
+    Task<UserPermissionMatrixDto> GetPermissionMatrixAsync(Guid id, CancellationToken cancellationToken = default);
+    Task<UserPermissionMatrixDto> UpdatePermissionsAsync(Guid id, UpdateUserPermissionsDto dto, Guid adminUserId, CancellationToken cancellationToken = default);
 }

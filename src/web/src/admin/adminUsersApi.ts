@@ -69,6 +69,26 @@ export interface AssignUserRolesRequest {
   primaryRole: string;
 }
 
+export interface UserPermissionEntry {
+  permissionId: string;
+  code: string;
+  nameEn: string;
+  module: string;
+  fromRole: boolean;
+  override: boolean | null;
+  effective: boolean;
+}
+
+export interface UserPermissionMatrix {
+  userId: string;
+  permissions: UserPermissionEntry[];
+}
+
+export interface UserPermissionOverride {
+  permissionId: string;
+  isGranted: boolean;
+}
+
 export const adminUsersApi = {
   list: (query: AdminUserListQuery) =>
     api.get<ApiResponse<PagedResult<AdminUserListItem>>>('/admin/users', { params: query }),
@@ -96,4 +116,10 @@ export const adminUsersApi = {
 
   verifyEmail: (id: string) =>
     api.post<ApiResponse<{ message: string }>>(`/admin/users/${id}/verify-email`),
+
+  getPermissions: (id: string) =>
+    api.get<ApiResponse<UserPermissionMatrix>>(`/admin/users/${id}/permissions`),
+
+  updatePermissions: (id: string, overrides: UserPermissionOverride[]) =>
+    api.put<ApiResponse<UserPermissionMatrix>>(`/admin/users/${id}/permissions`, { overrides }),
 };

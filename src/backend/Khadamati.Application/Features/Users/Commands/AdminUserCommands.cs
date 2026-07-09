@@ -13,6 +13,8 @@ public record SuspendUserCommand(Guid Id, SuspendUserDto Request, Guid AdminUser
 public record ActivateUserCommand(Guid Id, Guid AdminUserId) : IRequest<UserActionResponseDto>;
 public record AssignUserRolesCommand(Guid Id, AssignUserRolesDto Request, Guid AdminUserId) : IRequest<AdminUserDetailDto>;
 public record AdminVerifyUserEmailCommand(Guid Id, Guid AdminUserId) : IRequest<MessageResponseDto>;
+public record GetUserPermissionMatrixQuery(Guid UserId) : IRequest<UserPermissionMatrixDto>;
+public record UpdateUserPermissionsCommand(Guid UserId, UpdateUserPermissionsDto Request, Guid AdminUserId) : IRequest<UserPermissionMatrixDto>;
 
 public class CreateAdminUserCommandHandler : IRequestHandler<CreateAdminUserCommand, AdminUserDetailDto>
 {
@@ -71,4 +73,20 @@ public class AdminVerifyUserEmailCommandHandler : IRequestHandler<AdminVerifyUse
     public AdminVerifyUserEmailCommandHandler(IAuthService auth) => _auth = auth;
     public Task<MessageResponseDto> Handle(AdminVerifyUserEmailCommand request, CancellationToken cancellationToken) =>
         _auth.AdminVerifyEmailAsync(request.AdminUserId, new AdminVerifyEmailRequestDto(request.Id), cancellationToken);
+}
+
+public class GetUserPermissionMatrixQueryHandler : IRequestHandler<GetUserPermissionMatrixQuery, UserPermissionMatrixDto>
+{
+    private readonly IUserManagementService _service;
+    public GetUserPermissionMatrixQueryHandler(IUserManagementService service) => _service = service;
+    public Task<UserPermissionMatrixDto> Handle(GetUserPermissionMatrixQuery request, CancellationToken cancellationToken) =>
+        _service.GetPermissionMatrixAsync(request.UserId, cancellationToken);
+}
+
+public class UpdateUserPermissionsCommandHandler : IRequestHandler<UpdateUserPermissionsCommand, UserPermissionMatrixDto>
+{
+    private readonly IUserManagementService _service;
+    public UpdateUserPermissionsCommandHandler(IUserManagementService service) => _service = service;
+    public Task<UserPermissionMatrixDto> Handle(UpdateUserPermissionsCommand request, CancellationToken cancellationToken) =>
+        _service.UpdatePermissionsAsync(request.UserId, request.Request, request.AdminUserId, cancellationToken);
 }

@@ -65,7 +65,7 @@ public class BookingsController : ControllerBase
 
     /// <summary>Create a new booking (Customer).</summary>
     [HttpPost]
-    [Authorize(Roles = "Customer")]
+    [HasPermission(PermissionCodes.BookingsCreate)]
     [SwaggerOperation(Summary = "Create booking")]
     public async Task<IActionResult> Create([FromBody] CreateBookingDto request, CancellationToken cancellationToken)
     {
@@ -98,7 +98,7 @@ public class BookingsController : ControllerBase
 
     /// <summary>Customer confirms booking details.</summary>
     [HttpPost("{id:guid}/confirm")]
-    [Authorize(Roles = "Customer")]
+    [HasPermission(PermissionCodes.BookingsCreate)]
     [SwaggerOperation(Summary = "Confirm booking", Description = "Moves booking to Awaiting Payment.")]
     public async Task<IActionResult> Confirm(Guid id, [FromBody] ConfirmBookingDto request, CancellationToken cancellationToken)
     {
@@ -109,7 +109,7 @@ public class BookingsController : ControllerBase
 
     /// <summary>Initiate payment for booking.</summary>
     [HttpPost("{id:guid}/payment")]
-    [Authorize(Roles = "Customer")]
+    [HasPermission(PermissionCodes.BookingsCreate)]
     [SwaggerOperation(Summary = "Initiate payment", Description = "Payment status becomes Pending.")]
     public async Task<IActionResult> InitiatePayment(Guid id, [FromBody] InitiatePaymentDto request, CancellationToken cancellationToken)
     {
@@ -120,7 +120,7 @@ public class BookingsController : ControllerBase
 
     /// <summary>Confirm payment after gateway success.</summary>
     [HttpPost("{id:guid}/payment/confirm")]
-    [Authorize(Roles = "Customer")]
+    [HasPermission(PermissionCodes.BookingsCreate)]
     [SwaggerOperation(Summary = "Confirm payment", Description = "Reserves slot and notifies craftsman.")]
     public async Task<IActionResult> ConfirmPayment(Guid id, [FromBody] ConfirmPaymentDto request, CancellationToken cancellationToken)
     {
@@ -131,7 +131,7 @@ public class BookingsController : ControllerBase
 
     /// <summary>Craftsman accepts booking.</summary>
     [HttpPost("{id:guid}/accept")]
-    [Authorize(Roles = "Craftsman")]
+    [HasPermission(PermissionCodes.BookingsApprove)]
     [SwaggerOperation(Summary = "Accept booking")]
     public async Task<IActionResult> Accept(Guid id, CancellationToken cancellationToken)
     {
@@ -142,7 +142,7 @@ public class BookingsController : ControllerBase
 
     /// <summary>Craftsman rejects booking.</summary>
     [HttpPost("{id:guid}/reject")]
-    [Authorize(Roles = "Craftsman")]
+    [HasPermission(PermissionCodes.BookingsApprove)]
     [SwaggerOperation(Summary = "Reject booking")]
     public async Task<IActionResult> Reject(Guid id, [FromBody] RejectBookingDto request, CancellationToken cancellationToken)
     {
@@ -153,6 +153,7 @@ public class BookingsController : ControllerBase
 
     /// <summary>Cancel booking.</summary>
     [HttpPost("{id:guid}/cancel")]
+    [HasPermission(PermissionCodes.BookingsCancel)]
     [SwaggerOperation(Summary = "Cancel booking")]
     public async Task<IActionResult> Cancel(Guid id, [FromBody] CancelBookingDto request, CancellationToken cancellationToken)
     {
@@ -164,7 +165,7 @@ public class BookingsController : ControllerBase
 
     /// <summary>Mark booking as completed (Craftsman).</summary>
     [HttpPost("{id:guid}/complete")]
-    [Authorize(Roles = "Craftsman")]
+    [HasPermission(PermissionCodes.BookingsApprove)]
     [SwaggerOperation(Summary = "Complete booking")]
     public async Task<IActionResult> Complete(Guid id, CancellationToken cancellationToken)
     {
@@ -175,7 +176,7 @@ public class BookingsController : ControllerBase
 
     /// <summary>Mark customer as no-show (Craftsman).</summary>
     [HttpPost("{id:guid}/no-show")]
-    [Authorize(Roles = "Craftsman")]
+    [HasPermission(PermissionCodes.BookingsApprove)]
     [SwaggerOperation(Summary = "Mark no-show")]
     public async Task<IActionResult> NoShow(Guid id, CancellationToken cancellationToken)
     {
@@ -186,6 +187,7 @@ public class BookingsController : ControllerBase
 
     /// <summary>Reschedule booking to a new time.</summary>
     [HttpPost("{id:guid}/reschedule")]
+    [HasPermission(PermissionCodes.BookingsEdit)]
     [SwaggerOperation(Summary = "Reschedule booking")]
     public async Task<IActionResult> Reschedule(Guid id, [FromBody] RescheduleBookingDto request, CancellationToken cancellationToken)
     {
