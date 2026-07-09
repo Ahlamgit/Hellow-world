@@ -10,6 +10,8 @@ import AdminCategoriesPage from './AdminCategoriesPage';
 import AdminServicesPage from './AdminServicesPage';
 import AdminRegionsPage from './AdminRegionsPage';
 import AdminCitiesPage from './AdminCitiesPage';
+import AdminCouponsPage from './AdminCouponsPage';
+import AdminAdvertisementsPage from './AdminAdvertisementsPage';
 import AdminPageGuard from './AdminPageGuard';
 import { getModuleConfig } from './moduleConfig';
 import AdminBackupPage from './AdminSpecialPages';
@@ -86,6 +88,22 @@ export default function AdminModulePage() {
     return (
       <AdminPageGuard module="cities">
         <AdminCitiesPage />
+      </AdminPageGuard>
+    );
+  }
+
+  if (moduleKey === 'coupons') {
+    return (
+      <AdminPageGuard module="coupons">
+        <AdminCouponsPage />
+      </AdminPageGuard>
+    );
+  }
+
+  if (moduleKey === 'advertisements') {
+    return (
+      <AdminPageGuard module="advertisements">
+        <AdminAdvertisementsPage />
       </AdminPageGuard>
     );
   }

@@ -70,6 +70,9 @@ public class PaymentWebhookService : IPaymentWebhookService
 
     private static string? ResolveTransactionReference(MoyasarWebhookDto payload)
     {
+        if (!string.IsNullOrWhiteSpace(payload.InvoiceId))
+            return payload.InvoiceId;
+
         if (payload.Metadata != null)
         {
             if (payload.Metadata.TryGetValue("session_id", out var sessionId) && !string.IsNullOrWhiteSpace(sessionId))

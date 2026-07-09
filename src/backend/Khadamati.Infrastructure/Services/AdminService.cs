@@ -1033,4 +1033,199 @@ public class AdminService : IAdminService
         Code = c.Code,
         IsActive = c.IsActive,
     };
+
+    public async Task<PagedResult<CouponDto>> ListCouponsAdminAsync(CouponListQueryDto query, CancellationToken cancellationToken = default)
+    {
+        var q = _context.Coupons.AsQueryable();
+        if (!string.IsNullOrWhiteSpace(query.Search))
+        {
+            var s = query.Search.ToUpperInvariant();
+            q = q.Where(c => c.Code.Contains(s) || c.DescriptionEn.Contains(query.Search));
+        }
+        if (query.IsActive.HasValue) q = q.Where(c => c.IsActive == query.IsActive.Value);
+
+        var total = await q.CountAsync(cancellationToken);
+        var items = await q.OrderByDescending(c => c.CreatedAt)
+            .Skip((query.Page - 1) * query.PageSize).Take(query.PageSize)
+            .Select(c => MapCoupon(c))
+            .AsNoTracking()
+            .ToListAsync(cancellationToken);
+
+        return new PagedResult<CouponDto> { Items = items, TotalCount = total, Page = query.Page, PageSize = query.PageSize };
+    }
+
+    public async Task<CouponDto> GetCouponAsync(Guid id, CancellationToken cancellationToken = default)
+    {
+        var c = await _context.Coupons.AsNoTracking().FirstOrDefaultAsync(x => x.Id == id, cancellationToken)
+            ?? throw new Application.Common.NotFoundException("Coupon not found.");
+        return MapCoupon(c);
+    }
+
+    public async Task<CouponDto> CreateCouponAsync(CreateCouponDto request, string? userId, CancellationToken cancellationToken = default)
+    {
+        var code = request.Code.Trim().ToUpperInvariant();
+        if (await _context.Coupons.AnyAsync(c => c.Code == code, cancellationToken))
+            throw new Application.Common.ConflictException("Coupon code already exists.");
+
+        var coupon = new Coupon
+        {
+            Code = code,
+            DescriptionEn = request.DescriptionEn.Trim(),
+            DescriptionAr = request.DescriptionAr.Trim(),
+            DiscountPercentage = request.DiscountPercentage,
+            MaxDiscountAmount = request.MaxDiscountAmount,
+            MaxUses = request.MaxUses,
+            ValidFrom = request.ValidFrom,
+            ValidTo = request.ValidTo,
+            IsActive = request.IsActive,
+        };
+        await _context.Coupons.AddAsync(coupon, cancellationToken);
+        await LogActivityAsync(userId, "create", "coupons", coupon.Id.ToString(), cancellationToken);
+        await _context.SaveChangesAsync(cancellationToken);
+        return MapCoupon(coupon);
+    }
+
+    public async Task<CouponDto> UpdateCouponAsync(Guid id, UpdateCouponDto request, string? userId, CancellationToken cancellationToken = default)
+    {
+        var coupon = await _context.Coupons.FirstOrDefaultAsync(c => c.Id == id, cancellationToken)
+            ?? throw new Application.Common.NotFoundException("Coupon not found.");
+
+        var code = request.Code.Trim().ToUpperInvariant();
+        if (await _context.Coupons.AnyAsync(c => c.Code == code && c.Id != id, cancellationToken))
+            throw new Application.Common.ConflictException("Coupon code already exists.");
+
+        coupon.Code = code;
+        coupon.DescriptionEn = request.DescriptionEn.Trim();
+        coupon.DescriptionAr = request.DescriptionAr.Trim();
+        coupon.DiscountPercentage = request.DiscountPercentage;
+        coupon.MaxDiscountAmount = request.MaxDiscountAmount;
+        coupon.MaxUses = request.MaxUses;
+        coupon.ValidFrom = request.ValidFrom;
+        coupon.ValidTo = request.ValidTo;
+        coupon.IsActive = request.IsActive;
+
+        await LogActivityAsync(userId, "update", "coupons", id.ToString(), cancellationToken);
+        await _context.SaveChangesAsync(cancellationToken);
+        return MapCoupon(coupon);
+    }
+
+    public async Task DeleteCouponAsync(Guid id, string? userId, CancellationToken cancellationToken = default)
+    {
+        var coupon = await _context.Coupons.FirstOrDefaultAsync(c => c.Id == id, cancellationToken)
+            ?? throw new Application.Common.NotFoundException("Coupon not found.");
+        coupon.IsDeleted = true;
+        coupon.DeletedAt = DateTime.UtcNow;
+        await LogActivityAsync(userId, "delete", "coupons", id.ToString(), cancellationToken);
+        await _context.SaveChangesAsync(cancellationToken);
+    }
+
+    public async Task<PagedResult<AdminAdvertisementDto>> ListAdvertisementsAdminAsync(
+        AdvertisementListQueryDto query, CancellationToken cancellationToken = default)
+    {
+        var q = _context.Advertisements.AsQueryable();
+        if (!string.IsNullOrWhiteSpace(query.Search))
+            q = q.Where(a => a.TitleEn.Contains(query.Search) || a.TitleAr.Contains(query.Search));
+        if (!string.IsNullOrWhiteSpace(query.Placement))
+            q = q.Where(a => a.Placement == query.Placement);
+        if (query.IsActive.HasValue) q = q.Where(a => a.IsActive == query.IsActive.Value);
+
+        var total = await q.CountAsync(cancellationToken);
+        var items = await q.OrderByDescending(a => a.StartDate)
+            .Skip((query.Page - 1) * query.PageSize).Take(query.PageSize)
+            .Select(a => MapAdvertisement(a))
+            .AsNoTracking()
+            .ToListAsync(cancellationToken);
+
+        return new PagedResult<AdminAdvertisementDto> { Items = items, TotalCount = total, Page = query.Page, PageSize = query.PageSize };
+    }
+
+    public async Task<AdminAdvertisementDto> GetAdvertisementAsync(Guid id, CancellationToken cancellationToken = default)
+    {
+        var a = await _context.Advertisements.AsNoTracking().FirstOrDefaultAsync(x => x.Id == id, cancellationToken)
+            ?? throw new Application.Common.NotFoundException("Advertisement not found.");
+        return MapAdvertisement(a);
+    }
+
+    public async Task<AdminAdvertisementDto> CreateAdvertisementAsync(
+        CreateAdvertisementDto request, string? userId, CancellationToken cancellationToken = default)
+    {
+        var ad = new Advertisement
+        {
+            TitleEn = request.TitleEn.Trim(),
+            TitleAr = request.TitleAr.Trim(),
+            DescriptionEn = request.DescriptionEn,
+            ImageUrl = request.ImageUrl,
+            Placement = request.Placement,
+            TargetUserId = request.TargetUserId,
+            StartDate = request.StartDate,
+            EndDate = request.EndDate,
+            IsActive = request.IsActive,
+        };
+        await _context.Advertisements.AddAsync(ad, cancellationToken);
+        await LogActivityAsync(userId, "create", "advertisements", ad.Id.ToString(), cancellationToken);
+        await _context.SaveChangesAsync(cancellationToken);
+        return MapAdvertisement(ad);
+    }
+
+    public async Task<AdminAdvertisementDto> UpdateAdvertisementAsync(
+        Guid id, UpdateAdvertisementDto request, string? userId, CancellationToken cancellationToken = default)
+    {
+        var ad = await _context.Advertisements.FirstOrDefaultAsync(a => a.Id == id, cancellationToken)
+            ?? throw new Application.Common.NotFoundException("Advertisement not found.");
+
+        ad.TitleEn = request.TitleEn.Trim();
+        ad.TitleAr = request.TitleAr.Trim();
+        ad.DescriptionEn = request.DescriptionEn;
+        ad.ImageUrl = request.ImageUrl;
+        ad.Placement = request.Placement;
+        ad.TargetUserId = request.TargetUserId;
+        ad.StartDate = request.StartDate;
+        ad.EndDate = request.EndDate;
+        ad.IsActive = request.IsActive;
+
+        await LogActivityAsync(userId, "update", "advertisements", id.ToString(), cancellationToken);
+        await _context.SaveChangesAsync(cancellationToken);
+        return MapAdvertisement(ad);
+    }
+
+    public async Task DeleteAdvertisementAsync(Guid id, string? userId, CancellationToken cancellationToken = default)
+    {
+        var ad = await _context.Advertisements.FirstOrDefaultAsync(a => a.Id == id, cancellationToken)
+            ?? throw new Application.Common.NotFoundException("Advertisement not found.");
+        ad.IsDeleted = true;
+        ad.DeletedAt = DateTime.UtcNow;
+        await LogActivityAsync(userId, "delete", "advertisements", id.ToString(), cancellationToken);
+        await _context.SaveChangesAsync(cancellationToken);
+    }
+
+    private static CouponDto MapCoupon(Coupon c) => new()
+    {
+        Id = c.Id,
+        Code = c.Code,
+        DescriptionEn = c.DescriptionEn,
+        DescriptionAr = c.DescriptionAr,
+        DiscountPercentage = c.DiscountPercentage,
+        MaxDiscountAmount = c.MaxDiscountAmount,
+        MaxUses = c.MaxUses,
+        UsedCount = c.UsedCount,
+        ValidFrom = c.ValidFrom,
+        ValidTo = c.ValidTo,
+        IsActive = c.IsActive,
+    };
+
+    private static AdminAdvertisementDto MapAdvertisement(Advertisement a) => new()
+    {
+        Id = a.Id,
+        TitleEn = a.TitleEn,
+        TitleAr = a.TitleAr,
+        DescriptionEn = a.DescriptionEn,
+        ImageUrl = a.ImageUrl,
+        Placement = a.Placement,
+        TargetUserId = a.TargetUserId,
+        StartDate = a.StartDate,
+        EndDate = a.EndDate,
+        Impressions = a.Impressions,
+        Clicks = a.Clicks,
+        IsActive = a.IsActive,
+    };
 }

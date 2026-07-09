@@ -3,6 +3,7 @@ namespace Khadamati.Application.DTOs.Payments;
 public class MoyasarWebhookDto
 {
     public string? Id { get; set; }
+    public string? InvoiceId { get; set; }
     public string? Status { get; set; }
     public int? Amount { get; set; }
     public string? Currency { get; set; }

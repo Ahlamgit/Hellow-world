@@ -78,6 +78,7 @@ public static class DependencyInjection
         switch (provider.ToLowerInvariant())
         {
             case "moyasar":
+                services.AddHttpClient(nameof(MoyasarPaymentGateway));
                 services.AddScoped<IPaymentGateway, MoyasarPaymentGateway>();
                 break;
             default:

@@ -40,6 +40,16 @@ public record GetCityQuery(Guid Id) : IRequest<CityDto>;
 public record CreateCityCommand(CreateCityDto Request, string? UserId) : IRequest<CityDto>;
 public record UpdateCityCommand(Guid Id, UpdateCityDto Request, string? UserId) : IRequest<CityDto>;
 public record DeleteCityCommand(Guid Id, string? UserId) : IRequest<Unit>;
+public record ListCouponsQuery(CouponListQueryDto Query) : IRequest<PagedResult<CouponDto>>;
+public record GetCouponQuery(Guid Id) : IRequest<CouponDto>;
+public record CreateCouponCommand(CreateCouponDto Request, string? UserId) : IRequest<CouponDto>;
+public record UpdateCouponCommand(Guid Id, UpdateCouponDto Request, string? UserId) : IRequest<CouponDto>;
+public record DeleteCouponCommand(Guid Id, string? UserId) : IRequest<Unit>;
+public record ListAdvertisementsQuery(AdvertisementListQueryDto Query) : IRequest<PagedResult<AdminAdvertisementDto>>;
+public record GetAdvertisementQuery(Guid Id) : IRequest<AdminAdvertisementDto>;
+public record CreateAdvertisementCommand(CreateAdvertisementDto Request, string? UserId) : IRequest<AdminAdvertisementDto>;
+public record UpdateAdvertisementCommand(Guid Id, UpdateAdvertisementDto Request, string? UserId) : IRequest<AdminAdvertisementDto>;
+public record DeleteAdvertisementCommand(Guid Id, string? UserId) : IRequest<Unit>;
 
 public class GetAdminDashboardQueryHandler : IRequestHandler<GetAdminDashboardQuery, AdminDashboardDto>
 {
@@ -317,6 +327,92 @@ public class DeleteCityCommandHandler : IRequestHandler<DeleteCityCommand, Unit>
     public async Task<Unit> Handle(DeleteCityCommand request, CancellationToken ct)
     {
         await _admin.DeleteCityAsync(request.Id, request.UserId, ct);
+        return Unit.Value;
+    }
+}
+
+public class ListCouponsQueryHandler : IRequestHandler<ListCouponsQuery, PagedResult<CouponDto>>
+{
+    private readonly IAdminService _admin;
+    public ListCouponsQueryHandler(IAdminService admin) => _admin = admin;
+    public Task<PagedResult<CouponDto>> Handle(ListCouponsQuery request, CancellationToken ct) =>
+        _admin.ListCouponsAdminAsync(request.Query, ct);
+}
+
+public class GetCouponQueryHandler : IRequestHandler<GetCouponQuery, CouponDto>
+{
+    private readonly IAdminService _admin;
+    public GetCouponQueryHandler(IAdminService admin) => _admin = admin;
+    public Task<CouponDto> Handle(GetCouponQuery request, CancellationToken ct) =>
+        _admin.GetCouponAsync(request.Id, ct);
+}
+
+public class CreateCouponCommandHandler : IRequestHandler<CreateCouponCommand, CouponDto>
+{
+    private readonly IAdminService _admin;
+    public CreateCouponCommandHandler(IAdminService admin) => _admin = admin;
+    public Task<CouponDto> Handle(CreateCouponCommand request, CancellationToken ct) =>
+        _admin.CreateCouponAsync(request.Request, request.UserId, ct);
+}
+
+public class UpdateCouponCommandHandler : IRequestHandler<UpdateCouponCommand, CouponDto>
+{
+    private readonly IAdminService _admin;
+    public UpdateCouponCommandHandler(IAdminService admin) => _admin = admin;
+    public Task<CouponDto> Handle(UpdateCouponCommand request, CancellationToken ct) =>
+        _admin.UpdateCouponAsync(request.Id, request.Request, request.UserId, ct);
+}
+
+public class DeleteCouponCommandHandler : IRequestHandler<DeleteCouponCommand, Unit>
+{
+    private readonly IAdminService _admin;
+    public DeleteCouponCommandHandler(IAdminService admin) => _admin = admin;
+    public async Task<Unit> Handle(DeleteCouponCommand request, CancellationToken ct)
+    {
+        await _admin.DeleteCouponAsync(request.Id, request.UserId, ct);
+        return Unit.Value;
+    }
+}
+
+public class ListAdvertisementsQueryHandler : IRequestHandler<ListAdvertisementsQuery, PagedResult<AdminAdvertisementDto>>
+{
+    private readonly IAdminService _admin;
+    public ListAdvertisementsQueryHandler(IAdminService admin) => _admin = admin;
+    public Task<PagedResult<AdminAdvertisementDto>> Handle(ListAdvertisementsQuery request, CancellationToken ct) =>
+        _admin.ListAdvertisementsAdminAsync(request.Query, ct);
+}
+
+public class GetAdvertisementQueryHandler : IRequestHandler<GetAdvertisementQuery, AdminAdvertisementDto>
+{
+    private readonly IAdminService _admin;
+    public GetAdvertisementQueryHandler(IAdminService admin) => _admin = admin;
+    public Task<AdminAdvertisementDto> Handle(GetAdvertisementQuery request, CancellationToken ct) =>
+        _admin.GetAdvertisementAsync(request.Id, ct);
+}
+
+public class CreateAdvertisementCommandHandler : IRequestHandler<CreateAdvertisementCommand, AdminAdvertisementDto>
+{
+    private readonly IAdminService _admin;
+    public CreateAdvertisementCommandHandler(IAdminService admin) => _admin = admin;
+    public Task<AdminAdvertisementDto> Handle(CreateAdvertisementCommand request, CancellationToken ct) =>
+        _admin.CreateAdvertisementAsync(request.Request, request.UserId, ct);
+}
+
+public class UpdateAdvertisementCommandHandler : IRequestHandler<UpdateAdvertisementCommand, AdminAdvertisementDto>
+{
+    private readonly IAdminService _admin;
+    public UpdateAdvertisementCommandHandler(IAdminService admin) => _admin = admin;
+    public Task<AdminAdvertisementDto> Handle(UpdateAdvertisementCommand request, CancellationToken ct) =>
+        _admin.UpdateAdvertisementAsync(request.Id, request.Request, request.UserId, ct);
+}
+
+public class DeleteAdvertisementCommandHandler : IRequestHandler<DeleteAdvertisementCommand, Unit>
+{
+    private readonly IAdminService _admin;
+    public DeleteAdvertisementCommandHandler(IAdminService admin) => _admin = admin;
+    public async Task<Unit> Handle(DeleteAdvertisementCommand request, CancellationToken ct)
+    {
+        await _admin.DeleteAdvertisementAsync(request.Id, request.UserId, ct);
         return Unit.Value;
     }
 }

@@ -40,6 +40,16 @@ public interface IAdminService
     Task<CityDto> CreateCityAsync(CreateCityDto request, string? userId, CancellationToken cancellationToken = default);
     Task<CityDto> UpdateCityAsync(Guid id, UpdateCityDto request, string? userId, CancellationToken cancellationToken = default);
     Task DeleteCityAsync(Guid id, string? userId, CancellationToken cancellationToken = default);
+    Task<PagedResult<CouponDto>> ListCouponsAdminAsync(CouponListQueryDto query, CancellationToken cancellationToken = default);
+    Task<CouponDto> GetCouponAsync(Guid id, CancellationToken cancellationToken = default);
+    Task<CouponDto> CreateCouponAsync(CreateCouponDto request, string? userId, CancellationToken cancellationToken = default);
+    Task<CouponDto> UpdateCouponAsync(Guid id, UpdateCouponDto request, string? userId, CancellationToken cancellationToken = default);
+    Task DeleteCouponAsync(Guid id, string? userId, CancellationToken cancellationToken = default);
+    Task<PagedResult<AdminAdvertisementDto>> ListAdvertisementsAdminAsync(AdvertisementListQueryDto query, CancellationToken cancellationToken = default);
+    Task<AdminAdvertisementDto> GetAdvertisementAsync(Guid id, CancellationToken cancellationToken = default);
+    Task<AdminAdvertisementDto> CreateAdvertisementAsync(CreateAdvertisementDto request, string? userId, CancellationToken cancellationToken = default);
+    Task<AdminAdvertisementDto> UpdateAdvertisementAsync(Guid id, UpdateAdvertisementDto request, string? userId, CancellationToken cancellationToken = default);
+    Task DeleteAdvertisementAsync(Guid id, string? userId, CancellationToken cancellationToken = default);
 }
 
 public interface IAdminExportService
