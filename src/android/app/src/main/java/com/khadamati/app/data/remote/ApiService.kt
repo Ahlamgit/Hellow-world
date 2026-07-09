@@ -38,6 +38,12 @@ interface ApiService {
     @POST("auth/revoke")
     suspend fun revokeToken(@Body refreshToken: String): ApiResponse<Any?>
 
+    @POST("auth/forgot-password")
+    suspend fun forgotPassword(@Body request: ForgotPasswordRequestDto): ApiResponse<MessageResponseDto>
+
+    @POST("auth/reset-password")
+    suspend fun resetPassword(@Body request: ResetPasswordRequestDto): ApiResponse<MessageResponseDto>
+
     @GET("users/me")
     suspend fun getProfile(): ApiResponse<UserProfileDto>
 

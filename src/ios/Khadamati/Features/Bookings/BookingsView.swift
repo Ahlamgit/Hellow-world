@@ -41,41 +41,6 @@ struct MyBookingsView: View {
     }
 }
 
-struct BookingDetailView: View {
-    let booking: Booking
-    @ObservedObject var viewModel: BookingViewModel
-    @EnvironmentObject private var appSession: AppSession
-
-    var body: some View {
-        VStack(alignment: .leading, spacing: 16) {
-            Text(booking.serviceName).font(.title2.bold())
-            Label(booking.status, systemImage: "info.circle")
-            Text("Craftsman: \(booking.craftsmanName)")
-            Text("Price: \(booking.estimatedPrice) SAR")
-            Spacer()
-            if booking.status == "AwaitingPayment", appSession.currentUser?.role == "Customer" {
-                Button("Pay Now") { Task { await viewModel.pay(bookingId: booking.id) } }
-                    .buttonStyle(.borderedProminent)
-            }
-            NavigationLink {
-                BookingChatView(bookingId: booking.id)
-            } label: {
-                Text(L10n.Chat.open)
-            }
-            .buttonStyle(.bordered)
-            if booking.status == "PendingCraftsmanConfirmation", appSession.currentUser?.role == "Craftsman" {
-                HStack {
-                    Button("Accept") { Task { await viewModel.accept(bookingId: booking.id) } }
-                        .buttonStyle(.borderedProminent)
-                    Button("Reject", role: .destructive) { Task { await viewModel.reject(bookingId: booking.id, reason: "Unavailable") } }
-                }
-            }
-        }
-        .padding()
-        .navigationTitle(booking.bookingReference)
-    }
-}
-
 extension Booking: Hashable {
     static func == (lhs: Booking, rhs: Booking) -> Bool { lhs.id == rhs.id }
     func hash(into hasher: inout Hasher) { hasher.combine(id) }

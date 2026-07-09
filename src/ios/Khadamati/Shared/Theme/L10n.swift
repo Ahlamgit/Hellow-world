@@ -42,6 +42,18 @@ enum L10n {
         static let registerTitle = NSLocalizedString("auth.registerTitle", comment: "Register title")
         static let noAccount = NSLocalizedString("auth.noAccount", comment: "No account prompt")
         static let hasAccount = NSLocalizedString("auth.hasAccount", comment: "Has account prompt")
+        static let forgotPassword = NSLocalizedString("auth.forgotPassword", comment: "Forgot password link")
+        static let forgotPasswordTitle = NSLocalizedString("auth.forgotPasswordTitle", comment: "Forgot password title")
+        static let forgotPasswordHint = NSLocalizedString("auth.forgotPasswordHint", comment: "Forgot password hint")
+        static let sendResetLink = NSLocalizedString("auth.sendResetLink", comment: "Send reset link")
+        static let resetPasswordTitle = NSLocalizedString("auth.resetPasswordTitle", comment: "Reset password title")
+        static let resetToken = NSLocalizedString("auth.resetToken", comment: "Reset token")
+        static let newPassword = NSLocalizedString("auth.newPassword", comment: "New password")
+        static let confirmPassword = NSLocalizedString("auth.confirmPassword", comment: "Confirm password")
+        static let resetPassword = NSLocalizedString("auth.resetPassword", comment: "Reset password button")
+        static let passwordMismatch = NSLocalizedString("auth.passwordMismatch", comment: "Password mismatch")
+        static let resetSuccess = NSLocalizedString("auth.resetSuccess", comment: "Reset success")
+        static let forgotSuccess = NSLocalizedString("auth.forgotSuccess", comment: "Forgot success")
     }
 
     enum Services {
@@ -75,6 +87,19 @@ enum L10n {
         static let noCraftsmen = NSLocalizedString("booking.noCraftsmen", comment: "No craftsmen")
         static let noSlots = NSLocalizedString("booking.noSlots", comment: "No slots")
         static let findNearby = NSLocalizedString("booking.findNearby", comment: "Find nearby")
+        static let payNow = NSLocalizedString("booking.payNow", comment: "Pay now")
+        static let accept = NSLocalizedString("booking.accept", comment: "Accept booking")
+        static let reject = NSLocalizedString("booking.reject", comment: "Reject booking")
+        static let complete = NSLocalizedString("booking.complete", comment: "Complete booking")
+        static let cancel = NSLocalizedString("booking.cancel", comment: "Cancel booking")
+        static let cancelReason = NSLocalizedString("booking.cancelReason", comment: "Cancel reason")
+        static let confirmCancel = NSLocalizedString("booking.confirmCancel", comment: "Confirm cancel")
+        static let reschedule = NSLocalizedString("booking.reschedule", comment: "Reschedule booking")
+        static let rescheduleReason = NSLocalizedString("booking.rescheduleReason", comment: "Reschedule reason")
+        static let confirmReschedule = NSLocalizedString("booking.confirmReschedule", comment: "Confirm reschedule")
+        static let noShow = NSLocalizedString("booking.noShow", comment: "No show")
+        static let noShowHint = NSLocalizedString("booking.noShowHint", comment: "No show hint")
+        static let confirmNoShow = NSLocalizedString("booking.confirmNoShow", comment: "Confirm no show")
 
         static func distanceKm(_ km: Double) -> String {
             String(format: NSLocalizedString("booking.distanceKm", comment: "Distance"), km)

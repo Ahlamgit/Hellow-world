@@ -39,6 +39,7 @@ import com.khadamati.app.ui.viewmodel.AuthViewModel
 fun LoginScreen(
     authViewModel: AuthViewModel,
     onNavigateToRegister: () -> Unit,
+    onNavigateToForgotPassword: () -> Unit,
     onNavigateToHome: () -> Unit,
 ) {
     val uiState by authViewModel.uiState.collectAsStateWithLifecycle()
@@ -103,6 +104,10 @@ fun LoginScreen(
                 } else {
                     Text(stringResource(R.string.auth_sign_in))
                 }
+            }
+
+            TextButton(onClick = onNavigateToForgotPassword) {
+                Text(stringResource(R.string.auth_forgot_password))
             }
 
             TextButton(onClick = onNavigateToRegister) {

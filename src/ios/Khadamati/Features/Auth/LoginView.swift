@@ -55,6 +55,20 @@ struct LoginView: View {
                     .fontWeight(.semibold)
                 }
                 .font(AppTheme.Typography.body())
+
+                NavigationLink {
+                    ForgotPasswordView()
+                } label: {
+                    Text(L10n.Auth.forgotPassword)
+                        .font(AppTheme.Typography.body())
+                }
+
+                NavigationLink {
+                    ResetPasswordView()
+                } label: {
+                    Text(L10n.Auth.resetPasswordTitle)
+                        .font(AppTheme.Typography.caption())
+                }
             }
             .padding(AppTheme.Spacing.lg)
         }

@@ -176,4 +176,23 @@ final class BookingViewModel: ObservableObject {
         try? await apiClient.requestVoid(url: APIEndpoints.Bookings.reject(bookingId), method: .post, body: ["reason": reason], requiresAuth: true)
         await loadBookings()
     }
+
+    func reschedule(bookingId: UUID, newScheduledAt: String, reason: String?) async {
+        let body = RescheduleBody(newScheduledAt: newScheduledAt, reason: reason)
+        try? await apiClient.requestVoid(
+            url: APIEndpoints.Bookings.reschedule(bookingId),
+            method: .post,
+            body: body,
+            requiresAuth: true
+        )
+        await loadBookings()
+        if let refreshed = await loadBooking(id: bookingId) {
+            selectedBooking = refreshed
+        }
+    }
+}
+
+private struct RescheduleBody: Encodable {
+    let newScheduledAt: String
+    let reason: String?
 }

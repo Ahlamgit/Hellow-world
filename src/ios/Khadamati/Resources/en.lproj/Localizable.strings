@@ -33,6 +33,18 @@
 "auth.registerTitle" = "Create Account";
 "auth.noAccount" = "Don't have an account?";
 "auth.hasAccount" = "Already have an account?";
+"auth.forgotPassword" = "Forgot password?";
+"auth.forgotPasswordTitle" = "Forgot Password";
+"auth.forgotPasswordHint" = "Enter your email and we'll send you a reset link.";
+"auth.sendResetLink" = "Send Reset Link";
+"auth.resetPasswordTitle" = "Reset Password";
+"auth.resetToken" = "Reset Token";
+"auth.newPassword" = "New Password";
+"auth.confirmPassword" = "Confirm Password";
+"auth.resetPassword" = "Reset Password";
+"auth.passwordMismatch" = "Passwords do not match.";
+"auth.resetSuccess" = "Password reset successfully. You can sign in now.";
+"auth.forgotSuccess" = "If an account exists, a reset link has been sent.";
 
 "services.title" = "Our Services";
 "services.request" = "Request Service";
@@ -126,4 +138,17 @@
 "addresses.empty" = "No saved addresses yet.";
 
 "booking.findNearby" = "Find nearby craftsmen";
+"booking.payNow" = "Pay Now";
+"booking.accept" = "Accept";
+"booking.reject" = "Reject";
+"booking.complete" = "Mark Complete";
+"booking.cancel" = "Cancel Booking";
+"booking.cancelReason" = "Reason";
+"booking.confirmCancel" = "Confirm Cancel";
+"booking.reschedule" = "Reschedule";
+"booking.rescheduleReason" = "Reason (optional)";
+"booking.confirmReschedule" = "Confirm Reschedule";
+"booking.noShow" = "Mark No-Show";
+"booking.noShowHint" = "Record that the customer did not attend this confirmed booking.";
+"booking.confirmNoShow" = "Confirm No-Show";
 "booking.distanceKm" = "%.1f km away";

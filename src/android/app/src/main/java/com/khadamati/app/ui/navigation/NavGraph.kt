@@ -37,7 +37,8 @@ import com.khadamati.app.ui.screens.MyBookingsScreen
 import com.khadamati.app.ui.screens.MySubscriptionScreen
 import com.khadamati.app.ui.screens.NotificationsScreen
 import com.khadamati.app.ui.screens.ProfileScreen
-import com.khadamati.app.ui.screens.RegisterScreen
+import com.khadamati.app.ui.screens.ForgotPasswordScreen
+import com.khadamati.app.ui.screens.ResetPasswordScreen
 import com.khadamati.app.ui.screens.ServicesScreen
 import com.khadamati.app.ui.screens.SplashScreen
 import com.khadamati.app.ui.screens.SubscribeScreen
@@ -112,11 +113,27 @@ fun KhadamatiNavGraph(container: AppContainer) {
                 LoginScreen(
                     authViewModel = authViewModel,
                     onNavigateToRegister = { navController.navigate(Routes.REGISTER) },
+                    onNavigateToForgotPassword = { navController.navigate(Routes.FORGOT_PASSWORD) },
                     onNavigateToHome = {
                         navController.navigate(Routes.HOME) {
                             popUpTo(Routes.LOGIN) { inclusive = true }
                         }
                     },
+                )
+            }
+
+            composable(Routes.FORGOT_PASSWORD) {
+                ForgotPasswordScreen(
+                    authViewModel = authViewModel,
+                    onNavigateBack = { navController.popBackStack() },
+                    onNavigateToReset = { navController.navigate(Routes.RESET_PASSWORD) },
+                )
+            }
+
+            composable(Routes.RESET_PASSWORD) {
+                ResetPasswordScreen(
+                    authViewModel = authViewModel,
+                    onNavigateBack = { navController.popBackStack() },
                 )
             }
 

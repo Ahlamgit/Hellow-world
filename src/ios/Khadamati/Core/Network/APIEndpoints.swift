@@ -15,6 +15,8 @@ enum APIEndpoints {
         static let register = baseURL.appendingPathComponent("auth/register")
         static let refresh = baseURL.appendingPathComponent("auth/refresh")
         static let revoke = baseURL.appendingPathComponent("auth/revoke")
+        static let forgotPassword = baseURL.appendingPathComponent("auth/forgot-password")
+        static let resetPassword = baseURL.appendingPathComponent("auth/reset-password")
     }
 
     enum Devices {

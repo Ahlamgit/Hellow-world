@@ -24,6 +24,16 @@ class BookingViewModel(private val repository: BookingRepository) : ViewModel() 
     private val _uiState = MutableStateFlow(BookingUiState())
     val uiState: StateFlow<BookingUiState> = _uiState.asStateFlow()
 
+    fun loadBooking(bookingId: String) = viewModelScope.launch {
+        _uiState.value = _uiState.value.copy(isLoading = true, error = null)
+        try {
+            val booking = repository.getBooking(bookingId)
+            _uiState.value = _uiState.value.copy(selectedBooking = booking, isLoading = false)
+        } catch (e: Exception) {
+            _uiState.value = _uiState.value.copy(error = e.message, isLoading = false)
+        }
+    }
+
     fun loadBookings() = viewModelScope.launch {
         _uiState.value = _uiState.value.copy(isLoading = true)
         try {
@@ -81,10 +91,22 @@ class BookingViewModel(private val repository: BookingRepository) : ViewModel() 
             }
         }
 
-    fun pay(bookingId: String) = viewModelScope.launch { repository.pay(bookingId); loadBookings() }
-    fun accept(bookingId: String) = viewModelScope.launch { repository.accept(bookingId); loadBookings() }
-    fun reject(bookingId: String, reason: String) = viewModelScope.launch { repository.reject(bookingId, reason); loadBookings() }
-    fun cancel(bookingId: String, reason: String) = viewModelScope.launch { repository.cancel(bookingId, reason); loadBookings() }
-    fun complete(bookingId: String) = viewModelScope.launch { repository.complete(bookingId); loadBookings() }
-    fun noShow(bookingId: String) = viewModelScope.launch { repository.noShow(bookingId); loadBookings() }
+    private fun refreshAfterAction(bookingId: String) = viewModelScope.launch {
+        try {
+            val booking = repository.getBooking(bookingId)
+            val bookings = repository.getBookings()
+            _uiState.value = _uiState.value.copy(selectedBooking = booking, bookings = bookings, error = null)
+        } catch (e: Exception) {
+            _uiState.value = _uiState.value.copy(error = e.message)
+        }
+    }
+
+    fun pay(bookingId: String) = viewModelScope.launch { repository.pay(bookingId); refreshAfterAction(bookingId) }
+    fun accept(bookingId: String) = viewModelScope.launch { repository.accept(bookingId); refreshAfterAction(bookingId) }
+    fun reject(bookingId: String, reason: String) = viewModelScope.launch { repository.reject(bookingId, reason); refreshAfterAction(bookingId) }
+    fun cancel(bookingId: String, reason: String) = viewModelScope.launch { repository.cancel(bookingId, reason); refreshAfterAction(bookingId) }
+    fun complete(bookingId: String) = viewModelScope.launch { repository.complete(bookingId); refreshAfterAction(bookingId) }
+    fun noShow(bookingId: String) = viewModelScope.launch { repository.noShow(bookingId); refreshAfterAction(bookingId) }
+    fun reschedule(bookingId: String, newScheduledAt: String, reason: String?) =
+        viewModelScope.launch { repository.reschedule(bookingId, newScheduledAt, reason); refreshAfterAction(bookingId) }
 }

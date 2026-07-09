@@ -8,3 +8,7 @@ struct ApiResponse<T: Decodable>: Decodable {
 }
 
 struct EmptyResponse: Decodable {}
+
+struct MessageResponse: Decodable {
+    let message: String?
+}

@@ -76,6 +76,18 @@ class AuthRepository(
     suspend fun hasValidSession(): Boolean =
         !tokenManager.getAccessToken().isNullOrBlank()
 
+    suspend fun forgotPassword(email: String): Result<String> = runCatching {
+        val response = apiService.forgotPassword(com.khadamati.app.data.remote.dto.ForgotPasswordRequestDto(email))
+        response.message ?: response.data?.message ?: "If an account exists, a reset link has been sent."
+    }
+
+    suspend fun resetPassword(token: String, newPassword: String, confirmPassword: String): Result<String> = runCatching {
+        val response = apiService.resetPassword(
+            com.khadamati.app.data.remote.dto.ResetPasswordRequestDto(token, newPassword, confirmPassword),
+        )
+        response.message ?: response.data?.message ?: "Password reset successfully."
+    }
+
     private suspend fun persistSession(tokens: AuthTokens, user: User) {
         tokenManager.saveTokens(
             accessToken = tokens.accessToken,
