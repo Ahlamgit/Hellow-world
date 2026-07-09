@@ -19,6 +19,7 @@ import com.khadamati.app.data.remote.dto.ServiceDto
 import com.khadamati.app.data.remote.dto.UserProfileDto
 import retrofit2.http.Body
 import retrofit2.http.GET
+import retrofit2.http.PATCH
 import retrofit2.http.POST
 import retrofit2.http.PUT
 import retrofit2.http.Query
@@ -119,4 +120,44 @@ interface ApiService {
         @Query("page") page: Int = 1,
         @Query("pageSize") pageSize: Int = 20,
     ): ApiResponse<PagedResultDto<com.khadamati.app.data.remote.dto.NotificationDto>>
+
+    @POST("notifications/{id}/read")
+    suspend fun markNotificationRead(
+        @retrofit2.http.Path("id") id: String,
+    ): ApiResponse<Any?>
+
+    @GET("subscription-plans")
+    suspend fun getSubscriptionPlans(
+        @Query("targetRole") targetRole: String? = null,
+    ): ApiResponse<List<com.khadamati.app.data.remote.dto.SubscriptionPlanDto>>
+
+    @GET("subscription-plans/{id}")
+    suspend fun getSubscriptionPlan(
+        @retrofit2.http.Path("id") id: String,
+    ): ApiResponse<com.khadamati.app.data.remote.dto.SubscriptionPlanDto>
+
+    @GET("me/subscription")
+    suspend fun getCurrentSubscription(): ApiResponse<com.khadamati.app.data.remote.dto.UserSubscriptionDto?>
+
+    @GET("me/subscriptions")
+    suspend fun getSubscriptionHistory(
+        @Query("page") page: Int = 1,
+        @Query("pageSize") pageSize: Int = 20,
+    ): ApiResponse<PagedResultDto<com.khadamati.app.data.remote.dto.UserSubscriptionDto>>
+
+    @POST("me/subscription")
+    suspend fun subscribe(
+        @Body request: com.khadamati.app.data.remote.dto.SubscribeRequestDto,
+    ): ApiResponse<com.khadamati.app.data.remote.dto.UserSubscriptionDto>
+
+    @POST("me/subscription/{id}/cancel")
+    suspend fun cancelSubscription(
+        @retrofit2.http.Path("id") id: String,
+        @Body request: com.khadamati.app.data.remote.dto.CancelSubscriptionRequestDto,
+    ): ApiResponse<Any?>
+
+    @PATCH("me/subscription/auto-renew")
+    suspend fun updateAutoRenew(
+        @Body request: com.khadamati.app.data.remote.dto.UpdateAutoRenewRequestDto,
+    ): ApiResponse<com.khadamati.app.data.remote.dto.UserSubscriptionDto>
 }

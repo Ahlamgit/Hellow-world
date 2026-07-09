@@ -158,6 +158,66 @@ data class NotificationDto(
     val messageEn: String,
     val messageAr: String,
     val notificationType: String,
+    val referenceId: String? = null,
     val isRead: Boolean,
     val createdAt: String,
 )
+
+data class PlanBillingOptionDto(
+    val id: String? = null,
+    val cycle: String,
+    val price: Double,
+    val durationDays: Int,
+    val isActive: Boolean,
+)
+
+data class SubscriptionPlanDto(
+    val id: String,
+    val planCode: String,
+    val nameEn: String,
+    val nameAr: String,
+    val descriptionEn: String? = null,
+    val descriptionAr: String? = null,
+    val currency: String,
+    val targetRole: String,
+    val status: String,
+    val isFeatured: Boolean,
+    val maxServices: Int? = null,
+    val verificationBadge: Boolean,
+    val premiumBadge: Boolean,
+    val trialDays: Int,
+    val billingOptions: List<PlanBillingOptionDto>,
+)
+
+data class UserSubscriptionDto(
+    val id: String,
+    val userId: String,
+    val userEmail: String,
+    val userName: String,
+    val planId: String,
+    val planCode: String,
+    val planNameEn: String,
+    val planNameAr: String,
+    val billingOptionId: String? = null,
+    val billingCycle: String? = null,
+    val status: String,
+    val startDate: String,
+    val endDate: String? = null,
+    val autoRenew: Boolean,
+    val amountPaid: Double? = null,
+    val currency: String? = null,
+    val couponCode: String? = null,
+    val cancelledAt: String? = null,
+    val cancellationReason: String? = null,
+    val createdAt: String,
+)
+
+data class SubscribeRequestDto(
+    val planId: String,
+    val billingOptionId: String,
+    val autoRenew: Boolean = true,
+    val couponCode: String? = null,
+)
+
+data class CancelSubscriptionRequestDto(val reason: String? = null)
+data class UpdateAutoRenewRequestDto(val autoRenew: Boolean)

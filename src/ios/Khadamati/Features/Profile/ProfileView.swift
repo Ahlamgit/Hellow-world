@@ -10,6 +10,9 @@ struct ProfileView: View {
                 VStack(spacing: AppTheme.Spacing.lg) {
                     profileHeader
                     accountSection
+                    if appSession.currentUser != nil {
+                        quickLinksSection
+                    }
                     languageSection
                     logoutButton
                 }
@@ -76,6 +79,34 @@ struct ProfileView: View {
                 Text(error)
                     .font(AppTheme.Typography.caption())
                     .foregroundStyle(AppTheme.Colors.error)
+            }
+        }
+        .cardStyle()
+    }
+
+    private var quickLinksSection: some View {
+        VStack(alignment: .leading, spacing: AppTheme.Spacing.md) {
+            NavigationLink {
+                NotificationsView()
+            } label: {
+                Label(L10n.Notifications.title, systemImage: "bell")
+                    .font(AppTheme.Typography.body())
+            }
+
+            if SubscriptionRoleSupport.isSubscriber(appSession.currentUser?.role) {
+                NavigationLink {
+                    SubscriptionPlansView()
+                } label: {
+                    Label(L10n.Subscription.nav, systemImage: "creditcard")
+                        .font(AppTheme.Typography.body())
+                }
+
+                NavigationLink {
+                    MySubscriptionView()
+                } label: {
+                    Label(L10n.Subscription.mySubscription, systemImage: "person.text.rectangle")
+                        .font(AppTheme.Typography.body())
+                }
             }
         }
         .cardStyle()

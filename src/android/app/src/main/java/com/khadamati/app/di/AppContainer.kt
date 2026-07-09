@@ -7,10 +7,14 @@ import com.khadamati.app.data.preferences.TokenManager
 import com.khadamati.app.data.remote.RetrofitClient
 import com.khadamati.app.data.repository.AuthRepository
 import com.khadamati.app.data.repository.BookingRepository
+import com.khadamati.app.data.repository.NotificationRepository
 import com.khadamati.app.data.repository.ServicesRepository
+import com.khadamati.app.data.repository.SubscriptionRepository
 import com.khadamati.app.ui.viewmodel.AuthViewModel
 import com.khadamati.app.ui.viewmodel.BookingViewModel
+import com.khadamati.app.ui.viewmodel.NotificationsViewModel
 import com.khadamati.app.ui.viewmodel.ServicesViewModel
+import com.khadamati.app.ui.viewmodel.SubscriptionViewModel
 
 /**
  * Simple service-locator factory for dependency wiring.
@@ -57,6 +61,14 @@ class AppContainer(context: Context) {
         BookingRepository(apiService)
     }
 
+    val notificationRepository: NotificationRepository by lazy {
+        NotificationRepository(apiService)
+    }
+
+    val subscriptionRepository: SubscriptionRepository by lazy {
+        SubscriptionRepository(apiService)
+    }
+
     fun provideAuthViewModel(): AuthViewModel =
         AuthViewModel(authRepository)
 
@@ -65,4 +77,10 @@ class AppContainer(context: Context) {
 
     fun provideBookingViewModel(): BookingViewModel =
         BookingViewModel(bookingRepository)
+
+    fun provideNotificationsViewModel(): NotificationsViewModel =
+        NotificationsViewModel(notificationRepository)
+
+    fun provideSubscriptionViewModel(): SubscriptionViewModel =
+        SubscriptionViewModel(subscriptionRepository)
 }

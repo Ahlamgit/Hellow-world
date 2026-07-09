@@ -86,4 +86,45 @@
   <string name="booking_new">New booking</string>
   <string name="booking_no_craftsmen">No craftsmen available for this service</string>
   <string name="booking_no_slots">No time slots available for this date</string>
+
+  <!-- Notifications -->
+  <string name="notifications_title">Notifications</string>
+  <string name="notifications_all">All</string>
+  <string name="notifications_unread">Unread</string>
+  <string name="notifications_unread_badge">Unread</string>
+  <string name="notifications_empty">No notifications yet.</string>
+  <string name="notifications_empty_unread">You\'re all caught up — no unread notifications.</string>
+  <string name="notifications_mark_all_read">Mark all as read</string>
+  <string name="notifications_view_booking">View booking</string>
+
+  <!-- Subscriptions -->
+  <string name="subscription_nav">Subscriptions</string>
+  <string name="subscription_plans_title">Subscription Plans</string>
+  <string name="subscription_my_subscription">My Subscription</string>
+  <string name="subscription_subscribe_title">Subscribe to Plan</string>
+  <string name="subscription_choose_plan">Choose Plan</string>
+  <string name="subscription_already_subscribed">Already Subscribed</string>
+  <string name="subscription_no_plans">No plans available for your account type.</string>
+  <string name="subscription_billing_cycle">Billing cycle</string>
+  <string name="subscription_auto_renew">Auto-renew</string>
+  <string name="subscription_confirm_subscribe">Confirm Subscription</string>
+  <string name="subscription_no_active">You don\'t have an active subscription.</string>
+  <string name="subscription_browse_plans">Browse Plans</string>
+  <string name="subscription_start_date">Start date</string>
+  <string name="subscription_end_date">End date</string>
+  <string name="subscription_cancel">Cancel Subscription</string>
+  <string name="subscription_cancel_title">Cancel Subscription</string>
+  <string name="subscription_cancel_hint">Your subscription will be cancelled. You may retain access until the end of the billing period.</string>
+  <string name="subscription_cancel_reason">Reason (optional)</string>
+  <string name="subscription_confirm_cancel">Confirm Cancel</string>
+  <string name="subscription_history">Subscription History</string>
+  <string name="subscription_manage">Manage</string>
+  <string name="subscription_active_plan">Active plan: %1$s (%2$s)</string>
+  <string name="subscription_featured">Featured</string>
+  <string name="subscription_max_services">Up to %1$d services</string>
+  <string name="subscription_cycle_monthly">Monthly</string>
+  <string name="subscription_cycle_quarterly">Quarterly</string>
+  <string name="subscription_cycle_semi_annual">Semi-Annual</string>
+  <string name="subscription_cycle_annual">Annual</string>
+  <string name="subscription_cycle_lifetime">Lifetime</string>
 </resources>
