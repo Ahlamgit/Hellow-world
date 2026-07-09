@@ -20,6 +20,7 @@ public class AdminService : IAdminService
     private readonly IUnitOfWork _unitOfWork;
     private readonly IPermissionService _permissionService;
     private readonly IIntegrationReadinessService _integrationReadiness;
+    private readonly IDatabaseBackupService _backupService;
 
     private static readonly Dictionary<string, string[]> ModuleColumns = new(StringComparer.OrdinalIgnoreCase)
     {
@@ -54,13 +55,15 @@ public class AdminService : IAdminService
         IAdminExportService export,
         IUnitOfWork unitOfWork,
         IPermissionService permissionService,
-        IIntegrationReadinessService integrationReadiness)
+        IIntegrationReadinessService integrationReadiness,
+        IDatabaseBackupService backupService)
     {
         _context = context;
         _export = export;
         _unitOfWork = unitOfWork;
         _permissionService = permissionService;
         _integrationReadiness = integrationReadiness;
+        _backupService = backupService;
     }
 
     public async Task<AdminDashboardDto> GetDashboardAsync(CancellationToken cancellationToken = default)
@@ -232,25 +235,78 @@ public class AdminService : IAdminService
     public async Task<IReadOnlyList<AdminBackupDto>> ListBackupsAsync(CancellationToken cancellationToken = default)
     {
         var jobs = await _context.BackupJobs.OrderByDescending(b => b.CreatedAt).Take(50).ToListAsync(cancellationToken);
-        return jobs.Select(b => new AdminBackupDto { Id = b.Id.ToString(), Name = b.Name, Status = b.Status, SizeBytes = b.SizeBytes, CreatedAt = b.CreatedAt }).ToList();
+        return jobs.Select(b => new AdminBackupDto
+        {
+            Id = b.Id.ToString(),
+            Name = b.Name,
+            Status = b.Status,
+            SizeBytes = b.SizeBytes,
+            CreatedAt = b.CreatedAt,
+            FilePath = b.FilePath,
+            ErrorMessage = b.ErrorMessage,
+        }).ToList();
     }
 
     public async Task<AdminBackupDto> CreateBackupAsync(string? userId, CancellationToken cancellationToken = default)
     {
-        var job = new BackupJob { Name = $"backup-{DateTime.UtcNow:yyyyMMdd-HHmmss}", Status = "Completed", SizeBytes = 1024 * 1024, CompletedAt = DateTime.UtcNow, CreatedBy = userId };
+        var job = new BackupJob
+        {
+            Name = $"backup-{DateTime.UtcNow:yyyyMMdd-HHmmss}",
+            Status = "Pending",
+            CreatedBy = userId,
+        };
         await _context.BackupJobs.AddAsync(job, cancellationToken);
+        await _context.SaveChangesAsync(cancellationToken);
+
+        try
+        {
+            var result = await _backupService.CreateBackupAsync(job.Name, cancellationToken);
+            job.Status = "Completed";
+            job.FilePath = result.FilePath;
+            job.SizeBytes = result.SizeBytes;
+            job.CompletedAt = DateTime.UtcNow;
+        }
+        catch (Exception ex)
+        {
+            job.Status = "Failed";
+            job.ErrorMessage = ex.Message;
+        }
+
         await LogActivityAsync(userId, "CreateBackup", "backup", job.Id.ToString(), cancellationToken);
         await _context.SaveChangesAsync(cancellationToken);
-        return new AdminBackupDto { Id = job.Id.ToString(), Name = job.Name, Status = job.Status, SizeBytes = job.SizeBytes, CreatedAt = job.CreatedAt };
+        return new AdminBackupDto
+        {
+            Id = job.Id.ToString(),
+            Name = job.Name,
+            Status = job.Status,
+            SizeBytes = job.SizeBytes,
+            CreatedAt = job.CreatedAt,
+            FilePath = job.FilePath,
+            ErrorMessage = job.ErrorMessage,
+        };
     }
 
     public async Task<AdminBulkActionResultDto> RestoreBackupAsync(AdminRestoreRequestDto request, string? userId, CancellationToken cancellationToken = default)
     {
         if (!request.Confirm) throw new Application.Common.ValidationException(new[] { "Confirm must be true to restore." });
+        if (!Guid.TryParse(request.BackupId, out var backupId))
+            throw new Application.Common.NotFoundException("Backup not found.");
+
+        var job = await _context.BackupJobs.FirstOrDefaultAsync(b => b.Id == backupId && !b.IsDeleted, cancellationToken)
+            ?? throw new Application.Common.NotFoundException("Backup not found.");
+
+        if (string.IsNullOrWhiteSpace(job.FilePath) || job.Status != "Completed")
+            throw new Application.Common.ConflictException("Backup file is not available for restore.");
+
+        var result = await _backupService.RestoreBackupAsync(job.FilePath, cancellationToken);
         await LogActivityAsync(userId, "RestoreBackup", "restore", request.BackupId, cancellationToken);
         await _context.SaveChangesAsync(cancellationToken);
-        return new AdminBulkActionResultDto { AffectedCount = 1, Message = "Restore initiated. This is a simulated restore in development." };
+        return new AdminBulkActionResultDto { AffectedCount = result.RecordsRestored, Message = result.Message };
     }
+
+    public async Task<BackupJob> GetBackupJobAsync(Guid id, CancellationToken cancellationToken = default) =>
+        await _context.BackupJobs.FirstOrDefaultAsync(b => b.Id == id && !b.IsDeleted, cancellationToken)
+        ?? throw new Application.Common.NotFoundException("Backup not found.");
 
     // --- List helpers ---
 
@@ -465,7 +521,20 @@ public class AdminService : IAdminService
     private async Task<AdminListResultDto> ListBackupsAsync(AdminListQueryDto q, CancellationToken ct)
     {
         var query = _context.BackupJobs.AsQueryable();
-        return await Paginate(query, q, b => new AdminRowDto { Id = b.Id.ToString(), Columns = new Dictionary<string, string?> { ["name"] = b.Name, ["status"] = b.Status, ["sizeBytes"] = b.SizeBytes.ToString(), ["createdAt"] = b.CreatedAt.ToString("O"), ["completedAt"] = b.CompletedAt?.ToString("O") } }, ct);
+        return await Paginate(query, q, b => new AdminRowDto
+        {
+            Id = b.Id.ToString(),
+            Columns = new Dictionary<string, string?>
+            {
+                ["name"] = b.Name,
+                ["status"] = b.Status,
+                ["sizeBytes"] = b.SizeBytes.ToString(),
+                ["createdAt"] = b.CreatedAt.ToString("O"),
+                ["completedAt"] = b.CompletedAt?.ToString("O"),
+                ["filePath"] = b.FilePath,
+                ["errorMessage"] = b.ErrorMessage,
+            },
+        }, ct);
     }
 
   private static IQueryable<T> ApplySort<T>(IQueryable<T> query, AdminListQueryDto q, System.Linq.Expressions.Expression<Func<T, object>> defaultKey) where T : class

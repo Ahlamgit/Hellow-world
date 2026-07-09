@@ -21,7 +21,16 @@ export const adminApi = {
   },
   getAnalytics: () => api.get<ApiResponse<AdminAnalytics>>('/admin/analytics/data'),
   getSystemHealth: () => api.get<ApiResponse<AdminSystemHealth>>('/admin/system/health'),
-  createBackup: () => api.post<ApiResponse<{ id: string; name: string }>>('/admin/backup/create'),
+  createBackup: () => api.post<ApiResponse<{ id: string; name: string; status: string; filePath?: string; errorMessage?: string }>>('/admin/backup/create'),
   restoreBackup: (backupId: string) =>
     api.post<ApiResponse<{ message: string }>>('/admin/backup/restore', { backupId, confirm: true }),
+  downloadBackup: async (backupId: string) => {
+    const response = await api.get(`/admin/backup/${backupId}/download`, { responseType: 'blob' });
+    const url = window.URL.createObjectURL(new Blob([response.data]));
+    const link = document.createElement('a');
+    link.href = url;
+    link.download = `khadamati-backup-${backupId}.json.gz`;
+    link.click();
+    window.URL.revokeObjectURL(url);
+  },
 };

@@ -1,6 +1,7 @@
 using Khadamati.Application.Common;
 using Khadamati.Application.DTOs.Admin;
 using Khadamati.Application.DTOs.Support;
+using Khadamati.Domain.Entities;
 
 namespace Khadamati.Application.Interfaces;
 
@@ -16,6 +17,7 @@ public interface IAdminService
     Task<IReadOnlyList<AdminBackupDto>> ListBackupsAsync(CancellationToken cancellationToken = default);
     Task<AdminBackupDto> CreateBackupAsync(string? userId, CancellationToken cancellationToken = default);
     Task<AdminBulkActionResultDto> RestoreBackupAsync(AdminRestoreRequestDto request, string? userId, CancellationToken cancellationToken = default);
+    Task<BackupJob> GetBackupJobAsync(Guid id, CancellationToken cancellationToken = default);
     Task<IReadOnlyList<SystemSettingDto>> ListSettingsAsync(CancellationToken cancellationToken = default);
     Task<SystemSettingDto> UpdateSettingAsync(Guid id, UpdateSystemSettingDto request, string? userId, CancellationToken cancellationToken = default);
     Task<IReadOnlyList<AdminRoleDto>> ListRbacRolesAsync(CancellationToken cancellationToken = default);

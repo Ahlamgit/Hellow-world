@@ -5,6 +5,7 @@ using Khadamati.Infrastructure.Data;
 using Khadamati.Infrastructure.Repositories;
 using Khadamati.Infrastructure.Services;
 using Khadamati.Infrastructure.Services.Identity;
+using Khadamati.Infrastructure.Services.Backup;
 using Khadamati.Infrastructure.Services.Integrations;
 using Khadamati.Infrastructure.Services.Identity.Email;
 using Khadamati.Infrastructure.Services.Identity.Sms;
@@ -46,6 +47,8 @@ public static class DependencyInjection
         services.AddScoped<IBookingService, BookingService>();
         services.AddScoped<IIntegrationReadinessService, IntegrationReadinessService>();
         services.AddScoped<IAdminService, AdminService>();
+        services.AddScoped<IVerificationDocumentService, VerificationDocumentService>();
+        services.AddScoped<IDatabaseBackupService, DatabaseBackupService>();
         services.AddScoped<IUserManagementService, UserManagementService>();
         services.AddScoped<IAdminExportService, AdminExportService>();
         services.AddScoped<ICraftsmanService, CraftsmanPortalService>();

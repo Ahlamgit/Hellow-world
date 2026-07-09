@@ -30,7 +30,7 @@ public static class AdminPermissionMap
     public static string ViewPermissionForModule(string module) =>
         module.ToLowerInvariant() switch
         {
-            "users" or "customers" or "craftsmen" or "stores" or "complaints" or "support-tickets" or "notifications" =>
+            "users" or "customers" or "craftsmen" or "stores" or "complaints" or "support-tickets" or "notifications" or "verification-documents" =>
                 PermissionCodes.UsersView,
             "bookings" => PermissionCodes.BookingsView,
             "subscriptions" => PermissionCodes.SubscriptionsView,
@@ -49,7 +49,7 @@ public static class AdminPermissionMap
     public static string EditPermissionForModule(string module) =>
         module.ToLowerInvariant() switch
         {
-            "users" or "customers" or "craftsmen" or "stores" => PermissionCodes.UsersEdit,
+            "users" or "customers" or "craftsmen" or "stores" or "verification-documents" => PermissionCodes.UsersEdit,
             "bookings" => PermissionCodes.BookingsEdit,
             "subscriptions" => PermissionCodes.SubscriptionsEdit,
             "advertisements" => PermissionCodes.AdvertisementsManage,

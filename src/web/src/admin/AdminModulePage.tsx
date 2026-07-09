@@ -16,6 +16,7 @@ import AdminBookingsPage from './AdminBookingsPage';
 import AdminComplaintsPage from './AdminComplaintsPage';
 import AdminSupportTicketsPage from './AdminSupportTicketsPage';
 import AdminPaymentsPage from './AdminPaymentsPage';
+import AdminVerificationDocumentsPage from './AdminVerificationDocumentsPage';
 import AdminPageGuard from './AdminPageGuard';
 import { getModuleConfig } from './moduleConfig';
 import AdminBackupPage from './AdminSpecialPages';
@@ -140,6 +141,14 @@ export default function AdminModulePage() {
     return (
       <AdminPageGuard module="payments">
         <AdminPaymentsPage />
+      </AdminPageGuard>
+    );
+  }
+
+  if (moduleKey === 'verification-documents') {
+    return (
+      <AdminPageGuard module="verification-documents">
+        <AdminVerificationDocumentsPage />
       </AdminPageGuard>
     );
   }

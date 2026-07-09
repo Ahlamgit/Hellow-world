@@ -77,6 +77,7 @@ public class DatabaseSeeder
         await SeedAdminDataAsync(context, cancellationToken);
         await SeedSubscriptionPlansAsync(context, cancellationToken);
         await SeedCraftsmenAndStoresAsync(context, passwordHasher, cancellationToken);
+        await SeedVerificationDocumentsAsync(context, cancellationToken);
         await SeedCraftsmanAddressesAsync(context, cancellationToken);
         await IdentitySeeder.SeedAsync(context, _logger, cancellationToken);
     }
@@ -111,7 +112,9 @@ public class DatabaseSeeder
                 PasswordHash = passwordHasher.Hash("Craftsman@123"),
                 Role = UserRole.Craftsman,
                 Status = UserStatus.Active,
-                VerificationStatus = VerificationStatus.Verified,
+                VerificationStatus = email == "craftsman1@khadamati.com"
+                    ? VerificationStatus.PendingReview
+                    : VerificationStatus.Verified,
                 SubscriptionStatus = SubscriptionStatus.Active,
                 EmailVerifiedAt = DateTime.UtcNow,
                 Profile = new UserProfile { FirstName = first, LastName = last, PreferredLanguage = "ar" },
@@ -242,6 +245,26 @@ public class DatabaseSeeder
                 IsActive = true,
             });
 
+        await context.SaveChangesAsync(cancellationToken);
+    }
+
+    private static async Task SeedVerificationDocumentsAsync(
+        ApplicationDbContext context, CancellationToken cancellationToken)
+    {
+        if (await context.VerificationDocuments.AnyAsync(cancellationToken))
+            return;
+
+        var craftsman = await context.Users.FirstOrDefaultAsync(
+            u => u.Email == "craftsman1@khadamati.com", cancellationToken);
+        if (craftsman is null) return;
+
+        context.VerificationDocuments.Add(new VerificationDocument
+        {
+            UserId = craftsman.Id,
+            DocumentType = "National ID",
+            DocumentUrl = "https://storage.khadamati.com/demo/craftsman1-national-id.pdf",
+            Status = VerificationStatus.PendingReview,
+        });
         await context.SaveChangesAsync(cancellationToken);
     }
 
