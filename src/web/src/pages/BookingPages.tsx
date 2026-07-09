@@ -547,13 +547,13 @@ export function BookingPaymentPage() {
         {amount != null && <Typography sx={{ mb: 2, fontWeight: 600 }}>{amount} SAR</Typography>}
         {!sessionId ? (
           <Button variant="contained" fullWidth onClick={initiate} disabled={loading}>
-            {loading ? <CircularProgress size={24} /> : 'Start payment'}
+            {loading ? <CircularProgress size={24} /> : t('booking.startPayment')}
           </Button>
         ) : (
           <Box sx={{ display: 'flex', flexDirection: 'column', gap: 1 }}>
             {checkoutUrl && (
               <Button variant="outlined" href={checkoutUrl} target="_blank" rel="noreferrer">
-                Open checkout
+                {t('booking.openCheckout')}
               </Button>
             )}
             <Typography variant="caption" color="text.secondary">Session: {sessionId}</Typography>
@@ -563,6 +563,42 @@ export function BookingPaymentPage() {
           </Box>
         )}
       </CardContent></Card>
+    </Container>
+  );
+}
+
+export function PaymentCheckoutPage() {
+  const { t } = useTranslation();
+  const [searchParams] = useSearchParams();
+  const session = searchParams.get('session');
+  const amount = searchParams.get('amount');
+  const currency = searchParams.get('currency') ?? 'SAR';
+
+  return (
+    <Container maxWidth="sm" sx={{ py: 4 }}>
+      <Typography variant="h4" sx={{ fontWeight: 700 }} gutterBottom>
+        {t('booking.checkoutTitle')}
+      </Typography>
+      {!session ? (
+        <Alert severity="error">{t('booking.checkoutMissingSession')}</Alert>
+      ) : (
+        <Card>
+          <CardContent sx={{ display: 'flex', flexDirection: 'column', gap: 2 }}>
+            <Alert severity="info">{t('booking.checkoutDevNotice')}</Alert>
+            <Box>
+              <Typography variant="body2" color="text.secondary">{t('booking.checkoutSession')}</Typography>
+              <Typography sx={{ fontFamily: 'monospace' }}>{session}</Typography>
+            </Box>
+            {amount && (
+              <Box>
+                <Typography variant="body2" color="text.secondary">{t('booking.checkoutAmount')}</Typography>
+                <Typography variant="h5" sx={{ fontWeight: 700 }}>{amount} {currency}</Typography>
+              </Box>
+            )}
+            <Typography color="text.secondary">{t('booking.checkoutReturnHint')}</Typography>
+          </CardContent>
+        </Card>
+      )}
     </Container>
   );
 }

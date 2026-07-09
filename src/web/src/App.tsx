@@ -9,7 +9,7 @@ import HomePage from './pages/HomePage';
 import ServicesPage from './pages/ServicesPage';
 import DashboardPage from './pages/DashboardPage';
 import LoginPage, { RegisterPage } from './pages/AuthPages';
-import { BookingWizardPage, MyBookingsPage, BookingDetailPage, BookingPaymentPage } from './pages/BookingPages';
+import { BookingWizardPage, MyBookingsPage, BookingDetailPage, BookingPaymentPage, PaymentCheckoutPage } from './pages/BookingPages';
 import { SubscriptionPlansPage, SubscribePage, MySubscriptionPage } from './pages/SubscriptionPages';
 import {
   ForgotPasswordPage, ResetPasswordPage, VerifyEmailPage, ChangePasswordPage, SessionsPage,
@@ -37,6 +37,7 @@ function AppContent() {
             <Route path="/forgot-password" element={<ForgotPasswordPage />} />
             <Route path="/reset-password" element={<ResetPasswordPage />} />
             <Route path="/verify-email" element={<VerifyEmailPage />} />
+            <Route path="/pay" element={<PaymentCheckoutPage />} />
           </Route>
           <Route element={<ProtectedRoute />}>
             <Route path="/dashboard" element={<DashboardPage />} />
