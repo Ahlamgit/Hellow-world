@@ -173,4 +173,14 @@ enum APIEndpoints {
     enum Health {
         static let check = baseURL.appendingPathComponent("health")
     }
+
+    enum CraftsmanPortal {
+        static let profile = baseURL.appendingPathComponent("me/craftsman")
+        static let services = baseURL.appendingPathComponent("me/craftsman/services")
+    }
+
+    enum StorePortal {
+        static let profile = baseURL.appendingPathComponent("me/store")
+        static let products = baseURL.appendingPathComponent("me/store/products")
+    }
 }

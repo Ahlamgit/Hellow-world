@@ -235,4 +235,30 @@ interface ApiService {
         @retrofit2.http.Path("id") id: String,
         @Body request: com.khadamati.app.data.remote.dto.SubmitReviewRequestDto,
     ): ApiResponse<BookingDto>
+
+    @GET("me/craftsman")
+    suspend fun getCraftsmanProfile(): ApiResponse<com.khadamati.app.data.remote.dto.CraftsmanProfileDto>
+
+    @PUT("me/craftsman")
+    suspend fun updateCraftsmanProfile(
+        @Body request: com.khadamati.app.data.remote.dto.UpdateCraftsmanProfileRequestDto,
+    ): ApiResponse<com.khadamati.app.data.remote.dto.CraftsmanProfileDto>
+
+    @POST("me/craftsman/services")
+    suspend fun upsertCraftsmanService(
+        @Body request: com.khadamati.app.data.remote.dto.UpsertCraftsmanServiceRequestDto,
+    ): ApiResponse<com.khadamati.app.data.remote.dto.CraftsmanServiceItemDto>
+
+    @GET("me/store")
+    suspend fun getStoreProfile(): ApiResponse<com.khadamati.app.data.remote.dto.StoreProfileDto>
+
+    @PUT("me/store")
+    suspend fun updateStoreProfile(
+        @Body request: com.khadamati.app.data.remote.dto.UpdateStoreProfileRequestDto,
+    ): ApiResponse<com.khadamati.app.data.remote.dto.StoreProfileDto>
+
+    @POST("me/store/products")
+    suspend fun createStoreProduct(
+        @Body request: com.khadamati.app.data.remote.dto.UpsertStoreProductRequestDto,
+    ): ApiResponse<com.khadamati.app.data.remote.dto.StoreProductDto>
 }

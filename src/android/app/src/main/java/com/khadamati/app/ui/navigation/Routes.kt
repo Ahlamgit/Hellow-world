@@ -22,4 +22,6 @@ object Routes {
     const val BOOKING_CHAT = "booking/{bookingId}/chat"
     const val SUPPORT = "support"
     const val PROFILE_EDIT = "profile/edit"
+    const val CRAFTSMAN_PORTAL = "craftsman-portal"
+    const val STORE_PORTAL = "store-portal"
 }
