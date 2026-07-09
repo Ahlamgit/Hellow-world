@@ -75,7 +75,9 @@ public class DatabaseSeeder
         }
 
         await SeedAdminDataAsync(context, cancellationToken);
+        await SeedSubscriptionPlansAsync(context, cancellationToken);
         await SeedCraftsmenAndStoresAsync(context, passwordHasher, cancellationToken);
+        await SeedCraftsmanAddressesAsync(context, cancellationToken);
         await IdentitySeeder.SeedAsync(context, _logger, cancellationToken);
     }
 
@@ -163,6 +165,20 @@ public class DatabaseSeeder
                     IsActive = true,
                 });
             }
+
+            var (lat, lng) = GetCraftsmanSeedCoordinates(phoneSuffix);
+            context.Addresses.Add(new Address
+            {
+                UserId = user.Id,
+                Label = "Work",
+                Street = "King Fahd Road",
+                City = "Riyadh",
+                District = "Al Olaya",
+                Country = "SA",
+                Latitude = lat,
+                Longitude = lng,
+                IsDefault = true,
+            });
         }
 
         var storeUser = new User
@@ -331,4 +347,170 @@ public class DatabaseSeeder
             await context.SaveChangesAsync(cancellationToken);
         }
     }
+
+    private async Task SeedSubscriptionPlansAsync(ApplicationDbContext context, CancellationToken cancellationToken)
+    {
+        if (await context.SubscriptionPlans.AnyAsync(cancellationToken))
+            return;
+
+        var craftsmanBasic = new SubscriptionPlan
+        {
+            PlanCode = "CRAFTSMAN_BASIC",
+            NameEn = "Craftsman Basic",
+            NameAr = "حرفي - أساسي",
+            DescriptionEn = "Monthly basic plan for craftsmen",
+            DescriptionAr = "خطة شهرية أساسية للحرفيين",
+            Currency = "SAR",
+            TargetRole = UserRole.Craftsman,
+            Status = PlanStatus.Active,
+            DisplayPriority = 10,
+            SearchPriority = 5,
+            HomePageVisible = true,
+            MaxServices = 5,
+            MaxPhotos = 10,
+            TrialDays = 7,
+            VatRate = 15.00m,
+            PaymentMethods = "[\"Card\",\"Mada\"]",
+            PlanColor = "#4CAF50",
+            CreatedBy = "Seeder",
+        };
+        craftsmanBasic.BillingOptions.Add(new PlanBillingOption
+        {
+            Cycle = BillingCycle.Monthly,
+            Price = 99.00m,
+            DurationDays = 30,
+            CreatedBy = "Seeder",
+        });
+        craftsmanBasic.BillingOptions.Add(new PlanBillingOption
+        {
+            Cycle = BillingCycle.Quarterly,
+            Price = 279.00m,
+            DurationDays = 90,
+            CreatedBy = "Seeder",
+        });
+        craftsmanBasic.BillingOptions.Add(new PlanBillingOption
+        {
+            Cycle = BillingCycle.Annual,
+            Price = 999.00m,
+            DurationDays = 365,
+            CreatedBy = "Seeder",
+        });
+
+        var storePro = new SubscriptionPlan
+        {
+            PlanCode = "STORE_PRO",
+            NameEn = "Store Pro",
+            NameAr = "متجر - احترافي",
+            DescriptionEn = "Premium store plan with analytics and priority support",
+            DescriptionAr = "خطة متجر مميزة مع التحليلات والدعم الأولوي",
+            Currency = "SAR",
+            TargetRole = UserRole.Store,
+            Status = PlanStatus.Active,
+            DisplayPriority = 20,
+            SearchPriority = 15,
+            IsFeatured = true,
+            HomePageVisible = true,
+            BannerVisible = true,
+            MaxServices = 50,
+            MaxPhotos = 100,
+            MaxVideos = 20,
+            MaxAdvertisements = 10,
+            AdvertisementCredits = 500,
+            VerificationBadge = true,
+            PremiumBadge = true,
+            StatisticsDashboard = true,
+            Analytics = true,
+            PriorityCustomerSupport = true,
+            AutoRenewal = true,
+            TrialDays = 14,
+            CouponSupport = true,
+            VatRate = 15.00m,
+            PaymentMethods = "[\"Card\",\"Mada\",\"ApplePay\"]",
+            PlanColor = "#FF9800",
+            PlanIcon = "store-pro",
+            CreatedBy = "Seeder",
+        };
+        storePro.BillingOptions.Add(new PlanBillingOption
+        {
+            Cycle = BillingCycle.Monthly,
+            Price = 199.00m,
+            DurationDays = 30,
+            CreatedBy = "Seeder",
+        });
+        storePro.BillingOptions.Add(new PlanBillingOption
+        {
+            Cycle = BillingCycle.SemiAnnual,
+            Price = 999.00m,
+            DurationDays = 180,
+            CreatedBy = "Seeder",
+        });
+        storePro.BillingOptions.Add(new PlanBillingOption
+        {
+            Cycle = BillingCycle.Annual,
+            Price = 1799.00m,
+            DurationDays = 365,
+            CreatedBy = "Seeder",
+        });
+        storePro.BillingOptions.Add(new PlanBillingOption
+        {
+            Cycle = BillingCycle.Lifetime,
+            Price = 4999.00m,
+            DurationDays = 0,
+            CreatedBy = "Seeder",
+        });
+
+        context.SubscriptionPlans.AddRange(craftsmanBasic, storePro);
+        await context.SaveChangesAsync(cancellationToken);
+        _logger.LogInformation("Seeded subscription plans.");
+    }
+
+    private static async Task SeedCraftsmanAddressesAsync(ApplicationDbContext context, CancellationToken cancellationToken)
+    {
+        var craftsmen = await context.Users
+            .Where(u => u.Role == UserRole.Craftsman)
+            .OrderBy(u => u.Email)
+            .ToListAsync(cancellationToken);
+
+        if (craftsmen.Count == 0)
+            return;
+
+        var craftsmanIds = craftsmen.Select(c => c.Id).ToList();
+        var usersWithDefaultAddress = await context.Addresses
+            .Where(a => craftsmanIds.Contains(a.UserId) && a.IsDefault)
+            .Select(a => a.UserId)
+            .ToListAsync(cancellationToken);
+
+        var index = 0;
+        foreach (var craftsman in craftsmen)
+        {
+            if (usersWithDefaultAddress.Contains(craftsman.Id))
+                continue;
+
+            index++;
+            var (lat, lng) = GetCraftsmanSeedCoordinates(index);
+            context.Addresses.Add(new Address
+            {
+                UserId = craftsman.Id,
+                Label = "Work",
+                Street = "King Fahd Road",
+                City = "Riyadh",
+                District = "Al Olaya",
+                Country = "SA",
+                Latitude = lat,
+                Longitude = lng,
+                IsDefault = true,
+            });
+        }
+
+        if (context.ChangeTracker.HasChanges())
+            await context.SaveChangesAsync(cancellationToken);
+    }
+
+    private static (decimal Latitude, decimal Longitude) GetCraftsmanSeedCoordinates(int index) => index switch
+    {
+        1 => (24.7136m, 46.6753m),
+        2 => (24.7200m, 46.6850m),
+        3 => (24.7080m, 46.6700m),
+        _ => (24.7136m + (index * 0.002m), 46.6753m + (index * 0.002m)),
+    };
 }
