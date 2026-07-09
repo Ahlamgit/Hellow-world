@@ -21,6 +21,7 @@ public record RescheduleBookingCommand(Guid BookingId, Guid UserId, string Role,
 public record GetBookingQuery(Guid BookingId, Guid UserId, string Role) : IRequest<BookingDto>;
 public record ListBookingsQuery(Guid UserId, string Role, BookingListQueryDto Query) : IRequest<PagedResult<BookingDto>>;
 public record AdminListBookingsQuery(BookingListQueryDto Query) : IRequest<PagedResult<BookingDto>>;
+public record AdminGetBookingQuery(Guid Id) : IRequest<BookingDto>;
 public record GetAdminBookingStatsQuery() : IRequest<AdminBookingStatsDto>;
 public record GetNotificationsQuery(Guid UserId, bool UnreadOnly, int Page, int PageSize) : IRequest<PagedResult<NotificationDto>>;
 public record MarkNotificationReadCommand(Guid NotificationId, Guid UserId) : IRequest<Unit>;
@@ -151,6 +152,14 @@ public class AdminListBookingsQueryHandler : IRequestHandler<AdminListBookingsQu
     public AdminListBookingsQueryHandler(IBookingService service) => _service = service;
     public Task<PagedResult<BookingDto>> Handle(AdminListBookingsQuery request, CancellationToken ct) =>
         _service.AdminListBookingsAsync(request.Query, ct);
+}
+
+public class AdminGetBookingQueryHandler : IRequestHandler<AdminGetBookingQuery, BookingDto>
+{
+    private readonly IBookingService _service;
+    public AdminGetBookingQueryHandler(IBookingService service) => _service = service;
+    public Task<BookingDto> Handle(AdminGetBookingQuery request, CancellationToken ct) =>
+        _service.AdminGetBookingAsync(request.Id, ct);
 }
 
 public class GetAdminBookingStatsQueryHandler : IRequestHandler<GetAdminBookingStatsQuery, AdminBookingStatsDto>

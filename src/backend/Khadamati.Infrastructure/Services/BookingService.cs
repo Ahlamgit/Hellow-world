@@ -467,6 +467,13 @@ public class BookingService : IBookingService
         };
     }
 
+    public async Task<BookingDto> AdminGetBookingAsync(Guid bookingId, CancellationToken cancellationToken = default)
+    {
+        var booking = await _repository.GetByIdAsync(bookingId, includeDetails: true, cancellationToken)
+            ?? throw new NotFoundException("Booking not found.");
+        return MapToDto(booking);
+    }
+
     public async Task<PagedResult<NotificationDto>> GetNotificationsAsync(Guid userId, bool unreadOnly, int page, int pageSize, CancellationToken cancellationToken = default)
     {
         var (items, total) = await _repository.GetNotificationsAsync(userId, unreadOnly, page, pageSize, cancellationToken);

@@ -1,5 +1,6 @@
 using Khadamati.Application.Common;
 using Khadamati.Application.DTOs.Admin;
+using Khadamati.Application.DTOs.Support;
 
 namespace Khadamati.Application.Interfaces;
 
@@ -50,6 +51,11 @@ public interface IAdminService
     Task<AdminAdvertisementDto> CreateAdvertisementAsync(CreateAdvertisementDto request, string? userId, CancellationToken cancellationToken = default);
     Task<AdminAdvertisementDto> UpdateAdvertisementAsync(Guid id, UpdateAdvertisementDto request, string? userId, CancellationToken cancellationToken = default);
     Task DeleteAdvertisementAsync(Guid id, string? userId, CancellationToken cancellationToken = default);
+    Task<AdminComplaintDetailDto> GetComplaintDetailAsync(Guid id, CancellationToken cancellationToken = default);
+    Task<AdminComplaintDetailDto> ResolveComplaintAsync(Guid id, ResolveComplaintDto request, string? userId, CancellationToken cancellationToken = default);
+    Task<AdminSupportTicketDetailDto> GetSupportTicketDetailAsync(Guid id, CancellationToken cancellationToken = default);
+    Task<AdminSupportTicketDetailDto> CloseSupportTicketAsync(Guid id, string? userId, CancellationToken cancellationToken = default);
+    Task<AdminPaymentDetailDto> GetPaymentDetailAsync(Guid id, CancellationToken cancellationToken = default);
 }
 
 public interface IAdminExportService

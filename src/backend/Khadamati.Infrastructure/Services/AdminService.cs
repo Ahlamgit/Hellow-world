@@ -1,6 +1,7 @@
 using System.Diagnostics;
 using Khadamati.Application.Common;
 using Khadamati.Application.DTOs.Admin;
+using Khadamati.Application.DTOs.Support;
 using Khadamati.Application.Interfaces;
 using Khadamati.Domain.Common;
 using Khadamati.Domain.Entities;
@@ -1237,5 +1238,115 @@ public class AdminService : IAdminService
         Impressions = a.Impressions,
         Clicks = a.Clicks,
         IsActive = a.IsActive,
+    };
+
+    public async Task<AdminComplaintDetailDto> GetComplaintDetailAsync(Guid id, CancellationToken cancellationToken = default)
+    {
+        var complaint = await _context.Complaints
+            .Include(c => c.Complainant)
+            .FirstOrDefaultAsync(c => c.Id == id && !c.IsDeleted, cancellationToken)
+            ?? throw new Application.Common.NotFoundException("Complaint not found.");
+
+        return MapComplaintDetail(complaint);
+    }
+
+    public async Task<AdminComplaintDetailDto> ResolveComplaintAsync(
+        Guid id, ResolveComplaintDto request, string? userId, CancellationToken cancellationToken = default)
+    {
+        var complaint = await _context.Complaints
+            .Include(c => c.Complainant)
+            .FirstOrDefaultAsync(c => c.Id == id && !c.IsDeleted, cancellationToken)
+            ?? throw new Application.Common.NotFoundException("Complaint not found.");
+
+        if (complaint.Status.Equals("Resolved", StringComparison.OrdinalIgnoreCase))
+            throw new Application.Common.ConflictException("Complaint is already resolved.");
+
+        complaint.Status = "Resolved";
+        complaint.Resolution = request.Resolution.Trim();
+        complaint.ResolvedAt = DateTime.UtcNow;
+        await LogActivityAsync(userId, "resolve", "complaints", id.ToString(), cancellationToken);
+        await _context.SaveChangesAsync(cancellationToken);
+        return MapComplaintDetail(complaint);
+    }
+
+    public async Task<AdminSupportTicketDetailDto> GetSupportTicketDetailAsync(Guid id, CancellationToken cancellationToken = default)
+    {
+        var ticket = await _context.SupportTickets
+            .Include(t => t.User)
+            .FirstOrDefaultAsync(t => t.Id == id && !t.IsDeleted, cancellationToken)
+            ?? throw new Application.Common.NotFoundException("Support ticket not found.");
+
+        return MapSupportTicketDetail(ticket);
+    }
+
+    public async Task<AdminSupportTicketDetailDto> CloseSupportTicketAsync(Guid id, string? userId, CancellationToken cancellationToken = default)
+    {
+        var ticket = await _context.SupportTickets
+            .Include(t => t.User)
+            .FirstOrDefaultAsync(t => t.Id == id && !t.IsDeleted, cancellationToken)
+            ?? throw new Application.Common.NotFoundException("Support ticket not found.");
+
+        if (ticket.Status.Equals("Closed", StringComparison.OrdinalIgnoreCase))
+            throw new Application.Common.ConflictException("Support ticket is already closed.");
+
+        ticket.Status = "Closed";
+        ticket.ClosedAt = DateTime.UtcNow;
+        await LogActivityAsync(userId, "close", "support-tickets", id.ToString(), cancellationToken);
+        await _context.SaveChangesAsync(cancellationToken);
+        return MapSupportTicketDetail(ticket);
+    }
+
+    public async Task<AdminPaymentDetailDto> GetPaymentDetailAsync(Guid id, CancellationToken cancellationToken = default)
+    {
+        var payment = await _context.BookingPayments
+            .Include(p => p.ServiceRequest)
+            .Include(p => p.Payer)
+            .Include(p => p.Payee)
+            .FirstOrDefaultAsync(p => p.Id == id && !p.IsDeleted, cancellationToken)
+            ?? throw new Application.Common.NotFoundException("Payment not found.");
+
+        return new AdminPaymentDetailDto
+        {
+            Id = payment.Id,
+            BookingId = payment.ServiceRequestId,
+            BookingReference = payment.ServiceRequest?.BookingReference,
+            PayerEmail = payment.Payer.Email,
+            PayeeEmail = payment.Payee.Email,
+            Amount = payment.Amount,
+            Currency = payment.Currency,
+            Status = payment.Status.ToString(),
+            PaymentMethod = payment.PaymentMethod,
+            TransactionReference = payment.TransactionReference,
+            PaidAt = payment.PaidAt,
+            FailureReason = payment.FailureReason,
+            CreatedAt = payment.CreatedAt,
+        };
+    }
+
+    private static AdminComplaintDetailDto MapComplaintDetail(Complaint complaint) => new()
+    {
+        Id = complaint.Id,
+        Subject = complaint.Subject,
+        Description = complaint.Description,
+        Status = complaint.Status,
+        Priority = complaint.Priority,
+        ComplainantEmail = complaint.Complainant.Email,
+        Resolution = complaint.Resolution,
+        CreatedAt = complaint.CreatedAt,
+        ResolvedAt = complaint.ResolvedAt,
+    };
+
+    private static AdminSupportTicketDetailDto MapSupportTicketDetail(SupportTicket ticket) => new()
+    {
+        Id = ticket.Id,
+        TicketNumber = ticket.TicketNumber,
+        Subject = ticket.Subject,
+        Description = ticket.Description,
+        Status = ticket.Status,
+        Priority = ticket.Priority,
+        Category = ticket.Category,
+        CreatedAt = ticket.CreatedAt,
+        UserEmail = ticket.User.Email,
+        ClosedAt = ticket.ClosedAt,
     };
 }

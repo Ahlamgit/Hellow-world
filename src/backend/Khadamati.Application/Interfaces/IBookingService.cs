@@ -24,6 +24,7 @@ public interface IBookingService
     Task<PagedResult<BookingDto>> ListBookingsAsync(Guid userId, string role, BookingListQueryDto query, CancellationToken cancellationToken = default);
     Task<PagedResult<BookingDto>> AdminListBookingsAsync(BookingListQueryDto query, CancellationToken cancellationToken = default);
     Task<AdminBookingStatsDto> GetAdminStatsAsync(CancellationToken cancellationToken = default);
+    Task<BookingDto> AdminGetBookingAsync(Guid bookingId, CancellationToken cancellationToken = default);
     Task<PagedResult<NotificationDto>> GetNotificationsAsync(Guid userId, bool unreadOnly, int page, int pageSize, CancellationToken cancellationToken = default);
     Task MarkNotificationReadAsync(Guid notificationId, Guid userId, CancellationToken cancellationToken = default);
 }
