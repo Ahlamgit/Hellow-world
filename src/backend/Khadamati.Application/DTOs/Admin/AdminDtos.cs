@@ -1,3 +1,5 @@
+using Khadamati.Application.DTOs.Integrations;
+
 namespace Khadamati.Application.DTOs.Admin;
 
 public class AdminListQueryDto
@@ -68,6 +70,8 @@ public class AdminSystemHealthDto
     public string ApiVersion { get; set; } = "1.0";
     public long MemoryUsedMb { get; set; }
     public double CpuUsagePercent { get; set; }
+    public bool ProductionIntegrationsReady { get; set; }
+    public IReadOnlyList<ProviderReadinessDto> Integrations { get; set; } = Array.Empty<ProviderReadinessDto>();
 }
 
 public class AdminBackupDto

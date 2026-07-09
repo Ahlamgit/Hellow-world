@@ -18,6 +18,7 @@ public class AdminService : IAdminService
     private readonly IAdminExportService _export;
     private readonly IUnitOfWork _unitOfWork;
     private readonly IPermissionService _permissionService;
+    private readonly IIntegrationReadinessService _integrationReadiness;
 
     private static readonly Dictionary<string, string[]> ModuleColumns = new(StringComparer.OrdinalIgnoreCase)
     {
@@ -47,12 +48,18 @@ public class AdminService : IAdminService
         ["restore"] = ["name", "status", "completedAt", "createdAt"],
     };
 
-    public AdminService(ApplicationDbContext context, IAdminExportService export, IUnitOfWork unitOfWork, IPermissionService permissionService)
+    public AdminService(
+        ApplicationDbContext context,
+        IAdminExportService export,
+        IUnitOfWork unitOfWork,
+        IPermissionService permissionService,
+        IIntegrationReadinessService integrationReadiness)
     {
         _context = context;
         _export = export;
         _unitOfWork = unitOfWork;
         _permissionService = permissionService;
+        _integrationReadiness = integrationReadiness;
     }
 
     public async Task<AdminDashboardDto> GetDashboardAsync(CancellationToken cancellationToken = default)
@@ -207,6 +214,7 @@ public class AdminService : IAdminService
         var canConnect = await _context.Database.CanConnectAsync(cancellationToken);
         sw.Stop();
         var proc = Process.GetCurrentProcess();
+        var integrations = _integrationReadiness.GetReport();
         return new AdminSystemHealthDto
         {
             Status = canConnect ? "Healthy" : "Unhealthy",
@@ -215,6 +223,8 @@ public class AdminService : IAdminService
             DatabaseResponseMs = sw.ElapsedMilliseconds,
             ApiVersion = "1.0.0",
             MemoryUsedMb = proc.WorkingSet64 / 1024 / 1024,
+            ProductionIntegrationsReady = integrations.ProductionReady,
+            Integrations = integrations.Providers,
         };
     }
 

@@ -7,7 +7,9 @@ using Khadamati.Domain.Enums;
 using Khadamati.Infrastructure.Data;
 using Khadamati.Infrastructure.Repositories;
 using Khadamati.Infrastructure.Services;
+using Khadamati.Infrastructure.Services.Integrations;
 using Microsoft.EntityFrameworkCore;
+using Microsoft.Extensions.Configuration;
 
 namespace Khadamati.Tests.Services;
 
@@ -24,7 +26,8 @@ public class AdminServiceTests : IDisposable
         _context = new ApplicationDbContext(options);
         var export = new AdminExportService();
         var unitOfWork = new UnitOfWork(_context);
-        _adminService = new AdminService(_context, export, unitOfWork, new NoOpPermissionService());
+        var readiness = new IntegrationReadinessService(new ConfigurationBuilder().Build());
+        _adminService = new AdminService(_context, export, unitOfWork, new NoOpPermissionService(), readiness);
 
         SeedData();
     }

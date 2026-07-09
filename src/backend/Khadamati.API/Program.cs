@@ -123,6 +123,34 @@ using (var scope = app.Services.CreateScope())
 {
     var seeder = scope.ServiceProvider.GetRequiredService<DatabaseSeeder>();
     await seeder.SeedAsync();
+
+    var readiness = scope.ServiceProvider.GetRequiredService<Khadamati.Application.Interfaces.IIntegrationReadinessService>();
+    var report = readiness.GetReport();
+    if (report.ProductionReady)
+    {
+        Log.Information("All production integrations are configured and ready.");
+    }
+    else
+    {
+        foreach (var provider in report.Providers.Where(p => !p.IsProductionReady))
+        {
+            if (provider.Status == "Development")
+            {
+                Log.Warning(
+                    "{Category} is using development provider '{SelectedProvider}'. Configure production credentials before launch.",
+                    provider.Category,
+                    provider.SelectedProvider);
+            }
+            else
+            {
+                Log.Warning(
+                    "{Category} provider '{SelectedProvider}' is misconfigured. Missing: {Missing}",
+                    provider.Category,
+                    provider.SelectedProvider,
+                    string.Join(", ", provider.MissingSettings));
+            }
+        }
+    }
 }
 
 Log.Information("KHADAMATI API starting...");

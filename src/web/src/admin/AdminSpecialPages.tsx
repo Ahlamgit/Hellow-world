@@ -1,7 +1,7 @@
 import { useEffect, useState } from 'react';
 import {
   Alert, Box, Button, Card, CardContent, Chip, CircularProgress, Grid, Snackbar,
-  Table, TableBody, TableCell, TableContainer, TableRow, Typography,
+  Table, TableBody, TableCell, TableContainer, TableHead, TableRow, Typography,
 } from '@mui/material';
 import { Backup, CheckCircle, Error as ErrorIcon } from '@mui/icons-material';
 import { adminApi } from './adminApi';
@@ -130,6 +130,62 @@ export function AdminSystemHealthPage() {
             </CardContent>
           </Card>
         </Grid>
+        {health.integrations && health.integrations.length > 0 && (
+          <Grid size={{ xs: 12 }}>
+            <Card elevation={0} sx={{ border: 1, borderColor: 'divider' }}>
+              <CardContent>
+                <Box sx={{ display: 'flex', alignItems: 'center', gap: 1, mb: 2 }}>
+                  <Typography variant="h6">Production integrations</Typography>
+                  <Chip
+                    label={health.productionIntegrationsReady ? 'Ready' : 'Not ready'}
+                    color={health.productionIntegrationsReady ? 'success' : 'warning'}
+                    size="small"
+                  />
+                </Box>
+                <TableContainer>
+                  <Table size="small">
+                    <TableHead>
+                      <TableRow>
+                        <TableCell>Category</TableCell>
+                        <TableCell>Provider</TableCell>
+                        <TableCell>Status</TableCell>
+                        <TableCell>Notes</TableCell>
+                      </TableRow>
+                    </TableHead>
+                    <TableBody>
+                      {health.integrations.map((integration) => (
+                        <TableRow key={integration.category}>
+                          <TableCell>{integration.category}</TableCell>
+                          <TableCell>{integration.selectedProvider}</TableCell>
+                          <TableCell>
+                            <Chip
+                              label={integration.status}
+                              size="small"
+                              color={
+                                integration.status === 'Ready'
+                                  ? 'success'
+                                  : integration.status === 'Development'
+                                    ? 'default'
+                                    : 'warning'
+                              }
+                            />
+                          </TableCell>
+                          <TableCell>
+                            {integration.missingSettings?.length
+                              ? `Missing: ${integration.missingSettings.join(', ')}`
+                              : integration.warnings?.length
+                                ? integration.warnings.join(' ')
+                                : '—'}
+                          </TableCell>
+                        </TableRow>
+                      ))}
+                    </TableBody>
+                  </Table>
+                </TableContainer>
+              </CardContent>
+            </Card>
+          </Grid>
+        )}
       </Grid>
     </Box>
   );
