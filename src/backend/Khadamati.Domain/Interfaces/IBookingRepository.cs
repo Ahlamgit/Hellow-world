@@ -20,6 +20,7 @@ public interface IBookingRepository
     void Update(ServiceRequest booking);
     Task AddPaymentAsync(BookingPayment payment, CancellationToken cancellationToken = default);
     Task<BookingPayment?> GetPaymentByBookingIdAsync(Guid bookingId, CancellationToken cancellationToken = default);
+    Task<BookingPayment?> GetPaymentByTransactionReferenceAsync(string transactionReference, CancellationToken cancellationToken = default);
     Task AddSlotReservationAsync(BookingSlotReservation reservation, CancellationToken cancellationToken = default);
     Task ReleaseSlotReservationAsync(Guid bookingId, CancellationToken cancellationToken = default);
     Task AddStatusHistoryAsync(ServiceRequestStatusHistory history, CancellationToken cancellationToken = default);

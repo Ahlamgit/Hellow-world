@@ -8,6 +8,8 @@ import AdminSettingsPage from './AdminSettingsPage';
 import AdminRbacMatrixPage from './AdminRbacMatrixPage';
 import AdminCategoriesPage from './AdminCategoriesPage';
 import AdminServicesPage from './AdminServicesPage';
+import AdminRegionsPage from './AdminRegionsPage';
+import AdminCitiesPage from './AdminCitiesPage';
 import AdminPageGuard from './AdminPageGuard';
 import { getModuleConfig } from './moduleConfig';
 import AdminBackupPage from './AdminSpecialPages';
@@ -68,6 +70,22 @@ export default function AdminModulePage() {
     return (
       <AdminPageGuard module="services">
         <AdminServicesPage />
+      </AdminPageGuard>
+    );
+  }
+
+  if (moduleKey === 'regions') {
+    return (
+      <AdminPageGuard module="regions">
+        <AdminRegionsPage />
+      </AdminPageGuard>
+    );
+  }
+
+  if (moduleKey === 'cities') {
+    return (
+      <AdminPageGuard module="cities">
+        <AdminCitiesPage />
       </AdminPageGuard>
     );
   }

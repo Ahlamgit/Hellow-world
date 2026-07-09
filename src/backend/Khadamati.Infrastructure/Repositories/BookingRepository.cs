@@ -131,6 +131,10 @@ public class BookingRepository : IBookingRepository
     public Task<BookingPayment?> GetPaymentByBookingIdAsync(Guid bookingId, CancellationToken cancellationToken = default) =>
         _context.BookingPayments.FirstOrDefaultAsync(p => p.ServiceRequestId == bookingId, cancellationToken);
 
+    public Task<BookingPayment?> GetPaymentByTransactionReferenceAsync(string transactionReference, CancellationToken cancellationToken = default) =>
+        _context.BookingPayments.FirstOrDefaultAsync(
+            p => p.TransactionReference == transactionReference, cancellationToken);
+
     public async Task AddSlotReservationAsync(BookingSlotReservation reservation, CancellationToken cancellationToken = default) =>
         await _context.BookingSlotReservations.AddAsync(reservation, cancellationToken);
 
