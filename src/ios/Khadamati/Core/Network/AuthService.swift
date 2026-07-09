@@ -30,6 +30,7 @@ final class AuthService: AuthServiceProtocol {
             requiresAuth: false
         )
         try persistTokens(from: response.data)
+        await PushRegistrationService.registerCurrentDevice()
         return response.data
     }
 
@@ -41,6 +42,7 @@ final class AuthService: AuthServiceProtocol {
             requiresAuth: false
         )
         try persistTokens(from: response.data)
+        await PushRegistrationService.registerCurrentDevice()
         return response.data
     }
 
@@ -53,6 +55,7 @@ final class AuthService: AuthServiceProtocol {
                 requiresAuth: true
             )
         }
+        await PushRegistrationService.unregisterCurrentDevice()
         try tokenStorage.clear()
     }
 

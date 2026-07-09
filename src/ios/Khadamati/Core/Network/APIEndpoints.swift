@@ -17,8 +17,13 @@ enum APIEndpoints {
         static let revoke = baseURL.appendingPathComponent("auth/revoke")
     }
 
+    enum Devices {
+        static let pushToken = baseURL.appendingPathComponent("devices/push-token")
+    }
+
     enum Users {
         static let me = baseURL.appendingPathComponent("users/me")
+        static let addresses = baseURL.appendingPathComponent("users/me/addresses")
     }
 
     enum Services {
@@ -40,6 +45,17 @@ enum APIEndpoints {
         static func craftsmen(serviceId: UUID) -> URL {
             var components = URLComponents(url: baseURL.appendingPathComponent("bookings/craftsmen"), resolvingAgainstBaseURL: false)!
             components.queryItems = [URLQueryItem(name: "serviceId", value: serviceId.uuidString)]
+            return components.url!
+        }
+
+        static func nearbyCraftsmen(serviceId: UUID, latitude: Double, longitude: Double, radiusKm: Double = 25) -> URL {
+            var components = URLComponents(url: baseURL.appendingPathComponent("bookings/craftsmen/nearby"), resolvingAgainstBaseURL: false)!
+            components.queryItems = [
+                URLQueryItem(name: "serviceId", value: serviceId.uuidString),
+                URLQueryItem(name: "latitude", value: String(latitude)),
+                URLQueryItem(name: "longitude", value: String(longitude)),
+                URLQueryItem(name: "radiusKm", value: String(radiusKm)),
+            ]
             return components.url!
         }
 
@@ -114,6 +130,30 @@ enum APIEndpoints {
 
         static func cancel(_ id: UUID) -> URL {
             baseURL.appendingPathComponent("me/subscription/\(id.uuidString)/cancel")
+        }
+    }
+
+    enum Chat {
+        static let conversations = baseURL.appendingPathComponent("chat/conversations")
+
+        static func booking(_ bookingId: UUID) -> URL {
+            baseURL.appendingPathComponent("chat/bookings/\(bookingId.uuidString)")
+        }
+
+        static func messages(_ conversationId: UUID, page: Int = 1, pageSize: Int = 50) -> URL {
+            var components = URLComponents(
+                url: baseURL.appendingPathComponent("chat/conversations/\(conversationId.uuidString)/messages"),
+                resolvingAgainstBaseURL: false
+            )!
+            components.queryItems = [
+                URLQueryItem(name: "page", value: String(page)),
+                URLQueryItem(name: "pageSize", value: String(pageSize)),
+            ]
+            return components.url!
+        }
+
+        static func sendMessage(_ conversationId: UUID) -> URL {
+            baseURL.appendingPathComponent("chat/conversations/\(conversationId.uuidString)/messages")
         }
     }
 

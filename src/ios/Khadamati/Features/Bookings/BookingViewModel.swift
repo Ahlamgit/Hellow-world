@@ -64,6 +64,22 @@ final class BookingViewModel: ObservableObject {
         }
     }
 
+    func loadNearbyCraftsmen(serviceId: UUID, latitude: Double, longitude: Double) async {
+        isLoading = true
+        errorMessage = nil
+        defer { isLoading = false }
+        do {
+            let response: ApiResponse<[CraftsmanOption]> = try await apiClient.request(
+                url: APIEndpoints.Bookings.nearbyCraftsmen(serviceId: serviceId, latitude: latitude, longitude: longitude),
+                method: .get,
+                requiresAuth: false
+            )
+            craftsmen = response.data
+        } catch {
+            errorMessage = error.localizedDescription
+        }
+    }
+
     func loadSlots(craftsmanId: UUID, serviceId: UUID, date: Date) async {
         isLoading = true
         errorMessage = nil

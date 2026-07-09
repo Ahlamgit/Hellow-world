@@ -74,6 +74,11 @@ enum L10n {
         static let confirmAndPay = NSLocalizedString("booking.confirmAndPay", comment: "Confirm and pay")
         static let noCraftsmen = NSLocalizedString("booking.noCraftsmen", comment: "No craftsmen")
         static let noSlots = NSLocalizedString("booking.noSlots", comment: "No slots")
+        static let findNearby = NSLocalizedString("booking.findNearby", comment: "Find nearby")
+
+        static func distanceKm(_ km: Double) -> String {
+            String(format: NSLocalizedString("booking.distanceKm", comment: "Distance"), km)
+        }
     }
 
     enum Common {
@@ -133,6 +138,28 @@ enum L10n {
 
         static func maxServices(count: Int) -> String {
             String(format: NSLocalizedString("subscription.maxServices", comment: "Max services"), count)
+        }
+    }
+
+    enum Chat {
+        static let title = NSLocalizedString("chat.title", comment: "Chat title")
+        static let empty = NSLocalizedString("chat.empty", comment: "Empty chat")
+        static let open = NSLocalizedString("chat.open", comment: "Open chat")
+        static let messageHint = NSLocalizedString("chat.messageHint", comment: "Message hint")
+    }
+
+    enum Addresses {
+        static let title = NSLocalizedString("addresses.title", comment: "Addresses title")
+        static let add = NSLocalizedString("addresses.add", comment: "Add address")
+        static let label = NSLocalizedString("addresses.label", comment: "Label")
+        static let street = NSLocalizedString("addresses.street", comment: "Street")
+        static let city = NSLocalizedString("addresses.city", comment: "City")
+        static let country = NSLocalizedString("addresses.country", comment: "Country")
+        static let useLocation = NSLocalizedString("addresses.useLocation", comment: "Use location")
+        static let empty = NSLocalizedString("addresses.empty", comment: "Empty addresses")
+
+        static func coordinates(lat: Double, lng: Double) -> String {
+            String(format: NSLocalizedString("addresses.coordinates", comment: "Coordinates"), lat, lng)
         }
     }
 }

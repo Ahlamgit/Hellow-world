@@ -11,6 +11,7 @@ public class CraftsmanOptionDto
     public int CompletedJobs { get; set; }
     public decimal Price { get; set; }
     public bool IsAvailable { get; set; }
+    public double? DistanceKm { get; set; }
 }
 
 public class TimeSlotDto

@@ -10,6 +10,9 @@ class BookingRepository(private val apiService: ApiService) {
     suspend fun getCraftsmen(serviceId: String): List<CraftsmanOptionDto> =
         apiService.getCraftsmen(serviceId).data.orEmpty()
 
+    suspend fun getNearbyCraftsmen(serviceId: String, latitude: Double, longitude: Double): List<CraftsmanOptionDto> =
+        apiService.getNearbyCraftsmen(serviceId, latitude, longitude).data.orEmpty()
+
     suspend fun getAvailability(craftsmanId: String, serviceId: String, date: String): List<TimeSlotDto> =
         apiService.getAvailability(craftsmanId, serviceId, date).data.orEmpty()
 

@@ -109,3 +109,21 @@
 "subscription.cycle.SemiAnnual" = "نصف سنوي";
 "subscription.cycle.Annual" = "سنوي";
 "subscription.cycle.Lifetime" = "مدى الحياة";
+
+"chat.title" = "الرسائل";
+"chat.empty" = "لا توجد محادثات بعد.";
+"chat.open" = "فتح المحادثة";
+"chat.messageHint" = "اكتب رسالة…";
+
+"addresses.title" = "عناويني";
+"addresses.add" = "إضافة عنوان";
+"addresses.label" = "التسمية";
+"addresses.street" = "الشارع";
+"addresses.city" = "المدينة";
+"addresses.country" = "الدولة";
+"addresses.useLocation" = "استخدام الموقع الحالي";
+"addresses.coordinates" = "GPS: %.5f, %.5f";
+"addresses.empty" = "لا توجد عناوين محفوظة.";
+
+"booking.findNearby" = "البحث عن حرفيين قريبين";
+"booking.distanceKm" = "على بعد %.1f كم";

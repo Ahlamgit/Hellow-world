@@ -37,6 +37,7 @@ final class AppSession: ObservableObject {
         currentUser = user
         isAuthenticated = true
         preferredLanguage = user.preferredLanguage
+        Task { await PushRegistrationService.registerCurrentDevice() }
     }
 
     func signOut() {

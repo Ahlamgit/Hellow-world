@@ -6,6 +6,7 @@ using MediatR;
 namespace Khadamati.Application.Features.Bookings.Commands;
 
 public record GetCraftsmenForServiceQuery(Guid ServiceId) : IRequest<IReadOnlyList<CraftsmanOptionDto>>;
+public record GetNearbyCraftsmenForServiceQuery(Guid ServiceId, double Latitude, double Longitude, double RadiusKm = 25) : IRequest<IReadOnlyList<CraftsmanOptionDto>>;
 public record GetAvailableSlotsQuery(Guid CraftsmanId, Guid ServiceId, DateTime Date) : IRequest<IReadOnlyList<TimeSlotDto>>;
 public record CreateBookingCommand(Guid CustomerId, CreateBookingDto Request) : IRequest<BookingDto>;
 public record ConfirmBookingCommand(Guid BookingId, Guid UserId, ConfirmBookingDto Request) : IRequest<BookingDto>;
@@ -30,6 +31,14 @@ public class GetCraftsmenForServiceQueryHandler : IRequestHandler<GetCraftsmenFo
     public GetCraftsmenForServiceQueryHandler(IBookingService service) => _service = service;
     public Task<IReadOnlyList<CraftsmanOptionDto>> Handle(GetCraftsmenForServiceQuery request, CancellationToken ct) =>
         _service.GetCraftsmenForServiceAsync(request.ServiceId, ct);
+}
+
+public class GetNearbyCraftsmenForServiceQueryHandler : IRequestHandler<GetNearbyCraftsmenForServiceQuery, IReadOnlyList<CraftsmanOptionDto>>
+{
+    private readonly IBookingService _service;
+    public GetNearbyCraftsmenForServiceQueryHandler(IBookingService service) => _service = service;
+    public Task<IReadOnlyList<CraftsmanOptionDto>> Handle(GetNearbyCraftsmenForServiceQuery request, CancellationToken ct) =>
+        _service.GetNearbyCraftsmenForServiceAsync(request.ServiceId, request.Latitude, request.Longitude, request.RadiusKm, ct);
 }
 
 public class GetAvailableSlotsQueryHandler : IRequestHandler<GetAvailableSlotsQuery, IReadOnlyList<TimeSlotDto>>

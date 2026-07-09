@@ -15,6 +15,7 @@ public interface IBookingRepository
     Task<IReadOnlyList<BookingSlotReservation>> GetBookedSlotsAsync(Guid craftsmanId, DateTime from, DateTime to, CancellationToken cancellationToken = default);
     Task<IReadOnlyList<CraftsmanWorkingHour>> GetWorkingHoursAsync(Guid craftsmanId, CancellationToken cancellationToken = default);
     Task<IReadOnlyList<CraftsmanProfile>> GetCraftsmenForServiceAsync(Guid serviceId, CancellationToken cancellationToken = default);
+    Task<Dictionary<Guid, Address>> GetDefaultAddressesForUsersAsync(IEnumerable<Guid> userIds, CancellationToken cancellationToken = default);
     Task AddAsync(ServiceRequest booking, CancellationToken cancellationToken = default);
     void Update(ServiceRequest booking);
     Task AddPaymentAsync(BookingPayment payment, CancellationToken cancellationToken = default);

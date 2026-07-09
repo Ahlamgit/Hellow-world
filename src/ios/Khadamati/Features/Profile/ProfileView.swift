@@ -108,6 +108,20 @@ struct ProfileView: View {
                         .font(AppTheme.Typography.body())
                 }
             }
+
+            NavigationLink {
+                ChatListView()
+            } label: {
+                Label(L10n.Chat.title, systemImage: "message")
+                    .font(AppTheme.Typography.body())
+            }
+
+            NavigationLink {
+                AddressesView()
+            } label: {
+                Label(L10n.Addresses.title, systemImage: "mappin.and.ellipse")
+                    .font(AppTheme.Typography.body())
+            }
         }
         .cardStyle()
     }

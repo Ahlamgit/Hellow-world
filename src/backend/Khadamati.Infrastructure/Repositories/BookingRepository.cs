@@ -96,11 +96,28 @@ public class BookingRepository : IBookingRepository
     {
         return await _context.CraftsmanServices
             .Include(cs => cs.CraftsmanProfile).ThenInclude(cp => cp.User).ThenInclude(u => u.Profile)
+            .Include(cs => cs.CraftsmanProfile).ThenInclude(cp => cp.Services)
             .Where(cs => cs.ServiceId == serviceId && cs.IsAvailable && !cs.IsDeleted &&
                          cs.CraftsmanProfile.IsAvailable && !cs.CraftsmanProfile.IsDeleted)
             .Select(cs => cs.CraftsmanProfile)
             .AsNoTracking()
             .ToListAsync(cancellationToken);
+    }
+
+    public async Task<Dictionary<Guid, Address>> GetDefaultAddressesForUsersAsync(
+        IEnumerable<Guid> userIds, CancellationToken cancellationToken = default)
+    {
+        var ids = userIds.Distinct().ToList();
+        if (ids.Count == 0) return new Dictionary<Guid, Address>();
+
+        var addresses = await _context.Addresses
+            .Where(a => ids.Contains(a.UserId) && a.IsDefault && a.Latitude != null && a.Longitude != null)
+            .AsNoTracking()
+            .ToListAsync(cancellationToken);
+
+        return addresses
+            .GroupBy(a => a.UserId)
+            .ToDictionary(g => g.Key, g => g.First());
     }
 
     public async Task AddAsync(ServiceRequest booking, CancellationToken cancellationToken = default) =>

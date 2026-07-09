@@ -1,6 +1,8 @@
 package com.khadamati.app.ui.screens
 
-import androidx.compose.foundation.border
+import android.Manifest
+import androidx.activity.compose.rememberLauncherForActivityResult
+import androidx.activity.result.contract.ActivityResultContracts
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
@@ -52,8 +54,11 @@ import com.khadamati.app.R
 import com.khadamati.app.data.remote.dto.CraftsmanOptionDto
 import com.khadamati.app.data.remote.dto.TimeSlotDto
 import com.khadamati.app.domain.model.Service
+import com.khadamati.app.location.LocationProvider
 import com.khadamati.app.ui.viewmodel.BookingViewModel
 import com.khadamati.app.ui.viewmodel.ServicesViewModel
+import androidx.compose.runtime.rememberCoroutineScope
+import kotlinx.coroutines.launch
 import java.text.SimpleDateFormat
 import java.time.Instant
 import java.time.ZoneId
@@ -72,6 +77,7 @@ private val stepLabels = listOf(
 fun BookingWizardScreen(
     servicesViewModel: ServicesViewModel,
     bookingViewModel: BookingViewModel,
+    locationProvider: LocationProvider,
     preselectedServiceId: String?,
     onNavigateBack: () -> Unit,
     onBookingCreated: (String) -> Unit,
@@ -79,6 +85,7 @@ fun BookingWizardScreen(
     val servicesState by servicesViewModel.uiState.collectAsStateWithLifecycle()
     val bookingState by bookingViewModel.uiState.collectAsStateWithLifecycle()
     val isArabic = LocalConfiguration.current.locales[0].language == "ar"
+    val scope = rememberCoroutineScope()
 
     var activeStep by remember { mutableIntStateOf(if (preselectedServiceId != null) 1 else 0) }
     var selectedService by remember { mutableStateOf<Service?>(null) }
@@ -86,6 +93,19 @@ fun BookingWizardScreen(
     var selectedDate by remember { mutableStateOf("") }
     var selectedSlot by remember { mutableStateOf<TimeSlotDto?>(null) }
     var showDatePicker by remember { mutableStateOf(false) }
+
+    val locationPermissionLauncher = rememberLauncherForActivityResult(
+        ActivityResultContracts.RequestMultiplePermissions(),
+    ) { grants ->
+        if (grants.values.any { it }) {
+            val serviceId = selectedService?.id ?: return@rememberLauncherForActivityResult
+            scope.launch {
+                locationProvider.getCurrentLocation()?.let { location ->
+                    bookingViewModel.loadNearbyCraftsmen(serviceId, location.latitude, location.longitude)
+                }
+            }
+        }
+    }
 
     LaunchedEffect(preselectedServiceId, servicesState.services) {
         if (preselectedServiceId != null && selectedService == null) {
@@ -170,6 +190,14 @@ fun BookingWizardScreen(
                     craftsmen = bookingState.craftsmen,
                     isLoading = bookingState.isLoading,
                     isArabic = isArabic,
+                    onFindNearby = {
+                        locationPermissionLauncher.launch(
+                            arrayOf(
+                                Manifest.permission.ACCESS_FINE_LOCATION,
+                                Manifest.permission.ACCESS_COARSE_LOCATION,
+                            ),
+                        )
+                    },
                     onSelect = { craftsman ->
                         selectedCraftsman = craftsman
                         selectedDate = ""
@@ -293,6 +321,7 @@ private fun CraftsmanStep(
     craftsmen: List<CraftsmanOptionDto>,
     isLoading: Boolean,
     isArabic: Boolean,
+    onFindNearby: () -> Unit,
     onSelect: (CraftsmanOptionDto) -> Unit,
     onBack: () -> Unit,
 ) {
@@ -300,6 +329,11 @@ private fun CraftsmanStep(
         CircularProgressIndicator()
         return
     }
+
+    Button(onClick = onFindNearby, modifier = Modifier.fillMaxWidth()) {
+        Text(stringResource(R.string.booking_find_nearby))
+    }
+    Spacer(modifier = Modifier.height(8.dp))
 
     if (craftsmen.isEmpty()) {
         Text(stringResource(R.string.booking_no_craftsmen))
@@ -325,6 +359,13 @@ private fun CraftsmanStep(
                             )
                             craftsman.specialization?.let {
                                 Text(it, style = MaterialTheme.typography.bodySmall)
+                            }
+                            craftsman.distanceKm?.let {
+                                Text(
+                                    stringResource(R.string.booking_distance_km, it),
+                                    style = MaterialTheme.typography.labelSmall,
+                                    color = MaterialTheme.colorScheme.primary,
+                                )
                             }
                         }
                         Column(horizontalAlignment = Alignment.End) {

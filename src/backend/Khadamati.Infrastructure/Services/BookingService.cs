@@ -14,30 +14,77 @@ public class BookingService : IBookingService
     private readonly IBookingRepository _repository;
     private readonly IUnitOfWork _unitOfWork;
     private readonly IPaymentGateway _paymentGateway;
+    private readonly IPushNotificationService _pushNotificationService;
 
-    public BookingService(IBookingRepository repository, IUnitOfWork unitOfWork, IPaymentGateway paymentGateway)
+    public BookingService(
+        IBookingRepository repository,
+        IUnitOfWork unitOfWork,
+        IPaymentGateway paymentGateway,
+        IPushNotificationService pushNotificationService)
     {
         _repository = repository;
         _unitOfWork = unitOfWork;
         _paymentGateway = paymentGateway;
+        _pushNotificationService = pushNotificationService;
     }
 
     public async Task<IReadOnlyList<CraftsmanOptionDto>> GetCraftsmenForServiceAsync(Guid serviceId, CancellationToken cancellationToken = default)
     {
         var craftsmen = await _repository.GetCraftsmenForServiceAsync(serviceId, cancellationToken);
-        return craftsmen.Select(cp => new CraftsmanOptionDto
-        {
-            Id = cp.UserId,
-            FirstName = cp.User.Profile?.FirstName ?? string.Empty,
-            LastName = cp.User.Profile?.LastName ?? string.Empty,
-            Specialization = cp.Specialization,
-            Rating = cp.Rating,
-            TotalReviews = cp.TotalReviews,
-            CompletedJobs = cp.CompletedJobs,
-            Price = cp.Services.FirstOrDefault(s => s.ServiceId == serviceId)?.CustomPrice ?? 0,
-            IsAvailable = cp.IsAvailable
-        }).ToList();
+        return craftsmen.Select(cp => MapCraftsmanOption(cp, serviceId, null)).ToList();
     }
+
+    public async Task<IReadOnlyList<CraftsmanOptionDto>> GetNearbyCraftsmenForServiceAsync(
+        Guid serviceId, double latitude, double longitude, double radiusKm = 25, CancellationToken cancellationToken = default)
+    {
+        var craftsmen = await _repository.GetCraftsmenForServiceAsync(serviceId, cancellationToken);
+        var addresses = await _repository.GetDefaultAddressesForUsersAsync(craftsmen.Select(c => c.UserId), cancellationToken);
+
+        return craftsmen
+            .Select(cp =>
+            {
+                double? distance = null;
+                if (addresses.TryGetValue(cp.UserId, out var address) &&
+                    address.Latitude.HasValue && address.Longitude.HasValue)
+                {
+                    distance = HaversineKm(
+                        latitude, longitude,
+                        (double)address.Latitude.Value, (double)address.Longitude.Value);
+                }
+                return (Profile: cp, Distance: distance);
+            })
+            .Where(x => x.Distance.HasValue && x.Distance.Value <= radiusKm)
+            .OrderBy(x => x.Distance)
+            .Select(x => MapCraftsmanOption(x.Profile, serviceId, x.Distance))
+            .ToList();
+    }
+
+    private static CraftsmanOptionDto MapCraftsmanOption(CraftsmanProfile cp, Guid serviceId, double? distanceKm) => new()
+    {
+        Id = cp.UserId,
+        FirstName = cp.User.Profile?.FirstName ?? string.Empty,
+        LastName = cp.User.Profile?.LastName ?? string.Empty,
+        Specialization = cp.Specialization,
+        Rating = cp.Rating,
+        TotalReviews = cp.TotalReviews,
+        CompletedJobs = cp.CompletedJobs,
+        Price = cp.Services.FirstOrDefault(s => s.ServiceId == serviceId)?.CustomPrice ?? 0,
+        IsAvailable = cp.IsAvailable,
+        DistanceKm = distanceKm,
+    };
+
+    private static double HaversineKm(double lat1, double lon1, double lat2, double lon2)
+    {
+        const double earthRadiusKm = 6371;
+        var dLat = DegreesToRadians(lat2 - lat1);
+        var dLon = DegreesToRadians(lon2 - lon1);
+        var a = Math.Sin(dLat / 2) * Math.Sin(dLat / 2) +
+                Math.Cos(DegreesToRadians(lat1)) * Math.Cos(DegreesToRadians(lat2)) *
+                Math.Sin(dLon / 2) * Math.Sin(dLon / 2);
+        return earthRadiusKm * 2 * Math.Atan2(Math.Sqrt(a), Math.Sqrt(1 - a));
+    }
+
+    private static double DegreesToRadians(double degrees) => degrees * Math.PI / 180;
 
     public async Task<IReadOnlyList<TimeSlotDto>> GetAvailableSlotsAsync(Guid craftsmanId, Guid serviceId, DateTime date, CancellationToken cancellationToken = default)
     {
@@ -493,6 +540,17 @@ public class BookingService : IBookingService
             MessageAr = msgAr,
             NotificationType = type,
             ReferenceId = refId
+        }, cancellationToken);
+
+        await _pushNotificationService.SendAsync(new Application.DTOs.Messaging.PushNotificationPayload
+        {
+            UserId = userId,
+            TitleEn = titleEn,
+            TitleAr = titleAr,
+            MessageEn = msgEn,
+            MessageAr = msgAr,
+            NotificationType = type,
+            ReferenceId = refId,
         }, cancellationToken);
     }
 

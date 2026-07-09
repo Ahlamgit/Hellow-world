@@ -30,6 +30,9 @@ public class ApplicationDbContext : DbContext
     public DbSet<CraftsmanWorkingHour> CraftsmanWorkingHours => Set<CraftsmanWorkingHour>();
     public DbSet<BookingPayment> BookingPayments => Set<BookingPayment>();
     public DbSet<Notification> Notifications => Set<Notification>();
+    public DbSet<DevicePushToken> DevicePushTokens => Set<DevicePushToken>();
+    public DbSet<ChatConversation> ChatConversations => Set<ChatConversation>();
+    public DbSet<ChatMessage> ChatMessages => Set<ChatMessage>();
     public DbSet<ServiceRequestStatusHistory> ServiceRequestStatusHistories => Set<ServiceRequestStatusHistory>();
     public DbSet<Advertisement> Advertisements => Set<Advertisement>();
     public DbSet<Coupon> Coupons => Set<Coupon>();
@@ -82,6 +85,9 @@ public class ApplicationDbContext : DbContext
         modelBuilder.Entity<CraftsmanWorkingHour>().HasQueryFilter(e => !e.IsDeleted);
         modelBuilder.Entity<BookingPayment>().HasQueryFilter(e => !e.IsDeleted);
         modelBuilder.Entity<Notification>().HasQueryFilter(e => !e.IsDeleted);
+        modelBuilder.Entity<DevicePushToken>().HasQueryFilter(e => !e.IsDeleted);
+        modelBuilder.Entity<ChatConversation>().HasQueryFilter(e => !e.IsDeleted);
+        modelBuilder.Entity<ChatMessage>().HasQueryFilter(e => !e.IsDeleted);
         modelBuilder.Entity<ServiceRequestStatusHistory>().HasQueryFilter(e => !e.IsDeleted);
         modelBuilder.Entity<Advertisement>().HasQueryFilter(e => !e.IsDeleted);
         modelBuilder.Entity<Coupon>().HasQueryFilter(e => !e.IsDeleted);

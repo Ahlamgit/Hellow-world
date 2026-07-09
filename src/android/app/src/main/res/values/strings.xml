@@ -127,4 +127,22 @@
   <string name="subscription_cycle_semi_annual">Semi-Annual</string>
   <string name="subscription_cycle_annual">Annual</string>
   <string name="subscription_cycle_lifetime">Lifetime</string>
+
+  <!-- Chat -->
+  <string name="chat_title">Messages</string>
+  <string name="chat_empty">No conversations yet.</string>
+  <string name="chat_open">Open chat</string>
+  <string name="chat_message_hint">Type a message…</string>
+
+  <!-- Addresses / Maps -->
+  <string name="addresses_title">My Addresses</string>
+  <string name="addresses_add">Add address</string>
+  <string name="addresses_label">Label</string>
+  <string name="addresses_street">Street</string>
+  <string name="addresses_city">City</string>
+  <string name="addresses_country">Country</string>
+  <string name="addresses_use_location">Use current location</string>
+  <string name="addresses_coordinates">GPS: %1$.5f, %2$.5f</string>
+  <string name="booking_find_nearby">Find nearby craftsmen</string>
+  <string name="booking_distance_km">%.1f km away</string>
 </resources>
