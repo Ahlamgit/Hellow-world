@@ -37,6 +37,15 @@ jobs:
         working-directory: src/web
         run: npm run build
 
+  docker:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - name: Build API image
+        run: docker build -t khadamati-api:ci src/backend
+      - name: Build web image
+        run: docker build --build-arg VITE_API_URL=/api/v1 -t khadamati-web:ci src/web
+
   android:
     runs-on: ubuntu-latest
     steps:

@@ -1,15 +1,19 @@
 using System.Text;
 using AspNetCoreRateLimit;
+using Khadamati.API.Configuration;
 using Khadamati.API.Middleware;
 using Khadamati.Application;
 using Khadamati.Infrastructure;
 using Khadamati.Infrastructure.Services;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
+using Microsoft.AspNetCore.HttpOverrides;
 using Microsoft.IdentityModel.Tokens;
 using Microsoft.OpenApi.Models;
 using Serilog;
 
 var builder = WebApplication.CreateBuilder(args);
+
+ProductionStartupValidator.ValidateJwtSecret(builder.Configuration, builder.Environment);
 
 Log.Logger = new LoggerConfiguration()
     .ReadFrom.Configuration(builder.Configuration)
@@ -100,9 +104,23 @@ builder.Services.AddSingleton<IRateLimitConfiguration, RateLimitConfiguration>()
 
 builder.Services.AddAntiforgery(options => options.HeaderName = "X-CSRF-TOKEN");
 
+builder.Services.Configure<ForwardedHeadersOptions>(options =>
+{
+    options.ForwardedHeaders = ForwardedHeaders.XForwardedFor | ForwardedHeaders.XForwardedProto;
+    options.KnownNetworks.Clear();
+    options.KnownProxies.Clear();
+});
+
 var app = builder.Build();
 
+if (!app.Environment.IsDevelopment())
+{
+    app.UseForwardedHeaders();
+    app.UseHsts();
+}
+
 app.UseMiddleware<ExceptionHandlingMiddleware>();
+app.UseMiddleware<SecurityHeadersMiddleware>();
 
 if (app.Environment.IsDevelopment())
 {
@@ -124,6 +142,11 @@ using (var scope = app.Services.CreateScope())
     await seeder.SeedAsync();
 
     var readiness = scope.ServiceProvider.GetRequiredService<Khadamati.Application.Interfaces.IIntegrationReadinessService>();
+    ProductionStartupValidator.EnsureIntegrationsReadyIfRequired(
+        app.Configuration,
+        app.Environment,
+        readiness);
+
     var report = readiness.GetReport();
     if (report.ProductionReady)
     {

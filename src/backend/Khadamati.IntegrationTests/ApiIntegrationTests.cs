@@ -24,6 +24,16 @@ public class ApiIntegrationTests : IClassFixture<KhadamatiWebApplicationFactory>
     }
 
     [Fact]
+    public async Task HealthReady_ReturnsReadyWithDatabase()
+    {
+        var response = await _client.GetAsync("/api/v1/health/ready");
+        response.StatusCode.Should().Be(HttpStatusCode.OK);
+        var body = await response.Content.ReadAsStringAsync();
+        body.Should().Contain("ready");
+        body.Should().Contain("connected");
+    }
+
+    [Fact]
     public async Task AdminDashboard_WithoutAuth_ReturnsUnauthorized()
     {
         var response = await _client.GetAsync("/api/v1/admin/dashboard");

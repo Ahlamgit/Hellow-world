@@ -3,6 +3,7 @@ using Khadamati.Domain.Entities;
 using Khadamati.Domain.Enums;
 using Khadamati.Infrastructure.Data;
 using Microsoft.EntityFrameworkCore;
+using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using Microsoft.Extensions.Logging;
@@ -26,11 +27,36 @@ public class DatabaseSeeder
         var context = scope.ServiceProvider.GetRequiredService<ApplicationDbContext>();
         var passwordHasher = scope.ServiceProvider.GetRequiredService<IPasswordHasher>();
         var environment = scope.ServiceProvider.GetService<IHostEnvironment>();
+        var configuration = scope.ServiceProvider.GetRequiredService<IConfiguration>();
 
-        if (context.Database.IsRelational())
-            await context.Database.MigrateAsync(cancellationToken);
+        var isProduction = environment?.IsProduction() == true;
+        var migrateOnStartup = configuration.GetValue("Database:MigrateOnStartup", !isProduction);
+        var seedDemoData = configuration.GetValue("Database:SeedDemoData", !isProduction);
+
+        if (migrateOnStartup)
+        {
+            if (context.Database.IsRelational())
+                await context.Database.MigrateAsync(cancellationToken);
+            else
+                await context.Database.EnsureCreatedAsync(cancellationToken);
+        }
         else
-            await context.Database.EnsureCreatedAsync(cancellationToken);
+        {
+            _logger.LogInformation("Database migrations skipped (Database:MigrateOnStartup=false).");
+        }
+
+        await IdentitySeeder.SeedRolesAndPermissionsAsync(context, cancellationToken);
+
+        if (!seedDemoData)
+        {
+            _logger.LogInformation("Demo seed data skipped (Database:SeedDemoData=false).");
+
+            if (environment?.IsEnvironment("Testing") == true)
+                await EnsureIntegrationTestAccountsAsync(context, passwordHasher, cancellationToken);
+
+            await IdentitySeeder.FinalizeUserRoleAssignmentsAsync(context, _logger, cancellationToken);
+            return;
+        }
 
         if (!await context.Users.AnyAsync(cancellationToken))
         {
@@ -84,7 +110,7 @@ public class DatabaseSeeder
         await SeedCraftsmenAndStoresAsync(context, passwordHasher, cancellationToken);
         await SeedVerificationDocumentsAsync(context, cancellationToken);
         await SeedCraftsmanAddressesAsync(context, cancellationToken);
-        await IdentitySeeder.SeedAsync(context, _logger, cancellationToken);
+        await IdentitySeeder.FinalizeUserRoleAssignmentsAsync(context, _logger, cancellationToken);
 
         if (environment?.IsEnvironment("Testing") == true)
             await EnsureIntegrationTestAccountsAsync(context, passwordHasher, cancellationToken);
