@@ -1,0 +1,40 @@
+name: Staging smoke
+
+on:
+  push:
+    branches: [main]
+  pull_request:
+    branches: [main]
+  workflow_dispatch:
+
+jobs:
+  staging-smoke:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Prepare staging env
+        run: |
+          cp .env.staging.example .env.staging
+          chmod +x scripts/*.sh
+
+      - name: Start staging stack
+        run: docker compose -f docker-compose.staging.yml --env-file .env.staging up -d --build
+
+      - name: Wait for readiness
+        run: |
+          deadline=$((SECONDS + 240))
+          until curl -sf http://localhost:8080/api/v1/health/ready; do
+            if (( SECONDS >= deadline )); then
+              docker compose -f docker-compose.staging.yml --env-file .env.staging logs
+              exit 1
+            fi
+            sleep 5
+          done
+
+      - name: Run smoke tests
+        run: ./scripts/smoke-test.sh http://localhost:8080
+
+      - name: Tear down
+        if: always()
+        run: docker compose -f docker-compose.staging.yml --env-file .env.staging down -v

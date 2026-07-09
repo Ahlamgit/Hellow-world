@@ -6,7 +6,7 @@ public static class ProductionStartupValidator
 {
     public static void ValidateJwtSecret(IConfiguration configuration, IHostEnvironment environment)
     {
-        if (!environment.IsProduction())
+        if (!RequiresDeploymentSecret(environment))
             return;
 
         var secret = configuration["Jwt:Secret"];
@@ -15,7 +15,7 @@ public static class ProductionStartupValidator
             || secret.Contains("${", StringComparison.Ordinal))
         {
             throw new InvalidOperationException(
-                "Jwt:Secret must be set to at least 32 characters in Production. " +
+                "Jwt:Secret must be set to at least 32 characters in Production and Staging. " +
                 "Use the Jwt__Secret environment variable.");
         }
     }
@@ -44,4 +44,7 @@ public static class ProductionStartupValidator
             "Integrations:RequireProductionReady is enabled but providers are not ready: "
             + string.Join(", ", blockers));
     }
+
+    private static bool RequiresDeploymentSecret(IHostEnvironment environment) =>
+        environment.IsProduction() || environment.IsStaging();
 }

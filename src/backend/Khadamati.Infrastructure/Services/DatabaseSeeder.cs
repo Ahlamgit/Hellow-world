@@ -30,8 +30,9 @@ public class DatabaseSeeder
         var configuration = scope.ServiceProvider.GetRequiredService<IConfiguration>();
 
         var isProduction = environment?.IsProduction() == true;
+        var isStaging = environment?.IsStaging() == true;
         var migrateOnStartup = configuration.GetValue("Database:MigrateOnStartup", !isProduction);
-        var seedDemoData = configuration.GetValue("Database:SeedDemoData", !isProduction);
+        var seedDemoData = configuration.GetValue("Database:SeedDemoData", !isProduction && !isStaging);
 
         if (migrateOnStartup)
         {
@@ -53,6 +54,8 @@ public class DatabaseSeeder
 
             if (environment?.IsEnvironment("Testing") == true)
                 await EnsureIntegrationTestAccountsAsync(context, passwordHasher, cancellationToken);
+            else
+                await BootstrapAdminIfConfiguredAsync(context, passwordHasher, configuration, cancellationToken);
 
             await IdentitySeeder.FinalizeUserRoleAssignmentsAsync(context, _logger, cancellationToken);
             return;
@@ -114,6 +117,54 @@ public class DatabaseSeeder
 
         if (environment?.IsEnvironment("Testing") == true)
             await EnsureIntegrationTestAccountsAsync(context, passwordHasher, cancellationToken);
+    }
+
+    private async Task BootstrapAdminIfConfiguredAsync(
+        ApplicationDbContext context,
+        IPasswordHasher passwordHasher,
+        IConfiguration configuration,
+        CancellationToken cancellationToken)
+    {
+        var email = configuration["Bootstrap:AdminEmail"];
+        var password = configuration["Bootstrap:AdminPassword"];
+        if (string.IsNullOrWhiteSpace(email) || string.IsNullOrWhiteSpace(password))
+            return;
+
+        if (await context.Users.AnyAsync(u => u.Role == UserRole.Administrator, cancellationToken))
+        {
+            _logger.LogInformation("Bootstrap admin skipped — an administrator already exists.");
+            return;
+        }
+
+        if (await context.Users.AnyAsync(u => u.Email == email, cancellationToken))
+        {
+            _logger.LogWarning("Bootstrap admin skipped — user {Email} already exists.", email);
+            return;
+        }
+
+        var phone = configuration["Bootstrap:AdminPhone"];
+        if (string.IsNullOrWhiteSpace(phone))
+            phone = "+966500000001";
+
+        context.Users.Add(new User
+        {
+            Email = email.Trim(),
+            Phone = phone.Trim(),
+            PasswordHash = passwordHasher.Hash(password),
+            Role = UserRole.Administrator,
+            Status = UserStatus.Active,
+            VerificationStatus = VerificationStatus.Verified,
+            SubscriptionStatus = SubscriptionStatus.Active,
+            EmailVerifiedAt = DateTime.UtcNow,
+            Profile = new UserProfile
+            {
+                FirstName = configuration["Bootstrap:AdminFirstName"] ?? "Staging",
+                LastName = configuration["Bootstrap:AdminLastName"] ?? "Administrator",
+                PreferredLanguage = "en",
+            },
+        });
+        await context.SaveChangesAsync(cancellationToken);
+        _logger.LogInformation("Bootstrap administrator created for {Email}.", email);
     }
 
     private static async Task EnsureIntegrationTestAccountsAsync(

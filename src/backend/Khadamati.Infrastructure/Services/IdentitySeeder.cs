@@ -131,14 +131,16 @@ public static class IdentitySeeder
     private static async Task EnsureSuperAdminAsync(ApplicationDbContext context, ILogger logger, CancellationToken ct)
     {
         var superAdminRole = await context.Roles.FirstOrDefaultAsync(r => r.Name == RoleNames.SuperAdmin, ct);
-        if (superAdminRole == null) return;
+        if (superAdminRole is null) return;
 
         var admin = await context.Users
             .Include(u => u.Profile)
             .Include(u => u.UserRoles)
-            .FirstOrDefaultAsync(u => u.Email == "admin@khadamati.com", ct);
+            .Where(u => u.Role == UserRole.Administrator)
+            .OrderBy(u => u.Id)
+            .FirstOrDefaultAsync(ct);
 
-        if (admin == null) return;
+        if (admin is null) return;
 
         admin.PrimaryRoleId = superAdminRole.Id;
         admin.Role = UserRole.Administrator;
@@ -158,6 +160,6 @@ public static class IdentitySeeder
         }
 
         await context.SaveChangesAsync(ct);
-        logger.LogInformation("SuperAdmin role assigned to admin@khadamati.com");
+        logger.LogInformation("SuperAdmin role assigned to {Email}.", admin.Email);
     }
 }

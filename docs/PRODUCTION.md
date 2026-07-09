@@ -129,3 +129,5 @@ Startup logs warn when any provider is still on **Development** or **Misconfigur
 3. **Email** — register a user and confirm verification email is delivered (not logged only)
 
 See `appsettings.Production.json` and `.env.production.example` for the full production template.
+
+For pre-production validation, see [STAGING.md](./STAGING.md).
