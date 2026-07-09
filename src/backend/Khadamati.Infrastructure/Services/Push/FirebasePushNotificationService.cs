@@ -52,6 +52,12 @@ public class FirebasePushNotificationService : IPushNotificationService
 
         foreach (var token in tokens)
         {
+            if (token.Token.StartsWith("dev-", StringComparison.OrdinalIgnoreCase))
+            {
+                _logger.LogDebug("Skipping simulated push token for user {UserId}", payload.UserId);
+                continue;
+            }
+
             if (IsConfigured)
             {
                 // Scaffold: send via FCM HTTP v1 using Push:Firebase:ServerKey

@@ -853,4 +853,184 @@ public class AdminService : IAdminService
         IsActive = s.IsActive,
         EstimatedDurationMinutes = s.EstimatedDurationMinutes,
     };
+
+    public async Task<PagedResult<RegionDto>> ListRegionsAsync(RegionListQueryDto query, CancellationToken cancellationToken = default)
+    {
+        var q = _context.Regions.AsQueryable();
+        if (!string.IsNullOrWhiteSpace(query.Search))
+        {
+            var s = query.Search.ToLower();
+            q = q.Where(r => r.NameEn.ToLower().Contains(s) || r.NameAr.Contains(s) || r.Code.ToLower().Contains(s));
+        }
+        if (query.IsActive.HasValue) q = q.Where(r => r.IsActive == query.IsActive.Value);
+
+        var total = await q.CountAsync(cancellationToken);
+        var items = await q.OrderBy(r => r.NameEn)
+            .Skip((query.Page - 1) * query.PageSize).Take(query.PageSize)
+            .Select(r => new RegionDto
+            {
+                Id = r.Id,
+                NameEn = r.NameEn,
+                NameAr = r.NameAr,
+                Code = r.Code,
+                IsActive = r.IsActive,
+                CityCount = r.Cities.Count,
+            })
+            .AsNoTracking()
+            .ToListAsync(cancellationToken);
+
+        return new PagedResult<RegionDto> { Items = items, TotalCount = total, Page = query.Page, PageSize = query.PageSize };
+    }
+
+    public async Task<RegionDto> GetRegionAsync(Guid id, CancellationToken cancellationToken = default)
+    {
+        var r = await _context.Regions.AsNoTracking().FirstOrDefaultAsync(x => x.Id == id, cancellationToken)
+            ?? throw new Application.Common.NotFoundException("Region not found.");
+        var dto = MapRegion(r);
+        dto.CityCount = await _context.Cities.CountAsync(c => c.RegionId == id, cancellationToken);
+        return dto;
+    }
+
+    public async Task<RegionDto> CreateRegionAsync(CreateRegionDto request, string? userId, CancellationToken cancellationToken = default)
+    {
+        var region = new Region
+        {
+            NameEn = request.NameEn.Trim(),
+            NameAr = request.NameAr.Trim(),
+            Code = request.Code.Trim().ToUpperInvariant(),
+            IsActive = request.IsActive,
+        };
+        await _context.Regions.AddAsync(region, cancellationToken);
+        await LogActivityAsync(userId, "create", "regions", region.Id.ToString(), cancellationToken);
+        await _context.SaveChangesAsync(cancellationToken);
+        return await GetRegionAsync(region.Id, cancellationToken);
+    }
+
+    public async Task<RegionDto> UpdateRegionAsync(Guid id, UpdateRegionDto request, string? userId, CancellationToken cancellationToken = default)
+    {
+        var region = await _context.Regions.FirstOrDefaultAsync(r => r.Id == id, cancellationToken)
+            ?? throw new Application.Common.NotFoundException("Region not found.");
+        region.NameEn = request.NameEn.Trim();
+        region.NameAr = request.NameAr.Trim();
+        region.Code = request.Code.Trim().ToUpperInvariant();
+        region.IsActive = request.IsActive;
+        await LogActivityAsync(userId, "update", "regions", id.ToString(), cancellationToken);
+        await _context.SaveChangesAsync(cancellationToken);
+        return await GetRegionAsync(id, cancellationToken);
+    }
+
+    public async Task DeleteRegionAsync(Guid id, string? userId, CancellationToken cancellationToken = default)
+    {
+        var region = await _context.Regions.FirstOrDefaultAsync(r => r.Id == id, cancellationToken)
+            ?? throw new Application.Common.NotFoundException("Region not found.");
+        region.IsDeleted = true;
+        region.DeletedAt = DateTime.UtcNow;
+        await LogActivityAsync(userId, "delete", "regions", id.ToString(), cancellationToken);
+        await _context.SaveChangesAsync(cancellationToken);
+    }
+
+    public async Task<PagedResult<CityDto>> ListCitiesAsync(CityListQueryDto query, CancellationToken cancellationToken = default)
+    {
+        var q = _context.Cities.Include(c => c.Region).AsQueryable();
+        if (!string.IsNullOrWhiteSpace(query.Search))
+        {
+            var s = query.Search.ToLower();
+            q = q.Where(c => c.NameEn.ToLower().Contains(s) || c.NameAr.Contains(s) || c.Code.ToLower().Contains(s));
+        }
+        if (query.RegionId.HasValue) q = q.Where(c => c.RegionId == query.RegionId.Value);
+        if (query.IsActive.HasValue) q = q.Where(c => c.IsActive == query.IsActive.Value);
+
+        var total = await q.CountAsync(cancellationToken);
+        var items = await q.OrderBy(c => c.NameEn)
+            .Skip((query.Page - 1) * query.PageSize).Take(query.PageSize)
+            .Select(c => new CityDto
+            {
+                Id = c.Id,
+                RegionId = c.RegionId,
+                RegionName = c.Region.NameEn,
+                NameEn = c.NameEn,
+                NameAr = c.NameAr,
+                Code = c.Code,
+                IsActive = c.IsActive,
+            })
+            .AsNoTracking()
+            .ToListAsync(cancellationToken);
+
+        return new PagedResult<CityDto> { Items = items, TotalCount = total, Page = query.Page, PageSize = query.PageSize };
+    }
+
+    public async Task<CityDto> GetCityAsync(Guid id, CancellationToken cancellationToken = default)
+    {
+        var c = await _context.Cities.Include(x => x.Region).AsNoTracking()
+            .FirstOrDefaultAsync(x => x.Id == id, cancellationToken)
+            ?? throw new Application.Common.NotFoundException("City not found.");
+        return MapCity(c);
+    }
+
+    public async Task<CityDto> CreateCityAsync(CreateCityDto request, string? userId, CancellationToken cancellationToken = default)
+    {
+        if (!await _context.Regions.AnyAsync(r => r.Id == request.RegionId, cancellationToken))
+            throw new Application.Common.ValidationException(["Region not found."]);
+
+        var city = new City
+        {
+            RegionId = request.RegionId,
+            NameEn = request.NameEn.Trim(),
+            NameAr = request.NameAr.Trim(),
+            Code = request.Code.Trim().ToUpperInvariant(),
+            IsActive = request.IsActive,
+        };
+        await _context.Cities.AddAsync(city, cancellationToken);
+        await LogActivityAsync(userId, "create", "cities", city.Id.ToString(), cancellationToken);
+        await _context.SaveChangesAsync(cancellationToken);
+        return await GetCityAsync(city.Id, cancellationToken);
+    }
+
+    public async Task<CityDto> UpdateCityAsync(Guid id, UpdateCityDto request, string? userId, CancellationToken cancellationToken = default)
+    {
+        var city = await _context.Cities.FirstOrDefaultAsync(c => c.Id == id, cancellationToken)
+            ?? throw new Application.Common.NotFoundException("City not found.");
+
+        if (!await _context.Regions.AnyAsync(r => r.Id == request.RegionId, cancellationToken))
+            throw new Application.Common.ValidationException(["Region not found."]);
+
+        city.RegionId = request.RegionId;
+        city.NameEn = request.NameEn.Trim();
+        city.NameAr = request.NameAr.Trim();
+        city.Code = request.Code.Trim().ToUpperInvariant();
+        city.IsActive = request.IsActive;
+        await LogActivityAsync(userId, "update", "cities", id.ToString(), cancellationToken);
+        await _context.SaveChangesAsync(cancellationToken);
+        return await GetCityAsync(id, cancellationToken);
+    }
+
+    public async Task DeleteCityAsync(Guid id, string? userId, CancellationToken cancellationToken = default)
+    {
+        var city = await _context.Cities.FirstOrDefaultAsync(c => c.Id == id, cancellationToken)
+            ?? throw new Application.Common.NotFoundException("City not found.");
+        city.IsDeleted = true;
+        city.DeletedAt = DateTime.UtcNow;
+        await LogActivityAsync(userId, "delete", "cities", id.ToString(), cancellationToken);
+        await _context.SaveChangesAsync(cancellationToken);
+    }
+
+    private static RegionDto MapRegion(Region r) => new()
+    {
+        Id = r.Id,
+        NameEn = r.NameEn,
+        NameAr = r.NameAr,
+        Code = r.Code,
+        IsActive = r.IsActive,
+    };
+
+    private static CityDto MapCity(City c) => new()
+    {
+        Id = c.Id,
+        RegionId = c.RegionId,
+        RegionName = c.Region?.NameEn ?? string.Empty,
+        NameEn = c.NameEn,
+        NameAr = c.NameAr,
+        Code = c.Code,
+        IsActive = c.IsActive,
+    };
 }

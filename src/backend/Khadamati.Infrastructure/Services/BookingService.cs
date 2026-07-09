@@ -233,43 +233,67 @@ public class BookingService : IBookingService
         if (payment.Status != PaymentStatus.Pending && payment.Status != PaymentStatus.Processing)
             throw new ConflictException("Payment cannot be confirmed.");
 
-        if (await _repository.IsSlotBookedAsync(booking.CraftsmanId, booking.ScheduledAt, booking.SlotEnd, bookingId, cancellationToken))
-            throw new ConflictException("Time slot was booked by another customer. Please select a different time.");
+        return await FinalizePaymentAsync(booking, payment, dto.TransactionReference, userId, cancellationToken);
+    }
+
+    public async Task<BookingDto> ConfirmPaymentFromWebhookAsync(string transactionReference, CancellationToken cancellationToken = default)
+    {
+        var payment = await _repository.GetPaymentByTransactionReferenceAsync(transactionReference, cancellationToken)
+            ?? throw new NotFoundException("Payment not found for transaction reference.");
+
+        if (payment.Status == PaymentStatus.Completed)
+        {
+            return MapToDto(await ReloadBookingAsync(payment.ServiceRequestId, cancellationToken));
+        }
+
+        var booking = await _repository.GetByIdAsync(payment.ServiceRequestId, cancellationToken: cancellationToken)
+            ?? throw new NotFoundException("Booking not found.");
+
+        if (booking.Status != ServiceRequestStatus.AwaitingPayment)
+            throw new ConflictException("Booking is not awaiting payment.");
+
+        if (payment.Status != PaymentStatus.Pending && payment.Status != PaymentStatus.Processing)
+            throw new ConflictException("Payment cannot be confirmed.");
+
+        return await FinalizePaymentAsync(booking, payment, transactionReference, payment.PayerUserId, cancellationToken);
+    }
+
+    private async Task<BookingDto> FinalizePaymentAsync(
+        ServiceRequest booking, BookingPayment payment, string transactionReference, Guid actorUserId, CancellationToken cancellationToken)
+    {
+        if (await _repository.IsSlotBookedAsync(booking.CraftsmanId, booking.ScheduledAt, booking.SlotEnd, booking.Id, cancellationToken))
+            throw new ConflictException("Time slot was booked by another customer.");
 
         var verification = await _paymentGateway.VerifyAsync(
-            dto.TransactionReference,
-            payment.Amount,
-            payment.Currency,
-            cancellationToken);
+            transactionReference, payment.Amount, payment.Currency, cancellationToken);
 
         if (!verification.IsSuccessful)
             throw new ConflictException(verification.FailureReason ?? "Payment verification failed.");
 
         payment.Status = PaymentStatus.Completed;
-        payment.TransactionReference = verification.TransactionReference ?? dto.TransactionReference;
+        payment.TransactionReference = verification.TransactionReference ?? transactionReference;
         payment.PaidAt = DateTime.UtcNow;
 
-        await TransitionAsync(booking, ServiceRequestStatus.PaymentConfirmed, userId, "Payment confirmed", cancellationToken);
-        await TransitionAsync(booking, ServiceRequestStatus.PendingCraftsmanConfirmation, userId, "Awaiting craftsman confirmation", cancellationToken);
+        await TransitionAsync(booking, ServiceRequestStatus.PaymentConfirmed, actorUserId, "Payment confirmed", cancellationToken);
+        await TransitionAsync(booking, ServiceRequestStatus.PendingCraftsmanConfirmation, actorUserId, "Awaiting craftsman confirmation", cancellationToken);
 
-        var reservation = new BookingSlotReservation
+        await _repository.AddSlotReservationAsync(new BookingSlotReservation
         {
             CraftsmanId = booking.CraftsmanId,
-            ServiceRequestId = bookingId,
+            ServiceRequestId = booking.Id,
             SlotStart = booking.ScheduledAt,
             SlotEnd = booking.SlotEnd,
-            IsActive = true
-        };
-        await _repository.AddSlotReservationAsync(reservation, cancellationToken);
+            IsActive = true,
+        }, cancellationToken);
 
         await NotifyAsync(booking.CraftsmanId, "New Booking Request", "طلب حجز جديد",
             $"New booking {booking.BookingReference} requires your confirmation.",
             $"حجز جديد {booking.BookingReference} يتطلب تأكيدك.",
-            "BookingConfirmation", bookingId, cancellationToken);
+            "BookingConfirmation", booking.Id, cancellationToken);
 
         _repository.Update(booking);
         await _unitOfWork.SaveChangesAsync(cancellationToken);
-        return MapToDto(await ReloadBookingAsync(bookingId, cancellationToken));
+        return MapToDto(await ReloadBookingAsync(booking.Id, cancellationToken));
     }
 
     public async Task<BookingDto> AcceptBookingAsync(Guid bookingId, Guid craftsmanId, CancellationToken cancellationToken = default)

@@ -30,6 +30,16 @@ public record GetServiceQuery(Guid Id) : IRequest<ServiceDto>;
 public record CreateServiceCommand(CreateServiceDto Request, string? UserId) : IRequest<ServiceDto>;
 public record UpdateServiceCommand(Guid Id, UpdateServiceDto Request, string? UserId) : IRequest<ServiceDto>;
 public record DeleteServiceCommand(Guid Id, string? UserId) : IRequest<Unit>;
+public record ListRegionsQuery(RegionListQueryDto Query) : IRequest<PagedResult<RegionDto>>;
+public record GetRegionQuery(Guid Id) : IRequest<RegionDto>;
+public record CreateRegionCommand(CreateRegionDto Request, string? UserId) : IRequest<RegionDto>;
+public record UpdateRegionCommand(Guid Id, UpdateRegionDto Request, string? UserId) : IRequest<RegionDto>;
+public record DeleteRegionCommand(Guid Id, string? UserId) : IRequest<Unit>;
+public record ListCitiesQuery(CityListQueryDto Query) : IRequest<PagedResult<CityDto>>;
+public record GetCityQuery(Guid Id) : IRequest<CityDto>;
+public record CreateCityCommand(CreateCityDto Request, string? UserId) : IRequest<CityDto>;
+public record UpdateCityCommand(Guid Id, UpdateCityDto Request, string? UserId) : IRequest<CityDto>;
+public record DeleteCityCommand(Guid Id, string? UserId) : IRequest<Unit>;
 
 public class GetAdminDashboardQueryHandler : IRequestHandler<GetAdminDashboardQuery, AdminDashboardDto>
 {
@@ -221,6 +231,92 @@ public class DeleteServiceCommandHandler : IRequestHandler<DeleteServiceCommand,
     public async Task<Unit> Handle(DeleteServiceCommand request, CancellationToken ct)
     {
         await _admin.DeleteServiceAsync(request.Id, request.UserId, ct);
+        return Unit.Value;
+    }
+}
+
+public class ListRegionsQueryHandler : IRequestHandler<ListRegionsQuery, PagedResult<RegionDto>>
+{
+    private readonly IAdminService _admin;
+    public ListRegionsQueryHandler(IAdminService admin) => _admin = admin;
+    public Task<PagedResult<RegionDto>> Handle(ListRegionsQuery request, CancellationToken ct) =>
+        _admin.ListRegionsAsync(request.Query, ct);
+}
+
+public class GetRegionQueryHandler : IRequestHandler<GetRegionQuery, RegionDto>
+{
+    private readonly IAdminService _admin;
+    public GetRegionQueryHandler(IAdminService admin) => _admin = admin;
+    public Task<RegionDto> Handle(GetRegionQuery request, CancellationToken ct) =>
+        _admin.GetRegionAsync(request.Id, ct);
+}
+
+public class CreateRegionCommandHandler : IRequestHandler<CreateRegionCommand, RegionDto>
+{
+    private readonly IAdminService _admin;
+    public CreateRegionCommandHandler(IAdminService admin) => _admin = admin;
+    public Task<RegionDto> Handle(CreateRegionCommand request, CancellationToken ct) =>
+        _admin.CreateRegionAsync(request.Request, request.UserId, ct);
+}
+
+public class UpdateRegionCommandHandler : IRequestHandler<UpdateRegionCommand, RegionDto>
+{
+    private readonly IAdminService _admin;
+    public UpdateRegionCommandHandler(IAdminService admin) => _admin = admin;
+    public Task<RegionDto> Handle(UpdateRegionCommand request, CancellationToken ct) =>
+        _admin.UpdateRegionAsync(request.Id, request.Request, request.UserId, ct);
+}
+
+public class DeleteRegionCommandHandler : IRequestHandler<DeleteRegionCommand, Unit>
+{
+    private readonly IAdminService _admin;
+    public DeleteRegionCommandHandler(IAdminService admin) => _admin = admin;
+    public async Task<Unit> Handle(DeleteRegionCommand request, CancellationToken ct)
+    {
+        await _admin.DeleteRegionAsync(request.Id, request.UserId, ct);
+        return Unit.Value;
+    }
+}
+
+public class ListCitiesQueryHandler : IRequestHandler<ListCitiesQuery, PagedResult<CityDto>>
+{
+    private readonly IAdminService _admin;
+    public ListCitiesQueryHandler(IAdminService admin) => _admin = admin;
+    public Task<PagedResult<CityDto>> Handle(ListCitiesQuery request, CancellationToken ct) =>
+        _admin.ListCitiesAsync(request.Query, ct);
+}
+
+public class GetCityQueryHandler : IRequestHandler<GetCityQuery, CityDto>
+{
+    private readonly IAdminService _admin;
+    public GetCityQueryHandler(IAdminService admin) => _admin = admin;
+    public Task<CityDto> Handle(GetCityQuery request, CancellationToken ct) =>
+        _admin.GetCityAsync(request.Id, ct);
+}
+
+public class CreateCityCommandHandler : IRequestHandler<CreateCityCommand, CityDto>
+{
+    private readonly IAdminService _admin;
+    public CreateCityCommandHandler(IAdminService admin) => _admin = admin;
+    public Task<CityDto> Handle(CreateCityCommand request, CancellationToken ct) =>
+        _admin.CreateCityAsync(request.Request, request.UserId, ct);
+}
+
+public class UpdateCityCommandHandler : IRequestHandler<UpdateCityCommand, CityDto>
+{
+    private readonly IAdminService _admin;
+    public UpdateCityCommandHandler(IAdminService admin) => _admin = admin;
+    public Task<CityDto> Handle(UpdateCityCommand request, CancellationToken ct) =>
+        _admin.UpdateCityAsync(request.Id, request.Request, request.UserId, ct);
+}
+
+public class DeleteCityCommandHandler : IRequestHandler<DeleteCityCommand, Unit>
+{
+    private readonly IAdminService _admin;
+    public DeleteCityCommandHandler(IAdminService admin) => _admin = admin;
+    public async Task<Unit> Handle(DeleteCityCommand request, CancellationToken ct)
+    {
+        await _admin.DeleteCityAsync(request.Id, request.UserId, ct);
         return Unit.Value;
     }
 }

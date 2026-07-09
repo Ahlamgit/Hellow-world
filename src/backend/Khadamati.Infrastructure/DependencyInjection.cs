@@ -54,6 +54,7 @@ public static class DependencyInjection
         services.AddScoped<IChatService, ChatService>();
         RegisterPushProvider(services, configuration);
         RegisterPaymentProvider(services, configuration);
+        services.AddScoped<IPaymentWebhookService, PaymentWebhookService>();
         services.AddScoped<ITokenService, TokenService>();
         services.AddScoped<IPasswordHasher, PasswordHasher>();
         services.AddScoped<IOtpService, OtpService>();

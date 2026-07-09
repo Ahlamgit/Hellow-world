@@ -30,6 +30,16 @@ public interface IAdminService
     Task<ServiceDto> CreateServiceAsync(CreateServiceDto request, string? userId, CancellationToken cancellationToken = default);
     Task<ServiceDto> UpdateServiceAsync(Guid id, UpdateServiceDto request, string? userId, CancellationToken cancellationToken = default);
     Task DeleteServiceAsync(Guid id, string? userId, CancellationToken cancellationToken = default);
+    Task<PagedResult<RegionDto>> ListRegionsAsync(RegionListQueryDto query, CancellationToken cancellationToken = default);
+    Task<RegionDto> GetRegionAsync(Guid id, CancellationToken cancellationToken = default);
+    Task<RegionDto> CreateRegionAsync(CreateRegionDto request, string? userId, CancellationToken cancellationToken = default);
+    Task<RegionDto> UpdateRegionAsync(Guid id, UpdateRegionDto request, string? userId, CancellationToken cancellationToken = default);
+    Task DeleteRegionAsync(Guid id, string? userId, CancellationToken cancellationToken = default);
+    Task<PagedResult<CityDto>> ListCitiesAsync(CityListQueryDto query, CancellationToken cancellationToken = default);
+    Task<CityDto> GetCityAsync(Guid id, CancellationToken cancellationToken = default);
+    Task<CityDto> CreateCityAsync(CreateCityDto request, string? userId, CancellationToken cancellationToken = default);
+    Task<CityDto> UpdateCityAsync(Guid id, UpdateCityDto request, string? userId, CancellationToken cancellationToken = default);
+    Task DeleteCityAsync(Guid id, string? userId, CancellationToken cancellationToken = default);
 }
 
 public interface IAdminExportService
