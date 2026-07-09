@@ -153,6 +153,11 @@
     "scheduled": "Scheduled",
     "price": "Price",
     "description": "Notes / description",
+    "findNearby": "Find nearby craftsmen",
+    "noCraftsmen": "No craftsmen available for this service",
+    "distanceKm": "{{km}} km away",
+    "locationDenied": "Location access was denied. Enable location to find nearby craftsmen.",
+    "locationUnsupported": "Your browser does not support location services.",
     "status": {
       "Pending": "Pending",
       "AwaitingPayment": "Awaiting Payment",

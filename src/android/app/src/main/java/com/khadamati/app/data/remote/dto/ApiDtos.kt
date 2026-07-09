@@ -327,3 +327,85 @@ data class CreateSupportTicketRequestDto(
 )
 
 data class SubmitReviewRequestDto(val rating: Int, val review: String? = null)
+
+data class CraftsmanProfileDto(
+    val id: String,
+    val userId: String,
+    val specialization: String?,
+    val yearsOfExperience: Int,
+    val rating: Double,
+    val totalReviews: Int,
+    val completedJobs: Int,
+    val isAvailable: Boolean,
+    val serviceRadiusKm: Double?,
+    val services: List<CraftsmanServiceItemDto> = emptyList(),
+    val workingHours: List<CraftsmanWorkingHourDto> = emptyList(),
+)
+
+data class CraftsmanServiceItemDto(
+    val id: String,
+    val serviceId: String,
+    val serviceNameEn: String,
+    val serviceNameAr: String,
+    val customPrice: Double,
+    val isAvailable: Boolean,
+)
+
+data class CraftsmanWorkingHourDto(
+    val id: String,
+    val dayOfWeek: Int,
+    val startTime: String,
+    val endTime: String,
+    val isActive: Boolean,
+)
+
+data class UpdateCraftsmanProfileRequestDto(
+    val specialization: String?,
+    val yearsOfExperience: Int,
+    val isAvailable: Boolean,
+    val serviceRadiusKm: Double?,
+)
+
+data class UpsertCraftsmanServiceRequestDto(
+    val serviceId: String,
+    val customPrice: Double,
+    val isAvailable: Boolean = true,
+)
+
+data class StoreProfileDto(
+    val id: String,
+    val userId: String,
+    val storeName: String,
+    val description: String?,
+    val rating: Double,
+    val totalReviews: Int,
+    val isOpen: Boolean,
+    val openingTime: String?,
+    val closingTime: String?,
+    val products: List<StoreProductDto> = emptyList(),
+)
+
+data class StoreProductDto(
+    val id: String,
+    val nameEn: String,
+    val nameAr: String,
+    val price: Double,
+    val stockQuantity: Int,
+    val isActive: Boolean,
+)
+
+data class UpdateStoreProfileRequestDto(
+    val storeName: String,
+    val description: String?,
+    val isOpen: Boolean,
+    val openingTime: String?,
+    val closingTime: String?,
+)
+
+data class UpsertStoreProductRequestDto(
+    val nameEn: String,
+    val nameAr: String,
+    val price: Double,
+    val stockQuantity: Int,
+    val isActive: Boolean = true,
+)

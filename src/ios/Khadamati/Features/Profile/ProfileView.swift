@@ -123,6 +123,24 @@ struct ProfileView: View {
                     .font(AppTheme.Typography.body())
             }
 
+            if PortalRoleSupport.isCraftsman(appSession.currentUser?.role) {
+                NavigationLink {
+                    CraftsmanPortalView()
+                } label: {
+                    Label(L10n.Portal.craftsmanTitle, systemImage: "wrench.and.screwdriver")
+                        .font(AppTheme.Typography.body())
+                }
+            }
+
+            if PortalRoleSupport.isStore(appSession.currentUser?.role) {
+                NavigationLink {
+                    StorePortalView()
+                } label: {
+                    Label(L10n.Portal.storeTitle, systemImage: "storefront")
+                        .font(AppTheme.Typography.body())
+                }
+            }
+
             NavigationLink {
                 SupportView()
             } label: {

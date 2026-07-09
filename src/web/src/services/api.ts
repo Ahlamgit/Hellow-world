@@ -168,6 +168,7 @@ export interface CraftsmanOption {
   completedJobs: number;
   price: number;
   isAvailable: boolean;
+  distanceKm?: number;
 }
 
 export interface TimeSlot {

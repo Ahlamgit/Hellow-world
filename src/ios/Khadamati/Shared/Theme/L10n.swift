@@ -216,4 +216,32 @@ enum L10n {
         static let leave = NSLocalizedString("review.leave", comment: "Leave review")
         static let yourReview = NSLocalizedString("review.yourReview", comment: "Your review")
     }
+
+    enum Portal {
+        static let craftsmanTitle = NSLocalizedString("portal.craftsmanTitle", comment: "Craftsman portal")
+        static let storeTitle = NSLocalizedString("portal.storeTitle", comment: "Store portal")
+        static let profile = NSLocalizedString("portal.profile", comment: "Profile section")
+        static let saved = NSLocalizedString("portal.saved", comment: "Saved message")
+        static let serviceAdded = NSLocalizedString("portal.serviceAdded", comment: "Service added")
+        static let productAdded = NSLocalizedString("portal.productAdded", comment: "Product added")
+        static let specialization = NSLocalizedString("portal.specialization", comment: "Specialization")
+        static let years = NSLocalizedString("portal.years", comment: "Years")
+        static let radius = NSLocalizedString("portal.radius", comment: "Radius")
+        static let available = NSLocalizedString("portal.available", comment: "Available")
+        static let jobs = NSLocalizedString("portal.jobs", comment: "Jobs")
+        static let offeredServices = NSLocalizedString("portal.offeredServices", comment: "Offered services")
+        static let addService = NSLocalizedString("portal.addService", comment: "Add service")
+        static let storeProfile = NSLocalizedString("portal.storeProfile", comment: "Store profile")
+        static let storeName = NSLocalizedString("portal.storeName", comment: "Store name")
+        static let storeDescription = NSLocalizedString("portal.storeDescription", comment: "Store description")
+        static let opens = NSLocalizedString("portal.opens", comment: "Opens")
+        static let closes = NSLocalizedString("portal.closes", comment: "Closes")
+        static let storeOpen = NSLocalizedString("portal.storeOpen", comment: "Store open")
+        static let products = NSLocalizedString("portal.products", comment: "Products")
+        static let productNameEn = NSLocalizedString("portal.productNameEn", comment: "Product EN")
+        static let productNameAr = NSLocalizedString("portal.productNameAr", comment: "Product AR")
+        static let price = NSLocalizedString("portal.price", comment: "Price")
+        static let stock = NSLocalizedString("portal.stock", comment: "Stock")
+        static let addProduct = NSLocalizedString("portal.addProduct", comment: "Add product")
+    }
 }

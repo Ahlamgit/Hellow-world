@@ -153,6 +153,11 @@
     "scheduled": "الموعد",
     "price": "السعر",
     "description": "ملاحظات / وصف",
+    "findNearby": "البحث عن حرفيين قريبين",
+    "noCraftsmen": "لا يوجد حرفيون متاحون لهذه الخدمة",
+    "distanceKm": "على بعد {{km}} كم",
+    "locationDenied": "تم رفض الوصول للموقع. فعّل الموقع للبحث عن حرفيين قريبين.",
+    "locationUnsupported": "متصفحك لا يدعم خدمات الموقع.",
     "status": {
       "Pending": "قيد الانتظار",
       "AwaitingPayment": "في انتظار الدفع",

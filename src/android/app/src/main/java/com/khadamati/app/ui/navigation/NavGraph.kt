@@ -43,6 +43,8 @@ import com.khadamati.app.ui.screens.ServicesScreen
 import com.khadamati.app.ui.screens.SplashScreen
 import com.khadamati.app.ui.screens.SupportScreen
 import com.khadamati.app.ui.screens.ProfileEditScreen
+import com.khadamati.app.ui.screens.CraftsmanPortalScreen
+import com.khadamati.app.ui.screens.StorePortalScreen
 import com.khadamati.app.ui.screens.SubscriptionPlansScreen
 import com.khadamati.app.ui.viewmodel.AddressViewModel
 import com.khadamati.app.ui.viewmodel.AuthViewModel
@@ -51,6 +53,10 @@ import com.khadamati.app.ui.viewmodel.ChatViewModel
 import com.khadamati.app.ui.viewmodel.NotificationsViewModel
 import com.khadamati.app.ui.viewmodel.ServicesViewModel
 import com.khadamati.app.ui.viewmodel.SupportViewModel
+import com.khadamati.app.ui.viewmodel.CraftsmanPortalViewModel
+import com.khadamati.app.ui.viewmodel.StorePortalViewModel
+import com.khadamati.app.ui.viewmodel.isCraftsmanRole
+import com.khadamati.app.ui.viewmodel.isStoreRole
 import com.khadamati.app.ui.viewmodel.isSubscriberRole
 import com.khadamati.app.ui.viewmodel.subscriptionTargetRole
 
@@ -65,6 +71,8 @@ fun KhadamatiNavGraph(container: AppContainer) {
     val addressViewModel: AddressViewModel = viewModel(factory = AppViewModelFactory(container) { container.provideAddressViewModel() })
     val chatViewModel: ChatViewModel = viewModel(factory = AppViewModelFactory(container) { container.provideChatViewModel() })
     val supportViewModel: SupportViewModel = viewModel(factory = AppViewModelFactory(container) { container.provideSupportViewModel() })
+    val craftsmanPortalViewModel: CraftsmanPortalViewModel = viewModel(factory = AppViewModelFactory(container) { container.provideCraftsmanPortalViewModel() })
+    val storePortalViewModel: StorePortalViewModel = viewModel(factory = AppViewModelFactory(container) { container.provideStorePortalViewModel() })
 
     val navBackStackEntry by navController.currentBackStackEntryAsState()
     val currentRoute = navBackStackEntry?.destination?.route
@@ -240,6 +248,8 @@ fun KhadamatiNavGraph(container: AppContainer) {
                     authViewModel = authViewModel,
                     isAuthenticated = authState.isAuthenticated,
                     showSubscriptions = isSubscriberRole(userRole),
+                    showCraftsmanPortal = isCraftsmanRole(userRole),
+                    showStorePortal = isStoreRole(userRole),
                     onNavigateToLogin = {
                         navController.navigate(Routes.LOGIN) {
                             popUpTo(Routes.HOME)
@@ -252,6 +262,8 @@ fun KhadamatiNavGraph(container: AppContainer) {
                     onNavigateToChats = { navController.navigate(Routes.CHAT_LIST) },
                     onNavigateToSupport = { navController.navigate(Routes.SUPPORT) },
                     onNavigateToProfileEdit = { navController.navigate(Routes.PROFILE_EDIT) },
+                    onNavigateToCraftsmanPortal = { navController.navigate(Routes.CRAFTSMAN_PORTAL) },
+                    onNavigateToStorePortal = { navController.navigate(Routes.STORE_PORTAL) },
                 )
             }
 
@@ -265,6 +277,26 @@ fun KhadamatiNavGraph(container: AppContainer) {
             composable(Routes.PROFILE_EDIT) {
                 ProfileEditScreen(
                     authViewModel = authViewModel,
+                    onNavigateBack = { navController.popBackStack() },
+                )
+            }
+
+            composable(Routes.CRAFTSMAN_PORTAL) {
+                val authState by authViewModel.uiState.collectAsStateWithLifecycle()
+                val isArabic = (authState.profile?.preferredLanguage ?: authState.currentUser?.preferredLanguage) == "ar"
+                CraftsmanPortalScreen(
+                    viewModel = craftsmanPortalViewModel,
+                    isArabic = isArabic,
+                    onNavigateBack = { navController.popBackStack() },
+                )
+            }
+
+            composable(Routes.STORE_PORTAL) {
+                val authState by authViewModel.uiState.collectAsStateWithLifecycle()
+                val isArabic = (authState.profile?.preferredLanguage ?: authState.currentUser?.preferredLanguage) == "ar"
+                StorePortalScreen(
+                    viewModel = storePortalViewModel,
+                    isArabic = isArabic,
                     onNavigateBack = { navController.popBackStack() },
                 )
             }

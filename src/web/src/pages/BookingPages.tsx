@@ -57,6 +57,36 @@ export function BookingWizardPage() {
     finally { setLoading(false); }
   };
 
+  const loadNearbyCraftsmen = async (serviceId: string) => {
+    if (!navigator.geolocation) {
+      setError(t('booking.locationUnsupported'));
+      return;
+    }
+    setLoading(true);
+    setError('');
+    navigator.geolocation.getCurrentPosition(
+      async (position) => {
+        try {
+          const res = await bookingsApi.getNearbyCraftsmen(
+            serviceId,
+            position.coords.latitude,
+            position.coords.longitude,
+          );
+          setCraftsmen(res.data.data);
+        } catch {
+          setError(t('common.error'));
+        } finally {
+          setLoading(false);
+        }
+      },
+      () => {
+        setError(t('booking.locationDenied'));
+        setLoading(false);
+      },
+      { enableHighAccuracy: true, timeout: 15000 },
+    );
+  };
+
   const loadSlots = async () => {
     if (!selectedCraftsman || !selectedService || !selectedDate) return;
     setLoading(true);
@@ -124,13 +154,28 @@ export function BookingWizardPage() {
 
       {activeStep === 1 && (
         <Box>
-          {loading ? <CircularProgress /> : craftsmen.map((c) => (
+          {selectedService && (
+            <Button
+              variant="outlined"
+              sx={{ mb: 2 }}
+              disabled={loading}
+              onClick={() => loadNearbyCraftsmen(selectedService.id)}
+            >
+              {t('booking.findNearby')}
+            </Button>
+          )}
+          {loading ? <CircularProgress /> : craftsmen.length === 0 ? (
+            <Typography color="text.secondary" sx={{ mb: 2 }}>{t('booking.noCraftsmen')}</Typography>
+          ) : craftsmen.map((c) => (
             <Card key={c.id} sx={{ mb: 2, cursor: 'pointer' }}
               onClick={() => { setSelectedCraftsman(c); setActiveStep(2); }}>
               <CardContent sx={{ display: 'flex', justifyContent: 'space-between' }}>
                 <Box>
                   <Typography sx={{ fontWeight: 600 }}>{c.firstName} {c.lastName}</Typography>
                   <Typography variant="body2">{c.specialization}</Typography>
+                  {c.distanceKm != null && (
+                    <Typography variant="caption" color="primary">{t('booking.distanceKm', { km: c.distanceKm })}</Typography>
+                  )}
                 </Box>
                 <Box sx={{ textAlign: 'right' }}>
                   <Chip label={`⭐ ${c.rating}`} size="small" />

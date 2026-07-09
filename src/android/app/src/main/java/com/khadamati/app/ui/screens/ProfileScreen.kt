@@ -32,6 +32,8 @@ fun ProfileScreen(
     authViewModel: AuthViewModel,
     isAuthenticated: Boolean,
     showSubscriptions: Boolean = false,
+    showCraftsmanPortal: Boolean = false,
+    showStorePortal: Boolean = false,
     onNavigateToLogin: () -> Unit,
     onNavigateToNotifications: () -> Unit = {},
     onNavigateToSubscriptions: () -> Unit = {},
@@ -40,6 +42,8 @@ fun ProfileScreen(
     onNavigateToChats: () -> Unit = {},
     onNavigateToSupport: () -> Unit = {},
     onNavigateToProfileEdit: () -> Unit = {},
+    onNavigateToCraftsmanPortal: () -> Unit = {},
+    onNavigateToStorePortal: () -> Unit = {},
 ) {
     val uiState by authViewModel.uiState.collectAsStateWithLifecycle()
 
@@ -151,6 +155,19 @@ fun ProfileScreen(
                         modifier = Modifier.fillMaxWidth(),
                     ) {
                         Text(stringResource(R.string.subscription_my_subscription))
+                    }
+                }
+
+                if (showCraftsmanPortal) {
+                    Spacer(modifier = Modifier.height(8.dp))
+                    OutlinedButton(onClick = onNavigateToCraftsmanPortal, modifier = Modifier.fillMaxWidth()) {
+                        Text(stringResource(R.string.craftsman_portal_title))
+                    }
+                }
+                if (showStorePortal) {
+                    Spacer(modifier = Modifier.height(8.dp))
+                    OutlinedButton(onClick = onNavigateToStorePortal, modifier = Modifier.fillMaxWidth()) {
+                        Text(stringResource(R.string.store_portal_title))
                     }
                 }
 
