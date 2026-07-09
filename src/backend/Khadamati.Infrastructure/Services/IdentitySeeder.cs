@@ -13,11 +13,22 @@ public static class IdentitySeeder
     public static async Task SeedAsync(ApplicationDbContext context, ILogger logger, CancellationToken ct = default)
     {
         await SeedRolesAndPermissionsAsync(context, ct);
+        await FinalizeUserRoleAssignmentsAsync(context, logger, ct);
+    }
+
+    public static Task SeedRolesAndPermissionsAsync(ApplicationDbContext context, CancellationToken ct = default) =>
+        SeedRolesAndPermissionsInternalAsync(context, ct);
+
+    public static async Task FinalizeUserRoleAssignmentsAsync(
+        ApplicationDbContext context,
+        ILogger logger,
+        CancellationToken ct = default)
+    {
         await MigrateLegacyUsersAsync(context, ct);
         await EnsureSuperAdminAsync(context, logger, ct);
     }
 
-    private static async Task SeedRolesAndPermissionsAsync(ApplicationDbContext context, CancellationToken ct)
+    private static async Task SeedRolesAndPermissionsInternalAsync(ApplicationDbContext context, CancellationToken ct)
     {
         if (await context.Roles.AnyAsync(ct)) return;
 

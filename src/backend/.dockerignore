@@ -1,0 +1,12 @@
+**/*
+!Khadamati.Domain/**
+!Khadamati.Application/**
+!Khadamati.Infrastructure/**
+!Khadamati.API/**
+!Khadamati.sln
+**/bin/
+**/obj/
+**/.vs/
+**/logs/
+**/*.user
+**/*.md
