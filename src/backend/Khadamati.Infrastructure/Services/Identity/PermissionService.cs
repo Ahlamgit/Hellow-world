@@ -34,4 +34,11 @@ public class PermissionService : IPermissionService
     }
 
     public void InvalidateCache(Guid userId) => _cache.Remove($"permissions:{userId}");
+
+    public async Task InvalidateCacheForRoleAsync(Guid roleId, CancellationToken cancellationToken = default)
+    {
+        var userIds = await _identityRepository.GetUserIdsByRoleAsync(roleId, cancellationToken);
+        foreach (var userId in userIds)
+            InvalidateCache(userId);
+    }
 }

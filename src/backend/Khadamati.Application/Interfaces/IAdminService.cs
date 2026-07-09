@@ -15,6 +15,11 @@ public interface IAdminService
     Task<IReadOnlyList<AdminBackupDto>> ListBackupsAsync(CancellationToken cancellationToken = default);
     Task<AdminBackupDto> CreateBackupAsync(string? userId, CancellationToken cancellationToken = default);
     Task<AdminBulkActionResultDto> RestoreBackupAsync(AdminRestoreRequestDto request, string? userId, CancellationToken cancellationToken = default);
+    Task<IReadOnlyList<SystemSettingDto>> ListSettingsAsync(CancellationToken cancellationToken = default);
+    Task<SystemSettingDto> UpdateSettingAsync(Guid id, UpdateSystemSettingDto request, string? userId, CancellationToken cancellationToken = default);
+    Task<IReadOnlyList<AdminRoleDto>> ListRbacRolesAsync(CancellationToken cancellationToken = default);
+    Task<RolePermissionMatrixDto> GetRolePermissionMatrixAsync(Guid roleId, CancellationToken cancellationToken = default);
+    Task<RolePermissionMatrixDto> UpdateRolePermissionsAsync(Guid roleId, UpdateRolePermissionsDto request, string? userId, CancellationToken cancellationToken = default);
 }
 
 public interface IAdminExportService
