@@ -16,8 +16,12 @@ import {
   type AdminUserListQuery,
   type CreateAdminUserRequest,
   type UpdateAdminUserRequest,
+  type UserPermissionEntry,
+  type UserPermissionMatrix,
 } from './adminUsersApi';
 import { getApiErrorMessage } from '../utils/apiError';
+import { hasPermission } from '../utils/permissions';
+import { useAuth } from '../context/AuthContext';
 
 const PAGE_SIZES = [10, 25, 50, 100];
 
@@ -39,6 +43,8 @@ function StatusChip({ status }: { status: string }) {
 }
 
 export default function AdminUsersPage() {
+  const { user: authUser } = useAuth();
+  const canEditPermissions = hasPermission(authUser, 'Permissions.Manage');
   const [users, setUsers] = useState<AdminUserListItem[]>([]);
   const [totalCount, setTotalCount] = useState(0);
   const [loading, setLoading] = useState(true);
@@ -65,6 +71,10 @@ export default function AdminUsersPage() {
   const [suspendReason, setSuspendReason] = useState('');
   const [detailLoading, setDetailLoading] = useState(false);
   const [saving, setSaving] = useState(false);
+
+  const [permMatrix, setPermMatrix] = useState<UserPermissionMatrix | null>(null);
+  const [permOverrides, setPermOverrides] = useState<Record<string, 'inherit' | 'grant' | 'deny'>>({});
+  const [permLoading, setPermLoading] = useState(false);
 
   const buildQuery = useCallback((): AdminUserListQuery => ({
     search: search || undefined,
@@ -93,6 +103,7 @@ export default function AdminUsersPage() {
 
   const loadDetail = async (id: string) => {
     setDetailLoading(true);
+    setPermLoading(true);
     try {
       const { data } = await adminUsersApi.getById(id);
       const user = data.data;
@@ -106,10 +117,25 @@ export default function AdminUsersPage() {
       });
       setSelectedRoles([...user.roles]);
       setPrimaryRole(user.primaryRole);
+
+      try {
+        const permRes = await adminUsersApi.getPermissions(id);
+        const matrix = permRes.data.data;
+        setPermMatrix(matrix);
+        const overrides: Record<string, 'inherit' | 'grant' | 'deny'> = {};
+        matrix.permissions.forEach((p) => {
+          overrides[p.permissionId] = p.override === null ? 'inherit' : p.override ? 'grant' : 'deny';
+        });
+        setPermOverrides(overrides);
+      } catch {
+        setPermMatrix(null);
+        setPermOverrides({});
+      }
     } catch (err) {
       setSnack({ message: getApiErrorMessage(err, 'Failed to load user'), severity: 'error' });
     } finally {
       setDetailLoading(false);
+      setPermLoading(false);
     }
   };
 
@@ -125,7 +151,45 @@ export default function AdminUsersPage() {
     setDetail(null);
     setEditForm(null);
     setSuspendReason('');
+    setPermMatrix(null);
+    setPermOverrides({});
   };
+
+  const handleSavePermissions = async () => {
+    if (!selectedId || !permMatrix) return;
+    setSaving(true);
+    try {
+      const overrides = Object.entries(permOverrides)
+        .filter(([, state]) => state !== 'inherit')
+        .map(([permissionId, state]) => ({
+          permissionId,
+          isGranted: state === 'grant',
+        }));
+      const { data } = await adminUsersApi.updatePermissions(selectedId, overrides);
+      setPermMatrix(data.data);
+      const next: Record<string, 'inherit' | 'grant' | 'deny'> = {};
+      data.data.permissions.forEach((p) => {
+        next[p.permissionId] = p.override === null ? 'inherit' : p.override ? 'grant' : 'deny';
+      });
+      setPermOverrides(next);
+      setSnack({ message: 'Permission overrides saved', severity: 'success' });
+      if (detail) {
+        setDetail({ ...detail, permissions: data.data.permissions.filter((p) => p.effective).map((p) => p.code) });
+      }
+    } catch (err) {
+      setSnack({ message: getApiErrorMessage(err, 'Failed to save permissions'), severity: 'error' });
+    } finally {
+      setSaving(false);
+    }
+  };
+
+  const setPermState = (entry: UserPermissionEntry, state: 'inherit' | 'grant' | 'deny') => {
+    setPermOverrides((prev) => ({ ...prev, [entry.permissionId]: state }));
+  };
+
+  const permModules = permMatrix
+    ? Array.from(new Set(permMatrix.permissions.map((p) => p.module))).sort()
+    : [];
 
   const handleSort = (key: string) => {
     if (sortBy === key) setSortDirection((d) => (d === 'asc' ? 'desc' : 'asc'));
@@ -464,7 +528,59 @@ export default function AdminUsersPage() {
             )}
             <Button color="error" variant="outlined" onClick={handleDelete} disabled={saving}>Delete User</Button>
 
-            {detail.permissions.length > 0 && (
+            {permMatrix && (
+              <>
+                <Divider />
+                <Typography variant="subtitle2" sx={{ fontWeight: 600 }}>
+                  Permission overrides
+                  {permLoading && ' (loading…)'}
+                </Typography>
+                <Typography variant="caption" color="text.secondary">
+                  Inherit uses role permissions. Grant/deny applies a direct override.
+                </Typography>
+                {permModules.map((mod) => (
+                  <Box key={mod} sx={{ mt: 1 }}>
+                    <Typography variant="caption" sx={{ fontWeight: 600, color: 'text.secondary' }}>{mod}</Typography>
+                    <Stack spacing={0.5} sx={{ mt: 0.5 }}>
+                      {permMatrix.permissions.filter((p) => p.module === mod).map((p) => {
+                        const state = permOverrides[p.permissionId] ?? 'inherit';
+                        return (
+                          <Box key={p.permissionId} sx={{ display: 'flex', alignItems: 'center', gap: 1, flexWrap: 'wrap' }}>
+                            <Typography variant="body2" sx={{ flex: 1, minWidth: 160 }}>{p.code}</Typography>
+                            {p.fromRole && <Chip label="role" size="small" variant="outlined" />}
+                            {canEditPermissions ? (
+                              <FormControl size="small" sx={{ minWidth: 110 }}>
+                                <Select
+                                  value={state}
+                                  onChange={(e) => setPermState(p, e.target.value as 'inherit' | 'grant' | 'deny')}
+                                >
+                                  <MenuItem value="inherit">Inherit</MenuItem>
+                                  <MenuItem value="grant">Grant</MenuItem>
+                                  <MenuItem value="deny">Deny</MenuItem>
+                                </Select>
+                              </FormControl>
+                            ) : (
+                              <Chip
+                                label={p.effective ? 'allowed' : 'denied'}
+                                size="small"
+                                color={p.effective ? 'success' : 'default'}
+                              />
+                            )}
+                          </Box>
+                        );
+                      })}
+                    </Stack>
+                  </Box>
+                ))}
+                {canEditPermissions && (
+                  <Button variant="outlined" onClick={handleSavePermissions} disabled={saving || permLoading}>
+                    Save permission overrides
+                  </Button>
+                )}
+              </>
+            )}
+
+            {!permMatrix && detail.permissions.length > 0 && (
               <>
                 <Divider />
                 <Typography variant="subtitle2" sx={{ fontWeight: 600 }}>Permissions ({detail.permissions.length})</Typography>

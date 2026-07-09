@@ -266,6 +266,60 @@ public class UserManagementService : IUserManagementService
         return await GetByIdAsync(id, cancellationToken);
     }
 
+    public async Task<UserPermissionMatrixDto> GetPermissionMatrixAsync(Guid id, CancellationToken cancellationToken = default)
+    {
+        _ = await _userRepository.GetByIdAsync(id, cancellationToken: cancellationToken)
+            ?? throw new NotFoundException("User not found.");
+
+        var roleIds = await _identityRepository.GetUserRoleIdsAsync(id, cancellationToken);
+        var allPermissions = await _identityRepository.GetAllPermissionsAsync(cancellationToken);
+        var rolePermissionIds = await _identityRepository.GetRolePermissionIdsAsync(roleIds, cancellationToken);
+        var overrides = await _identityRepository.GetUserPermissionOverridesAsync(id, cancellationToken);
+        var overrideMap = overrides.ToDictionary(o => o.PermissionId);
+
+        var entries = allPermissions.Select(p =>
+        {
+            var (permId, code, nameEn, module) = p;
+            var fromRole = rolePermissionIds.Contains(permId);
+            overrideMap.TryGetValue(permId, out var ov);
+            var effective = ov != null ? ov.IsGranted : fromRole;
+            return new UserPermissionEntryDto
+            {
+                PermissionId = permId,
+                Code = code,
+                NameEn = nameEn,
+                Module = module,
+                FromRole = fromRole,
+                Override = ov?.IsGranted,
+                Effective = effective,
+            };
+        }).ToList();
+
+        return new UserPermissionMatrixDto { UserId = id, Permissions = entries };
+    }
+
+    public async Task<UserPermissionMatrixDto> UpdatePermissionsAsync(
+        Guid id, UpdateUserPermissionsDto dto, Guid adminUserId, CancellationToken cancellationToken = default)
+    {
+        if (!await _permissionService.UserHasPermissionAsync(adminUserId, PermissionCodes.PermissionsManage, cancellationToken))
+            throw new UnauthorizedException("Permission denied.");
+
+        _ = await _userRepository.GetByIdAsync(id, cancellationToken: cancellationToken)
+            ?? throw new NotFoundException("User not found.");
+
+        await _identityRepository.SetUserPermissionOverridesAsync(
+            id,
+            dto.Overrides.Select(o => (o.PermissionId, o.IsGranted)).ToList(),
+            adminUserId.ToString(),
+            cancellationToken);
+        await _unitOfWork.SaveChangesAsync(cancellationToken);
+        _permissionService.InvalidateCache(id);
+        await _auditService.LogSecurityEventAsync(
+            adminUserId, "UserPermissionsUpdated", $"Admin updated permission overrides for user {id}", null, null, cancellationToken: cancellationToken);
+
+        return await GetPermissionMatrixAsync(id, cancellationToken);
+    }
+
     private async Task<AdminUserDetailDto> MapDetailAsync(User user, CancellationToken cancellationToken)
     {
         var roles = await _identityRepository.GetUserRoleNamesAsync(user.Id, cancellationToken);

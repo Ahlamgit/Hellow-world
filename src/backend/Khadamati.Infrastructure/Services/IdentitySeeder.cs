@@ -73,8 +73,8 @@ public static class IdentitySeeder
             PermissionCodes.AuditLogsView, PermissionCodes.SecurityLogsView, PermissionCodes.LoginHistoryView);
         Grant(RoleNames.SupportAgent, PermissionCodes.UsersView, PermissionCodes.BookingsView, PermissionCodes.LoginHistoryView);
         Grant(RoleNames.Moderator, PermissionCodes.UsersView, PermissionCodes.BookingsView, PermissionCodes.BookingsCancel);
-        Grant(RoleNames.Customer, PermissionCodes.BookingsView, PermissionCodes.BookingsCreate, PermissionCodes.SessionsView);
-        Grant(RoleNames.Craftsman, PermissionCodes.BookingsView, PermissionCodes.BookingsApprove, PermissionCodes.SessionsView);
+        Grant(RoleNames.Customer, PermissionCodes.BookingsView, PermissionCodes.BookingsCreate, PermissionCodes.BookingsCancel, PermissionCodes.BookingsEdit, PermissionCodes.SessionsView);
+        Grant(RoleNames.Craftsman, PermissionCodes.BookingsView, PermissionCodes.BookingsApprove, PermissionCodes.BookingsCancel, PermissionCodes.BookingsEdit, PermissionCodes.SessionsView);
         Grant(RoleNames.StoreOwner, PermissionCodes.BookingsView, PermissionCodes.AdvertisementsManage, PermissionCodes.SessionsView);
         Grant(RoleNames.StoreEmployee, PermissionCodes.BookingsView, PermissionCodes.SessionsView);
         Grant(RoleNames.Accountant, PermissionCodes.PaymentsView, PermissionCodes.PaymentsUpdate, PermissionCodes.ReportsView, PermissionCodes.ReportsExport);
