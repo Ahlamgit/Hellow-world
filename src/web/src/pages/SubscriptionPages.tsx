@@ -11,6 +11,7 @@ import {
   subscriptionPlansApi, userSubscriptionApi,
   type SubscriptionPlan, type UserSubscription,
 } from '../services/subscriptionsApi';
+import { supportApi } from '../services/api';
 import { getApiErrorMessage } from '../utils/apiError';
 
 const SUBSCRIBER_ROLES = new Set(['Craftsman', 'Store', 'StoreOwner']);
@@ -128,6 +129,9 @@ export function SubscribePage() {
   const [plan, setPlan] = useState<SubscriptionPlan | null>(null);
   const [billingOptionId, setBillingOptionId] = useState('');
   const [autoRenew, setAutoRenew] = useState(true);
+  const [couponCode, setCouponCode] = useState('');
+  const [couponMessage, setCouponMessage] = useState('');
+  const [couponDiscount, setCouponDiscount] = useState<number | null>(null);
   const [loading, setLoading] = useState(true);
   const [submitting, setSubmitting] = useState(false);
   const [error, setError] = useState('');
@@ -144,12 +148,38 @@ export function SubscribePage() {
       .finally(() => setLoading(false));
   }, [planId, t]);
 
+  const selectedOption = plan?.billingOptions.find((b) => b.id === billingOptionId);
+  const baseAmount = selectedOption?.price ?? 0;
+
+  const validateCoupon = async () => {
+    if (!couponCode.trim() || !baseAmount) return;
+    setCouponMessage('');
+    setCouponDiscount(null);
+    try {
+      const { data } = await supportApi.validateCoupon(couponCode.trim(), baseAmount);
+      const result = data.data;
+      if (result.isValid) {
+        setCouponDiscount(result.discountAmount);
+        setCouponMessage(result.message ?? t('coupon.valid', { amount: result.discountAmount }));
+      } else {
+        setCouponMessage(result.message ?? t('coupon.invalid'));
+      }
+    } catch (e) {
+      setCouponMessage(getApiErrorMessage(e, t('coupon.invalid')));
+    }
+  };
+
   const handleSubscribe = async () => {
     if (!plan || !billingOptionId) return;
     setSubmitting(true);
     setError('');
     try {
-      await userSubscriptionApi.subscribe({ planId: plan.id, billingOptionId, autoRenew });
+      await userSubscriptionApi.subscribe({
+        planId: plan.id,
+        billingOptionId,
+        autoRenew,
+        couponCode: couponCode.trim() || undefined,
+      });
       navigate('/subscription');
     } catch (e) {
       setError(getApiErrorMessage(e, t('common.error')));
@@ -192,6 +222,29 @@ export function SubscribePage() {
             label={t('subscription.autoRenew')}
             sx={{ display: 'block', mt: 2 }}
           />
+
+          <Typography variant="subtitle2" sx={{ mt: 3 }} gutterBottom>{t('coupon.title')}</Typography>
+          <Box sx={{ display: 'flex', gap: 1, mb: 1 }}>
+            <TextField
+              fullWidth
+              label={t('coupon.code')}
+              value={couponCode}
+              onChange={(e) => setCouponCode(e.target.value)}
+            />
+            <Button variant="outlined" onClick={validateCoupon} disabled={!couponCode.trim() || !billingOptionId}>
+              {t('coupon.validate')}
+            </Button>
+          </Box>
+          {couponMessage && (
+            <Typography variant="body2" color={couponDiscount != null ? 'success.main' : 'error'} sx={{ mb: 1 }}>
+              {couponMessage}
+            </Typography>
+          )}
+          {couponDiscount != null && selectedOption && (
+            <Typography variant="body2" color="text.secondary">
+              {t('coupon.finalAmount', { amount: baseAmount - couponDiscount, currency: plan.currency })}
+            </Typography>
+          )}
 
           <Box sx={{ display: 'flex', gap: 1, mt: 3 }}>
             <Button onClick={() => navigate('/subscriptions')}>{t('common.back')}</Button>

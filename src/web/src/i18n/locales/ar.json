@@ -214,6 +214,34 @@
     "yourReview": "تقييمك",
     "leaveReview": "أضف تقييماً"
   },
+  "support": {
+    "title": "المساعدة والدعم",
+    "submit": "إرسال",
+    "history": "السجل",
+    "complaint": "شكوى",
+    "ticket": "تذكرة دعم",
+    "subject": "الموضوع",
+    "description": "الوصف",
+    "category": "الفئة",
+    "submitComplaint": "إرسال الشكوى",
+    "submitTicket": "إنشاء تذكرة",
+    "complaintSubmitted": "تم إرسال الشكوى بنجاح.",
+    "ticketSubmitted": "تم إنشاء تذكرة الدعم.",
+    "complaintFailed": "فشل إرسال الشكوى.",
+    "ticketFailed": "فشل إنشاء التذكرة.",
+    "myComplaints": "شكاواي",
+    "myTickets": "تذاكري",
+    "noComplaints": "لا توجد شكاوى بعد.",
+    "noTickets": "لا توجد تذاكر دعم بعد."
+  },
+  "coupon": {
+    "title": "رمز القسيمة",
+    "code": "رمز القسيمة",
+    "validate": "تطبيق",
+    "valid": "تم تطبيق القسيمة — خصم {{amount}} ريال",
+    "invalid": "قسيمة غير صالحة أو منتهية.",
+    "finalAmount": "الإجمالي التقديري: {{amount}} {{currency}}"
+  },
   "common": {
     "loading": "جاري التحميل...",
     "error": "حدث خطأ",

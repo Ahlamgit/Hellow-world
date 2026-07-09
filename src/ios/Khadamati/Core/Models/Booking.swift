@@ -13,6 +13,8 @@ struct Booking: Codable, Identifiable {
     let scheduledAt: Date
     let slotEnd: Date
     let estimatedPrice: Decimal
+    let customerRating: Int?
+    let customerReview: String?
     let payment: BookingPayment?
 }
 

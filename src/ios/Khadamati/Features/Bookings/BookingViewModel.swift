@@ -190,6 +190,20 @@ final class BookingViewModel: ObservableObject {
             selectedBooking = refreshed
         }
     }
+
+    func submitReview(bookingId: UUID, rating: Int, review: String?) async {
+        let body = SubmitReviewBody(rating: rating, review: review)
+        try? await apiClient.requestVoid(
+            url: APIEndpoints.Support.review(bookingId),
+            method: .post,
+            body: body,
+            requiresAuth: true
+        )
+        await loadBookings()
+        if let refreshed = await loadBooking(id: bookingId) {
+            selectedBooking = refreshed
+        }
+    }
 }
 
 private struct RescheduleBody: Encodable {

@@ -170,4 +170,27 @@
   <string name="auth_password_mismatch">Passwords do not match.</string>
   <string name="auth_reset_success">Password reset successfully. You can sign in now.</string>
   <string name="auth_forgot_success">If an account exists, a reset link has been sent.</string>
+  <string name="support_title">Help &amp; Support</string>
+  <string name="support_submit">Submit</string>
+  <string name="support_history">History</string>
+  <string name="support_complaint">Complaint</string>
+  <string name="support_ticket">Support Ticket</string>
+  <string name="support_subject">Subject</string>
+  <string name="support_description">Description</string>
+  <string name="support_category">Category</string>
+  <string name="support_submit_complaint">Submit complaint</string>
+  <string name="support_submit_ticket">Create ticket</string>
+  <string name="support_complaint_submitted">Complaint submitted successfully.</string>
+  <string name="support_ticket_submitted">Support ticket created.</string>
+  <string name="support_my_complaints">My Complaints</string>
+  <string name="support_my_tickets">My Tickets</string>
+  <string name="support_no_complaints">No complaints yet.</string>
+  <string name="support_no_tickets">No support tickets yet.</string>
+  <string name="profile_edit_title">Edit Profile</string>
+  <string name="review_title">Rate Your Experience</string>
+  <string name="review_rating">Rating (1-5)</string>
+  <string name="review_comment">Comment (optional)</string>
+  <string name="review_submit">Submit Review</string>
+  <string name="review_leave">Leave a Review</string>
+  <string name="review_your_review">Your review</string>
 </resources>

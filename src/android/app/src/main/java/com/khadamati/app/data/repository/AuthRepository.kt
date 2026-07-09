@@ -88,6 +88,18 @@ class AuthRepository(
         response.message ?: response.data?.message ?: "Password reset successfully."
     }
 
+    suspend fun updateProfile(firstName: String, lastName: String, preferredLanguage: String): Result<UserProfile> = runCatching {
+        val response = apiService.updateProfile(
+            mapOf(
+                "firstName" to firstName,
+                "lastName" to lastName,
+                "preferredLanguage" to preferredLanguage,
+            ),
+        )
+        val data = response.data ?: throw ApiException(response.message ?: "Failed to update profile")
+        data.toDomain()
+    }
+
     private suspend fun persistSession(tokens: AuthTokens, user: User) {
         tokenManager.saveTokens(
             accessToken = tokens.accessToken,

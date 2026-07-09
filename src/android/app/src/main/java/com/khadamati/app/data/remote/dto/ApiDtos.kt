@@ -142,6 +142,8 @@ data class BookingDto(
     val scheduledAt: String,
     val slotEnd: String,
     val estimatedPrice: Double,
+    val customerRating: Int? = null,
+    val customerReview: String? = null,
     val payment: BookingPaymentDto?,
 )
 
@@ -290,3 +292,38 @@ data class ChatMessageDto(
 )
 
 data class SendChatMessageRequestDto(val body: String)
+
+data class ComplaintDto(
+    val id: String,
+    val subject: String,
+    val description: String,
+    val status: String,
+    val priority: String,
+    val createdAt: String,
+)
+
+data class SupportTicketDto(
+    val id: String,
+    val ticketNumber: String,
+    val subject: String,
+    val description: String,
+    val status: String,
+    val priority: String,
+    val category: String,
+    val createdAt: String,
+)
+
+data class CreateComplaintRequestDto(
+    val subject: String,
+    val description: String,
+    val priority: String = "Normal",
+)
+
+data class CreateSupportTicketRequestDto(
+    val subject: String,
+    val description: String,
+    val category: String = "General",
+    val priority: String = "Normal",
+)
+
+data class SubmitReviewRequestDto(val rating: Int, val review: String? = null)

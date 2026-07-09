@@ -169,4 +169,18 @@ class AuthViewModel(
                 }
         }
     }
+
+    fun updateProfile(firstName: String, lastName: String, preferredLanguage: String, onSuccess: () -> Unit) {
+        viewModelScope.launch {
+            _uiState.value = _uiState.value.copy(isLoading = true, errorMessage = null)
+            authRepository.updateProfile(firstName, lastName, preferredLanguage)
+                .onSuccess { profile ->
+                    _uiState.value = _uiState.value.copy(isLoading = false, profile = profile)
+                    onSuccess()
+                }
+                .onFailure { error ->
+                    _uiState.value = _uiState.value.copy(isLoading = false, errorMessage = error.message)
+                }
+        }
+    }
 }

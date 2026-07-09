@@ -214,6 +214,34 @@
     "yourReview": "Your review",
     "leaveReview": "Leave a Review"
   },
+  "support": {
+    "title": "Help & Support",
+    "submit": "Submit",
+    "history": "History",
+    "complaint": "Complaint",
+    "ticket": "Support Ticket",
+    "subject": "Subject",
+    "description": "Description",
+    "category": "Category",
+    "submitComplaint": "Submit complaint",
+    "submitTicket": "Create ticket",
+    "complaintSubmitted": "Complaint submitted successfully.",
+    "ticketSubmitted": "Support ticket created.",
+    "complaintFailed": "Failed to submit complaint.",
+    "ticketFailed": "Failed to create ticket.",
+    "myComplaints": "My Complaints",
+    "myTickets": "My Tickets",
+    "noComplaints": "No complaints yet.",
+    "noTickets": "No support tickets yet."
+  },
+  "coupon": {
+    "title": "Coupon code",
+    "code": "Coupon code",
+    "validate": "Apply",
+    "valid": "Coupon applied — {{amount}} SAR discount",
+    "invalid": "Invalid or expired coupon.",
+    "finalAmount": "Estimated total: {{amount}} {{currency}}"
+  },
   "common": {
     "loading": "Loading...",
     "error": "An error occurred",

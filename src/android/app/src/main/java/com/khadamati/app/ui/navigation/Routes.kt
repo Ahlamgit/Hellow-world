@@ -20,4 +20,6 @@ object Routes {
     const val ADDRESSES = "addresses"
     const val CHAT_LIST = "chat"
     const val BOOKING_CHAT = "booking/{bookingId}/chat"
+    const val SUPPORT = "support"
+    const val PROFILE_EDIT = "profile/edit"
 }

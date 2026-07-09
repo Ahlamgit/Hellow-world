@@ -8,6 +8,7 @@ protocol AuthServiceProtocol {
     func fetchProfile() async throws -> User
     func forgotPassword(email: String) async throws -> String
     func resetPassword(token: String, newPassword: String, confirmPassword: String) async throws -> String
+    func updateProfile(firstName: String, lastName: String, preferredLanguage: String) async throws -> User
 }
 
 @MainActor
@@ -92,6 +93,17 @@ final class AuthService: AuthServiceProtocol {
             requiresAuth: false
         )
         return response.message ?? response.data?.message ?? L10n.Auth.resetSuccess
+    }
+
+    func updateProfile(firstName: String, lastName: String, preferredLanguage: String) async throws -> User {
+        let body = UpdateProfileBody(firstName: firstName, lastName: lastName, preferredLanguage: preferredLanguage)
+        try await apiClient.requestVoid(
+            url: APIEndpoints.Users.me,
+            method: .put,
+            body: body,
+            requiresAuth: true
+        )
+        return try await fetchProfile()
     }
 
     private func persistTokens(from response: AuthResponse) throws {
