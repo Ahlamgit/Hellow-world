@@ -49,6 +49,8 @@ export default function DashboardPage() {
                 )}
                 <Button component={Link} to="/sessions" variant="outlined" size="small">{t('identity.sessionsTitle')}</Button>
                 <Button component={Link} to="/notifications" variant="outlined" size="small">{t('notifications.title')}</Button>
+                <Button component={Link} to="/chat" variant="outlined" size="small">{t('chat.title')}</Button>
+                <Button component={Link} to="/addresses" variant="outlined" size="small">{t('addresses.title')}</Button>
                 <Button component={Link} to="/support" variant="outlined" size="small">Support</Button>
                 {user?.role === 'Craftsman' && (
                   <Button component={Link} to="/craftsman" variant="outlined" size="small">Craftsman Portal</Button>

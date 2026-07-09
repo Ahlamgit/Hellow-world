@@ -2,15 +2,15 @@ import { useEffect, useState, type ReactNode } from 'react';
 import { useNavigate, useParams, useSearchParams } from 'react-router-dom';
 import {
   Box, Button, Card, CardContent, Chip, CircularProgress, Container, Step, StepLabel, Stepper,
-  TextField, Typography, Alert, Dialog, DialogTitle, DialogContent, DialogActions,
+  TextField, Typography, Alert, Dialog, DialogTitle, DialogContent, DialogActions, MenuItem, Rating,
 } from '@mui/material';
 import Grid from '@mui/material/Grid';
 import { useTranslation } from 'react-i18next';
 import { useAuth } from '../context/AuthContext';
 import {
-  bookingsApi, type Booking, type CraftsmanOption, type Service, type TimeSlot,
+  bookingsApi, type Booking, type CraftsmanOption, type Service, type TimeSlot, type AddressDto,
 } from '../services/api';
-import { servicesApi } from '../services/api';
+import { servicesApi, usersApi } from '../services/api';
 import { getApiErrorMessage } from '../utils/apiError';
 
 const CANCELLABLE_STATUSES = new Set(['Pending', 'AwaitingPayment', 'Confirmed', 'Rescheduled']);
@@ -32,6 +32,9 @@ export function BookingWizardPage() {
   const [selectedCraftsman, setSelectedCraftsman] = useState<CraftsmanOption | null>(null);
   const [selectedDate, setSelectedDate] = useState('');
   const [selectedSlot, setSelectedSlot] = useState<TimeSlot | null>(null);
+  const [addresses, setAddresses] = useState<AddressDto[]>([]);
+  const [selectedAddressId, setSelectedAddressId] = useState('');
+  const [description, setDescription] = useState('');
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState('');
 
@@ -64,6 +67,17 @@ export function BookingWizardPage() {
     finally { setLoading(false); }
   };
 
+  useEffect(() => {
+    if (activeStep !== 3) return;
+    usersApi.listAddresses()
+      .then((res) => {
+        setAddresses(res.data.data);
+        const defaultAddress = res.data.data.find((address) => address.isDefault);
+        if (defaultAddress) setSelectedAddressId(defaultAddress.id);
+      })
+      .catch(() => setAddresses([]));
+  }, [activeStep]);
+
   const handleCreateBooking = async () => {
     if (!selectedService || !selectedCraftsman || !selectedSlot) return;
     setLoading(true);
@@ -73,6 +87,8 @@ export function BookingWizardPage() {
         serviceId: selectedService.id,
         craftsmanId: selectedCraftsman.id,
         scheduledAt: selectedSlot.start,
+        addressId: selectedAddressId || undefined,
+        description: description.trim() || undefined,
       });
       await bookingsApi.confirm(res.data.data.id);
       navigate(`/bookings/${res.data.data.id}/payment`);
@@ -158,6 +174,30 @@ export function BookingWizardPage() {
             <Typography>{selectedCraftsman.firstName} {selectedCraftsman.lastName}</Typography>
             <Typography>{new Date(selectedSlot.start).toLocaleString()}</Typography>
             <Typography sx={{ fontWeight: 700 }}>{selectedCraftsman.price} SAR</Typography>
+            <TextField
+              select
+              fullWidth
+              sx={{ mt: 2 }}
+              label={t('addresses.selectAddress')}
+              value={selectedAddressId}
+              onChange={(e) => setSelectedAddressId(e.target.value)}
+            >
+              <MenuItem value="">{t('addresses.noAddress')}</MenuItem>
+              {addresses.map((address) => (
+                <MenuItem key={address.id} value={address.id}>
+                  {address.label} — {address.street}, {address.city}
+                </MenuItem>
+              ))}
+            </TextField>
+            <TextField
+              fullWidth
+              sx={{ mt: 2 }}
+              label={t('booking.description')}
+              value={description}
+              onChange={(e) => setDescription(e.target.value)}
+              multiline
+              minRows={2}
+            />
             <Box sx={{ mt: 2, display: 'flex', gap: 1 }}>
               <Button onClick={() => setActiveStep(2)}>{t('common.back')}</Button>
               <Button variant="contained" onClick={handleCreateBooking} disabled={loading}>
@@ -223,6 +263,10 @@ export function BookingDetailPage() {
   const [rescheduleReason, setRescheduleReason] = useState('');
 
   const [noShowOpen, setNoShowOpen] = useState(false);
+  const [reviewOpen, setReviewOpen] = useState(false);
+  const [reviewRating, setReviewRating] = useState<number | null>(5);
+  const [reviewComment, setReviewComment] = useState('');
+  const [reviewSuccess, setReviewSuccess] = useState('');
 
   const reload = () => {
     if (!id) return;
@@ -311,6 +355,24 @@ export function BookingDetailPage() {
     }
   };
 
+  const handleSubmitReview = async () => {
+    if (!reviewRating) return;
+    setActionLoading(true);
+    setError('');
+    try {
+      await bookingsApi.submitReview(booking.id, reviewRating, reviewComment.trim() || undefined);
+      setReviewOpen(false);
+      setReviewSuccess(t('review.submitted'));
+      reload();
+    } catch (e) {
+      setError(getApiErrorMessage(e, t('common.error')));
+    } finally {
+      setActionLoading(false);
+    }
+  };
+
+  const chatEligible = !['Cancelled', 'Rejected', 'Expired'].includes(booking.status);
+
   const actions = () => {
     const buttons: ReactNode[] = [];
 
@@ -362,6 +424,22 @@ export function BookingDetailPage() {
       );
     }
 
+    if (chatEligible && (isCustomer || isCraftsman)) {
+      buttons.push(
+        <Button key="chat" variant="outlined" onClick={() => navigate(`/chat/${booking.id}`)}>
+          {t('chat.openChat')}
+        </Button>,
+      );
+    }
+
+    if (booking.status === 'Completed' && isCustomer && !booking.customerRating) {
+      buttons.push(
+        <Button key="review" variant="contained" onClick={() => setReviewOpen(true)}>
+          {t('review.leaveReview')}
+        </Button>,
+      );
+    }
+
     if (buttons.length === 0) return null;
     return <Box sx={{ display: 'flex', gap: 1, flexWrap: 'wrap' }}>{buttons}</Box>;
   };
@@ -371,6 +449,7 @@ export function BookingDetailPage() {
       <Typography variant="h4" sx={{ fontWeight: 700 }}>{booking.serviceName}</Typography>
       <Chip label={t(`booking.status.${booking.status}`)} color={statusColor(booking.status)} sx={{ my: 2 }} />
       {error && <Alert severity="error" sx={{ mb: 2 }}>{error}</Alert>}
+      {reviewSuccess && <Alert severity="success" sx={{ mb: 2 }}>{reviewSuccess}</Alert>}
       <Card sx={{ mb: 2 }}><CardContent>
         <Typography><strong>{t('booking.reference')}:</strong> {booking.bookingReference}</Typography>
         <Typography><strong>{t('booking.craftsman')}:</strong> {booking.craftsmanName}</Typography>
@@ -380,6 +459,15 @@ export function BookingDetailPage() {
           <Typography color="error" sx={{ mt: 1 }}>
             <strong>{t('booking.cancelReason')}:</strong> {booking.cancellationReason}
           </Typography>
+        )}
+        {booking.customerRating != null && (
+          <Box sx={{ mt: 2 }}>
+            <Typography variant="subtitle2">{t('review.yourReview')}</Typography>
+            <Rating value={booking.customerRating} readOnly size="small" />
+            {booking.customerReview && (
+              <Typography variant="body2" color="text.secondary" sx={{ mt: 0.5 }}>{booking.customerReview}</Typography>
+            )}
+          </Box>
         )}
       </CardContent></Card>
 
@@ -502,6 +590,33 @@ export function BookingDetailPage() {
           <Button onClick={() => setNoShowOpen(false)}>{t('common.cancel')}</Button>
           <Button color="warning" disabled={actionLoading} onClick={handleNoShow}>
             {t('booking.confirmNoShow')}
+          </Button>
+        </DialogActions>
+      </Dialog>
+
+      <Dialog open={reviewOpen} onClose={() => setReviewOpen(false)} maxWidth="sm" fullWidth>
+        <DialogTitle>{t('review.title')}</DialogTitle>
+        <DialogContent>
+          <Typography sx={{ mb: 2 }}>{t('review.hint')}</Typography>
+          <Typography component="legend">{t('review.rating')}</Typography>
+          <Rating
+            value={reviewRating}
+            onChange={(_, value) => setReviewRating(value)}
+            sx={{ mb: 2 }}
+          />
+          <TextField
+            fullWidth
+            multiline
+            minRows={3}
+            label={t('review.comment')}
+            value={reviewComment}
+            onChange={(e) => setReviewComment(e.target.value)}
+          />
+        </DialogContent>
+        <DialogActions>
+          <Button onClick={() => setReviewOpen(false)}>{t('common.cancel')}</Button>
+          <Button variant="contained" disabled={actionLoading || !reviewRating} onClick={handleSubmitReview}>
+            {t('review.submit')}
           </Button>
         </DialogActions>
       </Dialog>

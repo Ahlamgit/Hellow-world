@@ -210,6 +210,8 @@ export interface Booking {
   notes?: string;
   rejectionReason?: string;
   cancellationReason?: string;
+  customerRating?: number;
+  customerReview?: string;
   payment?: BookingPayment;
   statusHistory: { oldStatus?: string; newStatus: string; notes?: string; createdAt: string }[];
 }
@@ -286,6 +288,10 @@ export interface CreateAddressDto {
 export const bookingsApi = {
   getCraftsmen: (serviceId: string) =>
     api.get<ApiResponse<CraftsmanOption[]>>('/bookings/craftsmen', { params: { serviceId } }),
+  getNearbyCraftsmen: (serviceId: string, latitude: number, longitude: number, radiusKm = 25) =>
+    api.get<ApiResponse<CraftsmanOption[]>>('/bookings/craftsmen/nearby', {
+      params: { serviceId, latitude, longitude, radiusKm },
+    }),
   getAvailability: (craftsmanId: string, serviceId: string, date: string) =>
     api.get<ApiResponse<TimeSlot[]>>('/bookings/availability', { params: { craftsmanId, serviceId, date } }),
   create: (data: { serviceId: string; craftsmanId: string; scheduledAt: string; addressId?: string; description?: string }) =>
@@ -340,6 +346,43 @@ export const notificationsApi = {
     });
     return res.data.data.totalCount;
   },
+};
+
+export interface ChatConversation {
+  id: string;
+  bookingId: string;
+  bookingReference: string;
+  serviceName: string;
+  customerId: string;
+  customerName: string;
+  craftsmanId: string;
+  craftsmanName: string;
+  lastMessageAt?: string;
+  lastMessagePreview?: string;
+  unreadCount: number;
+}
+
+export interface ChatMessage {
+  id: string;
+  conversationId: string;
+  senderId: string;
+  senderName: string;
+  body: string;
+  sentAt: string;
+  isRead: boolean;
+  isMine: boolean;
+}
+
+export const chatApi = {
+  listConversations: () => api.get<ApiResponse<ChatConversation[]>>('/chat/conversations'),
+  getBookingChat: (bookingId: string) =>
+    api.get<ApiResponse<ChatConversation>>(`/chat/bookings/${bookingId}`),
+  getMessages: (conversationId: string, page = 1, pageSize = 50) =>
+    api.get<ApiResponse<PagedResult<ChatMessage>>>(`/chat/conversations/${conversationId}/messages`, {
+      params: { page, pageSize },
+    }),
+  sendMessage: (conversationId: string, body: string) =>
+    api.post<ApiResponse<ChatMessage>>(`/chat/conversations/${conversationId}/messages`, { body }),
 };
 
 export const craftsmanApi = {

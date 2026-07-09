@@ -19,6 +19,8 @@ import NotificationsPage from './pages/NotificationsPage';
 import { CraftsmanPortalPage } from './pages/CraftsmanPortalPage';
 import { StorePortalPage } from './pages/StorePortalPage';
 import SupportPage from './pages/SupportPage';
+import AddressesPage from './pages/AddressesPage';
+import { ChatListPage, BookingChatPage } from './pages/ChatPages';
 
 function AppContent() {
   const location = useLocation();
@@ -52,6 +54,9 @@ function AppContent() {
             <Route path="/subscriptions/:planId" element={<SubscribePage />} />
             <Route path="/subscription" element={<MySubscriptionPage />} />
             <Route path="/notifications" element={<NotificationsPage />} />
+            <Route path="/chat" element={<ChatListPage />} />
+            <Route path="/chat/:bookingId" element={<BookingChatPage />} />
+            <Route path="/addresses" element={<AddressesPage />} />
             <Route path="/craftsman" element={<CraftsmanPortalPage />} />
             <Route path="/store" element={<StorePortalPage />} />
             <Route path="/support" element={<SupportPage />} />

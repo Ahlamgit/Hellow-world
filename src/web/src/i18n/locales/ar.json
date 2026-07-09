@@ -152,6 +152,7 @@
     "craftsman": "الحرفي",
     "scheduled": "الموعد",
     "price": "السعر",
+    "description": "ملاحظات / وصف",
     "status": {
       "Pending": "قيد الانتظار",
       "AwaitingPayment": "في انتظار الدفع",
@@ -176,12 +177,50 @@
     "markAllRead": "تعليم الكل كمقروء",
     "viewBooking": "عرض الحجز"
   },
+  "chat": {
+    "title": "الرسائل",
+    "empty": "لا توجد محادثات بعد. افتح المحادثة من صفحة تفاصيل الحجز.",
+    "messageHint": "اكتب رسالة...",
+    "openChat": "فتح المحادثة"
+  },
+  "addresses": {
+    "title": "العناوين المحفوظة",
+    "add": "إضافة عنوان",
+    "label": "التسمية",
+    "street": "الشارع",
+    "city": "المدينة",
+    "district": "الحي",
+    "country": "الدولة",
+    "postalCode": "الرمز البريدي",
+    "coordinates": "الإحداثيات",
+    "useLocation": "استخدام الموقع الحالي",
+    "save": "حفظ العنوان",
+    "saved": "تم حفظ العنوان.",
+    "savedList": "عناوينك",
+    "empty": "لا توجد عناوين محفوظة بعد.",
+    "default": "افتراضي",
+    "selectAddress": "عنوان الخدمة",
+    "noAddress": "بدون عنوان (اختياري)",
+    "geolocationUnsupported": "تحديد الموقع غير مدعوم في هذا المتصفح.",
+    "geolocationFailed": "تعذر الحصول على موقعك."
+  },
+  "review": {
+    "title": "قيّم تجربتك",
+    "hint": "شاركنا ملاحظاتك حول هذه الخدمة المكتملة.",
+    "rating": "التقييم",
+    "comment": "تعليق (اختياري)",
+    "submit": "إرسال التقييم",
+    "submitted": "شكراً لتقييمك!",
+    "yourReview": "تقييمك",
+    "leaveReview": "أضف تقييماً"
+  },
   "common": {
     "loading": "جاري التحميل...",
     "error": "حدث خطأ",
     "save": "حفظ",
     "cancel": "إلغاء",
     "back": "رجوع",
+    "delete": "حذف",
     "next": "التالي",
     "minutes": "دقيقة"
   },
