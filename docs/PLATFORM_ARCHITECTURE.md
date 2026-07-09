@@ -832,14 +832,14 @@ gantt
 | 5 | **Subscriptions** | ✅ Complete | 🔲 Partial | 🔲 | 🔲 | Admin CRUD + public list |
 | 6 | **Notifications** | ✅ Complete | 🔲 | 🔲 | 🔲 | List + mark read |
 | 7 | **Admin Dashboard** | ✅ Complete | 🔄 In progress | — | — | RBAC matrix, settings edit, user-sub grant/cancel UI |
-| 8 | **Payments** | 🔄 Dev gateway + provider switch | ✅ Checkout | 🔄 Mock confirm | 🔄 Mock confirm | `Payment:Provider` = Development \| Moyasar |
+| 8 | **Payments** | ✅ Moyasar gateway + webhooks | ✅ Checkout | ✅ Pay confirm | ✅ Pay confirm | `Payment:Provider` = Development \| Moyasar |
 | 9 | **Reviews & Ratings** | ✅ API | ✅ Web | ✅ Android | ✅ iOS | Post-booking review on completed bookings |
 | 10 | **Store Management** | ✅ Portal API | ✅ Portal page | ✅ Portal screen | ✅ Portal view | `/me/store` self-service |
 | 11 | **Craftsman Management** | ✅ Portal API | ✅ Portal page | ✅ Portal screen | ✅ Portal view | `/me/craftsman` self-service |
-| 12 | **Advertisements** | ✅ Admin entity | 🔲 | 🔲 | 🔲 | Admin table + permissions |
-| 13 | **Coupons** | ✅ Admin entity | 🔲 | 🔲 | 🔲 | Admin table only |
+| 12 | **Advertisements** | ✅ Admin CRUD | ✅ Admin CRUD | 🔲 | 🔲 | Dedicated admin page |
+| 13 | **Coupons** | ✅ Admin CRUD | ✅ Admin CRUD | 🔲 | 🔲 | Dedicated admin page |
 | 14 | **Complaints & Support** | ✅ Admin entity | 🔲 | 🔲 | 🔲 | Admin table only |
-| 15 | **Regions & Cities** | ✅ Admin entity | 🔲 | — | — | Admin table only |
+| 15 | **Regions & Cities** | ✅ Admin CRUD | ✅ Admin CRUD | — | — | Dedicated admin pages |
 | 16 | **Reports & Analytics** | ✅ Admin API | 🔄 Partial | — | — | Charts + export |
 | 17 | **System Settings** | ✅ Admin API + edit | ✅ Admin UI | — | — | `PUT /admin/settings/{id}` |
 | 18 | **Backup & Restore** | ✅ Admin API | 🔲 | — | — | Job tracking |
@@ -847,7 +847,7 @@ gantt
 | 20 | **Verification Documents** | 🔲 | 🔲 | 🔲 | 🔲 | SQL table only |
 | 21 | **GPS & Maps** | 🔲 | 🔲 | 🔲 | 🔲 | Address GPS exists |
 | 22 | **Chat / Messaging** | ✅ Complete | ✅ Web | ✅ Android | ✅ iOS | Per-booking conversations |
-| 23 | **Push Notifications** | 🔄 Dev + Firebase scaffold | — | 🔄 Token stub | 🔄 Token stub | `Push:Provider` = Development \| Firebase |
+| 23 | **Push Notifications** | ✅ FCM + APNs send | — | ✅ FCM SDK | ✅ APNs SDK | `Push:Provider` = Development \| firebase; see [PRODUCTION.md](./PRODUCTION.md) |
 | 24 | **Multi-language CMS** | 🔲 | 🔲 | — | — | i18n in clients only |
 | 25 | **Store Employee Invites** | 🔲 | 🔲 | — | — | Deferred to Store module |
 | 26 | **Financial Reports** | 🔲 | 🔲 | — | — | Accountant role ready |
@@ -858,12 +858,10 @@ gantt
 
 | Priority | Task | Impact |
 |----------|------|--------|
-| High | Migrate `AdminOnly` policy to `[HasPermission]` | Admin dashboard authorization |
-| High | Update web `AdminRoute` role check (`Administrator` → `Admin`) | Admin UI access |
-| High | Identity React auth screens (login, register, sessions) | User-facing auth |
-| Medium | Migrate `BookingsController` from `[Authorize(Roles)]` to permissions | Booking authorization |
-| Medium | ~~Update `AdminService.ListRoles` to use `Roles` table~~ | Done — roles list uses `Roles` table |
-| Medium | Consolidate `Users/me` and `/profile` endpoints | API clarity |
+| High | Configure production provider secrets (Moyasar, FCM, APNs, email, SMS) | Live payments and push — see [PRODUCTION.md](./PRODUCTION.md) |
+| Medium | Migrate `AdminOnly` policy to `[HasPermission]` | Admin dashboard authorization (API largely migrated) |
+| Medium | Dedicated admin CRUD for bookings, complaints, support tickets | Ops workflows |
+| Medium | Identity React auth screens polish | User-facing auth |
 | Low | Migrate `ref.*` SQL tables to EF enums or dbo tables | Schema consistency |
 | Low | Add `VerificationDocuments` and `Reviews` to EF | Feature completeness |
 
@@ -906,4 +904,4 @@ Every module must ship with:
 | [BOOKING.md](./BOOKING.md) | Booking lifecycle and status flow |
 | [SUBSCRIPTION_MANAGEMENT.md](./SUBSCRIPTION_MANAGEMENT.md) | Subscription plans and billing |
 | [DATABASE.md](./DATABASE.md) | SQL deployment and stored procedures |
-| [ARCHITECTURE.md](./ARCHITECTURE.md) | High-level architecture overview |
+| [PRODUCTION.md](./PRODUCTION.md) | Production integration configuration and readiness checks |

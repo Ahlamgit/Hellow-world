@@ -40,6 +40,15 @@ export interface AdminDashboard {
   unreadNotifications: number;
 }
 
+export interface ProviderReadiness {
+  category: string;
+  selectedProvider: string;
+  status: string;
+  isProductionReady: boolean;
+  missingSettings: string[];
+  warnings: string[];
+}
+
 export interface AdminSystemHealth {
   status: string;
   timestamp: string;
@@ -47,6 +56,8 @@ export interface AdminSystemHealth {
   databaseResponseMs: number;
   apiVersion: string;
   memoryUsedMb: number;
+  productionIntegrationsReady?: boolean;
+  integrations?: ProviderReadiness[];
 }
 
 export interface AdminAnalytics {
