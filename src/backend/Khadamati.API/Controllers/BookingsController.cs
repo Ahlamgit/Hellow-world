@@ -226,6 +226,15 @@ public class AdminBookingsController : ControllerBase
         var result = await _mediator.Send(new GetAdminBookingStatsQuery(), cancellationToken);
         return Ok(ApiResponse<AdminBookingStatsDto>.Ok(result));
     }
+
+    [HttpGet("{id:guid}")]
+    [HasPermission(PermissionCodes.BookingsView)]
+    [SwaggerOperation(Summary = "Get booking details for admin")]
+    public async Task<IActionResult> GetById(Guid id, CancellationToken cancellationToken)
+    {
+        var result = await _mediator.Send(new AdminGetBookingQuery(id), cancellationToken);
+        return Ok(ApiResponse<BookingDto>.Ok(result));
+    }
 }
 
 /// <summary>User notifications for booking events.</summary>

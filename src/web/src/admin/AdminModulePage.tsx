@@ -12,6 +12,10 @@ import AdminRegionsPage from './AdminRegionsPage';
 import AdminCitiesPage from './AdminCitiesPage';
 import AdminCouponsPage from './AdminCouponsPage';
 import AdminAdvertisementsPage from './AdminAdvertisementsPage';
+import AdminBookingsPage from './AdminBookingsPage';
+import AdminComplaintsPage from './AdminComplaintsPage';
+import AdminSupportTicketsPage from './AdminSupportTicketsPage';
+import AdminPaymentsPage from './AdminPaymentsPage';
 import AdminPageGuard from './AdminPageGuard';
 import { getModuleConfig } from './moduleConfig';
 import AdminBackupPage from './AdminSpecialPages';
@@ -104,6 +108,38 @@ export default function AdminModulePage() {
     return (
       <AdminPageGuard module="advertisements">
         <AdminAdvertisementsPage />
+      </AdminPageGuard>
+    );
+  }
+
+  if (moduleKey === 'bookings') {
+    return (
+      <AdminPageGuard module="bookings">
+        <AdminBookingsPage />
+      </AdminPageGuard>
+    );
+  }
+
+  if (moduleKey === 'complaints') {
+    return (
+      <AdminPageGuard module="complaints">
+        <AdminComplaintsPage />
+      </AdminPageGuard>
+    );
+  }
+
+  if (moduleKey === 'support-tickets') {
+    return (
+      <AdminPageGuard module="support-tickets">
+        <AdminSupportTicketsPage />
+      </AdminPageGuard>
+    );
+  }
+
+  if (moduleKey === 'payments') {
+    return (
+      <AdminPageGuard module="payments">
+        <AdminPaymentsPage />
       </AdminPageGuard>
     );
   }

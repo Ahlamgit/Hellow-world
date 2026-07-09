@@ -17,6 +17,18 @@ public class ComplaintDto
     public DateTime CreatedAt { get; set; }
 }
 
+public class AdminComplaintDetailDto : ComplaintDto
+{
+    public string ComplainantEmail { get; set; } = string.Empty;
+    public string? Resolution { get; set; }
+    public DateTime? ResolvedAt { get; set; }
+}
+
+public class ResolveComplaintDto
+{
+    public string Resolution { get; set; } = string.Empty;
+}
+
 public class CreateSupportTicketDto
 {
     public string Subject { get; set; } = string.Empty;
@@ -34,6 +46,29 @@ public class SupportTicketDto
     public string Status { get; set; } = string.Empty;
     public string Priority { get; set; } = string.Empty;
     public string Category { get; set; } = string.Empty;
+    public DateTime CreatedAt { get; set; }
+}
+
+public class AdminSupportTicketDetailDto : SupportTicketDto
+{
+    public string UserEmail { get; set; } = string.Empty;
+    public DateTime? ClosedAt { get; set; }
+}
+
+public class AdminPaymentDetailDto
+{
+    public Guid Id { get; set; }
+    public Guid BookingId { get; set; }
+    public string? BookingReference { get; set; }
+    public string PayerEmail { get; set; } = string.Empty;
+    public string PayeeEmail { get; set; } = string.Empty;
+    public decimal Amount { get; set; }
+    public string Currency { get; set; } = "SAR";
+    public string Status { get; set; } = string.Empty;
+    public string PaymentMethod { get; set; } = string.Empty;
+    public string? TransactionReference { get; set; }
+    public DateTime? PaidAt { get; set; }
+    public string? FailureReason { get; set; }
     public DateTime CreatedAt { get; set; }
 }
 

@@ -1,4 +1,5 @@
 using Khadamati.Application.DTOs.Admin;
+using Khadamati.Application.DTOs.Support;
 using Khadamati.Application.Interfaces;
 using MediatR;
 using Khadamati.Application.Common;
@@ -415,4 +416,50 @@ public class DeleteAdvertisementCommandHandler : IRequestHandler<DeleteAdvertise
         await _admin.DeleteAdvertisementAsync(request.Id, request.UserId, ct);
         return Unit.Value;
     }
+}
+
+public record GetAdminComplaintQuery(Guid Id) : IRequest<AdminComplaintDetailDto>;
+public record ResolveAdminComplaintCommand(Guid Id, ResolveComplaintDto Request, string? UserId) : IRequest<AdminComplaintDetailDto>;
+public record GetAdminSupportTicketQuery(Guid Id) : IRequest<AdminSupportTicketDetailDto>;
+public record CloseAdminSupportTicketCommand(Guid Id, string? UserId) : IRequest<AdminSupportTicketDetailDto>;
+public record GetAdminPaymentQuery(Guid Id) : IRequest<AdminPaymentDetailDto>;
+
+public class GetAdminComplaintQueryHandler : IRequestHandler<GetAdminComplaintQuery, AdminComplaintDetailDto>
+{
+    private readonly IAdminService _admin;
+    public GetAdminComplaintQueryHandler(IAdminService admin) => _admin = admin;
+    public Task<AdminComplaintDetailDto> Handle(GetAdminComplaintQuery request, CancellationToken ct) =>
+        _admin.GetComplaintDetailAsync(request.Id, ct);
+}
+
+public class ResolveAdminComplaintCommandHandler : IRequestHandler<ResolveAdminComplaintCommand, AdminComplaintDetailDto>
+{
+    private readonly IAdminService _admin;
+    public ResolveAdminComplaintCommandHandler(IAdminService admin) => _admin = admin;
+    public Task<AdminComplaintDetailDto> Handle(ResolveAdminComplaintCommand request, CancellationToken ct) =>
+        _admin.ResolveComplaintAsync(request.Id, request.Request, request.UserId, ct);
+}
+
+public class GetAdminSupportTicketQueryHandler : IRequestHandler<GetAdminSupportTicketQuery, AdminSupportTicketDetailDto>
+{
+    private readonly IAdminService _admin;
+    public GetAdminSupportTicketQueryHandler(IAdminService admin) => _admin = admin;
+    public Task<AdminSupportTicketDetailDto> Handle(GetAdminSupportTicketQuery request, CancellationToken ct) =>
+        _admin.GetSupportTicketDetailAsync(request.Id, ct);
+}
+
+public class CloseAdminSupportTicketCommandHandler : IRequestHandler<CloseAdminSupportTicketCommand, AdminSupportTicketDetailDto>
+{
+    private readonly IAdminService _admin;
+    public CloseAdminSupportTicketCommandHandler(IAdminService admin) => _admin = admin;
+    public Task<AdminSupportTicketDetailDto> Handle(CloseAdminSupportTicketCommand request, CancellationToken ct) =>
+        _admin.CloseSupportTicketAsync(request.Id, request.UserId, ct);
+}
+
+public class GetAdminPaymentQueryHandler : IRequestHandler<GetAdminPaymentQuery, AdminPaymentDetailDto>
+{
+    private readonly IAdminService _admin;
+    public GetAdminPaymentQueryHandler(IAdminService admin) => _admin = admin;
+    public Task<AdminPaymentDetailDto> Handle(GetAdminPaymentQuery request, CancellationToken ct) =>
+        _admin.GetPaymentDetailAsync(request.Id, ct);
 }
