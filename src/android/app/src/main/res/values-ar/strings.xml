@@ -86,4 +86,45 @@
   <string name="booking_new">حجز جديد</string>
   <string name="booking_no_craftsmen">لا يوجد حرفيون متاحون لهذه الخدمة</string>
   <string name="booking_no_slots">لا توجد أوقات متاحة لهذا التاريخ</string>
+
+  <!-- Notifications -->
+  <string name="notifications_title">الإشعارات</string>
+  <string name="notifications_all">الكل</string>
+  <string name="notifications_unread">غير مقروء</string>
+  <string name="notifications_unread_badge">غير مقروء</string>
+  <string name="notifications_empty">لا توجد إشعارات بعد.</string>
+  <string name="notifications_empty_unread">لا توجد إشعارات غير مقروءة.</string>
+  <string name="notifications_mark_all_read">تعليم الكل كمقروء</string>
+  <string name="notifications_view_booking">عرض الحجز</string>
+
+  <!-- Subscriptions -->
+  <string name="subscription_nav">الاشتراكات</string>
+  <string name="subscription_plans_title">خطط الاشتراك</string>
+  <string name="subscription_my_subscription">اشتراكي</string>
+  <string name="subscription_subscribe_title">الاشتراك في خطة</string>
+  <string name="subscription_choose_plan">اختر الخطة</string>
+  <string name="subscription_already_subscribed">مشترك بالفعل</string>
+  <string name="subscription_no_plans">لا توجد خطط متاحة لنوع حسابك.</string>
+  <string name="subscription_billing_cycle">دورة الفوترة</string>
+  <string name="subscription_auto_renew">تجديد تلقائي</string>
+  <string name="subscription_confirm_subscribe">تأكيد الاشتراك</string>
+  <string name="subscription_no_active">ليس لديك اشتراك نشط.</string>
+  <string name="subscription_browse_plans">تصفح الخطط</string>
+  <string name="subscription_start_date">تاريخ البدء</string>
+  <string name="subscription_end_date">تاريخ الانتهاء</string>
+  <string name="subscription_cancel">إلغاء الاشتراك</string>
+  <string name="subscription_cancel_title">إلغاء الاشتراك</string>
+  <string name="subscription_cancel_hint">سيتم إلغاء اشتراكك. قد تحتفظ بالوصول حتى نهاية فترة الفوترة.</string>
+  <string name="subscription_cancel_reason">السبب (اختياري)</string>
+  <string name="subscription_confirm_cancel">تأكيد الإلغاء</string>
+  <string name="subscription_history">سجل الاشتراكات</string>
+  <string name="subscription_manage">إدارة</string>
+  <string name="subscription_active_plan">الخطة النشطة: %1$s (%2$s)</string>
+  <string name="subscription_featured">مميز</string>
+  <string name="subscription_max_services">حتى %1$d خدمات</string>
+  <string name="subscription_cycle_monthly">شهري</string>
+  <string name="subscription_cycle_quarterly">ربع سنوي</string>
+  <string name="subscription_cycle_semi_annual">نصف سنوي</string>
+  <string name="subscription_cycle_annual">سنوي</string>
+  <string name="subscription_cycle_lifetime">مدى الحياة</string>
 </resources>

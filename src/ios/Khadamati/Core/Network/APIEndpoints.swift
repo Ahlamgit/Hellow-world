@@ -67,6 +67,54 @@ enum APIEndpoints {
 
     enum Notifications {
         static let list = baseURL.appendingPathComponent("notifications")
+
+        static func markRead(_ id: UUID) -> URL {
+            baseURL.appendingPathComponent("notifications/\(id.uuidString)/read")
+        }
+
+        static func listURL(unreadOnly: Bool = false, page: Int = 1, pageSize: Int = 15) -> URL {
+            var components = URLComponents(url: list, resolvingAgainstBaseURL: false)!
+            components.queryItems = [
+                URLQueryItem(name: "unreadOnly", value: unreadOnly ? "true" : "false"),
+                URLQueryItem(name: "page", value: String(page)),
+                URLQueryItem(name: "pageSize", value: String(pageSize)),
+            ]
+            return components.url!
+        }
+    }
+
+    enum SubscriptionPlans {
+        static let list = baseURL.appendingPathComponent("subscription-plans")
+
+        static func list(targetRole: String? = nil) -> URL {
+            guard let targetRole else { return list }
+            var components = URLComponents(url: list, resolvingAgainstBaseURL: false)!
+            components.queryItems = [URLQueryItem(name: "targetRole", value: targetRole)]
+            return components.url!
+        }
+
+        static func detail(_ id: UUID) -> URL {
+            baseURL.appendingPathComponent("subscription-plans/\(id.uuidString)")
+        }
+    }
+
+    enum MeSubscription {
+        static let current = baseURL.appendingPathComponent("me/subscription")
+        static let subscribe = current
+        static let autoRenew = baseURL.appendingPathComponent("me/subscription/auto-renew")
+
+        static func history(page: Int = 1, pageSize: Int = 20) -> URL {
+            var components = URLComponents(url: baseURL.appendingPathComponent("me/subscriptions"), resolvingAgainstBaseURL: false)!
+            components.queryItems = [
+                URLQueryItem(name: "page", value: String(page)),
+                URLQueryItem(name: "pageSize", value: String(pageSize)),
+            ]
+            return components.url!
+        }
+
+        static func cancel(_ id: UUID) -> URL {
+            baseURL.appendingPathComponent("me/subscription/\(id.uuidString)/cancel")
+        }
     }
 
     enum Health {

@@ -86,4 +86,53 @@ enum L10n {
         static let minutes = NSLocalizedString("common.minutes", comment: "Minutes unit")
         static let retry = NSLocalizedString("common.retry", comment: "Retry button")
     }
+
+    enum Notifications {
+        static let title = NSLocalizedString("notifications.title", comment: "Notifications title")
+        static let all = NSLocalizedString("notifications.all", comment: "All notifications")
+        static let unread = NSLocalizedString("notifications.unread", comment: "Unread notifications")
+        static let unreadBadge = NSLocalizedString("notifications.unreadBadge", comment: "Unread badge")
+        static let empty = NSLocalizedString("notifications.empty", comment: "Empty notifications")
+        static let emptyUnread = NSLocalizedString("notifications.emptyUnread", comment: "Empty unread")
+        static let markAllRead = NSLocalizedString("notifications.markAllRead", comment: "Mark all read")
+        static let viewBooking = NSLocalizedString("notifications.viewBooking", comment: "View booking link")
+    }
+
+    enum Subscription {
+        static let nav = NSLocalizedString("subscription.nav", comment: "Subscriptions nav")
+        static let plansTitle = NSLocalizedString("subscription.plansTitle", comment: "Plans title")
+        static let mySubscription = NSLocalizedString("subscription.mySubscription", comment: "My subscription")
+        static let subscribeTitle = NSLocalizedString("subscription.subscribeTitle", comment: "Subscribe title")
+        static let choosePlan = NSLocalizedString("subscription.choosePlan", comment: "Choose plan")
+        static let alreadySubscribed = NSLocalizedString("subscription.alreadySubscribed", comment: "Already subscribed")
+        static let noPlans = NSLocalizedString("subscription.noPlans", comment: "No plans")
+        static let billingCycle = NSLocalizedString("subscription.billingCycle", comment: "Billing cycle")
+        static let autoRenew = NSLocalizedString("subscription.autoRenew", comment: "Auto renew")
+        static let confirmSubscribe = NSLocalizedString("subscription.confirmSubscribe", comment: "Confirm subscribe")
+        static let noActive = NSLocalizedString("subscription.noActive", comment: "No active subscription")
+        static let browsePlans = NSLocalizedString("subscription.browsePlans", comment: "Browse plans")
+        static let startDate = NSLocalizedString("subscription.startDate", comment: "Start date")
+        static let endDate = NSLocalizedString("subscription.endDate", comment: "End date")
+        static let cancel = NSLocalizedString("subscription.cancel", comment: "Cancel subscription")
+        static let cancelTitle = NSLocalizedString("subscription.cancelTitle", comment: "Cancel title")
+        static let cancelHint = NSLocalizedString("subscription.cancelHint", comment: "Cancel hint")
+        static let cancelReason = NSLocalizedString("subscription.cancelReason", comment: "Cancel reason")
+        static let confirmCancel = NSLocalizedString("subscription.confirmCancel", comment: "Confirm cancel")
+        static let history = NSLocalizedString("subscription.history", comment: "History")
+        static let manage = NSLocalizedString("subscription.manage", comment: "Manage")
+        static let featured = NSLocalizedString("subscription.featured", comment: "Featured")
+        static let cycleMonthly = NSLocalizedString("subscription.cycle.Monthly", comment: "Monthly")
+        static let cycleQuarterly = NSLocalizedString("subscription.cycle.Quarterly", comment: "Quarterly")
+        static let cycleSemiAnnual = NSLocalizedString("subscription.cycle.SemiAnnual", comment: "Semi annual")
+        static let cycleAnnual = NSLocalizedString("subscription.cycle.Annual", comment: "Annual")
+        static let cycleLifetime = NSLocalizedString("subscription.cycle.Lifetime", comment: "Lifetime")
+
+        static func activePlan(plan: String, status: String) -> String {
+            String(format: NSLocalizedString("subscription.activePlan", comment: "Active plan"), plan, status)
+        }
+
+        static func maxServices(count: Int) -> String {
+            String(format: NSLocalizedString("subscription.maxServices", comment: "Max services"), count)
+        }
+    }
 }

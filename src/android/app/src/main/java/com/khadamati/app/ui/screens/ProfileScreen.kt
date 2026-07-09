@@ -31,7 +31,11 @@ import com.khadamati.app.ui.viewmodel.AuthViewModel
 fun ProfileScreen(
     authViewModel: AuthViewModel,
     isAuthenticated: Boolean,
+    showSubscriptions: Boolean = false,
     onNavigateToLogin: () -> Unit,
+    onNavigateToNotifications: () -> Unit = {},
+    onNavigateToSubscriptions: () -> Unit = {},
+    onNavigateToMySubscription: () -> Unit = {},
 ) {
     val uiState by authViewModel.uiState.collectAsStateWithLifecycle()
 
@@ -108,7 +112,31 @@ fun ProfileScreen(
                     value = profile?.preferredLanguage ?: user?.preferredLanguage.orEmpty(),
                 )
 
-                Spacer(modifier = Modifier.height(32.dp))
+                Spacer(modifier = Modifier.height(16.dp))
+                OutlinedButton(
+                    onClick = onNavigateToNotifications,
+                    modifier = Modifier.fillMaxWidth(),
+                ) {
+                    Text(stringResource(R.string.notifications_title))
+                }
+                if (showSubscriptions) {
+                    Spacer(modifier = Modifier.height(8.dp))
+                    OutlinedButton(
+                        onClick = onNavigateToSubscriptions,
+                        modifier = Modifier.fillMaxWidth(),
+                    ) {
+                        Text(stringResource(R.string.subscription_nav))
+                    }
+                    Spacer(modifier = Modifier.height(8.dp))
+                    OutlinedButton(
+                        onClick = onNavigateToMySubscription,
+                        modifier = Modifier.fillMaxWidth(),
+                    ) {
+                        Text(stringResource(R.string.subscription_my_subscription))
+                    }
+                }
+
+                Spacer(modifier = Modifier.height(16.dp))
                 OutlinedButton(
                     onClick = { authViewModel.logout(onNavigateToLogin) },
                     modifier = Modifier.fillMaxWidth(),

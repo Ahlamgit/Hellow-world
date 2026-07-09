@@ -31,13 +31,21 @@ import com.khadamati.app.ui.screens.LoginScreen
 import com.khadamati.app.ui.screens.BookingDetailScreen
 import com.khadamati.app.ui.screens.BookingWizardScreen
 import com.khadamati.app.ui.screens.MyBookingsScreen
+import com.khadamati.app.ui.screens.MySubscriptionScreen
+import com.khadamati.app.ui.screens.NotificationsScreen
 import com.khadamati.app.ui.screens.ProfileScreen
 import com.khadamati.app.ui.screens.RegisterScreen
 import com.khadamati.app.ui.screens.ServicesScreen
 import com.khadamati.app.ui.screens.SplashScreen
+import com.khadamati.app.ui.screens.SubscribeScreen
+import com.khadamati.app.ui.screens.SubscriptionPlansScreen
 import com.khadamati.app.ui.viewmodel.AuthViewModel
 import com.khadamati.app.ui.viewmodel.BookingViewModel
+import com.khadamati.app.ui.viewmodel.NotificationsViewModel
 import com.khadamati.app.ui.viewmodel.ServicesViewModel
+import com.khadamati.app.ui.viewmodel.SubscriptionViewModel
+import com.khadamati.app.ui.viewmodel.isSubscriberRole
+import com.khadamati.app.ui.viewmodel.subscriptionTargetRole
 
 @Composable
 fun KhadamatiNavGraph(container: AppContainer) {
@@ -45,6 +53,8 @@ fun KhadamatiNavGraph(container: AppContainer) {
     val authViewModel: AuthViewModel = viewModel(factory = AppViewModelFactory(container) { container.provideAuthViewModel() })
     val servicesViewModel: ServicesViewModel = viewModel(factory = AppViewModelFactory(container) { container.provideServicesViewModel() })
     val bookingViewModel: BookingViewModel = viewModel(factory = AppViewModelFactory(container) { container.provideBookingViewModel() })
+    val notificationsViewModel: NotificationsViewModel = viewModel(factory = AppViewModelFactory(container) { container.provideNotificationsViewModel() })
+    val subscriptionViewModel: SubscriptionViewModel = viewModel(factory = AppViewModelFactory(container) { container.provideSubscriptionViewModel() })
 
     val navBackStackEntry by navController.currentBackStackEntryAsState()
     val currentRoute = navBackStackEntry?.destination?.route
@@ -195,14 +205,78 @@ fun KhadamatiNavGraph(container: AppContainer) {
 
             composable(Routes.PROFILE) {
                 val authState by authViewModel.uiState.collectAsStateWithLifecycle()
+                val userRole = authState.profile?.role ?: authState.currentUser?.role
+                val isArabic = (authState.profile?.preferredLanguage ?: authState.currentUser?.preferredLanguage) == "ar"
                 ProfileScreen(
                     authViewModel = authViewModel,
                     isAuthenticated = authState.isAuthenticated,
+                    showSubscriptions = isSubscriberRole(userRole),
                     onNavigateToLogin = {
                         navController.navigate(Routes.LOGIN) {
                             popUpTo(Routes.HOME)
                         }
                     },
+                    onNavigateToNotifications = { navController.navigate(Routes.NOTIFICATIONS) },
+                    onNavigateToSubscriptions = { navController.navigate(Routes.SUBSCRIPTION_PLANS) },
+                    onNavigateToMySubscription = { navController.navigate(Routes.MY_SUBSCRIPTION) },
+                )
+            }
+
+            composable(Routes.NOTIFICATIONS) {
+                val authState by authViewModel.uiState.collectAsStateWithLifecycle()
+                val isArabic = (authState.profile?.preferredLanguage ?: authState.currentUser?.preferredLanguage) == "ar"
+                NotificationsScreen(
+                    viewModel = notificationsViewModel,
+                    isArabic = isArabic,
+                    onNavigateBack = { navController.popBackStack() },
+                    onNavigateToBooking = { bookingId ->
+                        navController.navigate("booking/$bookingId")
+                    },
+                )
+            }
+
+            composable(Routes.SUBSCRIPTION_PLANS) {
+                val authState by authViewModel.uiState.collectAsStateWithLifecycle()
+                val userRole = authState.profile?.role ?: authState.currentUser?.role
+                val isArabic = (authState.profile?.preferredLanguage ?: authState.currentUser?.preferredLanguage) == "ar"
+                SubscriptionPlansScreen(
+                    viewModel = subscriptionViewModel,
+                    targetRole = subscriptionTargetRole(userRole),
+                    isArabic = isArabic,
+                    onNavigateBack = { navController.popBackStack() },
+                    onNavigateToSubscribe = { planId -> navController.navigate("subscriptions/$planId") },
+                    onNavigateToMySubscription = { navController.navigate(Routes.MY_SUBSCRIPTION) },
+                )
+            }
+
+            composable(
+                route = Routes.SUBSCRIBE,
+                arguments = listOf(navArgument("planId") { type = NavType.StringType }),
+            ) { backStack ->
+                val planId = backStack.arguments?.getString("planId") ?: return@composable
+                val authState by authViewModel.uiState.collectAsStateWithLifecycle()
+                val isArabic = (authState.profile?.preferredLanguage ?: authState.currentUser?.preferredLanguage) == "ar"
+                SubscribeScreen(
+                    planId = planId,
+                    viewModel = subscriptionViewModel,
+                    isArabic = isArabic,
+                    onNavigateBack = { navController.popBackStack() },
+                    onSubscribed = {
+                        navController.navigate(Routes.MY_SUBSCRIPTION) {
+                            popUpTo(Routes.SUBSCRIPTION_PLANS)
+                        }
+                    },
+                )
+            }
+
+            composable(Routes.MY_SUBSCRIPTION) {
+                val authState by authViewModel.uiState.collectAsStateWithLifecycle()
+                val isArabic = (authState.profile?.preferredLanguage ?: authState.currentUser?.preferredLanguage) == "ar"
+                MySubscriptionScreen(
+                    viewModel = subscriptionViewModel,
+                    isArabic = isArabic,
+                    onNavigateBack = { navController.popBackStack() },
+                    onBrowsePlans = { navController.navigate(Routes.SUBSCRIPTION_PLANS) },
                 )
             }
         }

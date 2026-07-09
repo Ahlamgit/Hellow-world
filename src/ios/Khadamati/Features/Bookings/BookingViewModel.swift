@@ -3,6 +3,7 @@ import Foundation
 @MainActor
 final class BookingViewModel: ObservableObject {
     @Published var bookings: [Booking] = []
+    @Published var selectedBooking: Booking?
     @Published var craftsmen: [CraftsmanOption] = []
     @Published var slots: [TimeSlot] = []
     @Published var isLoading = false
@@ -26,6 +27,24 @@ final class BookingViewModel: ObservableObject {
             bookings = response.data.items
         } catch {
             errorMessage = error.localizedDescription
+        }
+    }
+
+    func loadBooking(id: UUID) async -> Booking? {
+        isLoading = true
+        errorMessage = nil
+        defer { isLoading = false }
+        do {
+            let response: ApiResponse<Booking> = try await apiClient.request(
+                url: APIEndpoints.Bookings.detail(id),
+                method: .get,
+                requiresAuth: true
+            )
+            selectedBooking = response.data
+            return response.data
+        } catch {
+            errorMessage = error.localizedDescription
+            return nil
         }
     }
 
