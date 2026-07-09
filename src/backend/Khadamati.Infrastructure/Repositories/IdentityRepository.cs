@@ -70,6 +70,13 @@ public class IdentityRepository : IIdentityRepository
             .ToListAsync(cancellationToken);
     }
 
+    public async Task<IReadOnlyList<Guid>> GetUserIdsByRoleAsync(Guid roleId, CancellationToken cancellationToken = default) =>
+        await _context.Set<UserRoleAssignment>()
+            .Where(ur => ur.RoleId == roleId)
+            .Select(ur => ur.UserId)
+            .Distinct()
+            .ToListAsync(cancellationToken);
+
     public async Task AssignRoleAsync(Guid userId, Guid roleId, bool isPrimary, string? assignedBy, CancellationToken cancellationToken = default)
     {
         var exists = await _context.Set<UserRoleAssignment>()

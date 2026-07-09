@@ -7,6 +7,8 @@ using Khadamati.Infrastructure.Services;
 using Khadamati.Infrastructure.Services.Identity;
 using Khadamati.Infrastructure.Services.Identity.Email;
 using Khadamati.Infrastructure.Services.Identity.Sms;
+using Khadamati.Infrastructure.Services.Payments;
+using Khadamati.Infrastructure.Services.Push;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
@@ -50,8 +52,8 @@ public static class DependencyInjection
         services.AddScoped<ISupportService, SupportService>();
         services.AddScoped<IDeviceTokenService, DeviceTokenService>();
         services.AddScoped<IChatService, ChatService>();
-        services.AddScoped<IPushNotificationService, Khadamati.Infrastructure.Services.Push.DevelopmentPushNotificationService>();
-        services.AddScoped<IPaymentGateway, Khadamati.Infrastructure.Services.Payments.DevelopmentPaymentGateway>();
+        RegisterPushProvider(services, configuration);
+        RegisterPaymentProvider(services, configuration);
         services.AddScoped<ITokenService, TokenService>();
         services.AddScoped<IPasswordHasher, PasswordHasher>();
         services.AddScoped<IOtpService, OtpService>();
@@ -67,6 +69,34 @@ public static class DependencyInjection
         RegisterSmsProvider(services, configuration);
 
         return services;
+    }
+
+    private static void RegisterPaymentProvider(IServiceCollection services, IConfiguration configuration)
+    {
+        var provider = configuration["Payment:Provider"] ?? "Development";
+        switch (provider.ToLowerInvariant())
+        {
+            case "moyasar":
+                services.AddScoped<IPaymentGateway, MoyasarPaymentGateway>();
+                break;
+            default:
+                services.AddScoped<IPaymentGateway, DevelopmentPaymentGateway>();
+                break;
+        }
+    }
+
+    private static void RegisterPushProvider(IServiceCollection services, IConfiguration configuration)
+    {
+        var provider = configuration["Push:Provider"] ?? "Development";
+        switch (provider.ToLowerInvariant())
+        {
+            case "firebase":
+                services.AddScoped<IPushNotificationService, FirebasePushNotificationService>();
+                break;
+            default:
+                services.AddScoped<IPushNotificationService, DevelopmentPushNotificationService>();
+                break;
+        }
     }
 
     private static void RegisterEmailProvider(IServiceCollection services, IConfiguration configuration)

@@ -43,7 +43,7 @@ const NAV_SECTIONS: { title: string; titleAr: string; items: NavItem[] }[] = [
       { path: '/admin/customers', label: 'Customers', labelAr: 'العملاء', icon: <Person /> },
       { path: '/admin/craftsmen', label: 'Craftsmen', labelAr: 'الحرفيون', icon: <Engineering /> },
       { path: '/admin/stores', label: 'Stores', labelAr: 'المتاجر', icon: <Store /> },
-      { path: '/admin/roles', label: 'Roles', labelAr: 'الأدوار', icon: <Security /> },
+      { path: '/admin/roles', label: 'Role Permissions', labelAr: 'صلاحيات الأدوار', icon: <Security /> },
       { path: '/admin/permissions', label: 'Permissions', labelAr: 'الصلاحيات', icon: <VpnKey /> },
     ],
   },

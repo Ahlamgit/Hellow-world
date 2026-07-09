@@ -41,6 +41,8 @@ public interface IPermissionService
 {
     Task<IReadOnlyList<string>> GetUserPermissionsAsync(Guid userId, CancellationToken cancellationToken = default);
     Task<bool> UserHasPermissionAsync(Guid userId, string permissionCode, CancellationToken cancellationToken = default);
+    void InvalidateCache(Guid userId);
+    Task InvalidateCacheForRoleAsync(Guid roleId, CancellationToken cancellationToken = default);
 }
 
 public interface IPasswordPolicyService

@@ -1,5 +1,6 @@
 using FluentAssertions;
 using Khadamati.Application.DTOs.Admin;
+using Khadamati.Application.Interfaces;
 using Khadamati.Application.Validators;
 using Khadamati.Domain.Entities;
 using Khadamati.Domain.Enums;
@@ -23,7 +24,7 @@ public class AdminServiceTests : IDisposable
         _context = new ApplicationDbContext(options);
         var export = new AdminExportService();
         var unitOfWork = new UnitOfWork(_context);
-        _adminService = new AdminService(_context, export, unitOfWork);
+        _adminService = new AdminService(_context, export, unitOfWork, new NoOpPermissionService());
 
         SeedData();
     }
@@ -139,4 +140,15 @@ public class AdminServiceTests : IDisposable
     }
 
     public void Dispose() => _context.Dispose();
+
+    private sealed class NoOpPermissionService : IPermissionService
+    {
+        public Task<IReadOnlyList<string>> GetUserPermissionsAsync(Guid userId, CancellationToken cancellationToken = default) =>
+            Task.FromResult<IReadOnlyList<string>>(Array.Empty<string>());
+        public Task<bool> UserHasPermissionAsync(Guid userId, string permissionCode, CancellationToken cancellationToken = default) =>
+            Task.FromResult(false);
+        public void InvalidateCache(Guid userId) { }
+        public Task InvalidateCacheForRoleAsync(Guid roleId, CancellationToken cancellationToken = default) =>
+            Task.CompletedTask;
+    }
 }

@@ -1,8 +1,10 @@
 using System.Diagnostics;
+using Khadamati.Application.Common;
 using Khadamati.Application.DTOs.Admin;
 using Khadamati.Application.Interfaces;
 using Khadamati.Domain.Common;
 using Khadamati.Domain.Entities;
+using Khadamati.Domain.Entities.Identity;
 using Khadamati.Domain.Enums;
 using Khadamati.Domain.Interfaces;
 using Khadamati.Infrastructure.Data;
@@ -15,6 +17,7 @@ public class AdminService : IAdminService
     private readonly ApplicationDbContext _context;
     private readonly IAdminExportService _export;
     private readonly IUnitOfWork _unitOfWork;
+    private readonly IPermissionService _permissionService;
 
     private static readonly Dictionary<string, string[]> ModuleColumns = new(StringComparer.OrdinalIgnoreCase)
     {
@@ -44,11 +47,12 @@ public class AdminService : IAdminService
         ["restore"] = ["name", "status", "completedAt", "createdAt"],
     };
 
-    public AdminService(ApplicationDbContext context, IAdminExportService export, IUnitOfWork unitOfWork)
+    public AdminService(ApplicationDbContext context, IAdminExportService export, IUnitOfWork unitOfWork, IPermissionService permissionService)
     {
         _context = context;
         _export = export;
         _unitOfWork = unitOfWork;
+        _permissionService = permissionService;
     }
 
     public async Task<AdminDashboardDto> GetDashboardAsync(CancellationToken cancellationToken = default)
@@ -408,11 +412,21 @@ public class AdminService : IAdminService
         return await Paginate(query, q, s => new AdminRowDto { Id = s.Id.ToString(), Columns = new Dictionary<string, string?> { ["key"] = s.SettingKey, ["value"] = s.SettingValue, ["category"] = s.Category } }, ct);
     }
 
-    private Task<AdminListResultDto> ListRolesAsync(AdminListQueryDto q, CancellationToken ct)
+    private async Task<AdminListResultDto> ListRolesAsync(AdminListQueryDto q, CancellationToken ct)
     {
-        var roles = Enum.GetNames<UserRole>().Select(r => new AdminRowDto { Id = r, Columns = new Dictionary<string, string?> { ["role"] = r, ["description"] = $"System role: {r}" } }).ToList();
-        if (!string.IsNullOrWhiteSpace(q.Search)) roles = roles.Where(r => r.Id.Contains(q.Search, StringComparison.OrdinalIgnoreCase)).ToList();
-        return Task.FromResult(new AdminListResultDto { Items = roles.Skip((q.Page - 1) * q.PageSize).Take(q.PageSize).ToList(), TotalCount = roles.Count, Page = q.Page, PageSize = q.PageSize });
+        var query = _context.Roles.AsQueryable();
+        if (!string.IsNullOrWhiteSpace(q.Search))
+            query = query.Where(r => r.Name.Contains(q.Search) || r.Description!.Contains(q.Search));
+
+        return await Paginate(query, q, r => new AdminRowDto
+        {
+            Id = r.Id.ToString(),
+            Columns = new Dictionary<string, string?>
+            {
+                ["role"] = r.Name,
+                ["description"] = r.Description ?? r.NameAr,
+            },
+        }, ct);
     }
 
     private async Task<AdminListResultDto> ListPermissionsAsync(AdminListQueryDto q, CancellationToken ct)
@@ -483,5 +497,118 @@ public class AdminService : IAdminService
             Module = module,
             EntityId = entityId,
         }, ct);
+    }
+
+    public async Task<IReadOnlyList<SystemSettingDto>> ListSettingsAsync(CancellationToken cancellationToken = default) =>
+        await _context.SystemSettings
+            .OrderBy(s => s.Category).ThenBy(s => s.SettingKey)
+            .Select(s => new SystemSettingDto
+            {
+                Id = s.Id,
+                Key = s.SettingKey,
+                Value = s.SettingValue,
+                Category = s.Category,
+                Description = s.Description,
+                IsEncrypted = s.IsEncrypted,
+            })
+            .AsNoTracking()
+            .ToListAsync(cancellationToken);
+
+    public async Task<SystemSettingDto> UpdateSettingAsync(Guid id, UpdateSystemSettingDto request, string? userId, CancellationToken cancellationToken = default)
+    {
+        var setting = await _context.SystemSettings.FirstOrDefaultAsync(s => s.Id == id, cancellationToken)
+            ?? throw new Application.Common.NotFoundException("Setting not found.");
+        if (setting.IsEncrypted)
+            throw new ValidationException(["Encrypted settings cannot be updated via the admin UI."]);
+
+        setting.SettingValue = request.Value;
+        await _unitOfWork.SaveChangesAsync(cancellationToken);
+        await LogActivityAsync(userId, "update", "settings", id.ToString(), cancellationToken);
+
+        return new SystemSettingDto
+        {
+            Id = setting.Id,
+            Key = setting.SettingKey,
+            Value = setting.SettingValue,
+            Category = setting.Category,
+            Description = setting.Description,
+            IsEncrypted = setting.IsEncrypted,
+        };
+    }
+
+    public async Task<IReadOnlyList<AdminRoleDto>> ListRbacRolesAsync(CancellationToken cancellationToken = default) =>
+        await _context.Roles
+            .OrderBy(r => r.Name)
+            .Select(r => new AdminRoleDto
+            {
+                Id = r.Id,
+                Name = r.Name,
+                NameAr = r.NameAr,
+                Description = r.Description,
+                IsSystemRole = r.IsSystemRole,
+                PermissionCount = r.RolePermissions.Count,
+            })
+            .AsNoTracking()
+            .ToListAsync(cancellationToken);
+
+    public async Task<RolePermissionMatrixDto> GetRolePermissionMatrixAsync(Guid roleId, CancellationToken cancellationToken = default)
+    {
+        var role = await _context.Roles.AsNoTracking().FirstOrDefaultAsync(r => r.Id == roleId, cancellationToken)
+            ?? throw new Application.Common.NotFoundException("Role not found.");
+
+        var allPermissions = await _context.Permissions
+            .OrderBy(p => p.Module).ThenBy(p => p.Code)
+            .Select(p => new AdminPermissionDto
+            {
+                Id = p.Id,
+                Code = p.Code,
+                NameEn = p.NameEn,
+                Module = p.Module,
+            })
+            .AsNoTracking()
+            .ToListAsync(cancellationToken);
+
+        var assigned = await _context.RolePermissions
+            .Where(rp => rp.RoleId == roleId)
+            .Select(rp => rp.PermissionId)
+            .ToListAsync(cancellationToken);
+
+        return new RolePermissionMatrixDto
+        {
+            RoleId = role.Id,
+            RoleName = role.Name,
+            AllPermissions = allPermissions,
+            AssignedPermissionIds = assigned,
+        };
+    }
+
+    public async Task<RolePermissionMatrixDto> UpdateRolePermissionsAsync(
+        Guid roleId, UpdateRolePermissionsDto request, string? userId, CancellationToken cancellationToken = default)
+    {
+        var role = await _context.Roles.FirstOrDefaultAsync(r => r.Id == roleId, cancellationToken)
+            ?? throw new Application.Common.NotFoundException("Role not found.");
+
+        var validPermissionIds = await _context.Permissions
+            .Where(p => request.PermissionIds.Contains(p.Id))
+            .Select(p => p.Id)
+            .ToListAsync(cancellationToken);
+
+        var existing = await _context.RolePermissions.Where(rp => rp.RoleId == roleId).ToListAsync(cancellationToken);
+        _context.RolePermissions.RemoveRange(existing);
+
+        foreach (var permissionId in validPermissionIds.Distinct())
+        {
+            await _context.RolePermissions.AddAsync(new RolePermission
+            {
+                RoleId = roleId,
+                PermissionId = permissionId,
+            }, cancellationToken);
+        }
+
+        await _unitOfWork.SaveChangesAsync(cancellationToken);
+        await _permissionService.InvalidateCacheForRoleAsync(roleId, cancellationToken);
+        await LogActivityAsync(userId, "update_permissions", "roles", roleId.ToString(), cancellationToken);
+
+        return await GetRolePermissionMatrixAsync(roleId, cancellationToken);
     }
 }

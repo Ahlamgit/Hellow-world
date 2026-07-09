@@ -27,7 +27,7 @@ Master reference for database design, APIs, module dependencies, folder layout, 
 
 ### 1.1 Entity Framework Core (Primary Runtime Schema)
 
-The ASP.NET Core API uses EF Core with **40 tables** in the `dbo` schema. All business entities use `UNIQUEIDENTIFIER` primary keys (`Id`) except where noted.
+The ASP.NET Core API uses EF Core with **43 tables** in the `dbo` schema. All business entities use `UNIQUEIDENTIFIER` primary keys (`Id`) except where noted.
 
 ```mermaid
 erDiagram
@@ -831,23 +831,23 @@ gantt
 | 4 | **Bookings** | ✅ Complete | 🔲 Partial | 🔲 Partial | 🔲 Partial | Full lifecycle API |
 | 5 | **Subscriptions** | ✅ Complete | 🔲 Partial | 🔲 | 🔲 | Admin CRUD + public list |
 | 6 | **Notifications** | ✅ Complete | 🔲 | 🔲 | 🔲 | List + mark read |
-| 7 | **Admin Dashboard** | ✅ Complete | 🔄 In progress | — | — | 26 modules, export, analytics |
-| 8 | **Payments** | 🔲 Gateway integration | 🔲 | 🔲 | 🔲 | BookingPayments entity exists |
-| 9 | **Reviews & Ratings** | 🔲 | 🔲 | 🔲 | 🔲 | Rating on ServiceRequests only |
-| 10 | **Store Management** | 🔲 | 🔲 | 🔲 | 🔲 | StoreProfiles exist; no CRUD API |
-| 11 | **Craftsman Management** | 🔲 | 🔲 | 🔲 | 🔲 | CraftsmanProfiles exist |
+| 7 | **Admin Dashboard** | ✅ Complete | 🔄 In progress | — | — | RBAC matrix, settings edit, user-sub grant/cancel UI |
+| 8 | **Payments** | 🔄 Dev gateway + provider switch | ✅ Checkout | 🔄 Mock confirm | 🔄 Mock confirm | `Payment:Provider` = Development \| Moyasar |
+| 9 | **Reviews & Ratings** | ✅ API | ✅ Web | ✅ Android | ✅ iOS | Post-booking review on completed bookings |
+| 10 | **Store Management** | ✅ Portal API | ✅ Portal page | ✅ Portal screen | ✅ Portal view | `/me/store` self-service |
+| 11 | **Craftsman Management** | ✅ Portal API | ✅ Portal page | ✅ Portal screen | ✅ Portal view | `/me/craftsman` self-service |
 | 12 | **Advertisements** | ✅ Admin entity | 🔲 | 🔲 | 🔲 | Admin table + permissions |
 | 13 | **Coupons** | ✅ Admin entity | 🔲 | 🔲 | 🔲 | Admin table only |
 | 14 | **Complaints & Support** | ✅ Admin entity | 🔲 | 🔲 | 🔲 | Admin table only |
 | 15 | **Regions & Cities** | ✅ Admin entity | 🔲 | — | — | Admin table only |
 | 16 | **Reports & Analytics** | ✅ Admin API | 🔄 Partial | — | — | Charts + export |
-| 17 | **System Settings** | ✅ Admin entity | 🔲 | — | — | Key-value store |
+| 17 | **System Settings** | ✅ Admin API + edit | ✅ Admin UI | — | — | `PUT /admin/settings/{id}` |
 | 18 | **Backup & Restore** | ✅ Admin API | 🔲 | — | — | Job tracking |
 | 19 | **Audit & Activity Logs** | ✅ Entities | 🔲 | — | — | View in admin |
 | 20 | **Verification Documents** | 🔲 | 🔲 | 🔲 | 🔲 | SQL table only |
 | 21 | **GPS & Maps** | 🔲 | 🔲 | 🔲 | 🔲 | Address GPS exists |
-| 22 | **Chat / Messaging** | 🔲 | 🔲 | 🔲 | 🔲 | Not started |
-| 23 | **Push Notifications** | 🔲 | — | 🔲 | 🔲 | Not started |
+| 22 | **Chat / Messaging** | ✅ Complete | ✅ Web | ✅ Android | ✅ iOS | Per-booking conversations |
+| 23 | **Push Notifications** | 🔄 Dev + Firebase scaffold | — | 🔄 Token stub | 🔄 Token stub | `Push:Provider` = Development \| Firebase |
 | 24 | **Multi-language CMS** | 🔲 | 🔲 | — | — | i18n in clients only |
 | 25 | **Store Employee Invites** | 🔲 | 🔲 | — | — | Deferred to Store module |
 | 26 | **Financial Reports** | 🔲 | 🔲 | — | — | Accountant role ready |
@@ -862,7 +862,7 @@ gantt
 | High | Update web `AdminRoute` role check (`Administrator` → `Admin`) | Admin UI access |
 | High | Identity React auth screens (login, register, sessions) | User-facing auth |
 | Medium | Migrate `BookingsController` from `[Authorize(Roles)]` to permissions | Booking authorization |
-| Medium | Update `AdminService.ListRoles` to use `Roles` table | Admin roles page |
+| Medium | ~~Update `AdminService.ListRoles` to use `Roles` table~~ | Done — roles list uses `Roles` table |
 | Medium | Consolidate `Users/me` and `/profile` endpoints | API clarity |
 | Low | Migrate `ref.*` SQL tables to EF enums or dbo tables | Schema consistency |
 | Low | Add `VerificationDocuments` and `Reviews` to EF | Feature completeness |
