@@ -59,5 +59,11 @@
 	</dict>
 	<key>NSLocationWhenInUseUsageDescription</key>
 	<string>KHADAMATI uses your location to find nearby craftsmen and save address coordinates.</string>
+	<key>NSUserNotificationsUsageDescription</key>
+	<string>KHADAMATI sends notifications about bookings, messages, and account updates.</string>
+	<key>UIBackgroundModes</key>
+	<array>
+		<string>remote-notification</string>
+	</array>
 </dict>
 </plist>

@@ -16,6 +16,8 @@ class PushTokenManager(context: Context) {
         return createDevToken()
     }
 
+    fun getStoredToken(): String? = prefs.getString(KEY_TOKEN, null)?.takeIf { it.isNotBlank() }
+
     fun updateToken(token: String) {
         if (token.isBlank()) return
         prefs.edit().putString(KEY_TOKEN, token.trim()).apply()

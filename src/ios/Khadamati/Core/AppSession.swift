@@ -30,7 +30,19 @@ final class AppSession: ObservableObject {
         self.authService = authService ?? AuthService()
         self.preferredLanguage = UserDefaults.standard.string(forKey: "preferredLanguage") ?? "ar"
         applyLanguage()
+        observePushTokenUpdates()
         restoreSession()
+    }
+
+    private func observePushTokenUpdates() {
+        NotificationCenter.default.addObserver(
+            forName: PushNotificationManager.tokenDidUpdateNotification,
+            object: nil,
+            queue: .main
+        ) { [weak self] _ in
+            guard let self, self.isAuthenticated else { return }
+            Task { await PushRegistrationService.registerCurrentDevice() }
+        }
     }
 
     func signIn(user: User) {

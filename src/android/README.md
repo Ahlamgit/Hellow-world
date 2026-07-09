@@ -80,6 +80,18 @@ Endpoints mirror the KHADAMATI .NET API:
 
 RTL is supported via `android:supportsRtl="true"`.
 
+## Push notifications (FCM)
+
+The app integrates Firebase Cloud Messaging:
+
+1. Create a Firebase project and add an Android app with package `com.khadamati.app`.
+2. Download `google-services.json` and replace `app/google-services.json` (see `app/google-services.json.example`).
+3. Enable Cloud Messaging in the Firebase console.
+
+On launch the app requests `POST_NOTIFICATIONS` (Android 13+), fetches the FCM registration token, and registers it with `POST /devices/push-token` after sign-in. If Firebase is unavailable (e.g. placeholder config), a `dev-android-*` fallback token is used for local API testing.
+
+`KhadamatiFirebaseMessagingService` handles token refresh and incoming messages.
+
 ## Build
 
 Open `/workspace/src/android` in Android Studio (Ladybug or newer recommended), sync Gradle, and run on an emulator or device.
@@ -117,7 +129,7 @@ val authViewModel = container.provideAuthViewModel()
 
 - [ ] Add Hilt for DI
 - [ ] Service request booking flow
-- [ ] Push notifications (FCM)
+- [x] Push notifications (FCM)
 - [ ] Instrumented UI tests
 - [ ] Release signing + Play Store config
 - [ ] Network security config for production
