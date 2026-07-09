@@ -127,4 +127,20 @@
   <string name="subscription_cycle_semi_annual">نصف سنوي</string>
   <string name="subscription_cycle_annual">سنوي</string>
   <string name="subscription_cycle_lifetime">مدى الحياة</string>
+
+  <string name="chat_title">الرسائل</string>
+  <string name="chat_empty">لا توجد محادثات بعد.</string>
+  <string name="chat_open">فتح المحادثة</string>
+  <string name="chat_message_hint">اكتب رسالة…</string>
+
+  <string name="addresses_title">عناويني</string>
+  <string name="addresses_add">إضافة عنوان</string>
+  <string name="addresses_label">التسمية</string>
+  <string name="addresses_street">الشارع</string>
+  <string name="addresses_city">المدينة</string>
+  <string name="addresses_country">الدولة</string>
+  <string name="addresses_use_location">استخدام الموقع الحالي</string>
+  <string name="addresses_coordinates">GPS: %1$.5f, %2$.5f</string>
+  <string name="booking_find_nearby">البحث عن حرفيين قريبين</string>
+  <string name="booking_distance_km">على بعد %.1f كم</string>
 </resources>

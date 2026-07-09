@@ -15,4 +15,7 @@ object Routes {
     const val SUBSCRIPTION_PLANS = "subscriptions"
     const val SUBSCRIBE = "subscriptions/{planId}"
     const val MY_SUBSCRIPTION = "subscription"
+    const val ADDRESSES = "addresses"
+    const val CHAT_LIST = "chat"
+    const val BOOKING_CHAT = "booking/{bookingId}/chat"
 }

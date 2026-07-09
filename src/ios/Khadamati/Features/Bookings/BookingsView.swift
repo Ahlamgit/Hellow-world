@@ -57,6 +57,12 @@ struct BookingDetailView: View {
                 Button("Pay Now") { Task { await viewModel.pay(bookingId: booking.id) } }
                     .buttonStyle(.borderedProminent)
             }
+            NavigationLink {
+                BookingChatView(bookingId: booking.id)
+            } label: {
+                Text(L10n.Chat.open)
+            }
+            .buttonStyle(.bordered)
             if booking.status == "PendingCraftsmanConfirmation", appSession.currentUser?.role == "Craftsman" {
                 HStack {
                     Button("Accept") { Task { await viewModel.accept(bookingId: booking.id) } }

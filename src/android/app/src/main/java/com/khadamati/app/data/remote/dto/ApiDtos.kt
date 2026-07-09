@@ -102,6 +102,7 @@ data class CraftsmanOptionDto(
     val completedJobs: Int,
     val price: Double,
     val isAvailable: Boolean,
+    val distanceKm: Double? = null,
 )
 
 data class TimeSlotDto(
@@ -221,3 +222,61 @@ data class SubscribeRequestDto(
 
 data class CancelSubscriptionRequestDto(val reason: String? = null)
 data class UpdateAutoRenewRequestDto(val autoRenew: Boolean)
+
+data class AddressDto(
+    val id: String,
+    val label: String,
+    val street: String,
+    val city: String,
+    val district: String? = null,
+    val postalCode: String? = null,
+    val country: String,
+    val latitude: Double? = null,
+    val longitude: Double? = null,
+    val isDefault: Boolean,
+)
+
+data class CreateAddressRequestDto(
+    val label: String,
+    val street: String,
+    val city: String,
+    val district: String? = null,
+    val postalCode: String? = null,
+    val country: String,
+    val latitude: Double? = null,
+    val longitude: Double? = null,
+    val isDefault: Boolean = false,
+)
+
+data class RegisterPushTokenRequestDto(
+    val token: String,
+    val platform: String,
+    val deviceName: String? = null,
+)
+
+data class ChatConversationDto(
+    val id: String,
+    val bookingId: String,
+    val bookingReference: String,
+    val serviceName: String,
+    val customerId: String,
+    val customerName: String,
+    val craftsmanId: String,
+    val craftsmanName: String,
+    val lastMessageAt: String? = null,
+    val lastMessagePreview: String? = null,
+    val unreadCount: Int = 0,
+)
+
+data class ChatMessageDto(
+    val id: String,
+    val conversationId: String,
+    val senderId: String,
+    val senderName: String,
+    val body: String,
+    val sentAt: String,
+    val isRead: Boolean,
+    val isMine: Boolean,
+)
+
+data class SendChatMessageRequestDto(val body: String)

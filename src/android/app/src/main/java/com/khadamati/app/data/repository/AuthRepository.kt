@@ -4,7 +4,7 @@ import com.khadamati.app.data.local.dao.UserDao
 import com.khadamati.app.data.preferences.TokenManager
 import com.khadamati.app.data.remote.ApiService
 import com.khadamati.app.data.remote.dto.LoginRequestDto
-import com.khadamati.app.data.remote.dto.RegisterRequestDto
+import com.khadamati.app.data.repository.PushRepository
 import com.khadamati.app.domain.model.AuthTokens
 import com.khadamati.app.domain.model.User
 import com.khadamati.app.domain.model.UserProfile
@@ -17,6 +17,7 @@ class AuthRepository(
     private val apiService: ApiService,
     private val userDao: UserDao,
     private val tokenManager: TokenManager,
+    private val pushRepository: PushRepository? = null,
 ) {
 
     val isLoggedIn: Flow<Boolean> = tokenManager.isLoggedIn
@@ -82,9 +83,11 @@ class AuthRepository(
             expiresAt = tokens.expiresAt,
         )
         userDao.upsert(user.toEntity())
+        runCatching { pushRepository?.registerCurrentDevice() }
     }
 
     private suspend fun clearSession() {
+        runCatching { pushRepository?.unregisterCurrentDevice() }
         tokenManager.clearTokens()
         userDao.clear()
     }

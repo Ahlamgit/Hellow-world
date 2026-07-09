@@ -45,6 +45,18 @@ class BookingViewModel(private val repository: BookingRepository) : ViewModel() 
         }
     }
 
+    fun loadNearbyCraftsmen(serviceId: String, latitude: Double, longitude: Double) = viewModelScope.launch {
+        _uiState.value = _uiState.value.copy(isLoading = true, error = null)
+        try {
+            _uiState.value = _uiState.value.copy(
+                craftsmen = repository.getNearbyCraftsmen(serviceId, latitude, longitude),
+                isLoading = false,
+            )
+        } catch (e: Exception) {
+            _uiState.value = _uiState.value.copy(error = e.message, isLoading = false)
+        }
+    }
+
     fun loadSlots(craftsmanId: String, serviceId: String, date: String) = viewModelScope.launch {
         _uiState.value = _uiState.value.copy(isLoading = true, error = null)
         try {

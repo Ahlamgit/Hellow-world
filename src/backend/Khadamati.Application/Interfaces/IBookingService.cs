@@ -6,6 +6,8 @@ namespace Khadamati.Application.Interfaces;
 public interface IBookingService
 {
     Task<IReadOnlyList<CraftsmanOptionDto>> GetCraftsmenForServiceAsync(Guid serviceId, CancellationToken cancellationToken = default);
+    Task<IReadOnlyList<CraftsmanOptionDto>> GetNearbyCraftsmenForServiceAsync(
+        Guid serviceId, double latitude, double longitude, double radiusKm = 25, CancellationToken cancellationToken = default);
     Task<IReadOnlyList<TimeSlotDto>> GetAvailableSlotsAsync(Guid craftsmanId, Guid serviceId, DateTime date, CancellationToken cancellationToken = default);
     Task<BookingDto> CreateBookingAsync(Guid customerId, CreateBookingDto dto, CancellationToken cancellationToken = default);
     Task<BookingDto> ConfirmBookingAsync(Guid bookingId, Guid userId, ConfirmBookingDto dto, CancellationToken cancellationToken = default);

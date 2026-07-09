@@ -5,6 +5,7 @@ struct BookingWizardView: View {
 
     @StateObject private var servicesViewModel = ServicesViewModel()
     @StateObject private var bookingViewModel = BookingViewModel()
+    @StateObject private var locationManager = LocationManager()
 
     @State private var activeStep = 0
     @State private var selectedService: Service?
@@ -118,6 +119,21 @@ struct BookingWizardView: View {
 
     private var craftsmanStep: some View {
         VStack(alignment: .leading, spacing: AppTheme.Spacing.md) {
+            Button(L10n.Booking.findNearby) {
+                locationManager.requestLocation()
+            }
+            .buttonStyle(.borderedProminent)
+            .onChange(of: locationManager.lastLocation?.latitude) { _, _ in
+                guard let service = selectedService, let coordinate = locationManager.lastLocation else { return }
+                Task {
+                    await bookingViewModel.loadNearbyCraftsmen(
+                        serviceId: service.id,
+                        latitude: coordinate.latitude,
+                        longitude: coordinate.longitude
+                    )
+                }
+            }
+
             if bookingViewModel.isLoading && bookingViewModel.craftsmen.isEmpty {
                 ProgressView(L10n.Common.loading)
             } else if bookingViewModel.craftsmen.isEmpty {
@@ -138,6 +154,11 @@ struct BookingWizardView: View {
                                     Text(specialization)
                                         .font(AppTheme.Typography.caption())
                                         .foregroundStyle(AppTheme.Colors.textSecondary)
+                                }
+                                if let distance = craftsman.distanceKm {
+                                    Text(L10n.Booking.distanceKm(distance))
+                                        .font(AppTheme.Typography.caption())
+                                        .foregroundStyle(AppTheme.Colors.primary)
                                 }
                             }
                             Spacer()

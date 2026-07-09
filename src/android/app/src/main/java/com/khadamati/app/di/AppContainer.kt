@@ -3,15 +3,22 @@ package com.khadamati.app.di
 import android.content.Context
 import androidx.room.Room
 import com.khadamati.app.data.local.KhadamatiDatabase
+import com.khadamati.app.data.preferences.PushTokenManager
 import com.khadamati.app.data.preferences.TokenManager
 import com.khadamati.app.data.remote.RetrofitClient
+import com.khadamati.app.data.repository.AddressRepository
 import com.khadamati.app.data.repository.AuthRepository
 import com.khadamati.app.data.repository.BookingRepository
+import com.khadamati.app.data.repository.ChatRepository
 import com.khadamati.app.data.repository.NotificationRepository
+import com.khadamati.app.data.repository.PushRepository
 import com.khadamati.app.data.repository.ServicesRepository
 import com.khadamati.app.data.repository.SubscriptionRepository
+import com.khadamati.app.location.LocationProvider
+import com.khadamati.app.ui.viewmodel.AddressViewModel
 import com.khadamati.app.ui.viewmodel.AuthViewModel
 import com.khadamati.app.ui.viewmodel.BookingViewModel
+import com.khadamati.app.ui.viewmodel.ChatViewModel
 import com.khadamati.app.ui.viewmodel.NotificationsViewModel
 import com.khadamati.app.ui.viewmodel.ServicesViewModel
 import com.khadamati.app.ui.viewmodel.SubscriptionViewModel
@@ -25,6 +32,8 @@ class AppContainer(context: Context) {
     private val appContext = context.applicationContext
 
     val tokenManager: TokenManager by lazy { TokenManager(appContext) }
+    val pushTokenManager: PushTokenManager by lazy { PushTokenManager(appContext) }
+    val locationProvider: LocationProvider by lazy { LocationProvider(appContext) }
 
     private val retrofitClient: RetrofitClient by lazy {
         RetrofitClient(tokenManager)
@@ -41,11 +50,16 @@ class AppContainer(context: Context) {
             .build()
     }
 
+    val pushRepository: PushRepository by lazy {
+        PushRepository(apiService, pushTokenManager)
+    }
+
     val authRepository: AuthRepository by lazy {
         AuthRepository(
             apiService = apiService,
             userDao = database.userDao(),
             tokenManager = tokenManager,
+            pushRepository = pushRepository,
         )
     }
 
@@ -69,6 +83,14 @@ class AppContainer(context: Context) {
         SubscriptionRepository(apiService)
     }
 
+    val addressRepository: AddressRepository by lazy {
+        AddressRepository(apiService)
+    }
+
+    val chatRepository: ChatRepository by lazy {
+        ChatRepository(apiService)
+    }
+
     fun provideAuthViewModel(): AuthViewModel =
         AuthViewModel(authRepository)
 
@@ -83,4 +105,10 @@ class AppContainer(context: Context) {
 
     fun provideSubscriptionViewModel(): SubscriptionViewModel =
         SubscriptionViewModel(subscriptionRepository)
+
+    fun provideAddressViewModel(): AddressViewModel =
+        AddressViewModel(addressRepository)
+
+    fun provideChatViewModel(): ChatViewModel =
+        ChatViewModel(chatRepository)
 }

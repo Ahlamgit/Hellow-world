@@ -37,6 +37,22 @@ public class BookingsController : ControllerBase
         return Ok(ApiResponse<IReadOnlyList<CraftsmanOptionDto>>.Ok(result));
     }
 
+    /// <summary>List craftsmen near a GPS coordinate for a service.</summary>
+    [HttpGet("craftsmen/nearby")]
+    [AllowAnonymous]
+    [SwaggerOperation(Summary = "Get nearby craftsmen for service")]
+    public async Task<IActionResult> GetNearbyCraftsmen(
+        [FromQuery] Guid serviceId,
+        [FromQuery] double latitude,
+        [FromQuery] double longitude,
+        [FromQuery] double radiusKm = 25,
+        CancellationToken cancellationToken = default)
+    {
+        var result = await _mediator.Send(
+            new GetNearbyCraftsmenForServiceQuery(serviceId, latitude, longitude, radiusKm), cancellationToken);
+        return Ok(ApiResponse<IReadOnlyList<CraftsmanOptionDto>>.Ok(result));
+    }
+
     /// <summary>Get available time slots for a craftsman on a date (prevents double booking).</summary>
     [HttpGet("availability")]
     [AllowAnonymous]

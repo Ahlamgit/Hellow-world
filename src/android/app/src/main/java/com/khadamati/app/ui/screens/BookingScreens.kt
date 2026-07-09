@@ -80,6 +80,7 @@ fun BookingDetailScreen(
     viewModel: BookingViewModel,
     userRole: String,
     onPay: () -> Unit,
+    onOpenChat: (String) -> Unit,
 ) {
     val state by viewModel.uiState.collectAsStateWithLifecycle()
     LaunchedEffect(bookingId) {
@@ -95,6 +96,9 @@ fun BookingDetailScreen(
         Text(booking.serviceName, style = MaterialTheme.typography.headlineSmall)
         Text("${booking.bookingReference} · ${booking.status}")
         Text("${booking.craftsmanName} · ${booking.estimatedPrice} SAR")
+        Button(onClick = { onOpenChat(bookingId) }, modifier = Modifier.fillMaxWidth()) {
+            Text(stringResource(R.string.chat_open))
+        }
         when {
             booking.status == "AwaitingPayment" && userRole == "Customer" ->
                 Button(onClick = { viewModel.pay(bookingId); onPay() }, modifier = Modifier.fillMaxWidth()) { Text("Pay Now") }

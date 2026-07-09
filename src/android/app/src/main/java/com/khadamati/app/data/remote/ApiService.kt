@@ -160,4 +160,51 @@ interface ApiService {
     suspend fun updateAutoRenew(
         @Body request: com.khadamati.app.data.remote.dto.UpdateAutoRenewRequestDto,
     ): ApiResponse<com.khadamati.app.data.remote.dto.UserSubscriptionDto>
+
+    @POST("devices/push-token")
+    suspend fun registerPushToken(
+        @Body request: com.khadamati.app.data.remote.dto.RegisterPushTokenRequestDto,
+    ): ApiResponse<Any?>
+
+    @retrofit2.http.DELETE("devices/push-token")
+    suspend fun unregisterPushToken(
+        @Query("token") token: String,
+    ): ApiResponse<Any?>
+
+    @GET("users/me/addresses")
+    suspend fun getAddresses(): ApiResponse<List<com.khadamati.app.data.remote.dto.AddressDto>>
+
+    @POST("users/me/addresses")
+    suspend fun addAddress(
+        @Body request: com.khadamati.app.data.remote.dto.CreateAddressRequestDto,
+    ): ApiResponse<com.khadamati.app.data.remote.dto.AddressDto>
+
+    @GET("bookings/craftsmen/nearby")
+    suspend fun getNearbyCraftsmen(
+        @Query("serviceId") serviceId: String,
+        @Query("latitude") latitude: Double,
+        @Query("longitude") longitude: Double,
+        @Query("radiusKm") radiusKm: Double = 25.0,
+    ): ApiResponse<List<com.khadamati.app.data.remote.dto.CraftsmanOptionDto>>
+
+    @GET("chat/conversations")
+    suspend fun getChatConversations(): ApiResponse<List<com.khadamati.app.data.remote.dto.ChatConversationDto>>
+
+    @GET("chat/bookings/{bookingId}")
+    suspend fun getBookingChat(
+        @retrofit2.http.Path("bookingId") bookingId: String,
+    ): ApiResponse<com.khadamati.app.data.remote.dto.ChatConversationDto>
+
+    @GET("chat/conversations/{id}/messages")
+    suspend fun getChatMessages(
+        @retrofit2.http.Path("id") conversationId: String,
+        @Query("page") page: Int = 1,
+        @Query("pageSize") pageSize: Int = 50,
+    ): ApiResponse<PagedResultDto<com.khadamati.app.data.remote.dto.ChatMessageDto>>
+
+    @POST("chat/conversations/{id}/messages")
+    suspend fun sendChatMessage(
+        @retrofit2.http.Path("id") conversationId: String,
+        @Body request: com.khadamati.app.data.remote.dto.SendChatMessageRequestDto,
+    ): ApiResponse<com.khadamati.app.data.remote.dto.ChatMessageDto>
 }

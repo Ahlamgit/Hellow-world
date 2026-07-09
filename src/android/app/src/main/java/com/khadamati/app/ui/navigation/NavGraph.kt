@@ -26,6 +26,9 @@ import androidx.navigation.compose.rememberNavController
 import androidx.navigation.navArgument
 import com.khadamati.app.R
 import com.khadamati.app.di.AppContainer
+import com.khadamati.app.ui.screens.AddressesScreen
+import com.khadamati.app.ui.screens.BookingChatScreen
+import com.khadamati.app.ui.screens.ChatListScreen
 import com.khadamati.app.ui.screens.HomeScreen
 import com.khadamati.app.ui.screens.LoginScreen
 import com.khadamati.app.ui.screens.BookingDetailScreen
@@ -39,8 +42,10 @@ import com.khadamati.app.ui.screens.ServicesScreen
 import com.khadamati.app.ui.screens.SplashScreen
 import com.khadamati.app.ui.screens.SubscribeScreen
 import com.khadamati.app.ui.screens.SubscriptionPlansScreen
+import com.khadamati.app.ui.viewmodel.AddressViewModel
 import com.khadamati.app.ui.viewmodel.AuthViewModel
 import com.khadamati.app.ui.viewmodel.BookingViewModel
+import com.khadamati.app.ui.viewmodel.ChatViewModel
 import com.khadamati.app.ui.viewmodel.NotificationsViewModel
 import com.khadamati.app.ui.viewmodel.ServicesViewModel
 import com.khadamati.app.ui.viewmodel.SubscriptionViewModel
@@ -55,6 +60,8 @@ fun KhadamatiNavGraph(container: AppContainer) {
     val bookingViewModel: BookingViewModel = viewModel(factory = AppViewModelFactory(container) { container.provideBookingViewModel() })
     val notificationsViewModel: NotificationsViewModel = viewModel(factory = AppViewModelFactory(container) { container.provideNotificationsViewModel() })
     val subscriptionViewModel: SubscriptionViewModel = viewModel(factory = AppViewModelFactory(container) { container.provideSubscriptionViewModel() })
+    val addressViewModel: AddressViewModel = viewModel(factory = AppViewModelFactory(container) { container.provideAddressViewModel() })
+    val chatViewModel: ChatViewModel = viewModel(factory = AppViewModelFactory(container) { container.provideChatViewModel() })
 
     val navBackStackEntry by navController.currentBackStackEntryAsState()
     val currentRoute = navBackStackEntry?.destination?.route
@@ -153,6 +160,7 @@ fun KhadamatiNavGraph(container: AppContainer) {
                 BookingWizardScreen(
                     servicesViewModel = servicesViewModel,
                     bookingViewModel = bookingViewModel,
+                    locationProvider = container.locationProvider,
                     preselectedServiceId = null,
                     onNavigateBack = { navController.popBackStack() },
                     onBookingCreated = { bookingId ->
@@ -171,6 +179,7 @@ fun KhadamatiNavGraph(container: AppContainer) {
                 BookingWizardScreen(
                     servicesViewModel = servicesViewModel,
                     bookingViewModel = bookingViewModel,
+                    locationProvider = container.locationProvider,
                     preselectedServiceId = serviceId,
                     onNavigateBack = { navController.popBackStack() },
                     onBookingCreated = { bookingId ->
@@ -200,6 +209,7 @@ fun KhadamatiNavGraph(container: AppContainer) {
                     viewModel = bookingViewModel,
                     userRole = authState.currentUser?.role ?: "Customer",
                     onPay = { navController.navigate(Routes.BOOKINGS) },
+                    onOpenChat = { id -> navController.navigate("booking/$id/chat") },
                 )
             }
 
@@ -219,6 +229,8 @@ fun KhadamatiNavGraph(container: AppContainer) {
                     onNavigateToNotifications = { navController.navigate(Routes.NOTIFICATIONS) },
                     onNavigateToSubscriptions = { navController.navigate(Routes.SUBSCRIPTION_PLANS) },
                     onNavigateToMySubscription = { navController.navigate(Routes.MY_SUBSCRIPTION) },
+                    onNavigateToAddresses = { navController.navigate(Routes.ADDRESSES) },
+                    onNavigateToChats = { navController.navigate(Routes.CHAT_LIST) },
                 )
             }
 
@@ -266,6 +278,34 @@ fun KhadamatiNavGraph(container: AppContainer) {
                             popUpTo(Routes.SUBSCRIPTION_PLANS)
                         }
                     },
+                )
+            }
+
+            composable(Routes.ADDRESSES) {
+                AddressesScreen(
+                    viewModel = addressViewModel,
+                    locationProvider = container.locationProvider,
+                    onNavigateBack = { navController.popBackStack() },
+                )
+            }
+
+            composable(Routes.CHAT_LIST) {
+                ChatListScreen(
+                    viewModel = chatViewModel,
+                    onNavigateBack = { navController.popBackStack() },
+                    onOpenChat = { bookingId -> navController.navigate("booking/$bookingId/chat") },
+                )
+            }
+
+            composable(
+                route = "booking/{bookingId}/chat",
+                arguments = listOf(navArgument("bookingId") { type = NavType.StringType }),
+            ) { backStack ->
+                val bookingId = backStack.arguments?.getString("bookingId") ?: return@composable
+                BookingChatScreen(
+                    bookingId = bookingId,
+                    viewModel = chatViewModel,
+                    onNavigateBack = { navController.popBackStack() },
                 )
             }
 

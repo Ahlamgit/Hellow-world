@@ -109,3 +109,21 @@
 "subscription.cycle.SemiAnnual" = "Semi-Annual";
 "subscription.cycle.Annual" = "Annual";
 "subscription.cycle.Lifetime" = "Lifetime";
+
+"chat.title" = "Messages";
+"chat.empty" = "No conversations yet.";
+"chat.open" = "Open chat";
+"chat.messageHint" = "Type a message…";
+
+"addresses.title" = "My Addresses";
+"addresses.add" = "Add address";
+"addresses.label" = "Label";
+"addresses.street" = "Street";
+"addresses.city" = "City";
+"addresses.country" = "Country";
+"addresses.useLocation" = "Use current location";
+"addresses.coordinates" = "GPS: %.5f, %.5f";
+"addresses.empty" = "No saved addresses yet.";
+
+"booking.findNearby" = "Find nearby craftsmen";
+"booking.distanceKm" = "%.1f km away";

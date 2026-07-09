@@ -37,6 +37,7 @@ struct CraftsmanOption: Codable, Identifiable {
     let completedJobs: Int
     let price: Decimal
     let isAvailable: Bool
+    let distanceKm: Double?
 }
 
 struct TimeSlot: Codable, Identifiable {

@@ -48,6 +48,9 @@ public static class DependencyInjection
         services.AddScoped<IStoreService, StoreService>();
         services.AddScoped<ICouponService, CouponService>();
         services.AddScoped<ISupportService, SupportService>();
+        services.AddScoped<IDeviceTokenService, DeviceTokenService>();
+        services.AddScoped<IChatService, ChatService>();
+        services.AddScoped<IPushNotificationService, Khadamati.Infrastructure.Services.Push.DevelopmentPushNotificationService>();
         services.AddScoped<IPaymentGateway, Khadamati.Infrastructure.Services.Payments.DevelopmentPaymentGateway>();
         services.AddScoped<ITokenService, TokenService>();
         services.AddScoped<IPasswordHasher, PasswordHasher>();
