@@ -4,6 +4,7 @@ using Khadamati.Infrastructure.Data;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 #nullable disable
@@ -11,9 +12,11 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace Khadamati.Infrastructure.Data.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    partial class ApplicationDbContextModelSnapshot : ModelSnapshot
+    [Migration("20260709142236_FixSqlServerCascadePaths")]
+    partial class FixSqlServerCascadePaths
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        /// <inheritdoc />
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -3418,7 +3421,7 @@ namespace Khadamati.Infrastructure.Data.Migrations
                     b.HasOne("Khadamati.Domain.Entities.ServiceRequest", "RescheduledFrom")
                         .WithMany()
                         .HasForeignKey("RescheduledFromId")
-                        .OnDelete(DeleteBehavior.Restrict);
+                        .OnDelete(DeleteBehavior.SetNull);
 
                     b.HasOne("Khadamati.Domain.Entities.Service", "Service")
                         .WithMany("Requests")
@@ -3513,18 +3516,19 @@ namespace Khadamati.Infrastructure.Data.Migrations
                 {
                     b.HasOne("Khadamati.Domain.Entities.PlanBillingOption", "BillingOption")
                         .WithMany()
-                        .HasForeignKey("BillingOptionId");
+                        .HasForeignKey("BillingOptionId")
+                        .OnDelete(DeleteBehavior.SetNull);
 
                     b.HasOne("Khadamati.Domain.Entities.SubscriptionPlan", "Plan")
                         .WithMany("UserSubscriptions")
                         .HasForeignKey("PlanId")
-                        .OnDelete(DeleteBehavior.Restrict)
+                        .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
                     b.HasOne("Khadamati.Domain.Entities.User", "User")
                         .WithMany()
                         .HasForeignKey("UserId")
-                        .OnDelete(DeleteBehavior.Restrict)
+                        .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
                     b.Navigation("BillingOption");

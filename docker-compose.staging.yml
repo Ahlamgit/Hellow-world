@@ -35,7 +35,7 @@ services:
     container_name: khadamati-api-staging
     environment:
       ASPNETCORE_ENVIRONMENT: Staging
-      ConnectionStrings__DefaultConnection: "${ConnectionStrings__DefaultConnection}"
+      ConnectionStrings__DefaultConnection: "Server=${DB_HOST},1433;Database=${DB_NAME};User Id=${DB_USER};Password=${DB_PASSWORD};TrustServerCertificate=True;Encrypt=True;MultipleActiveResultSets=true"
       Jwt__Secret: "${Jwt__Secret}"
       Jwt__Issuer: "${Jwt__Issuer:-https://staging-api.khadamati.com}"
       Jwt__Audience: "${Jwt__Audience:-https://staging.khadamati.com}"

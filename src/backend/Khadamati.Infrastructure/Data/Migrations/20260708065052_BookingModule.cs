@@ -297,7 +297,7 @@ namespace Khadamati.Infrastructure.Data.Migrations
                 table: "BookingSlotReservations",
                 columns: new[] { "CraftsmanId", "SlotStart" },
                 unique: true,
-                filter: "[IsActive] = 1 AND [IsDeleted] = 0");
+                filter: "[IsActive] = 1 AND [Deleted] = 0");
 
             migrationBuilder.CreateIndex(
                 name: "IX_BookingSlotReservations_ServiceRequestId",
@@ -331,7 +331,7 @@ namespace Khadamati.Infrastructure.Data.Migrations
                 column: "RescheduledFromId",
                 principalTable: "ServiceRequests",
                 principalColumn: "Id",
-                onDelete: ReferentialAction.SetNull);
+                onDelete: ReferentialAction.Restrict);
 
             migrationBuilder.AddForeignKey(
                 name: "FK_ServiceRequests_Users_CraftsmanId",

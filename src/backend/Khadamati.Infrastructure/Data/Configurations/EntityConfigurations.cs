@@ -62,6 +62,10 @@ public class AddressConfiguration : IEntityTypeConfiguration<Address>
         builder.HasIndex(a => a.UserId);
         builder.Property(a => a.Latitude).HasPrecision(10, 7);
         builder.Property(a => a.Longitude).HasPrecision(10, 7);
+        builder.HasOne(a => a.User)
+            .WithMany(u => u.Addresses)
+            .HasForeignKey(a => a.UserId)
+            .OnDelete(DeleteBehavior.Restrict);
     }
 }
 
@@ -158,7 +162,7 @@ public class ServiceRequestConfiguration : IEntityTypeConfiguration<ServiceReque
         builder.HasOne(r => r.RescheduledFrom)
             .WithMany()
             .HasForeignKey(r => r.RescheduledFromId)
-            .OnDelete(DeleteBehavior.SetNull);
+            .OnDelete(DeleteBehavior.Restrict);
 
         builder.HasOne(r => r.Payment)
             .WithOne(p => p.ServiceRequest)
@@ -280,7 +284,7 @@ public class SubscriptionPlanConfiguration : IEntityTypeConfiguration<Subscripti
         builder.Property(p => p.PlanColor).HasMaxLength(20);
         builder.Property(p => p.PlanIcon).HasMaxLength(500);
         builder.HasMany(p => p.BillingOptions).WithOne(b => b.Plan).HasForeignKey(b => b.PlanId);
-        builder.HasMany(p => p.UserSubscriptions).WithOne(s => s.Plan).HasForeignKey(s => s.PlanId);
+        builder.HasMany(p => p.UserSubscriptions).WithOne(s => s.Plan).HasForeignKey(s => s.PlanId).OnDelete(DeleteBehavior.Restrict);
     }
 }
 
@@ -308,8 +312,8 @@ public class UserSubscriptionConfiguration : IEntityTypeConfiguration<UserSubscr
         builder.Property(s => s.AmountPaid).HasPrecision(18, 2);
         builder.Property(s => s.Currency).HasMaxLength(3);
         builder.Property(s => s.CouponCode).HasMaxLength(50);
-        builder.HasOne(s => s.User).WithMany().HasForeignKey(s => s.UserId);
-        builder.HasOne(s => s.BillingOption).WithMany().HasForeignKey(s => s.BillingOptionId).OnDelete(DeleteBehavior.SetNull);
+        builder.HasOne(s => s.User).WithMany().HasForeignKey(s => s.UserId).OnDelete(DeleteBehavior.Restrict);
+        builder.HasOne(s => s.Plan).WithMany(p => p.UserSubscriptions).HasForeignKey(s => s.PlanId).OnDelete(DeleteBehavior.Restrict);
     }
 }
 

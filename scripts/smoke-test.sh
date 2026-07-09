@@ -10,10 +10,14 @@ fail() { echo " FAIL $*" >&2; exit 1; }
 
 echo "Smoke tests against $BASE_URL (API direct: $API_DIRECT)"
 
-# Liveness via nginx proxy
-curl -sf "${BASE_URL%/}/api/v1/health" | grep -q healthy \
-  && pass "GET /api/v1/health (via web proxy)" \
-  || fail "GET /api/v1/health (via web proxy)"
+# Liveness via nginx proxy (docker web) or direct API fallback (host-native vite preview)
+if curl -sf "${BASE_URL%/}/api/v1/health" 2>/dev/null | grep -q healthy; then
+  pass "GET /api/v1/health (via web proxy)"
+elif curl -sf "${API_DIRECT%/}/api/v1/health" 2>/dev/null | grep -q healthy; then
+  pass "GET /api/v1/health (direct API — host-native mode)"
+else
+  fail "GET /api/v1/health"
+fi
 
 # Readiness via direct API port
 curl -sf "${API_DIRECT%/}/api/v1/health/ready" | grep -q ready \

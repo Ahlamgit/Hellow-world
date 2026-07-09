@@ -156,7 +156,7 @@ namespace Khadamati.Infrastructure.Data.Migrations
                         column: x => x.UserId,
                         principalTable: "Users",
                         principalColumn: "Id",
-                        onDelete: ReferentialAction.Cascade);
+                        onDelete: ReferentialAction.Restrict);
                 });
 
             migrationBuilder.CreateTable(
@@ -334,7 +334,7 @@ namespace Khadamati.Infrastructure.Data.Migrations
                         column: x => x.CraftsmanId,
                         principalTable: "Users",
                         principalColumn: "Id",
-                        onDelete: ReferentialAction.SetNull);
+                        onDelete: ReferentialAction.Restrict);
                     table.ForeignKey(
                         name: "FK_ServiceRequests_Users_CustomerId",
                         column: x => x.CustomerId,

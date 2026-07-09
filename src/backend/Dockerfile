@@ -5,7 +5,7 @@ COPY Khadamati.Domain/ Khadamati.Domain/
 COPY Khadamati.Application/ Khadamati.Application/
 COPY Khadamati.Infrastructure/ Khadamati.Infrastructure/
 COPY Khadamati.API/ Khadamati.API/
-RUN dotnet restore
+RUN dotnet restore Khadamati.API/Khadamati.API.csproj
 RUN dotnet publish Khadamati.API/Khadamati.API.csproj -c Release -o /app/publish
 
 FROM mcr.microsoft.com/dotnet/aspnet:9.0 AS runtime
