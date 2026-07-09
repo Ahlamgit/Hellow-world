@@ -13,6 +13,8 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Khadamati.API", "Khadamati.
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Khadamati.Tests", "Khadamati.Tests\Khadamati.Tests.csproj", "{441A9D36-2D09-428D-A7BA-A10034168532}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Khadamati.IntegrationTests", "Khadamati.IntegrationTests\Khadamati.IntegrationTests.csproj", "{2FEB9A5B-B67A-4CC7-9150-AB9E30B503C5}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -83,6 +85,18 @@ Global
 		{441A9D36-2D09-428D-A7BA-A10034168532}.Release|x64.Build.0 = Release|Any CPU
 		{441A9D36-2D09-428D-A7BA-A10034168532}.Release|x86.ActiveCfg = Release|Any CPU
 		{441A9D36-2D09-428D-A7BA-A10034168532}.Release|x86.Build.0 = Release|Any CPU
+		{2FEB9A5B-B67A-4CC7-9150-AB9E30B503C5}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{2FEB9A5B-B67A-4CC7-9150-AB9E30B503C5}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{2FEB9A5B-B67A-4CC7-9150-AB9E30B503C5}.Debug|x64.ActiveCfg = Debug|Any CPU
+		{2FEB9A5B-B67A-4CC7-9150-AB9E30B503C5}.Debug|x64.Build.0 = Debug|Any CPU
+		{2FEB9A5B-B67A-4CC7-9150-AB9E30B503C5}.Debug|x86.ActiveCfg = Debug|Any CPU
+		{2FEB9A5B-B67A-4CC7-9150-AB9E30B503C5}.Debug|x86.Build.0 = Debug|Any CPU
+		{2FEB9A5B-B67A-4CC7-9150-AB9E30B503C5}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{2FEB9A5B-B67A-4CC7-9150-AB9E30B503C5}.Release|Any CPU.Build.0 = Release|Any CPU
+		{2FEB9A5B-B67A-4CC7-9150-AB9E30B503C5}.Release|x64.ActiveCfg = Release|Any CPU
+		{2FEB9A5B-B67A-4CC7-9150-AB9E30B503C5}.Release|x64.Build.0 = Release|Any CPU
+		{2FEB9A5B-B67A-4CC7-9150-AB9E30B503C5}.Release|x86.ActiveCfg = Release|Any CPU
+		{2FEB9A5B-B67A-4CC7-9150-AB9E30B503C5}.Release|x86.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

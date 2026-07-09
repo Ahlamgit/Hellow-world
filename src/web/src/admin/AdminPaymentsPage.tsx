@@ -1,10 +1,11 @@
 import { useCallback, useEffect, useState } from 'react';
 import {
-  Alert, Box, Chip, CircularProgress, Drawer, IconButton, MenuItem, Paper,
+  Alert, Box, Button, Chip, CircularProgress, Drawer, IconButton, MenuItem, Paper,
   Snackbar, Stack, Table, TableBody, TableCell, TableContainer, TableHead,
   TablePagination, TableRow, TextField, Toolbar, Typography,
 } from '@mui/material';
-import { Close, Refresh } from '@mui/icons-material';
+import { Close, FileDownload, Refresh } from '@mui/icons-material';
+import { adminApi } from './adminApi';
 import { adminPaymentsApi } from './adminOpsApi';
 import type { AdminPaymentDetail } from './adminOpsApi';
 import type { AdminListResult } from './moduleConfig';
@@ -17,6 +18,8 @@ export default function AdminPaymentsPage() {
   const [data, setData] = useState<AdminListResult | null>(null);
   const [loading, setLoading] = useState(true);
   const [status, setStatus] = useState('');
+  const [fromDate, setFromDate] = useState('');
+  const [toDate, setToDate] = useState('');
   const [page, setPage] = useState(0);
   const [pageSize, setPageSize] = useState(25);
   const [detail, setDetail] = useState<AdminPaymentDetail | null>(null);
@@ -26,14 +29,20 @@ export default function AdminPaymentsPage() {
   const load = useCallback(async () => {
     setLoading(true);
     try {
-      const res = await adminPaymentsApi.list({ status: status || undefined, page: page + 1, pageSize });
+      const res = await adminPaymentsApi.list({
+        status: status || undefined,
+        fromDate: fromDate || undefined,
+        toDate: toDate || undefined,
+        page: page + 1,
+        pageSize,
+      });
       setData(res.data.data);
     } catch (e) {
       setSnack({ message: getApiErrorMessage(e), severity: 'error' });
     } finally {
       setLoading(false);
     }
-  }, [status, page, pageSize]);
+  }, [status, fromDate, toDate, page, pageSize]);
 
   useEffect(() => { load(); }, [load]);
 
@@ -51,14 +60,25 @@ export default function AdminPaymentsPage() {
     <Box>
       <Box sx={{ display: 'flex', justifyContent: 'space-between', mb: 2 }}>
         <Typography variant="h5" sx={{ fontWeight: 700 }}>Payments</Typography>
-        <IconButton onClick={load}><Refresh /></IconButton>
+        <Box sx={{ display: 'flex', gap: 1 }}>
+          <Button
+            size="small"
+            startIcon={<FileDownload />}
+            onClick={() => adminApi.exportModule('payments', 'xlsx', { status: status || undefined, fromDate: fromDate || undefined, toDate: toDate || undefined })}
+          >
+            Export
+          </Button>
+          <IconButton onClick={load}><Refresh /></IconButton>
+        </Box>
       </Box>
       <Paper sx={{ mb: 2 }}>
-        <Toolbar>
+        <Toolbar sx={{ gap: 2, flexWrap: 'wrap' }}>
           <TextField select label="Status" size="small" value={status} onChange={(e) => { setStatus(e.target.value); setPage(0); }} sx={{ minWidth: 180 }}>
             <MenuItem value="">All statuses</MenuItem>
             {PAYMENT_STATUSES.map((s) => <MenuItem key={s} value={s}>{s}</MenuItem>)}
           </TextField>
+          <TextField type="date" label="From" size="small" value={fromDate} onChange={(e) => { setFromDate(e.target.value); setPage(0); }} slotProps={{ inputLabel: { shrink: true } }} />
+          <TextField type="date" label="To" size="small" value={toDate} onChange={(e) => { setToDate(e.target.value); setPage(0); }} slotProps={{ inputLabel: { shrink: true } }} />
         </Toolbar>
       </Paper>
       <Paper>

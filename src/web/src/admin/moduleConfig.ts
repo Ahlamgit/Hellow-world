@@ -64,6 +64,7 @@ export interface AdminAnalytics {
   bookingsByMonth: { label: string; value: number }[];
   revenueByMonth: { label: string; value: number }[];
   usersByRole: { label: string; value: number }[];
+  paymentsByStatus: { label: string; value: number }[];
 }
 
 export interface ModuleConfig {
