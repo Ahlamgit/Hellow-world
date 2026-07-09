@@ -152,6 +152,7 @@
     "craftsman": "Craftsman",
     "scheduled": "Scheduled",
     "price": "Price",
+    "description": "Notes / description",
     "status": {
       "Pending": "Pending",
       "AwaitingPayment": "Awaiting Payment",
@@ -176,12 +177,50 @@
     "markAllRead": "Mark all as read",
     "viewBooking": "View booking"
   },
+  "chat": {
+    "title": "Messages",
+    "empty": "No conversations yet. Open chat from a booking detail page.",
+    "messageHint": "Type a message...",
+    "openChat": "Open Chat"
+  },
+  "addresses": {
+    "title": "Saved Addresses",
+    "add": "Add Address",
+    "label": "Label",
+    "street": "Street",
+    "city": "City",
+    "district": "District",
+    "country": "Country",
+    "postalCode": "Postal Code",
+    "coordinates": "Coordinates",
+    "useLocation": "Use current location",
+    "save": "Save Address",
+    "saved": "Address saved.",
+    "savedList": "Your Addresses",
+    "empty": "No saved addresses yet.",
+    "default": "Default",
+    "selectAddress": "Service address",
+    "noAddress": "No address (optional)",
+    "geolocationUnsupported": "Geolocation is not supported in this browser.",
+    "geolocationFailed": "Could not get your location."
+  },
+  "review": {
+    "title": "Rate Your Experience",
+    "hint": "Share your feedback about this completed service.",
+    "rating": "Rating",
+    "comment": "Comment (optional)",
+    "submit": "Submit Review",
+    "submitted": "Thank you for your review!",
+    "yourReview": "Your review",
+    "leaveReview": "Leave a Review"
+  },
   "common": {
     "loading": "Loading...",
     "error": "An error occurred",
     "save": "Save",
     "cancel": "Cancel",
     "back": "Back",
+    "delete": "Delete",
     "next": "Next",
     "minutes": "minutes"
   },

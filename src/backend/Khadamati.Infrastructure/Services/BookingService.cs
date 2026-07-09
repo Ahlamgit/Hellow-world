@@ -600,6 +600,8 @@ public class BookingService : IBookingService
         Notes = b.Notes,
         RejectionReason = b.RejectionReason,
         CancellationReason = b.CancellationReason,
+        CustomerRating = b.CustomerRating,
+        CustomerReview = b.CustomerReview,
         Payment = b.Payment != null ? MapPaymentDto(b.Payment) : null,
         StatusHistory = b.StatusHistory?.Select(h => new BookingStatusHistoryDto
         {

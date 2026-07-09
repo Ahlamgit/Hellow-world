@@ -106,6 +106,8 @@ public class BookingDto
     public string? Notes { get; set; }
     public string? RejectionReason { get; set; }
     public string? CancellationReason { get; set; }
+    public int? CustomerRating { get; set; }
+    public string? CustomerReview { get; set; }
     public BookingPaymentDto? Payment { get; set; }
     public List<BookingStatusHistoryDto> StatusHistory { get; set; } = new();
 }

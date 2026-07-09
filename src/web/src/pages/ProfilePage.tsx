@@ -184,6 +184,8 @@ export default function ProfilePage() {
                   </Button>
                   <Button component={Link} to="/change-password" variant="outlined">{t('identity.changePassword')}</Button>
                   <Button component={Link} to="/sessions" variant="outlined">{t('identity.sessionsTitle')}</Button>
+                  <Button component={Link} to="/addresses" variant="outlined">{t('addresses.title')}</Button>
+                  <Button component={Link} to="/chat" variant="outlined">{t('chat.title')}</Button>
                 </Box>
               </Grid>
             </Grid>
