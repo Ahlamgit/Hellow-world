@@ -2,6 +2,7 @@ using Khadamati.Application.Authorization;
 using Khadamati.Application.Common;
 using Khadamati.Application.DTOs.Admin;
 using Khadamati.Application.Features.Admin.Commands;
+using Khadamati.Application.Features.Verification;
 using Khadamati.Application.Interfaces;
 using Khadamati.Domain.Constants;
 using MediatR;
@@ -117,5 +118,14 @@ public class AdminController : ControllerBase
         await AdminAuthorization.EnsurePermissionAsync(_permissions, RequireUserId(), PermissionCodes.SettingsManage, ct);
         return Ok(ApiResponse<AdminBulkActionResultDto>.Ok(
             await _mediator.Send(new RestoreAdminBackupCommand(request, _currentUser.UserId?.ToString()), ct)));
+    }
+
+    [HttpGet("backup/{id:guid}/download")]
+    [SwaggerOperation(Summary = "Download backup file")]
+    public async Task<IActionResult> DownloadBackup(Guid id, CancellationToken ct)
+    {
+        await AdminAuthorization.EnsurePermissionAsync(_permissions, RequireUserId(), PermissionCodes.SettingsManage, ct);
+        var download = await _mediator.Send(new DownloadAdminBackupQuery(id), ct);
+        return File(download.Stream, "application/gzip", download.FileName);
     }
 }

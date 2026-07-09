@@ -65,6 +65,7 @@ export function viewPermissionForModule(module: string): string {
     case 'stores':
     case 'complaints':
     case 'support-tickets':
+    case 'verification-documents':
     case 'notifications':
       return 'Users.View';
     case 'bookings':

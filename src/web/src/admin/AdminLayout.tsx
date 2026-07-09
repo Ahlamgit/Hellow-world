@@ -9,7 +9,7 @@ import {
   Category, Handyman, EventNote, CardMembership, Campaign, LocalOffer,
   Notifications, Payment, Assessment, Analytics, ReportProblem, SupportAgent,
   LocationCity, Map, Settings, Security, VpnKey, History, Timeline,
-  Backup, Restore, MonitorHeart, Logout, Home,
+  Backup, Restore, MonitorHeart, Logout, Home, VerifiedUser,
 } from '@mui/icons-material';
 import { useTranslation } from 'react-i18next';
 import { useAuth } from '../context/AuthContext';
@@ -73,6 +73,7 @@ const NAV_SECTIONS: { title: string; titleAr: string; items: NavItem[] }[] = [
     titleAr: 'الدعم والمواقع',
     items: [
       { path: '/admin/complaints', label: 'Complaints', labelAr: 'الشكاوى', icon: <ReportProblem /> },
+      { path: '/admin/verification-documents', label: 'Verification', labelAr: 'التحقق', icon: <VerifiedUser /> },
       { path: '/admin/support-tickets', label: 'Support Tickets', labelAr: 'تذاكر الدعم', icon: <SupportAgent /> },
       { path: '/admin/cities', label: 'Cities', labelAr: 'المدن', icon: <LocationCity /> },
       { path: '/admin/regions', label: 'Regions', labelAr: 'المناطق', icon: <Map /> },

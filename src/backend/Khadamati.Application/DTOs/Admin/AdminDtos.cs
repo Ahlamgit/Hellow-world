@@ -81,6 +81,8 @@ public class AdminBackupDto
     public string Status { get; set; } = string.Empty;
     public long SizeBytes { get; set; }
     public DateTime CreatedAt { get; set; }
+    public string? FilePath { get; set; }
+    public string? ErrorMessage { get; set; }
 }
 
 public class AdminRestoreRequestDto

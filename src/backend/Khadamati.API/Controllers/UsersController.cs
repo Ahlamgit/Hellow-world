@@ -110,13 +110,3 @@ public class ServicesController : ControllerBase
         return Ok(ApiResponse<IReadOnlyList<ServiceDto>>.Ok(result));
     }
 }
-
-[ApiController]
-[Route("api/v1/[controller]")]
-[Produces("application/json")]
-public class HealthController : ControllerBase
-{
-    [HttpGet]
-    [AllowAnonymous]
-    public IActionResult Get() => Ok(new { status = "healthy", service = "KHADAMATI API", timestamp = DateTime.UtcNow });
-}

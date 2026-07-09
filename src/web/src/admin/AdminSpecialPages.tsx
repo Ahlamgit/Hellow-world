@@ -1,13 +1,13 @@
-import { useEffect, useState } from 'react';
+import { useCallback, useEffect, useState } from 'react';
 import {
-  Alert, Box, Button, Card, CardContent, Chip, CircularProgress, Grid, Snackbar,
+  Alert, Box, Button, Card, CardContent, Chip, CircularProgress, Grid, IconButton, Paper, Snackbar,
   Table, TableBody, TableCell, TableContainer, TableHead, TableRow, Typography,
 } from '@mui/material';
-import { Backup, CheckCircle, Error as ErrorIcon } from '@mui/icons-material';
+import { Backup, CheckCircle, Download, Error as ErrorIcon, Refresh } from '@mui/icons-material';
 import { adminApi } from './adminApi';
 import AdminDataTable from './AdminDataTable';
 import { getModuleConfig } from './moduleConfig';
-import type { AdminAnalytics, AdminSystemHealth } from './moduleConfig';
+import type { AdminAnalytics, AdminListResult, AdminSystemHealth } from './moduleConfig';
 
 function ChartBar({ label, value, max }: { label: string; value: number; max: number }) {
   const pct = max > 0 ? (value / max) * 100 : 0;
@@ -192,34 +192,129 @@ export function AdminSystemHealthPage() {
 }
 
 export default function AdminBackupPage() {
-  const config = getModuleConfig('backup')!;
+  const [rows, setRows] = useState<AdminListResult['items']>([]);
+  const [loading, setLoading] = useState(true);
   const [creating, setCreating] = useState(false);
-  const [snack, setSnack] = useState('');
+  const [snack, setSnack] = useState<{ message: string; severity: 'success' | 'error' } | null>(null);
+
+  const load = useCallback(async () => {
+    setLoading(true);
+    try {
+      const { data } = await adminApi.listModule('backup', { page: 1, pageSize: 50 });
+      setRows(data.data.items);
+    } catch {
+      setSnack({ message: 'Failed to load backups', severity: 'error' });
+    } finally {
+      setLoading(false);
+    }
+  }, []);
+
+  useEffect(() => { load(); }, [load]);
 
   const handleCreate = async () => {
     setCreating(true);
     try {
       const { data } = await adminApi.createBackup();
-      setSnack(`Backup created: ${data.data.name}`);
-      window.location.reload();
+      const backup = data.data;
+      if (backup.status === 'Failed') {
+        setSnack({ message: backup.errorMessage ?? 'Backup creation failed', severity: 'error' });
+      } else {
+        setSnack({ message: `Backup created: ${backup.name}`, severity: 'success' });
+      }
+      await load();
     } catch {
-      setSnack('Backup creation failed');
+      setSnack({ message: 'Backup creation failed', severity: 'error' });
     } finally {
       setCreating(false);
     }
   };
 
+  const formatSize = (bytes?: string | null) => {
+    const n = Number(bytes ?? 0);
+    if (!n) return '—';
+    if (n < 1024) return `${n} B`;
+    if (n < 1024 * 1024) return `${(n / 1024).toFixed(1)} KB`;
+    return `${(n / (1024 * 1024)).toFixed(1)} MB`;
+  };
+
+  const statusChip = (status?: string | null) => {
+    const color = status === 'Completed' ? 'success' : status === 'Failed' ? 'error' : 'warning';
+    return <Chip label={status ?? 'Unknown'} size="small" color={color} />;
+  };
+
   return (
     <Box>
-      <AdminDataTable
-        config={config}
-        extraActions={
+      <Box sx={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', mb: 2 }}>
+        <Typography variant="h5" sx={{ fontWeight: 700 }}>Backup</Typography>
+        <Box sx={{ display: 'flex', gap: 1 }}>
+          <IconButton onClick={load}><Refresh /></IconButton>
           <Button variant="contained" startIcon={<Backup />} disabled={creating} onClick={handleCreate}>
             Create Backup
           </Button>
-        }
-      />
-      <Snackbar open={!!snack} autoHideDuration={4000} onClose={() => setSnack('')} message={snack} />
+        </Box>
+      </Box>
+      <Alert severity="info" sx={{ mb: 2 }}>
+        Catalog/configuration snapshots are stored as gzip-compressed JSON (categories, services, regions, cities, coupons, ads, settings).
+      </Alert>
+      <Paper>
+        {loading ? (
+          <Box sx={{ p: 4, textAlign: 'center' }}><CircularProgress /></Box>
+        ) : (
+          <TableContainer>
+            <Table size="small">
+              <TableHead>
+                <TableRow>
+                  <TableCell>Name</TableCell>
+                  <TableCell>Status</TableCell>
+                  <TableCell>Size</TableCell>
+                  <TableCell>File</TableCell>
+                  <TableCell>Created</TableCell>
+                  <TableCell align="right">Actions</TableCell>
+                </TableRow>
+              </TableHead>
+              <TableBody>
+                {rows.map((row) => (
+                  <TableRow key={row.id}>
+                    <TableCell>{row.columns.name}</TableCell>
+                    <TableCell>{statusChip(row.columns.status)}</TableCell>
+                    <TableCell>{formatSize(row.columns.sizeBytes)}</TableCell>
+                    <TableCell sx={{ maxWidth: 220, overflow: 'hidden', textOverflow: 'ellipsis', whiteSpace: 'nowrap' }}>
+                      {row.columns.filePath ?? '—'}
+                    </TableCell>
+                    <TableCell>{row.columns.createdAt ? new Date(row.columns.createdAt).toLocaleString() : '—'}</TableCell>
+                    <TableCell align="right">
+                      {row.columns.status === 'Completed' && (
+                        <Button size="small" startIcon={<Download />} onClick={() => adminApi.downloadBackup(row.id)}>
+                          Download
+                        </Button>
+                      )}
+                    </TableCell>
+                  </TableRow>
+                ))}
+                {rows.length === 0 && (
+                  <TableRow>
+                    <TableCell colSpan={6} align="center">No backups yet.</TableCell>
+                  </TableRow>
+                )}
+              </TableBody>
+            </Table>
+          </TableContainer>
+        )}
+      </Paper>
+      {rows.some((r) => r.columns.errorMessage) && (
+        <Box sx={{ mt: 2 }}>
+          {rows.filter((r) => r.columns.errorMessage).map((r) => (
+            <Alert key={r.id} severity="error" sx={{ mb: 1 }}>
+              {r.columns.name}: {r.columns.errorMessage}
+            </Alert>
+          ))}
+        </Box>
+      )}
+      {snack && (
+        <Snackbar open autoHideDuration={5000} onClose={() => setSnack(null)}>
+          <Alert severity={snack.severity}>{snack.message}</Alert>
+        </Snackbar>
+      )}
     </Box>
   );
 }
@@ -230,7 +325,7 @@ export function AdminRestorePage() {
   const [snack, setSnack] = useState<{ message: string; severity: 'success' | 'error' } | null>(null);
 
   const handleRestore = async (id: string) => {
-    if (!window.confirm('Are you sure you want to restore from this backup? This action cannot be undone.')) return;
+    if (!window.confirm('Restore catalog data from this backup? This cannot be undone.')) return;
     setRestoring(id);
     try {
       const { data } = await adminApi.restoreBackup(id);
@@ -244,12 +339,15 @@ export function AdminRestorePage() {
 
   return (
     <Box>
+      <Alert severity="warning" sx={{ mb: 2 }}>
+        Restore replaces catalog/configuration tables from a completed backup. User accounts and bookings are not affected.
+      </Alert>
       <AdminDataTable
         config={config}
         onRowAction={(id) => handleRestore(id)}
         extraActions={
           <Typography variant="body2" color="text.secondary">
-            Click a row to restore from that backup
+            Click a completed backup row to restore catalog data
           </Typography>
         }
       />

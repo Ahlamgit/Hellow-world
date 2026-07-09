@@ -51,6 +51,7 @@ public class ApplicationDbContext : DbContext
     public DbSet<RolePermission> RolePermissions => Set<RolePermission>();
     public DbSet<ActivityLog> ActivityLogs => Set<ActivityLog>();
     public DbSet<BackupJob> BackupJobs => Set<BackupJob>();
+    public DbSet<VerificationDocument> VerificationDocuments => Set<VerificationDocument>();
 
     protected override void OnModelCreating(ModelBuilder modelBuilder)
     {
@@ -100,6 +101,7 @@ public class ApplicationDbContext : DbContext
         modelBuilder.Entity<RolePermission>().HasQueryFilter(e => !e.IsDeleted);
         modelBuilder.Entity<ActivityLog>().HasQueryFilter(e => !e.IsDeleted);
         modelBuilder.Entity<BackupJob>().HasQueryFilter(e => !e.IsDeleted);
+        modelBuilder.Entity<VerificationDocument>().HasQueryFilter(e => !e.IsDeleted);
         modelBuilder.Entity<Role>().HasQueryFilter(e => !e.IsDeleted);
         modelBuilder.Entity<UserRoleAssignment>().HasQueryFilter(e => !e.IsDeleted);
         modelBuilder.Entity<UserPermission>().HasQueryFilter(e => !e.IsDeleted);

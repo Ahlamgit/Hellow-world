@@ -27,7 +27,7 @@ public class AdminServiceTests : IDisposable
         var export = new AdminExportService();
         var unitOfWork = new UnitOfWork(_context);
         var readiness = new IntegrationReadinessService(new ConfigurationBuilder().Build());
-        _adminService = new AdminService(_context, export, unitOfWork, new NoOpPermissionService(), readiness);
+        _adminService = new AdminService(_context, export, unitOfWork, new NoOpPermissionService(), readiness, new FakeDatabaseBackupService());
 
         SeedData();
     }
@@ -153,5 +153,17 @@ public class AdminServiceTests : IDisposable
         public void InvalidateCache(Guid userId) { }
         public Task InvalidateCacheForRoleAsync(Guid roleId, CancellationToken cancellationToken = default) =>
             Task.CompletedTask;
+    }
+
+    private sealed class FakeDatabaseBackupService : IDatabaseBackupService
+    {
+        public Task<BackupFileResult> CreateBackupAsync(string jobName, CancellationToken cancellationToken = default) =>
+            Task.FromResult(new BackupFileResult { FilePath = "/tmp/fake-backup.json.gz", SizeBytes = 128 });
+
+        public Task<BackupRestoreResult> RestoreBackupAsync(string filePath, CancellationToken cancellationToken = default) =>
+            Task.FromResult(new BackupRestoreResult { RecordsRestored = 1, Message = "Restored." });
+
+        public Task<Stream> OpenBackupStreamAsync(string filePath, CancellationToken cancellationToken = default) =>
+            Task.FromResult<Stream>(new MemoryStream());
     }
 }
