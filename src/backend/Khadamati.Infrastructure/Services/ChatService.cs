@@ -1,6 +1,7 @@
 using Khadamati.Application.Common;
 using Khadamati.Application.DTOs.Messaging;
 using Khadamati.Application.Interfaces;
+using Khadamati.Domain.Constants;
 using Khadamati.Domain.Entities;
 using Khadamati.Infrastructure.Data;
 using Microsoft.EntityFrameworkCore;
@@ -11,11 +12,16 @@ public class ChatService : IChatService
 {
     private readonly ApplicationDbContext _context;
     private readonly IPushNotificationService _pushNotificationService;
+    private readonly IPermissionService _permissionService;
 
-    public ChatService(ApplicationDbContext context, IPushNotificationService pushNotificationService)
+    public ChatService(
+        ApplicationDbContext context,
+        IPushNotificationService pushNotificationService,
+        IPermissionService permissionService)
     {
         _context = context;
         _pushNotificationService = pushNotificationService;
+        _permissionService = permissionService;
     }
 
     public async Task<IReadOnlyList<ChatConversationDto>> GetMyConversationsAsync(Guid userId, CancellationToken cancellationToken = default)
@@ -75,11 +81,10 @@ public class ChatService : IChatService
             .FirstOrDefaultAsync(b => b.Id == bookingId, cancellationToken)
             ?? throw new NotFoundException("Booking not found.");
 
-        if (role == "Customer" && booking.CustomerId != userId)
-            throw new UnauthorizedException("Access denied.");
-        if (role == "Craftsman" && booking.CraftsmanId != userId)
-            throw new UnauthorizedException("Access denied.");
-        if (role is not ("Customer" or "Craftsman" or "Administrator"))
+        var isCustomer = role == "Customer" && booking.CustomerId == userId;
+        var isCraftsman = role == "Craftsman" && booking.CraftsmanId == userId;
+        var hasAdminAccess = await _permissionService.UserHasPermissionAsync(userId, PermissionCodes.BookingsView, cancellationToken);
+        if (!isCustomer && !isCraftsman && !hasAdminAccess)
             throw new UnauthorizedException("Access denied.");
 
         var conversation = await _context.ChatConversations

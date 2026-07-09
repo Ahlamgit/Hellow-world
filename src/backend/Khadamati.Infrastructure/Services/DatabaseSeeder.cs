@@ -4,6 +4,7 @@ using Khadamati.Domain.Enums;
 using Khadamati.Infrastructure.Data;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.DependencyInjection;
+using Microsoft.Extensions.Hosting;
 using Microsoft.Extensions.Logging;
 
 namespace Khadamati.Infrastructure.Services;
@@ -24,8 +25,12 @@ public class DatabaseSeeder
         using var scope = _serviceProvider.CreateScope();
         var context = scope.ServiceProvider.GetRequiredService<ApplicationDbContext>();
         var passwordHasher = scope.ServiceProvider.GetRequiredService<IPasswordHasher>();
+        var environment = scope.ServiceProvider.GetService<IHostEnvironment>();
 
-        await context.Database.MigrateAsync(cancellationToken);
+        if (context.Database.IsRelational())
+            await context.Database.MigrateAsync(cancellationToken);
+        else
+            await context.Database.EnsureCreatedAsync(cancellationToken);
 
         if (!await context.Users.AnyAsync(cancellationToken))
         {
@@ -80,6 +85,99 @@ public class DatabaseSeeder
         await SeedVerificationDocumentsAsync(context, cancellationToken);
         await SeedCraftsmanAddressesAsync(context, cancellationToken);
         await IdentitySeeder.SeedAsync(context, _logger, cancellationToken);
+
+        if (environment?.IsEnvironment("Testing") == true)
+            await EnsureIntegrationTestAccountsAsync(context, passwordHasher, cancellationToken);
+    }
+
+    private static async Task EnsureIntegrationTestAccountsAsync(
+        ApplicationDbContext context,
+        IPasswordHasher passwordHasher,
+        CancellationToken cancellationToken)
+    {
+        if (!await context.Users.AnyAsync(u => u.Email == "admin@khadamati.com", cancellationToken))
+        {
+            context.Users.Add(new User
+            {
+                Email = "admin@khadamati.com",
+                Phone = "+966500000001",
+                PasswordHash = passwordHasher.Hash("Admin@123456"),
+                Role = UserRole.Administrator,
+                Status = UserStatus.Active,
+                VerificationStatus = VerificationStatus.Verified,
+                SubscriptionStatus = SubscriptionStatus.Active,
+                Profile = new UserProfile { FirstName = "System", LastName = "Administrator", PreferredLanguage = "en" },
+            });
+            await context.SaveChangesAsync(cancellationToken);
+        }
+
+        if (!await context.ServiceCategories.AnyAsync(cancellationToken))
+        {
+            var category = new ServiceCategory { NameEn = "Plumbing", NameAr = "سباكة", DisplayOrder = 1, IsActive = true };
+            context.ServiceCategories.Add(category);
+            context.Services.Add(new Service
+            {
+                Category = category,
+                NameEn = "Leak Repair",
+                NameAr = "إصلاح تسرب",
+                BasePrice = 150,
+                EstimatedDurationMinutes = 60,
+            });
+            await context.SaveChangesAsync(cancellationToken);
+        }
+
+        if (!await context.Users.AnyAsync(u => u.Email == "craftsman1@khadamati.com", cancellationToken))
+        {
+            var service = await context.Services.FirstAsync(cancellationToken);
+            var user = new User
+            {
+                Email = "craftsman1@khadamati.com",
+                Phone = "+966500000101",
+                PasswordHash = passwordHasher.Hash("Craftsman@123"),
+                Role = UserRole.Craftsman,
+                Status = UserStatus.Active,
+                VerificationStatus = VerificationStatus.Verified,
+                SubscriptionStatus = SubscriptionStatus.Active,
+                Profile = new UserProfile { FirstName = "Ahmed", LastName = "Al-Otaibi", PreferredLanguage = "ar" },
+            };
+            context.Users.Add(user);
+            await context.SaveChangesAsync(cancellationToken);
+
+            var profile = new CraftsmanProfile
+            {
+                UserId = user.Id,
+                Specialization = "Plumbing",
+                YearsOfExperience = 5,
+                Rating = 4.5m,
+                TotalReviews = 10,
+                CompletedJobs = 25,
+                IsAvailable = true,
+                ServiceRadiusKm = 30,
+            };
+            context.CraftsmanProfiles.Add(profile);
+            await context.SaveChangesAsync(cancellationToken);
+
+            context.CraftsmanServices.Add(new CraftsmanService
+            {
+                CraftsmanProfileId = profile.Id,
+                ServiceId = service.Id,
+                CustomPrice = service.BasePrice,
+                IsAvailable = true,
+            });
+            context.Addresses.Add(new Address
+            {
+                UserId = user.Id,
+                Label = "Work",
+                Street = "King Fahd Road",
+                City = "Riyadh",
+                District = "Al Olaya",
+                Country = "SA",
+                Latitude = 24.7136m,
+                Longitude = 46.6753m,
+                IsDefault = true,
+            });
+            await context.SaveChangesAsync(cancellationToken);
+        }
     }
 
     private static async Task SeedCraftsmenAndStoresAsync(

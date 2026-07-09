@@ -87,6 +87,19 @@ public class AdminController : ControllerBase
         return Ok(ApiResponse<IReadOnlyList<AdminReportDto>>.Ok(await _mediator.Send(new GetAdminReportsQuery(), ct)));
     }
 
+    [HttpPost("reports/generate")]
+    [SwaggerOperation(Summary = "Generate and download a report")]
+    public async Task<IActionResult> GenerateReport([FromBody] AdminGenerateReportRequestDto request, CancellationToken ct)
+    {
+        await AdminAuthorization.EnsurePermissionAsync(_permissions, RequireUserId(), PermissionCodes.ReportsExport, ct);
+        var bytes = await _mediator.Send(new GenerateAdminReportCommand(request.ReportId, request.Format, request.Query), ct);
+        var format = request.Format.Equals("pdf", StringComparison.OrdinalIgnoreCase) ? "pdf" : "xlsx";
+        var contentType = format == "pdf"
+            ? "application/pdf"
+            : "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet";
+        return File(bytes, contentType, $"khadamati-report-{request.ReportId}-{DateTime.UtcNow:yyyyMMdd}.{format}");
+    }
+
     [HttpGet("system/health")]
     [SwaggerOperation(Summary = "System health check")]
     public async Task<IActionResult> SystemHealth(CancellationToken ct)

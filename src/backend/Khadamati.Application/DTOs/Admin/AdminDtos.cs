@@ -96,6 +96,7 @@ public class AdminAnalyticsDto
     public List<AdminChartPointDto> BookingsByMonth { get; set; } = new();
     public List<AdminChartPointDto> RevenueByMonth { get; set; } = new();
     public List<AdminChartPointDto> UsersByRole { get; set; } = new();
+    public List<AdminChartPointDto> PaymentsByStatus { get; set; } = new();
 }
 
 public class AdminChartPointDto
@@ -111,4 +112,11 @@ public class AdminReportDto
     public string Type { get; set; } = string.Empty;
     public DateTime GeneratedAt { get; set; }
     public string Status { get; set; } = string.Empty;
+}
+
+public class AdminGenerateReportRequestDto
+{
+    public string ReportId { get; set; } = string.Empty;
+    public string Format { get; set; } = "xlsx";
+    public AdminListQueryDto Query { get; set; } = new();
 }

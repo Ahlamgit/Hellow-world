@@ -46,7 +46,6 @@ builder.Services.AddAuthorization(options =>
     options.AddPolicy("CustomerOnly", policy => policy.RequireRole("Customer"));
     options.AddPolicy("CraftsmanOnly", policy => policy.RequireRole("Craftsman"));
     options.AddPolicy("StoreOnly", policy => policy.RequireRole("StoreOwner", "Store"));
-    options.AddPolicy("AdminOnly", policy => policy.RequireRole("Admin", "SuperAdmin", "Administrator"));
     options.AddPolicy("CraftsmanOrStore", policy => policy.RequireRole("Craftsman", "StoreOwner", "Store"));
     options.AddPolicy("VerifiedUser", policy => policy.RequireAuthenticatedUser());
 });
@@ -155,3 +154,5 @@ using (var scope = app.Services.CreateScope())
 
 Log.Information("KHADAMATI API starting...");
 app.Run();
+
+public partial class Program;

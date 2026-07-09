@@ -1,9 +1,10 @@
 import { useEffect, useState } from 'react';
 import {
   Alert, Box, Button, Card, CardContent, Chip, Container, FormControlLabel,
-  Grid, MenuItem, Switch, TextField, Typography,
+  Grid, Link, MenuItem, Switch, TextField, Typography,
 } from '@mui/material';
-import { craftsmanApi, servicesApi, type CraftsmanProfile, type CraftsmanServiceItem } from '../services/api';
+import { Link as RouterLink } from 'react-router-dom';
+import { craftsmanApi, servicesApi, usersApi, type CraftsmanProfile, type CraftsmanServiceItem } from '../services/api';
 
 const DAYS = ['Sunday', 'Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday'];
 
@@ -15,12 +16,15 @@ export function CraftsmanPortalPage() {
   const [form, setForm] = useState({ specialization: '', yearsOfExperience: 0, isAvailable: true, serviceRadiusKm: 25 });
   const [newService, setNewService] = useState({ serviceId: '', customPrice: 0 });
 
+  const [hasLocatedAddress, setHasLocatedAddress] = useState(true);
+
   const load = async () => {
     setLoading(true);
     try {
-      const [profileRes, servicesRes] = await Promise.all([
+      const [profileRes, servicesRes, addressesRes] = await Promise.all([
         craftsmanApi.getProfile(),
         servicesApi.getServices(),
+        usersApi.listAddresses(),
       ]);
       const p = profileRes.data.data;
       setProfile(p);
@@ -31,6 +35,8 @@ export function CraftsmanPortalPage() {
         serviceRadiusKm: p.serviceRadiusKm ?? 25,
       });
       setServices(servicesRes.data.data.map((s) => ({ id: s.id, nameEn: s.nameEn })));
+      const located = addressesRes.data.data.some((a) => a.isDefault && a.latitude != null && a.longitude != null);
+      setHasLocatedAddress(located);
     } catch {
       setError('Failed to load craftsman profile');
     } finally {
@@ -59,6 +65,12 @@ export function CraftsmanPortalPage() {
   return (
     <Container maxWidth="lg" sx={{ py: 4 }}>
       <Typography variant="h4" sx={{ fontWeight: 700, mb: 3 }}>Craftsman Portal</Typography>
+      {!hasLocatedAddress && (
+        <Alert severity="warning" sx={{ mb: 3 }}>
+          Add a default address with GPS coordinates so customers can find you in nearby search.{' '}
+          <Link component={RouterLink} to="/addresses">Manage addresses</Link>
+        </Alert>
+      )}
       <Grid container spacing={3}>
         <Grid size={{ xs: 12, md: 6 }}>
           <Card>

@@ -201,16 +201,32 @@ public class AdminService : IAdminService
             RevenueByMonth = payments.GroupBy(p => p.PaidAt!.Value.ToString("yyyy-MM")).Select(g => new AdminChartPointDto { Label = g.Key, Value = g.Sum(x => x.Amount) }).ToList(),
             UsersByRole = (await _context.Users.GroupBy(u => u.Role).Select(g => new { Role = g.Key, Count = g.Count() }).ToListAsync(cancellationToken))
                 .Select(x => new AdminChartPointDto { Label = x.Role.ToString(), Value = x.Count }).ToList(),
+            PaymentsByStatus = (await _context.BookingPayments.GroupBy(p => p.Status).Select(g => new { Status = g.Key, Count = g.Count() }).ToListAsync(cancellationToken))
+                .Select(x => new AdminChartPointDto { Label = x.Status.ToString(), Value = x.Count }).ToList(),
         };
     }
 
+    private static readonly IReadOnlyList<AdminReportDto> ReportCatalog =
+    [
+        new() { Id = "revenue", Name = "Payment Ledger", Type = "Revenue", GeneratedAt = DateTime.UtcNow, Status = "Ready" },
+        new() { Id = "bookings", Name = "Booking Summary", Type = "Bookings", GeneratedAt = DateTime.UtcNow, Status = "Ready" },
+        new() { Id = "users", Name = "User Growth", Type = "Users", GeneratedAt = DateTime.UtcNow, Status = "Ready" },
+    ];
+
     public Task<IReadOnlyList<AdminReportDto>> GetReportsAsync(CancellationToken cancellationToken = default) =>
-        Task.FromResult<IReadOnlyList<AdminReportDto>>(new List<AdminReportDto>
+        Task.FromResult(ReportCatalog);
+
+    public Task<byte[]> GenerateReportAsync(string reportId, string format, AdminListQueryDto query, CancellationToken cancellationToken = default)
+    {
+        var module = reportId.ToLowerInvariant() switch
         {
-            new() { Id = Guid.NewGuid().ToString(), Name = "Monthly Revenue Report", Type = "Revenue", GeneratedAt = DateTime.UtcNow.AddDays(-1), Status = "Ready" },
-            new() { Id = Guid.NewGuid().ToString(), Name = "User Growth Report", Type = "Users", GeneratedAt = DateTime.UtcNow.AddDays(-2), Status = "Ready" },
-            new() { Id = Guid.NewGuid().ToString(), Name = "Booking Summary", Type = "Bookings", GeneratedAt = DateTime.UtcNow.AddHours(-6), Status = "Ready" },
-        });
+            "revenue" => "payments",
+            "bookings" => "bookings",
+            "users" => "users",
+            _ => throw new Application.Common.NotFoundException($"Report '{reportId}' not found."),
+        };
+        return ExportAsync(module, format, query, cancellationToken);
+    }
 
     public async Task<AdminSystemHealthDto> GetSystemHealthAsync(CancellationToken cancellationToken = default)
     {
@@ -435,11 +451,29 @@ public class AdminService : IAdminService
     {
         var query = _context.BookingPayments.AsQueryable();
         if (!string.IsNullOrWhiteSpace(q.Status) && Enum.TryParse<PaymentStatus>(q.Status, true, out var st)) query = query.Where(p => p.Status == st);
+        if (q.FromDate.HasValue) query = query.Where(p => (p.PaidAt ?? p.CreatedAt) >= q.FromDate.Value);
+        if (q.ToDate.HasValue) query = query.Where(p => (p.PaidAt ?? p.CreatedAt) <= q.ToDate.Value);
         return await Paginate(query, q, p => new AdminRowDto { Id = p.Id.ToString(), Columns = new Dictionary<string, string?> { ["amount"] = p.Amount.ToString("F2"), ["currency"] = p.Currency, ["status"] = p.Status.ToString(), ["method"] = p.PaymentMethod, ["paidAt"] = p.PaidAt?.ToString("O") } }, ct);
     }
 
     private Task<AdminListResultDto> ListReportsAsync(AdminListQueryDto q, CancellationToken ct) =>
-        Task.FromResult(new AdminListResultDto { Items = GetReportsAsync(ct).Result.Select(r => new AdminRowDto { Id = r.Id, Columns = new Dictionary<string, string?> { ["name"] = r.Name, ["type"] = r.Type, ["status"] = r.Status, ["generatedAt"] = r.GeneratedAt.ToString("O") } }).ToList(), TotalCount = 3, Page = q.Page, PageSize = q.PageSize });
+        Task.FromResult(new AdminListResultDto
+        {
+            Items = ReportCatalog.Select(r => new AdminRowDto
+            {
+                Id = r.Id,
+                Columns = new Dictionary<string, string?>
+                {
+                    ["name"] = r.Name,
+                    ["type"] = r.Type,
+                    ["status"] = r.Status,
+                    ["generatedAt"] = r.GeneratedAt.ToString("O"),
+                },
+            }).ToList(),
+            TotalCount = ReportCatalog.Count,
+            Page = q.Page,
+            PageSize = q.PageSize,
+        });
 
     private async Task<AdminListResultDto> ListComplaintsAsync(AdminListQueryDto q, CancellationToken ct)
     {

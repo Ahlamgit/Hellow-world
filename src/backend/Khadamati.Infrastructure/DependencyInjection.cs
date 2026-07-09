@@ -12,8 +12,10 @@ using Khadamati.Infrastructure.Services.Identity.Sms;
 using Khadamati.Infrastructure.Services.Payments;
 using Khadamati.Infrastructure.Services.Push;
 using Microsoft.EntityFrameworkCore;
+using Microsoft.EntityFrameworkCore.Diagnostics;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
+using Microsoft.Extensions.Hosting;
 
 namespace Khadamati.Infrastructure;
 
@@ -21,10 +23,20 @@ public static class DependencyInjection
 {
     public static IServiceCollection AddInfrastructure(this IServiceCollection services, IConfiguration configuration)
     {
-        services.AddDbContext<ApplicationDbContext>(options =>
+        services.AddDbContext<ApplicationDbContext>((sp, options) =>
+        {
+            var environment = sp.GetService<IHostEnvironment>();
+            if (environment?.IsEnvironment("Testing") == true)
+            {
+                options.UseInMemoryDatabase("KhadamatiIntegrationTests");
+                options.ConfigureWarnings(w => w.Ignore(InMemoryEventId.TransactionIgnoredWarning));
+                return;
+            }
+
             options.UseSqlServer(
                 configuration.GetConnectionString("DefaultConnection"),
-                sql => sql.MigrationsAssembly(typeof(ApplicationDbContext).Assembly.FullName)));
+                sql => sql.MigrationsAssembly(typeof(ApplicationDbContext).Assembly.FullName));
+        });
 
         services.AddScoped<IUnitOfWork, UnitOfWork>();
         services.AddScoped<IAuthRepository, AuthRepository>();

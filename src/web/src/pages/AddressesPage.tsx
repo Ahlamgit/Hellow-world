@@ -3,7 +3,7 @@ import {
   Alert, Box, Button, Card, CardContent, Chip, CircularProgress, Container,
   Grid, IconButton, TextField, Typography,
 } from '@mui/material';
-import { Delete } from '@mui/icons-material';
+import { Delete, Edit } from '@mui/icons-material';
 import { useTranslation } from 'react-i18next';
 import { usersApi, type AddressDto, type CreateAddressDto } from '../services/api';
 import { getApiErrorMessage } from '../utils/apiError';
@@ -28,6 +28,7 @@ export default function AddressesPage() {
   const [saving, setSaving] = useState(false);
   const [locating, setLocating] = useState(false);
   const [error, setError] = useState('');
+  const [editingId, setEditingId] = useState<string | null>(null);
   const [success, setSuccess] = useState('');
 
   const load = async () => {
@@ -67,21 +68,48 @@ export default function AddressesPage() {
     );
   };
 
+  const resetForm = () => {
+    setForm(emptyForm);
+    setEditingId(null);
+  };
+
   const handleAdd = async (e: React.FormEvent) => {
     e.preventDefault();
     setSaving(true);
     setError('');
     setSuccess('');
     try {
-      await usersApi.addAddress(form);
-      setForm(emptyForm);
-      setSuccess(t('addresses.saved'));
+      if (editingId) {
+        await usersApi.updateAddress(editingId, form);
+        setSuccess(t('addresses.updated'));
+      } else {
+        await usersApi.addAddress(form);
+        setSuccess(t('addresses.saved'));
+      }
+      resetForm();
       await load();
     } catch (err) {
       setError(getApiErrorMessage(err, t('common.error')));
     } finally {
       setSaving(false);
     }
+  };
+
+  const startEdit = (address: AddressDto) => {
+    setEditingId(address.id);
+    setForm({
+      label: address.label,
+      street: address.street,
+      city: address.city,
+      district: address.district,
+      postalCode: address.postalCode,
+      country: address.country,
+      latitude: address.latitude,
+      longitude: address.longitude,
+      isDefault: address.isDefault,
+    });
+    setSuccess('');
+    setError('');
   };
 
   const handleDelete = async (id: string) => {
@@ -102,7 +130,7 @@ export default function AddressesPage() {
 
       <Card sx={{ mb: 3 }}>
         <CardContent>
-          <Typography variant="h6" gutterBottom>{t('addresses.add')}</Typography>
+          <Typography variant="h6" gutterBottom>{editingId ? t('addresses.edit') : t('addresses.add')}</Typography>
           <Box component="form" onSubmit={handleAdd}>
             <Grid container spacing={2}>
               <Grid size={{ xs: 12, sm: 6 }}>
@@ -136,8 +164,11 @@ export default function AddressesPage() {
                     {locating ? <CircularProgress size={20} /> : t('addresses.useLocation')}
                   </Button>
                   <Button type="submit" variant="contained" disabled={saving}>
-                    {saving ? <CircularProgress size={20} /> : t('addresses.save')}
+                    {saving ? <CircularProgress size={20} /> : (editingId ? t('addresses.update') : t('addresses.save'))}
                   </Button>
+                  {editingId && (
+                    <Button type="button" variant="text" onClick={resetForm}>{t('common.cancel')}</Button>
+                  )}
                 </Box>
               </Grid>
             </Grid>
@@ -167,9 +198,12 @@ export default function AddressesPage() {
                     </Typography>
                   )}
                 </Box>
-                <IconButton color="error" onClick={() => handleDelete(address.id)} aria-label={t('common.delete')}>
-                  <Delete />
-                </IconButton>
+                <Box sx={{ display: 'flex' }}>
+                  <IconButton onClick={() => startEdit(address)} aria-label={t('common.edit')}><Edit /></IconButton>
+                  <IconButton color="error" onClick={() => handleDelete(address.id)} aria-label={t('common.delete')}>
+                    <Delete />
+                  </IconButton>
+                </Box>
               </CardContent>
             </Card>
           ))}

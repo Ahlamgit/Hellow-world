@@ -20,6 +20,16 @@ export const adminApi = {
     window.URL.revokeObjectURL(url);
   },
   getAnalytics: () => api.get<ApiResponse<AdminAnalytics>>('/admin/analytics/data'),
+  getReports: () => api.get<ApiResponse<Array<{ id: string; name: string; type: string; status: string; generatedAt: string }>>>('/admin/reports/list'),
+  generateReport: async (reportId: string, format: 'xlsx' | 'pdf', query: AdminListQuery = {}) => {
+    const response = await api.post('/admin/reports/generate', { reportId, format, query }, { responseType: 'blob' });
+    const url = window.URL.createObjectURL(new Blob([response.data]));
+    const link = document.createElement('a');
+    link.href = url;
+    link.download = `khadamati-report-${reportId}.${format === 'pdf' ? 'pdf' : 'xlsx'}`;
+    link.click();
+    window.URL.revokeObjectURL(url);
+  },
   getSystemHealth: () => api.get<ApiResponse<AdminSystemHealth>>('/admin/system/health'),
   createBackup: () => api.post<ApiResponse<{ id: string; name: string; status: string; filePath?: string; errorMessage?: string }>>('/admin/backup/create'),
   restoreBackup: (backupId: string) =>

@@ -1,5 +1,3 @@
-import { hasAdminAccess as hasLegacyAdminRole } from './roles';
-
 /** Permission codes that grant access to the admin portal (mirrors backend AdminPermissionMap.PortalPermissions). */
 export const PORTAL_PERMISSIONS = [
   'Users.View',
@@ -47,12 +45,10 @@ export function hasAdminPortalAccess(
   return hasAnyPermission(user, PORTAL_PERMISSIONS);
 }
 
-/** Legacy admin roles or any portal permission. */
+/** Portal access is permission-based only. */
 export function canAccessAdmin(
-  user: (Parameters<typeof hasLegacyAdminRole>[0] & { permissions?: string[] }) | null | undefined,
+  user: { permissions?: string[] } | null | undefined,
 ): boolean {
-  if (!user) return false;
-  if (hasLegacyAdminRole(user)) return true;
   return hasAdminPortalAccess(user);
 }
 
@@ -102,11 +98,10 @@ export function viewPermissionForModule(module: string): string {
 }
 
 export function canViewModule(
-  user: (Parameters<typeof canAccessAdmin>[0]),
+  user: { permissions?: string[] } | null | undefined,
   module: string,
 ): boolean {
   if (!user) return false;
-  if (hasLegacyAdminRole(user)) return true;
   return hasPermission(user, viewPermissionForModule(module));
 }
 
@@ -121,11 +116,10 @@ export function permissionForAdminPath(path: string): string | null {
 }
 
 export function canAccessAdminPath(
-  user: (Parameters<typeof canAccessAdmin>[0]),
+  user: { permissions?: string[] } | null | undefined,
   path: string,
 ): boolean {
   if (!canAccessAdmin(user)) return false;
-  if (hasLegacyAdminRole(user)) return true;
   const required = permissionForAdminPath(path);
   if (!required) return hasAdminPortalAccess(user);
   return hasPermission(user, required);

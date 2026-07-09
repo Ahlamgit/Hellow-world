@@ -37,6 +37,7 @@ export function BookingWizardPage() {
   const [description, setDescription] = useState('');
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState('');
+  const [nearbySearched, setNearbySearched] = useState(false);
 
   useEffect(() => {
     servicesApi.getServices().then((res) => {
@@ -50,6 +51,7 @@ export function BookingWizardPage() {
 
   const loadCraftsmen = async (serviceId: string) => {
     setLoading(true);
+    setNearbySearched(false);
     try {
       const res = await bookingsApi.getCraftsmen(serviceId);
       setCraftsmen(res.data.data);
@@ -64,6 +66,7 @@ export function BookingWizardPage() {
     }
     setLoading(true);
     setError('');
+    setNearbySearched(true);
     navigator.geolocation.getCurrentPosition(
       async (position) => {
         try {
@@ -165,7 +168,16 @@ export function BookingWizardPage() {
             </Button>
           )}
           {loading ? <CircularProgress /> : craftsmen.length === 0 ? (
-            <Typography color="text.secondary" sx={{ mb: 2 }}>{t('booking.noCraftsmen')}</Typography>
+            <Box sx={{ mb: 2 }}>
+              <Typography color="text.secondary" sx={{ mb: 1 }}>
+                {nearbySearched ? t('booking.noNearbyCraftsmen') : t('booking.noCraftsmen')}
+              </Typography>
+              {nearbySearched && selectedService && (
+                <Button variant="outlined" onClick={() => loadCraftsmen(selectedService.id)}>
+                  {t('booking.showAllCraftsmen')}
+                </Button>
+              )}
+            </Box>
           ) : craftsmen.map((c) => (
             <Card key={c.id} sx={{ mb: 2, cursor: 'pointer' }}
               onClick={() => { setSelectedCraftsman(c); setActiveStep(2); }}>

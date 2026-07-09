@@ -1,7 +1,7 @@
 import { useCallback, useEffect, useState } from 'react';
 import {
   Alert, Box, Button, Card, CardContent, Chip, CircularProgress, Grid, IconButton, Paper, Snackbar,
-  Table, TableBody, TableCell, TableContainer, TableHead, TableRow, Typography,
+  Table, TableBody, TableCell, TableContainer, TableHead, TableRow, TextField, Typography,
 } from '@mui/material';
 import { Backup, CheckCircle, Download, Error as ErrorIcon, Refresh } from '@mui/icons-material';
 import { adminApi } from './adminApi';
@@ -40,12 +40,13 @@ export function AdminAnalyticsPage() {
   const maxBookings = Math.max(...data.bookingsByMonth.map((x) => x.value), 1);
   const maxRevenue = Math.max(...data.revenueByMonth.map((x) => x.value), 1);
   const maxUsers = Math.max(...data.usersByRole.map((x) => x.value), 1);
+  const maxPayments = Math.max(...(data.paymentsByStatus ?? []).map((x) => x.value), 1);
 
   return (
     <Box>
       <Typography variant="h4" sx={{ fontWeight: 700, mb: 3 }}>Analytics</Typography>
       <Grid container spacing={3}>
-        <Grid size={{ xs: 12, md: 4 }}>
+        <Grid size={{ xs: 12, md: 3 }}>
           <Card elevation={0} sx={{ border: 1, borderColor: 'divider' }}>
             <CardContent>
               <Typography variant="h6" gutterBottom>Bookings by Month</Typography>
@@ -53,7 +54,7 @@ export function AdminAnalyticsPage() {
             </CardContent>
           </Card>
         </Grid>
-        <Grid size={{ xs: 12, md: 4 }}>
+        <Grid size={{ xs: 12, md: 3 }}>
           <Card elevation={0} sx={{ border: 1, borderColor: 'divider' }}>
             <CardContent>
               <Typography variant="h6" gutterBottom>Revenue by Month (SAR)</Typography>
@@ -61,11 +62,19 @@ export function AdminAnalyticsPage() {
             </CardContent>
           </Card>
         </Grid>
-        <Grid size={{ xs: 12, md: 4 }}>
+        <Grid size={{ xs: 12, md: 3 }}>
           <Card elevation={0} sx={{ border: 1, borderColor: 'divider' }}>
             <CardContent>
               <Typography variant="h6" gutterBottom>Users by Role</Typography>
               {data.usersByRole.map((p) => <ChartBar key={p.label} label={p.label} value={p.value} max={maxUsers} />)}
+            </CardContent>
+          </Card>
+        </Grid>
+        <Grid size={{ xs: 12, md: 3 }}>
+          <Card elevation={0} sx={{ border: 1, borderColor: 'divider' }}>
+            <CardContent>
+              <Typography variant="h6" gutterBottom>Payments by Status</Typography>
+              {(data.paymentsByStatus ?? []).map((p) => <ChartBar key={p.label} label={p.label} value={p.value} max={maxPayments} />)}
             </CardContent>
           </Card>
         </Grid>
@@ -362,6 +371,83 @@ export function AdminRestorePage() {
 }
 
 export function AdminReportsPage() {
-  const config = getModuleConfig('reports')!;
-  return <AdminDataTable config={config} />;
+  const [reports, setReports] = useState<Array<{ id: string; name: string; type: string; status: string }>>([]);
+  const [fromDate, setFromDate] = useState('');
+  const [toDate, setToDate] = useState('');
+  const [generating, setGenerating] = useState<string | null>(null);
+  const [snack, setSnack] = useState<{ message: string; severity: 'success' | 'error' } | null>(null);
+
+  useEffect(() => {
+    adminApi.getReports()
+      .then(({ data }) => setReports(data.data))
+      .catch(() => setSnack({ message: 'Failed to load reports', severity: 'error' }));
+  }, []);
+
+  const handleGenerate = async (reportId: string, format: 'xlsx' | 'pdf') => {
+    setGenerating(`${reportId}-${format}`);
+    try {
+      await adminApi.generateReport(reportId, format, {
+        fromDate: fromDate || undefined,
+        toDate: toDate || undefined,
+        page: 1,
+        pageSize: 10000,
+      });
+      setSnack({ message: 'Report downloaded.', severity: 'success' });
+    } catch {
+      setSnack({ message: 'Report generation failed', severity: 'error' });
+    } finally {
+      setGenerating(null);
+    }
+  };
+
+  return (
+    <Box>
+      <Typography variant="h5" sx={{ fontWeight: 700, mb: 2 }}>Reports</Typography>
+      <Alert severity="info" sx={{ mb: 2 }}>
+        Generate on-demand exports for payments, bookings, and users. Optional date range filters payment and booking reports.
+      </Alert>
+      <Paper sx={{ p: 2, mb: 2 }}>
+        <Box sx={{ display: 'flex', gap: 2, flexWrap: 'wrap' }}>
+          <TextField type="date" label="From" size="small" value={fromDate} onChange={(e) => setFromDate(e.target.value)} slotProps={{ inputLabel: { shrink: true } }} />
+          <TextField type="date" label="To" size="small" value={toDate} onChange={(e) => setToDate(e.target.value)} slotProps={{ inputLabel: { shrink: true } }} />
+        </Box>
+      </Paper>
+      <Paper>
+        <TableContainer>
+          <Table size="small">
+            <TableHead>
+              <TableRow>
+                <TableCell>Report</TableCell>
+                <TableCell>Type</TableCell>
+                <TableCell>Status</TableCell>
+                <TableCell align="right">Actions</TableCell>
+              </TableRow>
+            </TableHead>
+            <TableBody>
+              {reports.map((report) => (
+                <TableRow key={report.id}>
+                  <TableCell>{report.name}</TableCell>
+                  <TableCell>{report.type}</TableCell>
+                  <TableCell><Chip label={report.status} size="small" color="success" /></TableCell>
+                  <TableCell align="right">
+                    <Button size="small" sx={{ mr: 1 }} disabled={!!generating} onClick={() => handleGenerate(report.id, 'xlsx')}>
+                      {generating === `${report.id}-xlsx` ? '...' : 'Excel'}
+                    </Button>
+                    <Button size="small" variant="outlined" disabled={!!generating} onClick={() => handleGenerate(report.id, 'pdf')}>
+                      {generating === `${report.id}-pdf` ? '...' : 'PDF'}
+                    </Button>
+                  </TableCell>
+                </TableRow>
+              ))}
+            </TableBody>
+          </Table>
+        </TableContainer>
+      </Paper>
+      {snack && (
+        <Snackbar open autoHideDuration={5000} onClose={() => setSnack(null)}>
+          <Alert severity={snack.severity}>{snack.message}</Alert>
+        </Snackbar>
+      )}
+    </Box>
+  );
 }

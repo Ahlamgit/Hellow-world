@@ -13,6 +13,7 @@ public interface IAdminService
     Task<byte[]> ExportAsync(string module, string format, AdminListQueryDto query, CancellationToken cancellationToken = default);
     Task<AdminAnalyticsDto> GetAnalyticsAsync(CancellationToken cancellationToken = default);
     Task<IReadOnlyList<AdminReportDto>> GetReportsAsync(CancellationToken cancellationToken = default);
+    Task<byte[]> GenerateReportAsync(string reportId, string format, AdminListQueryDto query, CancellationToken cancellationToken = default);
     Task<AdminSystemHealthDto> GetSystemHealthAsync(CancellationToken cancellationToken = default);
     Task<IReadOnlyList<AdminBackupDto>> ListBackupsAsync(CancellationToken cancellationToken = default);
     Task<AdminBackupDto> CreateBackupAsync(string? userId, CancellationToken cancellationToken = default);

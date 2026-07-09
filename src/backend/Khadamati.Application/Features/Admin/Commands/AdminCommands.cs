@@ -12,6 +12,7 @@ public record AdminBulkActionCommand(string Module, AdminBulkActionDto Request, 
 public record ExportAdminModuleQuery(string Module, string Format, AdminListQueryDto Query) : IRequest<byte[]>;
 public record GetAdminAnalyticsQuery() : IRequest<AdminAnalyticsDto>;
 public record GetAdminReportsQuery() : IRequest<IReadOnlyList<AdminReportDto>>;
+public record GenerateAdminReportCommand(string ReportId, string Format, AdminListQueryDto Query) : IRequest<byte[]>;
 public record GetAdminSystemHealthQuery() : IRequest<AdminSystemHealthDto>;
 public record ListAdminBackupsQuery() : IRequest<IReadOnlyList<AdminBackupDto>>;
 public record CreateAdminBackupCommand(string? UserId) : IRequest<AdminBackupDto>;
@@ -92,6 +93,14 @@ public class GetAdminReportsQueryHandler : IRequestHandler<GetAdminReportsQuery,
     private readonly IAdminService _admin;
     public GetAdminReportsQueryHandler(IAdminService admin) => _admin = admin;
     public Task<IReadOnlyList<AdminReportDto>> Handle(GetAdminReportsQuery request, CancellationToken ct) => _admin.GetReportsAsync(ct);
+}
+
+public class GenerateAdminReportCommandHandler : IRequestHandler<GenerateAdminReportCommand, byte[]>
+{
+    private readonly IAdminService _admin;
+    public GenerateAdminReportCommandHandler(IAdminService admin) => _admin = admin;
+    public Task<byte[]> Handle(GenerateAdminReportCommand request, CancellationToken ct) =>
+        _admin.GenerateReportAsync(request.ReportId, request.Format, request.Query, ct);
 }
 
 public class GetAdminSystemHealthQueryHandler : IRequestHandler<GetAdminSystemHealthQuery, AdminSystemHealthDto>

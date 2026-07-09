@@ -3,6 +3,7 @@ using Khadamati.Application.DTOs.Bookings;
 using Khadamati.Application.DTOs.Payments;
 using Khadamati.Application.Interfaces;
 using Khadamati.Domain.Common;
+using Khadamati.Domain.Constants;
 using Khadamati.Domain.Entities;
 using Khadamati.Domain.Enums;
 using Khadamati.Domain.Interfaces;
@@ -15,17 +16,20 @@ public class BookingService : IBookingService
     private readonly IUnitOfWork _unitOfWork;
     private readonly IPaymentGateway _paymentGateway;
     private readonly IPushNotificationService _pushNotificationService;
+    private readonly IPermissionService _permissionService;
 
     public BookingService(
         IBookingRepository repository,
         IUnitOfWork unitOfWork,
         IPaymentGateway paymentGateway,
-        IPushNotificationService pushNotificationService)
+        IPushNotificationService pushNotificationService,
+        IPermissionService permissionService)
     {
         _repository = repository;
         _unitOfWork = unitOfWork;
         _paymentGateway = paymentGateway;
         _pushNotificationService = pushNotificationService;
+        _permissionService = permissionService;
     }
 
     public async Task<IReadOnlyList<CraftsmanOptionDto>> GetCraftsmenForServiceAsync(Guid serviceId, CancellationToken cancellationToken = default)
@@ -51,9 +55,11 @@ public class BookingService : IBookingService
                         latitude, longitude,
                         (double)address.Latitude.Value, (double)address.Longitude.Value);
                 }
-                return (Profile: cp, Distance: distance);
+                var craftsmanRadius = cp.ServiceRadiusKm is > 0 ? (double)cp.ServiceRadiusKm.Value : radiusKm;
+                var effectiveRadius = Math.Min(radiusKm, craftsmanRadius);
+                return (Profile: cp, Distance: distance, EffectiveRadius: effectiveRadius);
             })
-            .Where(x => x.Distance.HasValue && x.Distance.Value <= radiusKm)
+            .Where(x => x.Distance.HasValue && x.Distance.Value <= x.EffectiveRadius)
             .OrderBy(x => x.Distance)
             .Select(x => MapCraftsmanOption(x.Profile, serviceId, x.Distance))
             .ToList();
@@ -529,9 +535,10 @@ public class BookingService : IBookingService
         var booking = await _repository.GetByIdAsync(bookingId, includeDetails: true, cancellationToken)
             ?? throw new NotFoundException("Booking not found.");
 
-        if (role == "Administrator") return booking;
         if (role == "Customer" && booking.CustomerId == userId) return booking;
         if (role == "Craftsman" && booking.CraftsmanId == userId) return booking;
+        if (await _permissionService.UserHasPermissionAsync(userId, PermissionCodes.BookingsView, cancellationToken))
+            return booking;
 
         throw new UnauthorizedException("Access denied.");
     }
