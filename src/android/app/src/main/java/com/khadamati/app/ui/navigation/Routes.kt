@@ -4,6 +4,8 @@ object Routes {
     const val SPLASH = "splash"
     const val LOGIN = "login"
     const val REGISTER = "register"
+    const val FORGOT_PASSWORD = "forgot-password"
+    const val RESET_PASSWORD = "reset-password"
     const val HOME = "home"
     const val SERVICES = "services"
     const val PROFILE = "profile"

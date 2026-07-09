@@ -6,6 +6,8 @@ protocol AuthServiceProtocol {
     func register(_ request: RegisterRequest) async throws -> AuthResponse
     func logout() async throws
     func fetchProfile() async throws -> User
+    func forgotPassword(email: String) async throws -> String
+    func resetPassword(token: String, newPassword: String, confirmPassword: String) async throws -> String
 }
 
 @MainActor
@@ -66,6 +68,30 @@ final class AuthService: AuthServiceProtocol {
             requiresAuth: true
         )
         return response.data
+    }
+
+    func forgotPassword(email: String) async throws -> String {
+        let response: ApiResponse<MessageResponse> = try await apiClient.request(
+            url: APIEndpoints.Auth.forgotPassword,
+            method: .post,
+            body: ["email": email],
+            requiresAuth: false
+        )
+        return response.message ?? response.data?.message ?? L10n.Auth.forgotSuccess
+    }
+
+    func resetPassword(token: String, newPassword: String, confirmPassword: String) async throws -> String {
+        let response: ApiResponse<MessageResponse> = try await apiClient.request(
+            url: APIEndpoints.Auth.resetPassword,
+            method: .post,
+            body: [
+                "token": token,
+                "newPassword": newPassword,
+                "confirmPassword": confirmPassword,
+            ],
+            requiresAuth: false
+        )
+        return response.message ?? response.data?.message ?? L10n.Auth.resetSuccess
     }
 
     private func persistTokens(from response: AuthResponse) throws {

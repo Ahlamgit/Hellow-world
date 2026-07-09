@@ -14,6 +14,16 @@ data class LoginRequestDto(
     val password: String,
 )
 
+data class ForgotPasswordRequestDto(val email: String)
+
+data class ResetPasswordRequestDto(
+    val token: String,
+    val newPassword: String,
+    val confirmPassword: String,
+)
+
+data class MessageResponseDto(val message: String? = null)
+
 data class RegisterRequestDto(
     val email: String,
     val phone: String,

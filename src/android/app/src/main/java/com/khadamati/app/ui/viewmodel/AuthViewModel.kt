@@ -141,4 +141,32 @@ class AuthViewModel(
     fun clearError() {
         _uiState.value = _uiState.value.copy(errorMessage = null)
     }
+
+    fun forgotPassword(email: String, onSuccess: (String) -> Unit) {
+        viewModelScope.launch {
+            _uiState.value = _uiState.value.copy(isLoading = true, errorMessage = null)
+            authRepository.forgotPassword(email)
+                .onSuccess { message ->
+                    _uiState.value = _uiState.value.copy(isLoading = false)
+                    onSuccess(message)
+                }
+                .onFailure { error ->
+                    _uiState.value = _uiState.value.copy(isLoading = false, errorMessage = error.message)
+                }
+        }
+    }
+
+    fun resetPassword(token: String, newPassword: String, confirmPassword: String, onSuccess: () -> Unit) {
+        viewModelScope.launch {
+            _uiState.value = _uiState.value.copy(isLoading = true, errorMessage = null)
+            authRepository.resetPassword(token, newPassword, confirmPassword)
+                .onSuccess {
+                    _uiState.value = _uiState.value.copy(isLoading = false)
+                    onSuccess()
+                }
+                .onFailure { error ->
+                    _uiState.value = _uiState.value.copy(isLoading = false, errorMessage = error.message)
+                }
+        }
+    }
 }

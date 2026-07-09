@@ -49,6 +49,8 @@
 		A10000010000000000000028 /* ChatViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = B10000010000000000000026 /* ChatViewModel.swift */; };
 		A10000010000000000000029 /* ChatView.swift in Sources */ = {isa = PBXBuildFile; fileRef = B10000010000000000000027 /* ChatView.swift */; };
 		A1000001000000000000002A /* AddressesView.swift in Sources */ = {isa = PBXBuildFile; fileRef = B10000010000000000000028 /* AddressesView.swift */; };
+		A1000001000000000000002B /* BookingDetailView.swift in Sources */ = {isa = PBXBuildFile; fileRef = B10000010000000000000029 /* BookingDetailView.swift */; };
+		A1000001000000000000002C /* PasswordRecoveryView.swift in Sources */ = {isa = PBXBuildFile; fileRef = B1000001000000000000002A /* PasswordRecoveryView.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -92,6 +94,8 @@
 		B10000010000000000000026 /* ChatViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ChatViewModel.swift; sourceTree = "<group>"; };
 		B10000010000000000000027 /* ChatView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ChatView.swift; sourceTree = "<group>"; };
 		B10000010000000000000028 /* AddressesView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AddressesView.swift; sourceTree = "<group>"; };
+		B10000010000000000000029 /* BookingDetailView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BookingDetailView.swift; sourceTree = "<group>"; };
+		B1000001000000000000002A /* PasswordRecoveryView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PasswordRecoveryView.swift; sourceTree = "<group>"; };
 		C10000010000000000000001 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		C10000010000000000000003 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		D10000010000000000000001 /* Khadamati.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Khadamati.app; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -227,6 +231,7 @@
 				B1000001000000000000000E /* LoginView.swift */,
 				B1000001000000000000000F /* RegisterView.swift */,
 				B10000010000000000000010 /* AuthViewModel.swift */,
+				B1000001000000000000002A /* PasswordRecoveryView.swift */,
 			);
 			path = Auth;
 			sourceTree = "<group>";
@@ -255,6 +260,7 @@
 				B1000001000000000000001B /* BookingsView.swift */,
 				B1000001000000000000001A /* BookingViewModel.swift */,
 				B1000001000000000000001C /* BookingWizardView.swift */,
+				B10000010000000000000029 /* BookingDetailView.swift */,
 			);
 			path = Bookings;
 			sourceTree = "<group>";
@@ -440,6 +446,8 @@
 				A10000010000000000000028 /* ChatViewModel.swift in Sources */,
 				A10000010000000000000029 /* ChatView.swift in Sources */,
 				A1000001000000000000002A /* AddressesView.swift in Sources */,
+				A1000001000000000000002B /* BookingDetailView.swift in Sources */,
+				A1000001000000000000002C /* PasswordRecoveryView.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

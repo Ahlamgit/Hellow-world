@@ -22,7 +22,15 @@ import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
+import androidx.compose.foundation.rememberScrollState
+import androidx.compose.foundation.verticalScroll
+import androidx.compose.material3.AlertDialog
+import androidx.compose.material3.OutlinedButton
+import androidx.compose.material3.OutlinedTextField
 import androidx.compose.runtime.getValue
+import androidx.compose.runtime.mutableStateOf
+import androidx.compose.runtime.remember
+import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.stringResource
@@ -83,29 +91,198 @@ fun BookingDetailScreen(
     onOpenChat: (String) -> Unit,
 ) {
     val state by viewModel.uiState.collectAsStateWithLifecycle()
-    LaunchedEffect(bookingId) {
-        viewModel.loadBookings()
-    }
-    val booking = state.bookings.find { it.id == bookingId }
+    var showCancelDialog by remember { mutableStateOf(false) }
+    var showRejectDialog by remember { mutableStateOf(false) }
+    var showRescheduleDialog by remember { mutableStateOf(false) }
+    var showNoShowDialog by remember { mutableStateOf(false) }
+    var reasonText by remember { mutableStateOf("") }
+    var rescheduleDate by remember { mutableStateOf("") }
+    var selectedSlot by remember { mutableStateOf<String?>(null) }
 
-    Column(Modifier.fillMaxSize().padding(16.dp), verticalArrangement = Arrangement.spacedBy(12.dp)) {
+    LaunchedEffect(bookingId) {
+        viewModel.loadBooking(bookingId)
+    }
+    val booking = state.selectedBooking
+
+    Column(
+        Modifier
+            .fillMaxSize()
+            .padding(16.dp)
+            .verticalScroll(rememberScrollState()),
+        verticalArrangement = Arrangement.spacedBy(12.dp),
+    ) {
         if (booking == null) {
             CircularProgressIndicator()
             return@Column
         }
+
         Text(booking.serviceName, style = MaterialTheme.typography.headlineSmall)
         Text("${booking.bookingReference} · ${booking.status}")
         Text("${booking.craftsmanName} · ${booking.estimatedPrice} SAR")
-        Button(onClick = { onOpenChat(bookingId) }, modifier = Modifier.fillMaxWidth()) {
+
+        OutlinedButton(onClick = { onOpenChat(bookingId) }, modifier = Modifier.fillMaxWidth()) {
             Text(stringResource(R.string.chat_open))
         }
+
+        val isCustomer = userRole == "Customer"
+        val isCraftsman = userRole == "Craftsman"
+        val cancellable = booking.status in setOf("Pending", "AwaitingPayment", "Confirmed", "Rescheduled")
+
         when {
-            booking.status == "AwaitingPayment" && userRole == "Customer" ->
-                Button(onClick = { viewModel.pay(bookingId); onPay() }, modifier = Modifier.fillMaxWidth()) { Text("Pay Now") }
-            booking.status == "PendingCraftsmanConfirmation" && userRole == "Craftsman" -> {
-                Button(onClick = { viewModel.accept(bookingId) }, modifier = Modifier.fillMaxWidth()) { Text("Accept") }
-                Button(onClick = { viewModel.reject(bookingId, "Unavailable") }, modifier = Modifier.fillMaxWidth()) { Text("Reject") }
+            booking.status == "AwaitingPayment" && isCustomer ->
+                Button(onClick = { viewModel.pay(bookingId); onPay() }, modifier = Modifier.fillMaxWidth()) {
+                    Text(stringResource(R.string.booking_pay))
+                }
+            booking.status == "PendingCraftsmanConfirmation" && isCraftsman -> {
+                Button(onClick = { viewModel.accept(bookingId) }, modifier = Modifier.fillMaxWidth()) {
+                    Text(stringResource(R.string.booking_accept))
+                }
+                OutlinedButton(onClick = { showRejectDialog = true }, modifier = Modifier.fillMaxWidth()) {
+                    Text(stringResource(R.string.booking_reject))
+                }
             }
         }
+
+        if (booking.status == "Confirmed" && isCraftsman) {
+            Button(onClick = { viewModel.complete(bookingId) }, modifier = Modifier.fillMaxWidth()) {
+                Text(stringResource(R.string.booking_complete))
+            }
+            OutlinedButton(onClick = { showNoShowDialog = true }, modifier = Modifier.fillMaxWidth()) {
+                Text(stringResource(R.string.booking_no_show))
+            }
+        }
+
+        if (cancellable && (isCustomer || isCraftsman)) {
+            OutlinedButton(onClick = { showCancelDialog = true }, modifier = Modifier.fillMaxWidth()) {
+                Text(stringResource(R.string.booking_cancel))
+            }
+        }
+
+        if (booking.status == "Confirmed" && (isCustomer || isCraftsman)) {
+            OutlinedButton(onClick = { showRescheduleDialog = true }, modifier = Modifier.fillMaxWidth()) {
+                Text(stringResource(R.string.booking_reschedule))
+            }
+        }
+    }
+
+    if (showCancelDialog) {
+        AlertDialog(
+            onDismissRequest = { showCancelDialog = false },
+            title = { Text(stringResource(R.string.booking_cancel)) },
+            text = {
+                OutlinedTextField(
+                    value = reasonText,
+                    onValueChange = { reasonText = it },
+                    label = { Text(stringResource(R.string.booking_cancel_reason)) },
+                    modifier = Modifier.fillMaxWidth(),
+                )
+            },
+            confirmButton = {
+                Button(
+                    onClick = {
+                        viewModel.cancel(bookingId, reasonText)
+                        reasonText = ""
+                        showCancelDialog = false
+                    },
+                    enabled = reasonText.isNotBlank(),
+                ) { Text(stringResource(R.string.booking_confirm_cancel)) }
+            },
+            dismissButton = {
+                OutlinedButton(onClick = { showCancelDialog = false }) { Text(stringResource(R.string.common_cancel)) }
+            },
+        )
+    }
+
+    if (showRejectDialog) {
+        AlertDialog(
+            onDismissRequest = { showRejectDialog = false },
+            title = { Text(stringResource(R.string.booking_reject)) },
+            text = {
+                OutlinedTextField(
+                    value = reasonText,
+                    onValueChange = { reasonText = it },
+                    label = { Text(stringResource(R.string.booking_cancel_reason)) },
+                    modifier = Modifier.fillMaxWidth(),
+                )
+            },
+            confirmButton = {
+                Button(
+                    onClick = {
+                        viewModel.reject(bookingId, reasonText)
+                        reasonText = ""
+                        showRejectDialog = false
+                    },
+                    enabled = reasonText.isNotBlank(),
+                ) { Text(stringResource(R.string.booking_reject)) }
+            },
+            dismissButton = {
+                OutlinedButton(onClick = { showRejectDialog = false }) { Text(stringResource(R.string.common_cancel)) }
+            },
+        )
+    }
+
+    if (showNoShowDialog) {
+        AlertDialog(
+            onDismissRequest = { showNoShowDialog = false },
+            title = { Text(stringResource(R.string.booking_no_show)) },
+            text = { Text(stringResource(R.string.booking_no_show_hint)) },
+            confirmButton = {
+                Button(onClick = { viewModel.noShow(bookingId); showNoShowDialog = false }) {
+                    Text(stringResource(R.string.booking_confirm_no_show))
+                }
+            },
+            dismissButton = {
+                OutlinedButton(onClick = { showNoShowDialog = false }) { Text(stringResource(R.string.common_cancel)) }
+            },
+        )
+    }
+
+    if (showRescheduleDialog && booking != null) {
+        AlertDialog(
+            onDismissRequest = { showRescheduleDialog = false },
+            title = { Text(stringResource(R.string.booking_reschedule)) },
+            text = {
+                Column(verticalArrangement = Arrangement.spacedBy(8.dp)) {
+                    OutlinedTextField(
+                        value = rescheduleDate,
+                        onValueChange = { rescheduleDate = it },
+                        label = { Text(stringResource(R.string.booking_select_date)) },
+                        modifier = Modifier.fillMaxWidth(),
+                    )
+                    Button(onClick = {
+                        viewModel.loadSlots(booking.craftsmanId, booking.serviceId, rescheduleDate)
+                    }) { Text(stringResource(R.string.booking_load_slots)) }
+                    state.slots.filter { it.isAvailable }.forEach { slot ->
+                        OutlinedButton(
+                            onClick = { selectedSlot = slot.start },
+                            modifier = Modifier.fillMaxWidth(),
+                        ) { Text(slot.start) }
+                    }
+                    OutlinedTextField(
+                        value = reasonText,
+                        onValueChange = { reasonText = it },
+                        label = { Text(stringResource(R.string.booking_reschedule_reason)) },
+                        modifier = Modifier.fillMaxWidth(),
+                    )
+                }
+            },
+            confirmButton = {
+                Button(
+                    onClick = {
+                        selectedSlot?.let {
+                            viewModel.reschedule(bookingId, it, reasonText.ifBlank { null })
+                        }
+                        reasonText = ""
+                        selectedSlot = null
+                        rescheduleDate = ""
+                        showRescheduleDialog = false
+                    },
+                    enabled = selectedSlot != null,
+                ) { Text(stringResource(R.string.booking_confirm_reschedule)) }
+            },
+            dismissButton = {
+                OutlinedButton(onClick = { showRescheduleDialog = false }) { Text(stringResource(R.string.common_cancel)) }
+            },
+        )
     }
 }

@@ -33,6 +33,18 @@
 "auth.registerTitle" = "إنشاء حساب";
 "auth.noAccount" = "ليس لديك حساب؟";
 "auth.hasAccount" = "لديك حساب بالفعل؟";
+"auth.forgotPassword" = "نسيت كلمة المرور؟";
+"auth.forgotPasswordTitle" = "نسيت كلمة المرور";
+"auth.forgotPasswordHint" = "أدخل بريدك الإلكتروني وسنرسل رابط إعادة التعيين.";
+"auth.sendResetLink" = "إرسال رابط إعادة التعيين";
+"auth.resetPasswordTitle" = "إعادة تعيين كلمة المرور";
+"auth.resetToken" = "رمز إعادة التعيين";
+"auth.newPassword" = "كلمة المرور الجديدة";
+"auth.confirmPassword" = "تأكيد كلمة المرور";
+"auth.resetPassword" = "إعادة تعيين كلمة المرور";
+"auth.passwordMismatch" = "كلمتا المرور غير متطابقتين.";
+"auth.resetSuccess" = "تمت إعادة تعيين كلمة المرور. يمكنك تسجيل الدخول الآن.";
+"auth.forgotSuccess" = "إذا كان الحساب موجوداً، تم إرسال رابط إعادة التعيين.";
 
 "services.title" = "خدماتنا";
 "services.request" = "طلب الخدمة";
@@ -126,4 +138,17 @@
 "addresses.empty" = "لا توجد عناوين محفوظة.";
 
 "booking.findNearby" = "البحث عن حرفيين قريبين";
+"booking.payNow" = "ادفع الآن";
+"booking.accept" = "قبول";
+"booking.reject" = "رفض";
+"booking.complete" = "إتمام";
+"booking.cancel" = "إلغاء الحجز";
+"booking.cancelReason" = "السبب";
+"booking.confirmCancel" = "تأكيد الإلغاء";
+"booking.reschedule" = "إعادة الجدولة";
+"booking.rescheduleReason" = "السبب (اختياري)";
+"booking.confirmReschedule" = "تأكيد إعادة الجدولة";
+"booking.noShow" = "تسجيل عدم حضور";
+"booking.noShowHint" = "سجّل أن العميل لم يحضر لهذا الحجز المؤكد.";
+"booking.confirmNoShow" = "تأكيد عدم الحضور";
 "booking.distanceKm" = "على بعد %.1f كم";
