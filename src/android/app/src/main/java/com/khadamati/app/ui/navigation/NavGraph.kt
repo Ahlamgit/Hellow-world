@@ -41,7 +41,8 @@ import com.khadamati.app.ui.screens.ForgotPasswordScreen
 import com.khadamati.app.ui.screens.ResetPasswordScreen
 import com.khadamati.app.ui.screens.ServicesScreen
 import com.khadamati.app.ui.screens.SplashScreen
-import com.khadamati.app.ui.screens.SubscribeScreen
+import com.khadamati.app.ui.screens.SupportScreen
+import com.khadamati.app.ui.screens.ProfileEditScreen
 import com.khadamati.app.ui.screens.SubscriptionPlansScreen
 import com.khadamati.app.ui.viewmodel.AddressViewModel
 import com.khadamati.app.ui.viewmodel.AuthViewModel
@@ -49,7 +50,7 @@ import com.khadamati.app.ui.viewmodel.BookingViewModel
 import com.khadamati.app.ui.viewmodel.ChatViewModel
 import com.khadamati.app.ui.viewmodel.NotificationsViewModel
 import com.khadamati.app.ui.viewmodel.ServicesViewModel
-import com.khadamati.app.ui.viewmodel.SubscriptionViewModel
+import com.khadamati.app.ui.viewmodel.SupportViewModel
 import com.khadamati.app.ui.viewmodel.isSubscriberRole
 import com.khadamati.app.ui.viewmodel.subscriptionTargetRole
 
@@ -63,6 +64,7 @@ fun KhadamatiNavGraph(container: AppContainer) {
     val subscriptionViewModel: SubscriptionViewModel = viewModel(factory = AppViewModelFactory(container) { container.provideSubscriptionViewModel() })
     val addressViewModel: AddressViewModel = viewModel(factory = AppViewModelFactory(container) { container.provideAddressViewModel() })
     val chatViewModel: ChatViewModel = viewModel(factory = AppViewModelFactory(container) { container.provideChatViewModel() })
+    val supportViewModel: SupportViewModel = viewModel(factory = AppViewModelFactory(container) { container.provideSupportViewModel() })
 
     val navBackStackEntry by navController.currentBackStackEntryAsState()
     val currentRoute = navBackStackEntry?.destination?.route
@@ -248,6 +250,22 @@ fun KhadamatiNavGraph(container: AppContainer) {
                     onNavigateToMySubscription = { navController.navigate(Routes.MY_SUBSCRIPTION) },
                     onNavigateToAddresses = { navController.navigate(Routes.ADDRESSES) },
                     onNavigateToChats = { navController.navigate(Routes.CHAT_LIST) },
+                    onNavigateToSupport = { navController.navigate(Routes.SUPPORT) },
+                    onNavigateToProfileEdit = { navController.navigate(Routes.PROFILE_EDIT) },
+                )
+            }
+
+            composable(Routes.SUPPORT) {
+                SupportScreen(
+                    viewModel = supportViewModel,
+                    onNavigateBack = { navController.popBackStack() },
+                )
+            }
+
+            composable(Routes.PROFILE_EDIT) {
+                ProfileEditScreen(
+                    authViewModel = authViewModel,
+                    onNavigateBack = { navController.popBackStack() },
                 )
             }
 

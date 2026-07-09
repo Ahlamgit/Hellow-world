@@ -9,9 +9,12 @@ struct BookingDetailView: View {
     @State private var showRejectDialog = false
     @State private var showNoShowDialog = false
     @State private var showRescheduleSheet = false
+    @State private var showReviewSheet = false
     @State private var reasonText = ""
     @State private var rescheduleDate = Date()
     @State private var selectedSlot: TimeSlot?
+    @State private var reviewRating = 5
+    @State private var reviewComment = ""
 
     init(booking: Booking, viewModel: BookingViewModel) {
         _currentBooking = State(initialValue: booking)
@@ -74,6 +77,29 @@ struct BookingDetailView: View {
                     Button(L10n.Booking.reschedule) { showRescheduleSheet = true }
                         .buttonStyle(.bordered)
                 }
+
+                if currentBooking.status == "Completed", isCustomer, currentBooking.customerRating == nil {
+                    Button(L10n.Review.leave) { showReviewSheet = true }
+                        .buttonStyle(.borderedProminent)
+                }
+
+                if let rating = currentBooking.customerRating {
+                    VStack(alignment: .leading, spacing: 8) {
+                        Text(L10n.Review.yourReview).font(.headline)
+                        HStack(spacing: 4) {
+                            ForEach(1...5, id: \.self) { star in
+                                Image(systemName: star <= rating ? "star.fill" : "star")
+                                    .foregroundStyle(.yellow)
+                            }
+                        }
+                        if let review = currentBooking.customerReview, !review.isEmpty {
+                            Text(review)
+                                .font(.subheadline)
+                                .foregroundStyle(AppTheme.Colors.textSecondary)
+                        }
+                    }
+                    .padding(.top, 8)
+                }
             }
             .frame(maxWidth: .infinity, alignment: .leading)
             .padding()
@@ -109,6 +135,37 @@ struct BookingDetailView: View {
             Button(L10n.Common.cancel, role: .cancel) {}
         } message: {
             Text(L10n.Booking.noShowHint)
+        }
+        .sheet(isPresented: $showReviewSheet) {
+            NavigationStack {
+                Form {
+                    Stepper(value: $reviewRating, in: 1...5) {
+                        Text("\(L10n.Review.rating): \(reviewRating)")
+                    }
+                    TextField(L10n.Review.comment, text: $reviewComment, axis: .vertical)
+                        .lineLimit(3...6)
+                }
+                .navigationTitle(L10n.Review.title)
+                .toolbar {
+                    ToolbarItem(placement: .cancellationAction) {
+                        Button(L10n.Common.cancel) { showReviewSheet = false }
+                    }
+                    ToolbarItem(placement: .confirmationAction) {
+                        Button(L10n.Review.submit) {
+                            Task {
+                                await viewModel.submitReview(
+                                    bookingId: currentBooking.id,
+                                    rating: reviewRating,
+                                    review: reviewComment.isEmpty ? nil : reviewComment
+                                )
+                                reviewComment = ""
+                                showReviewSheet = false
+                                await refreshBooking()
+                            }
+                        }
+                    }
+                }
+            }
         }
         .sheet(isPresented: $showRescheduleSheet) {
             NavigationStack {

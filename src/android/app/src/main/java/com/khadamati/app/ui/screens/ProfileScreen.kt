@@ -38,6 +38,8 @@ fun ProfileScreen(
     onNavigateToMySubscription: () -> Unit = {},
     onNavigateToAddresses: () -> Unit = {},
     onNavigateToChats: () -> Unit = {},
+    onNavigateToSupport: () -> Unit = {},
+    onNavigateToProfileEdit: () -> Unit = {},
 ) {
     val uiState by authViewModel.uiState.collectAsStateWithLifecycle()
 
@@ -150,6 +152,15 @@ fun ProfileScreen(
                     ) {
                         Text(stringResource(R.string.subscription_my_subscription))
                     }
+                }
+
+                Spacer(modifier = Modifier.height(8.dp))
+                OutlinedButton(onClick = onNavigateToSupport, modifier = Modifier.fillMaxWidth()) {
+                    Text(stringResource(R.string.support_title))
+                }
+                Spacer(modifier = Modifier.height(8.dp))
+                OutlinedButton(onClick = onNavigateToProfileEdit, modifier = Modifier.fillMaxWidth()) {
+                    Text(stringResource(R.string.profile_edit_title))
                 }
 
                 Spacer(modifier = Modifier.height(16.dp))

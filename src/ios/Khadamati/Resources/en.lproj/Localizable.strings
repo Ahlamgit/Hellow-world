@@ -57,6 +57,7 @@
 "profile.language" = "Language";
 "profile.english" = "English";
 "profile.arabic" = "Arabic";
+"profile.editTitle" = "Edit Profile";
 
 "common.loading" = "Loading...";
 "common.error" = "An error occurred";
@@ -152,3 +153,27 @@
 "booking.noShowHint" = "Record that the customer did not attend this confirmed booking.";
 "booking.confirmNoShow" = "Confirm No-Show";
 "booking.distanceKm" = "%.1f km away";
+
+"support.title" = "Help & Support";
+"support.submit" = "Submit";
+"support.history" = "History";
+"support.complaint" = "Complaint";
+"support.ticket" = "Support Ticket";
+"support.subject" = "Subject";
+"support.description" = "Description";
+"support.category" = "Category";
+"support.submitComplaint" = "Submit complaint";
+"support.submitTicket" = "Create ticket";
+"support.complaintSubmitted" = "Complaint submitted successfully.";
+"support.ticketSubmitted" = "Support ticket created.";
+"support.myComplaints" = "My Complaints";
+"support.myTickets" = "My Tickets";
+"support.noComplaints" = "No complaints yet.";
+"support.noTickets" = "No support tickets yet.";
+
+"review.title" = "Rate Your Experience";
+"review.rating" = "Rating";
+"review.comment" = "Comment (optional)";
+"review.submit" = "Submit Review";
+"review.leave" = "Leave a Review";
+"review.yourReview" = "Your review";

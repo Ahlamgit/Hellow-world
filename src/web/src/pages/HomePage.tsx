@@ -1,14 +1,23 @@
-import { Container, Typography, Button, Card, CardContent, Stack } from '@mui/material';
+import { useEffect, useState } from 'react';
+import { Container, Typography, Button, Card, CardContent, Stack, Alert } from '@mui/material';
 import Grid from '@mui/material/Grid';
 import { Build, ElectricBolt, AcUnit, FormatPaint, CleaningServices } from '@mui/icons-material';
 import { Link } from 'react-router-dom';
 import { useTranslation } from 'react-i18next';
+import { supportApi, type Advertisement } from '../services/api';
 
 const categoryIcons = [Build, ElectricBolt, AcUnit, FormatPaint, CleaningServices];
 
 export default function HomePage() {
   const { t, i18n } = useTranslation();
   const isAr = i18n.language === 'ar';
+  const [ads, setAds] = useState<Advertisement[]>([]);
+
+  useEffect(() => {
+    supportApi.getAds('HomePage')
+      .then((res) => setAds(res.data.data))
+      .catch(() => setAds([]));
+  }, []);
 
   const categories = [
     { name: isAr ? 'سباكة' : 'Plumbing' },
@@ -39,6 +48,24 @@ export default function HomePage() {
         </Container>
       </Stack>
 
+      {ads.length > 0 && (
+        <Container maxWidth="lg" sx={{ pt: 4 }}>
+          <Stack spacing={2}>
+            {ads.map((ad) => (
+              <Alert
+                key={ad.id}
+                severity="info"
+                sx={{ fontSize: '1rem', '& .MuiAlert-message': { width: '100%' } }}
+              >
+                <Typography variant="subtitle1" sx={{ fontWeight: 700 }}>
+                  {isAr ? ad.titleAr : ad.titleEn}
+                </Typography>
+              </Alert>
+            ))}
+          </Stack>
+        </Container>
+      )}
+
       <Container maxWidth="lg" sx={{ py: 8 }}>
         <Typography variant="h4" sx={{ fontWeight: 700, textAlign: 'center' }} gutterBottom>
           {t('home.categories')}
@@ -48,7 +75,7 @@ export default function HomePage() {
             const Icon = categoryIcons[i];
             return (
               <Grid key={cat.name} size={{ xs: 6, sm: 4, md: 2.4 }}>
-                <Card sx={{ textAlign: 'center', cursor: 'pointer', '&:hover': { transform: 'translateY(-4px)', transition: '0.2s' } }}>
+                <Card component={Link} to="/services" sx={{ textAlign: 'center', textDecoration: 'none', color: 'inherit', '&:hover': { transform: 'translateY(-4px)', transition: '0.2s' } }}>
                   <CardContent>
                     <Icon sx={{ fontSize: 48, color: 'primary.main', mb: 1 }} />
                     <Typography variant="body1" sx={{ fontWeight: 600 }}>{cat.name}</Typography>

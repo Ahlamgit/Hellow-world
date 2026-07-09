@@ -122,6 +122,20 @@ struct ProfileView: View {
                 Label(L10n.Addresses.title, systemImage: "mappin.and.ellipse")
                     .font(AppTheme.Typography.body())
             }
+
+            NavigationLink {
+                SupportView()
+            } label: {
+                Label(L10n.Support.title, systemImage: "lifepreserver")
+                    .font(AppTheme.Typography.body())
+            }
+
+            NavigationLink {
+                ProfileEditView()
+            } label: {
+                Label(L10n.Profile.editTitle, systemImage: "pencil")
+                    .font(AppTheme.Typography.body())
+            }
         }
         .cardStyle()
     }

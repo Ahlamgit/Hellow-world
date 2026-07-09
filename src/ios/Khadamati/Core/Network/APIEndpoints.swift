@@ -28,6 +28,17 @@ enum APIEndpoints {
         static let addresses = baseURL.appendingPathComponent("users/me/addresses")
     }
 
+    enum Support {
+        static let complaints = baseURL.appendingPathComponent("complaints")
+        static let myComplaints = baseURL.appendingPathComponent("complaints/mine")
+        static let tickets = baseURL.appendingPathComponent("support-tickets")
+        static let myTickets = baseURL.appendingPathComponent("support-tickets/mine")
+
+        static func review(_ bookingId: UUID) -> URL {
+            baseURL.appendingPathComponent("bookings/\(bookingId.uuidString)/review")
+        }
+    }
+
     enum Services {
         static let categories = baseURL.appendingPathComponent("services/categories")
 

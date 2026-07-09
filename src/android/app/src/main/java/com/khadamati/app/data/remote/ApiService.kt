@@ -213,4 +213,26 @@ interface ApiService {
         @retrofit2.http.Path("id") conversationId: String,
         @Body request: com.khadamati.app.data.remote.dto.SendChatMessageRequestDto,
     ): ApiResponse<com.khadamati.app.data.remote.dto.ChatMessageDto>
+
+    @POST("complaints")
+    suspend fun createComplaint(
+        @Body request: com.khadamati.app.data.remote.dto.CreateComplaintRequestDto,
+    ): ApiResponse<com.khadamati.app.data.remote.dto.ComplaintDto>
+
+    @GET("complaints/mine")
+    suspend fun getMyComplaints(): ApiResponse<List<com.khadamati.app.data.remote.dto.ComplaintDto>>
+
+    @POST("support-tickets")
+    suspend fun createSupportTicket(
+        @Body request: com.khadamati.app.data.remote.dto.CreateSupportTicketRequestDto,
+    ): ApiResponse<com.khadamati.app.data.remote.dto.SupportTicketDto>
+
+    @GET("support-tickets/mine")
+    suspend fun getMySupportTickets(): ApiResponse<List<com.khadamati.app.data.remote.dto.SupportTicketDto>>
+
+    @POST("bookings/{id}/review")
+    suspend fun submitBookingReview(
+        @retrofit2.http.Path("id") id: String,
+        @Body request: com.khadamati.app.data.remote.dto.SubmitReviewRequestDto,
+    ): ApiResponse<BookingDto>
 }

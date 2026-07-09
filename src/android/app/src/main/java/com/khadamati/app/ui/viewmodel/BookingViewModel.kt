@@ -109,4 +109,6 @@ class BookingViewModel(private val repository: BookingRepository) : ViewModel() 
     fun noShow(bookingId: String) = viewModelScope.launch { repository.noShow(bookingId); refreshAfterAction(bookingId) }
     fun reschedule(bookingId: String, newScheduledAt: String, reason: String?) =
         viewModelScope.launch { repository.reschedule(bookingId, newScheduledAt, reason); refreshAfterAction(bookingId) }
+    fun submitReview(bookingId: String, rating: Int, review: String?) =
+        viewModelScope.launch { repository.submitReview(bookingId, rating, review); refreshAfterAction(bookingId) }
 }

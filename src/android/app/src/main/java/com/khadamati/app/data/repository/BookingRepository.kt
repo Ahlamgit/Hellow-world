@@ -44,4 +44,7 @@ class BookingRepository(private val apiService: ApiService) {
         apiService.rescheduleBooking(id, com.khadamati.app.data.remote.dto.RescheduleBookingRequestDto(newScheduledAt, reason))
     }
     suspend fun noShow(id: String) { apiService.noShowBooking(id) }
+    suspend fun submitReview(id: String, rating: Int, review: String?) {
+        apiService.submitBookingReview(id, com.khadamati.app.data.remote.dto.SubmitReviewRequestDto(rating, review))
+    }
 }

@@ -57,6 +57,7 @@
 "profile.language" = "اللغة";
 "profile.english" = "الإنجليزية";
 "profile.arabic" = "العربية";
+"profile.editTitle" = "تعديل الملف الشخصي";
 
 "common.loading" = "جاري التحميل...";
 "common.error" = "حدث خطأ";
@@ -152,3 +153,27 @@
 "booking.noShowHint" = "سجّل أن العميل لم يحضر لهذا الحجز المؤكد.";
 "booking.confirmNoShow" = "تأكيد عدم الحضور";
 "booking.distanceKm" = "على بعد %.1f كم";
+
+"support.title" = "المساعدة والدعم";
+"support.submit" = "إرسال";
+"support.history" = "السجل";
+"support.complaint" = "شكوى";
+"support.ticket" = "تذكرة دعم";
+"support.subject" = "الموضوع";
+"support.description" = "الوصف";
+"support.category" = "الفئة";
+"support.submitComplaint" = "إرسال شكوى";
+"support.submitTicket" = "إنشاء تذكرة";
+"support.complaintSubmitted" = "تم إرسال الشكوى بنجاح.";
+"support.ticketSubmitted" = "تم إنشاء تذكرة الدعم.";
+"support.myComplaints" = "شكاواي";
+"support.myTickets" = "تذاكري";
+"support.noComplaints" = "لا توجد شكاوى بعد.";
+"support.noTickets" = "لا توجد تذاكر دعم بعد.";
+
+"review.title" = "قيّم تجربتك";
+"review.rating" = "التقييم";
+"review.comment" = "تعليق (اختياري)";
+"review.submit" = "إرسال التقييم";
+"review.leave" = "اترك تقييماً";
+"review.yourReview" = "تقييمك";

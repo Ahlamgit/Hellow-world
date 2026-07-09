@@ -168,4 +168,27 @@
   <string name="auth_password_mismatch">كلمتا المرور غير متطابقتين.</string>
   <string name="auth_reset_success">تمت إعادة تعيين كلمة المرور. يمكنك تسجيل الدخول الآن.</string>
   <string name="auth_forgot_success">إذا كان الحساب موجوداً، تم إرسال رابط إعادة التعيين.</string>
+  <string name="support_title">المساعدة والدعم</string>
+  <string name="support_submit">إرسال</string>
+  <string name="support_history">السجل</string>
+  <string name="support_complaint">شكوى</string>
+  <string name="support_ticket">تذكرة دعم</string>
+  <string name="support_subject">الموضوع</string>
+  <string name="support_description">الوصف</string>
+  <string name="support_category">الفئة</string>
+  <string name="support_submit_complaint">إرسال الشكوى</string>
+  <string name="support_submit_ticket">إنشاء تذكرة</string>
+  <string name="support_complaint_submitted">تم إرسال الشكوى بنجاح.</string>
+  <string name="support_ticket_submitted">تم إنشاء تذكرة الدعم.</string>
+  <string name="support_my_complaints">شكاواي</string>
+  <string name="support_my_tickets">تذاكري</string>
+  <string name="support_no_complaints">لا توجد شكاوى بعد.</string>
+  <string name="support_no_tickets">لا توجد تذاكر دعم بعد.</string>
+  <string name="profile_edit_title">تعديل الملف الشخصي</string>
+  <string name="review_title">قيّم تجربتك</string>
+  <string name="review_rating">التقييم (1-5)</string>
+  <string name="review_comment">تعليق (اختياري)</string>
+  <string name="review_submit">إرسال التقييم</string>
+  <string name="review_leave">أضف تقييماً</string>
+  <string name="review_your_review">تقييمك</string>
 </resources>

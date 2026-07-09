@@ -95,6 +95,9 @@ fun BookingDetailScreen(
     var showRejectDialog by remember { mutableStateOf(false) }
     var showRescheduleDialog by remember { mutableStateOf(false) }
     var showNoShowDialog by remember { mutableStateOf(false) }
+    var showReviewDialog by remember { mutableStateOf(false) }
+    var reviewRating by remember { mutableStateOf(5) }
+    var reviewComment by remember { mutableStateOf("") }
     var reasonText by remember { mutableStateOf("") }
     var rescheduleDate by remember { mutableStateOf("") }
     var selectedSlot by remember { mutableStateOf<String?>(null) }
@@ -162,6 +165,18 @@ fun BookingDetailScreen(
             OutlinedButton(onClick = { showRescheduleDialog = true }, modifier = Modifier.fillMaxWidth()) {
                 Text(stringResource(R.string.booking_reschedule))
             }
+        }
+
+        if (booking.status == "Completed" && isCustomer && booking.customerRating == null) {
+            Button(onClick = { showReviewDialog = true }, modifier = Modifier.fillMaxWidth()) {
+                Text(stringResource(R.string.review_leave))
+            }
+        }
+
+        booking.customerRating?.let { rating ->
+            Text(stringResource(R.string.review_your_review))
+            Text("★ $rating")
+            booking.customerReview?.let { Text(it) }
         }
     }
 
@@ -282,6 +297,40 @@ fun BookingDetailScreen(
             },
             dismissButton = {
                 OutlinedButton(onClick = { showRescheduleDialog = false }) { Text(stringResource(R.string.common_cancel)) }
+            },
+        )
+    }
+
+    if (showReviewDialog) {
+        AlertDialog(
+            onDismissRequest = { showReviewDialog = false },
+            title = { Text(stringResource(R.string.review_title)) },
+            text = {
+                Column(verticalArrangement = Arrangement.spacedBy(8.dp)) {
+                    OutlinedTextField(
+                        value = reviewRating.toString(),
+                        onValueChange = { reviewRating = it.toIntOrNull()?.coerceIn(1, 5) ?: reviewRating },
+                        label = { Text(stringResource(R.string.review_rating)) },
+                        modifier = Modifier.fillMaxWidth(),
+                    )
+                    OutlinedTextField(
+                        value = reviewComment,
+                        onValueChange = { reviewComment = it },
+                        label = { Text(stringResource(R.string.review_comment)) },
+                        modifier = Modifier.fillMaxWidth(),
+                        minLines = 3,
+                    )
+                }
+            },
+            confirmButton = {
+                Button(onClick = {
+                    viewModel.submitReview(bookingId, reviewRating, reviewComment.ifBlank { null })
+                    reviewComment = ""
+                    showReviewDialog = false
+                }) { Text(stringResource(R.string.review_submit)) }
+            },
+            dismissButton = {
+                OutlinedButton(onClick = { showReviewDialog = false }) { Text(stringResource(R.string.common_cancel)) }
             },
         )
     }

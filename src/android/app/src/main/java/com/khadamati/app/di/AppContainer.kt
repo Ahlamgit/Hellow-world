@@ -11,7 +11,7 @@ import com.khadamati.app.data.repository.AuthRepository
 import com.khadamati.app.data.repository.BookingRepository
 import com.khadamati.app.data.repository.ChatRepository
 import com.khadamati.app.data.repository.NotificationRepository
-import com.khadamati.app.data.repository.PushRepository
+import com.khadamati.app.data.repository.SupportRepository
 import com.khadamati.app.data.repository.ServicesRepository
 import com.khadamati.app.data.repository.SubscriptionRepository
 import com.khadamati.app.location.LocationProvider
@@ -20,7 +20,7 @@ import com.khadamati.app.ui.viewmodel.AuthViewModel
 import com.khadamati.app.ui.viewmodel.BookingViewModel
 import com.khadamati.app.ui.viewmodel.ChatViewModel
 import com.khadamati.app.ui.viewmodel.NotificationsViewModel
-import com.khadamati.app.ui.viewmodel.ServicesViewModel
+import com.khadamati.app.ui.viewmodel.SupportViewModel
 import com.khadamati.app.ui.viewmodel.SubscriptionViewModel
 
 /**
@@ -91,6 +91,10 @@ class AppContainer(context: Context) {
         ChatRepository(apiService)
     }
 
+    val supportRepository: SupportRepository by lazy {
+        SupportRepository(apiService)
+    }
+
     fun provideAuthViewModel(): AuthViewModel =
         AuthViewModel(authRepository)
 
@@ -111,4 +115,7 @@ class AppContainer(context: Context) {
 
     fun provideChatViewModel(): ChatViewModel =
         ChatViewModel(chatRepository)
+
+    fun provideSupportViewModel(): SupportViewModel =
+        SupportViewModel(supportRepository)
 }

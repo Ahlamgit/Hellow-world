@@ -70,6 +70,7 @@ enum L10n {
         static let language = NSLocalizedString("profile.language", comment: "Language setting")
         static let english = NSLocalizedString("profile.english", comment: "English language")
         static let arabic = NSLocalizedString("profile.arabic", comment: "Arabic language")
+        static let editTitle = NSLocalizedString("profile.editTitle", comment: "Edit profile title")
     }
 
     enum Booking {
@@ -186,5 +187,33 @@ enum L10n {
         static func coordinates(lat: Double, lng: Double) -> String {
             String(format: NSLocalizedString("addresses.coordinates", comment: "Coordinates"), lat, lng)
         }
+    }
+
+    enum Support {
+        static let title = NSLocalizedString("support.title", comment: "Support title")
+        static let submit = NSLocalizedString("support.submit", comment: "Submit tab")
+        static let history = NSLocalizedString("support.history", comment: "History tab")
+        static let complaint = NSLocalizedString("support.complaint", comment: "Complaint type")
+        static let ticket = NSLocalizedString("support.ticket", comment: "Ticket type")
+        static let subject = NSLocalizedString("support.subject", comment: "Subject field")
+        static let description = NSLocalizedString("support.description", comment: "Description field")
+        static let category = NSLocalizedString("support.category", comment: "Category field")
+        static let submitComplaint = NSLocalizedString("support.submitComplaint", comment: "Submit complaint")
+        static let submitTicket = NSLocalizedString("support.submitTicket", comment: "Submit ticket")
+        static let complaintSubmitted = NSLocalizedString("support.complaintSubmitted", comment: "Complaint submitted")
+        static let ticketSubmitted = NSLocalizedString("support.ticketSubmitted", comment: "Ticket submitted")
+        static let myComplaints = NSLocalizedString("support.myComplaints", comment: "My complaints")
+        static let myTickets = NSLocalizedString("support.myTickets", comment: "My tickets")
+        static let noComplaints = NSLocalizedString("support.noComplaints", comment: "No complaints")
+        static let noTickets = NSLocalizedString("support.noTickets", comment: "No tickets")
+    }
+
+    enum Review {
+        static let title = NSLocalizedString("review.title", comment: "Review title")
+        static let rating = NSLocalizedString("review.rating", comment: "Rating label")
+        static let comment = NSLocalizedString("review.comment", comment: "Comment field")
+        static let submit = NSLocalizedString("review.submit", comment: "Submit review")
+        static let leave = NSLocalizedString("review.leave", comment: "Leave review")
+        static let yourReview = NSLocalizedString("review.yourReview", comment: "Your review")
     }
 }
