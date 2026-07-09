@@ -77,6 +77,18 @@ The app targets the KHADAMATI backend at `/api/v1`:
 | `GET /services/categories` | Home & Services filters |
 | `GET /services` | Service listings |
 
+## Push notifications (APNs)
+
+The app registers for Apple Push Notification service on launch:
+
+1. Enable **Push Notifications** capability in Xcode (Signing & Capabilities).
+2. Use `Khadamati.entitlements` (`aps-environment` = development for debug builds).
+3. Configure backend `Push:Apns` (Team ID, Key ID, `.p8` private key, bundle ID) when using `Push:Provider` = `firebase`.
+
+`PushNotificationManager` requests user authorization, calls `registerForRemoteNotifications()`, and stores the hex device token via `PushTokenStorage`. The token is registered with `POST /devices/push-token` after sign-in. On simulator or when APNs registration fails, a `dev-ios-*` fallback token is used.
+
+Token refresh triggers automatic re-registration when the user is signed in.
+
 ## Security
 
 - Access and refresh tokens are stored in the iOS Keychain (`kSecAttrAccessibleAfterFirstUnlockThisDeviceOnly`).

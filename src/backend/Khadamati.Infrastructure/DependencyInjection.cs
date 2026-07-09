@@ -93,6 +93,13 @@ public static class DependencyInjection
         switch (provider.ToLowerInvariant())
         {
             case "firebase":
+                services.AddHttpClient(nameof(FirebasePushNotificationService));
+                services.AddHttpClient(nameof(ApnsPushNotificationSender))
+                    .ConfigurePrimaryHttpMessageHandler(() => new SocketsHttpHandler
+                    {
+                        EnableMultipleHttp2Connections = true,
+                    });
+                services.AddSingleton<ApnsPushNotificationSender>();
                 services.AddScoped<IPushNotificationService, FirebasePushNotificationService>();
                 break;
             default:

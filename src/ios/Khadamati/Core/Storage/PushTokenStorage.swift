@@ -17,6 +17,12 @@ final class PushTokenStorage {
         return token
     }
 
+    func getStoredToken() -> String? {
+        guard let raw = UserDefaults.standard.string(forKey: key) else { return nil }
+        let trimmed = raw.trimmingCharacters(in: .whitespacesAndNewlines)
+        return trimmed.isEmpty ? nil : trimmed
+    }
+
     func updateToken(_ token: String) {
         let trimmed = token.trimmingCharacters(in: .whitespacesAndNewlines)
         guard !trimmed.isEmpty else { return }
