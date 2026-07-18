@@ -28,7 +28,7 @@ export default function AdminModulePage() {
   if (moduleKey === 'users') {
     return (
       <AdminPageGuard module="users">
-        <AdminUsersPage />
+        <AdminUsersPage key="users" />
       </AdminPageGuard>
     );
   }
@@ -36,7 +36,7 @@ export default function AdminModulePage() {
   if (moduleKey === 'customers') {
     return (
       <AdminPageGuard module="customers">
-        <AdminUsersPage title="Customers" defaultRoleFilter="Customer" lockRoleFilter defaultCreateRole="Customer" />
+        <AdminUsersPage key="customers" title="Customers" defaultRoleFilter="Customer" lockRoleFilter defaultCreateRole="Customer" />
       </AdminPageGuard>
     );
   }
@@ -44,7 +44,7 @@ export default function AdminModulePage() {
   if (moduleKey === 'craftsmen') {
     return (
       <AdminPageGuard module="craftsmen">
-        <AdminUsersPage title="Craftsmen" defaultRoleFilter="Craftsman" lockRoleFilter defaultCreateRole="Craftsman" />
+        <AdminUsersPage key="craftsmen" title="Craftsmen" defaultRoleFilter="Craftsman" lockRoleFilter defaultCreateRole="Craftsman" />
       </AdminPageGuard>
     );
   }
@@ -52,7 +52,7 @@ export default function AdminModulePage() {
   if (moduleKey === 'stores') {
     return (
       <AdminPageGuard module="stores">
-        <AdminUsersPage title="Stores" defaultRoleFilter="StoreOwner" lockRoleFilter defaultCreateRole="StoreOwner" />
+        <AdminUsersPage key="stores" title="Stores" defaultRoleFilter="StoreOwner" lockRoleFilter defaultCreateRole="StoreOwner" />
       </AdminPageGuard>
     );
   }

@@ -100,6 +100,12 @@ export default function AdminUsersPage({
   const [permOverrides, setPermOverrides] = useState<Record<string, 'inherit' | 'grant' | 'deny'>>({});
   const [permLoading, setPermLoading] = useState(false);
 
+  // AdminModulePage reuses this component across role-scoped routes; keep roleFilter in sync.
+  useEffect(() => {
+    setRoleFilter(defaultRoleFilter);
+    setPage(0);
+  }, [defaultRoleFilter]);
+
   const buildQuery = useCallback((): AdminUserListQuery => ({
     search: search || undefined,
     status: statusFilter || undefined,
