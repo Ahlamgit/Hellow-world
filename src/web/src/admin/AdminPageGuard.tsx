@@ -2,7 +2,7 @@ import type { ReactNode } from 'react';
 import { Navigate } from 'react-router-dom';
 import { Alert, Box } from '@mui/material';
 import { useAuth } from '../context/AuthContext';
-import { canAccessAdminPath, canViewModule } from '../utils/permissions';
+import { canAccessAdmin, canAccessAdminPath, canViewModule, hasElevatedAdminRole } from '../utils/permissions';
 
 interface AdminPageGuardProps {
   children: ReactNode;
@@ -14,6 +14,19 @@ interface AdminPageGuardProps {
 
 export default function AdminPageGuard({ children, path, module }: AdminPageGuardProps) {
   const { user } = useAuth();
+
+  if (!user || !canAccessAdmin(user)) {
+    return (
+      <Box sx={{ py: 4 }}>
+        <Alert severity="warning">You do not have permission to access this section.</Alert>
+      </Box>
+    );
+  }
+
+  // SuperAdmin / Admin / Administrator — full navigation inside the portal.
+  if (hasElevatedAdminRole(user)) {
+    return <>{children}</>;
+  }
 
   const allowed = module
     ? canViewModule(user, module)

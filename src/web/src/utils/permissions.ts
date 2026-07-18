@@ -28,9 +28,11 @@ function hasElevatedAdminRole(
   user: { role?: string; primaryRole?: string; roles?: string[] } | null | undefined,
 ): boolean {
   if (!user) return false;
-  const role = user.primaryRole ?? user.role ?? '';
-  if (ELEVATED_ADMIN_ROLES.includes(role as typeof ELEVATED_ADMIN_ROLES[number])) return true;
-  return user.roles?.some((r) => ELEVATED_ADMIN_ROLES.includes(r as typeof ELEVATED_ADMIN_ROLES[number])) ?? false;
+  const normalize = (value?: string) => value?.trim().toLowerCase() ?? '';
+  const role = normalize(user.primaryRole) || normalize(user.role);
+  const elevated = ELEVATED_ADMIN_ROLES.map((r) => r.toLowerCase());
+  if (elevated.includes(role)) return true;
+  return user.roles?.some((r) => elevated.includes(normalize(r))) ?? false;
 }
 
 export function hasPermission(
@@ -131,10 +133,11 @@ export function permissionForAdminPath(path: string): string | null {
 }
 
 export function canAccessAdminPath(
-  user: { permissions?: string[] } | null | undefined,
+  user: { permissions?: string[]; role?: string; primaryRole?: string; roles?: string[] } | null | undefined,
   path: string,
 ): boolean {
   if (!canAccessAdmin(user)) return false;
+  if (hasElevatedAdminRole(user)) return true;
   const required = permissionForAdminPath(path);
   if (!required) return hasAdminPortalAccess(user);
   return hasPermission(user, required);
