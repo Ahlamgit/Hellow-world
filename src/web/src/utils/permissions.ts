@@ -23,10 +23,14 @@ export const PORTAL_PERMISSIONS = [
 export type PermissionCode = (typeof PORTAL_PERMISSIONS)[number] | string;
 
 export function hasPermission(
-  user: { permissions?: string[] } | null | undefined,
+  user: { permissions?: string[]; role?: string; primaryRole?: string; roles?: string[] } | null | undefined,
   code: string,
 ): boolean {
-  if (!user?.permissions?.length) return false;
+  if (!user) return false;
+  const role = user.primaryRole ?? user.role;
+  const isSuperAdmin = role === 'SuperAdmin' || user.roles?.includes('SuperAdmin');
+  if (isSuperAdmin && !user.permissions?.length) return true;
+  if (!user.permissions?.length) return false;
   const normalized = code.toLowerCase();
   return user.permissions.some((p) => p.toLowerCase() === normalized);
 }
@@ -40,9 +44,14 @@ export function hasAnyPermission(
 
 /** True when the user has any admin-portal permission. */
 export function hasAdminPortalAccess(
-  user: { permissions?: string[] } | null | undefined,
+  user: { permissions?: string[]; role?: string; primaryRole?: string; roles?: string[] } | null | undefined,
 ): boolean {
-  return hasAnyPermission(user, PORTAL_PERMISSIONS);
+  if (!user) return false;
+  if (hasAnyPermission(user, PORTAL_PERMISSIONS)) return true;
+  // Permissions may fail to load on first login — allow known admin roles.
+  const role = user.primaryRole ?? user.role;
+  if (role === 'SuperAdmin' || role === 'Admin') return true;
+  return user.roles?.some((r) => r === 'SuperAdmin' || r === 'Admin') ?? false;
 }
 
 /** Portal access is permission-based only. */
@@ -123,4 +132,32 @@ export function canAccessAdminPath(
   const required = permissionForAdminPath(path);
   if (!required) return hasAdminPortalAccess(user);
   return hasPermission(user, required);
+}
+
+export function canCreateUsers(user: { permissions?: string[] } | null | undefined): boolean {
+  return hasPermission(user, 'Users.Create');
+}
+
+export function canEditUsers(user: { permissions?: string[] } | null | undefined): boolean {
+  return hasPermission(user, 'Users.Edit');
+}
+
+export function canDeleteUsers(user: { permissions?: string[] } | null | undefined): boolean {
+  return hasPermission(user, 'Users.Delete');
+}
+
+export function canSuspendUsers(user: { permissions?: string[] } | null | undefined): boolean {
+  return hasPermission(user, 'Users.Suspend');
+}
+
+export function canVerifyUserEmail(user: { permissions?: string[] } | null | undefined): boolean {
+  return hasPermission(user, 'Users.VerifyEmail');
+}
+
+export function canCreateSubscriptionPlans(user: { permissions?: string[] } | null | undefined): boolean {
+  return hasPermission(user, 'Subscriptions.Create');
+}
+
+export function canEditSubscriptionPlans(user: { permissions?: string[] } | null | undefined): boolean {
+  return hasPermission(user, 'Subscriptions.Edit');
 }

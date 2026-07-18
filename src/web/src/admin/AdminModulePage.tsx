@@ -33,6 +33,30 @@ export default function AdminModulePage() {
     );
   }
 
+  if (moduleKey === 'customers') {
+    return (
+      <AdminPageGuard module="customers">
+        <AdminUsersPage title="Customers" defaultRoleFilter="Customer" lockRoleFilter defaultCreateRole="Customer" />
+      </AdminPageGuard>
+    );
+  }
+
+  if (moduleKey === 'craftsmen') {
+    return (
+      <AdminPageGuard module="craftsmen">
+        <AdminUsersPage title="Craftsmen" defaultRoleFilter="Craftsman" lockRoleFilter defaultCreateRole="Craftsman" />
+      </AdminPageGuard>
+    );
+  }
+
+  if (moduleKey === 'stores') {
+    return (
+      <AdminPageGuard module="stores">
+        <AdminUsersPage title="Stores" defaultRoleFilter="StoreOwner" lockRoleFilter defaultCreateRole="StoreOwner" />
+      </AdminPageGuard>
+    );
+  }
+
   if (moduleKey === 'user-subscriptions') {
     return (
       <AdminPageGuard module="user-subscriptions">

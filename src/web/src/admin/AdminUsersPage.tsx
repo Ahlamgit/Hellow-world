@@ -20,7 +20,14 @@ import {
   type UserPermissionMatrix,
 } from './adminUsersApi';
 import { getApiErrorMessage } from '../utils/apiError';
-import { hasPermission } from '../utils/permissions';
+import {
+  canCreateUsers,
+  canDeleteUsers,
+  canEditUsers,
+  canSuspendUsers,
+  canVerifyUserEmail,
+  hasPermission,
+} from '../utils/permissions';
 import { useAuth } from '../context/AuthContext';
 
 const PAGE_SIZES = [10, 25, 50, 100];
@@ -42,16 +49,33 @@ function StatusChip({ status }: { status: string }) {
   return <Chip label={status} size="small" color={color} />;
 }
 
-export default function AdminUsersPage() {
+export interface AdminUsersPageProps {
+  title?: string;
+  defaultRoleFilter?: string;
+  lockRoleFilter?: boolean;
+  defaultCreateRole?: string;
+}
+
+export default function AdminUsersPage({
+  title = 'Users',
+  defaultRoleFilter = '',
+  lockRoleFilter = false,
+  defaultCreateRole,
+}: AdminUsersPageProps = {}) {
   const { user: authUser } = useAuth();
   const canEditPermissions = hasPermission(authUser, 'Permissions.Manage');
+  const canCreate = canCreateUsers(authUser);
+  const canEdit = canEditUsers(authUser);
+  const canDelete = canDeleteUsers(authUser);
+  const canSuspend = canSuspendUsers(authUser);
+  const canVerifyEmail = canVerifyUserEmail(authUser);
   const [users, setUsers] = useState<AdminUserListItem[]>([]);
   const [totalCount, setTotalCount] = useState(0);
   const [loading, setLoading] = useState(true);
   const [searchInput, setSearchInput] = useState('');
   const [search, setSearch] = useState('');
   const [statusFilter, setStatusFilter] = useState('');
-  const [roleFilter, setRoleFilter] = useState('');
+  const [roleFilter, setRoleFilter] = useState(defaultRoleFilter);
   const [page, setPage] = useState(0);
   const [pageSize, setPageSize] = useState(25);
   const [sortBy, setSortBy] = useState('createdAt');
@@ -312,8 +336,22 @@ export default function AdminUsersPage() {
     <Box>
       <Paper elevation={0} sx={{ border: 1, borderColor: 'divider' }}>
         <Toolbar sx={{ gap: 1, flexWrap: 'wrap', py: 2 }}>
-          <Typography variant="h6" sx={{ flexGrow: 1, fontWeight: 700 }}>Users</Typography>
-          <Button variant="contained" startIcon={<Add />} onClick={() => setCreateOpen(true)}>Create User</Button>
+          <Typography variant="h6" sx={{ flexGrow: 1, fontWeight: 700 }}>{title}</Typography>
+          {canCreate && (
+            <Button
+              variant="contained"
+              startIcon={<Add />}
+              onClick={() => {
+                setCreateForm({
+                  ...emptyCreateForm,
+                  role: defaultCreateRole ?? defaultRoleFilter ?? emptyCreateForm.role,
+                });
+                setCreateOpen(true);
+              }}
+            >
+              Create User
+            </Button>
+          )}
           <IconButton onClick={loadUsers}><Refresh /></IconButton>
           <TextField
             size="small"
@@ -330,7 +368,7 @@ export default function AdminUsersPage() {
               {USER_STATUSES.map((s) => <MenuItem key={s} value={s}>{s}</MenuItem>)}
             </Select>
           </FormControl>
-          <FormControl size="small" sx={{ minWidth: 140 }}>
+          <FormControl size="small" sx={{ minWidth: 140 }} disabled={lockRoleFilter}>
             <InputLabel>Role</InputLabel>
             <Select label="Role" value={roleFilter} onChange={(e) => { setRoleFilter(e.target.value); setPage(0); }}>
               <MenuItem value="">All</MenuItem>
@@ -463,26 +501,40 @@ export default function AdminUsersPage() {
               <StatusChip status={detail.status} />
               <Chip label={detail.primaryRole} size="small" />
               {detail.emailVerified && <Chip label="Email verified" size="small" color="success" />}
+              {detail.subscriptionStatus && (
+                <Chip
+                  label={`Subscription: ${detail.subscriptionStatus}`}
+                  size="small"
+                  variant="outlined"
+                />
+              )}
             </Stack>
+            {detail.subscriptionExpiresAt && (
+              <Typography variant="caption" color="text.secondary">
+                Subscription expires: {new Date(detail.subscriptionExpiresAt).toLocaleDateString()}
+              </Typography>
+            )}
 
             <Typography variant="subtitle2" sx={{ fontWeight: 600 }}>Profile</Typography>
-            <TextField label="First Name" size="small" value={editForm.firstName} onChange={(e) => setEditForm({ ...editForm, firstName: e.target.value })} fullWidth />
-            <TextField label="Last Name" size="small" value={editForm.lastName} onChange={(e) => setEditForm({ ...editForm, lastName: e.target.value })} fullWidth />
-            <TextField label="Phone" size="small" value={editForm.phone} onChange={(e) => setEditForm({ ...editForm, phone: e.target.value })} fullWidth />
+            <TextField label="First Name" size="small" value={editForm.firstName} onChange={(e) => setEditForm({ ...editForm, firstName: e.target.value })} fullWidth disabled={!canEdit} />
+            <TextField label="Last Name" size="small" value={editForm.lastName} onChange={(e) => setEditForm({ ...editForm, lastName: e.target.value })} fullWidth disabled={!canEdit} />
+            <TextField label="Phone" size="small" value={editForm.phone} onChange={(e) => setEditForm({ ...editForm, phone: e.target.value })} fullWidth disabled={!canEdit} />
             <FormControl size="small" fullWidth>
               <InputLabel>Status</InputLabel>
-              <Select label="Status" value={editForm.status} onChange={(e) => setEditForm({ ...editForm, status: e.target.value })}>
+              <Select label="Status" value={editForm.status} onChange={(e) => setEditForm({ ...editForm, status: e.target.value })} disabled={!canEdit}>
                 {USER_STATUSES.map((s) => <MenuItem key={s} value={s}>{s}</MenuItem>)}
               </Select>
             </FormControl>
             <FormControl size="small" fullWidth>
               <InputLabel>Language</InputLabel>
-              <Select label="Language" value={editForm.preferredLanguage} onChange={(e) => setEditForm({ ...editForm, preferredLanguage: e.target.value })}>
+              <Select label="Language" value={editForm.preferredLanguage} onChange={(e) => setEditForm({ ...editForm, preferredLanguage: e.target.value })} disabled={!canEdit}>
                 <MenuItem value="ar">Arabic</MenuItem>
                 <MenuItem value="en">English</MenuItem>
               </Select>
             </FormControl>
-            <Button variant="contained" onClick={handleSaveProfile} disabled={saving}>Save Profile</Button>
+            {canEdit && (
+              <Button variant="contained" onClick={handleSaveProfile} disabled={saving}>Save Profile</Button>
+            )}
 
             <Divider />
 
@@ -495,6 +547,7 @@ export default function AdminUsersPage() {
                 onChange={(e) => setSelectedRoles(typeof e.target.value === 'string' ? e.target.value.split(',') : e.target.value)}
                 input={<OutlinedInput label="Assigned Roles" />}
                 renderValue={(selected) => selected.join(', ')}
+                disabled={!canEdit}
               >
                 {PLATFORM_ROLES.map((r) => (
                   <MenuItem key={r} value={r}>
@@ -506,27 +559,31 @@ export default function AdminUsersPage() {
             </FormControl>
             <FormControl size="small" fullWidth>
               <InputLabel>Primary Role</InputLabel>
-              <Select label="Primary Role" value={primaryRole} onChange={(e) => setPrimaryRole(e.target.value)}>
+              <Select label="Primary Role" value={primaryRole} onChange={(e) => setPrimaryRole(e.target.value)} disabled={!canEdit}>
                 {selectedRoles.map((r) => <MenuItem key={r} value={r}>{r}</MenuItem>)}
               </Select>
             </FormControl>
-            <Button variant="outlined" onClick={handleSaveRoles} disabled={saving}>Save Roles</Button>
+            <Button variant="outlined" onClick={handleSaveRoles} disabled={saving || !canEdit}>Save Roles</Button>
 
             <Divider />
 
             <Typography variant="subtitle2" sx={{ fontWeight: 600 }}>Actions</Typography>
             {detail.status === 'Suspended' ? (
-              <Button color="success" variant="outlined" onClick={handleActivate} disabled={saving}>Activate</Button>
+              canEdit && <Button color="success" variant="outlined" onClick={handleActivate} disabled={saving}>Activate</Button>
             ) : (
-              <>
-                <TextField label="Suspend reason (optional)" size="small" value={suspendReason} onChange={(e) => setSuspendReason(e.target.value)} fullWidth />
-                <Button color="warning" variant="outlined" onClick={handleSuspend} disabled={saving}>Suspend</Button>
-              </>
+              canSuspend && (
+                <>
+                  <TextField label="Suspend reason (optional)" size="small" value={suspendReason} onChange={(e) => setSuspendReason(e.target.value)} fullWidth />
+                  <Button color="warning" variant="outlined" onClick={handleSuspend} disabled={saving}>Suspend</Button>
+                </>
+              )
             )}
-            {!detail.emailVerified && (
+            {!detail.emailVerified && canVerifyEmail && (
               <Button variant="outlined" onClick={handleVerifyEmail} disabled={saving}>Verify Email</Button>
             )}
-            <Button color="error" variant="outlined" onClick={handleDelete} disabled={saving}>Delete User</Button>
+            {canDelete && (
+              <Button color="error" variant="outlined" onClick={handleDelete} disabled={saving}>Delete User</Button>
+            )}
 
             {permMatrix && (
               <>

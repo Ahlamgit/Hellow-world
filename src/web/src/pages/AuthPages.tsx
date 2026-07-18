@@ -3,6 +3,7 @@ import { Box, Card, CardContent, TextField, Button, Typography, Alert, MenuItem 
 import { Link, useNavigate } from 'react-router-dom';
 import { useTranslation } from 'react-i18next';
 import { useAuth } from '../context/AuthContext';
+import { canAccessAdmin } from '../utils/permissions';
 
 export default function LoginPage() {
   const { t } = useTranslation();
@@ -19,7 +20,9 @@ export default function LoginPage() {
     setLoading(true);
     try {
       await login(email, password);
-      navigate('/dashboard');
+      const stored = localStorage.getItem('user');
+      const loggedInUser = stored ? JSON.parse(stored) as { permissions?: string[] } : user;
+      navigate(canAccessAdmin(loggedInUser) ? '/admin' : '/dashboard');
     } catch {
       setError(t('common.error'));
     } finally {

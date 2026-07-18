@@ -26,7 +26,12 @@ async function loadPermissions(user: UserDto): Promise<UserDto> {
     const { data } = await authApi.getPermissions();
     return { ...user, permissions: data.data };
   } catch {
-    return user;
+    try {
+      const { data } = await authApi.getMe();
+      return { ...user, permissions: data.data.permissions };
+    } catch {
+      return user;
+    }
   }
 }
 
