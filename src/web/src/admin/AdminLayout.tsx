@@ -13,7 +13,7 @@ import {
 } from '@mui/icons-material';
 import { useTranslation } from 'react-i18next';
 import { useAuth } from '../context/AuthContext';
-import { canAccessAdminPath } from '../utils/permissions';
+import { canAccessAdmin } from '../utils/permissions';
 
 const DRAWER_WIDTH = 280;
 
