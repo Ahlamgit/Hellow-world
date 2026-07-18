@@ -51,6 +51,7 @@ public static class DependencyInjection
         services.AddScoped<IBookingRepository, BookingRepository>();
         services.AddScoped<IUserRepository, UserRepository>();
 
+        services.AddScoped<ILocationCatalogService, LocationCatalogService>();
         services.AddScoped<IAuthService, AuthService>();
         services.AddScoped<ISessionService, SessionService>();
         services.AddScoped<IProfileService, ProfileService>();

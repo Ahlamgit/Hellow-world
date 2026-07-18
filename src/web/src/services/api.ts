@@ -65,6 +65,12 @@ export interface AuthResponse {
   expiresAt: string;
   sessionId: string;
   user: UserDto;
+  emailVerificationLink?: string;
+}
+
+export interface MessageResponse {
+  message: string;
+  actionLink?: string;
 }
 
 export interface UserDto {
@@ -224,15 +230,15 @@ export const authApi = {
     api.post<ApiResponse<AuthResponse>>('/auth/register', data),
   logout: () => api.post('/auth/revoke', { refreshToken: localStorage.getItem('refreshToken') }),
   forgotPassword: (email: string) =>
-    api.post<ApiResponse<{ message: string }>>('/auth/forgot-password', { email }),
+    api.post<ApiResponse<MessageResponse>>('/auth/forgot-password', { email }),
   resetPassword: (token: string, newPassword: string, confirmPassword: string) =>
-    api.post<ApiResponse<{ message: string }>>('/auth/reset-password', { token, newPassword, confirmPassword }),
+    api.post<ApiResponse<MessageResponse>>('/auth/reset-password', { token, newPassword, confirmPassword }),
   changePassword: (currentPassword: string, newPassword: string, confirmPassword: string) =>
-    api.post<ApiResponse<{ message: string }>>('/auth/change-password', { currentPassword, newPassword, confirmPassword }),
+    api.post<ApiResponse<MessageResponse>>('/auth/change-password', { currentPassword, newPassword, confirmPassword }),
   verifyEmail: (token: string) =>
-    api.post<ApiResponse<{ message: string }>>('/auth/verify-email', { token }),
+    api.post<ApiResponse<MessageResponse>>('/auth/verify-email', { token }),
   resendEmailVerification: (email: string) =>
-    api.post<ApiResponse<{ message: string }>>('/auth/resend-email-verification', { email }),
+    api.post<ApiResponse<MessageResponse>>('/auth/resend-email-verification', { email }),
   getMe: () => api.get<ApiResponse<{ permissions: string[] }>>('/auth/me'),
   getPermissions: () => api.get<ApiResponse<string[]>>('/auth/permissions'),
 };

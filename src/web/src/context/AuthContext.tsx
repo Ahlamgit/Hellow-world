@@ -6,7 +6,7 @@ interface AuthContextType {
   isAuthenticated: boolean;
   isLoading: boolean;
   login: (email: string, password: string, rememberMe?: boolean) => Promise<void>;
-  register: (data: Record<string, string>) => Promise<void>;
+  register: (data: Record<string, string>) => Promise<string | undefined>;
   logout: () => void;
   refreshUser: () => Promise<void>;
 }
@@ -76,6 +76,7 @@ export function AuthProvider({ children }: { children: ReactNode }) {
     const withPermissions = await enrichUserFromApi(data.data.user);
     persistAuth({ ...data.data, user: withPermissions });
     setUser(withPermissions);
+    return data.data.emailVerificationLink;
   };
 
   const logout = () => {

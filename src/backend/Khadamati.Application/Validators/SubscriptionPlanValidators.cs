@@ -1,5 +1,6 @@
 using FluentValidation;
 using Khadamati.Application.DTOs.Subscriptions;
+using Khadamati.Domain.Constants;
 using Khadamati.Domain.Enums;
 
 namespace Khadamati.Application.Validators;
@@ -43,7 +44,10 @@ public class CreateSubscriptionPlanValidator : AbstractValidator<CreateSubscript
         RuleFor(x => x.NameAr).NotEmpty().MaximumLength(150);
         RuleFor(x => x.DescriptionEn).MaximumLength(2000);
         RuleFor(x => x.DescriptionAr).MaximumLength(2000);
-        RuleFor(x => x.Currency).NotEmpty().Length(3);
+        RuleFor(x => x.Currency)
+            .NotEmpty()
+            .Must(PlatformConstants.IsSupportedCurrency)
+            .WithMessage($"Currency must be {PlatformConstants.DefaultCurrency}.");
 
         RuleFor(x => x.TargetRole)
             .NotEmpty()

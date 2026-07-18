@@ -21,7 +21,7 @@ export default function LoginPage() {
     try {
       await login(email, password);
       const stored = localStorage.getItem('user');
-      const loggedInUser = stored ? JSON.parse(stored) as { permissions?: string[] } : user;
+      const loggedInUser = stored ? JSON.parse(stored) as { permissions?: string[]; role?: string; primaryRole?: string } : null;
       navigate(canAccessAdmin(loggedInUser) ? '/admin' : '/dashboard');
     } catch {
       setError(t('common.error'));
@@ -60,7 +60,7 @@ export function RegisterPage() {
   const { register } = useAuth();
   const navigate = useNavigate();
   const [form, setForm] = useState({
-    email: '', phone: '', password: '', firstName: '', lastName: '', role: 'Customer', preferredLanguage: 'ar',
+    email: '', phone: '', password: '', confirmPassword: '', firstName: '', lastName: '', role: 'Customer', preferredLanguage: 'ar',
   });
   const [error, setError] = useState('');
   const [loading, setLoading] = useState(false);
@@ -68,10 +68,14 @@ export function RegisterPage() {
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
     setError('');
+    if (form.password !== form.confirmPassword) {
+      setError(t('identity.passwordMismatch'));
+      return;
+    }
     setLoading(true);
     try {
-      await register(form);
-      navigate('/dashboard');
+      const verificationLink = await register(form);
+      navigate('/verify-email', { state: { actionLink: verificationLink } });
     } catch {
       setError(t('common.error'));
     } finally {
@@ -91,6 +95,7 @@ export function RegisterPage() {
             <TextField label={t('auth.email')} type="email" value={form.email} onChange={(e) => setForm({ ...form, email: e.target.value })} required fullWidth />
             <TextField label={t('auth.phone')} value={form.phone} onChange={(e) => setForm({ ...form, phone: e.target.value })} required fullWidth />
             <TextField label={t('auth.password')} type="password" value={form.password} onChange={(e) => setForm({ ...form, password: e.target.value })} required fullWidth />
+            <TextField label={t('auth.confirmPassword')} type="password" value={form.confirmPassword} onChange={(e) => setForm({ ...form, confirmPassword: e.target.value })} required fullWidth />
             <TextField select label={t('auth.role')} value={form.role} onChange={(e) => setForm({ ...form, role: e.target.value })} fullWidth>
               <MenuItem value="Customer">{t('auth.customer')}</MenuItem>
               <MenuItem value="Craftsman">{t('auth.craftsman')}</MenuItem>

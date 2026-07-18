@@ -117,7 +117,7 @@ export default function AdminLayout() {
               {isAr ? section.titleAr : section.title}
             </Typography>
             <List dense disablePadding>
-              {section.items.filter((item) => canAccessAdminPath(user, item.path)).map((item) => {
+              {section.items.filter(() => canAccessAdmin(user)).map((item) => {
                 const selected = location.pathname === item.path ||
                   (item.path !== '/admin' && location.pathname.startsWith(item.path));
                 return (

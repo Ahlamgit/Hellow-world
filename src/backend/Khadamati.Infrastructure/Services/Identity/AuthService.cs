@@ -120,10 +120,11 @@ public class AuthService : IAuthService
             ChangedByIp = ipAddress,
         }, cancellationToken);
 
-        await CreateAndSendEmailVerificationAsync(user, cancellationToken);
+        var verificationLink = await CreateAndSendEmailVerificationAsync(user, cancellationToken);
         await _auditService.LogSecurityEventAsync(user.Id, "UserRegistered", $"User registered as {roleName}", ipAddress, request.Device?.UserAgent, cancellationToken: cancellationToken);
 
-        return await GenerateAuthResponseAsync(user, ipAddress, rememberMe: false, request.Device, cancellationToken);
+        var response = await GenerateAuthResponseAsync(user, ipAddress, rememberMe: false, request.Device, cancellationToken);
+        return response with { EmailVerificationLink = ShouldExposeAuthLinks() ? verificationLink : null };
     }
 
     public async Task<AuthResponseDto> LoginAsync(LoginRequestDto request, string? ipAddress, CancellationToken cancellationToken = default)
@@ -242,10 +243,12 @@ public class AuthService : IAuthService
         await _unitOfWork.SaveChangesAsync(cancellationToken);
 
         var language = user.Profile?.PreferredLanguage ?? "ar";
-        await _emailService.SendPasswordResetAsync(user.Email, user.Profile?.FirstName ?? user.Email, rawToken, language, cancellationToken);
+        var resetLink = await _emailService.SendPasswordResetAsync(user.Email, user.Profile?.FirstName ?? user.Email, rawToken, language, cancellationToken);
         await _auditService.LogSecurityEventAsync(user.Id, "PasswordResetRequested", "Password reset requested", ipAddress, null, cancellationToken: cancellationToken);
 
-        return new MessageResponseDto("If the email exists, a password reset link has been sent.");
+        return new MessageResponseDto(
+            "If the email exists, a password reset link has been sent.",
+            ShouldExposeAuthLinks() ? resetLink : null);
     }
 
     public async Task<MessageResponseDto> ResetPasswordAsync(ResetPasswordRequestDto request, string? ipAddress, CancellationToken cancellationToken = default)
@@ -352,8 +355,10 @@ public class AuthService : IAuthService
         if (user == null || user.IsEmailVerified)
             return new MessageResponseDto("If the email exists and is unverified, a verification email has been sent.");
 
-        await CreateAndSendEmailVerificationAsync(user, cancellationToken);
-        return new MessageResponseDto("If the email exists and is unverified, a verification email has been sent.");
+        var verificationLink = await CreateAndSendEmailVerificationAsync(user, cancellationToken);
+        return new MessageResponseDto(
+            "If the email exists and is unverified, a verification email has been sent.",
+            ShouldExposeAuthLinks() ? verificationLink : null);
     }
 
     public async Task<OtpSentResponseDto> SendPhoneOtpAsync(Guid userId, SendPhoneOtpRequestDto request, string? ipAddress, CancellationToken cancellationToken = default)
@@ -478,7 +483,7 @@ public class AuthService : IAuthService
             SessionId = sessionId,
         }, ct);
 
-    private async Task CreateAndSendEmailVerificationAsync(User user, CancellationToken cancellationToken)
+    private async Task<string> CreateAndSendEmailVerificationAsync(User user, CancellationToken cancellationToken)
     {
         var existing = await _authRepository.GetActiveEmailVerificationTokenAsync(user.Id, cancellationToken);
         if (existing != null) { existing.IsDeleted = true; existing.DeletedAt = DateTime.UtcNow; _unitOfWork.Repository<EmailVerificationToken>().Update(existing); }
@@ -492,8 +497,12 @@ public class AuthService : IAuthService
         }, cancellationToken);
         await _unitOfWork.SaveChangesAsync(cancellationToken);
 
-        await _emailService.SendEmailVerificationAsync(user.Email, user.Profile?.FirstName ?? user.Email, rawToken, user.Profile?.PreferredLanguage ?? "ar", cancellationToken);
+        return await _emailService.SendEmailVerificationAsync(user.Email, user.Profile?.FirstName ?? user.Email, rawToken, user.Profile?.PreferredLanguage ?? "ar", cancellationToken);
     }
+
+    private bool ShouldExposeAuthLinks() =>
+        _configuration.GetValue("App:ExposeAuthLinks", false) ||
+        string.Equals(_configuration["Email:Provider"], "Development", StringComparison.OrdinalIgnoreCase);
 
     private async Task<EmailVerificationToken?> FindEmailVerificationTokenAsync(string rawToken, CancellationToken ct)
     {

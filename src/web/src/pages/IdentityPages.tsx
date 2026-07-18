@@ -2,9 +2,10 @@ import { useEffect, useState } from 'react';
 import {
   Box, Card, CardContent, TextField, Button, Typography, Alert, Link as MuiLink,
 } from '@mui/material';
-import { Link, useNavigate } from 'react-router-dom';
+import { Link, useLocation, useNavigate } from 'react-router-dom';
 import { useTranslation } from 'react-i18next';
 import { authApi, identityApi, type SessionDto } from '../services/api';
+import { DevActionLinkAlert } from '../components/DevActionLinkAlert';
 import { getApiErrorMessage } from '../utils/apiError';
 import { useAuth } from '../context/AuthContext';
 
@@ -26,6 +27,7 @@ export function ForgotPasswordPage() {
   const [email, setEmail] = useState('');
   const [error, setError] = useState('');
   const [success, setSuccess] = useState('');
+  const [actionLink, setActionLink] = useState('');
   const [loading, setLoading] = useState(false);
 
   const handleSubmit = async (e: React.FormEvent) => {
@@ -35,7 +37,8 @@ export function ForgotPasswordPage() {
     setLoading(true);
     try {
       const { data } = await authApi.forgotPassword(email);
-      setSuccess(data.message || t('identity.forgotPasswordSuccess'));
+      setSuccess(data.data.message || t('identity.forgotPasswordSuccess'));
+      setActionLink(data.data.actionLink ?? '');
     } catch (err) {
       setError(getApiErrorMessage(err, t('common.error')));
     } finally {
@@ -50,6 +53,7 @@ export function ForgotPasswordPage() {
       </Typography>
       {error && <Alert severity="error" sx={{ mb: 2 }}>{error}</Alert>}
       {success && <Alert severity="success" sx={{ mb: 2 }}>{success}</Alert>}
+      <DevActionLinkAlert link={actionLink} label={t('identity.devResetLinkHint')} />
       <Box component="form" onSubmit={handleSubmit} sx={{ display: 'flex', flexDirection: 'column', gap: 2 }}>
         <TextField label={t('auth.email')} type="email" value={email} onChange={(e) => setEmail(e.target.value)} required fullWidth />
         <Button type="submit" variant="contained" size="large" disabled={loading}>
@@ -85,7 +89,7 @@ export function ResetPasswordPage() {
     setLoading(true);
     try {
       const { data } = await authApi.resetPassword(token, newPassword, confirmPassword);
-      setSuccess(data.message || t('identity.resetPasswordSuccess'));
+      setSuccess(data.data.message || t('identity.resetPasswordSuccess'));
       setTimeout(() => navigate('/login'), 2000);
     } catch (err) {
       setError(getApiErrorMessage(err, t('common.error')));
@@ -118,22 +122,25 @@ export function ResetPasswordPage() {
 export function VerifyEmailPage() {
   const { t } = useTranslation();
   const navigate = useNavigate();
+  const location = useLocation();
   const { user, isAuthenticated } = useAuth();
   const params = new URLSearchParams(window.location.search);
   const tokenFromUrl = params.get('token') ?? '';
+  const initialActionLink = (location.state as { actionLink?: string } | null)?.actionLink ?? '';
   const [token, setToken] = useState(tokenFromUrl);
   const [error, setError] = useState('');
   const [success, setSuccess] = useState('');
   const [loading, setLoading] = useState(false);
   const [resendLoading, setResendLoading] = useState(false);
   const [resendMessage, setResendMessage] = useState('');
+  const [actionLink, setActionLink] = useState(initialActionLink);
 
   const verify = async (verifyToken: string) => {
     setError('');
     setLoading(true);
     try {
       const { data } = await authApi.verifyEmail(verifyToken);
-      setSuccess(data.message || t('identity.verifyEmailSuccess'));
+      setSuccess(data.data.message || t('identity.verifyEmailSuccess'));
       setTimeout(() => navigate(isAuthenticated ? '/dashboard' : '/login'), 2000);
     } catch (err) {
       setError(getApiErrorMessage(err, t('common.error')));
@@ -162,7 +169,8 @@ export function VerifyEmailPage() {
     setResendMessage('');
     try {
       const { data } = await authApi.resendEmailVerification(email);
-      setResendMessage(data.message || t('identity.resendSuccess'));
+      setResendMessage(data.data.message || t('identity.resendSuccess'));
+      setActionLink(data.data.actionLink ?? '');
     } catch (err) {
       setResendMessage(getApiErrorMessage(err, t('common.error')));
     } finally {
@@ -175,6 +183,7 @@ export function VerifyEmailPage() {
       <Typography variant="body2" color="text.secondary" sx={{ mb: 2 }}>
         {tokenFromUrl ? t('identity.verifyingEmail') : t('identity.verifyEmailHint')}
       </Typography>
+      <DevActionLinkAlert link={actionLink} label={t('identity.devVerificationLinkHint')} />
       {error && <Alert severity="error" sx={{ mb: 2 }}>{error}</Alert>}
       {success && <Alert severity="success" sx={{ mb: 2 }}>{success}</Alert>}
       {resendMessage && <Alert severity="info" sx={{ mb: 2 }}>{resendMessage}</Alert>}
@@ -218,7 +227,7 @@ export function ChangePasswordPage() {
     setLoading(true);
     try {
       const { data } = await authApi.changePassword(currentPassword, newPassword, confirmPassword);
-      setSuccess(data.message || t('identity.changePasswordSuccess'));
+      setSuccess(data.data.message || t('identity.changePasswordSuccess'));
       setTimeout(() => logout(), 2000);
     } catch (err) {
       setError(getApiErrorMessage(err, t('common.error')));

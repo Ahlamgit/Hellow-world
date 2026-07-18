@@ -7,6 +7,9 @@ import { useTranslation } from 'react-i18next';
 import { identityApi, type ProfileDto } from '../services/api';
 import { getApiErrorMessage } from '../utils/apiError';
 import { useAuth } from '../context/AuthContext';
+import { useSaudiLocations } from '../hooks/useSaudiLocations';
+
+const SAUDI_COUNTRY = 'SA';
 
 const emptyForm = {
   firstName: '',
@@ -16,7 +19,7 @@ const emptyForm = {
   nationality: '',
   profilePictureUrl: '',
   addressLine: '',
-  country: '',
+  country: SAUDI_COUNTRY,
   city: '',
   region: '',
   preferredLanguage: 'ar',
@@ -26,7 +29,9 @@ const emptyForm = {
 export default function ProfilePage() {
   const { t } = useTranslation();
   const { user, refreshUser } = useAuth();
+  const { regions, cities, loading: locationsLoading, regionLabel, cityLabel, loadCities, findRegionByName } = useSaudiLocations();
   const [form, setForm] = useState(emptyForm);
+  const [selectedRegionId, setSelectedRegionId] = useState('');
   const [profile, setProfile] = useState<ProfileDto | null>(null);
   const [error, setError] = useState('');
   const [success, setSuccess] = useState('');
@@ -47,7 +52,7 @@ export default function ProfilePage() {
           nationality: p.nationality ?? '',
           profilePictureUrl: p.profilePictureUrl ?? '',
           addressLine: p.addressLine ?? '',
-          country: p.country ?? '',
+          country: SAUDI_COUNTRY,
           city: p.city ?? '',
           region: p.region ?? '',
           preferredLanguage: p.preferredLanguage,
@@ -60,6 +65,22 @@ export default function ProfilePage() {
       }
     })();
   }, [t]);
+
+  useEffect(() => {
+    if (!regions.length || !form.region) return;
+    const region = findRegionByName(form.region);
+    if (region) {
+      setSelectedRegionId(region.id);
+      loadCities(region.id);
+    }
+  }, [regions, form.region, findRegionByName, loadCities]);
+
+  const handleRegionChange = async (regionId: string) => {
+    const region = regions.find((r) => r.id === regionId);
+    setSelectedRegionId(regionId);
+    setForm((prev) => ({ ...prev, region: region ? regionLabel(region) : '', city: '' }));
+    await loadCities(regionId);
+  };
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
@@ -75,7 +96,7 @@ export default function ProfilePage() {
         nationality: form.nationality || undefined,
         profilePictureUrl: form.profilePictureUrl || undefined,
         addressLine: form.addressLine || undefined,
-        country: form.country || undefined,
+        country: SAUDI_COUNTRY,
         city: form.city || undefined,
         region: form.region || undefined,
         preferredLanguage: form.preferredLanguage,
@@ -160,13 +181,37 @@ export default function ProfilePage() {
                 <TextField label={t('identity.addressLine')} value={form.addressLine} onChange={(e) => setForm({ ...form, addressLine: e.target.value })} fullWidth />
               </Grid>
               <Grid size={{ xs: 12, sm: 4 }}>
-                <TextField label={t('identity.country')} value={form.country} onChange={(e) => setForm({ ...form, country: e.target.value })} fullWidth />
+                <TextField label={t('identity.country')} value={t('locations.saudiArabia')} disabled fullWidth />
               </Grid>
               <Grid size={{ xs: 12, sm: 4 }}>
-                <TextField label={t('identity.city')} value={form.city} onChange={(e) => setForm({ ...form, city: e.target.value })} fullWidth />
+                <TextField
+                  select
+                  label={t('identity.region')}
+                  value={selectedRegionId}
+                  onChange={(e) => handleRegionChange(e.target.value)}
+                  disabled={locationsLoading}
+                  required
+                  fullWidth
+                >
+                  {regions.map((region) => (
+                    <MenuItem key={region.id} value={region.id}>{regionLabel(region)}</MenuItem>
+                  ))}
+                </TextField>
               </Grid>
               <Grid size={{ xs: 12, sm: 4 }}>
-                <TextField label={t('identity.region')} value={form.region} onChange={(e) => setForm({ ...form, region: e.target.value })} fullWidth />
+                <TextField
+                  select
+                  label={t('identity.city')}
+                  value={form.city}
+                  onChange={(e) => setForm({ ...form, city: e.target.value })}
+                  disabled={!selectedRegionId || locationsLoading}
+                  required
+                  fullWidth
+                >
+                  {cities.map((city) => (
+                    <MenuItem key={city.id} value={cityLabel(city)}>{cityLabel(city)}</MenuItem>
+                  ))}
+                </TextField>
               </Grid>
               <Grid size={{ xs: 12, sm: 6 }}>
                 <TextField select label={t('identity.language')} value={form.preferredLanguage} onChange={(e) => setForm({ ...form, preferredLanguage: e.target.value })} fullWidth>
