@@ -100,21 +100,24 @@ export default function AdminUsersPage({
   const [permOverrides, setPermOverrides] = useState<Record<string, 'inherit' | 'grant' | 'deny'>>({});
   const [permLoading, setPermLoading] = useState(false);
 
-  // AdminModulePage reuses this component across role-scoped routes; keep roleFilter in sync.
+  // AdminModulePage reuses this component across role-scoped routes. Locked sections must
+  // follow defaultRoleFilter immediately (useState init alone would keep the prior route).
   useEffect(() => {
     setRoleFilter(defaultRoleFilter);
     setPage(0);
   }, [defaultRoleFilter]);
 
+  const activeRoleFilter = lockRoleFilter ? defaultRoleFilter : roleFilter;
+
   const buildQuery = useCallback((): AdminUserListQuery => ({
     search: search || undefined,
     status: statusFilter || undefined,
-    role: roleFilter || undefined,
+    role: activeRoleFilter || undefined,
     sortBy,
     sortDirection,
     page: page + 1,
     pageSize,
-  }), [search, statusFilter, roleFilter, sortBy, sortDirection, page, pageSize]);
+  }), [search, statusFilter, activeRoleFilter, sortBy, sortDirection, page, pageSize]);
 
   const loadUsers = useCallback(async () => {
     setLoading(true);
@@ -376,7 +379,7 @@ export default function AdminUsersPage({
           </FormControl>
           <FormControl size="small" sx={{ minWidth: 140 }} disabled={lockRoleFilter}>
             <InputLabel>Role</InputLabel>
-            <Select label="Role" value={roleFilter} onChange={(e) => { setRoleFilter(e.target.value); setPage(0); }}>
+            <Select label="Role" value={activeRoleFilter} onChange={(e) => { setRoleFilter(e.target.value); setPage(0); }}>
               <MenuItem value="">All</MenuItem>
               {PLATFORM_ROLES.map((r) => <MenuItem key={r} value={r}>{r}</MenuItem>)}
             </Select>

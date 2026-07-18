@@ -27,32 +27,32 @@ export default function AdminModulePage() {
 
   if (moduleKey === 'users') {
     return (
-      <AdminPageGuard module="users">
-        <AdminUsersPage key="users" />
+      <AdminPageGuard key="users" module="users">
+        <AdminUsersPage />
       </AdminPageGuard>
     );
   }
 
   if (moduleKey === 'customers') {
     return (
-      <AdminPageGuard module="customers">
-        <AdminUsersPage key="customers" title="Customers" defaultRoleFilter="Customer" lockRoleFilter defaultCreateRole="Customer" />
+      <AdminPageGuard key="customers" module="customers">
+        <AdminUsersPage title="Customers" defaultRoleFilter="Customer" lockRoleFilter defaultCreateRole="Customer" />
       </AdminPageGuard>
     );
   }
 
   if (moduleKey === 'craftsmen') {
     return (
-      <AdminPageGuard module="craftsmen">
-        <AdminUsersPage key="craftsmen" title="Craftsmen" defaultRoleFilter="Craftsman" lockRoleFilter defaultCreateRole="Craftsman" />
+      <AdminPageGuard key="craftsmen" module="craftsmen">
+        <AdminUsersPage title="Craftsmen" defaultRoleFilter="Craftsman" lockRoleFilter defaultCreateRole="Craftsman" />
       </AdminPageGuard>
     );
   }
 
   if (moduleKey === 'stores') {
     return (
-      <AdminPageGuard module="stores">
-        <AdminUsersPage key="stores" title="Stores" defaultRoleFilter="StoreOwner" lockRoleFilter defaultCreateRole="StoreOwner" />
+      <AdminPageGuard key="stores" module="stores">
+        <AdminUsersPage title="Stores" defaultRoleFilter="StoreOwner" lockRoleFilter defaultCreateRole="StoreOwner" />
       </AdminPageGuard>
     );
   }
