@@ -19,6 +19,63 @@ public static class IdentitySeeder
     public static Task SeedRolesAndPermissionsAsync(ApplicationDbContext context, CancellationToken ct = default) =>
         SeedRolesAndPermissionsInternalAsync(context, ct);
 
+    /// <summary>
+    /// Ensures permission catalog and role grants stay in sync when new permissions are added after initial seed.
+    /// </summary>
+    public static async Task EnsureRolePermissionGrantsAsync(ApplicationDbContext context, CancellationToken ct = default)
+    {
+        var existingCodes = await context.Permissions.Select(p => p.Code).ToListAsync(ct);
+        var missingCodes = PermissionCodes.All
+            .Where(code => !existingCodes.Contains(code, StringComparer.OrdinalIgnoreCase))
+            .ToList();
+
+        if (missingCodes.Count > 0)
+        {
+            context.Permissions.AddRange(missingCodes.Select(code => new Permission
+            {
+                Code = code,
+                NameEn = code.Replace('.', ' '),
+                NameAr = code,
+                Module = code.Split('.')[0],
+                RequiresEmailVerification = PermissionCodes.RequiresEmailVerification.Contains(code),
+            }));
+            await context.SaveChangesAsync(ct);
+        }
+
+        var roles = await context.Roles.ToDictionaryAsync(r => r.Name, r => r.Id, ct);
+        var permissions = await context.Permissions.ToDictionaryAsync(p => p.Code, p => p.Id, StringComparer.OrdinalIgnoreCase, ct);
+        var existingGrants = await context.RolePermissions
+            .Select(rp => new { rp.RoleId, rp.PermissionId })
+            .ToListAsync(ct);
+        var grantSet = existingGrants.Select(g => (g.RoleId, g.PermissionId)).ToHashSet();
+
+        void EnsureGrant(string roleName, params string[] codes)
+        {
+            if (!roles.TryGetValue(roleName, out var roleId)) return;
+            foreach (var code in codes)
+            {
+                if (!permissions.TryGetValue(code, out var permissionId)) continue;
+                if (grantSet.Add((roleId, permissionId)))
+                    context.RolePermissions.Add(new RolePermission { RoleId = roleId, PermissionId = permissionId });
+            }
+        }
+
+        EnsureGrant(RoleNames.SuperAdmin, PermissionCodes.All);
+        EnsureGrant(RoleNames.Admin,
+            PermissionCodes.UsersView, PermissionCodes.UsersCreate, PermissionCodes.UsersEdit, PermissionCodes.UsersDelete,
+            PermissionCodes.UsersSuspend, PermissionCodes.UsersVerifyEmail,
+            PermissionCodes.SessionsView, PermissionCodes.SessionsRevoke, PermissionCodes.SessionsRevokeAll,
+            PermissionCodes.BookingsView, PermissionCodes.BookingsApprove, PermissionCodes.BookingsCancel,
+            PermissionCodes.SubscriptionsView, PermissionCodes.SubscriptionsCreate, PermissionCodes.SubscriptionsEdit,
+            PermissionCodes.AdvertisementsManage, PermissionCodes.ReportsView, PermissionCodes.ReportsExport,
+            PermissionCodes.PaymentsView, PermissionCodes.PaymentsUpdate, PermissionCodes.SettingsManage,
+            PermissionCodes.RolesView, PermissionCodes.PermissionsView,
+            PermissionCodes.AuditLogsView, PermissionCodes.SecurityLogsView, PermissionCodes.LoginHistoryView);
+
+        if (context.ChangeTracker.HasChanges())
+            await context.SaveChangesAsync(ct);
+    }
+
     public static async Task FinalizeUserRoleAssignmentsAsync(
         ApplicationDbContext context,
         ILogger logger,

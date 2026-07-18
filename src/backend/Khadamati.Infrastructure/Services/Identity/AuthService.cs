@@ -458,7 +458,11 @@ public class AuthService : IAuthService
         var userDto = _mapper.Map<UserDto>(user);
         userDto.Roles = roles;
         userDto.Permissions = permissions;
-        userDto.PrimaryRole = roles.FirstOrDefault() ?? user.PrimaryRole?.Name ?? user.Role.ToString();
+        userDto.PrimaryRole = roles.FirstOrDefault(r => r.Equals(RoleNames.SuperAdmin, StringComparison.OrdinalIgnoreCase))
+            ?? roles.FirstOrDefault(r => r.Equals(RoleNames.Admin, StringComparison.OrdinalIgnoreCase))
+            ?? roles.FirstOrDefault()
+            ?? user.PrimaryRole?.Name
+            ?? user.Role.ToString();
         userDto.RequiresEmailVerification = !user.IsEmailVerified;
         userDto.RequiresPhoneVerification = !user.IsPhoneVerified;
 

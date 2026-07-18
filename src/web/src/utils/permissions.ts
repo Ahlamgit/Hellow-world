@@ -22,14 +22,23 @@ export const PORTAL_PERMISSIONS = [
 
 export type PermissionCode = (typeof PORTAL_PERMISSIONS)[number] | string;
 
+const ELEVATED_ADMIN_ROLES = ['SuperAdmin', 'Admin', 'Administrator'] as const;
+
+function hasElevatedAdminRole(
+  user: { role?: string; primaryRole?: string; roles?: string[] } | null | undefined,
+): boolean {
+  if (!user) return false;
+  const role = user.primaryRole ?? user.role ?? '';
+  if (ELEVATED_ADMIN_ROLES.includes(role as typeof ELEVATED_ADMIN_ROLES[number])) return true;
+  return user.roles?.some((r) => ELEVATED_ADMIN_ROLES.includes(r as typeof ELEVATED_ADMIN_ROLES[number])) ?? false;
+}
+
 export function hasPermission(
   user: { permissions?: string[]; role?: string; primaryRole?: string; roles?: string[] } | null | undefined,
   code: string,
 ): boolean {
   if (!user) return false;
-  const role = user.primaryRole ?? user.role;
-  const isSuperAdmin = role === 'SuperAdmin' || user.roles?.includes('SuperAdmin');
-  if (isSuperAdmin && !user.permissions?.length) return true;
+  if (hasElevatedAdminRole(user)) return true;
   if (!user.permissions?.length) return false;
   const normalized = code.toLowerCase();
   return user.permissions.some((p) => p.toLowerCase() === normalized);
@@ -47,11 +56,8 @@ export function hasAdminPortalAccess(
   user: { permissions?: string[]; role?: string; primaryRole?: string; roles?: string[] } | null | undefined,
 ): boolean {
   if (!user) return false;
-  if (hasAnyPermission(user, PORTAL_PERMISSIONS)) return true;
-  // Permissions may fail to load on first login — allow known admin roles.
-  const role = user.primaryRole ?? user.role;
-  if (role === 'SuperAdmin' || role === 'Admin') return true;
-  return user.roles?.some((r) => r === 'SuperAdmin' || r === 'Admin') ?? false;
+  if (hasElevatedAdminRole(user)) return true;
+  return hasAnyPermission(user, PORTAL_PERMISSIONS);
 }
 
 /** Portal access is permission-based only. */
