@@ -12,7 +12,7 @@ Enterprise-grade maintenance and home services marketplace connecting **Customer
        └────────────────┼────────────────┘
                         │ REST API (JWT)
               ┌─────────▼─────────┐
-              │  ASP.NET Core 9   │
+              │  ASP.NET Core 8   │
               │   Clean Arch.     │
               └─────────┬─────────┘
                         │
@@ -25,7 +25,7 @@ Enterprise-grade maintenance and home services marketplace connecting **Customer
 
 | Layer | Technology |
 |-------|-----------|
-| Backend | ASP.NET Core 9, EF Core, JWT, Serilog, FluentValidation, AutoMapper, MediatR |
+| Backend | ASP.NET Core 8 LTS, EF Core, JWT, Serilog, FluentValidation, AutoMapper, MediatR |
 | Database | Microsoft SQL Server (stored procedures, views, indexes, audit logs) |
 | Web | React 19, TypeScript, Material UI 9, i18next (AR/EN), RTL |
 | Android | Kotlin, Jetpack Compose, MVVM, Retrofit, Room |
@@ -36,7 +36,7 @@ Enterprise-grade maintenance and home services marketplace connecting **Customer
 ```
 /workspace
 ├── src/
-│   ├── backend/          # ASP.NET Core 9 Web API (Clean Architecture)
+│   ├── backend/          # ASP.NET Core 8 Web API (Clean Architecture)
 │   ├── database/         # SQL Server scripts (views, SPs, indexes)
 │   ├── web/              # React TypeScript web application
 │   ├── android/          # Native Android application
@@ -49,7 +49,7 @@ Enterprise-grade maintenance and home services marketplace connecting **Customer
 
 ### Prerequisites
 
-- .NET 9 SDK
+- .NET 8 SDK
 - Node.js 22+
 - Docker & Docker Compose (for SQL Server + full stack)
 - Android Studio (for Android)

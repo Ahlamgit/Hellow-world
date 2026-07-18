@@ -35,7 +35,11 @@ public static class DependencyInjection
 
             options.UseSqlServer(
                 configuration.GetConnectionString("DefaultConnection"),
-                sql => sql.MigrationsAssembly(typeof(ApplicationDbContext).Assembly.FullName));
+                sql =>
+                {
+                    sql.MigrationsAssembly(typeof(ApplicationDbContext).Assembly.FullName);
+                    sql.UseCompatibilityLevel(120); // SQL Server 2014
+                });
         });
 
         services.AddScoped<IUnitOfWork, UnitOfWork>();
