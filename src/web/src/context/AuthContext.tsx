@@ -21,12 +21,27 @@ function persistAuth(data: { accessToken: string; refreshToken: string; sessionI
   localStorage.setItem('userRole', data.user.role || data.user.primaryRole || '');
 }
 
-async function loadPermissions(user: UserDto): Promise<UserDto> {
+async function enrichUserFromApi(user: UserDto): Promise<UserDto> {
   try {
-    const { data } = await authApi.getPermissions();
-    return { ...user, permissions: data.data };
+    const { data } = await authApi.getMe();
+    const me = data.data as {
+      permissions?: string[];
+      roles?: string[];
+      primaryRole?: string;
+    };
+    return {
+      ...user,
+      permissions: me.permissions ?? user.permissions,
+      roles: me.roles ?? user.roles,
+      primaryRole: me.primaryRole ?? user.primaryRole ?? user.role,
+    };
   } catch {
-    return user;
+    try {
+      const { data } = await authApi.getPermissions();
+      return { ...user, permissions: data.data };
+    } catch {
+      return user;
+    }
   }
 }
 
@@ -40,7 +55,7 @@ export function AuthProvider({ children }: { children: ReactNode }) {
       const token = localStorage.getItem('accessToken');
       if (stored && token) {
         const parsed: UserDto = JSON.parse(stored);
-        const withPermissions = await loadPermissions(parsed);
+        const withPermissions = await enrichUserFromApi(parsed);
         setUser(withPermissions);
         localStorage.setItem('user', JSON.stringify(withPermissions));
       }
@@ -51,14 +66,14 @@ export function AuthProvider({ children }: { children: ReactNode }) {
 
   const login = async (email: string, password: string, rememberMe = false) => {
     const { data } = await authApi.login(email, password, rememberMe);
-    const withPermissions = await loadPermissions(data.data.user);
+    const withPermissions = await enrichUserFromApi(data.data.user);
     persistAuth({ ...data.data, user: withPermissions });
     setUser(withPermissions);
   };
 
   const register = async (formData: Record<string, string>) => {
     const { data } = await authApi.register(formData);
-    const withPermissions = await loadPermissions(data.data.user);
+    const withPermissions = await enrichUserFromApi(data.data.user);
     persistAuth({ ...data.data, user: withPermissions });
     setUser(withPermissions);
   };
@@ -83,7 +98,7 @@ export function AuthProvider({ children }: { children: ReactNode }) {
         phoneVerified: profile.phoneVerified,
       };
       localStorage.setItem('user', JSON.stringify(updated));
-      loadPermissions(updated).then((withPermissions) => {
+      enrichUserFromApi(updated).then((withPermissions) => {
         setUser(withPermissions);
         localStorage.setItem('user', JSON.stringify(withPermissions));
       });

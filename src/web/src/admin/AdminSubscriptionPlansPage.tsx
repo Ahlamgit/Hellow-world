@@ -19,6 +19,8 @@ import {
 } from './adminSubscriptionPlansApi';
 import type { PlanBillingOption } from '../services/subscriptionsApi';
 import { getApiErrorMessage } from '../utils/apiError';
+import { useAuth } from '../context/AuthContext';
+import { canCreateSubscriptionPlans, canEditSubscriptionPlans } from '../utils/permissions';
 
 const PAGE_SIZES = [10, 25, 50];
 
@@ -165,6 +167,9 @@ function planToForm(plan: AdminSubscriptionPlan): CreateSubscriptionPlanRequest 
 }
 
 export default function AdminSubscriptionPlansPage() {
+  const { user } = useAuth();
+  const canCreate = canCreateSubscriptionPlans(user);
+  const canEdit = canEditSubscriptionPlans(user);
   const [plans, setPlans] = useState<AdminSubscriptionPlan[]>([]);
   const [totalCount, setTotalCount] = useState(0);
   const [loading, setLoading] = useState(true);
@@ -292,7 +297,9 @@ export default function AdminSubscriptionPlansPage() {
     <Box>
       <Box sx={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', mb: 2 }}>
         <Typography variant="h5" sx={{ fontWeight: 700 }}>Subscription Plans</Typography>
-        <Button variant="contained" startIcon={<Add />} onClick={openCreate}>New plan</Button>
+        {canCreate && (
+          <Button variant="contained" startIcon={<Add />} onClick={openCreate}>New plan</Button>
+        )}
       </Box>
 
       <Paper sx={{ mb: 2 }}>
@@ -304,6 +311,7 @@ export default function AdminSubscriptionPlansPage() {
             onChange={(e) => setSearchInput(e.target.value)}
             onKeyDown={(e) => e.key === 'Enter' && (setSearch(searchInput), setPage(0))}
           />
+          <Button size="small" variant="outlined" onClick={() => { setSearch(searchInput); setPage(0); }}>Search</Button>
           <FormControl size="small" sx={{ minWidth: 130 }}>
             <InputLabel>Status</InputLabel>
             <Select label="Status" value={statusFilter} onChange={(e) => { setStatusFilter(e.target.value); setPage(0); }}>
@@ -354,21 +362,25 @@ export default function AdminSubscriptionPlansPage() {
                 </TableCell>
                 <TableCell align="right">
                   <Stack direction="row" spacing={0.5} sx={{ justifyContent: 'flex-end', flexWrap: 'wrap' }}>
-                    <Button size="small" onClick={() => openEdit(plan.id)}>Edit</Button>
-                    {plan.status !== 'Active' && (
+                    {canEdit && <Button size="small" onClick={() => openEdit(plan.id)}>Edit</Button>}
+                    {canEdit && plan.status !== 'Active' && (
                       <Button size="small" color="success" onClick={() => runAction(plan.id, 'activate')}>Activate</Button>
                     )}
-                    {plan.status === 'Active' && (
+                    {canEdit && plan.status === 'Active' && (
                       <Button size="small" onClick={() => runAction(plan.id, 'deactivate')}>Deactivate</Button>
                     )}
-                    {plan.status !== 'Suspended' && plan.status !== 'Archived' && (
+                    {canEdit && plan.status !== 'Suspended' && plan.status !== 'Archived' && (
                       <Button size="small" color="warning" onClick={() => runAction(plan.id, 'suspend')}>Suspend</Button>
                     )}
-                    {plan.status !== 'Archived' && (
+                    {canEdit && plan.status !== 'Archived' && (
                       <Button size="small" onClick={() => runAction(plan.id, 'archive')}>Archive</Button>
                     )}
-                    <Button size="small" onClick={() => { setCloneId(plan.id); setCloneCode(`${plan.planCode}_COPY`); setCloneOpen(true); }}>Clone</Button>
-                    <Button size="small" color="error" onClick={() => { setDeleteId(plan.id); setDeleteOpen(true); }}>Delete</Button>
+                    {canCreate && (
+                      <Button size="small" onClick={() => { setCloneId(plan.id); setCloneCode(`${plan.planCode}_COPY`); setCloneOpen(true); }}>Clone</Button>
+                    )}
+                    {canEdit && (
+                      <Button size="small" color="error" onClick={() => { setDeleteId(plan.id); setDeleteOpen(true); }}>Delete</Button>
+                    )}
                   </Stack>
                 </TableCell>
               </TableRow>
@@ -433,7 +445,11 @@ export default function AdminSubscriptionPlansPage() {
       </Dialog>
 
       <Snackbar open={!!snack} autoHideDuration={5000} onClose={() => setSnack(null)} anchorOrigin={{ vertical: 'bottom', horizontal: 'center' }}>
-        {snack ? <Alert severity={snack.severity} onClose={() => setSnack(null)}>{snack.message}</Alert> : undefined}
+        {snack ? (
+          <Alert severity={snack.severity} onClose={() => setSnack(null)} sx={{ width: '100%' }}>
+            {snack.message}
+          </Alert>
+        ) : undefined}
       </Snackbar>
     </Box>
   );

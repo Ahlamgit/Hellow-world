@@ -47,6 +47,7 @@ public class DatabaseSeeder
         }
 
         await IdentitySeeder.SeedRolesAndPermissionsAsync(context, cancellationToken);
+        await IdentitySeeder.EnsureRolePermissionGrantsAsync(context, cancellationToken);
 
         if (!seedDemoData)
         {
