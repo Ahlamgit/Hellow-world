@@ -24,7 +24,7 @@ export type PermissionCode = (typeof PORTAL_PERMISSIONS)[number] | string;
 
 const ELEVATED_ADMIN_ROLES = ['SuperAdmin', 'Admin', 'Administrator'] as const;
 
-function hasElevatedAdminRole(
+export function hasElevatedAdminRole(
   user: { role?: string; primaryRole?: string; roles?: string[] } | null | undefined,
 ): boolean {
   if (!user) return false;
