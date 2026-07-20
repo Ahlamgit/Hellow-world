@@ -7,6 +7,7 @@ import { useTranslation } from 'react-i18next';
 import { identityApi, type ProfileDto } from '../services/api';
 import { getApiErrorMessage } from '../utils/apiError';
 import { useAuth } from '../context/AuthContext';
+import { useLocationCatalog } from '../hooks/useLocationCatalog';
 
 const emptyForm = {
   firstName: '',
@@ -26,7 +27,9 @@ const emptyForm = {
 export default function ProfilePage() {
   const { t } = useTranslation();
   const { user, refreshUser } = useAuth();
+  const { regions, cities, loading: locationsLoading, error: locationsError, regionLabel, cityLabel, loadCities, findRegionByName } = useLocationCatalog();
   const [form, setForm] = useState(emptyForm);
+  const [selectedRegionId, setSelectedRegionId] = useState('');
   const [profile, setProfile] = useState<ProfileDto | null>(null);
   const [error, setError] = useState('');
   const [success, setSuccess] = useState('');
@@ -60,6 +63,31 @@ export default function ProfilePage() {
       }
     })();
   }, [t]);
+
+  useEffect(() => {
+    if (!regions.length || !form.region) return;
+    const region = findRegionByName(form.region);
+    if (region) {
+      setSelectedRegionId(region.id);
+      loadCities(region.id);
+    }
+  }, [regions, form.region, findRegionByName, loadCities]);
+
+  const handleRegionChange = async (regionId: string) => {
+    const region = regions.find((r) => r.id === regionId);
+    setSelectedRegionId(regionId);
+    setForm((prev) => ({
+      ...prev,
+      region: region ? regionLabel(region) : '',
+      city: '',
+      country: region?.code ?? '',
+    }));
+    await loadCities(regionId);
+  };
+
+  const handleCityChange = (cityName: string) => {
+    setForm((prev) => ({ ...prev, city: cityName }));
+  };
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
@@ -127,6 +155,7 @@ export default function ProfilePage() {
         </Alert>
       )}
 
+      {locationsError && <Alert severity="warning" sx={{ mb: 2 }}>{t('locations.loadError')}</Alert>}
       {error && <Alert severity="error" sx={{ mb: 2 }}>{error}</Alert>}
       {success && <Alert severity="success" sx={{ mb: 2 }}>{success}</Alert>}
 
@@ -160,13 +189,37 @@ export default function ProfilePage() {
                 <TextField label={t('identity.addressLine')} value={form.addressLine} onChange={(e) => setForm({ ...form, addressLine: e.target.value })} fullWidth />
               </Grid>
               <Grid size={{ xs: 12, sm: 4 }}>
-                <TextField label={t('identity.country')} value={form.country} onChange={(e) => setForm({ ...form, country: e.target.value })} fullWidth />
+                <TextField
+                  select
+                  label={t('identity.region')}
+                  value={selectedRegionId}
+                  onChange={(e) => handleRegionChange(e.target.value)}
+                  disabled={locationsLoading || !regions.length}
+                  fullWidth
+                >
+                  <MenuItem value="">{t('locations.selectRegion')}</MenuItem>
+                  {regions.map((region) => (
+                    <MenuItem key={region.id} value={region.id}>{regionLabel(region)}</MenuItem>
+                  ))}
+                </TextField>
               </Grid>
               <Grid size={{ xs: 12, sm: 4 }}>
-                <TextField label={t('identity.city')} value={form.city} onChange={(e) => setForm({ ...form, city: e.target.value })} fullWidth />
+                <TextField
+                  select
+                  label={t('identity.city')}
+                  value={form.city}
+                  onChange={(e) => handleCityChange(e.target.value)}
+                  disabled={!selectedRegionId || locationsLoading}
+                  fullWidth
+                >
+                  <MenuItem value="">{t('locations.selectCity')}</MenuItem>
+                  {cities.map((city) => (
+                    <MenuItem key={city.id} value={cityLabel(city)}>{cityLabel(city)}</MenuItem>
+                  ))}
+                </TextField>
               </Grid>
               <Grid size={{ xs: 12, sm: 4 }}>
-                <TextField label={t('identity.region')} value={form.region} onChange={(e) => setForm({ ...form, region: e.target.value })} fullWidth />
+                <TextField label={t('identity.country')} value={form.country} disabled fullWidth helperText={t('locations.countryFromRegion')} />
               </Grid>
               <Grid size={{ xs: 12, sm: 6 }}>
                 <TextField select label={t('identity.language')} value={form.preferredLanguage} onChange={(e) => setForm({ ...form, preferredLanguage: e.target.value })} fullWidth>

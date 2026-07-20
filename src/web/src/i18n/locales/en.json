@@ -194,6 +194,12 @@
     "messageHint": "Type a message...",
     "openChat": "Open Chat"
   },
+  "locations": {
+    "selectRegion": "Select region",
+    "selectCity": "Select city",
+    "loadError": "Could not load regions. Ask an admin to configure the location catalog.",
+    "countryFromRegion": "Set automatically from the selected region"
+  },
   "addresses": {
     "title": "Saved Addresses",
     "add": "Add Address",
