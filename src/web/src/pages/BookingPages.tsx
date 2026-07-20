@@ -744,7 +744,7 @@ export function PaymentCheckoutPage() {
   const [searchParams] = useSearchParams();
   const session = searchParams.get('session');
   const amount = searchParams.get('amount');
-  const currency = 'SAR';
+  const currency = searchParams.get('currency') ?? 'SAR';
 
   return (
     <Container maxWidth="sm" sx={{ py: 4 }}>

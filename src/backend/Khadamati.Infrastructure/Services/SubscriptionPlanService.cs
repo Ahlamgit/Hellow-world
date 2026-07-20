@@ -3,7 +3,6 @@ using AutoMapper;
 using Khadamati.Application.Common;
 using Khadamati.Application.DTOs.Subscriptions;
 using Khadamati.Application.Interfaces;
-using Khadamati.Domain.Constants;
 using Khadamati.Domain.Entities;
 using Khadamati.Domain.Enums;
 using Khadamati.Domain.Interfaces;
@@ -240,7 +239,6 @@ public class SubscriptionPlanService : ISubscriptionPlanService
     private SubscriptionPlan MapToEntity(CreateSubscriptionPlanDto dto)
     {
         var plan = _mapper.Map<SubscriptionPlan>(dto);
-        plan.Currency = PlatformConstants.DefaultCurrency;
         plan.BillingOptions = dto.BillingOptions.Select(b => new PlanBillingOption
         {
             Cycle = Enum.Parse<BillingCycle>(b.Cycle, true),
@@ -255,7 +253,6 @@ public class SubscriptionPlanService : ISubscriptionPlanService
     private void UpdateEntityFromDto(SubscriptionPlan plan, UpdateSubscriptionPlanDto dto)
     {
         _mapper.Map(dto, plan);
-        plan.Currency = PlatformConstants.DefaultCurrency;
         plan.PlanCode = dto.PlanCode.ToUpperInvariant();
         plan.PaymentMethods = SerializePaymentMethods(dto.PaymentMethods);
 

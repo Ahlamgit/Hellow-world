@@ -1,6 +1,5 @@
 using Khadamati.Application.DTOs.Payments;
 using Khadamati.Application.Interfaces;
-using Khadamati.Domain.Constants;
 using Microsoft.Extensions.Configuration;
 
 namespace Khadamati.Infrastructure.Services.Payments;
@@ -16,12 +15,9 @@ public class DevelopmentPaymentGateway : IPaymentGateway
 
     public Task<PaymentSessionDto> CreateSessionAsync(PaymentSessionRequest request, CancellationToken cancellationToken = default)
     {
-        if (!PlatformConstants.IsSupportedCurrency(request.Currency))
-            throw new InvalidOperationException($"Only {PlatformConstants.DefaultCurrency} payments are supported.");
-
         var sessionId = $"KHD-{request.PaymentId:N}";
         var baseUrl = _configuration["Payment:CheckoutBaseUrl"] ?? "http://localhost:5173/pay";
-        var checkoutUrl = $"{baseUrl}?session={sessionId}&amount={request.Amount:F2}&currency={PlatformConstants.DefaultCurrency}";
+        var checkoutUrl = $"{baseUrl}?session={sessionId}&amount={request.Amount:F2}&currency={request.Currency}";
 
         return Task.FromResult(new PaymentSessionDto
         {
@@ -33,15 +29,6 @@ public class DevelopmentPaymentGateway : IPaymentGateway
 
     public Task<PaymentVerificationResult> VerifyAsync(string sessionId, decimal expectedAmount, string currency, CancellationToken cancellationToken = default)
     {
-        if (!PlatformConstants.IsSupportedCurrency(currency))
-        {
-            return Task.FromResult(new PaymentVerificationResult
-            {
-                IsSuccessful = false,
-                FailureReason = $"Only {PlatformConstants.DefaultCurrency} payments are supported.",
-            });
-        }
-
         if (string.IsNullOrWhiteSpace(sessionId) || !sessionId.StartsWith("KHD-", StringComparison.OrdinalIgnoreCase))
         {
             return Task.FromResult(new PaymentVerificationResult
