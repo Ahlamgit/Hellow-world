@@ -308,8 +308,8 @@ export const bookingsApi = {
   getById: (id: string) => api.get<ApiResponse<Booking>>(`/bookings/${id}`),
   confirm: (id: string, notes?: string) =>
     api.post<ApiResponse<Booking>>(`/bookings/${id}/confirm`, { notes }),
-  initiatePayment: (id: string, paymentMethod: string) =>
-    api.post<ApiResponse<BookingPayment>>(`/bookings/${id}/payment`, { paymentMethod }),
+  initiatePayment: (id: string, paymentMethod: string, currency?: string) =>
+    api.post<ApiResponse<BookingPayment>>(`/bookings/${id}/payment`, { paymentMethod, currency }),
   confirmPayment: (id: string, transactionReference: string) =>
     api.post<ApiResponse<Booking>>(`/bookings/${id}/payment/confirm`, { transactionReference }),
   accept: (id: string) => api.post<ApiResponse<Booking>>(`/bookings/${id}/accept`),

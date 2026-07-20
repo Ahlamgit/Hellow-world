@@ -14,7 +14,7 @@ const emptyForm: CreateAddressDto = {
   city: '',
   district: '',
   postalCode: '',
-  country: 'SA',
+  country: '',
   latitude: undefined,
   longitude: undefined,
   isDefault: false,

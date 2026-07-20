@@ -9,6 +9,7 @@ import { Add, Close, Delete, Refresh } from '@mui/icons-material';
 import {
   adminSubscriptionPlansApi,
   BILLING_CYCLES,
+  COMMON_CURRENCIES,
   emptyPlanForm,
   defaultBillingOption,
   PLAN_STATUSES,
@@ -31,9 +32,9 @@ function StatusChip({ status }: { status: string }) {
   return <Chip label={status} size="small" color={color} variant={status === 'Archived' ? 'outlined' : 'filled'} />;
 }
 
-function billingSummary(options: PlanBillingOption[]) {
+function billingSummary(options: PlanBillingOption[], currency: string) {
   if (!options.length) return '—';
-  return options.map((o) => `${o.cycle}: ${o.price} SAR`).join(' · ');
+  return options.map((o) => `${o.cycle}: ${o.price} ${currency}`).join(' · ');
 }
 
 interface PlanFormProps {
@@ -81,12 +82,18 @@ function PlanForm({ form, onChange, isEdit }: PlanFormProps) {
       <TextField label="Description (EN)" value={form.descriptionEn ?? ''} onChange={(e) => set('descriptionEn', e.target.value)} multiline rows={2} fullWidth />
       <TextField label="Description (AR)" value={form.descriptionAr ?? ''} onChange={(e) => set('descriptionAr', e.target.value)} multiline rows={2} fullWidth />
       <Box sx={{ display: 'flex', gap: 2, flexWrap: 'wrap' }}>
-        <FormControl sx={{ minWidth: 120 }}>
-          <InputLabel>Currency</InputLabel>
-          <Select label="Currency" value={form.currency} onChange={(e) => set('currency', e.target.value)}>
-            <MenuItem value="SAR">SAR</MenuItem>
-          </Select>
-        </FormControl>
+        <TextField
+          label="Currency"
+          value={form.currency}
+          onChange={(e) => set('currency', e.target.value.toUpperCase().slice(0, 3))}
+          helperText="ISO 4217 code (e.g. SAR, USD, EUR)"
+          inputProps={{ list: 'plan-currency-options', maxLength: 3 }}
+          sx={{ minWidth: 140 }}
+          required
+        />
+        <datalist id="plan-currency-options">
+          {COMMON_CURRENCIES.map((c) => <option key={c} value={c} />)}
+        </datalist>
         <FormControl sx={{ minWidth: 160 }}>
           <InputLabel>Target role</InputLabel>
           <Select label="Target role" value={form.targetRole} onChange={(e) => set('targetRole', e.target.value)}>
@@ -358,7 +365,7 @@ export default function AdminSubscriptionPlansPage() {
                 <TableCell><Chip label={plan.targetRole} size="small" variant="outlined" /></TableCell>
                 <TableCell><StatusChip status={plan.status} /></TableCell>
                 <TableCell sx={{ maxWidth: 280, overflow: 'hidden', textOverflow: 'ellipsis', whiteSpace: 'nowrap' }}>
-                  {billingSummary(plan.billingOptions)}
+                  {billingSummary(plan.billingOptions, plan.currency)}
                 </TableCell>
                 <TableCell align="right">
                   <Stack direction="row" spacing={0.5} sx={{ justifyContent: 'flex-end', flexWrap: 'wrap' }}>

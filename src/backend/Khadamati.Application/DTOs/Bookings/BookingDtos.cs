@@ -39,6 +39,7 @@ public class ConfirmBookingDto
 public class InitiatePaymentDto
 {
     public string PaymentMethod { get; set; } = "Card";
+    public string? Currency { get; set; }
 }
 
 public class ConfirmPaymentDto
