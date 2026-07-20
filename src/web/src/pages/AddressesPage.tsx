@@ -1,34 +1,29 @@
 import { useEffect, useState } from 'react';
 import {
   Alert, Box, Button, Card, CardContent, Chip, CircularProgress, Container,
-  Grid, IconButton, MenuItem, TextField, Typography,
+  Grid, IconButton, TextField, Typography,
 } from '@mui/material';
 import { Delete, Edit } from '@mui/icons-material';
 import { useTranslation } from 'react-i18next';
 import { usersApi, type AddressDto, type CreateAddressDto } from '../services/api';
 import { getApiErrorMessage } from '../utils/apiError';
-import { useSaudiLocations } from '../hooks/useSaudiLocations';
 
-const SAUDI_COUNTRY = 'SA';
-
-const emptyForm = (): CreateAddressDto & { regionId?: string } => ({
+const emptyForm: CreateAddressDto = {
   label: 'Home',
   street: '',
   city: '',
   district: '',
   postalCode: '',
-  country: SAUDI_COUNTRY,
+  country: 'SA',
   latitude: undefined,
   longitude: undefined,
   isDefault: false,
-  regionId: '',
-});
+};
 
 export default function AddressesPage() {
   const { t } = useTranslation();
-  const { regions, cities, regionLabel, cityLabel, loadCities } = useSaudiLocations();
   const [addresses, setAddresses] = useState<AddressDto[]>([]);
-  const [form, setForm] = useState(emptyForm());
+  const [form, setForm] = useState<CreateAddressDto>(emptyForm);
   const [loading, setLoading] = useState(true);
   const [saving, setSaving] = useState(false);
   const [locating, setLocating] = useState(false);
@@ -49,11 +44,6 @@ export default function AddressesPage() {
   };
 
   useEffect(() => { load(); }, []);
-
-  const handleRegionChange = async (regionId: string) => {
-    setForm((prev) => ({ ...prev, regionId, city: '' }));
-    await loadCities(regionId);
-  };
 
   const useCurrentLocation = () => {
     if (!navigator.geolocation) {
@@ -79,7 +69,7 @@ export default function AddressesPage() {
   };
 
   const resetForm = () => {
-    setForm(emptyForm());
+    setForm(emptyForm);
     setEditingId(null);
   };
 
@@ -89,22 +79,11 @@ export default function AddressesPage() {
     setError('');
     setSuccess('');
     try {
-      const payload: CreateAddressDto = {
-        label: form.label,
-        street: form.street,
-        city: form.city,
-        district: form.district,
-        postalCode: form.postalCode,
-        country: SAUDI_COUNTRY,
-        latitude: form.latitude,
-        longitude: form.longitude,
-        isDefault: form.isDefault,
-      };
       if (editingId) {
-        await usersApi.updateAddress(editingId, payload);
+        await usersApi.updateAddress(editingId, form);
         setSuccess(t('addresses.updated'));
       } else {
-        await usersApi.addAddress(payload);
+        await usersApi.addAddress(form);
         setSuccess(t('addresses.saved'));
       }
       resetForm();
@@ -116,16 +95,7 @@ export default function AddressesPage() {
     }
   };
 
-  const startEdit = async (address: AddressDto) => {
-    let regionId = '';
-    for (const region of regions) {
-      const regionCities = await loadCities(region.id);
-      const match = regionCities.find((c) => c.nameEn === address.city || c.nameAr === address.city);
-      if (match) {
-        regionId = region.id;
-        break;
-      }
-    }
+  const startEdit = (address: AddressDto) => {
     setEditingId(address.id);
     setForm({
       label: address.label,
@@ -133,13 +103,11 @@ export default function AddressesPage() {
       city: address.city,
       district: address.district,
       postalCode: address.postalCode,
-      country: SAUDI_COUNTRY,
+      country: address.country,
       latitude: address.latitude,
       longitude: address.longitude,
       isDefault: address.isDefault,
-      regionId,
     });
-    if (regionId) await loadCities(regionId);
     setSuccess('');
     setError('');
   };
@@ -172,39 +140,13 @@ export default function AddressesPage() {
                 <TextField label={t('addresses.street')} value={form.street} onChange={(e) => setForm({ ...form, street: e.target.value })} required fullWidth />
               </Grid>
               <Grid size={{ xs: 12, sm: 6 }}>
-                <TextField label={t('addresses.country')} value={t('locations.saudiArabia')} disabled fullWidth />
-              </Grid>
-              <Grid size={{ xs: 12, sm: 6 }}>
-                <TextField
-                  select
-                  label={t('identity.region')}
-                  value={form.regionId ?? ''}
-                  onChange={(e) => handleRegionChange(e.target.value)}
-                  required
-                  fullWidth
-                >
-                  {regions.map((region) => (
-                    <MenuItem key={region.id} value={region.id}>{regionLabel(region)}</MenuItem>
-                  ))}
-                </TextField>
-              </Grid>
-              <Grid size={{ xs: 12, sm: 6 }}>
-                <TextField
-                  select
-                  label={t('addresses.city')}
-                  value={form.city}
-                  onChange={(e) => setForm({ ...form, city: e.target.value })}
-                  disabled={!form.regionId}
-                  required
-                  fullWidth
-                >
-                  {cities.map((city) => (
-                    <MenuItem key={city.id} value={cityLabel(city)}>{cityLabel(city)}</MenuItem>
-                  ))}
-                </TextField>
+                <TextField label={t('addresses.city')} value={form.city} onChange={(e) => setForm({ ...form, city: e.target.value })} required fullWidth />
               </Grid>
               <Grid size={{ xs: 12, sm: 6 }}>
                 <TextField label={t('addresses.district')} value={form.district ?? ''} onChange={(e) => setForm({ ...form, district: e.target.value })} fullWidth />
+              </Grid>
+              <Grid size={{ xs: 12, sm: 6 }}>
+                <TextField label={t('addresses.country')} value={form.country} onChange={(e) => setForm({ ...form, country: e.target.value })} required fullWidth />
               </Grid>
               <Grid size={{ xs: 12, sm: 6 }}>
                 <TextField label={t('addresses.postalCode')} value={form.postalCode ?? ''} onChange={(e) => setForm({ ...form, postalCode: e.target.value })} fullWidth />

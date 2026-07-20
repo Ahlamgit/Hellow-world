@@ -108,21 +108,12 @@ public class RevokeTokenRequestValidator : AbstractValidator<RevokeTokenRequestD
 
 public class UpdateProfileRequestValidator : AbstractValidator<UpdateProfileRequestDto>
 {
-    public UpdateProfileRequestValidator(ILocationCatalogService locations)
+    public UpdateProfileRequestValidator()
     {
         RuleFor(x => x.FirstName).NotEmpty().MaximumLength(100);
         RuleFor(x => x.LastName).NotEmpty().MaximumLength(100);
         RuleFor(x => x.PreferredLanguage).Must(l => l is "ar" or "en");
         RuleFor(x => x.Timezone).NotEmpty();
-        RuleFor(x => x.Country)
-            .Must(c => string.IsNullOrWhiteSpace(c) || PlatformConstants.IsSupportedCountry(c))
-            .WithMessage($"Country must be {PlatformConstants.DefaultCountryCode}.");
-        RuleFor(x => x.Region)
-            .MustAsync(async (region, ct) => string.IsNullOrWhiteSpace(region) || await locations.IsActiveRegionAsync(region, ct))
-            .WithMessage("Region must be selected from the supported Saudi regions catalog.");
-        RuleFor(x => x.City)
-            .MustAsync(async (dto, city, ct) => string.IsNullOrWhiteSpace(city) || await locations.IsActiveCityAsync(city, dto.Region, ct))
-            .WithMessage("City must be selected from the supported Saudi cities catalog.");
     }
 }
 

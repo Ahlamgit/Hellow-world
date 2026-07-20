@@ -194,9 +194,6 @@
     "messageHint": "Type a message...",
     "openChat": "Open Chat"
   },
-  "locations": {
-    "saudiArabia": "Saudi Arabia"
-  },
   "addresses": {
     "title": "Saved Addresses",
     "add": "Add Address",

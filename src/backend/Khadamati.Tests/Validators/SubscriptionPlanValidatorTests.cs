@@ -65,15 +65,6 @@ public class SubscriptionPlanValidatorTests
     }
 
     [Fact]
-    public async Task Create_WithUnsupportedCurrency_ShouldFail()
-    {
-        var dto = ValidPlan();
-        dto.Currency = "USD";
-        var result = await _createValidator.ValidateAsync(dto);
-        result.IsValid.Should().BeFalse();
-    }
-
-    [Fact]
     public async Task Clone_WithValidCode_ShouldPass()
     {
         var result = await _cloneValidator.ValidateAsync(new CloneSubscriptionPlanDto { NewPlanCode = "CRAFTSMAN_PRO_COPY" });
