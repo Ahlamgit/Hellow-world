@@ -1,5 +1,6 @@
 using Khadamati.Application.Common;
 using Khadamati.Application.DTOs.Users;
+using Khadamati.Domain.Constants;
 using Khadamati.Domain.Entities;
 using Khadamati.Domain.Interfaces;
 using MediatR;
@@ -85,6 +86,7 @@ public class AddAddressCommandHandler : IRequestHandler<AddAddressCommand, Addre
     {
         var address = _mapper.Map<Address>(request.Request);
         address.UserId = request.UserId;
+        address.Country = PlatformConstants.DefaultCountryCode;
 
         if (request.Request.IsDefault)
         {
@@ -157,7 +159,7 @@ public class UpdateAddressCommandHandler : IRequestHandler<UpdateAddressCommand,
         address.City = request.Request.City;
         address.District = request.Request.District;
         address.PostalCode = request.Request.PostalCode;
-        address.Country = request.Request.Country;
+        address.Country = PlatformConstants.DefaultCountryCode;
         address.Latitude = request.Request.Latitude;
         address.Longitude = request.Request.Longitude;
         address.IsDefault = request.Request.IsDefault;

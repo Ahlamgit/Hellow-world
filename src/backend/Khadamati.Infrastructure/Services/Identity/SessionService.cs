@@ -2,6 +2,7 @@ using Khadamati.Application.Common;
 using Khadamati.Application.DTOs.Identity;
 using Khadamati.Application.Interfaces;
 using Khadamati.Domain.Constants;
+using Khadamati.Domain.Constants;
 using Khadamati.Domain.Interfaces;
 
 namespace Khadamati.Infrastructure.Services.Identity;
@@ -104,7 +105,7 @@ public class ProfileService : IProfileService
         user.Profile.Nationality = request.Nationality;
         user.Profile.ProfilePictureUrl = request.ProfilePictureUrl;
         user.Profile.AddressLine = request.AddressLine;
-        user.Profile.Country = request.Country;
+        user.Profile.Country = PlatformConstants.DefaultCountryCode;
         user.Profile.City = request.City;
         user.Profile.Region = request.Region;
         user.Profile.Latitude = request.Latitude;
