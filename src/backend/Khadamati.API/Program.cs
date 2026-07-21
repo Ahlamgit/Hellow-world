@@ -13,6 +13,9 @@ using Serilog;
 
 var builder = WebApplication.CreateBuilder(args);
 
+// Optional local overrides (gitignored) — use instead of editing appsettings.json
+builder.Configuration.AddJsonFile("appsettings.Local.json", optional: true, reloadOnChange: true);
+
 ProductionStartupValidator.ValidateJwtSecret(builder.Configuration, builder.Environment);
 
 Log.Logger = new LoggerConfiguration()
