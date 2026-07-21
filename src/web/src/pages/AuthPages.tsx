@@ -94,8 +94,8 @@ export function RegisterPage() {
             <TextField label={t('auth.lastName')} value={form.lastName} onChange={(e) => setForm({ ...form, lastName: e.target.value })} required fullWidth />
             <TextField label={t('auth.email')} type="email" value={form.email} onChange={(e) => setForm({ ...form, email: e.target.value })} required fullWidth />
             <TextField label={t('auth.phone')} value={form.phone} onChange={(e) => setForm({ ...form, phone: e.target.value })} required fullWidth />
-            <TextField label={t('auth.password')} type="password" value={form.password} onChange={(e) => setForm({ ...form, password: e.target.value })} required fullWidth />
-            <TextField label={t('auth.confirmPassword')} type="password" value={form.confirmPassword} onChange={(e) => setForm({ ...form, confirmPassword: e.target.value })} required fullWidth />
+            <TextField label={t('auth.password')} type="password" value={form.password} onChange={(e) => setForm({ ...form, password: e.target.value })} required fullWidth autoComplete="new-password" />
+            <TextField label={t('auth.confirmPassword')} type="password" value={form.confirmPassword} onChange={(e) => setForm({ ...form, confirmPassword: e.target.value })} required fullWidth autoComplete="new-password" error={!!form.confirmPassword && form.password !== form.confirmPassword} helperText={form.confirmPassword && form.password !== form.confirmPassword ? t('identity.passwordMismatch') : ' '} />
             <TextField select label={t('auth.role')} value={form.role} onChange={(e) => setForm({ ...form, role: e.target.value })} fullWidth>
               <MenuItem value="Customer">{t('auth.customer')}</MenuItem>
               <MenuItem value="Craftsman">{t('auth.craftsman')}</MenuItem>

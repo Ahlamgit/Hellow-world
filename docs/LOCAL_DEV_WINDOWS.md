@@ -76,6 +76,8 @@ cd C:\Users\Ahlam\Documents\Khadamati
 git pull origin cursor/auth-region-fixes-7b80
 ```
 
+**Register and change password** include a **Confirm Password** field. After pulling, restart the web dev server (`Ctrl+C`, then `npm run dev`) and hard-refresh the browser (`Ctrl+Shift+R`).
+
 Then restart **both** API and web terminals.
 
 ## Troubleshooting

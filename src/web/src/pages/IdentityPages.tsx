@@ -106,8 +106,8 @@ export function ResetPasswordPage() {
         {!tokenFromUrl && (
           <TextField label={t('identity.resetToken')} value={token} onChange={(e) => setToken(e.target.value)} required fullWidth />
         )}
-        <TextField label={t('identity.newPassword')} type="password" value={newPassword} onChange={(e) => setNewPassword(e.target.value)} required fullWidth />
-        <TextField label={t('identity.confirmPassword')} type="password" value={confirmPassword} onChange={(e) => setConfirmPassword(e.target.value)} required fullWidth />
+        <TextField label={t('identity.newPassword')} type="password" value={newPassword} onChange={(e) => setNewPassword(e.target.value)} required fullWidth autoComplete="new-password" />
+        <TextField label={t('identity.confirmPassword')} type="password" value={confirmPassword} onChange={(e) => setConfirmPassword(e.target.value)} required fullWidth autoComplete="new-password" error={!!confirmPassword && newPassword !== confirmPassword} helperText={confirmPassword && newPassword !== confirmPassword ? t('identity.passwordMismatch') : ' '} />
         <Button type="submit" variant="contained" size="large" disabled={loading || !token}>
           {loading ? t('common.loading') : t('identity.resetPassword')}
         </Button>
@@ -244,9 +244,9 @@ export function ChangePasswordPage() {
       {error && <Alert severity="error" sx={{ mb: 2 }}>{error}</Alert>}
       {success && <Alert severity="success" sx={{ mb: 2 }}>{success}</Alert>}
       <Box component="form" onSubmit={handleSubmit} sx={{ display: 'flex', flexDirection: 'column', gap: 2 }}>
-        <TextField label={t('identity.currentPassword')} type="password" value={currentPassword} onChange={(e) => setCurrentPassword(e.target.value)} required fullWidth />
-        <TextField label={t('identity.newPassword')} type="password" value={newPassword} onChange={(e) => setNewPassword(e.target.value)} required fullWidth />
-        <TextField label={t('identity.confirmPassword')} type="password" value={confirmPassword} onChange={(e) => setConfirmPassword(e.target.value)} required fullWidth />
+        <TextField label={t('identity.currentPassword')} type="password" value={currentPassword} onChange={(e) => setCurrentPassword(e.target.value)} required fullWidth autoComplete="current-password" />
+        <TextField label={t('identity.newPassword')} type="password" value={newPassword} onChange={(e) => setNewPassword(e.target.value)} required fullWidth autoComplete="new-password" />
+        <TextField label={t('identity.confirmPassword')} type="password" value={confirmPassword} onChange={(e) => setConfirmPassword(e.target.value)} required fullWidth autoComplete="new-password" error={!!confirmPassword && newPassword !== confirmPassword} helperText={confirmPassword && newPassword !== confirmPassword ? t('identity.passwordMismatch') : ' '} />
         <Button type="submit" variant="contained" size="large" disabled={loading}>
           {loading ? t('common.loading') : t('identity.changePassword')}
         </Button>

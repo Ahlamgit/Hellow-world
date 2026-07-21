@@ -48,6 +48,22 @@ struct RegisterView: View {
                         textContentType: .newPassword
                     )
 
+                    KhadamatiTextField(
+                        title: L10n.Auth.confirmPassword,
+                        text: $viewModel.confirmPassword,
+                        isSecure: true,
+                        textContentType: .newPassword
+                    )
+
+                    if !viewModel.password.isEmpty &&
+                        !viewModel.confirmPassword.isEmpty &&
+                        viewModel.password != viewModel.confirmPassword {
+                        Text(L10n.Auth.passwordMismatch)
+                            .font(AppTheme.Typography.caption())
+                            .foregroundStyle(AppTheme.Colors.error)
+                            .frame(maxWidth: .infinity, alignment: .leading)
+                    }
+
                     VStack(alignment: .leading, spacing: AppTheme.Spacing.xs) {
                         Text(L10n.Auth.role)
                             .font(AppTheme.Typography.caption())
