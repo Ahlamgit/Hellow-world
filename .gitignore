@@ -6,6 +6,7 @@
 *.user
 *.suo
 logs/
+**/appsettings.Local.json
 .env
 .env.local
 .env.*.local

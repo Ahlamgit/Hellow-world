@@ -123,6 +123,30 @@ In the browser: DevTools → Application → Local Storage → clear for your si
 
 ```powershell
 cd C:\Users\Ahlam\Documents\Khadamati
+```
+
+**If git says** `Please commit your changes or stash them before you merge` **for `appsettings.json`:**
+
+Do **not** keep local edits in `appsettings.json`. Stash or discard them, then pull:
+
+```powershell
+git checkout -- src/backend/Khadamati.API/appsettings.json
+git pull origin cursor/auth-region-fixes-7b80
+```
+
+Put **your SQL password / server name** in `appsettings.Local.json` instead (never committed):
+
+```powershell
+cd src\backend\Khadamati.API
+copy appsettings.Local.json.example appsettings.Local.json
+notepad appsettings.Local.json
+```
+
+Edit `DefaultConnection` in that file only, save, restart the API.
+
+Or use `appsettings.Development.json` (see SQL section above).
+
+```powershell
 git pull origin cursor/auth-region-fixes-7b80
 ```
 
@@ -134,6 +158,7 @@ Then restart **both** API and web terminals.
 
 | Problem | Fix |
 |---------|-----|
+| `Please commit your changes or stash them before you merge` on `appsettings.json` | Run `git checkout -- src/backend/Khadamati.API/appsettings.json` then pull; put SQL settings in `appsettings.Local.json` or `appsettings.Development.json` |
 | `no such file or directory` for `src\backend` | You are not in the project folder — `cd C:\Users\Ahlam\Documents\Khadamati` first |
 | Swagger error / “Failed to load API definition” | API did not start — check the API terminal for red SQL errors; fix connection string above; restart API |
 | API hangs on startup | Wrong SQL connection — set `Encrypt=False` and correct `Server=` value; ensure SQL Server service is running |
