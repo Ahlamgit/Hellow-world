@@ -27,14 +27,47 @@ dotnet run --project Khadamati.API
 
 Leave this terminal open. Swagger: http://localhost:5000/swagger
 
-**SQL connection (SQL Server 2014 on Windows):** `appsettings.Development.json` is preconfigured for Windows auth. If login fails, edit the connection string in:
+**SQL connection (SQL Server 2014 on Windows):**
+
+If `appsettings.Development.json` has **no connection string**, copy the example file:
+
+```powershell
+cd C:\Users\Ahlam\Documents\Khadamati\src\backend\Khadamati.API
+copy appsettings.Development.example.json appsettings.Development.json
+```
+
+Or paste this **entire file** into `appsettings.Development.json`:
 
 `C:\Users\Ahlam\Documents\Khadamati\src\backend\Khadamati.API\appsettings.Development.json`
 
-**Default instance (Windows login):**
 ```json
-"DefaultConnection": "Server=localhost;Database=KhadamatiDb;Integrated Security=True;TrustServerCertificate=True;Encrypt=False;MultipleActiveResultSets=true;Connect Timeout=20"
+{
+  "Logging": {
+    "LogLevel": {
+      "Default": "Information",
+      "Microsoft.AspNetCore": "Warning",
+      "Microsoft.EntityFrameworkCore": "Information"
+    }
+  },
+  "ConnectionStrings": {
+    "DefaultConnection": "Server=localhost;Database=KhadamatiDb;Integrated Security=True;TrustServerCertificate=True;Encrypt=False;MultipleActiveResultSets=true;Connect Timeout=20"
+  },
+  "Database": {
+    "MigrateOnStartup": true,
+    "SeedDemoData": true,
+    "ContinueOnFailure": true
+  },
+  "App": {
+    "WebBaseUrl": "http://localhost:5173",
+    "ExposeAuthLinks": true
+  },
+  "IpRateLimiting": {
+    "EnableEndpointRateLimiting": false
+  }
+}
 ```
+
+If login fails, edit only the `DefaultConnection` line in that file:
 
 **Named instance (e.g. SQLEXPRESS):**
 ```json
