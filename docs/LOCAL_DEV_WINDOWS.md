@@ -154,6 +154,33 @@ git pull origin cursor/auth-region-fixes-7b80
 
 Then restart **both** API and web terminals.
 
+## Free stuck web ports (5173, 5174, …)
+
+You have **many old `npm run dev` windows** still running. Close them, or run:
+
+```powershell
+taskkill /F /IM node.exe
+```
+
+Then start web again:
+
+```powershell
+cd C:\Users\Ahlam\Documents\Khadamati\src\web
+npm run dev
+```
+
+It should say `http://localhost:5173` (not 5178).
+
+Or use the helper script (after git pull):
+
+```powershell
+cd C:\Users\Ahlam\Documents\Khadamati
+powershell -ExecutionPolicy Bypass -File scripts\stop-web-windows.ps1
+powershell -ExecutionPolicy Bypass -File scripts\start-web-windows.ps1
+```
+
+**Note:** `taskkill /F /IM node.exe` stops **all** Node apps on your PC. Close other Node projects first if needed.
+
 ## Troubleshooting
 
 | Problem | Fix |
@@ -164,6 +191,6 @@ Then restart **both** API and web terminals.
 | API hangs on startup | Wrong SQL connection — set `Encrypt=False` and correct `Server=` value; ensure SQL Server service is running |
 | “Cannot reach the API” (web) | Start the API terminal; open http://localhost:5000/swagger |
 | CORS / network errors | Use `VITE_API_URL=http://localhost:5000/api/v1`; restart web dev server |
-| Port 5173 in use | Vite will use 5174, 5175, etc. — any localhost port works |
+| Port 5173 in use / Vite tries 5174, 5175… | Old dev servers still running — see **Free stuck web ports** below |
 | Empty region/city dropdowns | Admin → Regions / Cities — add active regions and cities |
 | Site loads but login/register fails | Database not connected — open http://localhost:5000/api/v1/health/ready (should be 200) |

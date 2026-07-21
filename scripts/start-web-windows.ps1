@@ -16,5 +16,11 @@ if (Test-Path ".env") {
     }
 }
 
-Write-Host "Starting KHADAMATI web dev server..."
+# Free ports 5173+ if old Vite instances are still running
+$stopScript = Join-Path $ProjectRoot "scripts\stop-web-windows.ps1"
+if (Test-Path $stopScript) {
+    & $stopScript
+}
+
+Write-Host "Starting KHADAMATI web dev server on http://localhost:5173 ..."
 npm run dev
