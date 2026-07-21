@@ -16,7 +16,10 @@ public class RegisterRequestValidator : AbstractValidator<RegisterRequestDto>
             try { passwordPolicy.ValidatePassword(p); }
             catch (Exception ex) { ctx.AddFailure(ex.Message); }
         });
-        RuleFor(x => x.ConfirmPassword).Equal(x => x.Password);
+        RuleFor(x => x.ConfirmPassword)
+            .NotEmpty()
+            .Equal(x => x.Password)
+            .WithMessage("Passwords do not match.");
         RuleFor(x => x.FirstName).NotEmpty().MaximumLength(100);
         RuleFor(x => x.LastName).NotEmpty().MaximumLength(100);
         RuleFor(x => x.Role).NotEmpty()
@@ -49,7 +52,10 @@ public class ResetPasswordRequestValidator : AbstractValidator<ResetPasswordRequ
             try { passwordPolicy.ValidatePassword(p); }
             catch (Exception ex) { ctx.AddFailure(ex.Message); }
         });
-        RuleFor(x => x.ConfirmPassword).Equal(x => x.NewPassword);
+        RuleFor(x => x.ConfirmPassword)
+            .NotEmpty()
+            .Equal(x => x.NewPassword)
+            .WithMessage("Passwords do not match.");
     }
 }
 
@@ -63,7 +69,10 @@ public class ChangePasswordRequestValidator : AbstractValidator<ChangePasswordRe
             try { passwordPolicy.ValidatePassword(p); }
             catch (Exception ex) { ctx.AddFailure(ex.Message); }
         });
-        RuleFor(x => x.ConfirmPassword).Equal(x => x.NewPassword);
+        RuleFor(x => x.ConfirmPassword)
+            .NotEmpty()
+            .Equal(x => x.NewPassword)
+            .WithMessage("Passwords do not match.");
         RuleFor(x => x.NewPassword).NotEqual(x => x.CurrentPassword);
     }
 }

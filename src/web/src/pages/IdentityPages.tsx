@@ -5,7 +5,9 @@ import {
 import { Link, useLocation, useNavigate } from 'react-router-dom';
 import { useTranslation } from 'react-i18next';
 import { authApi, identityApi, type SessionDto } from '../services/api';
+import ChangePasswordForm from '../components/ChangePasswordForm';
 import { DevActionLinkAlert } from '../components/DevActionLinkAlert';
+import PasswordConfirmFields, { passwordsMatch } from '../components/PasswordConfirmFields';
 import { getApiErrorMessage } from '../utils/apiError';
 import { useAuth } from '../context/AuthContext';
 
@@ -106,9 +108,15 @@ export function ResetPasswordPage() {
         {!tokenFromUrl && (
           <TextField label={t('identity.resetToken')} value={token} onChange={(e) => setToken(e.target.value)} required fullWidth />
         )}
-        <TextField label={t('identity.newPassword')} type="password" value={newPassword} onChange={(e) => setNewPassword(e.target.value)} required fullWidth autoComplete="new-password" />
-        <TextField label={t('identity.confirmPassword')} type="password" value={confirmPassword} onChange={(e) => setConfirmPassword(e.target.value)} required fullWidth autoComplete="new-password" error={!!confirmPassword && newPassword !== confirmPassword} helperText={confirmPassword && newPassword !== confirmPassword ? t('identity.passwordMismatch') : ' '} />
-        <Button type="submit" variant="contained" size="large" disabled={loading || !token}>
+        <PasswordConfirmFields
+          password={newPassword}
+          confirmPassword={confirmPassword}
+          onPasswordChange={setNewPassword}
+          onConfirmPasswordChange={setConfirmPassword}
+          passwordLabel={t('identity.newPassword')}
+          confirmLabel={t('identity.confirmPassword')}
+        />
+        <Button type="submit" variant="contained" size="large" disabled={loading || !token || !passwordsMatch(newPassword, confirmPassword)}>
           {loading ? t('common.loading') : t('identity.resetPassword')}
         </Button>
       </Box>
@@ -209,48 +217,13 @@ export function VerifyEmailPage() {
 
 export function ChangePasswordPage() {
   const { t } = useTranslation();
-  const { logout } = useAuth();
-  const [currentPassword, setCurrentPassword] = useState('');
-  const [newPassword, setNewPassword] = useState('');
-  const [confirmPassword, setConfirmPassword] = useState('');
-  const [error, setError] = useState('');
-  const [success, setSuccess] = useState('');
-  const [loading, setLoading] = useState(false);
-
-  const handleSubmit = async (e: React.FormEvent) => {
-    e.preventDefault();
-    setError('');
-    if (newPassword !== confirmPassword) {
-      setError(t('identity.passwordMismatch'));
-      return;
-    }
-    setLoading(true);
-    try {
-      const { data } = await authApi.changePassword(currentPassword, newPassword, confirmPassword);
-      setSuccess(data.data.message || t('identity.changePasswordSuccess'));
-      setTimeout(() => logout(), 2000);
-    } catch (err) {
-      setError(getApiErrorMessage(err, t('common.error')));
-    } finally {
-      setLoading(false);
-    }
-  };
 
   return (
     <AuthCard title={t('identity.changePasswordTitle')}>
       <Typography variant="body2" color="text.secondary" sx={{ mb: 2 }}>
         {t('identity.changePasswordHint')}
       </Typography>
-      {error && <Alert severity="error" sx={{ mb: 2 }}>{error}</Alert>}
-      {success && <Alert severity="success" sx={{ mb: 2 }}>{success}</Alert>}
-      <Box component="form" onSubmit={handleSubmit} sx={{ display: 'flex', flexDirection: 'column', gap: 2 }}>
-        <TextField label={t('identity.currentPassword')} type="password" value={currentPassword} onChange={(e) => setCurrentPassword(e.target.value)} required fullWidth autoComplete="current-password" />
-        <TextField label={t('identity.newPassword')} type="password" value={newPassword} onChange={(e) => setNewPassword(e.target.value)} required fullWidth autoComplete="new-password" />
-        <TextField label={t('identity.confirmPassword')} type="password" value={confirmPassword} onChange={(e) => setConfirmPassword(e.target.value)} required fullWidth autoComplete="new-password" error={!!confirmPassword && newPassword !== confirmPassword} helperText={confirmPassword && newPassword !== confirmPassword ? t('identity.passwordMismatch') : ' '} />
-        <Button type="submit" variant="contained" size="large" disabled={loading}>
-          {loading ? t('common.loading') : t('identity.changePassword')}
-        </Button>
-      </Box>
+      <ChangePasswordForm />
     </AuthCard>
   );
 }

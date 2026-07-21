@@ -53,6 +53,7 @@
     "confirmPassword": "Confirm Password",
     "currentPassword": "Current Password",
     "passwordMismatch": "Passwords do not match.",
+    "newPasswordMustDiffer": "New password must be different from your current password.",
     "changePassword": "Change Password",
     "changePasswordTitle": "Change Password",
     "changePasswordHint": "Changing your password will sign you out of all devices.",

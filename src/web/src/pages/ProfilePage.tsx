@@ -8,6 +8,7 @@ import { identityApi, type ProfileDto } from '../services/api';
 import { getApiErrorMessage } from '../utils/apiError';
 import { useAuth } from '../context/AuthContext';
 import { useLocationCatalog } from '../hooks/useLocationCatalog';
+import ChangePasswordForm from '../components/ChangePasswordForm';
 
 const emptyForm = {
   firstName: '',
@@ -235,7 +236,6 @@ export default function ProfilePage() {
                   <Button type="submit" variant="contained" disabled={saving}>
                     {saving ? t('common.loading') : t('common.save')}
                   </Button>
-                  <Button component={Link} to="/change-password" variant="outlined">{t('identity.changePassword')}</Button>
                   <Button component={Link} to="/sessions" variant="outlined">{t('identity.sessionsTitle')}</Button>
                   <Button component={Link} to="/addresses" variant="outlined">{t('addresses.title')}</Button>
                   <Button component={Link} to="/chat" variant="outlined">{t('chat.title')}</Button>
@@ -243,6 +243,16 @@ export default function ProfilePage() {
               </Grid>
             </Grid>
           </Box>
+        </CardContent>
+      </Card>
+
+      <Card sx={{ mt: 3 }}>
+        <CardContent>
+          <Typography variant="h6" sx={{ fontWeight: 700, mb: 1 }}>{t('identity.changePasswordTitle')}</Typography>
+          <Typography variant="body2" color="text.secondary" sx={{ mb: 2 }}>
+            {t('identity.changePasswordHint')}
+          </Typography>
+          <ChangePasswordForm />
         </CardContent>
       </Card>
 

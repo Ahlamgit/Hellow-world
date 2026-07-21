@@ -225,10 +225,21 @@ export interface Booking {
   statusHistory: { oldStatus?: string; newStatus: string; notes?: string; createdAt: string }[];
 }
 
+export interface RegisterRequest {
+  email: string;
+  phone: string;
+  password: string;
+  confirmPassword: string;
+  firstName: string;
+  lastName: string;
+  role: string;
+  preferredLanguage: string;
+}
+
 export const authApi = {
   login: (email: string, password: string, rememberMe = false) =>
     api.post<ApiResponse<AuthResponse>>('/auth/login', { email, password, rememberMe }),
-  register: (data: Record<string, string>) =>
+  register: (data: RegisterRequest) =>
     api.post<ApiResponse<AuthResponse>>('/auth/register', data),
   logout: () => api.post('/auth/revoke', { refreshToken: localStorage.getItem('refreshToken') }),
   forgotPassword: (email: string) =>

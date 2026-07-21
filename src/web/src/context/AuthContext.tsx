@@ -1,12 +1,12 @@
 import { createContext, useContext, useState, useEffect, type ReactNode } from 'react';
-import { type UserDto, authApi, identityApi } from '../services/api';
+import { type UserDto, type RegisterRequest, authApi, identityApi } from '../services/api';
 
 interface AuthContextType {
   user: UserDto | null;
   isAuthenticated: boolean;
   isLoading: boolean;
   login: (email: string, password: string, rememberMe?: boolean) => Promise<void>;
-  register: (data: Record<string, string>) => Promise<string | undefined>;
+  register: (data: RegisterRequest) => Promise<string | undefined>;
   logout: () => void;
   refreshUser: () => Promise<void>;
 }
@@ -71,7 +71,7 @@ export function AuthProvider({ children }: { children: ReactNode }) {
     setUser(withPermissions);
   };
 
-  const register = async (formData: Record<string, string>) => {
+  const register = async (formData: RegisterRequest) => {
     const { data } = await authApi.register(formData);
     const withPermissions = await enrichUserFromApi(data.data.user);
     persistAuth({ ...data.data, user: withPermissions });

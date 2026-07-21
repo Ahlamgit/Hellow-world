@@ -53,6 +53,7 @@
     "confirmPassword": "تأكيد كلمة المرور",
     "currentPassword": "كلمة المرور الحالية",
     "passwordMismatch": "كلمتا المرور غير متطابقتين.",
+    "newPasswordMustDiffer": "يجب أن تكون كلمة المرور الجديدة مختلفة عن الحالية.",
     "changePassword": "تغيير كلمة المرور",
     "changePasswordTitle": "تغيير كلمة المرور",
     "changePasswordHint": "تغيير كلمة المرور سيُنهي جلساتك على جميع الأجهزة.",

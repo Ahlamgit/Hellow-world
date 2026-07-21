@@ -4,6 +4,7 @@ import { Link, useNavigate } from 'react-router-dom';
 import { useTranslation } from 'react-i18next';
 import { useAuth } from '../context/AuthContext';
 import { canAccessAdmin } from '../utils/permissions';
+import PasswordConfirmFields, { passwordsMatch } from '../components/PasswordConfirmFields';
 
 export default function LoginPage() {
   const { t } = useTranslation();
@@ -94,14 +95,18 @@ export function RegisterPage() {
             <TextField label={t('auth.lastName')} value={form.lastName} onChange={(e) => setForm({ ...form, lastName: e.target.value })} required fullWidth />
             <TextField label={t('auth.email')} type="email" value={form.email} onChange={(e) => setForm({ ...form, email: e.target.value })} required fullWidth />
             <TextField label={t('auth.phone')} value={form.phone} onChange={(e) => setForm({ ...form, phone: e.target.value })} required fullWidth />
-            <TextField label={t('auth.password')} type="password" value={form.password} onChange={(e) => setForm({ ...form, password: e.target.value })} required fullWidth autoComplete="new-password" />
-            <TextField label={t('auth.confirmPassword')} type="password" value={form.confirmPassword} onChange={(e) => setForm({ ...form, confirmPassword: e.target.value })} required fullWidth autoComplete="new-password" error={!!form.confirmPassword && form.password !== form.confirmPassword} helperText={form.confirmPassword && form.password !== form.confirmPassword ? t('identity.passwordMismatch') : ' '} />
+            <PasswordConfirmFields
+              password={form.password}
+              confirmPassword={form.confirmPassword}
+              onPasswordChange={(password) => setForm({ ...form, password })}
+              onConfirmPasswordChange={(confirmPassword) => setForm({ ...form, confirmPassword })}
+            />
             <TextField select label={t('auth.role')} value={form.role} onChange={(e) => setForm({ ...form, role: e.target.value })} fullWidth>
               <MenuItem value="Customer">{t('auth.customer')}</MenuItem>
               <MenuItem value="Craftsman">{t('auth.craftsman')}</MenuItem>
               <MenuItem value="Store">{t('auth.store')}</MenuItem>
             </TextField>
-            <Button type="submit" variant="contained" size="large" disabled={loading}>
+            <Button type="submit" variant="contained" size="large" disabled={loading || !passwordsMatch(form.password, form.confirmPassword)}>
               {loading ? t('common.loading') : t('nav.register')}
             </Button>
           </Box>
