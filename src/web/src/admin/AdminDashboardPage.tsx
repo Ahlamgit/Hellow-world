@@ -79,7 +79,7 @@ export default function AdminDashboardPage() {
     <Box>
       <Box sx={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', flexWrap: 'wrap', gap: 2, mb: 3 }}>
         <Typography variant="h4" sx={{ fontWeight: 700 }}>Dashboard</Typography>
-        <Stack direction="row" spacing={1} flexWrap="wrap">
+        <Stack direction="row" spacing={1} sx={{ flexWrap: 'wrap' }}>
           <Button component={RouterLink} to="/admin/users" variant="outlined" startIcon={<People />}>
             Manage users
           </Button>

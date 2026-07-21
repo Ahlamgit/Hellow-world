@@ -87,7 +87,7 @@ function PlanForm({ form, onChange, isEdit }: PlanFormProps) {
           value={form.currency}
           onChange={(e) => set('currency', e.target.value.toUpperCase().slice(0, 3))}
           helperText="ISO 4217 code (e.g. SAR, USD, EUR)"
-          inputProps={{ list: 'plan-currency-options', maxLength: 3 }}
+          slotProps={{ htmlInput: { list: 'plan-currency-options', maxLength: 3 } }}
           sx={{ minWidth: 140 }}
           required
         />
