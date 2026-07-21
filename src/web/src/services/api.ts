@@ -1,7 +1,8 @@
 import axios from 'axios';
 
-const API_BASE_URL = import.meta.env.VITE_API_URL
-  || (import.meta.env.DEV ? '/api/v1' : 'http://localhost:5000/api/v1');
+// Direct API URL in dev avoids Vite proxy issues when the backend is on port 5000.
+// Development CORS allows any localhost origin (see Program.cs).
+const API_BASE_URL = import.meta.env.VITE_API_URL || 'http://localhost:5000/api/v1';
 
 export const api = axios.create({
   baseURL: API_BASE_URL,

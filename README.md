@@ -72,6 +72,8 @@ cd src/backend
 dotnet run --project Khadamati.API
 ```
 
+**Windows (Ahlam):** project lives at `C:\Users\Ahlam\Documents\Khadamati`. See [docs/LOCAL_DEV_WINDOWS.md](docs/LOCAL_DEV_WINDOWS.md) or run `scripts/start-api-windows.ps1`.
+
 ### Run Web Locally
 
 ```bash
@@ -80,6 +82,8 @@ cp .env.example .env
 npm install
 npm run dev
 ```
+
+Default API URL: `http://localhost:5000/api/v1` (set in `.env` as `VITE_API_URL` if needed).
 
 ### Default Admin Credentials
 

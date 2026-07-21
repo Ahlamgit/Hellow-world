@@ -143,9 +143,12 @@ if (app.Environment.IsDevelopment() || app.Environment.IsStaging())
 }
 
 app.UseSerilogRequestLogging();
-app.UseHttpsRedirection();
-app.UseIpRateLimiting();
 app.UseCors("KhadamatiCors");
+if (!app.Environment.IsDevelopment())
+{
+    app.UseHttpsRedirection();
+}
+app.UseIpRateLimiting();
 app.UseAuthentication();
 app.UseAuthorization();
 app.MapControllers();
