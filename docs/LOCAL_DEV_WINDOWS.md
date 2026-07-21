@@ -27,11 +27,28 @@ dotnet run --project Khadamati.API
 
 Leave this terminal open. Swagger: http://localhost:5000/swagger
 
-**SQL connection:** edit `src\backend\Khadamati.API\appsettings.json` (or `appsettings.Development.json`) if your SQL instance is not on port `1433`. Example for default SQL Server instance:
+**SQL connection (SQL Server 2014 on Windows):** `appsettings.Development.json` is preconfigured for Windows auth. If login fails, edit the connection string in:
 
+`C:\Users\Ahlam\Documents\Khadamati\src\backend\Khadamati.API\appsettings.Development.json`
+
+**Default instance (Windows login):**
 ```json
-"DefaultConnection": "Server=localhost;Database=KhadamatiDb;Integrated Security=True;TrustServerCertificate=True;MultipleActiveResultSets=true"
+"DefaultConnection": "Server=localhost;Database=KhadamatiDb;Integrated Security=True;TrustServerCertificate=True;Encrypt=False;MultipleActiveResultSets=true;Connect Timeout=20"
 ```
+
+**Named instance (e.g. SQLEXPRESS):**
+```json
+"DefaultConnection": "Server=localhost\\SQLEXPRESS;Database=KhadamatiDb;Integrated Security=True;TrustServerCertificate=True;Encrypt=False;MultipleActiveResultSets=true;Connect Timeout=20"
+```
+
+**SQL login (sa):**
+```json
+"DefaultConnection": "Server=localhost;Database=KhadamatiDb;User Id=sa;Password=YOUR_PASSWORD;TrustServerCertificate=True;Encrypt=False;MultipleActiveResultSets=true;Connect Timeout=20"
+```
+
+`Encrypt=False` is required for many SQL Server 2014 setups.
+
+Make sure **SQL Server service is running** (Services → SQL Server (MSSQLSERVER) or SQL Server (SQLEXPRESS)).
 
 ### 2. Web
 
@@ -85,7 +102,10 @@ Then restart **both** API and web terminals.
 | Problem | Fix |
 |---------|-----|
 | `no such file or directory` for `src\backend` | You are not in the project folder — `cd C:\Users\Ahlam\Documents\Khadamati` first |
-| “Cannot reach the API” | Start the API terminal; confirm http://localhost:5000/swagger loads |
+| Swagger error / “Failed to load API definition” | API did not start — check the API terminal for red SQL errors; fix connection string above; restart API |
+| API hangs on startup | Wrong SQL connection — set `Encrypt=False` and correct `Server=` value; ensure SQL Server service is running |
+| “Cannot reach the API” (web) | Start the API terminal; open http://localhost:5000/swagger |
 | CORS / network errors | Use `VITE_API_URL=http://localhost:5000/api/v1`; restart web dev server |
 | Port 5173 in use | Vite will use 5174, 5175, etc. — any localhost port works |
 | Empty region/city dropdowns | Admin → Regions / Cities — add active regions and cities |
+| Site loads but login/register fails | Database not connected — open http://localhost:5000/api/v1/health/ready (should be 200) |
