@@ -6,8 +6,11 @@
 *.user
 *.suo
 logs/
+**/appsettings.Local.json
 .env
-.env.*
-!.env.*.example
+.env.local
+.env.*.local
+!.env.example
+!.env.development
 .DS_Store
 *.log

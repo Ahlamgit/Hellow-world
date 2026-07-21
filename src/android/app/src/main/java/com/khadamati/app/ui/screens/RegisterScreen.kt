@@ -51,6 +51,7 @@ fun RegisterScreen(
 
     var email by remember { mutableStateOf("") }
     var phone by remember { mutableStateOf("") }
+    var confirmPassword by remember { mutableStateOf("") }
     var password by remember { mutableStateOf("") }
     var firstName by remember { mutableStateOf("") }
     var lastName by remember { mutableStateOf("") }
@@ -140,6 +141,24 @@ fun RegisterScreen(
             )
             Spacer(modifier = Modifier.height(12.dp))
 
+            OutlinedTextField(
+                value = confirmPassword,
+                onValueChange = { confirmPassword = it },
+                label = { Text(stringResource(R.string.auth_confirm_password)) },
+                visualTransformation = PasswordVisualTransformation(),
+                keyboardOptions = KeyboardOptions(keyboardType = KeyboardType.Password),
+                modifier = Modifier.fillMaxWidth(),
+                singleLine = true,
+            )
+            if (password.isNotBlank() && confirmPassword.isNotBlank() && password != confirmPassword) {
+                Text(
+                    text = stringResource(R.string.auth_password_mismatch),
+                    color = MaterialTheme.colorScheme.error,
+                    style = MaterialTheme.typography.bodySmall,
+                )
+            }
+            Spacer(modifier = Modifier.height(12.dp))
+
             ExposedDropdownMenuBox(
                 expanded = roleExpanded,
                 onExpandedChange = { roleExpanded = it },
@@ -204,10 +223,12 @@ fun RegisterScreen(
 
             Button(
                 onClick = {
+                    if (password != confirmPassword) return@Button
                     authViewModel.register(
                         email = email.trim(),
                         phone = phone.trim(),
                         password = password,
+                        confirmPassword = confirmPassword,
                         firstName = firstName.trim(),
                         lastName = lastName.trim(),
                         role = role,
@@ -219,6 +240,8 @@ fun RegisterScreen(
                     email.isNotBlank() &&
                     phone.isNotBlank() &&
                     password.isNotBlank() &&
+                    confirmPassword.isNotBlank() &&
+                    password == confirmPassword &&
                     firstName.isNotBlank() &&
                     lastName.isNotBlank(),
                 modifier = Modifier.fillMaxWidth(),
