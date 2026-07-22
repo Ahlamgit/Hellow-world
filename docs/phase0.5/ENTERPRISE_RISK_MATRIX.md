@@ -1,7 +1,8 @@
 # Enterprise Risk Matrix — Phase 0.5 Discovery
 
 **Generated:** 2026-07-22  
-**Inputs:** Client feature matrix, test coverage analysis, CI/CD pipeline review
+**Location:** `docs/phase0.5/`  
+**Inputs:** Client feature matrix, test coverage analysis, CI/CD pipeline review, database discovery, Phase 0 security audit
 
 ## Risk Scoring
 
@@ -45,6 +46,72 @@
 | R-22 | Integrations | **Push notification services untested** | 3 | 3 | **9** | Medium | Firebase/APNs services 0 tests | Mock provider tests |
 | R-23 | Business | **Cross-client feature drift** — customers see different capabilities per platform | 4 | 3 | **12** | High | See CLIENT_FEATURE_MATRIX parity table | Feature flags + parity checklist per release |
 | R-24 | Availability | **Single integration test fixture** — parallel CI may cause flakiness as suite grows | 2 | 3 | **6** | Medium | One `KhadamatiWebApplicationFactory` | Test isolation review |
+| R-25 | Security | **Committed JWT + SQL credentials** — token forgery / DB compromise | 5 | 5 | **25** | Critical | `appsettings.json`, `docker-compose.yml` in git history | Phase 1 secrets migration + rotation |
+| R-26 | Data | **EF vs SQL script schema drift** — wrong deploy path corrupts DB | 4 | 5 | **20** | Critical | `000_MasterDeploy.sql` vs EF migrations | Phase 1 archive SQL scripts; EF-only deploy |
+| R-27 | Data | **No optimistic concurrency on bookings/slots** — double-booking under load | 4 | 4 | **16** | Critical | No `rowversion` on ServiceRequests, BookingSlotReservations | Phase 1 add rowversion + retry |
+| R-28 | Architecture | **AdminService monolith (1,455 LOC)** — change blast radius | 4 | 3 | **12** | High | 52 public methods across 8 domains | Phase 2 service decomposition |
+| R-29 | API | **Duplicate profile endpoints** — inconsistent client behavior | 3 | 3 | **9** | Medium | `/users/me` vs `/profile` vs `/auth/me` | Phase 2 API consolidation |
+| R-30 | Database | **Missing geo index** — nearby search degrades at scale | 4 | 3 | **12** | High | No lat/long index in EF; integration test flaky | Phase 1 index + query tuning |
+
+---
+
+## Detailed Risk Profiles (Top Critical & High)
+
+### R-01 — BookingService Untested
+| Field | Detail |
+|-------|--------|
+| **Description** | Core booking lifecycle (653 LOC) has zero dedicated unit tests |
+| **Business impact** | Failed bookings, payment errors, customer churn |
+| **Technical impact** | State machine regressions undetected; refactor blocked |
+| **Dependencies** | BookingService, PaymentWebhookService, MoyasarPaymentGateway |
+| **Recommended phase** | **Phase 1** |
+
+### R-25 — Committed Secrets
+| Field | Detail |
+|-------|--------|
+| **Description** | JWT secret and SQL SA password in tracked config and compose files |
+| **Business impact** | Full platform compromise; regulatory breach |
+| **Technical impact** | Credential rotation required; git history exposure |
+| **Dependencies** | All environments, CI/CD secret injection |
+| **Recommended phase** | **Phase 1** (per DEPLOYMENT_RUNBOOK §10) |
+
+### R-26 — Schema Drift
+| Field | Detail |
+|-------|--------|
+| **Description** | Legacy SQL scripts use ref.* tables; EF uses enum ints and different names |
+| **Business impact** | Failed deployments, data loss on wrong script execution |
+| **Technical impact** | Views/SPs reference obsolete Payments/Reviews tables |
+| **Dependencies** | DATABASE_OBJECT_INVENTORY, deployment runbook |
+| **Recommended phase** | **Phase 1** |
+
+### R-27 — Booking Concurrency
+| Field | Detail |
+|-------|--------|
+| **Description** | No rowversion on hot booking tables |
+| **Business impact** | Double bookings, craftsman schedule conflicts |
+| **Technical impact** | Race conditions under concurrent slot reservation |
+| **Dependencies** | BookingService, BookingSlotReservations filtered unique index |
+| **Recommended phase** | **Phase 1** |
+
+### R-28 — AdminService Monolith
+| Field | Detail |
+|-------|--------|
+| **Description** | Single service handles dashboard, catalog, locations, marketing, RBAC, backup |
+| **Business impact** | Slow feature delivery; admin regressions span modules |
+| **Technical impact** | SRP violation; difficult testing |
+| **Dependencies** | 40+ admin API endpoints |
+| **Recommended phase** | **Phase 2** |
+
+---
+
+## Risk by Recommended Phase
+
+| Phase | Risk IDs |
+|-------|----------|
+| **Phase 1** (Hardening) | R-01, R-02, R-03, R-12, R-25, R-26, R-27, R-30 |
+| **Phase 2** (Architecture) | R-05, R-06, R-08, R-28, R-29, R-13, R-21 |
+| **Phase 3** (Scale) | R-15, R-16, R-19, R-24 |
+| **Accept / Defer** | R-07 (admin web-only), R-18 (low i18n) |
 
 ---
 

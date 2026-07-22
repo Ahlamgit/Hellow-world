@@ -66,7 +66,6 @@
 | Method | Type |
 |--------|------|
 | `WeakPassword_ShouldThrow` | Fact |
-| `Customer_ShouldHaveUsersViewPermission` | Fact *(class name mismatch in file)* |
 | `StrongPassword_ShouldPass` | Fact |
 
 #### IntegrationReadinessServiceTests (3 tests)
