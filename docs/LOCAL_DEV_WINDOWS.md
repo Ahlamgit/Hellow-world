@@ -4,7 +4,7 @@
 
 | Item | Value |
 |------|-------|
-| **GitHub repo** | [Ahlamgit/khadamati](https://github.com/Ahlamgit/khadamati) |
+| **GitHub repo** | [Ahlamgit/Khadamati](https://github.com/Ahlamgit/Khadamati) |
 | **Project folder** | `C:\Users\Ahlam\Documents\Khadamati` |
 | **API** | http://localhost:5000 |
 | **Web (Vite)** | http://localhost:5173 (or the port Vite prints) |

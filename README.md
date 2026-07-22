@@ -2,6 +2,9 @@
 
 Enterprise-grade maintenance and home services marketplace connecting **Customers**, **Craftsmen**, **Stores**, and **Administrators**.
 
+**Repository:** [github.com/Ahlamgit/Khadamati](https://github.com/Ahlamgit/Khadamati)  
+*(Formerly `Hellow-world` — renamed to Khadamati.)*
+
 ## Architecture
 
 ```

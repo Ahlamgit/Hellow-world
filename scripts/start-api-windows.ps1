@@ -3,7 +3,7 @@
 $ProjectRoot = "C:\Users\Ahlam\Documents\Khadamati"
 
 if (-not (Test-Path $ProjectRoot)) {
-    Write-Error "Project not found at $ProjectRoot. Clone Ahlamgit/khadamati there or edit this script."
+    Write-Error "Project not found at $ProjectRoot. Clone Ahlamgit/Khadamati there or edit this script."
     exit 1
 }
 
