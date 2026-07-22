@@ -13,6 +13,9 @@ using Serilog;
 
 var builder = WebApplication.CreateBuilder(args);
 
+// Optional local overrides (gitignored) — use instead of editing appsettings.json
+builder.Configuration.AddJsonFile("appsettings.Local.json", optional: true, reloadOnChange: true);
+
 ProductionStartupValidator.ValidateJwtSecret(builder.Configuration, builder.Environment);
 
 Log.Logger = new LoggerConfiguration()
@@ -90,8 +93,22 @@ builder.Services.AddCors(options =>
 {
     options.AddPolicy("KhadamatiCors", policy =>
     {
-        policy.WithOrigins(builder.Configuration.GetSection("Cors:AllowedOrigins").Get<string[]>() ?? ["http://localhost:3000"])
-            .AllowAnyHeader()
+        if (builder.Environment.IsDevelopment())
+        {
+            policy.SetIsOriginAllowed(static origin =>
+            {
+                if (string.IsNullOrWhiteSpace(origin)) return false;
+                if (!Uri.TryCreate(origin, UriKind.Absolute, out var uri)) return false;
+                return uri.Host is "localhost" or "127.0.0.1";
+            });
+        }
+        else
+        {
+            policy.WithOrigins(builder.Configuration.GetSection("Cors:AllowedOrigins").Get<string[]>()
+                ?? ["http://localhost:3000"]);
+        }
+
+        policy.AllowAnyHeader()
             .AllowAnyMethod()
             .AllowCredentials();
     });
@@ -125,53 +142,71 @@ app.UseMiddleware<SecurityHeadersMiddleware>();
 if (app.Environment.IsDevelopment() || app.Environment.IsStaging())
 {
     app.UseSwagger();
-    app.UseSwaggerUI(c => c.SwaggerEndpoint("/swagger/v1/swagger.json", "KHADAMATI API v1"));
+    app.UseSwaggerUI(c =>
+    {
+        c.SwaggerEndpoint("/swagger/v1/swagger.json", "KHADAMATI API v1");
+        c.RoutePrefix = "swagger";
+    });
 }
 
 app.UseSerilogRequestLogging();
-app.UseHttpsRedirection();
-app.UseIpRateLimiting();
 app.UseCors("KhadamatiCors");
+if (!app.Environment.IsDevelopment())
+{
+    app.UseHttpsRedirection();
+}
+app.UseIpRateLimiting();
 app.UseAuthentication();
 app.UseAuthorization();
 app.MapControllers();
 
 using (var scope = app.Services.CreateScope())
 {
-    var seeder = scope.ServiceProvider.GetRequiredService<DatabaseSeeder>();
-    await seeder.SeedAsync();
-
-    var readiness = scope.ServiceProvider.GetRequiredService<Khadamati.Application.Interfaces.IIntegrationReadinessService>();
-    ProductionStartupValidator.EnsureIntegrationsReadyIfRequired(
-        app.Configuration,
-        app.Environment,
-        readiness);
-
-    var report = readiness.GetReport();
-    if (report.ProductionReady)
+    try
     {
-        Log.Information("All production integrations are configured and ready.");
-    }
-    else
-    {
-        foreach (var provider in report.Providers.Where(p => !p.IsProductionReady))
+        var seeder = scope.ServiceProvider.GetRequiredService<DatabaseSeeder>();
+        await seeder.SeedAsync();
+
+        var readiness = scope.ServiceProvider.GetRequiredService<Khadamati.Application.Interfaces.IIntegrationReadinessService>();
+        ProductionStartupValidator.EnsureIntegrationsReadyIfRequired(
+            app.Configuration,
+            app.Environment,
+            readiness);
+
+        var report = readiness.GetReport();
+        if (report.ProductionReady)
         {
-            if (provider.Status == "Development")
+            Log.Information("All production integrations are configured and ready.");
+        }
+        else
+        {
+            foreach (var provider in report.Providers.Where(p => !p.IsProductionReady))
             {
-                Log.Warning(
-                    "{Category} is using development provider '{SelectedProvider}'. Configure production credentials before launch.",
-                    provider.Category,
-                    provider.SelectedProvider);
-            }
-            else
-            {
-                Log.Warning(
-                    "{Category} provider '{SelectedProvider}' is misconfigured. Missing: {Missing}",
-                    provider.Category,
-                    provider.SelectedProvider,
-                    string.Join(", ", provider.MissingSettings));
+                if (provider.Status == "Development")
+                {
+                    Log.Warning(
+                        "{Category} is using development provider '{SelectedProvider}'. Configure production credentials before launch.",
+                        provider.Category,
+                        provider.SelectedProvider);
+                }
+                else
+                {
+                    Log.Warning(
+                        "{Category} provider '{SelectedProvider}' is misconfigured. Missing: {Missing}",
+                        provider.Category,
+                        provider.SelectedProvider,
+                        string.Join(", ", provider.MissingSettings));
+                }
             }
         }
+    }
+    catch (Exception ex) when (app.Environment.IsDevelopment()
+        && app.Configuration.GetValue("Database:ContinueOnFailure", false))
+    {
+        Log.Error(
+            ex,
+            "Database migration/seed failed. The API will start so Swagger is available, but most endpoints need SQL Server. " +
+            "Update ConnectionStrings:DefaultConnection in appsettings.Development.json (see docs/LOCAL_DEV_WINDOWS.md).");
     }
 }
 

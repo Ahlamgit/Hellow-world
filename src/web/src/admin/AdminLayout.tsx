@@ -13,7 +13,7 @@ import {
 } from '@mui/icons-material';
 import { useTranslation } from 'react-i18next';
 import { useAuth } from '../context/AuthContext';
-import { canAccessAdminPath } from '../utils/permissions';
+import { canAccessAdmin } from '../utils/permissions';
 
 const DRAWER_WIDTH = 280;
 
@@ -117,7 +117,7 @@ export default function AdminLayout() {
               {isAr ? section.titleAr : section.title}
             </Typography>
             <List dense disablePadding>
-              {section.items.filter((item) => canAccessAdminPath(user, item.path)).map((item) => {
+              {section.items.filter(() => canAccessAdmin(user)).map((item) => {
                 const selected = location.pathname === item.path ||
                   (item.path !== '/admin' && location.pathname.startsWith(item.path));
                 return (

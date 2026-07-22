@@ -24,6 +24,9 @@ public class InitiatePaymentValidator : AbstractValidator<InitiatePaymentDto>
     {
         RuleFor(x => x.PaymentMethod).NotEmpty()
             .Must(m => ValidMethods.Contains(m, StringComparer.OrdinalIgnoreCase));
+        RuleFor(x => x.Currency)
+            .Length(3)
+            .When(x => !string.IsNullOrWhiteSpace(x.Currency));
     }
 }
 

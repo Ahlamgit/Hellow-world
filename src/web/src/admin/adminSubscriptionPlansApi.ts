@@ -4,6 +4,7 @@ import type { PlanBillingOption } from '../services/subscriptionsApi';
 export const PLAN_STATUSES = ['Active', 'Inactive', 'Suspended', 'Archived'] as const;
 export const TARGET_ROLES = ['Customer', 'Craftsman', 'Store', 'Administrator'] as const;
 export const BILLING_CYCLES = ['Monthly', 'Quarterly', 'SemiAnnual', 'Annual', 'Lifetime'] as const;
+export const COMMON_CURRENCIES = ['SAR', 'USD', 'EUR', 'GBP', 'AED', 'KWD', 'BHD', 'OMR', 'QAR', 'EGP'] as const;
 
 export interface AdminSubscriptionPlan {
   id: string;

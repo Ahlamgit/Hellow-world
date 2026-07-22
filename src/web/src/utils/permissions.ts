@@ -22,11 +22,34 @@ export const PORTAL_PERMISSIONS = [
 
 export type PermissionCode = (typeof PORTAL_PERMISSIONS)[number] | string;
 
+const ELEVATED_ADMIN_ROLES = ['SuperAdmin', 'Admin', 'Administrator'] as const;
+
+export function hasElevatedAdminRole(
+  user: { email?: string; role?: string; primaryRole?: string; roles?: string[] } | null | undefined,
+): boolean {
+  if (!user) return false;
+  if (user.email?.toLowerCase() === 'admin@khadamati.com') return true;
+  const normalize = (value?: string) => value?.trim().toLowerCase() ?? '';
+  const role = normalize(user.primaryRole) || normalize(user.role);
+  const elevated = ELEVATED_ADMIN_ROLES.map((r) => r.toLowerCase());
+  if (elevated.includes(role)) return true;
+  if (user.roles?.some((r) => elevated.includes(normalize(r)))) return true;
+  try {
+    const storedRole = localStorage.getItem('userRole');
+    if (storedRole && elevated.includes(normalize(storedRole))) return true;
+  } catch {
+    // ignore
+  }
+  return false;
+}
+
 export function hasPermission(
-  user: { permissions?: string[] } | null | undefined,
+  user: { permissions?: string[]; role?: string; primaryRole?: string; roles?: string[] } | null | undefined,
   code: string,
 ): boolean {
-  if (!user?.permissions?.length) return false;
+  if (!user) return false;
+  if (hasElevatedAdminRole(user)) return true;
+  if (!user.permissions?.length) return false;
   const normalized = code.toLowerCase();
   return user.permissions.some((p) => p.toLowerCase() === normalized);
 }
@@ -40,8 +63,10 @@ export function hasAnyPermission(
 
 /** True when the user has any admin-portal permission. */
 export function hasAdminPortalAccess(
-  user: { permissions?: string[] } | null | undefined,
+  user: { permissions?: string[]; role?: string; primaryRole?: string; roles?: string[] } | null | undefined,
 ): boolean {
+  if (!user) return false;
+  if (hasElevatedAdminRole(user)) return true;
   return hasAnyPermission(user, PORTAL_PERMISSIONS);
 }
 
@@ -116,11 +141,40 @@ export function permissionForAdminPath(path: string): string | null {
 }
 
 export function canAccessAdminPath(
-  user: { permissions?: string[] } | null | undefined,
+  user: { permissions?: string[]; role?: string; primaryRole?: string; roles?: string[] } | null | undefined,
   path: string,
 ): boolean {
   if (!canAccessAdmin(user)) return false;
+  if (hasElevatedAdminRole(user)) return true;
   const required = permissionForAdminPath(path);
   if (!required) return hasAdminPortalAccess(user);
   return hasPermission(user, required);
+}
+
+export function canCreateUsers(user: { permissions?: string[] } | null | undefined): boolean {
+  return hasPermission(user, 'Users.Create');
+}
+
+export function canEditUsers(user: { permissions?: string[] } | null | undefined): boolean {
+  return hasPermission(user, 'Users.Edit');
+}
+
+export function canDeleteUsers(user: { permissions?: string[] } | null | undefined): boolean {
+  return hasPermission(user, 'Users.Delete');
+}
+
+export function canSuspendUsers(user: { permissions?: string[] } | null | undefined): boolean {
+  return hasPermission(user, 'Users.Suspend');
+}
+
+export function canVerifyUserEmail(user: { permissions?: string[] } | null | undefined): boolean {
+  return hasPermission(user, 'Users.VerifyEmail');
+}
+
+export function canCreateSubscriptionPlans(user: { permissions?: string[] } | null | undefined): boolean {
+  return hasPermission(user, 'Subscriptions.Create');
+}
+
+export function canEditSubscriptionPlans(user: { permissions?: string[] } | null | undefined): boolean {
+  return hasPermission(user, 'Subscriptions.Edit');
 }

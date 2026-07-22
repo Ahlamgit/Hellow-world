@@ -16,6 +16,10 @@ public class RegisterRequestValidator : AbstractValidator<RegisterRequestDto>
             try { passwordPolicy.ValidatePassword(p); }
             catch (Exception ex) { ctx.AddFailure(ex.Message); }
         });
+        RuleFor(x => x.ConfirmPassword)
+            .NotEmpty()
+            .Equal(x => x.Password)
+            .WithMessage("Passwords do not match.");
         RuleFor(x => x.FirstName).NotEmpty().MaximumLength(100);
         RuleFor(x => x.LastName).NotEmpty().MaximumLength(100);
         RuleFor(x => x.Role).NotEmpty()
@@ -48,7 +52,10 @@ public class ResetPasswordRequestValidator : AbstractValidator<ResetPasswordRequ
             try { passwordPolicy.ValidatePassword(p); }
             catch (Exception ex) { ctx.AddFailure(ex.Message); }
         });
-        RuleFor(x => x.ConfirmPassword).Equal(x => x.NewPassword);
+        RuleFor(x => x.ConfirmPassword)
+            .NotEmpty()
+            .Equal(x => x.NewPassword)
+            .WithMessage("Passwords do not match.");
     }
 }
 
@@ -62,7 +69,10 @@ public class ChangePasswordRequestValidator : AbstractValidator<ChangePasswordRe
             try { passwordPolicy.ValidatePassword(p); }
             catch (Exception ex) { ctx.AddFailure(ex.Message); }
         });
-        RuleFor(x => x.ConfirmPassword).Equal(x => x.NewPassword);
+        RuleFor(x => x.ConfirmPassword)
+            .NotEmpty()
+            .Equal(x => x.NewPassword)
+            .WithMessage("Passwords do not match.");
         RuleFor(x => x.NewPassword).NotEqual(x => x.CurrentPassword);
     }
 }
@@ -107,12 +117,19 @@ public class RevokeTokenRequestValidator : AbstractValidator<RevokeTokenRequestD
 
 public class UpdateProfileRequestValidator : AbstractValidator<UpdateProfileRequestDto>
 {
-    public UpdateProfileRequestValidator()
+    public UpdateProfileRequestValidator(ILocationCatalogService locations)
     {
         RuleFor(x => x.FirstName).NotEmpty().MaximumLength(100);
         RuleFor(x => x.LastName).NotEmpty().MaximumLength(100);
         RuleFor(x => x.PreferredLanguage).Must(l => l is "ar" or "en");
         RuleFor(x => x.Timezone).NotEmpty();
+        RuleFor(x => x.Country).MaximumLength(50);
+        RuleFor(x => x.Region)
+            .MustAsync(async (region, ct) => string.IsNullOrWhiteSpace(region) || await locations.IsActiveRegionAsync(region, ct))
+            .WithMessage("Region must be selected from the location catalog.");
+        RuleFor(x => x.City)
+            .MustAsync(async (dto, city, ct) => string.IsNullOrWhiteSpace(city) || await locations.IsActiveCityAsync(city, dto.Region, ct))
+            .WithMessage("City must be selected from the location catalog.");
     }
 }
 

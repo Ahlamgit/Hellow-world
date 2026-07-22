@@ -36,7 +36,8 @@
     "loginTitle": "تسجيل الدخول",
     "registerTitle": "إنشاء حساب",
     "noAccount": "ليس لديك حساب؟",
-    "hasAccount": "لديك حساب بالفعل؟"
+    "hasAccount": "لديك حساب بالفعل؟",
+    "confirmPassword": "تأكيد كلمة المرور"
   },
   "identity": {
     "forgotPassword": "نسيت كلمة المرور؟",
@@ -52,13 +53,14 @@
     "confirmPassword": "تأكيد كلمة المرور",
     "currentPassword": "كلمة المرور الحالية",
     "passwordMismatch": "كلمتا المرور غير متطابقتين.",
+    "newPasswordMustDiffer": "يجب أن تكون كلمة المرور الجديدة مختلفة عن الحالية.",
     "changePassword": "تغيير كلمة المرور",
     "changePasswordTitle": "تغيير كلمة المرور",
     "changePasswordHint": "تغيير كلمة المرور سيُنهي جلساتك على جميع الأجهزة.",
     "changePasswordSuccess": "تم تغيير كلمة المرور. يرجى تسجيل الدخول مجدداً.",
     "verifyEmail": "تأكيد البريد",
     "verifyEmailTitle": "تأكيد البريد الإلكتروني",
-    "verifyEmailHint": "الصق رمز التأكيد من بريدك الإلكتروني.",
+    "verifyEmailHint": "أرسلنا رابط تأكيد إلى بريدك الإلكتروني. افتح الرابط أو الصق الرمز أدناه.",
     "verifyEmailSuccess": "تم تأكيد البريد الإلكتروني بنجاح.",
     "verifyEmailPrompt": "يرجى تأكيد بريدك الإلكتروني لتفعيل جميع الميزات.",
     "verifyingEmail": "جاري تأكيد بريدك الإلكتروني...",
@@ -66,6 +68,9 @@
     "resendVerification": "إعادة إرسال بريد التأكيد",
     "resendSuccess": "تم إرسال بريد التأكيد.",
     "resendRequiresLogin": "سجّل الدخول لإعادة إرسال بريد التأكيد.",
+    "devActionLinkHint": "وضع التطوير — استخدم هذا الرابط:",
+    "devVerificationLinkHint": "وضع التطوير — أكّد بريدك باستخدام هذا الرابط:",
+    "devResetLinkHint": "وضع التطوير — أعد تعيين كلمة المرور باستخدام هذا الرابط:",
     "sessionsTitle": "الجلسات النشطة",
     "sessionsHint": "إدارة الأجهزة التي سجّلت الدخول منها.",
     "currentSession": "هذا الجهاز",
@@ -189,6 +194,12 @@
     "empty": "لا توجد محادثات بعد. افتح المحادثة من صفحة تفاصيل الحجز.",
     "messageHint": "اكتب رسالة...",
     "openChat": "فتح المحادثة"
+  },
+  "locations": {
+    "selectRegion": "اختر المنطقة",
+    "selectCity": "اختر المدينة",
+    "loadError": "تعذر تحميل المناطق. يُرجى من المسؤول إعداد دليل المواقع.",
+    "countryFromRegion": "يُحدد تلقائياً من المنطقة المختارة"
   },
   "addresses": {
     "title": "العناوين المحفوظة",

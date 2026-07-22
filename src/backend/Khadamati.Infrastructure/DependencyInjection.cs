@@ -35,7 +35,11 @@ public static class DependencyInjection
 
             options.UseSqlServer(
                 configuration.GetConnectionString("DefaultConnection"),
-                sql => sql.MigrationsAssembly(typeof(ApplicationDbContext).Assembly.FullName));
+                sql =>
+                {
+                    sql.MigrationsAssembly(typeof(ApplicationDbContext).Assembly.FullName);
+                    sql.UseCompatibilityLevel(120); // SQL Server 2014
+                });
         });
 
         services.AddScoped<IUnitOfWork, UnitOfWork>();
@@ -47,6 +51,7 @@ public static class DependencyInjection
         services.AddScoped<IBookingRepository, BookingRepository>();
         services.AddScoped<IUserRepository, UserRepository>();
 
+        services.AddScoped<ILocationCatalogService, LocationCatalogService>();
         services.AddScoped<IAuthService, AuthService>();
         services.AddScoped<ISessionService, SessionService>();
         services.AddScoped<IProfileService, ProfileService>();

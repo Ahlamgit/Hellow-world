@@ -3,6 +3,8 @@ import { Box, Card, CardContent, TextField, Button, Typography, Alert, MenuItem 
 import { Link, useNavigate } from 'react-router-dom';
 import { useTranslation } from 'react-i18next';
 import { useAuth } from '../context/AuthContext';
+import { canAccessAdmin } from '../utils/permissions';
+import PasswordConfirmFields, { passwordsMatch } from '../components/PasswordConfirmFields';
 
 export default function LoginPage() {
   const { t } = useTranslation();
@@ -19,7 +21,9 @@ export default function LoginPage() {
     setLoading(true);
     try {
       await login(email, password);
-      navigate('/dashboard');
+      const stored = localStorage.getItem('user');
+      const loggedInUser = stored ? JSON.parse(stored) as { permissions?: string[]; role?: string; primaryRole?: string } : null;
+      navigate(canAccessAdmin(loggedInUser) ? '/admin' : '/dashboard');
     } catch {
       setError(t('common.error'));
     } finally {
@@ -57,7 +61,7 @@ export function RegisterPage() {
   const { register } = useAuth();
   const navigate = useNavigate();
   const [form, setForm] = useState({
-    email: '', phone: '', password: '', firstName: '', lastName: '', role: 'Customer', preferredLanguage: 'ar',
+    email: '', phone: '', password: '', confirmPassword: '', firstName: '', lastName: '', role: 'Customer', preferredLanguage: 'ar',
   });
   const [error, setError] = useState('');
   const [loading, setLoading] = useState(false);
@@ -65,10 +69,14 @@ export function RegisterPage() {
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
     setError('');
+    if (form.password !== form.confirmPassword) {
+      setError(t('identity.passwordMismatch'));
+      return;
+    }
     setLoading(true);
     try {
-      await register(form);
-      navigate('/dashboard');
+      const verificationLink = await register(form);
+      navigate('/verify-email', { state: { actionLink: verificationLink } });
     } catch {
       setError(t('common.error'));
     } finally {
@@ -87,13 +95,18 @@ export function RegisterPage() {
             <TextField label={t('auth.lastName')} value={form.lastName} onChange={(e) => setForm({ ...form, lastName: e.target.value })} required fullWidth />
             <TextField label={t('auth.email')} type="email" value={form.email} onChange={(e) => setForm({ ...form, email: e.target.value })} required fullWidth />
             <TextField label={t('auth.phone')} value={form.phone} onChange={(e) => setForm({ ...form, phone: e.target.value })} required fullWidth />
-            <TextField label={t('auth.password')} type="password" value={form.password} onChange={(e) => setForm({ ...form, password: e.target.value })} required fullWidth />
+            <PasswordConfirmFields
+              password={form.password}
+              confirmPassword={form.confirmPassword}
+              onPasswordChange={(password) => setForm({ ...form, password })}
+              onConfirmPasswordChange={(confirmPassword) => setForm({ ...form, confirmPassword })}
+            />
             <TextField select label={t('auth.role')} value={form.role} onChange={(e) => setForm({ ...form, role: e.target.value })} fullWidth>
               <MenuItem value="Customer">{t('auth.customer')}</MenuItem>
               <MenuItem value="Craftsman">{t('auth.craftsman')}</MenuItem>
               <MenuItem value="Store">{t('auth.store')}</MenuItem>
             </TextField>
-            <Button type="submit" variant="contained" size="large" disabled={loading}>
+            <Button type="submit" variant="contained" size="large" disabled={loading || !passwordsMatch(form.password, form.confirmPassword)}>
               {loading ? t('common.loading') : t('nav.register')}
             </Button>
           </Box>
