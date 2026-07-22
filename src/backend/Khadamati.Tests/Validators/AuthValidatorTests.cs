@@ -27,7 +27,7 @@ public class AuthValidatorTests
     [Fact]
     public async Task Register_WithValidData_ShouldPass()
     {
-        var dto = new RegisterRequestDto("user@test.com", "+966501234567", "Password1!", "John", "Doe", "Customer");
+        var dto = new RegisterRequestDto("user@test.com", "+966501234567", "Password1!", "Password1!", "John", "Doe", "Customer");
         var result = await _registerValidator.ValidateAsync(dto);
         result.IsValid.Should().BeTrue();
     }
@@ -35,7 +35,7 @@ public class AuthValidatorTests
     [Fact]
     public async Task Register_WithWeakPassword_ShouldFail()
     {
-        var dto = new RegisterRequestDto("user@test.com", "+966501234567", "weak", "John", "Doe", "Customer");
+        var dto = new RegisterRequestDto("user@test.com", "+966501234567", "weak", "weak", "John", "Doe", "Customer");
         var result = await _registerValidator.ValidateAsync(dto);
         result.IsValid.Should().BeFalse();
     }
@@ -43,7 +43,7 @@ public class AuthValidatorTests
     [Fact]
     public async Task Register_WithAdminRole_ShouldFail()
     {
-        var dto = new RegisterRequestDto("admin@test.com", "+966501234567", "Password1!", "Admin", "User", "Administrator");
+        var dto = new RegisterRequestDto("admin@test.com", "+966501234567", "Password1!", "Password1!", "Admin", "User", "Administrator");
         var result = await _registerValidator.ValidateAsync(dto);
         result.IsValid.Should().BeFalse();
     }
@@ -54,6 +54,14 @@ public class AuthValidatorTests
         var dto = new LoginRequestDto("user@test.com", "Password1!", true);
         var result = await _loginValidator.ValidateAsync(dto);
         result.IsValid.Should().BeTrue();
+    }
+
+    [Fact]
+    public async Task Register_WithMismatchedConfirmPassword_ShouldFail()
+    {
+        var dto = new RegisterRequestDto("user@test.com", "+966501234567", "Password1!", "Different1!", "John", "Doe", "Customer");
+        var result = await _registerValidator.ValidateAsync(dto);
+        result.IsValid.Should().BeFalse();
     }
 
     [Fact]

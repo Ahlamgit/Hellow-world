@@ -196,13 +196,14 @@ public class BookingService : IBookingService
         if (existing is { Status: PaymentStatus.Pending or PaymentStatus.Processing })
             return MapPaymentDto(existing, existing.TransactionReference);
 
+        var currency = string.IsNullOrWhiteSpace(dto.Currency) ? "SAR" : dto.Currency.Trim().ToUpperInvariant();
         var payment = new BookingPayment
         {
             ServiceRequestId = bookingId,
             PayerUserId = userId,
             PayeeUserId = booking.CraftsmanId,
             Amount = booking.EstimatedPrice,
-            Currency = "SAR",
+            Currency = currency,
             Status = PaymentStatus.Pending,
             PaymentMethod = dto.PaymentMethod
         };

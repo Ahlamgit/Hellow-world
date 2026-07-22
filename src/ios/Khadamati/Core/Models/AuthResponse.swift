@@ -16,6 +16,7 @@ struct RegisterRequest: Encodable {
     let email: String
     let phone: String
     let password: String
+    let confirmPassword: String
     let firstName: String
     let lastName: String
     let role: String
