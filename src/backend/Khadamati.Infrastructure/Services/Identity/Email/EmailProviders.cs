@@ -95,25 +95,27 @@ public class EmailService : IEmailService
         _configuration = configuration;
     }
 
-    public Task SendEmailVerificationAsync(string email, string firstName, string verificationToken, string language, CancellationToken cancellationToken = default)
+    public async Task<string> SendEmailVerificationAsync(string email, string firstName, string verificationToken, string language, CancellationToken cancellationToken = default)
     {
-        var baseUrl = _configuration["App:WebBaseUrl"] ?? "http://localhost:3000";
+        var baseUrl = _configuration["App:WebBaseUrl"] ?? "http://localhost:5173";
         var link = $"{baseUrl}/verify-email?token={verificationToken}";
         var subject = language == "ar" ? "تأكيد البريد الإلكتروني - خدماتي" : "Verify your email - Khadamati";
         var body = language == "ar"
             ? $"<p>مرحباً {firstName}،</p><p>يرجى تأكيد بريدك الإلكتروني: <a href=\"{link}\">{link}</a></p>"
             : $"<p>Hello {firstName},</p><p>Please verify your email: <a href=\"{link}\">{link}</a></p>";
-        return _provider.SendAsync(email, subject, body, cancellationToken);
+        await _provider.SendAsync(email, subject, body, cancellationToken);
+        return link;
     }
 
-    public Task SendPasswordResetAsync(string email, string firstName, string resetToken, string language, CancellationToken cancellationToken = default)
+    public async Task<string> SendPasswordResetAsync(string email, string firstName, string resetToken, string language, CancellationToken cancellationToken = default)
     {
-        var baseUrl = _configuration["App:WebBaseUrl"] ?? "http://localhost:3000";
+        var baseUrl = _configuration["App:WebBaseUrl"] ?? "http://localhost:5173";
         var link = $"{baseUrl}/reset-password?token={resetToken}";
         var subject = language == "ar" ? "إعادة تعيين كلمة المرور - خدماتي" : "Reset your password - Khadamati";
         var body = language == "ar"
             ? $"<p>مرحباً {firstName}،</p><p>أعد تعيين كلمة المرور: <a href=\"{link}\">{link}</a></p>"
             : $"<p>Hello {firstName},</p><p>Reset your password: <a href=\"{link}\">{link}</a></p>";
-        return _provider.SendAsync(email, subject, body, cancellationToken);
+        await _provider.SendAsync(email, subject, body, cancellationToken);
+        return link;
     }
 }

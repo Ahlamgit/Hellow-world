@@ -74,8 +74,8 @@ public interface IEmailProvider
 
 public interface IEmailService
 {
-    Task SendEmailVerificationAsync(string email, string firstName, string verificationToken, string language, CancellationToken cancellationToken = default);
-    Task SendPasswordResetAsync(string email, string firstName, string resetToken, string language, CancellationToken cancellationToken = default);
+    Task<string> SendEmailVerificationAsync(string email, string firstName, string verificationToken, string language, CancellationToken cancellationToken = default);
+    Task<string> SendPasswordResetAsync(string email, string firstName, string resetToken, string language, CancellationToken cancellationToken = default);
 }
 
 public interface IOtpService

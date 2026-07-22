@@ -86,7 +86,7 @@ public class ApiIntegrationTests : IClassFixture<KhadamatiWebApplicationFactory>
         servicesResponse.StatusCode.Should().Be(HttpStatusCode.OK);
         var servicesPayload = await servicesResponse.Content.ReadFromJsonAsync<ApiResponse<JsonElement>>();
         var serviceId = servicesPayload!.Data.EnumerateArray()
-            .First(s => s.GetProperty("nameEn").GetString() == "AC Maintenance")
+            .First(s => s.GetProperty("nameEn").GetString() == "Leak Repair")
             .GetProperty("id").GetString();
         serviceId.Should().NotBeNullOrWhiteSpace();
 

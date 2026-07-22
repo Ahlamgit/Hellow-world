@@ -4,6 +4,7 @@ import Foundation
 final class AuthViewModel: ObservableObject {
     @Published var email = ""
     @Published var password = ""
+    @Published var confirmPassword = ""
     @Published var phone = ""
     @Published var firstName = ""
     @Published var lastName = ""
@@ -27,7 +28,8 @@ final class AuthViewModel: ObservableObject {
         isLoginValid &&
         !phone.trimmingCharacters(in: .whitespaces).isEmpty &&
         !firstName.trimmingCharacters(in: .whitespaces).isEmpty &&
-        !lastName.trimmingCharacters(in: .whitespaces).isEmpty
+        !lastName.trimmingCharacters(in: .whitespaces).isEmpty &&
+        password == confirmPassword
     }
 
     func login(appSession: AppSession) async {
@@ -53,6 +55,11 @@ final class AuthViewModel: ObservableObject {
     func register(appSession: AppSession) async {
         guard isRegisterValid else { return }
 
+        if password != confirmPassword {
+            errorMessage = L10n.Auth.passwordMismatch
+            return
+        }
+
         isLoading = true
         errorMessage = nil
         defer { isLoading = false }
@@ -61,6 +68,7 @@ final class AuthViewModel: ObservableObject {
             email: email.trimmingCharacters(in: .whitespaces),
             phone: phone.trimmingCharacters(in: .whitespaces),
             password: password,
+            confirmPassword: confirmPassword,
             firstName: firstName.trimmingCharacters(in: .whitespaces),
             lastName: lastName.trimmingCharacters(in: .whitespaces),
             role: role,

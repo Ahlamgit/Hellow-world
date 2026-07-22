@@ -9,6 +9,7 @@ import { Add, Close, Delete, Refresh } from '@mui/icons-material';
 import {
   adminSubscriptionPlansApi,
   BILLING_CYCLES,
+  COMMON_CURRENCIES,
   emptyPlanForm,
   defaultBillingOption,
   PLAN_STATUSES,
@@ -19,6 +20,8 @@ import {
 } from './adminSubscriptionPlansApi';
 import type { PlanBillingOption } from '../services/subscriptionsApi';
 import { getApiErrorMessage } from '../utils/apiError';
+import { useAuth } from '../context/AuthContext';
+import { canCreateSubscriptionPlans, canEditSubscriptionPlans } from '../utils/permissions';
 
 const PAGE_SIZES = [10, 25, 50];
 
@@ -29,9 +32,9 @@ function StatusChip({ status }: { status: string }) {
   return <Chip label={status} size="small" color={color} variant={status === 'Archived' ? 'outlined' : 'filled'} />;
 }
 
-function billingSummary(options: PlanBillingOption[]) {
+function billingSummary(options: PlanBillingOption[], currency: string) {
   if (!options.length) return '—';
-  return options.map((o) => `${o.cycle}: ${o.price} SAR`).join(' · ');
+  return options.map((o) => `${o.cycle}: ${o.price} ${currency}`).join(' · ');
 }
 
 interface PlanFormProps {
@@ -79,12 +82,18 @@ function PlanForm({ form, onChange, isEdit }: PlanFormProps) {
       <TextField label="Description (EN)" value={form.descriptionEn ?? ''} onChange={(e) => set('descriptionEn', e.target.value)} multiline rows={2} fullWidth />
       <TextField label="Description (AR)" value={form.descriptionAr ?? ''} onChange={(e) => set('descriptionAr', e.target.value)} multiline rows={2} fullWidth />
       <Box sx={{ display: 'flex', gap: 2, flexWrap: 'wrap' }}>
-        <FormControl sx={{ minWidth: 120 }}>
-          <InputLabel>Currency</InputLabel>
-          <Select label="Currency" value={form.currency} onChange={(e) => set('currency', e.target.value)}>
-            <MenuItem value="SAR">SAR</MenuItem>
-          </Select>
-        </FormControl>
+        <TextField
+          label="Currency"
+          value={form.currency}
+          onChange={(e) => set('currency', e.target.value.toUpperCase().slice(0, 3))}
+          helperText="ISO 4217 code (e.g. SAR, USD, EUR)"
+          slotProps={{ htmlInput: { list: 'plan-currency-options', maxLength: 3 } }}
+          sx={{ minWidth: 140 }}
+          required
+        />
+        <datalist id="plan-currency-options">
+          {COMMON_CURRENCIES.map((c) => <option key={c} value={c} />)}
+        </datalist>
         <FormControl sx={{ minWidth: 160 }}>
           <InputLabel>Target role</InputLabel>
           <Select label="Target role" value={form.targetRole} onChange={(e) => set('targetRole', e.target.value)}>
@@ -165,6 +174,9 @@ function planToForm(plan: AdminSubscriptionPlan): CreateSubscriptionPlanRequest 
 }
 
 export default function AdminSubscriptionPlansPage() {
+  const { user } = useAuth();
+  const canCreate = canCreateSubscriptionPlans(user);
+  const canEdit = canEditSubscriptionPlans(user);
   const [plans, setPlans] = useState<AdminSubscriptionPlan[]>([]);
   const [totalCount, setTotalCount] = useState(0);
   const [loading, setLoading] = useState(true);
@@ -292,7 +304,9 @@ export default function AdminSubscriptionPlansPage() {
     <Box>
       <Box sx={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', mb: 2 }}>
         <Typography variant="h5" sx={{ fontWeight: 700 }}>Subscription Plans</Typography>
-        <Button variant="contained" startIcon={<Add />} onClick={openCreate}>New plan</Button>
+        {canCreate && (
+          <Button variant="contained" startIcon={<Add />} onClick={openCreate}>New plan</Button>
+        )}
       </Box>
 
       <Paper sx={{ mb: 2 }}>
@@ -304,6 +318,7 @@ export default function AdminSubscriptionPlansPage() {
             onChange={(e) => setSearchInput(e.target.value)}
             onKeyDown={(e) => e.key === 'Enter' && (setSearch(searchInput), setPage(0))}
           />
+          <Button size="small" variant="outlined" onClick={() => { setSearch(searchInput); setPage(0); }}>Search</Button>
           <FormControl size="small" sx={{ minWidth: 130 }}>
             <InputLabel>Status</InputLabel>
             <Select label="Status" value={statusFilter} onChange={(e) => { setStatusFilter(e.target.value); setPage(0); }}>
@@ -350,25 +365,29 @@ export default function AdminSubscriptionPlansPage() {
                 <TableCell><Chip label={plan.targetRole} size="small" variant="outlined" /></TableCell>
                 <TableCell><StatusChip status={plan.status} /></TableCell>
                 <TableCell sx={{ maxWidth: 280, overflow: 'hidden', textOverflow: 'ellipsis', whiteSpace: 'nowrap' }}>
-                  {billingSummary(plan.billingOptions)}
+                  {billingSummary(plan.billingOptions, plan.currency)}
                 </TableCell>
                 <TableCell align="right">
                   <Stack direction="row" spacing={0.5} sx={{ justifyContent: 'flex-end', flexWrap: 'wrap' }}>
-                    <Button size="small" onClick={() => openEdit(plan.id)}>Edit</Button>
-                    {plan.status !== 'Active' && (
+                    {canEdit && <Button size="small" onClick={() => openEdit(plan.id)}>Edit</Button>}
+                    {canEdit && plan.status !== 'Active' && (
                       <Button size="small" color="success" onClick={() => runAction(plan.id, 'activate')}>Activate</Button>
                     )}
-                    {plan.status === 'Active' && (
+                    {canEdit && plan.status === 'Active' && (
                       <Button size="small" onClick={() => runAction(plan.id, 'deactivate')}>Deactivate</Button>
                     )}
-                    {plan.status !== 'Suspended' && plan.status !== 'Archived' && (
+                    {canEdit && plan.status !== 'Suspended' && plan.status !== 'Archived' && (
                       <Button size="small" color="warning" onClick={() => runAction(plan.id, 'suspend')}>Suspend</Button>
                     )}
-                    {plan.status !== 'Archived' && (
+                    {canEdit && plan.status !== 'Archived' && (
                       <Button size="small" onClick={() => runAction(plan.id, 'archive')}>Archive</Button>
                     )}
-                    <Button size="small" onClick={() => { setCloneId(plan.id); setCloneCode(`${plan.planCode}_COPY`); setCloneOpen(true); }}>Clone</Button>
-                    <Button size="small" color="error" onClick={() => { setDeleteId(plan.id); setDeleteOpen(true); }}>Delete</Button>
+                    {canCreate && (
+                      <Button size="small" onClick={() => { setCloneId(plan.id); setCloneCode(`${plan.planCode}_COPY`); setCloneOpen(true); }}>Clone</Button>
+                    )}
+                    {canEdit && (
+                      <Button size="small" color="error" onClick={() => { setDeleteId(plan.id); setDeleteOpen(true); }}>Delete</Button>
+                    )}
                   </Stack>
                 </TableCell>
               </TableRow>
@@ -433,7 +452,11 @@ export default function AdminSubscriptionPlansPage() {
       </Dialog>
 
       <Snackbar open={!!snack} autoHideDuration={5000} onClose={() => setSnack(null)} anchorOrigin={{ vertical: 'bottom', horizontal: 'center' }}>
-        {snack ? <Alert severity={snack.severity} onClose={() => setSnack(null)}>{snack.message}</Alert> : undefined}
+        {snack ? (
+          <Alert severity={snack.severity} onClose={() => setSnack(null)} sx={{ width: '100%' }}>
+            {snack.message}
+          </Alert>
+        ) : undefined}
       </Snackbar>
     </Box>
   );

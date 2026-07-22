@@ -35,6 +35,7 @@
     "store": "Store",
     "loginTitle": "Sign In",
     "registerTitle": "Create Account",
+    "confirmPassword": "Confirm Password",
     "noAccount": "Don't have an account?",
     "hasAccount": "Already have an account?"
   },
@@ -52,13 +53,14 @@
     "confirmPassword": "Confirm Password",
     "currentPassword": "Current Password",
     "passwordMismatch": "Passwords do not match.",
+    "newPasswordMustDiffer": "New password must be different from your current password.",
     "changePassword": "Change Password",
     "changePasswordTitle": "Change Password",
     "changePasswordHint": "Changing your password will sign you out of all devices.",
     "changePasswordSuccess": "Password changed. Please sign in again.",
     "verifyEmail": "Verify Email",
     "verifyEmailTitle": "Email Verification",
-    "verifyEmailHint": "Paste the verification token from your email.",
+    "verifyEmailHint": "We sent a verification link to your email. Open the link or paste the token below.",
     "verifyEmailSuccess": "Email verified successfully.",
     "verifyEmailPrompt": "Please verify your email to unlock all features.",
     "verifyingEmail": "Verifying your email...",
@@ -66,6 +68,9 @@
     "resendVerification": "Resend verification email",
     "resendSuccess": "Verification email sent.",
     "resendRequiresLogin": "Sign in to resend verification email.",
+    "devActionLinkHint": "Development mode — use this link:",
+    "devVerificationLinkHint": "Development mode — verify your email using this link:",
+    "devResetLinkHint": "Development mode — reset your password using this link:",
     "sessionsTitle": "Active Sessions",
     "sessionsHint": "Manage devices where you are signed in.",
     "currentSession": "this device",
@@ -189,6 +194,12 @@
     "empty": "No conversations yet. Open chat from a booking detail page.",
     "messageHint": "Type a message...",
     "openChat": "Open Chat"
+  },
+  "locations": {
+    "selectRegion": "Select region",
+    "selectCity": "Select city",
+    "loadError": "Could not load regions. Ask an admin to configure the location catalog.",
+    "countryFromRegion": "Set automatically from the selected region"
   },
   "addresses": {
     "title": "Saved Addresses",

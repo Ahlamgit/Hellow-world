@@ -11,6 +11,7 @@ public record RegisterRequestDto(
     string Email,
     string Phone,
     string Password,
+    string ConfirmPassword,
     string FirstName,
     string LastName,
     string Role,
@@ -77,9 +78,10 @@ public record AuthResponseDto(
     string RefreshToken,
     DateTime ExpiresAt,
     Guid SessionId,
-    UserDto User);
+    UserDto User,
+    string? EmailVerificationLink = null);
 
-public record MessageResponseDto(string Message);
+public record MessageResponseDto(string Message, string? ActionLink = null);
 
 public record OtpSentResponseDto(string Message, DateTime ExpiresAt, int ExpiresInSeconds);
 

@@ -59,6 +59,8 @@ public class AuthServiceTests : IDisposable
         var passwordPolicy = new PasswordPolicyService(config, identityRepository, _passwordHasher);
         var permissionService = new PermissionService(identityRepository, new Microsoft.Extensions.Caching.Memory.MemoryCache(new Microsoft.Extensions.Caching.Memory.MemoryCacheOptions()));
         var emailMock = new Mock<IEmailService>();
+        emailMock.Setup(e => e.SendEmailVerificationAsync(It.IsAny<string>(), It.IsAny<string>(), It.IsAny<string>(), It.IsAny<string>(), It.IsAny<CancellationToken>()))
+            .ReturnsAsync("http://localhost:5173/verify-email?token=test");
         var smsMock = new Mock<ISmsService>();
         var auditMock = new Mock<IAuditService>();
         var mapper = new MapperConfiguration(c => c.AddProfile<MappingProfile>()).CreateMapper();
@@ -74,7 +76,7 @@ public class AuthServiceTests : IDisposable
     [Fact]
     public async Task Register_ShouldCreateUserAndReturnTokens()
     {
-        var request = new RegisterRequestDto("newuser@test.com", "+966509999999", "Password1!", "Test", "User", RoleNames.Customer);
+        var request = new RegisterRequestDto("newuser@test.com", "+966509999999", "Password1!", "Password1!", "Test", "User", RoleNames.Customer);
         var result = await _authService.RegisterAsync(request, "127.0.0.1");
 
         result.AccessToken.Should().NotBeNullOrEmpty();

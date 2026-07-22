@@ -1,5 +1,7 @@
 import axios from 'axios';
 
+// Direct API URL in dev avoids Vite proxy issues when the backend is on port 5000.
+// Development CORS allows any localhost origin (see Program.cs).
 const API_BASE_URL = import.meta.env.VITE_API_URL || 'http://localhost:5000/api/v1';
 
 export const api = axios.create({
@@ -65,6 +67,12 @@ export interface AuthResponse {
   expiresAt: string;
   sessionId: string;
   user: UserDto;
+  emailVerificationLink?: string;
+}
+
+export interface MessageResponse {
+  message: string;
+  actionLink?: string;
 }
 
 export interface UserDto {
@@ -217,22 +225,33 @@ export interface Booking {
   statusHistory: { oldStatus?: string; newStatus: string; notes?: string; createdAt: string }[];
 }
 
+export interface RegisterRequest {
+  email: string;
+  phone: string;
+  password: string;
+  confirmPassword: string;
+  firstName: string;
+  lastName: string;
+  role: string;
+  preferredLanguage: string;
+}
+
 export const authApi = {
   login: (email: string, password: string, rememberMe = false) =>
     api.post<ApiResponse<AuthResponse>>('/auth/login', { email, password, rememberMe }),
-  register: (data: Record<string, string>) =>
+  register: (data: RegisterRequest) =>
     api.post<ApiResponse<AuthResponse>>('/auth/register', data),
   logout: () => api.post('/auth/revoke', { refreshToken: localStorage.getItem('refreshToken') }),
   forgotPassword: (email: string) =>
-    api.post<ApiResponse<{ message: string }>>('/auth/forgot-password', { email }),
+    api.post<ApiResponse<MessageResponse>>('/auth/forgot-password', { email }),
   resetPassword: (token: string, newPassword: string, confirmPassword: string) =>
-    api.post<ApiResponse<{ message: string }>>('/auth/reset-password', { token, newPassword, confirmPassword }),
+    api.post<ApiResponse<MessageResponse>>('/auth/reset-password', { token, newPassword, confirmPassword }),
   changePassword: (currentPassword: string, newPassword: string, confirmPassword: string) =>
-    api.post<ApiResponse<{ message: string }>>('/auth/change-password', { currentPassword, newPassword, confirmPassword }),
+    api.post<ApiResponse<MessageResponse>>('/auth/change-password', { currentPassword, newPassword, confirmPassword }),
   verifyEmail: (token: string) =>
-    api.post<ApiResponse<{ message: string }>>('/auth/verify-email', { token }),
+    api.post<ApiResponse<MessageResponse>>('/auth/verify-email', { token }),
   resendEmailVerification: (email: string) =>
-    api.post<ApiResponse<{ message: string }>>('/auth/resend-email-verification', { email }),
+    api.post<ApiResponse<MessageResponse>>('/auth/resend-email-verification', { email }),
   getMe: () => api.get<ApiResponse<{ permissions: string[] }>>('/auth/me'),
   getPermissions: () => api.get<ApiResponse<string[]>>('/auth/permissions'),
 };
@@ -302,8 +321,8 @@ export const bookingsApi = {
   getById: (id: string) => api.get<ApiResponse<Booking>>(`/bookings/${id}`),
   confirm: (id: string, notes?: string) =>
     api.post<ApiResponse<Booking>>(`/bookings/${id}/confirm`, { notes }),
-  initiatePayment: (id: string, paymentMethod: string) =>
-    api.post<ApiResponse<BookingPayment>>(`/bookings/${id}/payment`, { paymentMethod }),
+  initiatePayment: (id: string, paymentMethod: string, currency?: string) =>
+    api.post<ApiResponse<BookingPayment>>(`/bookings/${id}/payment`, { paymentMethod, currency }),
   confirmPayment: (id: string, transactionReference: string) =>
     api.post<ApiResponse<Booking>>(`/bookings/${id}/payment/confirm`, { transactionReference }),
   accept: (id: string) => api.post<ApiResponse<Booking>>(`/bookings/${id}/accept`),
