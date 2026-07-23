@@ -12,17 +12,20 @@ public class UserSubscriptionService : IUserSubscriptionService
     private readonly IUserSubscriptionRepository _subscriptionRepository;
     private readonly ISubscriptionPlanRepository _planRepository;
     private readonly IUserRepository _userRepository;
+    private readonly ICouponService _couponService;
     private readonly IUnitOfWork _unitOfWork;
 
     public UserSubscriptionService(
         IUserSubscriptionRepository subscriptionRepository,
         ISubscriptionPlanRepository planRepository,
         IUserRepository userRepository,
+        ICouponService couponService,
         IUnitOfWork unitOfWork)
     {
         _subscriptionRepository = subscriptionRepository;
         _planRepository = planRepository;
         _userRepository = userRepository;
+        _couponService = couponService;
         _unitOfWork = unitOfWork;
     }
 
@@ -70,7 +73,20 @@ public class UserSubscriptionService : IUserSubscriptionService
         var billingOption = plan.BillingOptions.FirstOrDefault(b => b.Id == request.BillingOptionId && b.IsActive && !b.IsDeleted)
             ?? throw new ValidationException(["Invalid billing option for this plan."]);
 
-        var subscription = BuildSubscription(user, plan, billingOption, request.AutoRenew, request.CouponCode);
+        decimal amountPaid = billingOption.Price;
+        string? couponCode = null;
+
+        if (!string.IsNullOrWhiteSpace(request.CouponCode))
+        {
+            var couponResult = await _couponService.TryRedeemAsync(request.CouponCode, billingOption.Price, cancellationToken);
+            if (!couponResult.IsValid)
+                throw new ValidationException([couponResult.Message ?? "Invalid coupon."]);
+
+            amountPaid = couponResult.FinalAmount;
+            couponCode = couponResult.Code;
+        }
+
+        var subscription = BuildSubscription(user, plan, billingOption, request.AutoRenew, couponCode, amountPaid);
         await _subscriptionRepository.AddAsync(subscription, cancellationToken);
         SyncUserSubscriptionFields(user, subscription);
         _userRepository.Update(user);
@@ -146,7 +162,7 @@ public class UserSubscriptionService : IUserSubscriptionService
         var billingOption = plan.BillingOptions.FirstOrDefault(b => b.Id == request.BillingOptionId && !b.IsDeleted)
             ?? throw new ValidationException(["Invalid billing option for this plan."]);
 
-        var subscription = BuildSubscription(user, plan, billingOption, request.AutoRenew, couponCode: null);
+        var subscription = BuildSubscription(user, plan, billingOption, request.AutoRenew, couponCode: null, billingOption.Price);
         subscription.CreatedBy = grantedBy;
         await _subscriptionRepository.AddAsync(subscription, cancellationToken);
         SyncUserSubscriptionFields(user, subscription);
@@ -201,7 +217,8 @@ public class UserSubscriptionService : IUserSubscriptionService
         SubscriptionPlan plan,
         PlanBillingOption billingOption,
         bool autoRenew,
-        string? couponCode)
+        string? couponCode,
+        decimal amountPaid)
     {
         var now = DateTime.UtcNow;
         var status = plan.TrialDays > 0 ? SubscriptionStatus.Trial : SubscriptionStatus.Active;
@@ -216,7 +233,7 @@ public class UserSubscriptionService : IUserSubscriptionService
             StartDate = now,
             EndDate = endDate,
             AutoRenew = autoRenew || plan.AutoRenewal,
-            AmountPaid = billingOption.Price,
+            AmountPaid = amountPaid,
             Currency = plan.Currency,
             CouponCode = couponCode,
         };

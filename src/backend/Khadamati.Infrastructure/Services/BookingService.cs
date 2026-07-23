@@ -7,6 +7,8 @@ using Khadamati.Domain.Constants;
 using Khadamati.Domain.Entities;
 using Khadamati.Domain.Enums;
 using Khadamati.Domain.Interfaces;
+using Khadamati.Infrastructure.Common;
+using Microsoft.EntityFrameworkCore;
 
 namespace Khadamati.Infrastructure.Services;
 
@@ -163,7 +165,7 @@ public class BookingService : IBookingService
 
         await _repository.AddAsync(booking, cancellationToken);
         await AddHistoryAsync(booking, null, ServiceRequestStatus.Pending, customerId, "Booking created", cancellationToken);
-        await _unitOfWork.SaveChangesAsync(cancellationToken);
+        await SaveBookingChangesAsync(cancellationToken);
 
         booking.Service = service;
         booking.Customer = await _unitOfWork.Repository<User>().GetByIdAsync(customerId, cancellationToken) ?? new User();
@@ -182,7 +184,7 @@ public class BookingService : IBookingService
         if (!string.IsNullOrWhiteSpace(dto.Notes)) booking.Notes = dto.Notes;
 
         _repository.Update(booking);
-        await _unitOfWork.SaveChangesAsync(cancellationToken);
+        await SaveBookingChangesAsync(cancellationToken);
         return MapToDto(await ReloadBookingAsync(bookingId, cancellationToken));
     }
 
@@ -208,7 +210,7 @@ public class BookingService : IBookingService
         };
 
         await _repository.AddPaymentAsync(payment, cancellationToken);
-        await _unitOfWork.SaveChangesAsync(cancellationToken);
+        await SaveBookingChangesAsync(cancellationToken);
 
         var customer = await _unitOfWork.Repository<User>().GetByIdAsync(userId, cancellationToken);
         var session = await _paymentGateway.CreateSessionAsync(new PaymentSessionRequest
@@ -223,7 +225,7 @@ public class BookingService : IBookingService
         payment.Status = PaymentStatus.Processing;
         payment.TransactionReference = session.SessionId;
         _unitOfWork.Repository<BookingPayment>().Update(payment);
-        await _unitOfWork.SaveChangesAsync(cancellationToken);
+        await SaveBookingChangesAsync(cancellationToken);
         return MapPaymentDto(payment, session.SessionId, session.CheckoutUrl, session.Provider);
     }
 
@@ -298,7 +300,7 @@ public class BookingService : IBookingService
             "BookingConfirmation", booking.Id, cancellationToken);
 
         _repository.Update(booking);
-        await _unitOfWork.SaveChangesAsync(cancellationToken);
+        await SaveBookingChangesAsync(cancellationToken);
         return MapToDto(await ReloadBookingAsync(booking.Id, cancellationToken));
     }
 
@@ -320,7 +322,7 @@ public class BookingService : IBookingService
             "BookingConfirmed", bookingId, cancellationToken);
 
         _repository.Update(booking);
-        await _unitOfWork.SaveChangesAsync(cancellationToken);
+        await SaveBookingChangesAsync(cancellationToken);
         return MapToDto(await ReloadBookingAsync(bookingId, cancellationToken));
     }
 
@@ -339,7 +341,7 @@ public class BookingService : IBookingService
             "BookingRejected", bookingId, cancellationToken);
 
         _repository.Update(booking);
-        await _unitOfWork.SaveChangesAsync(cancellationToken);
+        await SaveBookingChangesAsync(cancellationToken);
         return MapToDto(await ReloadBookingAsync(bookingId, cancellationToken));
     }
 
@@ -357,7 +359,7 @@ public class BookingService : IBookingService
             "BookingCancelled", bookingId, cancellationToken);
 
         _repository.Update(booking);
-        await _unitOfWork.SaveChangesAsync(cancellationToken);
+        await SaveBookingChangesAsync(cancellationToken);
         return MapToDto(await ReloadBookingAsync(bookingId, cancellationToken));
     }
 
@@ -376,7 +378,7 @@ public class BookingService : IBookingService
             "BookingCompleted", bookingId, cancellationToken);
 
         _repository.Update(booking);
-        await _unitOfWork.SaveChangesAsync(cancellationToken);
+        await SaveBookingChangesAsync(cancellationToken);
         return MapToDto(await ReloadBookingAsync(bookingId, cancellationToken));
     }
 
@@ -394,7 +396,7 @@ public class BookingService : IBookingService
             "BookingNoShow", bookingId, cancellationToken);
 
         _repository.Update(booking);
-        await _unitOfWork.SaveChangesAsync(cancellationToken);
+        await SaveBookingChangesAsync(cancellationToken);
         return MapToDto(await ReloadBookingAsync(bookingId, cancellationToken));
     }
 
@@ -419,7 +421,7 @@ public class BookingService : IBookingService
         booking.ExpiresAt = DateTime.UtcNow.AddMinutes(30);
 
         _repository.Update(booking);
-        await _unitOfWork.SaveChangesAsync(cancellationToken);
+        await SaveBookingChangesAsync(cancellationToken);
         return MapToDto(await ReloadBookingAsync(bookingId, cancellationToken));
     }
 
@@ -511,7 +513,7 @@ public class BookingService : IBookingService
         notification.IsRead = true;
         notification.ReadAt = DateTime.UtcNow;
         _unitOfWork.Repository<Notification>().Update(notification);
-        await _unitOfWork.SaveChangesAsync(cancellationToken);
+        await SaveBookingChangesAsync(cancellationToken);
     }
 
     private async Task<ServiceRequest> GetBookingForCustomerAsync(Guid bookingId, Guid userId, CancellationToken cancellationToken)
@@ -590,6 +592,25 @@ public class BookingService : IBookingService
             NotificationType = type,
             ReferenceId = refId,
         }, cancellationToken);
+    }
+
+    private async Task<int> SaveBookingChangesAsync(CancellationToken cancellationToken)
+    {
+        try
+        {
+            return await _unitOfWork.SaveChangesAsync(cancellationToken);
+        }
+        catch (DbUpdateConcurrencyException)
+        {
+            throw new ConflictException("Booking was updated by another request. Please refresh and try again.");
+        }
+        catch (DbUpdateException ex) when (DbPersistenceExceptionMapper.IsUniqueConstraintViolation(ex))
+        {
+            var message = DbPersistenceExceptionMapper.IsSlotReservationConflict(ex)
+                ? "Time slot was booked by another customer."
+                : "A conflicting booking record already exists.";
+            throw new ConflictException(message);
+        }
     }
 
     private static string GenerateReference() => $"KHD-{DateTime.UtcNow:yyyyMMdd}-{Guid.NewGuid().ToString()[..6].ToUpperInvariant()}";

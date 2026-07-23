@@ -91,7 +91,7 @@ public class ApiIntegrationTests : IClassFixture<KhadamatiWebApplicationFactory>
         serviceId.Should().NotBeNullOrWhiteSpace();
 
         var response = await _client.GetAsync(
-            $"/api/v1/bookings/craftsmen/nearby?serviceId={serviceId}&latitude=24.7136&longitude=46.6753&radiusKm=50");
+            $"/api/v1/bookings/craftsmen/nearby?serviceId={serviceId}&latitude=33.8938&longitude=35.5018&radiusKm=50");
         response.StatusCode.Should().Be(HttpStatusCode.OK);
 
         var payload = await response.Content.ReadFromJsonAsync<ApiResponse<JsonElement>>();

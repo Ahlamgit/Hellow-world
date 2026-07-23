@@ -29,6 +29,7 @@ public class Coupon : BaseEntity
     public DateTime ValidFrom { get; set; }
     public DateTime ValidTo { get; set; }
     public bool IsActive { get; set; } = true;
+    public byte[] RowVersion { get; set; } = [];
 }
 
 public class Complaint : BaseEntity

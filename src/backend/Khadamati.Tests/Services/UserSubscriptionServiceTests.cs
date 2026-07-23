@@ -32,7 +32,8 @@ public class UserSubscriptionServiceTests : IDisposable
         var planRepository = new SubscriptionPlanRepository(_context);
         var userRepository = new UserRepository(_context);
         var unitOfWork = new UnitOfWork(_context);
-        _service = new UserSubscriptionService(subscriptionRepository, planRepository, userRepository, unitOfWork);
+        var couponService = new CouponService(unitOfWork, _context);
+        _service = new UserSubscriptionService(subscriptionRepository, planRepository, userRepository, couponService, unitOfWork);
 
         _craftsmanUserId = Guid.NewGuid();
         _planId = Guid.NewGuid();

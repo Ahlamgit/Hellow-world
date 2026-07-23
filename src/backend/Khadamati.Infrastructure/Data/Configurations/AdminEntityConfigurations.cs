@@ -21,9 +21,12 @@ public class CouponConfiguration : IEntityTypeConfiguration<Coupon>
     {
         builder.ToTable("Coupons");
         builder.HasKey(c => c.Id);
-        builder.HasIndex(c => c.Code).IsUnique();
+        builder.HasIndex(c => c.Code).IsUnique()
+            .HasFilter("[Deleted] = 0")
+            .HasDatabaseName("IX_Coupons_Code_Active");
         builder.Property(c => c.Code).HasMaxLength(50);
         builder.Property(c => c.DiscountPercentage).HasPrecision(5, 2);
+        builder.Property(c => c.RowVersion).IsRowVersion();
     }
 }
 
