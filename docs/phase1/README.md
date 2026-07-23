@@ -5,8 +5,8 @@ KHADAMATI Phase 1 is split into four waves. This folder holds planning and rollb
 | Wave | Focus | Status |
 |------|-------|--------|
 | **1A** | Data integrity | **Closed** — [closure notes](./PHASE1A_CLOSURE_NOTES.md) |
-| **1B** | Security hardening | **Ready for review** — [verification report](./PHASE1B_VERIFICATION_REPORT.md) |
-| **1C** | API consolidation | Pending |
+| **1B** | Security hardening | **Closed** — [verification report](./PHASE1B_VERIFICATION_REPORT.md) |
+| **1C** | API consolidation | **Blocked** — [alignment checkpoint](./PHASE1B_PAYMENT_AND_MOBILE_ALIGNMENT.md) |
 | **1D** | Global platform model | Pending |
 
 ## Phase 1A documents
@@ -27,6 +27,7 @@ KHADAMATI Phase 1 is split into four waves. This folder holds planning and rollb
 - [Test plan](./PHASE1B_TEST_PLAN.md)
 - [Rollback plan](./PHASE1B_ROLLBACK_PLAN.md)
 - [Verification report](./PHASE1B_VERIFICATION_REPORT.md)
+- [Payment & mobile alignment checkpoint](./PHASE1B_PAYMENT_AND_MOBILE_ALIGNMENT.md) — required before Phase 1C
 - [Secret rotation plan](../security/SECRET_ROTATION_PLAN.md) (documentation only — no rotation in 1B)
 
 ## Traceability
