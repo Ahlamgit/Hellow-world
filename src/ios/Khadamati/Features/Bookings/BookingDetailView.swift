@@ -31,7 +31,7 @@ struct BookingDetailView: View {
                 Text(currentBooking.serviceName).font(.title2.bold())
                 Label(currentBooking.status, systemImage: "info.circle")
                 Text("Craftsman: \(currentBooking.craftsmanName)")
-                Text("Price: \(currentBooking.estimatedPrice) SAR")
+                Text("Price: \(currentBooking.estimatedPrice) USD")
 
                 NavigationLink {
                     BookingChatView(bookingId: currentBooking.id)

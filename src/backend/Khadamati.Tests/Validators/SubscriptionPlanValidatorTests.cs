@@ -1,6 +1,7 @@
 using FluentAssertions;
 using Khadamati.Application.DTOs.Subscriptions;
 using Khadamati.Application.Validators;
+using Khadamati.Domain.Constants;
 
 namespace Khadamati.Tests.Validators;
 
@@ -15,7 +16,7 @@ public class SubscriptionPlanValidatorTests
         NameEn = "Craftsman Pro",
         NameAr = "حرفي احترافي",
         DescriptionEn = "Premium plan",
-        Currency = "SAR",
+        Currency = PlatformDefaults.Currency,
         TargetRole = "Craftsman",
         Status = "Active",
         BillingOptions = new List<PlanBillingOptionDto>

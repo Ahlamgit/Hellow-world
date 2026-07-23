@@ -12,6 +12,7 @@ import {
 } from '../services/api';
 import { servicesApi, usersApi } from '../services/api';
 import { getApiErrorMessage } from '../utils/apiError';
+import { DEFAULT_CURRENCY, formatCurrency } from '../config/platform';
 
 const CANCELLABLE_STATUSES = new Set(['Pending', 'AwaitingPayment', 'Confirmed', 'Rescheduled']);
 
@@ -147,7 +148,7 @@ export function BookingWizardPage() {
                 onClick={() => { setSelectedService(svc); setActiveStep(1); loadCraftsmen(svc.id); }}>
                 <CardContent>
                   <Typography sx={{ fontWeight: 600 }}>{isAr ? svc.nameAr : svc.nameEn}</Typography>
-                  <Typography variant="body2" color="text.secondary">{svc.basePrice} SAR</Typography>
+                  <Typography variant="body2" color="text.secondary">{formatCurrency(svc.basePrice)}</Typography>
                 </CardContent>
               </Card>
             </Grid>
@@ -191,7 +192,7 @@ export function BookingWizardPage() {
                 </Box>
                 <Box sx={{ textAlign: 'right' }}>
                   <Chip label={`⭐ ${c.rating}`} size="small" />
-                  <Typography variant="body2">{c.price} SAR</Typography>
+                  <Typography variant="body2">{formatCurrency(c.price)}</Typography>
                 </Box>
               </CardContent>
             </Card>
@@ -230,7 +231,7 @@ export function BookingWizardPage() {
             <Typography>{isAr ? selectedService.nameAr : selectedService.nameEn}</Typography>
             <Typography>{selectedCraftsman.firstName} {selectedCraftsman.lastName}</Typography>
             <Typography>{new Date(selectedSlot.start).toLocaleString()}</Typography>
-            <Typography sx={{ fontWeight: 700 }}>{selectedCraftsman.price} SAR</Typography>
+            <Typography sx={{ fontWeight: 700 }}>{formatCurrency(selectedCraftsman.price)}</Typography>
             <TextField
               select
               fullWidth
@@ -511,7 +512,7 @@ export function BookingDetailPage() {
         <Typography><strong>{t('booking.reference')}:</strong> {booking.bookingReference}</Typography>
         <Typography><strong>{t('booking.craftsman')}:</strong> {booking.craftsmanName}</Typography>
         <Typography><strong>{t('booking.scheduled')}:</strong> {new Date(booking.scheduledAt).toLocaleString()}</Typography>
-        <Typography><strong>{t('booking.price')}:</strong> {booking.estimatedPrice} SAR</Typography>
+        <Typography><strong>{t('booking.price')}:</strong> {formatCurrency(booking.estimatedPrice)}</Typography>
         {booking.cancellationReason && (
           <Typography color="error" sx={{ mt: 1 }}>
             <strong>{t('booking.cancelReason')}:</strong> {booking.cancellationReason}
@@ -716,7 +717,7 @@ export function BookingPaymentPage() {
       <Typography variant="h4" sx={{ fontWeight: 700 }} gutterBottom>{t('booking.payment')}</Typography>
       <Card><CardContent>
         <Typography gutterBottom>{t('booking.paymentPending')}</Typography>
-        {amount != null && <Typography sx={{ mb: 2, fontWeight: 600 }}>{amount} SAR</Typography>}
+        {amount != null && <Typography sx={{ mb: 2, fontWeight: 600 }}>{formatCurrency(amount)}</Typography>}
         {!sessionId ? (
           <Button variant="contained" fullWidth onClick={initiate} disabled={loading}>
             {loading ? <CircularProgress size={24} /> : t('booking.startPayment')}
@@ -744,7 +745,7 @@ export function PaymentCheckoutPage() {
   const [searchParams] = useSearchParams();
   const session = searchParams.get('session');
   const amount = searchParams.get('amount');
-  const currency = searchParams.get('currency') ?? 'SAR';
+  const currency = searchParams.get('currency') ?? DEFAULT_CURRENCY;
 
   return (
     <Container maxWidth="sm" sx={{ py: 4 }}>

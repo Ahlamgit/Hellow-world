@@ -5,6 +5,7 @@ import {
 } from '@mui/material';
 import { Link as RouterLink } from 'react-router-dom';
 import { craftsmanApi, servicesApi, usersApi, type CraftsmanProfile, type CraftsmanServiceItem } from '../services/api';
+import { formatCurrency } from '../config/platform';
 
 const DAYS = ['Sunday', 'Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday'];
 
@@ -95,7 +96,7 @@ export function CraftsmanPortalPage() {
               {profile.services.map((s: CraftsmanServiceItem) => (
                 <Box key={s.id} sx={{ display: 'flex', justifyContent: 'space-between', py: 1, borderBottom: 1, borderColor: 'divider' }}>
                   <Typography>{s.serviceNameEn}</Typography>
-                  <Typography sx={{ fontWeight: 600 }}>{s.customPrice} SAR</Typography>
+                  <Typography sx={{ fontWeight: 600 }}>{formatCurrency(s.customPrice)}</Typography>
                 </Box>
               ))}
               <Box sx={{ display: 'flex', gap: 1, mt: 2 }}>

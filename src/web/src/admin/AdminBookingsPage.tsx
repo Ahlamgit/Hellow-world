@@ -8,6 +8,7 @@ import { Close, Refresh } from '@mui/icons-material';
 import { adminBookingsApi, BOOKING_STATUSES } from './adminOpsApi';
 import type { AdminBookingStats } from './adminOpsApi';
 import type { Booking } from '../services/api';
+import { formatCurrency } from '../config/platform';
 import { getApiErrorMessage } from '../utils/apiError';
 
 const PAGE_SIZES = [10, 25, 50];
@@ -144,7 +145,7 @@ export default function AdminBookingsPage() {
             <Typography><strong>Customer:</strong> {selected.customerName}</Typography>
             <Typography><strong>Craftsman:</strong> {selected.craftsmanName}</Typography>
             <Typography><strong>Scheduled:</strong> {new Date(selected.scheduledAt).toLocaleString()}</Typography>
-            <Typography><strong>Price:</strong> {selected.finalPrice ?? selected.estimatedPrice} SAR</Typography>
+            <Typography><strong>Price:</strong> {formatCurrency(selected.finalPrice ?? selected.estimatedPrice)}</Typography>
             {selected.description && <Typography><strong>Description:</strong> {selected.description}</Typography>}
             {selected.payment && (
               <Box sx={{ mt: 1, p: 2, bgcolor: 'action.hover', borderRadius: 1 }}>

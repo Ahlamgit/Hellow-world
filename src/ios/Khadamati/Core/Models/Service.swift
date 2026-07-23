@@ -22,8 +22,8 @@ struct Service: Codable, Identifiable, Equatable {
     var formattedPrice: String {
         let formatter = NumberFormatter()
         formatter.numberStyle = .currency
-        formatter.currencyCode = "SAR"
-        formatter.locale = Locale(identifier: "en_SA")
+        formatter.currencyCode = "USD"
+        formatter.locale = Locale(identifier: "en_LB")
         return formatter.string(from: basePrice as NSDecimalNumber) ?? "\(basePrice)"
     }
 }

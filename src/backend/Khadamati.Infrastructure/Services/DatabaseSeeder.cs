@@ -1,4 +1,5 @@
 using Khadamati.Application.Interfaces;
+using Khadamati.Domain.Constants;
 using Khadamati.Domain.Entities;
 using Khadamati.Domain.Enums;
 using Khadamati.Infrastructure.Data;
@@ -245,12 +246,12 @@ public class DatabaseSeeder
             {
                 UserId = user.Id,
                 Label = "Work",
-                Street = "King Fahd Road",
-                City = "Riyadh",
-                District = "Al Olaya",
-                Country = "SA",
-                Latitude = 24.7136m,
-                Longitude = 46.6753m,
+                Street = "Hamra Street",
+                City = PlatformDefaults.DefaultCity,
+                District = "Hamra",
+                Country = PlatformDefaults.CountryCode,
+                Latitude = 33.8938m,
+                Longitude = 35.5018m,
                 IsDefault = true,
             });
             await context.SaveChangesAsync(cancellationToken);
@@ -349,10 +350,10 @@ public class DatabaseSeeder
             {
                 UserId = user.Id,
                 Label = "Work",
-                Street = "King Fahd Road",
-                City = "Riyadh",
-                District = "Al Olaya",
-                Country = "SA",
+                Street = "Hamra Street",
+                City = PlatformDefaults.DefaultCity,
+                District = "Hamra",
+                Country = PlatformDefaults.CountryCode,
                 Latitude = lat,
                 Longitude = lng,
                 IsDefault = true,
@@ -447,16 +448,16 @@ public class DatabaseSeeder
     {
         if (!await context.Regions.AnyAsync(cancellationToken))
         {
-            var riyadh = new Region { NameEn = "Riyadh Region", NameAr = "منطقة الرياض", Code = "RYD", IsActive = true };
-            var makkah = new Region { NameEn = "Makkah Region", NameAr = "منطقة مكة", Code = "MKK", IsActive = true };
-            context.Regions.AddRange(riyadh, makkah);
+            var beirut = new Region { NameEn = "Beirut Governorate", NameAr = "محافظة بيروت", Code = "BEY", IsActive = true };
+            var mountLebanon = new Region { NameEn = "Mount Lebanon", NameAr = "جبل لبنان", Code = "ML", IsActive = true };
+            context.Regions.AddRange(beirut, mountLebanon);
             await context.SaveChangesAsync(cancellationToken);
 
             context.Cities.AddRange(
-                new City { RegionId = riyadh.Id, NameEn = "Riyadh", NameAr = "الرياض", Code = "RYD-01", IsActive = true },
-                new City { RegionId = riyadh.Id, NameEn = "Diriyah", NameAr = "الدرعية", Code = "RYD-02", IsActive = true },
-                new City { RegionId = makkah.Id, NameEn = "Jeddah", NameAr = "جدة", Code = "MKK-01", IsActive = true },
-                new City { RegionId = makkah.Id, NameEn = "Makkah", NameAr = "مكة", Code = "MKK-02", IsActive = true });
+                new City { RegionId = beirut.Id, NameEn = "Beirut", NameAr = "بيروت", Code = "BEY-01", IsActive = true },
+                new City { RegionId = beirut.Id, NameEn = "Achrafieh", NameAr = "الأشرفية", Code = "BEY-02", IsActive = true },
+                new City { RegionId = mountLebanon.Id, NameEn = "Jounieh", NameAr = "جونيه", Code = "ML-01", IsActive = true },
+                new City { RegionId = mountLebanon.Id, NameEn = "Byblos", NameAr = "جبيل", Code = "ML-02", IsActive = true });
             await context.SaveChangesAsync(cancellationToken);
         }
 
@@ -469,6 +470,8 @@ public class DatabaseSeeder
         {
             context.SystemSettings.AddRange(
                 new SystemSetting { SettingKey = "platform.name", SettingValue = "Khadamati", Category = "General" },
+                new SystemSetting { SettingKey = "platform.default_currency", SettingValue = PlatformDefaults.Currency, Category = "General" },
+                new SystemSetting { SettingKey = "platform.default_country", SettingValue = PlatformDefaults.CountryCode, Category = "General" },
                 new SystemSetting { SettingKey = "booking.payment_timeout_minutes", SettingValue = "30", Category = "Booking" },
                 new SystemSetting { SettingKey = "notification.email_enabled", SettingValue = "true", Category = "Notifications" });
             await context.SaveChangesAsync(cancellationToken);
@@ -558,7 +561,7 @@ public class DatabaseSeeder
             NameAr = "حرفي - أساسي",
             DescriptionEn = "Monthly basic plan for craftsmen",
             DescriptionAr = "خطة شهرية أساسية للحرفيين",
-            Currency = "SAR",
+            Currency = PlatformDefaults.Currency,
             TargetRole = UserRole.Craftsman,
             Status = PlanStatus.Active,
             DisplayPriority = 10,
@@ -601,7 +604,7 @@ public class DatabaseSeeder
             NameAr = "متجر - احترافي",
             DescriptionEn = "Premium store plan with analytics and priority support",
             DescriptionAr = "خطة متجر مميزة مع التحليلات والدعم الأولوي",
-            Currency = "SAR",
+            Currency = PlatformDefaults.Currency,
             TargetRole = UserRole.Store,
             Status = PlanStatus.Active,
             DisplayPriority = 20,
@@ -690,10 +693,10 @@ public class DatabaseSeeder
             {
                 UserId = craftsman.Id,
                 Label = "Work",
-                Street = "King Fahd Road",
-                City = "Riyadh",
-                District = "Al Olaya",
-                Country = "SA",
+                Street = "Hamra Street",
+                City = PlatformDefaults.DefaultCity,
+                District = "Hamra",
+                Country = PlatformDefaults.CountryCode,
                 Latitude = lat,
                 Longitude = lng,
                 IsDefault = true,
@@ -706,9 +709,9 @@ public class DatabaseSeeder
 
     private static (decimal Latitude, decimal Longitude) GetCraftsmanSeedCoordinates(int index) => index switch
     {
-        1 => (24.7136m, 46.6753m),
-        2 => (24.7200m, 46.6850m),
-        3 => (24.7080m, 46.6700m),
-        _ => (24.7136m + (index * 0.002m), 46.6753m + (index * 0.002m)),
+        1 => (33.8938m, 35.5018m),
+        2 => (33.9000m, 35.5100m),
+        3 => (33.8850m, 35.4900m),
+        _ => (33.8938m + (index * 0.002m), 35.5018m + (index * 0.002m)),
     };
 }

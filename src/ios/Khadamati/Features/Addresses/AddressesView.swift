@@ -7,7 +7,7 @@ struct AddressesView: View {
     @State private var label = "Home"
     @State private var street = ""
     @State private var city = ""
-    @State private var country = "SA"
+    @State private var country = "LB"
     @State private var isLoading = false
     @State private var isSaving = false
 
