@@ -121,7 +121,7 @@ fun BookingDetailScreen(
 
         Text(booking.serviceName, style = MaterialTheme.typography.headlineSmall)
         Text("${booking.bookingReference} · ${booking.status}")
-        Text("${booking.craftsmanName} · ${booking.estimatedPrice} SAR")
+        Text("${booking.craftsmanName} · ${booking.estimatedPrice} USD")
 
         OutlinedButton(onClick = { onOpenChat(bookingId) }, modifier = Modifier.fillMaxWidth()) {
             Text(stringResource(R.string.chat_open))

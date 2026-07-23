@@ -1,4 +1,5 @@
 using Khadamati.Domain.Common;
+using Khadamati.Domain.Constants;
 
 namespace Khadamati.Domain.Entities;
 
@@ -11,7 +12,7 @@ public class UserProfile : BaseEntity
     public string? Bio { get; set; }
     public string? ProfilePictureUrl { get; set; }
     public string PreferredLanguage { get; set; } = "ar";
-    public string Timezone { get; set; } = "Asia/Riyadh";
+    public string Timezone { get; set; } = PlatformDefaults.Timezone;
     public string? NationalId { get; set; }
     public string? Nationality { get; set; }
     public string? Gender { get; set; }

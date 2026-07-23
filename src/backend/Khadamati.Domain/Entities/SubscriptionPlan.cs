@@ -1,4 +1,5 @@
 using Khadamati.Domain.Common;
+using Khadamati.Domain.Constants;
 using Khadamati.Domain.Enums;
 
 namespace Khadamati.Domain.Entities;
@@ -10,7 +11,7 @@ public class SubscriptionPlan : BaseEntity
     public string NameAr { get; set; } = string.Empty;
     public string? DescriptionEn { get; set; }
     public string? DescriptionAr { get; set; }
-    public string Currency { get; set; } = "SAR";
+    public string Currency { get; set; } = PlatformDefaults.Currency;
     public UserRole TargetRole { get; set; }
     public PlanStatus Status { get; set; } = PlanStatus.Inactive;
 

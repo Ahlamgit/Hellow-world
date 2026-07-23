@@ -1,4 +1,5 @@
 using Khadamati.Domain.Common;
+using Khadamati.Domain.Constants;
 using Khadamati.Domain.Enums;
 
 namespace Khadamati.Domain.Entities;
@@ -9,7 +10,7 @@ public class BookingPayment : BaseEntity
     public Guid PayerUserId { get; set; }
     public Guid PayeeUserId { get; set; }
     public decimal Amount { get; set; }
-    public string Currency { get; set; } = "SAR";
+    public string Currency { get; set; } = PlatformDefaults.Currency;
     public PaymentStatus Status { get; set; } = PaymentStatus.Pending;
     public string PaymentMethod { get; set; } = string.Empty;
     public string? TransactionReference { get; set; }

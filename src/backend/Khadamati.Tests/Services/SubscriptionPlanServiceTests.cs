@@ -2,6 +2,7 @@ using AutoMapper;
 using FluentAssertions;
 using Khadamati.Application.DTOs.Subscriptions;
 using Khadamati.Application.Mappings;
+using Khadamati.Domain.Constants;
 using Khadamati.Domain.Enums;
 using Khadamati.Domain.Interfaces;
 using Khadamati.Infrastructure.Data;
@@ -34,7 +35,7 @@ public class SubscriptionPlanServiceTests : IDisposable
         PlanCode = code,
         NameEn = "Craftsman Basic",
         NameAr = "حرفي أساسي",
-        Currency = "SAR",
+        Currency = PlatformDefaults.Currency,
         TargetRole = "Craftsman",
         Status = "Inactive",
         BillingOptions = new List<PlanBillingOptionDto>

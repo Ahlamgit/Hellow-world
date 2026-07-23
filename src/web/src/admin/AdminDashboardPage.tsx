@@ -7,6 +7,7 @@ import {
   ReportProblem, SupportAgent, Notifications,
 } from '@mui/icons-material';
 import { adminApi } from './adminApi';
+import { DEFAULT_CURRENCY } from '../config/platform';
 import type { AdminDashboard } from './moduleConfig';
 
 interface KpiCardProps {
@@ -59,7 +60,7 @@ export default function AdminDashboardPage() {
     { title: 'Stores', value: dashboard.totalStores, icon: <Store />, color: 'warning' },
     { title: 'Total Bookings', value: dashboard.totalBookings, icon: <EventNote />, color: 'primary', subtitle: `${dashboard.pendingBookings} pending` },
     { title: 'Active Subscriptions', value: dashboard.activeSubscriptions, icon: <CardMembership />, color: 'success' },
-    { title: 'Total Revenue', value: `${dashboard.totalRevenue.toLocaleString()} SAR`, icon: <AttachMoney />, color: 'success' },
+    { title: 'Total Revenue', value: `${dashboard.totalRevenue.toLocaleString()} ${DEFAULT_CURRENCY}`, icon: <AttachMoney />, color: 'success' },
     { title: 'Open Complaints', value: dashboard.openComplaints, icon: <ReportProblem />, color: 'error' },
     { title: 'Open Tickets', value: dashboard.openTickets, icon: <SupportAgent />, color: 'warning' },
     { title: 'Unread Notifications', value: dashboard.unreadNotifications, icon: <Notifications />, color: 'info' },

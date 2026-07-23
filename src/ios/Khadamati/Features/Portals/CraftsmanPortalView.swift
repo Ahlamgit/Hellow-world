@@ -44,7 +44,7 @@ struct CraftsmanPortalView: View {
                         HStack {
                             Text(isArabic ? service.serviceNameAr : service.serviceNameEn)
                             Spacer()
-                            Text("\(service.customPrice) SAR")
+                            Text("\(service.customPrice) USD")
                         }
                     }
                 }

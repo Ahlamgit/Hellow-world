@@ -45,7 +45,7 @@ struct StorePortalView: View {
                         HStack {
                             Text(isArabic ? product.nameAr : product.nameEn)
                             Spacer()
-                            Text("\(product.price) SAR · \(product.stockQuantity)")
+                            Text("\(product.price) USD · \(product.stockQuantity)")
                         }
                     }
                 }

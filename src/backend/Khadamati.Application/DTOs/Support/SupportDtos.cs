@@ -1,3 +1,5 @@
+using Khadamati.Domain.Constants;
+
 namespace Khadamati.Application.DTOs.Support;
 
 public class CreateComplaintDto
@@ -63,7 +65,7 @@ public class AdminPaymentDetailDto
     public string PayerEmail { get; set; } = string.Empty;
     public string PayeeEmail { get; set; } = string.Empty;
     public decimal Amount { get; set; }
-    public string Currency { get; set; } = "SAR";
+    public string Currency { get; set; } = PlatformDefaults.Currency;
     public string Status { get; set; } = string.Empty;
     public string PaymentMethod { get; set; } = string.Empty;
     public string? TransactionReference { get; set; }

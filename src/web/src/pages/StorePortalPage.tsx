@@ -4,6 +4,7 @@ import {
   Grid, Switch, TextField, Typography,
 } from '@mui/material';
 import { storeApi, type StoreProfile, type StoreProduct } from '../services/api';
+import { formatCurrency } from '../config/platform';
 
 export function StorePortalPage() {
   const [profile, setProfile] = useState<StoreProfile | null>(null);
@@ -76,7 +77,7 @@ export function StorePortalPage() {
               {profile.products.map((p: StoreProduct) => (
                 <Box key={p.id} sx={{ display: 'flex', justifyContent: 'space-between', py: 1, borderBottom: 1, borderColor: 'divider' }}>
                   <Typography>{p.nameEn}</Typography>
-                  <Typography>{p.price} SAR · Stock {p.stockQuantity}</Typography>
+                  <Typography>{formatCurrency(p.price)} · Stock {p.stockQuantity}</Typography>
                 </Box>
               ))}
               <Typography variant="subtitle2" sx={{ mt: 2, mb: 1 }}>Add product</Typography>

@@ -10,6 +10,7 @@ import {
   adminCouponsApi, emptyCouponForm,
   type Coupon, type CouponListQuery, type CreateCouponRequest,
 } from './adminMarketingApi';
+import { DEFAULT_CURRENCY } from '../config/platform';
 import { getApiErrorMessage } from '../utils/apiError';
 
 const PAGE_SIZES = [10, 25, 50];
@@ -169,7 +170,7 @@ export default function AdminCouponsPage() {
           <TextField label="Description (EN)" value={form.descriptionEn} onChange={(e) => set('descriptionEn', e.target.value)} fullWidth />
           <TextField label="Description (AR)" value={form.descriptionAr} onChange={(e) => set('descriptionAr', e.target.value)} fullWidth />
           <TextField type="number" label="Discount %" value={form.discountPercentage} onChange={(e) => set('discountPercentage', Number(e.target.value))} fullWidth />
-          <TextField type="number" label="Max discount (SAR)" value={form.maxDiscountAmount ?? ''} onChange={(e) => set('maxDiscountAmount', e.target.value ? Number(e.target.value) : undefined)} fullWidth />
+          <TextField type="number" label={`Max discount (${DEFAULT_CURRENCY})`} value={form.maxDiscountAmount ?? ''} onChange={(e) => set('maxDiscountAmount', e.target.value ? Number(e.target.value) : undefined)} fullWidth />
           <TextField type="number" label="Max uses (0 = unlimited)" value={form.maxUses} onChange={(e) => set('maxUses', Number(e.target.value))} fullWidth />
           <TextField type="date" label="Valid from" value={form.validFrom} onChange={(e) => set('validFrom', e.target.value)} slotProps={{ inputLabel: { shrink: true } }} fullWidth />
           <TextField type="date" label="Valid to" value={form.validTo} onChange={(e) => set('validTo', e.target.value)} slotProps={{ inputLabel: { shrink: true } }} fullWidth />

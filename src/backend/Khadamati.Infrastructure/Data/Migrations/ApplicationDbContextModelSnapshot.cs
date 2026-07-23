@@ -17,7 +17,7 @@ namespace Khadamati.Infrastructure.Data.Migrations
         {
 #pragma warning disable 612, 618
             modelBuilder
-                .HasAnnotation("ProductVersion", "9.0.4")
+                .HasAnnotation("ProductVersion", "8.0.11")
                 .HasAnnotation("Relational:MaxIdentifierLength", 128);
 
             SqlServerModelBuilderExtensions.UseIdentityColumns(modelBuilder);
@@ -2422,7 +2422,7 @@ namespace Khadamati.Infrastructure.Data.Migrations
                         .ValueGeneratedOnAdd()
                         .HasMaxLength(3)
                         .HasColumnType("nvarchar(3)")
-                        .HasDefaultValue("SAR");
+                        .HasDefaultValue("USD");
 
                     b.Property<DateTime?>("DeletedAt")
                         .HasColumnType("datetime2")
@@ -2890,7 +2890,7 @@ namespace Khadamati.Infrastructure.Data.Migrations
                         .ValueGeneratedOnAdd()
                         .HasMaxLength(50)
                         .HasColumnType("nvarchar(50)")
-                        .HasDefaultValue("Asia/Riyadh");
+                        .HasDefaultValue("Asia/Beirut");
 
                     b.Property<DateTime?>("UpdatedAt")
                         .HasColumnType("datetime2")

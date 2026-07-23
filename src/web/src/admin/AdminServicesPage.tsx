@@ -10,6 +10,7 @@ import {
   adminCategoriesApi, adminServicesApi, emptyServiceForm,
   type Category, type CreateServiceRequest, type Service, type ServiceListQuery,
 } from './adminCatalogApi';
+import { DEFAULT_CURRENCY } from '../config/platform';
 import { getApiErrorMessage } from '../utils/apiError';
 
 const PAGE_SIZES = [10, 25, 50];
@@ -168,7 +169,7 @@ export default function AdminServicesPage() {
             <TableRow>
               <TableCell>Name</TableCell>
               <TableCell>Category</TableCell>
-              <TableCell>Price (SAR)</TableCell>
+              <TableCell>Price ({DEFAULT_CURRENCY})</TableCell>
               <TableCell>Duration (min)</TableCell>
               <TableCell>Status</TableCell>
               <TableCell align="right">Actions</TableCell>
@@ -225,7 +226,7 @@ export default function AdminServicesPage() {
           </FormControl>
           <TextField label="Name (EN)" value={form.nameEn} onChange={(e) => set('nameEn', e.target.value)} required fullWidth />
           <TextField label="Name (AR)" value={form.nameAr} onChange={(e) => set('nameAr', e.target.value)} required fullWidth />
-          <TextField type="number" label="Base price (SAR)" value={form.basePrice} onChange={(e) => set('basePrice', Number(e.target.value))} fullWidth />
+          <TextField type="number" label={`Base price (${DEFAULT_CURRENCY})`} value={form.basePrice} onChange={(e) => set('basePrice', Number(e.target.value))} fullWidth />
           <TextField type="number" label="Duration (minutes)" value={form.estimatedDurationMinutes} onChange={(e) => set('estimatedDurationMinutes', Number(e.target.value))} fullWidth />
           <TextField label="Image URL" value={form.imageUrl ?? ''} onChange={(e) => set('imageUrl', e.target.value)} fullWidth />
           <FormControlLabel control={<Switch checked={form.isActive} onChange={(e) => set('isActive', e.target.checked)} />} label="Active" />

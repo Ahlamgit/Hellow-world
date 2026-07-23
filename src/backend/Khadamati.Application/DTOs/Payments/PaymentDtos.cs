@@ -1,10 +1,12 @@
+using Khadamati.Domain.Constants;
+
 namespace Khadamati.Application.DTOs.Payments;
 
 public class PaymentSessionRequest
 {
     public Guid PaymentId { get; set; }
     public decimal Amount { get; set; }
-    public string Currency { get; set; } = "SAR";
+    public string Currency { get; set; } = PlatformDefaults.Currency;
     public string Description { get; set; } = string.Empty;
     public string CustomerEmail { get; set; } = string.Empty;
     public string CallbackUrl { get; set; } = string.Empty;

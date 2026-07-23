@@ -248,7 +248,7 @@
     "title": "Coupon code",
     "code": "Coupon code",
     "validate": "Apply",
-    "valid": "Coupon applied — {{amount}} SAR discount",
+    "valid": "Coupon applied — {{amount}} USD discount",
     "invalid": "Invalid or expired coupon.",
     "finalAmount": "Estimated total: {{amount}} {{currency}}"
   },
