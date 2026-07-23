@@ -4,8 +4,8 @@ KHADAMATI Phase 1 is split into four waves. This folder holds planning and rollb
 
 | Wave | Focus | Status |
 |------|-------|--------|
-| **1A** | Data integrity | **Approved for merge** — [verification report](./PHASE1A_VERIFICATION_REPORT.md) (SQL Server validated) |
-| **1B** | Security hardening | Pending |
+| **1A** | Data integrity | **Closed** — [closure notes](./PHASE1A_CLOSURE_NOTES.md) |
+| **1B** | Security hardening | In progress |
 | **1C** | API consolidation | Pending |
 | **1D** | Global platform model | Pending |
 
