@@ -1,8 +1,13 @@
 # KHADAMATI — Areeba Implementation Plan (MPGS Hosted Checkout)
 
-**Status:** Documentation only — **awaiting approval** (revised)  
+**Status:** **Approved for implementation** (revised + attempt model locked)  
 **Date:** 2026-07-23  
-**Code / migrations / UI changes:** None in this deliverable  
+
+**Authoritative addendum:** [AREEBA_IMPLEMENTATION_PLAN_UPDATE.md](./AREEBA_IMPLEMENTATION_PLAN_UPDATE.md)  
+**DB plan:** [AREEBA_DATABASE_MIGRATION_PLAN.md](./AREEBA_DATABASE_MIGRATION_PLAN.md)  
+**Risks:** [AREEBA_RISK_ASSESSMENT.md](./AREEBA_RISK_ASSESSMENT.md)
+
+`BookingPaymentAttempts` is **required**. Do not store multiple gateway attempts only inside `BookingPayment`.
 
 ## Objective (revised)
 
