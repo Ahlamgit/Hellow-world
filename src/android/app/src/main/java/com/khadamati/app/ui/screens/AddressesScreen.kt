@@ -55,7 +55,7 @@ fun AddressesScreen(
     var label by remember { mutableStateOf("Home") }
     var street by remember { mutableStateOf("") }
     var city by remember { mutableStateOf("") }
-    var country by remember { mutableStateOf("SA") }
+    var country by remember { mutableStateOf("LB") }
     var location by remember { mutableStateOf<GeoLocation?>(null) }
 
     val permissionLauncher = rememberLauncherForActivityResult(

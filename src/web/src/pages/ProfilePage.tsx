@@ -5,6 +5,7 @@ import {
 import { Link } from 'react-router-dom';
 import { useTranslation } from 'react-i18next';
 import { identityApi, type ProfileDto } from '../services/api';
+import { DEFAULT_COUNTRY, DEFAULT_TIMEZONE } from '../config/platform';
 import { getApiErrorMessage } from '../utils/apiError';
 import { useAuth } from '../context/AuthContext';
 
@@ -16,11 +17,11 @@ const emptyForm = {
   nationality: '',
   profilePictureUrl: '',
   addressLine: '',
-  country: '',
+  country: DEFAULT_COUNTRY,
   city: '',
   region: '',
   preferredLanguage: 'ar',
-  timezone: 'Asia/Riyadh',
+  timezone: DEFAULT_TIMEZONE,
 };
 
 export default function ProfilePage() {

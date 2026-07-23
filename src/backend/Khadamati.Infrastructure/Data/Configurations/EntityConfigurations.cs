@@ -1,3 +1,4 @@
+using Khadamati.Domain.Constants;
 using Khadamati.Domain.Entities;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Metadata.Builders;
@@ -40,7 +41,7 @@ public class UserProfileConfiguration : IEntityTypeConfiguration<UserProfile>
         builder.Property(p => p.FirstName).HasMaxLength(100).IsRequired();
         builder.Property(p => p.LastName).HasMaxLength(100).IsRequired();
         builder.Property(p => p.PreferredLanguage).HasMaxLength(5).HasDefaultValue("ar");
-        builder.Property(p => p.Timezone).HasMaxLength(50).HasDefaultValue("Asia/Riyadh");
+        builder.Property(p => p.Timezone).HasMaxLength(50).HasDefaultValue(PlatformDefaults.Timezone);
         builder.Property(p => p.Gender).HasMaxLength(20);
         builder.Property(p => p.Nationality).HasMaxLength(100);
         builder.Property(p => p.Country).HasMaxLength(100);
@@ -274,7 +275,7 @@ public class SubscriptionPlanConfiguration : IEntityTypeConfiguration<Subscripti
         builder.Property(p => p.NameAr).HasMaxLength(150).IsRequired();
         builder.Property(p => p.DescriptionEn).HasMaxLength(2000);
         builder.Property(p => p.DescriptionAr).HasMaxLength(2000);
-        builder.Property(p => p.Currency).HasMaxLength(3).HasDefaultValue("SAR");
+        builder.Property(p => p.Currency).HasMaxLength(3).HasDefaultValue(PlatformDefaults.Currency);
         builder.Property(p => p.TargetRole).HasConversion<int>();
         builder.Property(p => p.Status).HasConversion<int>();
         builder.Property(p => p.DiscountPercentage).HasPrecision(5, 2);

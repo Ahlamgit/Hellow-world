@@ -202,7 +202,7 @@ public class BookingService : IBookingService
             PayerUserId = userId,
             PayeeUserId = booking.CraftsmanId,
             Amount = booking.EstimatedPrice,
-            Currency = "SAR",
+            Currency = PlatformDefaults.Currency,
             Status = PaymentStatus.Pending,
             PaymentMethod = dto.PaymentMethod
         };

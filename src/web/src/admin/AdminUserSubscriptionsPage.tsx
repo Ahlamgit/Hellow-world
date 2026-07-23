@@ -8,6 +8,7 @@ import {
 } from '@mui/material';
 import { Add, Cancel, Refresh } from '@mui/icons-material';
 import { adminUserSubscriptionsApi, type UserSubscriptionListQuery } from './adminUserSubscriptionsApi';
+import { formatCurrency } from '../config/platform';
 import { adminSubscriptionPlansApi, type AdminSubscriptionPlan } from './adminSubscriptionPlansApi';
 import { adminUsersApi, type AdminUserListItem } from './adminUsersApi';
 import type { UserSubscription } from '../services/subscriptionsApi';
@@ -271,7 +272,7 @@ export default function AdminUserSubscriptionsPage() {
             >
               {billingOptions.map((b, index) => (
                 <MenuItem key={b.id ?? `${b.cycle}-${index}`} value={b.id ?? ''}>
-                  {b.cycle} — {b.price} SAR
+                  {b.cycle} — {formatCurrency(b.price)}
                 </MenuItem>
               ))}
             </Select>

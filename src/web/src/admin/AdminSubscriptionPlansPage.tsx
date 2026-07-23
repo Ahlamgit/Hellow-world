@@ -19,6 +19,7 @@ import {
 } from './adminSubscriptionPlansApi';
 import type { PlanBillingOption } from '../services/subscriptionsApi';
 import { getApiErrorMessage } from '../utils/apiError';
+import { DEFAULT_CURRENCY, formatCurrency } from '../config/platform';
 
 const PAGE_SIZES = [10, 25, 50];
 
@@ -31,7 +32,7 @@ function StatusChip({ status }: { status: string }) {
 
 function billingSummary(options: PlanBillingOption[]) {
   if (!options.length) return '—';
-  return options.map((o) => `${o.cycle}: ${o.price} SAR`).join(' · ');
+  return options.map((o) => `${o.cycle}: ${formatCurrency(o.price)}`).join(' · ');
 }
 
 interface PlanFormProps {
@@ -82,7 +83,10 @@ function PlanForm({ form, onChange, isEdit }: PlanFormProps) {
         <FormControl sx={{ minWidth: 120 }}>
           <InputLabel>Currency</InputLabel>
           <Select label="Currency" value={form.currency} onChange={(e) => set('currency', e.target.value)}>
+            <MenuItem value={DEFAULT_CURRENCY}>{DEFAULT_CURRENCY}</MenuItem>
             <MenuItem value="SAR">SAR</MenuItem>
+            <MenuItem value="EUR">EUR</MenuItem>
+            <MenuItem value="LBP">LBP</MenuItem>
           </Select>
         </FormControl>
         <FormControl sx={{ minWidth: 160 }}>

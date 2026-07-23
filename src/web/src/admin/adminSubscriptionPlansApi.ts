@@ -1,5 +1,6 @@
 import { api, type ApiResponse, type PagedResult } from '../services/api';
 import type { PlanBillingOption } from '../services/subscriptionsApi';
+import { DEFAULT_CURRENCY } from '../config/platform';
 
 export const PLAN_STATUSES = ['Active', 'Inactive', 'Suspended', 'Archived'] as const;
 export const TARGET_ROLES = ['Customer', 'Craftsman', 'Store', 'Administrator'] as const;
@@ -91,7 +92,7 @@ export const emptyPlanForm = (): CreateSubscriptionPlanRequest => ({
   nameAr: '',
   descriptionEn: '',
   descriptionAr: '',
-  currency: 'SAR',
+  currency: DEFAULT_CURRENCY,
   targetRole: 'Craftsman',
   status: 'Inactive',
   displayPriority: 0,

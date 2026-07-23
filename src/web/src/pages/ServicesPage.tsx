@@ -5,6 +5,7 @@ import { useNavigate } from 'react-router-dom';
 import { useTranslation } from 'react-i18next';
 import { useAuth } from '../context/AuthContext';
 import { servicesApi, type Service } from '../services/api';
+import { formatCurrency } from '../config/platform';
 
 export default function ServicesPage() {
   const { t, i18n } = useTranslation();
@@ -44,7 +45,7 @@ export default function ServicesPage() {
                   {isAr ? service.descriptionAr : service.descriptionEn}
                 </Typography>
                 <Box sx={{ mt: 2, display: 'flex', gap: 1 }}>
-                  <Chip label={`${t('services.price')}: ${service.basePrice} SAR`} color="primary" size="small" />
+                  <Chip label={`${t('services.price')}: ${formatCurrency(service.basePrice)}`} color="primary" size="small" />
                   <Chip label={`${service.estimatedDurationMinutes} ${t('common.minutes')}`} size="small" />
                 </Box>
               </CardContent>
