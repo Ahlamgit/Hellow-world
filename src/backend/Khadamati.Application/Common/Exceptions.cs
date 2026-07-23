@@ -15,6 +15,11 @@ public class UnauthorizedException : ApplicationException
     public UnauthorizedException(string message) : base(message) { }
 }
 
+public class ForbiddenException : ApplicationException
+{
+    public ForbiddenException(string message) : base(message) { }
+}
+
 public class ValidationException : ApplicationException
 {
     public IEnumerable<string> Errors { get; }

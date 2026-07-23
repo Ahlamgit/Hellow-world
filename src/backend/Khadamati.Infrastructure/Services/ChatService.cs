@@ -85,7 +85,7 @@ public class ChatService : IChatService
         var isCraftsman = role == "Craftsman" && booking.CraftsmanId == userId;
         var hasAdminAccess = await _permissionService.UserHasPermissionAsync(userId, PermissionCodes.BookingsView, cancellationToken);
         if (!isCustomer && !isCraftsman && !hasAdminAccess)
-            throw new UnauthorizedException("Access denied.");
+            throw new ForbiddenException("Access denied.");
 
         var conversation = await _context.ChatConversations
             .FirstOrDefaultAsync(c => c.BookingId == bookingId, cancellationToken);
@@ -214,7 +214,7 @@ public class ChatService : IChatService
             ?? throw new NotFoundException("Conversation not found.");
 
         if (conversation.CustomerId != userId && conversation.CraftsmanId != userId)
-            throw new UnauthorizedException("Access denied.");
+            throw new ForbiddenException("Access denied.");
 
         return conversation;
     }

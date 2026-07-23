@@ -36,6 +36,7 @@ public class ExceptionHandlingMiddleware
             Khadamati.Application.Common.ValidationException ve => (HttpStatusCode.BadRequest, exception.Message, ve.Errors),
             NotFoundException => (HttpStatusCode.NotFound, exception.Message, null),
             UnauthorizedException => (HttpStatusCode.Unauthorized, exception.Message, null),
+            ForbiddenException => (HttpStatusCode.Forbidden, exception.Message, null),
             ConflictException => (HttpStatusCode.Conflict, exception.Message, null),
             InvalidOperationException => (HttpStatusCode.Conflict, exception.Message, null),
             _ => (HttpStatusCode.InternalServerError, "An internal server error occurred.", null)

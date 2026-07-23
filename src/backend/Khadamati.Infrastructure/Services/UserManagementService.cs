@@ -90,7 +90,7 @@ public class UserManagementService : IUserManagementService
     public async Task<AdminUserDetailDto> CreateAsync(CreateAdminUserDto dto, Guid adminUserId, string? ipAddress, CancellationToken cancellationToken = default)
     {
         if (!await _permissionService.UserHasPermissionAsync(adminUserId, PermissionCodes.UsersCreate, cancellationToken))
-            throw new UnauthorizedException("Permission denied.");
+            throw new ForbiddenException("Permission denied.");
 
         _passwordPolicy.ValidatePassword(dto.Password);
 
@@ -154,7 +154,7 @@ public class UserManagementService : IUserManagementService
     public async Task<AdminUserDetailDto> UpdateAsync(Guid id, UpdateAdminUserDto dto, Guid adminUserId, CancellationToken cancellationToken = default)
     {
         if (!await _permissionService.UserHasPermissionAsync(adminUserId, PermissionCodes.UsersEdit, cancellationToken))
-            throw new UnauthorizedException("Permission denied.");
+            throw new ForbiddenException("Permission denied.");
 
         var user = await _userRepository.GetByIdAsync(id, includeDetails: true, cancellationToken)
             ?? throw new NotFoundException("User not found.");
@@ -183,7 +183,7 @@ public class UserManagementService : IUserManagementService
     public async Task DeleteAsync(Guid id, Guid adminUserId, CancellationToken cancellationToken = default)
     {
         if (!await _permissionService.UserHasPermissionAsync(adminUserId, PermissionCodes.UsersDelete, cancellationToken))
-            throw new UnauthorizedException("Permission denied.");
+            throw new ForbiddenException("Permission denied.");
 
         if (id == adminUserId)
             throw new ValidationException(["You cannot delete your own account."]);
@@ -199,7 +199,7 @@ public class UserManagementService : IUserManagementService
     public async Task<UserActionResponseDto> SuspendAsync(Guid id, SuspendUserDto dto, Guid adminUserId, CancellationToken cancellationToken = default)
     {
         if (!await _permissionService.UserHasPermissionAsync(adminUserId, PermissionCodes.UsersSuspend, cancellationToken))
-            throw new UnauthorizedException("Permission denied.");
+            throw new ForbiddenException("Permission denied.");
 
         if (id == adminUserId)
             throw new ValidationException(["You cannot suspend your own account."]);
@@ -226,7 +226,7 @@ public class UserManagementService : IUserManagementService
     public async Task<UserActionResponseDto> ActivateAsync(Guid id, Guid adminUserId, CancellationToken cancellationToken = default)
     {
         if (!await _permissionService.UserHasPermissionAsync(adminUserId, PermissionCodes.UsersEdit, cancellationToken))
-            throw new UnauthorizedException("Permission denied.");
+            throw new ForbiddenException("Permission denied.");
 
         var user = await _userRepository.GetByIdAsync(id, cancellationToken: cancellationToken)
             ?? throw new NotFoundException("User not found.");
@@ -248,7 +248,7 @@ public class UserManagementService : IUserManagementService
     public async Task<AdminUserDetailDto> AssignRolesAsync(Guid id, AssignUserRolesDto dto, Guid adminUserId, CancellationToken cancellationToken = default)
     {
         if (!await _permissionService.UserHasPermissionAsync(adminUserId, PermissionCodes.UsersEdit, cancellationToken))
-            throw new UnauthorizedException("Permission denied.");
+            throw new ForbiddenException("Permission denied.");
 
         var user = await _userRepository.GetByIdAsync(id, cancellationToken: cancellationToken)
             ?? throw new NotFoundException("User not found.");
@@ -302,7 +302,7 @@ public class UserManagementService : IUserManagementService
         Guid id, UpdateUserPermissionsDto dto, Guid adminUserId, CancellationToken cancellationToken = default)
     {
         if (!await _permissionService.UserHasPermissionAsync(adminUserId, PermissionCodes.PermissionsManage, cancellationToken))
-            throw new UnauthorizedException("Permission denied.");
+            throw new ForbiddenException("Permission denied.");
 
         _ = await _userRepository.GetByIdAsync(id, cancellationToken: cancellationToken)
             ?? throw new NotFoundException("User not found.");

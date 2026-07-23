@@ -39,6 +39,7 @@ import com.khadamati.app.ui.screens.NotificationsScreen
 import com.khadamati.app.ui.screens.ProfileScreen
 import com.khadamati.app.ui.screens.ForgotPasswordScreen
 import com.khadamati.app.ui.screens.ResetPasswordScreen
+import com.khadamati.app.ui.screens.ChangePasswordScreen
 import com.khadamati.app.ui.screens.ServicesScreen
 import com.khadamati.app.ui.screens.SplashScreen
 import com.khadamati.app.ui.screens.SupportScreen
@@ -142,6 +143,13 @@ fun KhadamatiNavGraph(container: AppContainer) {
 
             composable(Routes.RESET_PASSWORD) {
                 ResetPasswordScreen(
+                    authViewModel = authViewModel,
+                    onNavigateBack = { navController.popBackStack() },
+                )
+            }
+
+            composable(Routes.CHANGE_PASSWORD) {
+                ChangePasswordScreen(
                     authViewModel = authViewModel,
                     onNavigateBack = { navController.popBackStack() },
                 )
@@ -262,6 +270,7 @@ fun KhadamatiNavGraph(container: AppContainer) {
                     onNavigateToChats = { navController.navigate(Routes.CHAT_LIST) },
                     onNavigateToSupport = { navController.navigate(Routes.SUPPORT) },
                     onNavigateToProfileEdit = { navController.navigate(Routes.PROFILE_EDIT) },
+                    onNavigateToChangePassword = { navController.navigate(Routes.CHANGE_PASSWORD) },
                     onNavigateToCraftsmanPortal = { navController.navigate(Routes.CRAFTSMAN_PORTAL) },
                     onNavigateToStorePortal = { navController.navigate(Routes.STORE_PORTAL) },
                 )

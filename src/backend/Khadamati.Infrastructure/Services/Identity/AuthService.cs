@@ -331,7 +331,7 @@ public class AuthService : IAuthService
     public async Task<MessageResponseDto> AdminVerifyEmailAsync(Guid adminUserId, AdminVerifyEmailRequestDto request, CancellationToken cancellationToken = default)
     {
         if (!await _permissionService.UserHasPermissionAsync(adminUserId, PermissionCodes.UsersVerifyEmail, cancellationToken))
-            throw new UnauthorizedException("Permission denied.");
+            throw new ForbiddenException("Permission denied.");
 
         var user = await _identityRepository.GetUserByIdWithRolesAsync(request.UserId, cancellationToken)
             ?? throw new NotFoundException("User not found.");

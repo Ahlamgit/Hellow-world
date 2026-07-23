@@ -59,7 +59,7 @@ public class StoreService : IStoreService
             product = await _unitOfWork.Repository<StoreProduct>().GetByIdAsync(productId.Value, cancellationToken)
                 ?? throw new NotFoundException("Product not found.");
             if (product.StoreProfileId != profile.Id)
-                throw new UnauthorizedException("Not authorized.");
+                throw new ForbiddenException("Not authorized.");
         }
 
         product.NameAr = dto.NameAr;
@@ -86,7 +86,7 @@ public class StoreService : IStoreService
         var product = await _unitOfWork.Repository<StoreProduct>().GetByIdAsync(productId, cancellationToken)
             ?? throw new NotFoundException("Product not found.");
         if (product.StoreProfileId != profile.Id)
-            throw new UnauthorizedException("Not authorized.");
+            throw new ForbiddenException("Not authorized.");
 
         product.IsDeleted = true;
         product.UpdatedAt = DateTime.UtcNow;
@@ -99,7 +99,7 @@ public class StoreService : IStoreService
         var roles = await _identityRepository.GetUserRoleNamesAsync(userId, cancellationToken);
         if (!roles.Any(r => r.Equals(RoleNames.StoreOwner, StringComparison.OrdinalIgnoreCase)
                          || r.Equals(RoleNames.StoreEmployee, StringComparison.OrdinalIgnoreCase)))
-            throw new UnauthorizedException("Store role required.");
+            throw new ForbiddenException("Store role required.");
     }
 
     private async Task<StoreProfile> GetOrCreateProfileAsync(Guid userId, CancellationToken cancellationToken)

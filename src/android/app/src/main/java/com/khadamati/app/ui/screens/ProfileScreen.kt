@@ -42,6 +42,7 @@ fun ProfileScreen(
     onNavigateToChats: () -> Unit = {},
     onNavigateToSupport: () -> Unit = {},
     onNavigateToProfileEdit: () -> Unit = {},
+    onNavigateToChangePassword: () -> Unit = {},
     onNavigateToCraftsmanPortal: () -> Unit = {},
     onNavigateToStorePortal: () -> Unit = {},
 ) {
@@ -174,6 +175,10 @@ fun ProfileScreen(
                 Spacer(modifier = Modifier.height(8.dp))
                 OutlinedButton(onClick = onNavigateToSupport, modifier = Modifier.fillMaxWidth()) {
                     Text(stringResource(R.string.support_title))
+                }
+                Spacer(modifier = Modifier.height(8.dp))
+                OutlinedButton(onClick = onNavigateToChangePassword, modifier = Modifier.fillMaxWidth()) {
+                    Text(stringResource(R.string.auth_change_password))
                 }
                 Spacer(modifier = Modifier.height(8.dp))
                 OutlinedButton(onClick = onNavigateToProfileEdit, modifier = Modifier.fillMaxWidth()) {

@@ -10,6 +10,7 @@ using MediatR;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Swashbuckle.AspNetCore.Annotations;
+using System.Text;
 
 namespace Khadamati.API.Controllers;
 
@@ -123,11 +124,22 @@ public class MoyasarWebhookController : ControllerBase
 
     [HttpPost]
     [SwaggerOperation(Summary = "Moyasar payment webhook", Description = "Confirms booking payments when Moyasar reports paid status.")]
-    public async Task<IActionResult> Handle([FromBody] MoyasarWebhookDto payload, CancellationToken ct)
+    public async Task<IActionResult> Handle(CancellationToken ct)
     {
+        using var reader = new StreamReader(Request.Body, Encoding.UTF8, detectEncodingFromByteOrderMarks: false, leaveOpen: true);
+        var rawBody = await reader.ReadToEndAsync(ct);
+        if (string.IsNullOrWhiteSpace(rawBody))
+            return BadRequest(ApiResponse<object>.Fail("Empty webhook payload."));
+
+        var payload = System.Text.Json.JsonSerializer.Deserialize<MoyasarWebhookDto>(
+            rawBody,
+            new System.Text.Json.JsonSerializerOptions { PropertyNameCaseInsensitive = true });
+        if (payload is null)
+            return BadRequest(ApiResponse<object>.Fail("Invalid webhook payload."));
+
         var signature = Request.Headers["X-Moyasar-Signature"].FirstOrDefault()
             ?? Request.Headers["X-Webhook-Secret"].FirstOrDefault();
-        var result = await _mediator.Send(new ProcessMoyasarWebhookCommand(payload, signature), ct);
+        var result = await _mediator.Send(new ProcessMoyasarWebhookCommand(payload, signature, rawBody), ct);
         return Ok(ApiResponse<PaymentWebhookResultDto>.Ok(result));
     }
 }

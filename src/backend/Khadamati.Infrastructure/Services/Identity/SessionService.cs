@@ -43,11 +43,11 @@ public class SessionService : ISessionService
             ?? throw new NotFoundException("Session not found.");
 
         if (!isAdmin && session.UserId != userId)
-            throw new UnauthorizedException("Cannot revoke another user's session.");
+            throw new ForbiddenException("Cannot revoke another user's session.");
 
         if (isAdmin && session.UserId != userId &&
             !await _permissionService.UserHasPermissionAsync(userId, PermissionCodes.SessionsRevoke, cancellationToken))
-            throw new UnauthorizedException("Permission denied.");
+            throw new ForbiddenException("Permission denied.");
 
         await _sessionRepository.RevokeSessionAsync(sessionId, ipAddress, cancellationToken);
         await _auditService.LogSecurityEventAsync(userId, "SessionRevoked", $"Session {sessionId} revoked", ipAddress, session.UserAgent, cancellationToken: cancellationToken);

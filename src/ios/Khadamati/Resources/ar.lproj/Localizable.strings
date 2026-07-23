@@ -44,6 +44,11 @@
 "auth.resetPassword" = "إعادة تعيين كلمة المرور";
 "auth.passwordMismatch" = "كلمتا المرور غير متطابقتين.";
 "auth.resetSuccess" = "تمت إعادة تعيين كلمة المرور. يمكنك تسجيل الدخول الآن.";
+"auth.changePassword" = "تغيير كلمة المرور";
+"auth.changePasswordTitle" = "تغيير كلمة المرور";
+"auth.changePasswordHint" = "أدخل كلمة المرور الحالية واختر كلمة مرور جديدة.";
+"auth.currentPassword" = "كلمة المرور الحالية";
+"auth.changePasswordSuccess" = "تم تغيير كلمة المرور بنجاح.";
 "auth.forgotSuccess" = "إذا كان الحساب موجوداً، تم إرسال رابط إعادة التعيين.";
 
 "services.title" = "خدماتنا";

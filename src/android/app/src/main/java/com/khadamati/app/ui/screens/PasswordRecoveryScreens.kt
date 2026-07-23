@@ -167,3 +167,83 @@ fun ResetPasswordScreen(
         }
     }
 }
+
+@Composable
+fun ChangePasswordScreen(
+    authViewModel: AuthViewModel,
+    onNavigateBack: () -> Unit,
+) {
+    val uiState by authViewModel.uiState.collectAsStateWithLifecycle()
+    val snackbarHostState = remember { SnackbarHostState() }
+    var currentPassword by remember { mutableStateOf("") }
+    var newPassword by remember { mutableStateOf("") }
+    var confirmPassword by remember { mutableStateOf("") }
+    var successMessage by remember { mutableStateOf<String?>(null) }
+
+    LaunchedEffect(uiState.errorMessage) {
+        uiState.errorMessage?.let {
+            snackbarHostState.showSnackbar(it)
+            authViewModel.clearError()
+        }
+    }
+
+    Scaffold(snackbarHost = { SnackbarHost(snackbarHostState) }) { padding ->
+        Column(
+            modifier = Modifier.fillMaxSize().padding(padding).padding(24.dp).verticalScroll(rememberScrollState()),
+            horizontalAlignment = Alignment.CenterHorizontally,
+            verticalArrangement = Arrangement.Center,
+        ) {
+            Text(stringResource(R.string.auth_change_password_title), style = MaterialTheme.typography.headlineMedium)
+            Spacer(modifier = Modifier.height(12.dp))
+            Text(stringResource(R.string.auth_change_password_hint))
+            Spacer(modifier = Modifier.height(24.dp))
+            OutlinedTextField(
+                value = currentPassword,
+                onValueChange = { currentPassword = it },
+                label = { Text(stringResource(R.string.auth_current_password)) },
+                visualTransformation = PasswordVisualTransformation(),
+                modifier = Modifier.fillMaxWidth(),
+            )
+            Spacer(modifier = Modifier.height(12.dp))
+            OutlinedTextField(
+                value = newPassword,
+                onValueChange = { newPassword = it },
+                label = { Text(stringResource(R.string.auth_new_password)) },
+                visualTransformation = PasswordVisualTransformation(),
+                modifier = Modifier.fillMaxWidth(),
+            )
+            Spacer(modifier = Modifier.height(12.dp))
+            OutlinedTextField(
+                value = confirmPassword,
+                onValueChange = { confirmPassword = it },
+                label = { Text(stringResource(R.string.auth_confirm_password)) },
+                visualTransformation = PasswordVisualTransformation(),
+                modifier = Modifier.fillMaxWidth(),
+            )
+            successMessage?.let {
+                Spacer(modifier = Modifier.height(12.dp))
+                Text(it, color = MaterialTheme.colorScheme.primary)
+            }
+            Spacer(modifier = Modifier.height(24.dp))
+            Button(
+                onClick = {
+                    if (newPassword != confirmPassword) return@Button
+                    authViewModel.changePassword(currentPassword, newPassword, confirmPassword) { message ->
+                        successMessage = message
+                        currentPassword = ""
+                        newPassword = ""
+                        confirmPassword = ""
+                    }
+                },
+                enabled = !uiState.isLoading && currentPassword.isNotBlank() && newPassword.length >= 8 && confirmPassword.isNotBlank(),
+                modifier = Modifier.fillMaxWidth(),
+            ) {
+                if (uiState.isLoading) CircularProgressIndicator() else Text(stringResource(R.string.auth_change_password))
+            }
+            if (newPassword.isNotBlank() && confirmPassword.isNotBlank() && newPassword != confirmPassword) {
+                Text(stringResource(R.string.auth_password_mismatch), color = MaterialTheme.colorScheme.error)
+            }
+            TextButton(onClick = onNavigateBack) { Text(stringResource(R.string.common_back)) }
+        }
+    }
+}

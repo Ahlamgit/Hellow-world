@@ -16,7 +16,7 @@ public static class AdminAuthorization
                 return;
         }
 
-        throw new UnauthorizedException("Admin access denied.");
+        throw new ForbiddenException("Admin access denied.");
     }
 
     public static async Task EnsurePermissionAsync(
@@ -26,6 +26,6 @@ public static class AdminAuthorization
         CancellationToken cancellationToken = default)
     {
         if (!await permissionService.UserHasPermissionAsync(userId, permission, cancellationToken))
-            throw new UnauthorizedException($"Missing permission: {permission}");
+            throw new ForbiddenException($"Missing permission: {permission}");
     }
 }

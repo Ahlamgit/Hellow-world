@@ -170,6 +170,20 @@ class AuthViewModel(
         }
     }
 
+    fun changePassword(currentPassword: String, newPassword: String, confirmPassword: String, onSuccess: (String) -> Unit) {
+        viewModelScope.launch {
+            _uiState.value = _uiState.value.copy(isLoading = true, errorMessage = null)
+            authRepository.changePassword(currentPassword, newPassword, confirmPassword)
+                .onSuccess { message ->
+                    _uiState.value = _uiState.value.copy(isLoading = false)
+                    onSuccess(message)
+                }
+                .onFailure { error ->
+                    _uiState.value = _uiState.value.copy(isLoading = false, errorMessage = error.message)
+                }
+        }
+    }
+
     fun updateProfile(firstName: String, lastName: String, preferredLanguage: String, onSuccess: () -> Unit) {
         viewModelScope.launch {
             _uiState.value = _uiState.value.copy(isLoading = true, errorMessage = null)

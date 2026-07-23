@@ -139,7 +139,7 @@ public class UpdateAddressCommandHandler : IRequestHandler<UpdateAddressCommand,
         var address = await _unitOfWork.Repository<Address>().GetByIdAsync(request.AddressId, cancellationToken)
             ?? throw new NotFoundException("Address not found.");
         if (address.UserId != request.UserId)
-            throw new UnauthorizedException("Not authorized.");
+            throw new ForbiddenException("Not authorized.");
 
         if (request.Request.IsDefault)
         {
@@ -179,7 +179,7 @@ public class DeleteAddressCommandHandler : IRequestHandler<DeleteAddressCommand,
         var address = await _unitOfWork.Repository<Address>().GetByIdAsync(request.AddressId, cancellationToken)
             ?? throw new NotFoundException("Address not found.");
         if (address.UserId != request.UserId)
-            throw new UnauthorizedException("Not authorized.");
+            throw new ForbiddenException("Not authorized.");
 
         address.IsDeleted = true;
         address.UpdatedAt = DateTime.UtcNow;

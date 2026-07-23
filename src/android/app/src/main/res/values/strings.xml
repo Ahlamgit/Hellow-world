@@ -167,6 +167,10 @@
   <string name="auth_new_password">New Password</string>
   <string name="auth_confirm_password">Confirm Password</string>
   <string name="auth_reset_password">Reset Password</string>
+  <string name="auth_change_password">Change Password</string>
+  <string name="auth_change_password_title">Change Password</string>
+  <string name="auth_change_password_hint">Enter your current password and choose a new one.</string>
+  <string name="auth_current_password">Current Password</string>
   <string name="auth_password_mismatch">Passwords do not match.</string>
   <string name="auth_reset_success">Password reset successfully. You can sign in now.</string>
   <string name="auth_forgot_success">If an account exists, a reset link has been sent.</string>

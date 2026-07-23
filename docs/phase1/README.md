@@ -4,9 +4,9 @@ KHADAMATI Phase 1 is split into four waves. This folder holds planning and rollb
 
 | Wave | Focus | Status |
 |------|-------|--------|
-| **1A** | Data integrity | **Approved for merge** — [verification report](./PHASE1A_VERIFICATION_REPORT.md) (SQL Server validated) |
-| **1B** | Security hardening | Pending |
-| **1C** | API consolidation | Pending |
+| **1A** | Data integrity | **Closed** — [closure notes](./PHASE1A_CLOSURE_NOTES.md) |
+| **1B** | Security hardening | **Closed** — [verification report](./PHASE1B_VERIFICATION_REPORT.md) |
+| **1C** | API consolidation | **Blocked** — [alignment checkpoint](./PHASE1B_PAYMENT_AND_MOBILE_ALIGNMENT.md) |
 | **1D** | Global platform model | Pending |
 
 ## Phase 1A documents
@@ -16,11 +16,23 @@ KHADAMATI Phase 1 is split into four waves. This folder holds planning and rollb
 - [Risk assessment](./PHASE1A_RISK_ASSESSMENT.md)
 - [Test plan](./PHASE1A_TEST_PLAN.md)
 - [Rollback plan](./PHASE1A_ROLLBACK_PLAN.md)
-- [Verification report](./PHASE1A_VERIFICATION_REPORT.md) — Phase 1A checkpoint (approved pending staging SQL apply)
+- [Verification report](./PHASE1A_VERIFICATION_REPORT.md) — SQL Server validated, approved for merge
+- [Closure notes](./PHASE1A_CLOSURE_NOTES.md) — lessons learned
+
+## Phase 1B documents
+
+- [Implementation plan](./PHASE1B_IMPLEMENTATION_PLAN.md)
+- [Database migration plan](./PHASE1B_DATABASE_MIGRATION_PLAN.md)
+- [Risk assessment](./PHASE1B_RISK_ASSESSMENT.md)
+- [Test plan](./PHASE1B_TEST_PLAN.md)
+- [Rollback plan](./PHASE1B_ROLLBACK_PLAN.md)
+- [Verification report](./PHASE1B_VERIFICATION_REPORT.md)
+- [Payment & mobile alignment checkpoint](./PHASE1B_PAYMENT_AND_MOBILE_ALIGNMENT.md) — required before Phase 1C
+- [Secret rotation plan](../security/SECRET_ROTATION_PLAN.md) (documentation only — no rotation in 1B)
 
 ## Traceability
 
-Phase 1A requirement → implementation → test mapping is in [PHASE1A_VERIFICATION_REPORT.md](./PHASE1A_VERIFICATION_REPORT.md#52-requirement--implementation--test-coverage). No separate Phase 0.5 traceability folder exists in the repository.
+Phase 1A requirement → implementation → test mapping is in [PHASE1A_VERIFICATION_REPORT.md](./PHASE1A_VERIFICATION_REPORT.md#52-requirement--implementation--test-coverage). Phase 1B mapping is in [PHASE1B_VERIFICATION_REPORT.md](./PHASE1B_VERIFICATION_REPORT.md).
 
 ## Rules
 

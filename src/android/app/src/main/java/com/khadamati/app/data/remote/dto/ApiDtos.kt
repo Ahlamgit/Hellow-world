@@ -22,6 +22,12 @@ data class ResetPasswordRequestDto(
     val confirmPassword: String,
 )
 
+data class ChangePasswordRequestDto(
+    val currentPassword: String,
+    val newPassword: String,
+    val confirmPassword: String,
+)
+
 data class MessageResponseDto(val message: String? = null)
 
 data class RegisterRequestDto(

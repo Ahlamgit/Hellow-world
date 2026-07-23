@@ -76,7 +76,7 @@ public class SupportService : ISupportService
             ?? throw new NotFoundException("Booking not found.");
 
         if (booking.CustomerId != customerId)
-            throw new UnauthorizedException("Only the customer can submit a review.");
+            throw new ForbiddenException("Only the customer can submit a review.");
 
         if (booking.Status != ServiceRequestStatus.Completed)
             throw new ConflictException("Reviews can only be submitted for completed bookings.");

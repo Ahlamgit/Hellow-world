@@ -165,6 +165,10 @@
   <string name="auth_new_password">كلمة المرور الجديدة</string>
   <string name="auth_confirm_password">تأكيد كلمة المرور</string>
   <string name="auth_reset_password">إعادة تعيين كلمة المرور</string>
+  <string name="auth_change_password">تغيير كلمة المرور</string>
+  <string name="auth_change_password_title">تغيير كلمة المرور</string>
+  <string name="auth_change_password_hint">أدخل كلمة المرور الحالية واختر كلمة مرور جديدة.</string>
+  <string name="auth_current_password">كلمة المرور الحالية</string>
   <string name="auth_password_mismatch">كلمتا المرور غير متطابقتين.</string>
   <string name="auth_reset_success">تمت إعادة تعيين كلمة المرور. يمكنك تسجيل الدخول الآن.</string>
   <string name="auth_forgot_success">إذا كان الحساب موجوداً، تم إرسال رابط إعادة التعيين.</string>

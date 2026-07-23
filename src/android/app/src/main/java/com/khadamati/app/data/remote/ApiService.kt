@@ -44,6 +44,9 @@ interface ApiService {
     @POST("auth/reset-password")
     suspend fun resetPassword(@Body request: ResetPasswordRequestDto): ApiResponse<MessageResponseDto>
 
+    @POST("auth/change-password")
+    suspend fun changePassword(@Body request: ChangePasswordRequestDto): ApiResponse<MessageResponseDto>
+
     @GET("users/me")
     suspend fun getProfile(): ApiResponse<UserProfileDto>
 
