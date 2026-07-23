@@ -1,16 +1,21 @@
 # Areeba — External Dependency Checklist
 
-**Status:** Validation **blocked** — waiting on Areeba external dependencies  
+**Status:** Sandbox **validation** blocked — adapter **implementation** can proceed without credentials  
 **Date:** 2026-07-23  
-**Scope:** Documentation only — no implementation changes in this checkpoint
+**Related:** [Implementation readiness plan](./AREEBA_IMPLEMENTATION_READINESS_PLAN.md)
 
 ---
 
 ## Blocker summary
 
-Areeba sandbox validation cannot proceed until the items in Section 1 are supplied by Areeba (or the merchant onboarding team). Internal payment plumbing exists at the platform level; **Areeba-specific integration and live validation remain pending** credentials and API access.
+**Important:** External credentials are required for **sandbox validation**, but they are **not** a blocker for completing the Areeba adapter implementation. See [AREEBA_IMPLEMENTATION_READINESS_PLAN.md](./AREEBA_IMPLEMENTATION_READINESS_PLAN.md) for work that can proceed with mocked responses.
 
-**Explicitly out of scope for this checkpoint:** Phase 1C, React Native migration, Moyasar removal, and any new code changes.
+| Track | Status |
+|-------|--------|
+| **Implementation** (adapter, DTOs, webhooks, mocked tests) | Can proceed without credentials |
+| **Sandbox validation** (real checkout, webhooks, device testing) | **Blocked** — awaiting Section 1 external items |
+
+**Explicitly out of scope:** Phase 1C, React Native migration, Moyasar removal, Areeba production enablement.
 
 ---
 
@@ -56,7 +61,7 @@ Checklist of items that must be obtained from **Areeba** or the merchant onboard
 
 | Component | Status | Repository evidence |
 |-----------|--------|---------------------|
-| **Areeba gateway adapter** | ☐ **Not implemented** | `IPaymentGateway` abstraction exists; current providers are `Development` and `Moyasar` only. Areeba adapter is **blocked** pending API documentation and sandbox credentials. |
+| **Areeba gateway adapter** | ☐ **Not implemented** | `IPaymentGateway` abstraction exists. Adapter implementation can proceed **without credentials** (mocked tests). Live validation blocked until Section 1 items received. |
 | **Payment attempts model** | ✅ **Implemented** (gateway-agnostic) | `BookingPayment` entity + `BookingPayments` table (`20260708065052_BookingModule`). Tracks amount, status, method, and `TransactionReference` per booking. |
 | **Webhook processing** | ⚠️ **Partial** | Moyasar webhook path implemented (`PaymentWebhookService`, `POST /api/v1/webhooks/moyasar`, HMAC-SHA256). Areeba-specific webhook endpoint and signature logic **not yet implemented**. |
 | **Idempotency handling** | ✅ **Implemented** (booking layer) | `ConfirmPaymentFromWebhookAsync` returns existing booking if payment already `Completed`; status guards prevent double-finalize. |
@@ -74,21 +79,23 @@ Checklist of items that must be obtained from **Areeba** or the merchant onboard
 | **Admin** | Read-only payment list/detail (`AdminPaymentsController`) |
 | **Tests** | `PaymentWebhookServiceTests`, `BookingServiceTests` (payment confirm paths) |
 
-## Not validated
+## Not validated (requires Areeba sandbox — Section 1)
 
-The following cannot be confirmed until Section 1 external items are received and Areeba integration is wired to staging:
+The following cannot be confirmed until Section 1 external items are received and the adapter is deployed to staging with `Payment:Provider=Areeba`:
 
 | Validation | Blocked by |
 |------------|------------|
-| **Real gateway communication** | No Areeba sandbox credentials; no `AreebaPaymentGateway` in repository |
-| **Real webhook delivery** | No Areeba webhook URL whitelisted; no Areeba webhook handler deployed |
-| **Real checkout completion** | No end-to-end test against Areeba hosted checkout; mobile clients do not complete hosted checkout flow |
+| **Real gateway communication** | No sandbox credentials deployed to staging yet |
+| **Real webhook delivery** | No Areeba webhook URL whitelisted on staging |
+| **Real checkout completion** | No end-to-end test against Areeba hosted checkout |
 
 ---
 
-# 3. Next execution steps
+# 3. Next execution steps (sandbox validation only)
 
-**Do not execute until Section 1 items are received and checked.**
+**Prerequisite:** Adapter implementation complete per [AREEBA_IMPLEMENTATION_READINESS_PLAN.md](./AREEBA_IMPLEMENTATION_READINESS_PLAN.md).
+
+**Do not execute validation until Section 1 items are received and checked.**
 
 ## Step 1 — Configure sandbox environment
 
@@ -96,7 +103,6 @@ The following cannot be confirmed until Section 1 external items are received an
 - [ ] Populate staging `Payment:Areeba:*` configuration keys
 - [ ] Set `Payment:Provider=Areeba` in staging only (keep `Development` for local dev; **do not remove Moyasar**)
 - [ ] Confirm Areeba has whitelisted staging webhook and redirect URLs
-- [ ] Implement `AreebaPaymentGateway` + Areeba webhook handler (future implementation wave — **not in this checkpoint**)
 
 ## Step 2 — Deploy staging
 
@@ -147,5 +153,6 @@ The following cannot be confirmed until Section 1 external items are received an
 | No React Native migration | ✅ |
 | No Moyasar removal | ✅ |
 | Areeba validation | **BLOCKED** — awaiting Section 1 external items |
+| Areeba implementation | **Unblocked** — see readiness plan |
 
-**STOP.** Await Areeba sandbox credentials and merchant onboarding before any further payment implementation or validation work.
+**STOP (validation track).** Await Areeba sandbox credentials for live testing. Implementation may proceed separately after readiness plan approval.
