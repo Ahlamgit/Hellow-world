@@ -4,7 +4,7 @@ KHADAMATI Phase 1 is split into four waves. This folder holds planning and rollb
 
 | Wave | Focus | Status |
 |------|-------|--------|
-| **1A** | Data integrity | In progress |
+| **1A** | Data integrity | Verified — see [verification report](./PHASE1A_VERIFICATION_REPORT.md) |
 | **1B** | Security hardening | Pending |
 | **1C** | API consolidation | Pending |
 | **1D** | Global platform model | Pending |
@@ -15,7 +15,7 @@ KHADAMATI Phase 1 is split into four waves. This folder holds planning and rollb
 - [Database migration plan](./PHASE1A_DATABASE_MIGRATION_PLAN.md)
 - [Risk assessment](./PHASE1A_RISK_ASSESSMENT.md)
 - [Test plan](./PHASE1A_TEST_PLAN.md)
-- [Rollback plan](./PHASE1A_ROLLBACK_PLAN.md)
+- [Verification report](./PHASE1A_VERIFICATION_REPORT.md) — Phase 1A checkpoint (approved pending staging SQL apply)
 
 ## Rules
 
