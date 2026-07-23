@@ -49,7 +49,7 @@ Enterprise-grade maintenance and home services marketplace connecting **Customer
 
 ### Prerequisites
 
-- .NET 8 SDK
+- **.NET 8 SDK** (required — the backend targets `net8.0`; .NET 9 is not supported)
 - Node.js 22+
 - Docker & Docker Compose (for SQL Server + full stack)
 - Android Studio (for Android)
