@@ -1,3 +1,5 @@
+using Khadamati.Domain.Constants;
+
 namespace Khadamati.Application.DTOs.Subscriptions;
 
 public class PlanBillingOptionDto
@@ -16,7 +18,7 @@ public class CreateSubscriptionPlanDto
     public string NameAr { get; set; } = string.Empty;
     public string? DescriptionEn { get; set; }
     public string? DescriptionAr { get; set; }
-    public string Currency { get; set; } = "SAR";
+    public string Currency { get; set; } = PlatformDefaults.Currency;
     public string TargetRole { get; set; } = string.Empty;
     public string Status { get; set; } = "Inactive";
 
@@ -70,7 +72,7 @@ public class SubscriptionPlanDto
     public string NameAr { get; set; } = string.Empty;
     public string? DescriptionEn { get; set; }
     public string? DescriptionAr { get; set; }
-    public string Currency { get; set; } = "SAR";
+    public string Currency { get; set; } = PlatformDefaults.Currency;
     public string TargetRole { get; set; } = string.Empty;
     public string Status { get; set; } = string.Empty;
 

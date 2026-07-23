@@ -5,6 +5,7 @@ import {
 } from '@mui/material';
 import { Backup, CheckCircle, Download, Error as ErrorIcon, Refresh } from '@mui/icons-material';
 import { adminApi } from './adminApi';
+import { DEFAULT_CURRENCY } from '../config/platform';
 import AdminDataTable from './AdminDataTable';
 import { getModuleConfig } from './moduleConfig';
 import type { AdminAnalytics, AdminListResult, AdminSystemHealth } from './moduleConfig';
@@ -57,7 +58,7 @@ export function AdminAnalyticsPage() {
         <Grid size={{ xs: 12, md: 3 }}>
           <Card elevation={0} sx={{ border: 1, borderColor: 'divider' }}>
             <CardContent>
-              <Typography variant="h6" gutterBottom>Revenue by Month (SAR)</Typography>
+              <Typography variant="h6" gutterBottom>Revenue by Month ({DEFAULT_CURRENCY})</Typography>
               {data.revenueByMonth.map((p) => <ChartBar key={p.label} label={p.label} value={p.value} max={maxRevenue} />)}
             </CardContent>
           </Card>

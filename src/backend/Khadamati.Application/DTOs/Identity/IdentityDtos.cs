@@ -1,3 +1,5 @@
+using Khadamati.Domain.Constants;
+
 namespace Khadamati.Application.DTOs.Identity;
 
 public record DeviceInfoDto(
@@ -62,7 +64,7 @@ public class UserDto
     public string FullName { get; set; } = string.Empty;
     public string? ProfilePictureUrl { get; set; }
     public string PreferredLanguage { get; set; } = "ar";
-    public string Timezone { get; set; } = "Asia/Riyadh";
+    public string Timezone { get; set; } = PlatformDefaults.Timezone;
     public bool EmailVerified { get; set; }
     public bool PhoneVerified { get; set; }
     public bool RequiresEmailVerification { get; set; }
@@ -128,7 +130,7 @@ public class ProfileDto
     public decimal? Latitude { get; set; }
     public decimal? Longitude { get; set; }
     public string PreferredLanguage { get; set; } = "ar";
-    public string Timezone { get; set; } = "Asia/Riyadh";
+    public string Timezone { get; set; } = PlatformDefaults.Timezone;
     public bool EmailVerified { get; set; }
     public bool PhoneVerified { get; set; }
 }

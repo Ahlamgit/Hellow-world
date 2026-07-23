@@ -1,3 +1,5 @@
+using Khadamati.Domain.Constants;
+
 namespace Khadamati.Application.DTOs.Bookings;
 
 public class CraftsmanOptionDto
@@ -66,7 +68,7 @@ public class BookingPaymentDto
 {
     public Guid Id { get; set; }
     public decimal Amount { get; set; }
-    public string Currency { get; set; } = "SAR";
+    public string Currency { get; set; } = PlatformDefaults.Currency;
     public string Status { get; set; } = string.Empty;
     public string PaymentMethod { get; set; } = string.Empty;
     public string? TransactionReference { get; set; }

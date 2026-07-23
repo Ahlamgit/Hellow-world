@@ -203,7 +203,7 @@ struct MySubscriptionView: View {
                     .font(AppTheme.Typography.title())
                 Spacer()
                 if let amount = subscription.amountPaid {
-                    Text("\(amount) \(subscription.currency ?? "SAR")")
+                    Text("\(amount) \(subscription.currency ?? "USD")")
                         .font(AppTheme.Typography.title())
                 }
             }
@@ -249,7 +249,7 @@ struct MySubscriptionView: View {
             }
             Spacer()
             if let amount = item.amountPaid {
-                Text("\(amount) \(item.currency ?? "SAR")")
+                Text("\(amount) \(item.currency ?? "USD")")
             }
         }
         .cardStyle()

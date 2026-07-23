@@ -139,7 +139,7 @@ public class ProfileService : IProfileService
         Latitude = user.Profile?.Latitude,
         Longitude = user.Profile?.Longitude,
         PreferredLanguage = user.Profile?.PreferredLanguage ?? "ar",
-        Timezone = user.Profile?.Timezone ?? "Asia/Riyadh",
+        Timezone = user.Profile?.Timezone ?? PlatformDefaults.Timezone,
         EmailVerified = user.IsEmailVerified,
         PhoneVerified = user.IsPhoneVerified,
     };

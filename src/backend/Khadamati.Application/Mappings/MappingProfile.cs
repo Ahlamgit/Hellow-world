@@ -3,6 +3,7 @@ using Khadamati.Application.DTOs.Identity;
 using Khadamati.Application.DTOs.Services;
 using Khadamati.Application.DTOs.Subscriptions;
 using Khadamati.Application.DTOs.Users;
+using Khadamati.Domain.Constants;
 using Khadamati.Domain.Entities;
 using Khadamati.Domain.Enums;
 
@@ -23,7 +24,7 @@ public class MappingProfile : Profile
             .ForMember(d => d.FullName, o => o.MapFrom(s => s.Profile != null ? s.Profile.FullName : string.Empty))
             .ForMember(d => d.ProfilePictureUrl, o => o.MapFrom(s => s.Profile != null ? s.Profile.ProfilePictureUrl : null))
             .ForMember(d => d.PreferredLanguage, o => o.MapFrom(s => s.Profile != null ? s.Profile.PreferredLanguage : "ar"))
-            .ForMember(d => d.Timezone, o => o.MapFrom(s => s.Profile != null ? s.Profile.Timezone : "Asia/Riyadh"))
+            .ForMember(d => d.Timezone, o => o.MapFrom(s => s.Profile != null ? s.Profile.Timezone : PlatformDefaults.Timezone))
             .ForMember(d => d.EmailVerified, o => o.MapFrom(s => s.EmailVerifiedAt != null))
             .ForMember(d => d.PhoneVerified, o => o.MapFrom(s => s.PhoneVerifiedAt != null))
             .ForMember(d => d.Roles, o => o.Ignore())

@@ -69,7 +69,7 @@
   <string name="common_cancel">Cancel</string>
   <string name="common_retry">Retry</string>
   <string name="common_minutes">minutes</string>
-  <string name="common_currency">SAR</string>
+  <string name="common_currency">USD</string>
   <string name="common_back">Back</string>
   <string name="common_next">Next</string>
 

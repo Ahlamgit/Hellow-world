@@ -164,7 +164,7 @@ struct BookingWizardView: View {
                             Spacer()
                             VStack(alignment: .trailing, spacing: 4) {
                                 Text("⭐ \(String(format: "%.1f", craftsman.rating))")
-                                Text("\(craftsman.price) SAR")
+                                Text("\(craftsman.price) USD")
                                     .foregroundStyle(AppTheme.Colors.accent)
                             }
                         }
@@ -246,7 +246,7 @@ struct BookingWizardView: View {
                     Text(slot.start, style: .time)
                 }
                 if let craftsman = selectedCraftsman {
-                    Text("\(craftsman.price) SAR")
+                    Text("\(craftsman.price) USD")
                         .fontWeight(.bold)
                 }
             }

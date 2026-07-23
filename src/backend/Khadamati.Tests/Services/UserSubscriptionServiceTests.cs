@@ -1,6 +1,7 @@
 using FluentAssertions;
 using Khadamati.Application.Common;
 using Khadamati.Application.DTOs.Subscriptions;
+using Khadamati.Domain.Constants;
 using Khadamati.Domain.Entities;
 using Khadamati.Domain.Entities.Identity;
 using Khadamati.Domain.Enums;
@@ -55,7 +56,7 @@ public class UserSubscriptionServiceTests : IDisposable
             PlanCode = "CRAFTSMAN_BASIC",
             NameEn = "Craftsman Basic",
             NameAr = "حرفي أساسي",
-            Currency = "SAR",
+            Currency = PlatformDefaults.Currency,
             TargetRole = UserRole.Craftsman,
             Status = PlanStatus.Active,
             TrialDays = 0,
