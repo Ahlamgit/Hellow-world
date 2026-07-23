@@ -36,23 +36,39 @@ public class IntegrationReadinessService : IIntegrationReadinessService
             return Development("Payment", provider);
         }
 
-        if (!provider.Equals("Moyasar", StringComparison.OrdinalIgnoreCase))
+        if (provider.Equals("Moyasar", StringComparison.OrdinalIgnoreCase))
         {
-            return Misconfigured("Payment", provider, ["Payment:Provider"]);
+            var missing = MissingWhenEmpty(
+                ("Payment:Moyasar:SecretKey", "Payment:Moyasar:SecretKey"),
+                ("Payment:Moyasar:PublishableKey", "Payment:Moyasar:PublishableKey"));
+
+            var warnings = new List<string>();
+            if (string.IsNullOrWhiteSpace(_configuration["Payment:Moyasar:WebhookSecret"]))
+                warnings.Add("Payment:Moyasar:WebhookSecret is not set — webhooks will not be signature-validated.");
+
+            if (missing.Count > 0)
+                return Misconfigured("Payment", provider, missing, warnings);
+
+            return Ready("Payment", provider, warnings);
         }
 
-        var missing = MissingWhenEmpty(
-            ("Payment:Moyasar:SecretKey", "Payment:Moyasar:SecretKey"),
-            ("Payment:Moyasar:PublishableKey", "Payment:Moyasar:PublishableKey"));
+        if (provider.Equals("Areeba", StringComparison.OrdinalIgnoreCase))
+        {
+            var missing = MissingWhenEmpty(
+                ("Payment:Areeba:MerchantId", "Payment:Areeba:MerchantId"),
+                ("Payment:Areeba:ApiPassword", "Payment:Areeba:ApiPassword"));
 
-        var warnings = new List<string>();
-        if (string.IsNullOrWhiteSpace(_configuration["Payment:Moyasar:WebhookSecret"]))
-            warnings.Add("Payment:Moyasar:WebhookSecret is not set — webhooks will not be signature-validated.");
+            var warnings = new List<string>();
+            if (string.IsNullOrWhiteSpace(_configuration["Payment:Areeba:WebhookSecret"]))
+                warnings.Add("Payment:Areeba:WebhookSecret is not set — webhooks will not be signature-validated.");
 
-        if (missing.Count > 0)
-            return Misconfigured("Payment", provider, missing, warnings);
+            if (missing.Count > 0)
+                return Misconfigured("Payment", provider, missing, warnings);
 
-        return Ready("Payment", provider, warnings);
+            return Ready("Payment", provider, warnings);
+        }
+
+        return Misconfigured("Payment", provider, ["Payment:Provider"]);
     }
 
     private ProviderReadinessDto EvaluatePush()

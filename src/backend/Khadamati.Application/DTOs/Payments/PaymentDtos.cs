@@ -15,6 +15,8 @@ public class PaymentSessionDto
     public string SessionId { get; set; } = string.Empty;
     public string? CheckoutUrl { get; set; }
     public string Provider { get; set; } = string.Empty;
+    /// <summary>Optional provider-native session id (e.g. MPGS session.id) when SessionId is the order/transaction id.</summary>
+    public string? GatewaySessionId { get; set; }
 }
 
 public class PaymentVerificationResult

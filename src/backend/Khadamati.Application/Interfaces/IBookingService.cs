@@ -14,6 +14,7 @@ public interface IBookingService
     Task<BookingPaymentDto> InitiatePaymentAsync(Guid bookingId, Guid userId, InitiatePaymentDto dto, CancellationToken cancellationToken = default);
     Task<BookingDto> ConfirmPaymentAsync(Guid bookingId, Guid userId, ConfirmPaymentDto dto, CancellationToken cancellationToken = default);
     Task<BookingDto> ConfirmPaymentFromWebhookAsync(string transactionReference, CancellationToken cancellationToken = default);
+    Task<BookingDto> ConfirmPaymentFromWebhookAsync(string transactionReference, string? webhookEventId, CancellationToken cancellationToken = default);
     Task<BookingDto> AcceptBookingAsync(Guid bookingId, Guid craftsmanId, CancellationToken cancellationToken = default);
     Task<BookingDto> RejectBookingAsync(Guid bookingId, Guid craftsmanId, RejectBookingDto dto, CancellationToken cancellationToken = default);
     Task<BookingDto> CancelBookingAsync(Guid bookingId, Guid userId, string role, CancelBookingDto dto, CancellationToken cancellationToken = default);

@@ -1,4 +1,5 @@
 import Foundation
+import UIKit
 
 @MainActor
 final class BookingViewModel: ObservableObject {
@@ -139,13 +140,12 @@ final class BookingViewModel: ObservableObject {
                 body: ["paymentMethod": "Card"],
                 requiresAuth: true
             )
-            let sessionId = paymentResponse.data.sessionId ?? paymentResponse.data.transactionReference ?? ""
-            let _: ApiResponse<Booking> = try await apiClient.request(
-                url: APIEndpoints.Bookings.confirmPayment(bookingId),
-                method: .post,
-                body: ["transactionReference": sessionId],
-                requiresAuth: true
-            )
+            // Hosted checkout must complete on the gateway. Do not confirm from the client.
+            if let checkoutUrl = paymentResponse.data.checkoutUrl,
+               let url = URL(string: checkoutUrl) {
+                UIApplication.shared.open(url)
+            }
+            _ = await loadBooking(id: bookingId)
             await loadBookings()
         } catch {
             errorMessage = error.localizedDescription

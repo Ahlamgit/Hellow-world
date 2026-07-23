@@ -689,21 +689,46 @@ export function BookingPaymentPage() {
   const [sessionId, setSessionId] = useState<string | null>(null);
   const [checkoutUrl, setCheckoutUrl] = useState<string | null>(null);
   const [amount, setAmount] = useState<number | null>(null);
+  const [provider, setProvider] = useState<string | null>(null);
+  const [statusMessage, setStatusMessage] = useState<string | null>(null);
 
   const initiate = async () => {
     if (!id) return;
     setLoading(true);
+    setStatusMessage(null);
     try {
       const { data } = await bookingsApi.initiatePayment(id, 'Card');
       const payment = data.data;
       setSessionId(payment.sessionId ?? null);
       setCheckoutUrl(payment.checkoutUrl ?? null);
       setAmount(payment.amount);
+      setProvider(payment.provider ?? null);
+      if (payment.checkoutUrl) {
+        window.location.assign(payment.checkoutUrl);
+      }
     } finally { setLoading(false); }
   };
 
-  const confirm = async () => {
+  const refreshStatus = async () => {
+    if (!id) return;
+    setLoading(true);
+    try {
+      const { data } = await bookingsApi.getById(id);
+      const booking = data.data;
+      if (booking.status !== 'AwaitingPayment') {
+        navigate(`/bookings/${id}`);
+        return;
+      }
+      setStatusMessage(t('booking.paymentPendingGateway', { defaultValue: 'Waiting for gateway confirmation…' }));
+    } finally { setLoading(false); }
+  };
+
+  const confirmDevelopment = async () => {
     if (!id || !sessionId) return;
+    if (provider && provider !== 'Development') {
+      setStatusMessage(t('booking.paymentWebhookOnly', { defaultValue: 'Production payments complete via gateway webhook. Refresh status after paying.' }));
+      return;
+    }
     setLoading(true);
     try {
       await bookingsApi.confirmPayment(id, sessionId);
@@ -717,6 +742,7 @@ export function BookingPaymentPage() {
       <Card><CardContent>
         <Typography gutterBottom>{t('booking.paymentPending')}</Typography>
         {amount != null && <Typography sx={{ mb: 2, fontWeight: 600 }}>{amount} SAR</Typography>}
+        {statusMessage && <Alert severity="info" sx={{ mb: 2 }}>{statusMessage}</Alert>}
         {!sessionId ? (
           <Button variant="contained" fullWidth onClick={initiate} disabled={loading}>
             {loading ? <CircularProgress size={24} /> : t('booking.startPayment')}
@@ -729,9 +755,14 @@ export function BookingPaymentPage() {
               </Button>
             )}
             <Typography variant="caption" color="text.secondary">Session: {sessionId}</Typography>
-            <Button variant="contained" fullWidth onClick={confirm} disabled={loading}>
-              {loading ? <CircularProgress size={24} /> : t('booking.confirmPayment')}
+            <Button variant="outlined" fullWidth onClick={refreshStatus} disabled={loading}>
+              {loading ? <CircularProgress size={24} /> : t('booking.refreshStatus', { defaultValue: 'Refresh payment status' })}
             </Button>
+            {(!provider || provider === 'Development') && (
+              <Button variant="contained" fullWidth onClick={confirmDevelopment} disabled={loading}>
+                {loading ? <CircularProgress size={24} /> : t('booking.confirmPayment')}
+              </Button>
+            )}
           </Box>
         )}
       </CardContent></Card>

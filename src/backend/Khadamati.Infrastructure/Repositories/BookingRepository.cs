@@ -128,12 +128,50 @@ public class BookingRepository : IBookingRepository
     public async Task AddPaymentAsync(BookingPayment payment, CancellationToken cancellationToken = default) =>
         await _context.BookingPayments.AddAsync(payment, cancellationToken);
 
+    public async Task AddPaymentAttemptAsync(BookingPaymentAttempt attempt, CancellationToken cancellationToken = default) =>
+        await _context.BookingPaymentAttempts.AddAsync(attempt, cancellationToken);
+
     public Task<BookingPayment?> GetPaymentByBookingIdAsync(Guid bookingId, CancellationToken cancellationToken = default) =>
-        _context.BookingPayments.FirstOrDefaultAsync(p => p.ServiceRequestId == bookingId, cancellationToken);
+        _context.BookingPayments
+            .Include(p => p.Attempts)
+            .Include(p => p.CurrentAttempt)
+            .FirstOrDefaultAsync(p => p.ServiceRequestId == bookingId, cancellationToken);
 
     public Task<BookingPayment?> GetPaymentByTransactionReferenceAsync(string transactionReference, CancellationToken cancellationToken = default) =>
-        _context.BookingPayments.FirstOrDefaultAsync(
-            p => p.TransactionReference == transactionReference, cancellationToken);
+        _context.BookingPayments
+            .Include(p => p.Attempts)
+            .Include(p => p.CurrentAttempt)
+            .FirstOrDefaultAsync(
+                p => p.TransactionReference == transactionReference
+                     || p.GatewayTransactionId == transactionReference
+                     || p.GatewaySessionId == transactionReference,
+                cancellationToken);
+
+    public Task<BookingPaymentAttempt?> GetPaymentAttemptByGatewayTransactionIdAsync(string gatewayTransactionId, CancellationToken cancellationToken = default) =>
+        _context.BookingPaymentAttempts
+            .Include(a => a.BookingPayment)
+            .FirstOrDefaultAsync(a => a.GatewayTransactionId == gatewayTransactionId, cancellationToken);
+
+    public Task<BookingPaymentAttempt?> GetPaymentAttemptByWebhookEventIdAsync(string webhookEventId, CancellationToken cancellationToken = default) =>
+        _context.BookingPaymentAttempts
+            .Include(a => a.BookingPayment)
+            .FirstOrDefaultAsync(a => a.WebhookEventId == webhookEventId, cancellationToken);
+
+    public Task<BookingPaymentAttempt?> GetPaymentAttemptBySessionOrTransactionAsync(string reference, CancellationToken cancellationToken = default) =>
+        _context.BookingPaymentAttempts
+            .Include(a => a.BookingPayment)
+            .FirstOrDefaultAsync(
+                a => a.GatewayTransactionId == reference || a.GatewaySessionId == reference,
+                cancellationToken);
+
+    public async Task<int> GetNextPaymentAttemptNumberAsync(Guid bookingPaymentId, CancellationToken cancellationToken = default)
+    {
+        var max = await _context.BookingPaymentAttempts
+            .Where(a => a.BookingPaymentId == bookingPaymentId)
+            .Select(a => (int?)a.AttemptNumber)
+            .MaxAsync(cancellationToken);
+        return (max ?? 0) + 1;
+    }
 
     public async Task AddSlotReservationAsync(BookingSlotReservation reservation, CancellationToken cancellationToken = default) =>
         await _context.BookingSlotReservations.AddAsync(reservation, cancellationToken);
