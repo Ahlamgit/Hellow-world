@@ -1,5 +1,6 @@
 # Areeba — Go-Live Decision
 
+**Remediation validation reviewed:** 2026-07-23  
 **Date:** 2026-07-23 (updated — final integration preparation)  
 **Branch:** `cursor/payment-gateway-migration-plan-4876`  
 **Evidence / plans:**
@@ -14,11 +15,11 @@
 
 ## Final status
 
-# NOT READY
+# NOT READY FOR PRODUCTION CUTOVER
 
 **Production Areeba cutover is not approved.**
 
-Final integration test **preparation** is complete. Live Areeba sandbox credentials, real payment lifecycle execution, and browser/device QA are still outstanding.
+Accepted remediation items are complete. Final integration test **preparation** is published. Live Areeba sandbox credentials, real payment lifecycle execution, and browser/device QA remain open.
 
 ---
 

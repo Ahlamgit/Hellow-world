@@ -1,18 +1,20 @@
 # Areeba — Final Integration Test Plan
 
-**Status:** Preparation complete — **awaiting sandbox credentials + Staging execution**  
-**Date:** 2026-07-23  
+**Remediation validation reviewed:** 2026-07-23  
+**Status:** Preparation only — **NOT READY FOR PRODUCTION CUTOVER**  
 **Branch:** `cursor/payment-gateway-migration-plan-4876`  
 **Go-live decision:** [AREEBA_GO_LIVE_DECISION.md](./AREEBA_GO_LIVE_DECISION.md) → **NOT READY** until this plan’s live matrix is signed PASS  
 
-**Already accepted (do not re-litigate):**
+**Accepted completed items (do not re-litigate):**
 
-- SQL Server 2022 migration validation  
-- BookingPayment preservation + attempt backfill  
-- Index + rollback/re-apply validation  
-- `FixPaymentProviderDefault`  
+- ✅ SQL Server 2022 migration validation  
+- ✅ BookingPayment preservation  
+- ✅ PaymentAttempt backfill validation  
+- ✅ Index validation  
+- ✅ Rollback/re-apply validation  
+- ✅ `FixPaymentProviderDefault` migration correction  
 
-**Still open (this plan targets):**
+**Remaining blockers (this plan targets):**
 
 1. Areeba sandbox credentials  
 2. Real sandbox payment lifecycle tests  
@@ -24,6 +26,7 @@
 - Do **not** remove Moyasar  
 - Do **not** start Phase 1C or React Native  
 - Use **Staging** (or isolated sandbox stack) only  
+- **STOP** after documentation and validation preparation until Ops injects credentials and QA executes this plan
 
 ---
 
