@@ -328,7 +328,7 @@ public class BookingSlotReservationConfiguration : IEntityTypeConfiguration<Book
         builder.ToTable("BookingSlotReservations");
         builder.HasKey(r => r.Id);
         builder.HasIndex(r => new { r.CraftsmanId, r.SlotStart }).IsUnique()
-            .HasFilter("[IsActive] = 1 AND [IsDeleted] = 0")
+            .HasFilter("[IsActive] = 1 AND [Deleted] = 0")
             .HasDatabaseName("IX_BookingSlotReservations_ActiveSlot");
         builder.HasIndex(r => new { r.CraftsmanId, r.IsActive, r.SlotStart, r.SlotEnd })
             .HasDatabaseName("IX_BookingSlotReservations_CraftsmanId_IsActive_SlotRange");

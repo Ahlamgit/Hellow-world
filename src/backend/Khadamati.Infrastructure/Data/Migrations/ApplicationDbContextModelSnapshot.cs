@@ -469,7 +469,7 @@ namespace Khadamati.Infrastructure.Data.Migrations
                     b.HasIndex("CraftsmanId", "SlotStart")
                         .IsUnique()
                         .HasDatabaseName("IX_BookingSlotReservations_ActiveSlot")
-                        .HasFilter("[IsActive] = 1 AND [IsDeleted] = 0");
+                        .HasFilter("[IsActive] = 1 AND [Deleted] = 0");
 
                     b.HasIndex("CraftsmanId", "IsActive", "SlotStart", "SlotEnd")
                         .HasDatabaseName("IX_BookingSlotReservations_CraftsmanId_IsActive_SlotRange");
@@ -794,7 +794,7 @@ namespace Khadamati.Infrastructure.Data.Migrations
                     b.HasIndex("Code")
                         .IsUnique()
                         .HasDatabaseName("IX_Coupons_Code_Active")
-                        .HasFilter("[IsDeleted] = 0");
+                        .HasFilter("[Deleted] = 0");
 
                     b.ToTable("Coupons", (string)null);
                 });

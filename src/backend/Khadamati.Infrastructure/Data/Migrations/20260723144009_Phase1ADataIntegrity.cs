@@ -45,7 +45,7 @@ namespace Khadamati.Infrastructure.Data.Migrations
                 table: "Coupons",
                 column: "Code",
                 unique: true,
-                filter: "[IsDeleted] = 0");
+                filter: "[Deleted] = 0");
 
             migrationBuilder.CreateIndex(
                 name: "IX_BookingSlotReservations_CraftsmanId_IsActive_SlotRange",
