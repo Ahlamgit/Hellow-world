@@ -1,6 +1,6 @@
 # Areeba — Implementation Readiness Plan
 
-**Status:** Ready for implementation (mocked / no live credentials) — **awaiting approval**  
+**Status:** Implementation complete (adapter layer) — **awaiting sandbox validation / production cutover approval**  
 **Date:** 2026-07-23  
 **Prerequisite:** `AREEBA_EXTERNAL_DEPENDENCY_CHECKLIST.md` (validation items tracked separately)
 
@@ -323,8 +323,10 @@ Payload shapes updated when official Areeba API documentation is received.
 | Deliverable | Status |
 |-------------|--------|
 | This readiness plan | ✅ Complete |
-| Adapter implementation | ⏸ Awaiting approval |
+| Adapter implementation | ✅ Complete — see `AREEBA_IMPLEMENTATION_REPORT.md` |
+| Unit test suite | ✅ Complete — see `AREEBA_TEST_REPORT.md` |
+| Development verification | ✅ Complete — see `AREEBA_VERIFICATION_REPORT.md` |
 | Sandbox validation | ⏸ Awaiting Areeba credentials |
 | Production cutover | ⏸ Blocked |
 
-**STOP.** Review and approve this plan before Areeba adapter implementation begins.
+**STOP.** Adapter implementation and development verification are complete. Await approval before sandbox validation or production cutover.

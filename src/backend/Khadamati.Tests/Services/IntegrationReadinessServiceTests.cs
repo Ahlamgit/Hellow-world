@@ -62,4 +62,40 @@ public class IntegrationReadinessServiceTests
         payment.Status.Should().Be("Misconfigured");
         payment.MissingSettings.Should().Contain("Payment:Moyasar:SecretKey");
     }
+
+    [Fact]
+    public void GetReport_AreebaFullyConfigured_IsProductionReadyForPayment()
+    {
+        var config = new ConfigurationBuilder().AddInMemoryCollection(new Dictionary<string, string?>
+        {
+            ["Payment:Provider"] = "Areeba",
+            ["Payment:Areeba:MerchantId"] = "merchant",
+            ["Payment:Areeba:SecretKey"] = "secret",
+            ["Payment:Areeba:ApiBaseUrl"] = "https://sandbox.areeba.example/v1",
+            ["Push:Provider"] = "Development",
+            ["Email:Provider"] = "Development",
+            ["Sms:Provider"] = "Development",
+        }).Build();
+
+        var payment = new IntegrationReadinessService(config).GetReport().Providers
+            .Single(p => p.Category == "Payment");
+
+        payment.Status.Should().Be("Ready");
+        payment.SelectedProvider.Should().Be("Areeba");
+    }
+
+    [Fact]
+    public void GetReport_AreebaMissingMerchant_IsMisconfigured()
+    {
+        var config = new ConfigurationBuilder().AddInMemoryCollection(new Dictionary<string, string?>
+        {
+            ["Payment:Provider"] = "Areeba",
+        }).Build();
+
+        var payment = new IntegrationReadinessService(config).GetReport().Providers
+            .Single(p => p.Category == "Payment");
+
+        payment.Status.Should().Be("Misconfigured");
+        payment.MissingSettings.Should().Contain("Payment:Areeba:MerchantId");
+    }
 }

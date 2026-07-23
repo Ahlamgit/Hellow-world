@@ -364,6 +364,43 @@ public class BookingPaymentConfiguration : IEntityTypeConfiguration<BookingPayme
         builder.Property(p => p.TransactionReference).HasMaxLength(200);
         builder.HasOne(p => p.Payer).WithMany().HasForeignKey(p => p.PayerUserId).OnDelete(DeleteBehavior.Restrict);
         builder.HasOne(p => p.Payee).WithMany().HasForeignKey(p => p.PayeeUserId).OnDelete(DeleteBehavior.Restrict);
+        builder.HasMany(p => p.Attempts).WithOne(a => a.BookingPayment).HasForeignKey(a => a.BookingPaymentId);
+    }
+}
+
+public class BookingPaymentAttemptConfiguration : IEntityTypeConfiguration<BookingPaymentAttempt>
+{
+    public void Configure(EntityTypeBuilder<BookingPaymentAttempt> builder)
+    {
+        builder.ToTable("BookingPaymentAttempts");
+        builder.HasKey(a => a.Id);
+        builder.HasIndex(a => a.SessionId);
+        builder.HasIndex(a => new { a.BookingPaymentId, a.Status });
+        builder.Property(a => a.Provider).HasMaxLength(50).IsRequired();
+        builder.Property(a => a.SessionId).HasMaxLength(200).IsRequired();
+        builder.Property(a => a.ProviderTransactionId).HasMaxLength(200);
+        builder.Property(a => a.Amount).HasPrecision(18, 2);
+        builder.Property(a => a.Currency).HasMaxLength(3).IsRequired();
+        builder.Property(a => a.Status).HasConversion<int>();
+        builder.Property(a => a.CheckoutUrl).HasMaxLength(500);
+        builder.Property(a => a.FailureReason).HasMaxLength(500);
+    }
+}
+
+public class PaymentWebhookEventConfiguration : IEntityTypeConfiguration<PaymentWebhookEvent>
+{
+    public void Configure(EntityTypeBuilder<PaymentWebhookEvent> builder)
+    {
+        builder.ToTable("PaymentWebhookEvents");
+        builder.HasKey(e => e.Id);
+        builder.HasIndex(e => new { e.Provider, e.WebhookEventId }).IsUnique();
+        builder.Property(e => e.Provider).HasMaxLength(50).IsRequired();
+        builder.Property(e => e.WebhookEventId).HasMaxLength(200).IsRequired();
+        builder.Property(e => e.EventStatus).HasMaxLength(50);
+        builder.HasOne(e => e.BookingPaymentAttempt)
+            .WithMany()
+            .HasForeignKey(e => e.BookingPaymentAttemptId)
+            .OnDelete(DeleteBehavior.SetNull);
     }
 }
 

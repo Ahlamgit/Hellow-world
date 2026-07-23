@@ -10,6 +10,7 @@ using Khadamati.Infrastructure.Services.Integrations;
 using Khadamati.Infrastructure.Services.Identity.Email;
 using Khadamati.Infrastructure.Services.Identity.Sms;
 using Khadamati.Infrastructure.Services.Payments;
+using Khadamati.Infrastructure.Services.Payments.Areeba;
 using Khadamati.Infrastructure.Services.Push;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Diagnostics;
@@ -75,6 +76,10 @@ public static class DependencyInjection
         services.AddScoped<IChatService, ChatService>();
         RegisterPushProvider(services, configuration);
         RegisterPaymentProvider(services, configuration);
+        services.AddScoped<PaymentAttemptRepository>();
+        services.AddScoped<IPaymentAttemptService, PaymentAttemptService>();
+        services.AddScoped<IAreebaWebhookSignatureValidator, AreebaWebhookSignatureValidator>();
+        services.AddScoped<IAreebaWebhookService, AreebaWebhookService>();
         services.AddScoped<IPaymentWebhookService, PaymentWebhookService>();
         services.AddScoped<ITokenService, TokenService>();
         services.AddScoped<IPasswordHasher, PasswordHasher>();
@@ -101,6 +106,11 @@ public static class DependencyInjection
             case "moyasar":
                 services.AddHttpClient(nameof(MoyasarPaymentGateway));
                 services.AddScoped<IPaymentGateway, MoyasarPaymentGateway>();
+                break;
+            case "areeba":
+                services.Configure<AreebaOptions>(configuration.GetSection(AreebaOptions.SectionName));
+                services.AddHttpClient(AreebaPaymentGateway.HttpClientName);
+                services.AddScoped<IPaymentGateway, AreebaPaymentGateway>();
                 break;
             default:
                 services.AddScoped<IPaymentGateway, DevelopmentPaymentGateway>();

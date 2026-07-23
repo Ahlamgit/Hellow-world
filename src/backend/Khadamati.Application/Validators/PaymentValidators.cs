@@ -20,3 +20,21 @@ public class ProcessMoyasarWebhookCommandValidator : AbstractValidator<ProcessMo
         RuleFor(x => x.Payload).NotNull();
     }
 }
+
+public class AreebaWebhookValidator : AbstractValidator<AreebaWebhookDto>
+{
+    public AreebaWebhookValidator()
+    {
+        RuleFor(x => x.EventId).NotEmpty().MaximumLength(200);
+        RuleFor(x => x.Status).NotEmpty().MaximumLength(50);
+    }
+}
+
+public class ProcessAreebaWebhookCommandValidator : AbstractValidator<ProcessAreebaWebhookCommand>
+{
+    public ProcessAreebaWebhookCommandValidator()
+    {
+        RuleFor(x => x.RawBody).NotEmpty();
+        RuleFor(x => x.Payload).NotNull();
+    }
+}

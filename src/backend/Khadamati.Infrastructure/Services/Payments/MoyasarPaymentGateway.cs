@@ -40,6 +40,8 @@ public class MoyasarPaymentGateway : IPaymentGateway
 
     public string ProviderName => "Moyasar";
 
+    public bool SupportsClientSideConfirmation => true;
+
     private bool IsConfigured =>
         !string.IsNullOrWhiteSpace(_configuration["Payment:Moyasar:SecretKey"]);
 

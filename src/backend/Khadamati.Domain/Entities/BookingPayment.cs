@@ -20,4 +20,5 @@ public class BookingPayment : BaseEntity
     public ServiceRequest ServiceRequest { get; set; } = null!;
     public User Payer { get; set; } = null!;
     public User Payee { get; set; } = null!;
+    public ICollection<BookingPaymentAttempt> Attempts { get; set; } = new List<BookingPaymentAttempt>();
 }

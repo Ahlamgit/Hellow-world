@@ -13,6 +13,8 @@ public class DevelopmentPaymentGateway : IPaymentGateway
 
     public string ProviderName => "Development";
 
+    public bool SupportsClientSideConfirmation => true;
+
     public Task<PaymentSessionDto> CreateSessionAsync(PaymentSessionRequest request, CancellationToken cancellationToken = default)
     {
         var sessionId = $"KHD-{request.PaymentId:N}";

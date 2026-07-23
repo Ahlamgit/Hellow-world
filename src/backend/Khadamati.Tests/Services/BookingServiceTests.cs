@@ -117,6 +117,7 @@ public class BookingServiceTests : IDisposable
         var unitOfWork = new UnitOfWork(_context);
         var config = new ConfigurationBuilder().Build();
         var paymentGateway = new DevelopmentPaymentGateway(config);
+        var paymentAttemptService = new PaymentAttemptService(new PaymentAttemptRepository(_context));
         var pushMock = new Mock<IPushNotificationService>();
         pushMock.Setup(p => p.SendAsync(It.IsAny<Application.DTOs.Messaging.PushNotificationPayload>(), It.IsAny<CancellationToken>()))
             .Returns(Task.CompletedTask);
@@ -124,7 +125,7 @@ public class BookingServiceTests : IDisposable
         permissionMock.Setup(p => p.UserHasPermissionAsync(It.IsAny<Guid>(), It.IsAny<string>(), It.IsAny<CancellationToken>()))
             .ReturnsAsync(false);
 
-        _service = new BookingService(bookingRepository, unitOfWork, paymentGateway, pushMock.Object, permissionMock.Object);
+        _service = new BookingService(bookingRepository, unitOfWork, paymentGateway, paymentAttemptService, pushMock.Object, permissionMock.Object);
     }
 
     [Fact]

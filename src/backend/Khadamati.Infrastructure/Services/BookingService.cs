@@ -17,6 +17,7 @@ public class BookingService : IBookingService
     private readonly IBookingRepository _repository;
     private readonly IUnitOfWork _unitOfWork;
     private readonly IPaymentGateway _paymentGateway;
+    private readonly IPaymentAttemptService _paymentAttemptService;
     private readonly IPushNotificationService _pushNotificationService;
     private readonly IPermissionService _permissionService;
 
@@ -24,12 +25,14 @@ public class BookingService : IBookingService
         IBookingRepository repository,
         IUnitOfWork unitOfWork,
         IPaymentGateway paymentGateway,
+        IPaymentAttemptService paymentAttemptService,
         IPushNotificationService pushNotificationService,
         IPermissionService permissionService)
     {
         _repository = repository;
         _unitOfWork = unitOfWork;
         _paymentGateway = paymentGateway;
+        _paymentAttemptService = paymentAttemptService;
         _pushNotificationService = pushNotificationService;
         _permissionService = permissionService;
     }
@@ -195,10 +198,39 @@ public class BookingService : IBookingService
             throw new ConflictException("Booking is not awaiting payment.");
 
         var existing = await _repository.GetPaymentByBookingIdAsync(bookingId, cancellationToken);
-        if (existing is { Status: PaymentStatus.Pending or PaymentStatus.Processing })
-            return MapPaymentDto(existing, existing.TransactionReference);
+        if (existing is { Status: PaymentStatus.Completed })
+            throw new ConflictException("Payment already completed.");
 
-        var payment = new BookingPayment
+        if (existing is { Status: PaymentStatus.Pending or PaymentStatus.Processing })
+        {
+            if (_paymentGateway.SupportsClientSideConfirmation &&
+                !string.IsNullOrWhiteSpace(existing.TransactionReference))
+            {
+                return MapPaymentDto(existing, existing.TransactionReference);
+            }
+
+            if (!_paymentGateway.SupportsClientSideConfirmation)
+            {
+                if (await _paymentAttemptService.HasCompletedAttemptAsync(existing.Id, cancellationToken))
+                    throw new ConflictException("Payment already completed.");
+
+                var activeAttempt = await _paymentAttemptService.GetActiveAttemptAsync(existing.Id, cancellationToken);
+                if (activeAttempt is not null)
+                {
+                    return MapPaymentDto(
+                        existing,
+                        activeAttempt.SessionId,
+                        activeAttempt.CheckoutUrl,
+                        activeAttempt.Provider);
+                }
+            }
+        }
+        else if (existing is not null)
+        {
+            throw new ConflictException("Payment cannot be initiated.");
+        }
+
+        var payment = existing ?? new BookingPayment
         {
             ServiceRequestId = bookingId,
             PayerUserId = userId,
@@ -209,8 +241,11 @@ public class BookingService : IBookingService
             PaymentMethod = dto.PaymentMethod
         };
 
-        await _repository.AddPaymentAsync(payment, cancellationToken);
-        await SaveBookingChangesAsync(cancellationToken);
+        if (existing is null)
+        {
+            await _repository.AddPaymentAsync(payment, cancellationToken);
+            await SaveBookingChangesAsync(cancellationToken);
+        }
 
         var customer = await _unitOfWork.Repository<User>().GetByIdAsync(userId, cancellationToken);
         var session = await _paymentGateway.CreateSessionAsync(new PaymentSessionRequest
@@ -222,6 +257,14 @@ public class BookingService : IBookingService
             CustomerEmail = customer?.Email ?? string.Empty,
         }, cancellationToken);
 
+        await _paymentAttemptService.CreateAttemptAsync(
+            payment.Id,
+            _paymentGateway.ProviderName,
+            session,
+            payment.Amount,
+            payment.Currency,
+            cancellationToken);
+
         payment.Status = PaymentStatus.Processing;
         payment.TransactionReference = session.SessionId;
         _unitOfWork.Repository<BookingPayment>().Update(payment);
@@ -231,6 +274,9 @@ public class BookingService : IBookingService
 
     public async Task<BookingDto> ConfirmPaymentAsync(Guid bookingId, Guid userId, ConfirmPaymentDto dto, CancellationToken cancellationToken = default)
     {
+        if (!_paymentGateway.SupportsClientSideConfirmation)
+            throw new ConflictException("Payment confirmation is handled by the payment provider.");
+
         var booking = await GetBookingForCustomerAsync(bookingId, userId, cancellationToken);
         if (booking.Status != ServiceRequestStatus.AwaitingPayment)
             throw new ConflictException("Booking is not awaiting payment.");
