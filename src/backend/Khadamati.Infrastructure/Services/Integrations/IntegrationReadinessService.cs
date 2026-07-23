@@ -36,23 +36,46 @@ public class IntegrationReadinessService : IIntegrationReadinessService
             return Development("Payment", provider);
         }
 
-        if (!provider.Equals("Moyasar", StringComparison.OrdinalIgnoreCase))
+        if (provider.Equals("Moyasar", StringComparison.OrdinalIgnoreCase))
         {
-            return Misconfigured("Payment", provider, ["Payment:Provider"]);
+            var missing = MissingWhenEmpty(
+                ("Payment:Moyasar:SecretKey", "Payment:Moyasar:SecretKey"),
+                ("Payment:Moyasar:PublishableKey", "Payment:Moyasar:PublishableKey"));
+
+            var warnings = new List<string>();
+            if (string.IsNullOrWhiteSpace(_configuration["Payment:Moyasar:WebhookSecret"]))
+                warnings.Add("Payment:Moyasar:WebhookSecret is not set — webhooks will not be signature-validated.");
+
+            if (missing.Count > 0)
+                return Misconfigured("Payment", provider, missing, warnings);
+
+            return Ready("Payment", provider, warnings);
         }
 
-        var missing = MissingWhenEmpty(
-            ("Payment:Moyasar:SecretKey", "Payment:Moyasar:SecretKey"),
-            ("Payment:Moyasar:PublishableKey", "Payment:Moyasar:PublishableKey"));
+        if (provider.Equals("Areeba", StringComparison.OrdinalIgnoreCase))
+        {
+            var missing = MissingWhenEmpty(
+                ("Payment:Areeba:MerchantId", "Payment:Areeba:MerchantId"),
+                ("Payment:Areeba:SecretKey", "Payment:Areeba:SecretKey"),
+                ("Payment:Areeba:ApiBaseUrl", "Payment:Areeba:ApiBaseUrl"));
 
-        var warnings = new List<string>();
-        if (string.IsNullOrWhiteSpace(_configuration["Payment:Moyasar:WebhookSecret"]))
-            warnings.Add("Payment:Moyasar:WebhookSecret is not set — webhooks will not be signature-validated.");
+            var warnings = new List<string>();
+            if (string.IsNullOrWhiteSpace(_configuration["Payment:Areeba:WebhookSecret"]))
+                warnings.Add("Payment:Areeba:WebhookSecret is not set — webhooks will not be signature-validated.");
+            if (string.IsNullOrWhiteSpace(_configuration["Payment:Areeba:CallbackUrl"]))
+                warnings.Add("Payment:Areeba:CallbackUrl is not set.");
+            if (string.IsNullOrWhiteSpace(_configuration["Payment:Areeba:SuccessUrl"]))
+                warnings.Add("Payment:Areeba:SuccessUrl is not set.");
+            if (string.IsNullOrWhiteSpace(_configuration["Payment:Areeba:FailureUrl"]))
+                warnings.Add("Payment:Areeba:FailureUrl is not set.");
 
-        if (missing.Count > 0)
-            return Misconfigured("Payment", provider, missing, warnings);
+            if (missing.Count > 0)
+                return Misconfigured("Payment", provider, missing, warnings);
 
-        return Ready("Payment", provider, warnings);
+            return Ready("Payment", provider, warnings);
+        }
+
+        return Misconfigured("Payment", provider, ["Payment:Provider"]);
     }
 
     private ProviderReadinessDto EvaluatePush()
