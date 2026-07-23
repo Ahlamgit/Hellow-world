@@ -133,7 +133,10 @@ public class ServiceRequestConfiguration : IEntityTypeConfiguration<ServiceReque
         builder.HasIndex(r => r.CraftsmanId);
         builder.HasIndex(r => r.Status);
         builder.HasIndex(r => r.ScheduledAt);
+        builder.HasIndex(r => new { r.CraftsmanId, r.Status, r.ScheduledAt })
+            .HasDatabaseName("IX_ServiceRequests_CraftsmanId_Status_ScheduledAt");
         builder.Property(r => r.BookingReference).HasMaxLength(30).IsRequired();
+        builder.Property(r => r.RowVersion).IsRowVersion();
         builder.Property(r => r.Status).HasConversion<int>();
         builder.Property(r => r.EstimatedPrice).HasPrecision(18, 2);
         builder.Property(r => r.FinalPrice).HasPrecision(18, 2);
@@ -325,7 +328,10 @@ public class BookingSlotReservationConfiguration : IEntityTypeConfiguration<Book
         builder.ToTable("BookingSlotReservations");
         builder.HasKey(r => r.Id);
         builder.HasIndex(r => new { r.CraftsmanId, r.SlotStart }).IsUnique()
-            .HasFilter("[IsActive] = 1 AND [IsDeleted] = 0");
+            .HasFilter("[IsActive] = 1 AND [IsDeleted] = 0")
+            .HasDatabaseName("IX_BookingSlotReservations_ActiveSlot");
+        builder.HasIndex(r => new { r.CraftsmanId, r.IsActive, r.SlotStart, r.SlotEnd })
+            .HasDatabaseName("IX_BookingSlotReservations_CraftsmanId_IsActive_SlotRange");
         builder.HasIndex(r => r.ServiceRequestId).IsUnique();
     }
 }

@@ -324,7 +324,7 @@ public class DatabaseSeeder
             context.CraftsmanProfiles.Add(profile);
             await context.SaveChangesAsync(cancellationToken);
 
-            var service = services[Math.Min(svcIdx, services.Count - 1)];
+            var service = ResolveCraftsmanService(services, spec, svcIdx);
             context.CraftsmanServices.Add(new Domain.Entities.CraftsmanService
             {
                 CraftsmanProfileId = profile.Id,
@@ -705,6 +705,19 @@ public class DatabaseSeeder
 
         if (context.ChangeTracker.HasChanges())
             await context.SaveChangesAsync(cancellationToken);
+    }
+
+    private static Service ResolveCraftsmanService(IReadOnlyList<Service> services, string specialization, int fallbackIndex)
+    {
+        var matched = specialization switch
+        {
+            "Plumbing" => services.FirstOrDefault(s => s.NameEn == "Leak Repair"),
+            "Electrical" => services.FirstOrDefault(s => s.NameEn == "Electrical Repair"),
+            "HVAC" => services.FirstOrDefault(s => s.NameEn == "AC Maintenance"),
+            _ => null,
+        };
+
+        return matched ?? services[Math.Min(fallbackIndex, services.Count - 1)];
     }
 
     private static (decimal Latitude, decimal Longitude) GetCraftsmanSeedCoordinates(int index) => index switch

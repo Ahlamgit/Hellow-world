@@ -25,6 +25,7 @@ public class ServiceRequest : BaseEntity
     public Guid? RescheduledFromId { get; set; }
     public int? CustomerRating { get; set; }
     public string? CustomerReview { get; set; }
+    public byte[] RowVersion { get; set; } = [];
 
     public User Customer { get; set; } = null!;
     public Service Service { get; set; } = null!;
