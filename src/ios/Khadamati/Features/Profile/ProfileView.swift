@@ -154,6 +154,13 @@ struct ProfileView: View {
                 Label(L10n.Profile.editTitle, systemImage: "pencil")
                     .font(AppTheme.Typography.body())
             }
+
+            NavigationLink {
+                ChangePasswordView()
+            } label: {
+                Label(L10n.Auth.changePassword, systemImage: "lock.rotation")
+                    .font(AppTheme.Typography.body())
+            }
         }
         .cardStyle()
     }

@@ -6,6 +6,7 @@ object Routes {
     const val REGISTER = "register"
     const val FORGOT_PASSWORD = "forgot-password"
     const val RESET_PASSWORD = "reset-password"
+    const val CHANGE_PASSWORD = "change-password"
     const val HOME = "home"
     const val SERVICES = "services"
     const val PROFILE = "profile"

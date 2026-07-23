@@ -13,7 +13,7 @@ public class SessionRepository : ISessionRepository
 
     public Task<RefreshToken?> GetByTokenAsync(string token, CancellationToken cancellationToken = default) =>
         _context.RefreshTokens
-            .Include(r => r.User).ThenInclude(u => u.Profile)
+            .AsNoTracking()
             .FirstOrDefaultAsync(r => r.Token == token, cancellationToken);
 
     public Task<IReadOnlyList<RefreshToken>> GetActiveSessionsAsync(Guid userId, CancellationToken cancellationToken = default) =>

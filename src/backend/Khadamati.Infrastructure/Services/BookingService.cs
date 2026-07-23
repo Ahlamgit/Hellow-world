@@ -509,7 +509,7 @@ public class BookingService : IBookingService
     {
         var notification = await _unitOfWork.Repository<Notification>().GetByIdAsync(notificationId, cancellationToken)
             ?? throw new NotFoundException("Notification not found.");
-        if (notification.UserId != userId) throw new UnauthorizedException("Access denied.");
+        if (notification.UserId != userId) throw new ForbiddenException("Access denied.");
         notification.IsRead = true;
         notification.ReadAt = DateTime.UtcNow;
         _unitOfWork.Repository<Notification>().Update(notification);
@@ -520,7 +520,7 @@ public class BookingService : IBookingService
     {
         var booking = await _repository.GetByIdAsync(bookingId, includeDetails: true, cancellationToken)
             ?? throw new NotFoundException("Booking not found.");
-        if (booking.CustomerId != userId) throw new UnauthorizedException("Access denied.");
+        if (booking.CustomerId != userId) throw new ForbiddenException("Access denied.");
         return booking;
     }
 
@@ -528,7 +528,7 @@ public class BookingService : IBookingService
     {
         var booking = await _repository.GetByIdAsync(bookingId, includeDetails: true, cancellationToken)
             ?? throw new NotFoundException("Booking not found.");
-        if (booking.CraftsmanId != craftsmanId) throw new UnauthorizedException("Access denied.");
+        if (booking.CraftsmanId != craftsmanId) throw new ForbiddenException("Access denied.");
         return booking;
     }
 
@@ -542,7 +542,7 @@ public class BookingService : IBookingService
         if (await _permissionService.UserHasPermissionAsync(userId, PermissionCodes.BookingsView, cancellationToken))
             return booking;
 
-        throw new UnauthorizedException("Access denied.");
+        throw new ForbiddenException("Access denied.");
     }
 
     private async Task<ServiceRequest> ReloadBookingAsync(Guid bookingId, CancellationToken cancellationToken) =>

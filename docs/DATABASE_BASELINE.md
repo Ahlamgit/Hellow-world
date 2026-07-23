@@ -2,7 +2,7 @@
 
 This document is the **canonical reference** for the live SQL Server schema used by the ASP.NET Core API (EF Core). Legacy scripts under `src/database/` may differ and are not authoritative for the running application.
 
-**Last validated:** 2026-07-23 (Phase 1A SQL Server apply on SQL Server 2022 Developer, Linux)
+**Last validated:** 2026-07-23 (Phase 1A SQL Server apply; Phase 1B indexes generated, apply pending)
 
 ---
 
@@ -59,6 +59,13 @@ All entities inheriting `BaseEntity` use this mapping globally (`AuditColumnConf
 | `ServiceRequests` | `IX_ServiceRequests_CraftsmanId_Status_ScheduledAt` | Composite index |
 | `BookingSlotReservations` | `IX_BookingSlotReservations_CraftsmanId_IsActive_SlotRange` | Composite index |
 | `BookingSlotReservations` | `IX_BookingSlotReservations_ActiveSlot` | Renamed filtered unique slot index |
+
+## Phase 1B schema additions (migration `20260723180606_Phase1BRefreshTokenIndexes`)
+
+| Table | Index | Notes |
+|-------|-------|-------|
+| `RefreshTokens` | `IX_RefreshTokens_ExpiresAt` | Expiry sweeps / cleanup |
+| `RefreshTokens` | `IX_RefreshTokens_UserId_RevokedAt_ExpiresAt` | Active sessions per user |
 
 ---
 

@@ -44,6 +44,11 @@
 "auth.resetPassword" = "Reset Password";
 "auth.passwordMismatch" = "Passwords do not match.";
 "auth.resetSuccess" = "Password reset successfully. You can sign in now.";
+"auth.changePassword" = "Change Password";
+"auth.changePasswordTitle" = "Change Password";
+"auth.changePasswordHint" = "Enter your current password and choose a new one.";
+"auth.currentPassword" = "Current Password";
+"auth.changePasswordSuccess" = "Password changed successfully.";
 "auth.forgotSuccess" = "If an account exists, a reset link has been sent.";
 
 "services.title" = "Our Services";

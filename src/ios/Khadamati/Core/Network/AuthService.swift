@@ -8,6 +8,7 @@ protocol AuthServiceProtocol {
     func fetchProfile() async throws -> User
     func forgotPassword(email: String) async throws -> String
     func resetPassword(token: String, newPassword: String, confirmPassword: String) async throws -> String
+    func changePassword(currentPassword: String, newPassword: String, confirmPassword: String) async throws -> String
     func updateProfile(firstName: String, lastName: String, preferredLanguage: String) async throws -> User
 }
 
@@ -93,6 +94,20 @@ final class AuthService: AuthServiceProtocol {
             requiresAuth: false
         )
         return response.message ?? response.data?.message ?? L10n.Auth.resetSuccess
+    }
+
+    func changePassword(currentPassword: String, newPassword: String, confirmPassword: String) async throws -> String {
+        let response: ApiResponse<MessageResponse> = try await apiClient.request(
+            url: APIEndpoints.Auth.changePassword,
+            method: .post,
+            body: [
+                "currentPassword": currentPassword,
+                "newPassword": newPassword,
+                "confirmPassword": confirmPassword,
+            ],
+            requiresAuth: true
+        )
+        return response.message ?? response.data?.message ?? L10n.Auth.changePasswordSuccess
     }
 
     func updateProfile(firstName: String, lastName: String, preferredLanguage: String) async throws -> User {

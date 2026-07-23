@@ -78,6 +78,9 @@ public class RefreshTokenConfiguration : IEntityTypeConfiguration<RefreshToken>
         builder.HasKey(r => r.Id);
         builder.HasIndex(r => r.Token).IsUnique();
         builder.HasIndex(r => r.UserId);
+        builder.HasIndex(r => r.ExpiresAt);
+        builder.HasIndex(r => new { r.UserId, r.RevokedAt, r.ExpiresAt })
+            .HasDatabaseName("IX_RefreshTokens_UserId_RevokedAt_ExpiresAt");
         builder.HasIndex(r => r.DeviceId);
         builder.Property(r => r.RememberMe).HasDefaultValue(false);
         builder.Property(r => r.DeviceName).HasMaxLength(200);

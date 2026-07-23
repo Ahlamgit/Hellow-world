@@ -88,6 +88,13 @@ class AuthRepository(
         response.message ?: response.data?.message ?: "Password reset successfully."
     }
 
+    suspend fun changePassword(currentPassword: String, newPassword: String, confirmPassword: String): Result<String> = runCatching {
+        val response = apiService.changePassword(
+            com.khadamati.app.data.remote.dto.ChangePasswordRequestDto(currentPassword, newPassword, confirmPassword),
+        )
+        response.message ?: response.data?.message ?: "Password changed successfully."
+    }
+
     suspend fun updateProfile(firstName: String, lastName: String, preferredLanguage: String): Result<UserProfile> = runCatching {
         val response = apiService.updateProfile(
             mapOf(

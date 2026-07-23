@@ -84,7 +84,7 @@ public class CraftsmanPortalService : ICraftsmanService
         var item = await _unitOfWork.Repository<Domain.Entities.CraftsmanService>().GetByIdAsync(craftsmanServiceId, cancellationToken)
             ?? throw new NotFoundException("Craftsman service not found.");
         if (item.CraftsmanProfileId != profile.Id)
-            throw new UnauthorizedException("Not authorized.");
+            throw new ForbiddenException("Not authorized.");
 
         item.IsDeleted = true;
         item.UpdatedAt = DateTime.UtcNow;
@@ -135,7 +135,7 @@ public class CraftsmanPortalService : ICraftsmanService
         var hour = await _unitOfWork.Repository<CraftsmanWorkingHour>().GetByIdAsync(workingHourId, cancellationToken)
             ?? throw new NotFoundException("Working hour not found.");
         if (hour.CraftsmanId != userId)
-            throw new UnauthorizedException("Not authorized.");
+            throw new ForbiddenException("Not authorized.");
 
         hour.IsDeleted = true;
         hour.UpdatedAt = DateTime.UtcNow;
@@ -147,7 +147,7 @@ public class CraftsmanPortalService : ICraftsmanService
     {
         var roles = await _identityRepository.GetUserRoleNamesAsync(userId, cancellationToken);
         if (!roles.Contains(RoleNames.Craftsman, StringComparer.OrdinalIgnoreCase))
-            throw new UnauthorizedException("Craftsman role required.");
+            throw new ForbiddenException("Craftsman role required.");
     }
 
     private async Task<CraftsmanProfile> GetOrCreateProfileAsync(Guid userId, CancellationToken cancellationToken)

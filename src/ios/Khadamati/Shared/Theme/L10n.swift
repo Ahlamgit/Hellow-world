@@ -54,6 +54,11 @@ enum L10n {
         static let passwordMismatch = NSLocalizedString("auth.passwordMismatch", comment: "Password mismatch")
         static let resetSuccess = NSLocalizedString("auth.resetSuccess", comment: "Reset success")
         static let forgotSuccess = NSLocalizedString("auth.forgotSuccess", comment: "Forgot success")
+        static let changePassword = NSLocalizedString("auth.changePassword", comment: "Change password")
+        static let changePasswordTitle = NSLocalizedString("auth.changePasswordTitle", comment: "Change password title")
+        static let changePasswordHint = NSLocalizedString("auth.changePasswordHint", comment: "Change password hint")
+        static let currentPassword = NSLocalizedString("auth.currentPassword", comment: "Current password")
+        static let changePasswordSuccess = NSLocalizedString("auth.changePasswordSuccess", comment: "Change password success")
     }
 
     enum Services {

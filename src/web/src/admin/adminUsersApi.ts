@@ -48,6 +48,7 @@ export interface CreateAdminUserRequest {
   email: string;
   phone: string;
   password: string;
+  confirmPassword: string;
   firstName: string;
   lastName: string;
   role: string;

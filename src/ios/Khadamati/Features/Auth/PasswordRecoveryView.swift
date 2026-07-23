@@ -122,3 +122,85 @@ final class PasswordRecoveryViewModel: ObservableObject {
         }
     }
 }
+
+@MainActor
+final class ChangePasswordViewModel: ObservableObject {
+    @Published var currentPassword = ""
+    @Published var newPassword = ""
+    @Published var confirmPassword = ""
+    @Published var isLoading = false
+    @Published var errorMessage: String?
+    @Published var successMessage: String?
+
+    private let authService: AuthServiceProtocol
+
+    init(authService: AuthServiceProtocol? = nil) {
+        self.authService = authService ?? AuthService()
+    }
+
+    var isValid: Bool {
+        !currentPassword.isEmpty && newPassword.count >= 8 && newPassword == confirmPassword
+    }
+
+    func changePassword() async {
+        guard newPassword == confirmPassword else {
+            errorMessage = L10n.Auth.passwordMismatch
+            return
+        }
+        isLoading = true
+        errorMessage = nil
+        successMessage = nil
+        defer { isLoading = false }
+        do {
+            successMessage = try await authService.changePassword(
+                currentPassword: currentPassword,
+                newPassword: newPassword,
+                confirmPassword: confirmPassword
+            )
+            currentPassword = ""
+            newPassword = ""
+            confirmPassword = ""
+        } catch {
+            errorMessage = error.localizedDescription
+        }
+    }
+}
+
+struct ChangePasswordView: View {
+    @StateObject private var viewModel = ChangePasswordViewModel()
+
+    var body: some View {
+        ScrollView {
+            VStack(spacing: AppTheme.Spacing.lg) {
+                Text(L10n.Auth.changePasswordTitle)
+                    .font(AppTheme.Typography.largeTitle())
+
+                Text(L10n.Auth.changePasswordHint)
+                    .font(AppTheme.Typography.body())
+                    .foregroundStyle(AppTheme.Colors.textSecondary)
+
+                KhadamatiTextField(title: L10n.Auth.currentPassword, text: $viewModel.currentPassword, isSecure: true)
+                KhadamatiTextField(title: L10n.Auth.newPassword, text: $viewModel.newPassword, isSecure: true)
+                KhadamatiTextField(title: L10n.Auth.confirmPassword, text: $viewModel.confirmPassword, isSecure: true)
+
+                if let success = viewModel.successMessage {
+                    Text(success).foregroundStyle(AppTheme.Colors.primary)
+                }
+                if let error = viewModel.errorMessage {
+                    Text(error).foregroundStyle(AppTheme.Colors.error)
+                }
+
+                Button {
+                    Task { await viewModel.changePassword() }
+                } label: {
+                    if viewModel.isLoading { ProgressView().tint(.white) }
+                    else { Text(L10n.Auth.changePassword) }
+                }
+                .buttonStyle(PrimaryButtonStyle())
+                .disabled(viewModel.isLoading || !viewModel.isValid)
+            }
+            .padding(AppTheme.Spacing.lg)
+        }
+        .navigationTitle(L10n.Auth.changePasswordTitle)
+    }
+}

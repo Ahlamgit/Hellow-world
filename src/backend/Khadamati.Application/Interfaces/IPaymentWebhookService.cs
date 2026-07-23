@@ -4,5 +4,6 @@ namespace Khadamati.Application.Interfaces;
 
 public interface IPaymentWebhookService
 {
-    Task<PaymentWebhookResultDto> ProcessMoyasarWebhookAsync(MoyasarWebhookDto payload, string? signature, CancellationToken cancellationToken = default);
+    Task<PaymentWebhookResultDto> ProcessMoyasarWebhookAsync(
+        MoyasarWebhookDto payload, string? signature, string rawBody, CancellationToken cancellationToken = default);
 }

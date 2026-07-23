@@ -29,6 +29,7 @@ const emptyCreateForm: CreateAdminUserRequest = {
   email: '',
   phone: '',
   password: '',
+  confirmPassword: '',
   firstName: '',
   lastName: '',
   role: 'Customer',
@@ -413,6 +414,7 @@ export default function AdminUsersPage() {
           <TextField label="Email" type="email" value={createForm.email} onChange={(e) => setCreateForm({ ...createForm, email: e.target.value })} fullWidth required />
           <TextField label="Phone" value={createForm.phone} onChange={(e) => setCreateForm({ ...createForm, phone: e.target.value })} fullWidth required />
           <TextField label="Password" type="password" value={createForm.password} onChange={(e) => setCreateForm({ ...createForm, password: e.target.value })} fullWidth required />
+          <TextField label="Confirm Password" type="password" value={createForm.confirmPassword} onChange={(e) => setCreateForm({ ...createForm, confirmPassword: e.target.value })} fullWidth required error={createForm.confirmPassword.length > 0 && createForm.password !== createForm.confirmPassword} helperText={createForm.confirmPassword.length > 0 && createForm.password !== createForm.confirmPassword ? 'Passwords do not match' : undefined} />
           <TextField label="First Name" value={createForm.firstName} onChange={(e) => setCreateForm({ ...createForm, firstName: e.target.value })} fullWidth required />
           <TextField label="Last Name" value={createForm.lastName} onChange={(e) => setCreateForm({ ...createForm, lastName: e.target.value })} fullWidth required />
           <FormControl fullWidth>
@@ -441,7 +443,7 @@ export default function AdminUsersPage() {
         </DialogContent>
         <DialogActions>
           <Button onClick={() => setCreateOpen(false)}>Cancel</Button>
-          <Button variant="contained" onClick={handleCreate} disabled={createLoading}>
+          <Button variant="contained" onClick={handleCreate} disabled={createLoading || createForm.password !== createForm.confirmPassword}>
             {createLoading ? 'Creating...' : 'Create'}
           </Button>
         </DialogActions>

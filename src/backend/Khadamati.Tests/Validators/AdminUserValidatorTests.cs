@@ -24,6 +24,24 @@ public class AdminUserValidatorTests
     }
 
     [Fact]
+    public void CreateAdminUserValidator_ShouldRejectMismatchedConfirmPassword()
+    {
+        var validator = new CreateAdminUserValidator();
+        var result = validator.Validate(new CreateAdminUserDto
+        {
+            Email = "a@test.com",
+            Phone = "+966500000000",
+            Password = "Password1!",
+            ConfirmPassword = "Different1!",
+            FirstName = "A",
+            LastName = "B",
+            Role = "Customer",
+            Status = "Active",
+        });
+        result.IsValid.Should().BeFalse();
+    }
+
+    [Fact]
     public void AssignUserRolesValidator_ShouldRequirePrimaryInRoles()
     {
         var validator = new AssignUserRolesValidator();

@@ -103,7 +103,7 @@ public class UserSubscriptionService : IUserSubscriptionService
             ?? throw new NotFoundException("Subscription not found.");
 
         if (subscription.UserId != userId)
-            throw new UnauthorizedException("You can only cancel your own subscription.");
+            throw new ForbiddenException("You can only cancel your own subscription.");
 
         return await CancelSubscriptionInternalAsync(subscription, request.Reason, cancellationToken);
     }
