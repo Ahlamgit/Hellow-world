@@ -1,449 +1,503 @@
 # KHADAMATI — Areeba Implementation Plan (MPGS Hosted Checkout)
 
-**Status:** Documentation only — **awaiting approval**  
+**Status:** Documentation only — **awaiting approval** (revised)  
 **Date:** 2026-07-23  
 **Code / migrations / UI changes:** None in this deliverable  
 
+## Objective (revised)
+
+This is **not** a Moyasar → Areeba swap.  
+The objective is to make KHADAMATI **payment architecture production-ready and gateway-independent**, with Areeba MPGS Hosted Checkout as the first production adapter.
+
+| Goal | Meaning |
+|------|---------|
+| Gateway-independent | Booking business logic never depends on Areeba, Moyasar, or any PSP SDK |
+| Production-ready | Secure webhooks, idempotency, amount/currency checks, payment history, mobile hosted checkout |
+| Multi-gateway | Areeba (target), Moyasar (temporary), Development (dev/CI) coexist via config |
+| Future-proof | New gateways plug in behind `IPaymentGateway` without changing booking workflows |
+
 **Approved inputs:**
 
-| Decision | Source |
+| Decision | Status |
 |----------|--------|
-| Production gateway = **Areeba MPGS Hosted Checkout** | `AREEBA_IMPLEMENTATION_DECISION.md` |
-| Keep `IPaymentGateway` unchanged | Architecture approval |
-| Keep `DevelopmentPaymentGateway` | Architecture approval |
-| Keep Moyasar temporarily during migration | Architecture approval |
-| Mobile never marks payment completed | Architecture approval |
-| Webhook + API `VerifyAsync` = only completion authority | Architecture approval |
-| Phase 1C still blocked | Architecture approval |
+| Production target = Areeba MPGS Hosted Checkout | Approved |
+| Keep `IPaymentGateway` unchanged (as the seam) | Approved |
+| Keep `DevelopmentPaymentGateway` | Approved |
+| Keep Moyasar temporarily during migration | Approved |
+| Mobile never marks payment completed | Approved |
+| Webhook + server-side verification = only completion authority | Approved |
+| Phase 1C still blocked | Approved |
 
 **Parent docs:**
 
 - [PAYMENT_GATEWAY_MIGRATION_PLAN.md](./PAYMENT_GATEWAY_MIGRATION_PLAN.md)
 - [AREEBA_IMPLEMENTATION_DECISION.md](./AREEBA_IMPLEMENTATION_DECISION.md)
 
-**Stop condition:** Do not implement code, run migrations, or change payment UI until this plan is approved.
+**Stop condition:** Do not implement code, migrations, UI, or Phase 1C until this revised plan is approved.
 
 ---
 
 ## Executive summary
 
-This plan defines the **exact** work packages for the first Areeba implementation wave:
-
-1. Backend `AreebaPaymentGateway` + webhook + config + DI (behind `Payment:Provider`)
-2. Additive SQL Server / EF migration for four payment correlation columns
-3. Web checkout redirect / status display hardening
-4. Native mobile checkout correction (no auto-confirm)
-5. Security controls, tests, and staged deployment
-
-`IPaymentGateway` method signatures stay as-is. Business/application services continue to call only the abstraction.
+| Workstream | Deliverable |
+|------------|-------------|
+| Architecture rule | Booking orchestration stays gateway-agnostic; adapters only in Infrastructure |
+| Database | Correlation columns + **payment attempt history** for abandon/retry/switch/delayed webhooks |
+| State machine | Explicit payment states including awaiting gateway confirmation, failed, cancelled, expired |
+| Clients | Hosted checkout only; never finalize payment |
+| Security | Signature, secrets, replay, idempotency, amount/currency/ownership checks |
+| Migration | Six phases; Moyasar removed only after successful production period |
+| Tests | Backend + mobile matrix covering success, failure, duplicates, mismatches |
 
 ---
 
-# 1. IMPLEMENTATION SCOPE
+# 1. PAYMENT ARCHITECTURE RULE
 
-## 1.1 Backend
+## 1.1 Keep (non-negotiable)
 
-### New `AreebaPaymentGateway`
-
-| Item | Detail |
-|------|--------|
-| Path | `Khadamati.Infrastructure/Services/Payments/AreebaPaymentGateway.cs` |
-| Implements | `IPaymentGateway` |
-| `ProviderName` | `"Areeba"` |
-| Product | MPGS only for this wave (`Payment:Areeba:Product` default `Mpgs`) |
-| `CreateSessionAsync` | `POST /api/rest/version/{v}/merchant/{merchantId}/session` with `INITIATE_CHECKOUT`; merchant `order.id` = deterministic KHADAMATI order key (e.g. payment id / booking reference); amount + currency from request |
-| Returns | `SessionId` = gateway order id (stable); also capture MPGS `session.id` for checkout; `CheckoutUrl` = hosted redirect URL **or** KHADAMATI bridge URL that loads `checkout.min.js` |
-| `VerifyAsync` | `GET .../order/{orderId}`; require successful paid/captured equivalent; match amount + currency |
-| Auth | HTTP Basic (`merchant.{MerchantId}` + API password) |
-| Failure | Map HTTP/API errors to `ApplicationException` / verification failure reasons; never throw raw PSP payloads to clients |
-| Fallback | **Do not** silently fall back to Development when Areeba secrets missing in Staging/Production — fail readiness / throw on create |
-
-Supporting types (Infrastructure-private): request/response DTOs for MPGS session and order — **not** exposed to Application/Domain.
-
-### Configuration settings
-
-Add under `Payment:Areeba` in `appsettings.json`, Staging, Production, and `.env.*.example`:
-
-| Key | Purpose |
-|-----|---------|
-| `Payment:Provider` | Add allowed value `Areeba` (retain `Development`, `Moyasar`) |
-| `Payment:Areeba:Product` | `Mpgs` |
-| `Payment:Areeba:MerchantId` | Merchant id |
-| `Payment:Areeba:ApiUsername` | Typically `merchant.{MerchantId}` |
-| `Payment:Areeba:ApiPassword` | API password from ePayment portal |
-| `Payment:Areeba:ApiBaseUrl` | Default `https://epayment.areeba.com` |
-| `Payment:Areeba:ApiVersion` | Default `100` (confirm with boarding) |
-| `Payment:Areeba:WebhookSecret` | Signature secret (fail-closed Staging/Production) |
-| `Payment:Areeba:CallbackUrl` | `https://{api-host}/api/v1/webhooks/areeba` |
-| `Payment:Areeba:SuccessUrl` | Web/app return URL |
-| `Payment:Areeba:CancelUrl` | Cancel/timeout return URL |
-| `Payment:Areeba:Currency` | Merchant settlement currency (expect `USD` for Lebanon) |
-
-Secrets must be injectable via env (`Payment__Areeba__ApiPassword`, etc.). Never commit real values.
-
-### Dependency injection registration
-
-Extend `RegisterPaymentProvider` in `DependencyInjection.cs`:
-
-```text
-Payment:Provider
-  moyasar  → MoyasarPaymentGateway (+ HttpClient)   // keep
-  areeba   → AreebaPaymentGateway (+ HttpClient)    // new
-  default  → DevelopmentPaymentGateway
 ```
-
-Also:
-
-- Register webhook handler(s) for Areeba (scoped)
-- Extend `IntegrationReadinessService` to treat `Areeba` as a valid production provider and validate required keys
-- Update readiness unit tests accordingly
-
-### Webhook handling
-
-| Item | Detail |
-|------|--------|
-| Endpoint | `POST /api/v1/webhooks/areeba` |
-| Controller | Dedicated `AreebaWebhookController` (do not add to locations file) |
-| Auth | `[AllowAnonymous]` + signature validation |
-| Raw body | Read raw body before deserialize (HMAC/signature input) |
-| Application | Prefer provider-agnostic completion path: map event → reference → `ConfirmPaymentFromWebhookAsync` |
-| Moyasar | Keep `/webhooks/moyasar` unchanged during coexistence |
-| Idempotency | Persist `WebhookEventId`; short-circuit if already processed or payment already `Completed` |
-
-Optional hardening (same wave if low cost): extract shared “confirm from webhook” helper so Moyasar and Areeba do not duplicate booking transition logic.
-
-### Logging and error handling
+Customers / Web / Mobile
+        ↓
+Booking APIs (initiate payment, status read)
+        ↓
+BookingService / payment orchestration   ← gateway-agnostic
+        ↓
+IPaymentGateway
+   ├── AreebaPaymentGateway      (production target)
+   ├── MoyasarPaymentGateway     (temporary coexistence)
+   └── DevelopmentPaymentGateway (development/testing only)
+        ↓
+Provider webhooks → signature verify → VerifyAsync → finalize booking
+```
 
 | Rule | Detail |
 |------|--------|
-| Serilog | Log payment id, booking id, provider, gateway order/session ids, HTTP status |
-| Never log | API passwords, webhook secrets, full card data, CVV, raw authorization headers |
-| Truncate | Webhook body logs: structured fields only, or redacted payload |
-| Client errors | Map to existing `ConflictException` / `NotFoundException` / `UnauthorizedException` patterns |
-| Ops signal | Warn on repeated verify failures; count stuck `AwaitingPayment` |
+| Keep `IPaymentGateway` | `CreateSessionAsync` + `VerifyAsync` (+ `ProviderName`) |
+| Orchestration location | `BookingService` and payment/webhook application services only |
+| No Areeba in booking workflows | No MPGS types, URLs, or headers inside booking state transitions |
+| Multi-provider | Booking must work with Areeba, Moyasar, and Development via `Payment:Provider` |
+| Future gateways | Add a new `IPaymentGateway` implementation + DI case + webhook adapter — **no** booking business-logic changes |
 
-### Out of scope (backend this wave)
+## 1.2 What must not happen
 
-- Refund API
-- Escrow / payouts
-- Changing `IPaymentGateway` interface shape
-- Removing Moyasar
-- Phase 1C profile consolidation
+| Anti-pattern | Why forbidden |
+|--------------|---------------|
+| `if (provider == "Areeba")` inside booking domain transitions | Couples marketplace logic to one PSP |
+| Clients setting `PaymentStatus.Completed` | Clients are not completion authority |
+| Silent Development fallback when Areeba/Moyasar misconfigured in Staging/Production | Hides outages; fake “paid” risk |
+| Removing Moyasar before soak | Blocks rollback and in-flight drain |
 
----
+## 1.3 Implementation scope (exact changes)
 
-## 1.2 Database
-
-### Required migrations only
-
-Single additive EF Core migration (name suggestion: `AddAreebaPaymentCorrelationColumns`):
-
-| Change | Type |
-|--------|------|
-| Add `PaymentProvider` | `nvarchar(50)` NOT NULL, default `'Development'` |
-| Add `GatewaySessionId` | `nvarchar(200)` NULL |
-| Add `GatewayTransactionId` | `nvarchar(200)` NULL |
-| Add `WebhookEventId` | `nvarchar(200)` NULL |
-| Indexes | See §2 |
-| Backfill | `PaymentProvider` for existing rows |
-
-No new tables. No drops. No renames of existing columns.
-
-### Backward compatibility
-
-| Concern | Approach |
-|---------|----------|
-| Existing API DTOs | Keep `BookingPaymentDto.sessionId` / `checkoutUrl` / `transactionReference` / `provider` |
-| Existing rows | Nullable gateway columns; `PaymentProvider` default + backfill |
-| Moyasar path | Continues writing `TransactionReference`; should also populate new columns when touched |
-| Development path | `PaymentProvider=Development`; `KHD-*` session ids unchanged |
-| Readers | Admin/list queries ignore unknown null gateway fields |
-
-### Rollback plan
-
-| Scenario | Action |
-|----------|--------|
-| App rollback (code) | Redeploy previous API image; set `Payment:Provider` back to `Moyasar` or `Development` |
-| Migration rollback | Prefer **forward fix**; additive columns are safe to leave in place. If mandatory down migration: drop new indexes then drop four columns only after confirming no production code depends on them |
-| Data | Do not delete historical `BookingPayments` rows |
-| Dual webhook | Leaving Moyasar webhook enabled allows draining in-flight Moyasar payments after app rollback |
-
----
-
-## 1.3 Web
+### Backend
 
 | Change | Detail |
 |--------|--------|
-| Checkout redirect | After initiate, prefer **redirect** (or same-tab navigation) to `checkoutUrl` instead of optional new-tab + manual confirm |
-| Success/cancel routes | Handle `SuccessUrl` / `CancelUrl` landing; on success **refresh booking** and optionally call confirm (idempotent) |
-| Payment status display | Render Pending / Processing / Completed / Failed **only** from API booking/payment status |
-| Dev `/pay` simulator | Remain available only when provider is Development; hide or disable for Areeba/Moyasar |
-| Copy / i18n | Clarify that payment confirmation comes from the server |
+| `AreebaPaymentGateway` | New Infrastructure adapter for MPGS hosted checkout |
+| Configuration | `Payment:Areeba:*` secrets/URLs; `Payment:Provider` accepts `Areeba` |
+| DI registration | `case "areeba"` beside existing Moyasar + Development |
+| Webhook handling | `POST /api/v1/webhooks/areeba` → verify → gateway-agnostic finalize |
+| Logging / errors | Structured Serilog; no secrets/PAN; map failures to existing exception types |
+| Orchestration updates | Persist provider/attempt/correlation fields only through agnostic services |
 
-Do not claim “Paid” from query-string alone.
-
----
-
-## 1.4 Mobile (Android Kotlin / iOS Swift)
+### Database
 
 | Change | Detail |
 |--------|--------|
-| Payment flow correction | Remove initiate → immediate confirm. Open `checkoutUrl` via Custom Tabs (Android) / `SFSafariViewController` or equivalent (iOS) |
-| Pending state | Show pending/processing while booking is `AwaitingPayment` and payment not `Completed` |
-| Completed state | Only after `GET` booking (or confirm response) shows server-side completion |
-| Failed / cancelled | Surface API errors and cancelled return; allow retry per booking rules |
-| Deep link / return | Register app links / custom scheme matching `SuccessUrl` / `CancelUrl`; on return, refresh booking from API |
-| Authority rule | **Never** mark payment completed locally |
+| Required migrations | Additive only (see §2) |
+| Backward compatibility | Existing APIs and rows keep working |
+| Rollback | Config rollback + additive columns left in place preferred |
 
-No React Native work in this wave.
+### Web
+
+| Change | Detail |
+|--------|--------|
+| Checkout redirect | Open/redirect to `checkoutUrl` |
+| Status display | Pending / awaiting confirmation / completed / failed from **API only** |
+
+### Mobile
+
+| Change | Detail |
+|--------|--------|
+| Flow correction | Remove initiate→immediate confirm |
+| States | Pending / completed / failed from API |
+| Deep link / return | Refresh status; never mark paid locally |
 
 ---
 
-# 2. DATABASE MIGRATION PLAN
+# 2. DATABASE DESIGN REVIEW
 
 ## 2.1 Current `BookingPayments` schema (verified)
 
-From EF configuration + `20260708065052_BookingModule` migration:
+From EF + `20260708065052_BookingModule`:
 
-| Column | SQL type | Nullable | Notes |
-|--------|----------|----------|-------|
+| Column | SQL | Nullable | Notes |
+|--------|-----|----------|-------|
 | `Id` | `uniqueidentifier` | NO | PK |
-| `ServiceRequestId` | `uniqueidentifier` | NO | Unique index `IX_BookingPayments_ServiceRequestId` |
-| `PayerUserId` / `PayeeUserId` | `uniqueidentifier` | NO | FK Restrict; indexes present |
-| `Amount` | `decimal(18,2)` | NO | |
-| `Currency` | `nvarchar(3)` | NO | |
+| `ServiceRequestId` | `uniqueidentifier` | NO | **Unique** → enforces 1:0..1 payment per booking today |
+| `PayerUserId` / `PayeeUserId` | `uniqueidentifier` | NO | |
+| `Amount` / `Currency` | `decimal(18,2)` / `nvarchar(3)` | NO | |
 | `Status` | `int` | NO | `PaymentStatus` enum |
 | `PaymentMethod` | `nvarchar(50)` | NO | |
-| `TransactionReference` | `nvarchar(200)` | YES | No unique index today |
-| `PaidAt` | `datetime2` | YES | |
-| `FailureReason` | `nvarchar(max)` | YES | |
-| Soft-delete / audit | via `BaseEntity` / table columns | | As created by Booking module |
+| `TransactionReference` | `nvarchar(200)` | YES | Overloaded session/invoice id |
+| `PaidAt` | `datetime2` | YES | Acts as completed timestamp today |
+| `FailureReason` | `nvarchar(max)` | YES | **Already exists** |
+| `CreatedAt` | via `BaseEntity` | NO | **Already exists** (`CreatedAt`) |
 
-**Not present today:** `PaymentProvider`, `GatewaySessionId`, `GatewayTransactionId`, `WebhookEventId`.
+**Not present today:** `PaymentProvider`, `GatewaySessionId`, `GatewayTransactionId`, `WebhookEventId`, attempt history, `GatewayStatus`, `FailedAt`, `CompletedAt` (distinct from `PaidAt`).
 
-## 2.2 Proposed additions (final)
+### Production gap
 
-| Column | CLR type | SQL type | Max length | Nullability | Default | Purpose |
-|--------|----------|----------|------------|-------------|---------|---------|
-| `PaymentProvider` | `string` | `nvarchar(50)` | 50 | **NOT NULL** | `'Development'` | `Development` \| `Moyasar` \| `Areeba` |
-| `GatewaySessionId` | `string?` | `nvarchar(200)` | 200 | **NULL** | — | MPGS `session.id` |
-| `GatewayTransactionId` | `string?` | `nvarchar(200)` | 200 | **NULL** | — | MPGS `order.id` (stable) |
-| `WebhookEventId` | `string?` | `nvarchar(200)` | 200 | **NULL** | — | Last/processed webhook event id for idempotency |
+A customer may:
+
+1. Start payment  
+2. Abandon checkout  
+3. Retry payment  
+4. Switch gateway (during migration / rollback)  
+5. Receive delayed webhook events  
+
+The current **1:0..1** `ServiceRequestId` unique constraint **cannot** store attempt history. Overwriting one row loses troubleshooting data and complicates delayed webhooks for abandoned sessions.
+
+## 2.2 Design decision — payment header + attempts
+
+**Recommended model (gateway-independent):**
+
+```
+BookingPayments              ← one current/active payment header per booking (keep 1:0..1)
+   └── BookingPaymentAttempts  ← N attempts (history)  [NEW TABLE]
+```
+
+| Entity | Role |
+|--------|------|
+| `BookingPayment` | Current payment aggregate for the booking (amount, currency, current status, active attempt pointer) |
+| `BookingPaymentAttempt` | Each initiate/checkout try: provider, session/order ids, gateway status, timestamps, webhook event ids |
+
+This supports abandon/retry/switch/delayed webhooks without deleting history.
+
+**Alternative (not preferred):** drop unique `ServiceRequestId` and store many `BookingPayments` rows per booking — conflicts with existing DTO/API assumptions of a single `payment` on booking.
+
+## 2.3 Columns on `BookingPayments` (header) — add
+
+| Column | Type | Max | Null | Purpose |
+|--------|------|-----|------|---------|
+| `PaymentProvider` | `nvarchar(50)` | 50 | NOT NULL, default `'Development'` | Active/last provider |
+| `GatewaySessionId` | `nvarchar(200)` | 200 | NULL | Active attempt session id (denormalized for fast API) |
+| `GatewayTransactionId` | `nvarchar(200)` | 200 | NULL | Active attempt transaction/order id |
+| `WebhookEventId` | `nvarchar(200)` | 200 | NULL | Last processed event on active attempt (optional denorm) |
+| `CurrentAttemptId` | `uniqueidentifier` | — | NULL | FK to active `BookingPaymentAttempt` |
+| `CompletedAt` | `datetime2` | — | NULL | When moved to Completed (can mirror/replace use of `PaidAt`; keep `PaidAt` for compat or set both) |
+| `FailedAt` | `datetime2` | — | NULL | When moved to Failed/Expired/Cancelled terminal failure |
+
+**Already present — reuse:**
+
+| Column | Action |
+|--------|--------|
+| `CreatedAt` | Keep (`BaseEntity`) — do **not** add duplicate |
+| `FailureReason` | Keep — update on failure paths |
+| `PaidAt` | Keep for API compat; set together with `CompletedAt` on success |
+
+## 2.4 Evaluate — attempt fields
+
+| Proposed field | Decision | Where | Rationale |
+|----------------|----------|-------|-----------|
+| `PaymentAttemptId` | **Add** | Attempt table PK (`Id`) | Stable id for troubleshooting and webhook correlation |
+| `PaymentAttemptNumber` | **Add** | Attempt table `int NOT NULL` | Monotonic per booking payment (1, 2, 3…) |
+| `GatewayStatus` | **Add** | Attempt table `nvarchar(50) NULL` | Raw PSP status string for ops (e.g. `CAPTURED`, `FAILED`) without polluting domain enum |
+| `CreatedAt` | **Reuse/add** | Attempt: own `CreatedAt`; header already has it | Attempt timeline |
+| `CompletedAt` | **Add** | Header + attempt | Success timestamp clarity |
+| `FailedAt` | **Add** | Header + attempt | Failure/expiry/cancel timestamp |
+| `FailureReason` | **Reuse/add** | Header exists; add on attempt | Per-attempt reason |
+
+### Proposed `BookingPaymentAttempts` table
+
+| Column | SQL | Null | Notes |
+|--------|-----|------|-------|
+| `Id` (`PaymentAttemptId`) | `uniqueidentifier` | NO | PK |
+| `BookingPaymentId` | `uniqueidentifier` | NO | FK → `BookingPayments` |
+| `AttemptNumber` | `int` | NO | Unique per `(BookingPaymentId, AttemptNumber)` |
+| `PaymentProvider` | `nvarchar(50)` | NO | Provider used for this attempt |
+| `Status` | `int` | NO | Same `PaymentStatus` (or attempt-specific subset) |
+| `GatewaySessionId` | `nvarchar(200)` | YES | |
+| `GatewayTransactionId` | `nvarchar(200)` | YES | |
+| `GatewayStatus` | `nvarchar(50)` | YES | Raw PSP status |
+| `WebhookEventId` | `nvarchar(200)` | YES | |
+| `CheckoutUrl` | `nvarchar(1000)` | YES | Optional; may omit if sensitive/long-lived URLs undesirable |
+| `FailureReason` | `nvarchar(1000)` | YES | Prefer bounded length vs `max` |
+| `CreatedAt` | `datetime2` | NO | |
+| `CompletedAt` | `datetime2` | YES | |
+| `FailedAt` | `datetime2` | YES | |
 
 ### Index / uniqueness rules
 
-| Index | Columns | Unique? | Filter | Rationale |
-|-------|---------|---------|--------|-----------|
-| `UX_BookingPayments_WebhookEventId` | `WebhookEventId` | **Yes** | `WHERE WebhookEventId IS NOT NULL` | Duplicate webhook rejection |
-| `IX_BookingPayments_GatewayTransactionId` | `GatewayTransactionId` | No (or unique filtered if 1:1 guaranteed) | `WHERE GatewayTransactionId IS NOT NULL` | Lookup/verify; start **non-unique** unless product guarantees one order id forever |
-| `UX_BookingPayments_TransactionReference` | `TransactionReference` | **Yes** | `WHERE TransactionReference IS NOT NULL` | Webhook/confirm correlation; fix current missing index |
-
-**Uniqueness notes:**
-
-- `ServiceRequestId` remains the only booking↔payment uniqueness (1:0..1).
-- `WebhookEventId` unique when present — required for replay protection.
-- If two historical rows could share blank/duplicate `TransactionReference`, clean or leave nulls before applying unique filtered index; migration script must verify no duplicates first.
+| Index | Unique? | Filter / keys |
+|-------|---------|----------------|
+| `UX_BookingPaymentAttempts_Payment_AttemptNumber` | Yes | `(BookingPaymentId, AttemptNumber)` |
+| `UX_BookingPaymentAttempts_WebhookEventId` | Yes | `WebhookEventId` WHERE NOT NULL |
+| `IX_BookingPaymentAttempts_GatewayTransactionId` | No* | WHERE NOT NULL (*unique filtered if product guarantees global order id uniqueness) |
+| `UX_BookingPayments_TransactionReference` | Yes | WHERE NOT NULL (header; after duplicate cleanup) |
+| Keep | Yes | `UX` / unique on `BookingPayments.ServiceRequestId` |
 
 ### Existing records compatibility
 
-| Step | SQL / EF action |
-|------|-----------------|
-| 1 | `ADD` columns with defaults/nulls (online-friendly) |
-| 2 | Backfill `PaymentProvider`: `Development` where `TransactionReference LIKE 'KHD-%'`; else `Moyasar` for non-null historical gateway refs; else `Development` |
-| 3 | Leave `GatewaySessionId` / `GatewayTransactionId` / `WebhookEventId` null for old rows |
-| 4 | Optionally copy `TransactionReference` → `GatewayTransactionId` for non-`KHD-` rows to aid support |
-| 5 | Create filtered indexes after duplicate check |
+1. Add header columns with defaults/nulls.  
+2. Backfill `PaymentProvider` (`KHD-%` → Development; else Moyasar when historical gateway ref present).  
+3. Create attempts table.  
+4. For each existing `BookingPayments` row, insert **AttemptNumber = 1** copying `TransactionReference` into session/transaction fields as best-effort.  
+5. Set `CurrentAttemptId` to that attempt.  
+6. Add indexes after duplicate checks.
 
-### EF / SQL Server discipline
+### Backward compatibility / rollback
 
-1. Generate EF migration from entity + `BookingPaymentConfiguration` updates.
-2. Review generated SQL; adjust filtered indexes if EF does not emit them correctly (Phase 1A lesson).
-3. Apply against SQL Server in Dev → Staging before Production.
-4. Physical schema must match EF model snapshot.
-
-### Explicitly not in this migration
-
-- `GatewayStatus`
-- `PaymentAttemptNumber`
-- Refund / escrow tables
-- Dropping Moyasar-related artifacts (none as columns)
+| Concern | Approach |
+|---------|----------|
+| API | Keep single `payment` on booking DTO; expose current attempt fields; admin can list attempts later |
+| Moyasar / Development | Write attempts the same way as Areeba |
+| Rollback | Prefer leave new tables/columns; app rollback via `Payment:Provider`; down migration only if required and unused |
 
 ---
 
-# 3. PAYMENT SECURITY REVIEW
+# 3. PAYMENT STATE MACHINE REVIEW
 
-## 3.1 Areeba API key storage
+## 3.1 Final payment states (domain)
 
-| Control | Requirement |
-|---------|-------------|
-| Storage | Environment variables / secret store only (`Payment__Areeba__ApiPassword`, webhook secret) |
-| Repo | Empty placeholders in `appsettings*.json`; real values only in `.env` / host secrets |
-| Access | Restrict to API process identity; no client apps receive API password |
-| Rotation | Document in security runbook; dual-password support if Areeba portal allows standby password |
-| Readiness | Staging/Production fail or warn via `IntegrationReadinessService` when Provider=Areeba and secrets missing |
+Extend / clarify `PaymentStatus` for production-ready flows:
 
-## 3.2 Webhook signature validation
+| State | Meaning |
+|-------|---------|
+| `Pending` | Payment record created; session not yet opened / not sent to gateway |
+| `Processing` | Gateway session created; customer directed to checkout |
+| `AwaitingGatewayConfirmation` | Customer returned from checkout **or** timeout window; waiting for webhook / verify (**new**) |
+| `Completed` | Server verified paid; booking may advance |
+| `Failed` | Gateway declined / verify failed |
+| `Cancelled` | Customer cancelled checkout / explicit cancel |
+| `Expired` | Payment window elapsed without successful confirmation (**new**; today only booking expiry exists) |
+| `Refunded` | Reserved for future refund wave (keep; do not implement now) |
 
-| Control | Requirement |
-|---------|-------------|
-| Algorithm | Confirm with Areeba boarding (expect HMAC over raw body or documented header scheme); implement exactly as specified |
-| Input | **Raw request body** bytes/string before JSON deserialize |
-| Comparison | Fixed-time equals (Phase 1B pattern) |
-| Fail-closed | Staging + Production: missing secret or bad signature → `Unauthorized`; **no** booking mutation |
-| Development | May allow missing secret only in Development environment |
-| Moyasar | Keep existing HMAC validation path during coexistence |
+> **Enum change note:** Adding `AwaitingGatewayConfirmation` and `Expired` requires an approved enum/migration change. Until coded, document them as the target machine; map gateway raw values into `GatewayStatus` on attempts immediately.
 
-## 3.3 Idempotency handling
+## 3.2 Happy path
 
-| Layer | Behavior |
-|-------|----------|
-| Webhook | If `WebhookEventId` already stored → return processed/no-op |
-| Payment | If `PaymentStatus.Completed` → return current booking DTO; do not re-reserve slot |
-| Confirm API | `VerifyAsync` + same finalize path; safe to call after webhook |
-| Slot reservation | Rely on existing unique slot constraints (Phase 1A) |
+```
+Pending
+  ↓  CreateSessionAsync success
+Processing
+  ↓  Customer leaves checkout / return deep link / poll
+AwaitingGatewayConfirmation
+  ↓  Webhook + VerifyAsync success (amount + currency)
+Completed
+  ↓  Booking orchestration (gateway-agnostic)
+PaymentConfirmed → PendingCraftsmanConfirmation → …
+```
 
-## 3.4 Replay attack protection
+## 3.3 Failure paths
 
-| Control | Requirement |
-|---------|-------------|
-| Signature | Reject unsigned / invalid signatures |
-| Event id | Persist unique `WebhookEventId` |
-| Verify | Always re-check amount/currency with Areeba Retrieve Order — do not trust webhook body alone for money fields |
-| Freshness | Optionally reject events older than configured window if timestamp provided by Areeba (confirm field availability) |
+```
+Processing → Failed
+Processing → Cancelled
+Processing → Expired
 
-## 3.5 Duplicate webhook handling
+AwaitingGatewayConfirmation → Failed
+AwaitingGatewayConfirmation → Expired
+AwaitingGatewayConfirmation → Cancelled
+```
 
-| Case | Response |
-|------|----------|
-| Same event id twice | 200 + idempotent result; log info |
-| Same payment, different event, already Completed | 200 + no-op |
-| Concurrent webhooks | DB uniqueness / row update concurrency; one winner; other no-op or retry-safe |
+Retry (new attempt):
 
-## 3.6 Sensitive data logging rules
+```
+Failed | Cancelled | Expired | Processing (abandoned)
+  ↓  Initiate payment again (new AttemptNumber)
+Pending/Processing (new attempt)
+```
 
-| May log | Must not log |
-|---------|--------------|
-| Payment id, booking id, provider | `ApiPassword`, `WebhookSecret`, Basic auth header |
-| Gateway order/session ids | PAN, CVV, full track data |
-| HTTP status, high-level error codes | Full raw webhook body if it contains masked-but-sensitive card metadata — prefer allowlisted fields |
-| Correlation / trace ids | Customer email in debug unless already permitted by privacy policy |
+Delayed webhook for an old attempt:
 
-Serilog enrichers must not dump entire configuration sections containing secrets.
+- Match by `GatewayTransactionId` / `WebhookEventId` / attempt session  
+- If newer attempt is active and old attempt not Completed: update **that attempt** only  
+- Only promote booking when the **accepted** paid attempt is valid for the current booking amount/currency and booking still `AwaitingPayment`
+
+## 3.4 Completion authority (hard rule)
+
+| Actor | May finalize `Completed`? |
+|-------|---------------------------|
+| Mobile client | **No** |
+| Web client | **No** |
+| Query-string / deep-link params | **No** |
+| Development fake UI alone | **No** (even Dev must go through server verify path) |
+| Areeba/Moyasar **webhook** + **server-side `VerifyAsync`** | **Yes** (required authority) |
+
+### Client endpoints
+
+| Endpoint | Role after this plan |
+|----------|----------------------|
+| `POST /bookings/{id}/payment` | Create attempt + session; return `checkoutUrl` |
+| `GET /bookings/{id}` | Status refresh for UI |
+| `POST /bookings/{id}/payment/confirm` | **Must not be a client completion authority.** Prefer deprecate for production providers, or reduce to “request status sync” that **only** finalizes if webhook already applied **or** server `VerifyAsync` proves paid. Clients never set Completed themselves. |
+
+**Mobile/Web must never mark payment completed.** UI shows Completed only when API returns `Completed`.
 
 ---
 
-# 4. TEST IMPLEMENTATION PLAN
+# 4. MOBILE PAYMENT RULE
 
-## 4.1 Unit tests
+## 4.1 Current (forbidden)
+
+```
+initiate payment
+  ↓
+immediately confirm payment   ← REMOVE (Android + iOS)
+```
+
+This only “works” with `DevelopmentPaymentGateway` and is unsafe for Areeba/Moyasar.
+
+## 4.2 Required mobile flow
+
+```
+Mobile:
+  1. Request payment session          POST /bookings/{id}/payment
+  2. Receive checkout URL (+ session)
+  3. Open hosted checkout             Custom Tabs / SFSafariViewController
+  4. Wait for return / deep link / status refresh
+  5. Show Pending / AwaitingGatewayConfirmation / Completed / Failed from API
+
+Server:
+  Webhook receives payment event
+    ↓
+  Verify signature
+    ↓
+  Verify transaction (VerifyAsync: amount + currency + status)
+    ↓
+  Update BookingPayment (+ attempt)
+    ↓
+  Advance booking state
+```
+
+## 4.3 Mobile UX states
+
+| API payment/booking signal | Mobile UI |
+|----------------------------|-----------|
+| Pending / Processing | “Continue to payment” / open checkout |
+| AwaitingGatewayConfirmation | “Confirming payment…” (poll GET booking) |
+| Completed | Success; show next booking status |
+| Failed / Cancelled / Expired | Error + retry if booking still payable |
+
+No React Native in this wave.
+
+---
+
+# 5. SECURITY REQUIREMENTS
+
+Document before coding; implement in Infrastructure/API only.
+
+| Requirement | Definition |
+|-------------|------------|
+| **Areeba webhook signature mechanism** | Confirm with boarding (HMAC-SHA256 over raw body or Areeba-documented header). Read **raw body** before deserialize. Fixed-time compare. Fail-closed in Staging/Production. |
+| **Secret storage method** | `Payment__Areeba__ApiPassword`, `Payment__Areeba__WebhookSecret` via env/secret store only. Empty placeholders in git. Never ship secrets to mobile/web clients. |
+| **Replay attack prevention** | Reject invalid/missing signatures; unique `WebhookEventId`; optional timestamp skew window if Areeba provides event time; always re-verify with Retrieve Order. |
+| **Idempotency handling** | Same event id → no-op success; already `Completed` → no-op; slot reservation protected by Phase 1A uniqueness. |
+| **Duplicate webhook handling** | Unique filtered index on attempt `WebhookEventId`; concurrent deliveries must be safe. |
+| **Amount validation** | `VerifyAsync` compares gateway amount to `BookingPayment.Amount` (minor-unit rules per MPGS). Mismatch → do not complete. |
+| **Currency validation** | Gateway currency must equal `BookingPayment.Currency`. Mismatch → do not complete. |
+| **Booking ownership validation** | Initiate/status endpoints require authenticated customer owns booking. Webhooks do **not** use user JWT; they authorize via signature and correlate to payment/attempt ids only. Admin payment views remain permission-gated. |
+
+### Sensitive logging
+
+| Allow | Deny |
+|-------|------|
+| Payment id, attempt id/number, booking id, provider | API passwords, webhook secrets, Basic auth headers |
+| Gateway session/order ids, HTTP status | PAN, CVV, full card payloads |
+| High-level failure reasons | Unredacted webhook bodies with card metadata |
+
+---
+
+# 6. MIGRATION STRATEGY
+
+Do **not** remove Moyasar immediately.
+
+| Phase | Name | Actions | Exit |
+|-------|------|---------|------|
+| **1** | Implement Areeba beside Moyasar | Adapter + DI + webhook + DB attempts/columns; default Provider remains Development/Moyasar per env | CI green; both adapters registered |
+| **2** | Sandbox testing | Staging `Payment:Provider=Areeba`; sandbox pay; mobile/web checkout; security tests | Signed sandbox checklist |
+| **3** | Production validation | Limited production or full prod with monitoring; Moyasar webhook still live | Metrics acceptable |
+| **4** | Switch default provider | `Payment:Provider=Areeba` for new sessions | All new payments on Areeba |
+| **5** | Moyasar fallback period | Keep Moyasar code + webhook for rollback and in-flight drain (recommend ≥ 30 days) | No critical Areeba regressions |
+| **6** | Deprecate Moyasar | After successful operation + drain: remove Moyasar gateway/webhook/config | Areeba + Development only |
+
+**Rollback at any phase 1–5:** set `Payment:Provider=Moyasar` (or Development in non-prod). Booking logic unchanged.
+
+---
+
+# 7. TEST REQUIREMENTS
+
+## 7.1 Backend
 
 | Test | Expectation |
 |------|-------------|
-| **Create payment session** | Mock HTTP: success JSON → `PaymentSessionDto` with order/session + checkout URL; provider `Areeba` |
-| **Gateway failure** | Non-success HTTP / network → application error; payment not marked Completed |
-| **Invalid response** | Missing session/order fields → fail create; no partial success returned to caller |
-| **Webhook verification — valid** | Valid signature + paid mapping → calls confirm path |
-| **Webhook verification — invalid** | Bad signature → unauthorized; booking service not called |
-| **VerifyAsync mismatch** | Wrong amount/currency/status → `IsSuccessful=false` |
-| **Idempotent completed payment** | Second confirm/webhook → no double transition |
-| **Readiness** | Areeba misconfigured vs ready |
+| Create Areeba payment session | Session + checkout URL; attempt #1 (or N); provider Areeba |
+| Invalid webhook rejected | Bad/missing signature → unauthorized; no state change |
+| Valid webhook completes payment | Signature OK + VerifyAsync OK → Completed + booking advances |
+| Duplicate webhook ignored | Second delivery idempotent; no double slot lock |
+| Wrong amount rejected | Verify fails; not Completed |
+| Wrong currency rejected | Verify fails; not Completed |
+| Failed payment handled | Attempt/header → Failed; booking remains payable or follows expiry rules |
+| Expired payment handled | Attempt/header → Expired; retry creates new attempt |
 
-Use `HttpMessageHandler` mocks; no real network in unit tests.
+Additional: ownership checks on initiate; Development + Moyasar regression; migration apply on SQL Server.
 
-## 4.2 Integration tests
+## 7.2 Mobile
 
 | Test | Expectation |
 |------|-------------|
-| **Sandbox payment** | Against Areeba sandbox (or recorded contract test if secrets unavailable in CI): initiate → paid → booking advances |
-| **Successful webhook** | Signed payload → payment Completed + craftsman pending confirmation |
-| **Failed payment** | Declined/failed status → not Completed; booking stays awaiting payment (or Failed per rule) |
-| **Duplicate webhook** | Second delivery does not create second reservation / does not error critically |
-| **Migration apply** | EF migration applies cleanly on SQL Server test DB; backfill + indexes exist |
+| Checkout opened correctly | Uses `checkoutUrl`; no immediate confirm |
+| Payment pending state handled | UI pending/processing/awaiting confirmation from API |
+| Completed state handled | Only after API shows Completed |
+| Failed state handled | Shows failure; retry path if allowed |
 
-CI strategy: unit tests always; sandbox integration behind secret-gated job or manual staging checklist if sandbox credentials are not in CI.
-
-## 4.3 Regression
+## 7.3 Regression
 
 | Area | Expectation |
 |------|-------------|
-| **Existing booking flow** | Create → confirm → await payment → (dev) pay → craftsman accept path unchanged |
-| **Existing Moyasar flow** | With `Payment:Provider=Moyasar`, invoice create + webhook still pass tests |
-| **Development provider** | Default local/CI path unchanged (`KHD-*`) |
-| **Phase 1A** | Slot concurrency / coupon / RowVersion scenarios still green |
-| **Phase 1B** | Moyasar HMAC fail-closed tests still green |
+| Existing booking flow | Create → confirm booking → await payment → complete path |
+| Moyasar during migration | Still creates/verifies when Provider=Moyasar |
+| Phase 1A / 1B | Concurrency + webhook HMAC fail-closed remain green |
 
 ---
 
-# 5. DEPLOYMENT STRATEGY
+# 8. DEPLOYMENT MAPPING
 
-## Stage 1 — Development environment
+Maps to §6 phases for ops clarity:
 
-| Action | Detail |
-|--------|--------|
-| Merge implementation behind config | Default `Payment:Provider=Development` |
-| Apply DB migration | Dev SQL Server |
-| Manual smoke | Development checkout still works |
-| Areeba optional | Engineers may point local Provider to Areeba with sandbox secrets |
-
-**Exit:** CI green; Dev booking pay works on Development gateway.
-
-## Stage 2 — Sandbox validation
-
-| Action | Detail |
-|--------|--------|
-| Staging config | `Payment:Provider=Areeba` + sandbox secrets |
-| Webhooks | Public staging callback URL registered in Areeba |
-| Clients | Web + Android + iOS against staging API |
-| Evidence | Record successful sandbox pay, invalid signature rejection, duplicate webhook, cancel path |
-| Moyasar | Code + webhook still deployed; not creating new sessions if Provider=Areeba |
-
-**Exit:** Signed sandbox validation checklist (backend + web + mobile).
-
-## Stage 3 — Production with provider configuration
-
-| Action | Detail |
-|--------|--------|
-| Feature switch | **Config-only**: `Payment:Provider=Areeba` (no separate code flag required if DI switch is sufficient) |
-| Secrets | Production MPGS merchant credentials + webhook secret in vault/host env |
-| Moyasar webhook | Remains enabled for in-flight Moyasar payments |
-| Monitor | Payment success rate, webhook 401s, verify failures, stuck `AwaitingPayment` |
-| Rollback | Set `Payment:Provider=Moyasar` (or Development only if emergency and acceptable) and redeploy config; Moyasar code still present |
-
-**Exit:** New production payments created on Areeba; no critical error budget breach for agreed soak window.
-
-## Stage 4 — Moyasar deprecation
-
-| Gate | Detail |
-|------|--------|
-| Drain | No Moyasar `Processing` in-flight beyond TTL |
-| Soak | Successful production period (recommend ≥ 30 days) |
-| Remove | Moyasar gateway, webhook, config keys, readiness branches, docs references |
-| Secrets | Remove/rotate Moyasar secrets |
-
-**Hard rule:** No Moyasar deletion in Stages 1–3.
+| Stage | Maps to | Environment |
+|-------|---------|-------------|
+| Development environment | Phase 1 | Local/CI, Provider=Development |
+| Sandbox validation | Phase 2 | Staging + Areeba sandbox |
+| Production with provider configuration | Phases 3–4 | Production secrets + Provider switch |
+| Moyasar deprecation | Phases 5–6 | Fallback window then removal |
 
 ---
 
-## Suggested implementation work order (after approval)
+## Suggested work order (after approval only)
 
-1. Database migration + entity/config update  
-2. `AreebaPaymentGateway` + DI + readiness  
-3. Areeba webhook endpoint + security  
-4. `BookingService` persistence of new columns (still via existing initiate/finalize)  
-5. Unit/integration tests  
-6. Web checkout/status UX  
-7. Mobile flow correction + deep links  
-8. Staging sandbox validation  
-9. Production provider switch  
+1. Approve this revised plan (architecture + DB attempt model + state machine)  
+2. Additive DB migration (header columns + `BookingPaymentAttempts`)  
+3. Gateway-agnostic orchestration updates (attempts, states) — still no Areeba types in booking  
+4. `AreebaPaymentGateway` + webhook + DI + readiness  
+5. Restrict client completion authority  
+6. Web + mobile hosted checkout  
+7. Full test matrix  
+8. Execute migration phases 1→6  
 
 ---
 
 ## Approval checklist
 
-- [ ] Approve §1 scope (backend / DB / web / mobile)  
-- [ ] Approve §2 column types, nullability, indexes, backfill  
-- [ ] Approve §3 security controls  
-- [ ] Approve §4 test matrix  
-- [ ] Approve §5 four-stage deployment  
+- [ ] Approve gateway-independent architecture rule (§1)  
+- [ ] Approve header + `BookingPaymentAttempts` history model (§2)  
+- [ ] Approve payment state machine including `AwaitingGatewayConfirmation` / `Expired` (§3)  
+- [ ] Approve webhook + server verify as sole completion authority (§3–4)  
+- [ ] Approve mobile flow correction (§4)  
+- [ ] Approve security requirements (§5)  
+- [ ] Approve six-phase Moyasar coexistence/deprecation (§6)  
+- [ ] Approve expanded test matrix (§7)  
 
 **Still blocked until approval:**
 
@@ -462,4 +516,4 @@ CI strategy: unit tests always; sandbox integration behind secret-gated job or m
 
 ---
 
-*End of document — documentation only; STOP and wait for approval.*
+*End of revised document — documentation only; STOP and wait for approval.*
