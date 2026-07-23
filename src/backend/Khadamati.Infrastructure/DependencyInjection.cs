@@ -98,6 +98,10 @@ public static class DependencyInjection
                 services.AddHttpClient(nameof(MoyasarPaymentGateway));
                 services.AddScoped<IPaymentGateway, MoyasarPaymentGateway>();
                 break;
+            case "areeba":
+                services.AddHttpClient(nameof(AreebaPaymentGateway));
+                services.AddScoped<IPaymentGateway, AreebaPaymentGateway>();
+                break;
             default:
                 services.AddScoped<IPaymentGateway, DevelopmentPaymentGateway>();
                 break;

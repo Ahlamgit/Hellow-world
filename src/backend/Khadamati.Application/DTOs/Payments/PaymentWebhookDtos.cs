@@ -11,6 +11,18 @@ public class MoyasarWebhookDto
     public Dictionary<string, string>? Metadata { get; set; }
 }
 
+public class AreebaWebhookDto
+{
+    public string? Id { get; set; }
+    public string? EventId { get; set; }
+    public string? OrderId { get; set; }
+    public string? TransactionId { get; set; }
+    public string? Status { get; set; }
+    public string? Result { get; set; }
+    public decimal? Amount { get; set; }
+    public string? Currency { get; set; }
+}
+
 public class PaymentWebhookResultDto
 {
     public bool Processed { get; set; }

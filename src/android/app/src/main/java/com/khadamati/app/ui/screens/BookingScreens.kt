@@ -33,9 +33,12 @@ import androidx.compose.runtime.remember
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.unit.dp
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
+import android.content.Intent
+import android.net.Uri
 import com.khadamati.app.R
 import com.khadamati.app.ui.viewmodel.BookingViewModel
 
@@ -106,6 +109,14 @@ fun BookingDetailScreen(
         viewModel.loadBooking(bookingId)
     }
     val booking = state.selectedBooking
+    val context = LocalContext.current
+    LaunchedEffect(state.checkoutUrl) {
+        val url = state.checkoutUrl ?: return@LaunchedEffect
+        runCatching {
+            context.startActivity(Intent(Intent.ACTION_VIEW, Uri.parse(url)))
+        }
+        viewModel.consumeCheckoutUrl()
+    }
 
     Column(
         Modifier
@@ -132,10 +143,17 @@ fun BookingDetailScreen(
         val cancellable = booking.status in setOf("Pending", "AwaitingPayment", "Confirmed", "Rescheduled")
 
         when {
-            booking.status == "AwaitingPayment" && isCustomer ->
-                Button(onClick = { viewModel.pay(bookingId); onPay() }, modifier = Modifier.fillMaxWidth()) {
+            booking.status == "AwaitingPayment" && isCustomer -> {
+                Button(onClick = { viewModel.pay(bookingId) }, modifier = Modifier.fillMaxWidth()) {
                     Text(stringResource(R.string.booking_pay))
                 }
+                state.paymentPendingMessage?.let { msg ->
+                    Text(msg, style = MaterialTheme.typography.bodySmall)
+                }
+                OutlinedButton(onClick = { viewModel.loadBooking(bookingId) }, modifier = Modifier.fillMaxWidth()) {
+                    Text("Refresh payment status")
+                }
+            }
             booking.status == "PendingCraftsmanConfirmation" && isCraftsman -> {
                 Button(onClick = { viewModel.accept(bookingId) }, modifier = Modifier.fillMaxWidth()) {
                     Text(stringResource(R.string.booking_accept))

@@ -352,8 +352,52 @@ public class BookingPaymentConfiguration : IEntityTypeConfiguration<BookingPayme
         builder.Property(p => p.Status).HasConversion<int>();
         builder.Property(p => p.PaymentMethod).HasMaxLength(50);
         builder.Property(p => p.TransactionReference).HasMaxLength(200);
+        builder.Property(p => p.PaymentProvider).HasMaxLength(50).IsRequired().HasDefaultValue("Development");
+        builder.Property(p => p.GatewaySessionId).HasMaxLength(200);
+        builder.Property(p => p.GatewayTransactionId).HasMaxLength(200);
+        builder.HasIndex(p => p.TransactionReference)
+            .IsUnique()
+            .HasFilter("[TransactionReference] IS NOT NULL");
+        builder.HasIndex(p => p.GatewayTransactionId)
+            .HasFilter("[GatewayTransactionId] IS NOT NULL");
         builder.HasOne(p => p.Payer).WithMany().HasForeignKey(p => p.PayerUserId).OnDelete(DeleteBehavior.Restrict);
         builder.HasOne(p => p.Payee).WithMany().HasForeignKey(p => p.PayeeUserId).OnDelete(DeleteBehavior.Restrict);
+        builder.HasOne(p => p.CurrentAttempt)
+            .WithMany()
+            .HasForeignKey(p => p.CurrentAttemptId)
+            .OnDelete(DeleteBehavior.NoAction);
+        builder.HasMany(p => p.Attempts)
+            .WithOne(a => a.BookingPayment)
+            .HasForeignKey(a => a.BookingPaymentId)
+            .OnDelete(DeleteBehavior.Cascade);
+    }
+}
+
+public class BookingPaymentAttemptConfiguration : IEntityTypeConfiguration<BookingPaymentAttempt>
+{
+    public void Configure(EntityTypeBuilder<BookingPaymentAttempt> builder)
+    {
+        builder.ToTable("BookingPaymentAttempts");
+        builder.HasKey(a => a.Id);
+        builder.Property(a => a.PaymentProvider).HasMaxLength(50).IsRequired();
+        builder.Property(a => a.GatewaySessionId).HasMaxLength(200);
+        builder.Property(a => a.GatewayTransactionId).HasMaxLength(200);
+        builder.Property(a => a.Status).HasConversion<int>();
+        builder.Property(a => a.Amount).HasPrecision(18, 2);
+        builder.Property(a => a.Currency).HasMaxLength(3).IsRequired();
+        builder.Property(a => a.FailureReason).HasMaxLength(1000);
+        builder.Property(a => a.WebhookEventId).HasMaxLength(200);
+        builder.HasIndex(a => new { a.BookingPaymentId, a.AttemptNumber }).IsUnique();
+        builder.HasIndex(a => a.WebhookEventId)
+            .IsUnique()
+            .HasFilter("[WebhookEventId] IS NOT NULL");
+        builder.HasIndex(a => a.GatewayTransactionId)
+            .HasFilter("[GatewayTransactionId] IS NOT NULL");
+        // Only one Completed attempt per payment (Status = 3).
+        builder.HasIndex(a => a.BookingPaymentId)
+            .IsUnique()
+            .HasFilter("[Status] = 3 AND [Deleted] = 0")
+            .HasDatabaseName("UX_BookingPaymentAttempts_OneCompletedPerPayment");
     }
 }
 

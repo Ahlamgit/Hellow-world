@@ -48,6 +48,10 @@ struct BookingDetailView: View {
                         }
                     }
                     .buttonStyle(.borderedProminent)
+                    Button("Refresh payment status") {
+                        Task { await refreshBooking() }
+                    }
+                    .buttonStyle(.bordered)
                 }
 
                 if currentBooking.status == "PendingCraftsmanConfirmation", isCraftsman {

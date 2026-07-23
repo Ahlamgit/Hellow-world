@@ -19,8 +19,13 @@ public interface IBookingRepository
     Task AddAsync(ServiceRequest booking, CancellationToken cancellationToken = default);
     void Update(ServiceRequest booking);
     Task AddPaymentAsync(BookingPayment payment, CancellationToken cancellationToken = default);
+    Task AddPaymentAttemptAsync(BookingPaymentAttempt attempt, CancellationToken cancellationToken = default);
     Task<BookingPayment?> GetPaymentByBookingIdAsync(Guid bookingId, CancellationToken cancellationToken = default);
     Task<BookingPayment?> GetPaymentByTransactionReferenceAsync(string transactionReference, CancellationToken cancellationToken = default);
+    Task<BookingPaymentAttempt?> GetPaymentAttemptByGatewayTransactionIdAsync(string gatewayTransactionId, CancellationToken cancellationToken = default);
+    Task<BookingPaymentAttempt?> GetPaymentAttemptByWebhookEventIdAsync(string webhookEventId, CancellationToken cancellationToken = default);
+    Task<BookingPaymentAttempt?> GetPaymentAttemptBySessionOrTransactionAsync(string reference, CancellationToken cancellationToken = default);
+    Task<int> GetNextPaymentAttemptNumberAsync(Guid bookingPaymentId, CancellationToken cancellationToken = default);
     Task AddSlotReservationAsync(BookingSlotReservation reservation, CancellationToken cancellationToken = default);
     Task ReleaseSlotReservationAsync(Guid bookingId, CancellationToken cancellationToken = default);
     Task AddStatusHistoryAsync(ServiceRequestStatusHistory history, CancellationToken cancellationToken = default);

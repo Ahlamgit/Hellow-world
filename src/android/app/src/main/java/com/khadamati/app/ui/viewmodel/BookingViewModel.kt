@@ -18,6 +18,8 @@ data class BookingUiState(
     val selectedBooking: BookingDto? = null,
     val isLoading: Boolean = false,
     val error: String? = null,
+    val checkoutUrl: String? = null,
+    val paymentPendingMessage: String? = null,
 )
 
 class BookingViewModel(private val repository: BookingRepository) : ViewModel() {
@@ -101,7 +103,27 @@ class BookingViewModel(private val repository: BookingRepository) : ViewModel() 
         }
     }
 
-    fun pay(bookingId: String) = viewModelScope.launch { repository.pay(bookingId); refreshAfterAction(bookingId) }
+    fun pay(bookingId: String) = viewModelScope.launch {
+        try {
+            val payment = repository.pay(bookingId)
+            _uiState.value = _uiState.value.copy(
+                checkoutUrl = payment.checkoutUrl,
+                paymentPendingMessage = if (payment.checkoutUrl.isNullOrBlank()) {
+                    "Payment session created. Complete checkout, then refresh status."
+                } else {
+                    "Open checkout to pay. Status updates after gateway confirmation."
+                },
+                error = null,
+            )
+            refreshAfterAction(bookingId)
+        } catch (e: Exception) {
+            _uiState.value = _uiState.value.copy(error = e.message)
+        }
+    }
+
+    fun consumeCheckoutUrl() {
+        _uiState.value = _uiState.value.copy(checkoutUrl = null)
+    }
     fun accept(bookingId: String) = viewModelScope.launch { repository.accept(bookingId); refreshAfterAction(bookingId) }
     fun reject(bookingId: String, reason: String) = viewModelScope.launch { repository.reject(bookingId, reason); refreshAfterAction(bookingId) }
     fun cancel(bookingId: String, reason: String) = viewModelScope.launch { repository.cancel(bookingId, reason); refreshAfterAction(bookingId) }

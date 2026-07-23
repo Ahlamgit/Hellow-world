@@ -2,6 +2,7 @@ package com.khadamati.app.data.repository
 
 import com.khadamati.app.data.remote.ApiService
 import com.khadamati.app.data.remote.dto.BookingDto
+import com.khadamati.app.data.remote.dto.BookingPaymentDto
 import com.khadamati.app.data.remote.dto.CraftsmanOptionDto
 import com.khadamati.app.data.remote.dto.TimeSlotDto
 
@@ -29,11 +30,16 @@ class BookingRepository(private val apiService: ApiService) {
     suspend fun getBooking(id: String): BookingDto =
         apiService.getBooking(id).data ?: error("Booking not found")
 
-    suspend fun pay(id: String) {
+    suspend fun pay(id: String): BookingPaymentDto {
         val payment = apiService.initiatePayment(id, com.khadamati.app.data.remote.dto.InitiatePaymentRequestDto("Card")).data
             ?: error("Payment initiation failed")
-        val sessionId = payment.sessionId ?: error("Missing payment session")
-        apiService.confirmPayment(id, com.khadamati.app.data.remote.dto.ConfirmPaymentRequestDto(sessionId))
+        val checkoutUrl = payment.checkoutUrl
+        if (!checkoutUrl.isNullOrBlank()) {
+            // Hosted checkout must complete on the gateway. Completion is webhook/server-side only.
+            return payment
+        }
+        // Development fallback: no hosted URL — caller may refresh booking status after fake checkout.
+        return payment
     }
 
     suspend fun accept(id: String) { apiService.acceptBooking(id) }

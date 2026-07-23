@@ -29,6 +29,7 @@ public class ApplicationDbContext : DbContext
     public DbSet<BookingSlotReservation> BookingSlotReservations => Set<BookingSlotReservation>();
     public DbSet<CraftsmanWorkingHour> CraftsmanWorkingHours => Set<CraftsmanWorkingHour>();
     public DbSet<BookingPayment> BookingPayments => Set<BookingPayment>();
+    public DbSet<BookingPaymentAttempt> BookingPaymentAttempts => Set<BookingPaymentAttempt>();
     public DbSet<Notification> Notifications => Set<Notification>();
     public DbSet<DevicePushToken> DevicePushTokens => Set<DevicePushToken>();
     public DbSet<ChatConversation> ChatConversations => Set<ChatConversation>();
@@ -85,6 +86,7 @@ public class ApplicationDbContext : DbContext
         modelBuilder.Entity<BookingSlotReservation>().HasQueryFilter(e => !e.IsDeleted);
         modelBuilder.Entity<CraftsmanWorkingHour>().HasQueryFilter(e => !e.IsDeleted);
         modelBuilder.Entity<BookingPayment>().HasQueryFilter(e => !e.IsDeleted);
+        modelBuilder.Entity<BookingPaymentAttempt>().HasQueryFilter(e => !e.IsDeleted);
         modelBuilder.Entity<Notification>().HasQueryFilter(e => !e.IsDeleted);
         modelBuilder.Entity<DevicePushToken>().HasQueryFilter(e => !e.IsDeleted);
         modelBuilder.Entity<ChatConversation>().HasQueryFilter(e => !e.IsDeleted);
