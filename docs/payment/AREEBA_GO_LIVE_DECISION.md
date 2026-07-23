@@ -1,8 +1,14 @@
 # Areeba — Go-Live Decision
 
-**Date:** 2026-07-23 (updated after remediation validation)  
-**Based on:** [AREEBA_SANDBOX_VALIDATION_REPORT.md](./AREEBA_SANDBOX_VALIDATION_REPORT.md), [AREEBA_BLOCKER_RESOLUTION_PLAN.md](./AREEBA_BLOCKER_RESOLUTION_PLAN.md)  
-**Branch:** `cursor/payment-gateway-migration-plan-4876`
+**Date:** 2026-07-23 (updated — final integration preparation)  
+**Branch:** `cursor/payment-gateway-migration-plan-4876`  
+**Evidence / plans:**
+
+- [AREEBA_FINAL_INTEGRATION_TEST_PLAN.md](./AREEBA_FINAL_INTEGRATION_TEST_PLAN.md) ← **execution plan for remaining blockers**
+- [AREEBA_BLOCKER_RESOLUTION_PLAN.md](./AREEBA_BLOCKER_RESOLUTION_PLAN.md)
+- [AREEBA_SANDBOX_VALIDATION_REPORT.md](./AREEBA_SANDBOX_VALIDATION_REPORT.md)
+- [AREEBA_PRE_PRODUCTION_VERIFICATION.md](./AREEBA_PRE_PRODUCTION_VERIFICATION.md)
+- [AREEBA_VERIFICATION_REPORT.md](./AREEBA_VERIFICATION_REPORT.md)
 
 ---
 
@@ -12,67 +18,74 @@
 
 **Production Areeba cutover is not approved.**
 
-SQL Server migration compatibility was validated in remediation (local SQL Server 2022). Live Areeba sandbox credentials, Staging host apply confirmation, and browser/device QA remain open blockers.
+Final integration test **preparation** is complete. Live Areeba sandbox credentials, real payment lifecycle execution, and browser/device QA are still outstanding.
 
 ---
 
-## Recommendation summary
+## Allowed outcomes
 
-| Option | Selected |
-|--------|----------|
-| READY | |
+| Outcome | Selected |
+|---------|----------|
+| READY FOR PRODUCTION | |
 | **NOT READY** | **Yes** |
 
 ---
 
-## Passed checks
+## Test results (current)
 
-| ID | Check |
-|----|-------|
-| P1 | Gateway-independent `IPaymentGateway` architecture |
-| P2 | `BookingPaymentAttempts` model + additive migrations |
-| P3 | Areeba adapter + webhook implementation in repo |
-| P4 | Unit: invalid webhook, duplicate path, amount/currency mismatch |
-| P5 | Mobile/Web no longer use initiate→confirm as completion authority (code) |
-| P6 | Production `Payment:Provider` remains **Moyasar** |
-| P7 | No live secrets committed |
-| P8 | **NEW:** SQL Server 2022 — `dotnet ef database update` **PASS** |
-| P9 | **NEW:** Indexes + FKs for attempts verified on live SQL instance |
-| P10 | **NEW:** Existing `BookingPayment` preserved; attempt backfill **PASS** |
-| P11 | **NEW:** Migration rollback + re-apply **PASS** |
-| P12 | Moyasar coexistence retained |
+| Area | Result | Evidence |
+|------|--------|----------|
+| SQL Server 2022 migration / indexes / rollback | **PASS** | Blocker resolution plan §2 |
+| BookingPayment preservation + attempt backfill | **PASS** | Blocker resolution plan §2.3 |
+| `FixPaymentProviderDefault` | **PASS** | Migration `20260723212353_*` |
+| Unit: webhook HMAC / amount / currency | **PASS** | `Khadamati.Tests` payment filter |
+| Areeba sandbox credentials on Staging | **NOT RUN** | Credentials unavailable |
+| Real sandbox payment matrix (§2 of final plan) | **NOT RUN** | Blocked on credentials |
+| Web Chrome / mobile browser QA | **NOT RUN** | Blocked on Staging sandbox |
+| Android device QA | **NOT RUN** | Blocked on Staging sandbox |
+| iOS device QA | **NOT RUN** | Blocked on Staging sandbox |
+| Production Provider | **PASS (safe)** | Still `Moyasar` — cutover not enabled |
 
 ---
 
-## Failed / open checks
+## Passed checks (accepted)
 
-| ID | Check | Severity |
-|----|-------|----------|
-| O1 | Areeba sandbox merchant credentials configured on Staging | **Blocker** |
-| O2 | Official Staging SQL host migration (ops environment) | **Blocker** (compat proven; host apply pending) |
-| O3 | Live successful sandbox payment E2E | **Blocker** |
-| O4 | Live fail / abandon / delayed webhook E2E | **Blocker** |
-| O5 | Live duplicate + invalid signature on Staging URL | **Blocker** |
-| O6 | Chrome + mobile browser QA against Staging | **Blocker** |
-| O7 | Android device checkout/return/refresh QA | **Blocker** |
-| O8 | iOS device checkout/return/refresh QA | **Blocker** |
+| ID | Check |
+|----|-------|
+| P1 | Gateway-independent architecture |
+| P2 | `BookingPaymentAttempts` model |
+| P3 | Areeba adapter + webhook code |
+| P4 | Mobile/Web completion authority corrected in code |
+| P5 | SQL validation + preservation + rollback |
+| P6 | Moyasar coexistence retained |
+| P7 | Final integration test plan published for Ops/QA execution |
+
+---
+
+## Remaining blockers
+
+| ID | Blocker | Severity |
+|----|---------|----------|
+| R1 | Areeba sandbox merchant credentials + Staging secret injection | **Blocker** |
+| R2 | Real sandbox payment lifecycle matrix (success/fail/abandon/duplicate/invalid/amount/currency) | **Blocker** |
+| R3 | Browser + Android + iOS checkout QA on Staging | **Blocker** |
 
 ---
 
 ## Remaining risks
 
-| Risk | Level | Notes |
-|------|-------|-------|
-| Webhook signature scheme mismatch vs boarding docs | High until live sandbox | Confirm headers with Areeba |
-| Hosted checkout UX / deep links | Medium | Needs device QA |
-| Staging host differs from local SQL container | Low–Med | Re-run same validation queries on Staging |
-| Accidental production Provider switch | Critical if ignored | Keep Production on Moyasar |
+| Risk | Level | Mitigation |
+|------|-------|------------|
+| Webhook signature header/algorithm differs from implementation | High until first live notify | Confirm during §1 webhook setup in final test plan |
+| Deep-link return UX gaps on mobile | Medium | Execute §3 Android/iOS of final test plan |
+| Staging host drift vs local SQL proof | Low–Med | Re-run SQL checks on Staging host before READY |
+| Accidental production cutover | Critical | Keep Production `Payment:Provider=Moyasar` until READY + explicit approval |
 
 ---
 
 ## Explicit non-actions (still in force)
 
-Until status flips to **READY** after open checks PASS:
+Until status is flipped to **READY FOR PRODUCTION** after final integration execution:
 
 - Do **not** enable Production `Payment:Provider=Areeba`
 - Do **not** remove Moyasar
@@ -81,13 +94,11 @@ Until status flips to **READY** after open checks PASS:
 
 ---
 
-## Criteria to flip to READY
+## Path to READY FOR PRODUCTION
 
-1. Staging secrets: Areeba sandbox merchant + webhook secret injected (not committed).  
-2. Staging SQL: same migrations applied; preservation/index queries green.  
-3. Live §3 sandbox matrix all PASS with logs.  
-4. Web + Android + iOS §4 QA all PASS.  
-5. Product/Eng/Ops sign below as READY.
+1. Complete [AREEBA_FINAL_INTEGRATION_TEST_PLAN.md](./AREEBA_FINAL_INTEGRATION_TEST_PLAN.md) §§1–3 with all PASS.  
+2. Attach evidence pack listed in that plan.  
+3. Re-issue this decision as **READY FOR PRODUCTION** with sign-off below.
 
 ---
 
@@ -95,10 +106,10 @@ Until status flips to **READY** after open checks PASS:
 
 | Role | Name | Date | Decision |
 |------|------|------|----------|
-| Engineering | | | **NOT READY** (ack) |
-| QA | | | Pending Staging/device evidence |
-| Ops | | | Pending Staging secrets + host migrate |
-| Product | | | Hold cutover |
+| Engineering | | | **NOT READY** (preparation complete) |
+| QA | | | Pending live matrix + client QA |
+| Ops | | | Pending sandbox credentials + Staging inject |
+| Product | | | Hold production cutover |
 
 ---
 
