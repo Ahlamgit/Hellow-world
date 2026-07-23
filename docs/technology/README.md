@@ -2,8 +2,14 @@
 
 Enterprise architecture analysis for technology evaluation, mobile migration, scalability, hosting, and roadmap planning.
 
-**Status:** Draft — analysis only, no implementation authorized  
+**Status:** Technology direction **approved** (July 2026) — see canonical reference below  
 **Created:** July 2026
+
+---
+
+## Canonical reference
+
+**[KHADAMATI_FINAL_TECHNOLOGY_ARCHITECTURE.md](./KHADAMATI_FINAL_TECHNOLOGY_ARCHITECTURE.md)** — approved stack, scale assumptions (Year 1: ~2,250 users; Year 5: ~10,000 users), deployment, migration priority, and cost discipline. **This supersedes conflicting figures in earlier drafts below.**
 
 ---
 
@@ -11,21 +17,24 @@ Enterprise architecture analysis for technology evaluation, mobile migration, sc
 
 | # | Document | Description |
 |---|----------|-------------|
-| 1 | [TECHNOLOGY_EVALUATION.md](./TECHNOLOGY_EVALUATION.md) | Current vs proposed stack comparison across performance, cost, hiring, security, and enterprise readiness |
-| 2 | [MOBILE_MIGRATION_PLAN.md](./MOBILE_MIGRATION_PLAN.md) | Kotlin + Swift → React Native migration strategy, risks, and reuse analysis |
-| 3 | [SCALABILITY_PLAN.md](./SCALABILITY_PLAN.md) | Architecture for 5K–50K users: API, SQL, Redis, caching, jobs, monitoring |
-| 4 | [HOSTING_ARCHITECTURE.md](./HOSTING_ARCHITECTURE.md) | Dev, staging, production, HA, backups, DR, CDN, cost optimization |
-| 5 | [ROADMAP.md](./ROADMAP.md) | Five-phase migration and evolution plan |
-| 6 | [FINAL_RECOMMENDATION.md](./FINAL_RECOMMENDATION.md) | Executive go/no-go decisions and target architecture |
+| **★** | [KHADAMATI_FINAL_TECHNOLOGY_ARCHITECTURE.md](./KHADAMATI_FINAL_TECHNOLOGY_ARCHITECTURE.md) | **Approved technology direction (canonical)** |
+| — | [REACT_NATIVE_MIGRATION_ARCHITECTURE.md](./REACT_NATIVE_MIGRATION_ARCHITECTURE.md) | Phase 2 — *to be created after Phase 1 stabilization* |
+| 1 | [TECHNOLOGY_EVALUATION.md](./TECHNOLOGY_EVALUATION.md) | Pre-approval stack comparison |
+| 2 | [MOBILE_MIGRATION_PLAN.md](./MOBILE_MIGRATION_PLAN.md) | Pre-approval migration inventory |
+| 3 | [SCALABILITY_PLAN.md](./SCALABILITY_PLAN.md) | Detailed capacity notes (scale figures superseded by canonical doc) |
+| 4 | [HOSTING_ARCHITECTURE.md](./HOSTING_ARCHITECTURE.md) | Environment topology |
+| 5 | [ROADMAP.md](./ROADMAP.md) | Phased plan — align with canonical §7 |
+| 6 | [FINAL_RECOMMENDATION.md](./FINAL_RECOMMENDATION.md) | Pre-approval recommendation (superseded) |
 
 ---
 
-## Key conclusions (summary)
+## Approved conclusions (summary)
 
 - **Keep:** ASP.NET Core 8, EF Core, SQL Server, React + TypeScript web
-- **Migrate (phased):** Android + iOS → React Native + TypeScript (Expo dev builds)
-- **Scale:** Add Redis, read replicas, horizontal API scaling, blob storage before 5K CCU
-- **Do not:** Rewrite backend, replace SQL, or big-bang mobile migration before MVP stabilization
+- **Mobile now:** Native Kotlin + Swift until Phase 1 complete
+- **Mobile future:** React Native + Expo dev builds + EAS (Phase 3 — not started)
+- **Scale:** ~2,250 users Year 1 → ~10,000 Year 5; no over-engineering
+- **Defer:** Redis, replicas, K8s, microservices unless metrics justify
 
 ---
 
