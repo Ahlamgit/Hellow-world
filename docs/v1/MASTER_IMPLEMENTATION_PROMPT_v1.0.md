@@ -7,6 +7,7 @@
 **Implementation readiness:** [`IMPLEMENTATION_READINESS_EXECUTION_PLAN.md`](./IMPLEMENTATION_READINESS_EXECUTION_PLAN.md) — tracks blockers to gate **A**  
 **Blocker closure status:** [`READINESS_BLOCKER_CLOSURE_STATUS.md`](./READINESS_BLOCKER_CLOSURE_STATUS.md) — active closure tracking  
 **Implementation gate:** [`FINAL_IMPLEMENTATION_GATE_REPORT.md`](./FINAL_IMPLEMENTATION_GATE_REPORT.md) — currently **B) NOT READY — CODING BLOCKED**  
+**Pre-implementation review:** [`FINAL_PRE_IMPLEMENTATION_READINESS_REVIEW.md`](./FINAL_PRE_IMPLEMENTATION_READINESS_REVIEW.md) — recommendation **B**  
 **Supersedes conflicting statements** in earlier draft docs where this prompt / ADRs / scope baseline are more specific.  
 **Companion:** [FEATURE_TRACEABILITY_MATRIX.md](./FEATURE_TRACEABILITY_MATRIX.md) · [ARCHITECTURE_AUDIT_FINAL.md](./ARCHITECTURE_AUDIT_FINAL.md) · [QUESTIONS-REQUIRING-BUSINESS-DECISION.md](./QUESTIONS-REQUIRING-BUSINESS-DECISION.md) · ADR-001…028
 
