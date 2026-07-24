@@ -7,7 +7,18 @@
 **Production code / UI / application files:** **None generated**
 
 ### Controlling sources
-Master Prompt v1.0 · Final Readiness Report · Decisions Complete · FTM · ADR-001…028 · Business proposal · Design requirements (pending assets)
+Master Prompt v1.0 · [`FINAL_SCOPE_BASELINE.md`](./FINAL_SCOPE_BASELINE.md) · Final Readiness Report · Decisions Complete · FTM · ADR-001…028 · Business proposal · Design requirements (pending assets)
+
+---
+
+## Scope Freeze vs Implementation Gate
+
+| Dimension | Status | Document |
+|-----------|--------|----------|
+| **Product / feature scope** | **A) Scope Frozen** | [`FINAL_SCOPE_BASELINE.md`](./FINAL_SCOPE_BASELINE.md) |
+| **Implementation readiness** | **B) NOT READY** | This report |
+
+Scope freeze does **not** authorize coding. Implementation remains blocked until blockers below are closed.
 
 ---
 
@@ -18,11 +29,12 @@ Master Prompt v1.0 · Final Readiness Report · Decisions Complete · FTM · ADR
 **Coding is not authorized.**
 
 ## Re-validation result (this pass)
+- **Final Scope Baseline v1.0 published** — product scope status **A) Scope Frozen** (sign-off pending G-00)  
 - Consistency audit rechecked against Master Prompt, FTM, DB, API, RBAC, finance, booking, UI prep, deploy  
 - Store Dashboard correction (services + catalog advertising, **no e-commerce**) verified via ADR-027 and FTM BR-STR-*  
 - **ADR-028** unified Provider capability model + service-first UX documented  
-- No authorization to code — critical delivery blockers **G-01…G-07** remain  
-- Gate remains **B**
+- No authorization to code — critical delivery blockers **G-00…G-07** remain  
+- Implementation gate remains **B**
 
 Architecture and business-rule decisions are substantially complete (including Store catalog advertising ADR-027 and unified capability model ADR-028). Critical **delivery inputs and approvals** remain open; therefore the implementation gate **fails**.
 
@@ -54,6 +66,7 @@ Architecture and business-rule decisions are substantially complete (including S
 
 | ID | Blocker | Owner | Severity |
 |----|---------|-------|----------|
+| G-00 | **Scope baseline sign-off** on FINAL_SCOPE_BASELINE.md | Product/Arch | Critical |
 | G-01 | **Design assets missing** → UI/UX specification incomplete (ADR-023) | Design | Critical |
 | G-02 | **Formal stakeholder sign-off** on architecture gate not recorded | Product/Arch/Eng | Critical |
 | G-03 | **Vendor selections** incomplete (SMS, Email, Object Storage, Maps, OCR, Face) | Business/Eng | Critical |
@@ -84,6 +97,7 @@ Backend-only scaffolding is also **not authorized** by this gate until G-02 is s
 
 | Input | Status |
 |-------|--------|
+| Scope baseline document | **Published** — signature pending |
 | Branding, logo, colors, design references, videos/screens, design direction | **Missing** |
 | UI analysis, UX analysis, design tokens, component inventory, screen specs | **Not started** (blocked on assets) |
 | SMS / Email / Storage / Maps / OCR / Face vendor choices | **Missing** |
@@ -124,12 +138,14 @@ Backend-only scaffolding is also **not authorized** by this gate until G-02 is s
 
 ## How to Reach Decision A (READY FOR IMPLEMENTATION)
 
-1. Upload and approve design assets; complete UI/UX specification deliverables  
-2. Record stakeholder signatures on this gate  
-3. Select minimum vendors + cloud  
-4. Finance prepares Lebanon policy configs for staging  
-5. Compliance sets retention defaults  
-6. Re-run gate → amend this report to **A) READY FOR IMPLEMENTATION** with date/sign-off  
+1. Complete **G-00** — stakeholder sign-off on [`FINAL_SCOPE_BASELINE.md`](./FINAL_SCOPE_BASELINE.md)  
+2. Upload and approve design assets; complete UI/UX specification deliverables (G-01)  
+3. Record stakeholder signatures on this gate (G-02)  
+4. Select minimum vendors + cloud (G-03, G-04)  
+5. Finance prepares Lebanon policy configs for staging (G-05)  
+6. Compliance sets retention defaults (G-06)  
+7. Evidence Payment.js mobile spike (G-07)  
+8. Re-run gate → amend this report to **A) READY FOR IMPLEMENTATION** with date/sign-off  
 
 ---
 

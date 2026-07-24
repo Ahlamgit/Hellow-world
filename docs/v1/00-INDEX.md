@@ -6,6 +6,7 @@
 **Classification:** Internal — Architecture & Product Discovery  
 **Stack Decision (Fixed):** Spring Boot 3.x / Java 21 / PostgreSQL / Flyway / React+MUI / Flutter / JWT / Areeba IXOPAY Payment.js  
 **Controlling brief:** [MASTER_IMPLEMENTATION_PROMPT_v1.0.md](./MASTER_IMPLEMENTATION_PROMPT_v1.0.md)  
+**Final scope baseline (frozen):** [FINAL_SCOPE_BASELINE.md](./FINAL_SCOPE_BASELINE.md)  
 **Feature Traceability:** [FEATURE_TRACEABILITY_MATRIX.md](./FEATURE_TRACEABILITY_MATRIX.md)  
 **ADRs:** [adr/README.md](./adr/README.md)  
 **Admin configurable finance rules:** [architecture/47-ADMIN-CONFIGURABLE-FINANCIAL-RULES.md](./architecture/47-ADMIN-CONFIGURABLE-FINANCIAL-RULES.md) · [ADR-013](./adr/ADR-013-admin-configurable-financial-business-rules.md)  

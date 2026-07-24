@@ -1,9 +1,11 @@
 # Feature Traceability Matrix — KHADAMATI V1
 
 **Document ID:** KHAD-V1-FTM  
-**Status:** Draft for Approval (pre-implementation gate)  
-**Source:** Master Implementation Prompt v1.0  
-**Rule:** No proposal feature may disappear silently. Status values: `Specified` · `Deferred (ADR)` · `Blocked (Q-*)` · `Implemented` (post-coding)
+**Status:** Aligned to **Final Scope Baseline v1.0** (Scope Frozen)  
+**Source:** Master Implementation Prompt v1.0 · ADR-001…028 · FINAL_SCOPE_BASELINE.md  
+**Rule:** No proposal feature may disappear silently. Status values: `Specified` · `Deferred (ADR)` · `Blocked (Q-*)` · `Implemented` (post-coding) · **`Out of V1`** (see Scope Baseline §8)
+
+> **Scope freeze:** Features marked Included in [`FINAL_SCOPE_BASELINE.md`](./FINAL_SCOPE_BASELINE.md) are the only authorized V1 build targets. Additions require Change Control.
 
 ---
 
