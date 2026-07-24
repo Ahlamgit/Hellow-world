@@ -156,7 +156,7 @@ Backend-only scaffolding is also **not authorized** by this gate until G-02 is s
 
 | Domain | Result |
 |--------|--------|
-| Payment architecture | Pass (architecture); BLOCKER-007 **IN VALIDATION** — PASS WITH CONDITIONS |
+| Payment architecture | Pass (architecture); security/recon framework published; BLOCKER-007 **IN VALIDATION** — PASS WITH CONDITIONS |
 | Business Rule Engine | Pass (ADR-013/026) |
 | Security readiness | Pass baseline; pen-test later |
 | UI/UX readiness | **Fail gate** — assets/specs missing |
