@@ -9,7 +9,7 @@
 
 **Sources:** Master Prompt v1.0 · Decisions Complete · Scope Baseline · Implementation Readiness Plan · ADR-024  
 
-**Related:** [`../READINESS_BLOCKER_CLOSURE_STATUS.md`](../READINESS_BLOCKER_CLOSURE_STATUS.md) · [`../vendors/VENDOR_EVALUATION_MATRIX.md`](../vendors/VENDOR_EVALUATION_MATRIX.md) (Storage)
+**Related:** [`CLOUD_SIZING_AND_COST_FRAMEWORK.md`](./CLOUD_SIZING_AND_COST_FRAMEWORK.md) · [`../READINESS_BLOCKER_CLOSURE_STATUS.md`](../READINESS_BLOCKER_CLOSURE_STATUS.md) · [`../vendors/VENDOR_EVALUATION_MATRIX.md`](../vendors/VENDOR_EVALUATION_MATRIX.md) (Storage)
 
 ```text
 DO NOT write production code.
