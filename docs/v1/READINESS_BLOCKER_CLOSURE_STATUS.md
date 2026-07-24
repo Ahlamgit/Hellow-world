@@ -53,7 +53,7 @@ New requirements → ADR or Change Request (Scope Baseline §10). No silent scop
 |----|---------|----------------|----------------|----------------------|
 | BLOCKER-001 | Design assets & UI/UX specification | [`design/DESIGN_APPROVAL_RECORD.md`](./design/DESIGN_APPROVAL_RECORD.md) · UI/UX · Brand · Tokens · Color · [`design/assets/LOGO_ASSET_PACKAGE.md`](./design/assets/LOGO_ASSET_PACKAGE.md) | **READY FOR APPROVAL** (not COMPLETED — binaries missing) | Assets + colors approved + Product/Design signatures |
 | BLOCKER-002 | Stakeholder sign-off | [`governance/STAKEHOLDER_SIGN_OFF_PACKAGE.md`](./governance/STAKEHOLDER_SIGN_OFF_PACKAGE.md) | **READY FOR APPROVAL** (not COMPLETED) | Signatures on package §6 |
-| BLOCKER-003 | Vendor selection | [`vendors/VENDOR_INTEGRATION_READINESS_MATRIX.md`](./vendors/VENDOR_INTEGRATION_READINESS_MATRIX.md) · [`vendors/VENDOR_EVALUATION_MATRIX.md`](./vendors/VENDOR_EVALUATION_MATRIX.md) · [`vendors/INTEGRATION_CONTRACT_SPECIFICATION.md`](./vendors/INTEGRATION_CONTRACT_SPECIFICATION.md) | **IN PREPARATION** (framework + contracts ready; selections Pending) | Vendors selected + contracts + sandbox + technical validation |
+| BLOCKER-003 | Vendor selection | [`vendors/VENDOR_INTEGRATION_READINESS_MATRIX.md`](./vendors/VENDOR_INTEGRATION_READINESS_MATRIX.md) · [`vendors/VENDOR_EVALUATION_MATRIX.md`](./vendors/VENDOR_EVALUATION_MATRIX.md) · [`vendors/INTEGRATION_CONTRACT_SPECIFICATION.md`](./vendors/INTEGRATION_CONTRACT_SPECIFICATION.md) · [`vendors/VENDOR_RISK_AND_SLA_ASSESSMENT.md`](./vendors/VENDOR_RISK_AND_SLA_ASSESSMENT.md) | **IN PREPARATION** (framework + contracts + risk/SLA ready; selections Pending) | Vendors selected + contracts + sandbox + technical validation |
 | BLOCKER-004 | Cloud infrastructure | [`infra/CLOUD_INFRASTRUCTURE_DECISION.md`](./infra/CLOUD_INFRASTRUCTURE_DECISION.md) · [`infra/CLOUD_SIZING_AND_COST_FRAMEWORK.md`](./infra/CLOUD_SIZING_AND_COST_FRAMEWORK.md) · [`infra/PRODUCTION_OPERATIONS_READINESS.md`](./infra/PRODUCTION_OPERATIONS_READINESS.md) | **IN PREPARATION** (ops readiness defined; provider/budget/RPO/RTO Pending) | Cloud **approved** (provider + budget + RPO/RTO + ops checklist) |
 | BLOCKER-005 | Finance Lebanon config | [`config/FINANCE_LEBANON_INITIAL_CONFIGURATION.md`](./config/FINANCE_LEBANON_INITIAL_CONFIGURATION.md) · [`governance/FINANCE_POLICY_APPROVAL_MATRIX.md`](./governance/FINANCE_POLICY_APPROVAL_MATRIX.md) · [`governance/FINANCE_POLICY_LIFECYCLE.md`](./governance/FINANCE_POLICY_LIFECYCLE.md) | **IN PREPARATION** (governance ready; values Pending Business Decision) | Approved finance values + Finance sign-off |
 | BLOCKER-006 | Compliance & retention | [`compliance/RETENTION_POLICY_DECISIONS.md`](./compliance/RETENTION_POLICY_DECISIONS.md) | **Open** (decisions template ready) | Compliance decisions **approved** |
@@ -189,6 +189,7 @@ Until then: keep **READY FOR APPROVAL**.
 - [`vendors/VENDOR_INTEGRATION_READINESS_MATRIX.md`](./vendors/VENDOR_INTEGRATION_READINESS_MATRIX.md)  
 - [`vendors/VENDOR_EVALUATION_MATRIX.md`](./vendors/VENDOR_EVALUATION_MATRIX.md)  
 - [`vendors/INTEGRATION_CONTRACT_SPECIFICATION.md`](./vendors/INTEGRATION_CONTRACT_SPECIFICATION.md)  
+- [`vendors/VENDOR_RISK_AND_SLA_ASSESSMENT.md`](./vendors/VENDOR_RISK_AND_SLA_ASSESSMENT.md)  
 - [`payment/AREEBA_IXOPAY_VENDOR_VALIDATION_CHECKLIST.md`](./payment/AREEBA_IXOPAY_VENDOR_VALIDATION_CHECKLIST.md)  
 
 ### Rules
@@ -198,6 +199,7 @@ Until then: keep **READY FOR APPROVAL**.
 - Payment architecture candidate: **Areeba IXOPAY** (Payment.js) — not business-approved until validation complete  
 - No vendor approved without Technical → Security → Business → Contract → Integration authorization  
 - Internal integration contracts (ports) defined before adapter implementation  
+- Risk & SLA assessment required before vendor approval  
 
 ### Category summary
 
@@ -215,6 +217,7 @@ Until then: keep **READY FOR APPROVAL**.
 - [x] Integration readiness matrix published  
 - [x] Evaluation matrix + Payment checklist published  
 - [x] Integration Contract Specification published (port responsibilities; checklist Pending)  
+- [x] Vendor Risk & SLA Assessment published (criteria ready; values Pending Vendor Selection)  
 - [ ] Vendors selected (or deferred with Product risk ack)  
 - [ ] Contracts approved  
 - [ ] Sandbox credentials available  
@@ -228,6 +231,7 @@ Until then: keep **READY FOR APPROVAL**.
 - [ ] OCR / Face selected or deferred with Product risk ack  
 - [ ] Adapter ownership confirmed per category  
 - [ ] Integration contracts accepted (Architect + Eng Lead) per category  
+- [ ] Risk/SLA rows filled + Technical/Security/Business approvals recorded  
 
 Until then: keep **IN PREPARATION**.
 
@@ -238,6 +242,7 @@ Until then: keep **IN PREPARATION**.
 | 2026-07-24 | Vendor evaluation matrix published |
 | 2026-07-24 | VENDOR_INTEGRATION_READINESS_MATRIX published — status **IN PREPARATION** |
 | 2026-07-24 | INTEGRATION_CONTRACT_SPECIFICATION published — still **IN PREPARATION** |
+| 2026-07-24 | VENDOR_RISK_AND_SLA_ASSESSMENT published — still **IN PREPARATION** |
 
 ---
 
@@ -418,6 +423,7 @@ Financial records and audit records **cannot** be removed if legally required.
 | 2026-07-24 | BLOCKER-004 Prod Ops Readiness v1.1 (marketplace/pay/ledger-specific) — still **IN PREPARATION** | 0/7 | **B) NOT READY — CODING BLOCKED** |
 | 2026-07-24 | BLOCKER-003 Vendor Integration Readiness Matrix — **IN PREPARATION** | 0/7 | **B) NOT READY — CODING BLOCKED** |
 | 2026-07-24 | BLOCKER-003 Integration Contract Specification published — still **IN PREPARATION** | 0/7 | **B) NOT READY — CODING BLOCKED** |
+| 2026-07-24 | BLOCKER-003 Vendor Risk & SLA Assessment published — still **IN PREPARATION** | 0/7 | **B) NOT READY — CODING BLOCKED** |
 
 ---
 

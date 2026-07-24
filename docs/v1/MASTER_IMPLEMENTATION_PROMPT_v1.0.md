@@ -449,7 +449,7 @@ Do **NOT** start coding until completed and approved:
 - [x] **Scope baseline frozen** — [`FINAL_SCOPE_BASELINE.md`](./FINAL_SCOPE_BASELINE.md)  
 - [ ] **BLOCKER-002** — Scope + stakeholder sign-off — **READY FOR APPROVAL** (signatures pending)  
 - [ ] **BLOCKER-001** — Design assets + UI/UX specification (ADR-023) — **READY FOR APPROVAL** (signatures pending; not Completed)  
-- [ ] **BLOCKER-003** — Vendors — **IN PREPARATION** (readiness matrix + integration contracts; selections pending)  
+- [ ] **BLOCKER-003** — Vendors — **IN PREPARATION** (readiness matrix + contracts + risk/SLA; selections pending)  
 - [ ] **BLOCKER-004** — Cloud decision — **IN PREPARATION** (vendor-neutral; selections pending)  
 - [ ] **BLOCKER-005** — Finance Lebanon configuration — **IN PREPARATION** (values Pending Business Decision)  
 - [ ] **BLOCKER-006** — Compliance retention defaults approved  
