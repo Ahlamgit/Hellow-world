@@ -46,7 +46,7 @@ Scope freeze does **not** authorize coding. Implementation remains blocked until
   - BLOCKER-005: **IN PREPARATION** — Finance Lebanon config + Approval Matrix + [`governance/FINANCE_POLICY_LIFECYCLE.md`](./governance/FINANCE_POLICY_LIFECYCLE.md) (values Pending Business Decision; not COMPLETED)  
   - BLOCKER-004: **IN PREPARATION** — Cloud Decision + Sizing/Cost + Prod Ops Readiness **v1.1** (KHADAMATI-specific; provider/budget/RPO/RTO Pending; not COMPLETED)  
   - BLOCKER-003: **IN PREPARATION** — [`vendors/VENDOR_INTEGRATION_READINESS_MATRIX.md`](./vendors/VENDOR_INTEGRATION_READINESS_MATRIX.md) · [`vendors/INTEGRATION_CONTRACT_SPECIFICATION.md`](./vendors/INTEGRATION_CONTRACT_SPECIFICATION.md) · [`vendors/VENDOR_RISK_AND_SLA_ASSESSMENT.md`](./vendors/VENDOR_RISK_AND_SLA_ASSESSMENT.md) (selections/sandbox/validation Pending; not COMPLETED)  
-  - BLOCKER-006: evaluation / decision / config artifacts ready for owner input  
+  - BLOCKER-006: **IN PREPARATION** — [`compliance/RETENTION_AND_DATA_GOVERNANCE_FRAMEWORK.md`](./compliance/RETENTION_AND_DATA_GOVERNANCE_FRAMEWORK.md) · [`compliance/RETENTION_POLICY_DECISIONS.md`](./compliance/RETENTION_POLICY_DECISIONS.md) (numeric defaults Pending Business / Legal Approval; not COMPLETED)  
 - No authorization to code — no architecture or scope changes  
 - Implementation gate remains **B**
 
@@ -63,7 +63,7 @@ Architecture and business-rule decisions are complete. Critical **delivery input
 | BLOCKER-003 | G-03 | Vendor selection | [`vendors/VENDOR_INTEGRATION_READINESS_MATRIX.md`](./vendors/VENDOR_INTEGRATION_READINESS_MATRIX.md) · [`vendors/VENDOR_EVALUATION_MATRIX.md`](./vendors/VENDOR_EVALUATION_MATRIX.md) · [`vendors/INTEGRATION_CONTRACT_SPECIFICATION.md`](./vendors/INTEGRATION_CONTRACT_SPECIFICATION.md) · [`vendors/VENDOR_RISK_AND_SLA_ASSESSMENT.md`](./vendors/VENDOR_RISK_AND_SLA_ASSESSMENT.md) | **IN PREPARATION** |
 | BLOCKER-004 | G-04 | Cloud infrastructure | [`infra/CLOUD_INFRASTRUCTURE_DECISION.md`](./infra/CLOUD_INFRASTRUCTURE_DECISION.md) · [`infra/CLOUD_SIZING_AND_COST_FRAMEWORK.md`](./infra/CLOUD_SIZING_AND_COST_FRAMEWORK.md) · [`infra/PRODUCTION_OPERATIONS_READINESS.md`](./infra/PRODUCTION_OPERATIONS_READINESS.md) | **IN PREPARATION** |
 | BLOCKER-005 | G-05 | Finance Lebanon config | [`config/FINANCE_LEBANON_INITIAL_CONFIGURATION.md`](./config/FINANCE_LEBANON_INITIAL_CONFIGURATION.md) · [`governance/FINANCE_POLICY_APPROVAL_MATRIX.md`](./governance/FINANCE_POLICY_APPROVAL_MATRIX.md) · [`governance/FINANCE_POLICY_LIFECYCLE.md`](./governance/FINANCE_POLICY_LIFECYCLE.md) | **IN PREPARATION** |
-| BLOCKER-006 | G-06 | Compliance & retention | [`compliance/RETENTION_POLICY_DECISIONS.md`](./compliance/RETENTION_POLICY_DECISIONS.md) | **Open** |
+| BLOCKER-006 | G-06 | Compliance & retention | [`compliance/RETENTION_AND_DATA_GOVERNANCE_FRAMEWORK.md`](./compliance/RETENTION_AND_DATA_GOVERNANCE_FRAMEWORK.md) · [`compliance/RETENTION_POLICY_DECISIONS.md`](./compliance/RETENTION_POLICY_DECISIONS.md) | **IN PREPARATION** |
 | BLOCKER-007 | G-07 | Payment.js mobile spike | [`payment/PAYMENT_JS_MOBILE_VALIDATION_REPORT.md`](./payment/PAYMENT_JS_MOBILE_VALIDATION_REPORT.md) · [`payment/AREEBA_IXOPAY_VENDOR_VALIDATION_CHECKLIST.md`](./payment/AREEBA_IXOPAY_VENDOR_VALIDATION_CHECKLIST.md) | **IN VALIDATION** (PASS WITH CONDITIONS) |
 
 Full closure tracking: [`READINESS_BLOCKER_CLOSURE_STATUS.md`](./READINESS_BLOCKER_CLOSURE_STATUS.md)
@@ -102,7 +102,7 @@ Full closure tracking: [`READINESS_BLOCKER_CLOSURE_STATUS.md`](./READINESS_BLOCK
 | G-03 | **Vendors** **IN PREPARATION** — readiness matrix + contracts + risk/SLA framework published; selections/sandbox/validation Pending | Business/Eng | Critical |
 | G-04 | **Cloud** **IN PREPARATION** — blueprint + sizing/cost + KHADAMATI prod ops (v1.1); provider/budget/RPO/RTO Pending | DevOps/Business | Critical |
 | G-05 | **Finance** Lebanon config **IN PREPARATION** — structure + approval matrix + lifecycle ready; values Pending Business Decision | Finance | Critical for money |
-| G-06 | **Compliance** retention numeric defaults not set | Compliance | High |
+| G-06 | **Compliance** **IN PREPARATION** — governance framework ready; numeric defaults Pending Business / Legal Approval | Compliance | High |
 | G-07 | **Payment.js mobile spike IN VALIDATION** — report PASS WITH CONDITIONS; live sandbox + acceptance pending | Eng | High for payments UI |
 
 Until G-01 and G-02 are closed, **no UI and no authorized application implementation** shall start.  

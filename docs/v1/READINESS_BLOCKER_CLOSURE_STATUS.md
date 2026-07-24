@@ -56,7 +56,7 @@ New requirements → ADR or Change Request (Scope Baseline §10). No silent scop
 | BLOCKER-003 | Vendor selection | [`vendors/VENDOR_INTEGRATION_READINESS_MATRIX.md`](./vendors/VENDOR_INTEGRATION_READINESS_MATRIX.md) · [`vendors/VENDOR_EVALUATION_MATRIX.md`](./vendors/VENDOR_EVALUATION_MATRIX.md) · [`vendors/INTEGRATION_CONTRACT_SPECIFICATION.md`](./vendors/INTEGRATION_CONTRACT_SPECIFICATION.md) · [`vendors/VENDOR_RISK_AND_SLA_ASSESSMENT.md`](./vendors/VENDOR_RISK_AND_SLA_ASSESSMENT.md) | **IN PREPARATION** (framework + contracts + risk/SLA ready; selections Pending) | Vendors selected + contracts + sandbox + technical validation |
 | BLOCKER-004 | Cloud infrastructure | [`infra/CLOUD_INFRASTRUCTURE_DECISION.md`](./infra/CLOUD_INFRASTRUCTURE_DECISION.md) · [`infra/CLOUD_SIZING_AND_COST_FRAMEWORK.md`](./infra/CLOUD_SIZING_AND_COST_FRAMEWORK.md) · [`infra/PRODUCTION_OPERATIONS_READINESS.md`](./infra/PRODUCTION_OPERATIONS_READINESS.md) | **IN PREPARATION** (ops readiness defined; provider/budget/RPO/RTO Pending) | Cloud **approved** (provider + budget + RPO/RTO + ops checklist) |
 | BLOCKER-005 | Finance Lebanon config | [`config/FINANCE_LEBANON_INITIAL_CONFIGURATION.md`](./config/FINANCE_LEBANON_INITIAL_CONFIGURATION.md) · [`governance/FINANCE_POLICY_APPROVAL_MATRIX.md`](./governance/FINANCE_POLICY_APPROVAL_MATRIX.md) · [`governance/FINANCE_POLICY_LIFECYCLE.md`](./governance/FINANCE_POLICY_LIFECYCLE.md) | **IN PREPARATION** (governance ready; values Pending Business Decision) | Approved finance values + Finance sign-off |
-| BLOCKER-006 | Compliance & retention | [`compliance/RETENTION_POLICY_DECISIONS.md`](./compliance/RETENTION_POLICY_DECISIONS.md) | **Open** (decisions template ready) | Compliance decisions **approved** |
+| BLOCKER-006 | Compliance & retention | [`compliance/RETENTION_AND_DATA_GOVERNANCE_FRAMEWORK.md`](./compliance/RETENTION_AND_DATA_GOVERNANCE_FRAMEWORK.md) · [`compliance/RETENTION_POLICY_DECISIONS.md`](./compliance/RETENTION_POLICY_DECISIONS.md) | **IN PREPARATION** (framework ready; numeric defaults Pending Business / Legal Approval) | Compliance decisions **approved** |
 | BLOCKER-007 | Payment.js mobile spike | [`payment/PAYMENT_JS_MOBILE_VALIDATION_REPORT.md`](./payment/PAYMENT_JS_MOBILE_VALIDATION_REPORT.md) · [`payment/AREEBA_IXOPAY_VENDOR_VALIDATION_CHECKLIST.md`](./payment/AREEBA_IXOPAY_VENDOR_VALIDATION_CHECKLIST.md) | **IN VALIDATION** (PASS WITH CONDITIONS — not COMPLETED) | Checklist §8 + Architect/Eng approval |
 
 **Closed count:** 0 / 7  
@@ -339,25 +339,50 @@ Until then: keep **IN PREPARATION**.
 
 # BLOCKER-006 — Compliance & Retention
 
-**Status:** **Open**  
+**Status:** **IN PREPARATION**  
+**Not:** COMPLETED (numeric defaults + Legal/Compliance approvals pending)  
 **ADR:** ADR-022 · ADR-014  
-**Artifact:** [`compliance/RETENTION_POLICY_DECISIONS.md`](./compliance/RETENTION_POLICY_DECISIONS.md)  
+**Artifacts:**  
+- [`compliance/RETENTION_AND_DATA_GOVERNANCE_FRAMEWORK.md`](./compliance/RETENTION_AND_DATA_GOVERNANCE_FRAMEWORK.md)  
+- [`compliance/RETENTION_POLICY_DECISIONS.md`](./compliance/RETENTION_POLICY_DECISIONS.md)  
+
+### Rules
+
+- Framework covers classification, ownership, retention process, deletion/anonymisation, access, security, chat governance  
+- **No** final durations in framework — values **Pending Business / Legal Approval**  
+- **No** unapproved legal obligations  
+- Financial records and audit records **protected** from casual account deletion (ADR-022)  
+- Retention remains Admin/Market-configurable at runtime  
 
 ### Must protect
 
-Financial records and audit records **cannot** be removed if legally required.
+Financial records and audit records **cannot** be removed if legally required / for convenience with account deletion.
 
-### Acceptance
+### Preparation coverage
+
+- [x] Retention & Data Governance Framework published  
+- [x] Retention Policy Decisions template published  
+- [ ] Account deletion handling decided (channels / cool-off values)  
+- [ ] PII / provider documents / audit / financial / chat retention defaults set  
+- [ ] Compliance / Legal approval recorded  
+- [ ] BLOCKER-006 → **COMPLETED**  
+
+### Acceptance → COMPLETED
 
 - [ ] Account deletion handling decided  
 - [ ] PII / provider documents / audit / financial retention defaults set  
+- [ ] Chat retention default approved  
 - [ ] Compliance / Legal approval recorded  
+- [ ] Finance / Security acknowledgements for protected classes  
+
+Until then: keep **IN PREPARATION**.
 
 ### Closure log
 
 | Date | Event |
 |------|-------|
 | 2026-07-24 | Retention policy decisions template published |
+| 2026-07-24 | RETENTION_AND_DATA_GOVERNANCE_FRAMEWORK published — status **IN PREPARATION** |
 
 ---
 

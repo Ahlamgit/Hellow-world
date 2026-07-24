@@ -73,7 +73,7 @@ Closing **BLOCKER-001…007** is the path to amend the Implementation Gate Repor
 | BLOCKER-003 | External vendor decisions | Readiness matrix + contracts + risk/SLA framework published; selections Pending | Select vendors; commercial contracts; risk/SLA fill; sandbox; technical validation; ports only | Business / Eng | ADR-025 ports | Vendors selected (or deferred); sandbox + validation; no business-logic coupling | **IN PREPARATION** |
 | BLOCKER-004 | Cloud infrastructure approval | Blueprint + sizing/cost + prod ops ready; provider/budget/RPO/RTO Pending | Fill workload; select provider; approve budget/RPO/RTO; ops checklist | DevOps / Business | Portable deploy pattern (ADR-012/024) | Provider, budget, RPO/RTO, ops readiness approved | **IN PREPARATION** |
 | BLOCKER-005 | Finance Lebanon configuration | Structure prepared; commercial values **Pending Business Decision** | Business/Finance fill values; approve; keep Admin-configurable | Finance | ADR-013 / 026 | Config values approved; remain Admin-editable; **not** hardcoded | **IN PREPARATION** |
-| BLOCKER-006 | Compliance & retention defaults | Numeric retention/deletion defaults unset | Set defaults for account deletion, PII, financial, audit, documents | Compliance / Legal | ADR-022 | Defaults approved; financial & audit records protected | **Open** |
+| BLOCKER-006 | Compliance & retention defaults | Governance framework ready; numeric defaults Pending Business / Legal Approval | Set defaults for account deletion, PII, financial, audit, documents, chat; Legal approve | Compliance / Legal | ADR-022 | Defaults approved; financial & audit records protected | **IN PREPARATION** |
 | BLOCKER-007 | Payment.js mobile validation spike | PASS WITH CONDITIONS; vendor checklist ready; live tests pending | Fill Areeba checklist; sandbox tests; Architect + Eng approval | Eng | Areeba sandbox (BLOCKER-003) | Checklist §8 complete → COMPLETED | **IN VALIDATION** |
 
 ---
@@ -350,24 +350,41 @@ Keep **IN PREPARATION** until checklist complete.
 
 ## BLOCKER-006 — Compliance & Retention Defaults
 
-**Gate mapping:** G-06 · **ADR:** ADR-022  
-**Status:** Open  
+**Gate mapping:** G-06 · **ADR:** ADR-022 · ADR-014  
+**Status:** **IN PREPARATION** (not COMPLETED)  
+**Artifacts:** [`compliance/RETENTION_AND_DATA_GOVERNANCE_FRAMEWORK.md`](./compliance/RETENTION_AND_DATA_GOVERNANCE_FRAMEWORK.md) · [`compliance/RETENTION_POLICY_DECISIONS.md`](./compliance/RETENTION_POLICY_DECISIONS.md)
+
+**Rule:** Framework only — **no** code, schema, or deletion jobs. **No** unapproved legal obligations. Durations remain **Pending Business / Legal Approval**.
+
+### Governance preparation
+
+| Item | State |
+|------|-------|
+| Data classification / ownership / access / security framework | ☑ Published |
+| Account deletion + anonymisation model documented | ☑ (ADR-022 aligned) |
+| Chat governance (booking-scoped) documented | ☑ Duration Pending |
+| Compliance approval matrix | ☑ Rows require approval |
+| Numeric defaults in decisions sheet | ☐ **Pending Business / Legal Approval** |
 
 ### Required decisions
 
 | Topic | Default / rule | Protect? | State |
 |-------|----------------|----------|-------|
-| Account deletion handling | | Soft-delete / request workflow per ADR | ☐ |
-| Personal data retention | | Per policy | ☐ |
-| Financial record retention | | **Protected** — do not purge with account alone | ☐ |
-| Audit log retention | | **Protected** | ☐ |
-| Document retention (KYC/media) | | Per policy | ☐ |
+| Account deletion handling | Soft-delete / request workflow per ADR | Workflow | ☐ Values Pending |
+| Personal data retention | Per policy | Anonymise path | ☐ |
+| Financial record retention | **Protected** — do not purge with account alone | **Yes** | ☐ Duration Pending |
+| Audit log retention | **Protected** | **Yes** | ☐ Duration Pending |
+| Document retention (KYC/media) | Per policy | After elapsed | ☐ |
+| Chat retention | Booking-scoped; configurable | Per policy | ☐ |
 
-### Acceptance criteria
+### Acceptance criteria → COMPLETED
 
 - Numeric or explicit policy defaults approved by Compliance/Legal  
 - Financial records and audit records remain protected from casual deletion  
 - Admin retention configuration model remains the runtime control (ADR-022)  
+- Approval matrix owners recorded  
+
+Keep **IN PREPARATION** until above are done.
 
 ---
 
