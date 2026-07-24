@@ -16,6 +16,7 @@
 | Q-AUTH-004 | Password reset via email link, SMS OTP, or both? | Auth + notifications | Open |
 | Q-AUTH-005 | Refresh token lifetime and multi-device policy? | IAM | Open |
 | Q-AUTH-006 | Embed permissions in JWT or resolve server-side from roles? | Authz performance | Open |
+| Q-AUTH-007 | May administrators log in from mobile apps? | Auth channels, Flutter, API audience | **Answered: No — Administration Portal (web) only** |
 | Q-RBAC-001 | Final admin role taxonomy and permission matrix? | Admin portal | Open |
 | Q-STR-001 | Can a store have multiple operator users? | Store IAM schema | Open |
 
@@ -181,4 +182,4 @@ Deferred items must be feature-flagged off and must not invent production policy
 
 | ID | Decision | Owner | Date | Links |
 |----|----------|-------|------|-------|
-| | | | | |
+| Q-AUTH-007 | Administrators must not log in from mobile apps; Administration Portal (web) only. API enforces audience `admin-web`. | Product / Security | 2026-07-24 | BR-008; AuthN §21.9 |

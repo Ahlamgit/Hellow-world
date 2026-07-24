@@ -42,11 +42,13 @@
 |--------|------|-------------|
 | POST | `/api/v1/auth/register/customer` | Customer registration |
 | POST | `/api/v1/auth/register/craftsman` | Craftsman registration |
-| POST | `/api/v1/auth/login` | Login |
-| POST | `/api/v1/auth/refresh` | Refresh tokens |
+| POST | `/api/v1/auth/login` | Login (**requires `clientId`/`audience`; admin roles allowed only for `admin-web`**) |
+| POST | `/api/v1/auth/refresh` | Refresh tokens (preserves/validates audience) |
 | POST | `/api/v1/auth/logout` | Revoke refresh |
 | POST | `/api/v1/auth/password/forgot` | Start reset (**policy Q-AUTH-004**) |
 | POST | `/api/v1/auth/password/reset` | Complete reset |
+
+**Audience enforcement:** Login body (or header) must include client audience: `admin-web` | `store-web` | `customer-app` | `craftsman-app`. If the authenticated user has admin roles and audience ≠ `admin-web`, respond `403` with code `AUTH_ADMIN_WEB_ONLY`.
 
 ## 16.4 Customer APIs (representative)
 

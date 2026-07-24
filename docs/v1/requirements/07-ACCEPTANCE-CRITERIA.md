@@ -25,6 +25,19 @@ Acceptance criteria use Given/When/Then. Criteria marked **POLICY-GATED** requir
 - When refresh is requested  
 - Then a new access and refresh token are issued and the old refresh token is invalidated  
 
+### AC-AUTH-04 — Admin Login Web-Only
+- Given a user with any administrator role  
+- When login is attempted with audience `customer-app`, `craftsman-app`, or `store-web`  
+- Then the API rejects the attempt with `AUTH_ADMIN_WEB_ONLY` and issues no tokens  
+- And when login is attempted with audience `admin-web` and valid credentials  
+- Then an admin session is issued for the Administration Portal only  
+
+### AC-AUTH-05 — Mobile Apps Do Not Offer Admin Login
+- Given the Customer or Craftsman Flutter application  
+- When a user opens authentication screens  
+- Then no administrator login path is available in the UI  
+- And the apps always send their respective non-admin audience on auth calls  
+
 ---
 
 ## 7.2 Booking

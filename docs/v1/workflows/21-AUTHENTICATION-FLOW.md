@@ -7,7 +7,14 @@
 
 ## 21.1 Actors & Channels
 
-Customers/Craftsmen via Flutter; Store operators & Admins via React web apps.
+| Actor | Allowed login channel |
+|-------|------------------------|
+| Customer | Customer Flutter app (and future customer web if added) |
+| Craftsman | Craftsman Flutter app |
+| Store Operator | Store Dashboard (React web) |
+| **Administrator (all admin roles)** | **Administration Portal (React web) only** |
+
+**Hard rule (BR-008):** Administrators must **not** log in from mobile apps. Flutter apps must not expose admin login UI. The API must enforce audience/client restrictions so admin credentials cannot obtain a mobile session even if requested.
 
 ## 21.2 Token Model
 
@@ -70,8 +77,19 @@ Depends on Q-AUTH-004 (email link vs SMS OTP). Architecture supports both via no
 |-------|--------|-----|
 | Refresh storage | flutter_secure_storage | HttpOnly cookie preferred (Q-FE-002) |
 | Biometric unlock | Optional OS biometric to unlock app session | N/A |
-| MFA | Optional | Strongly recommended for admin |
+| MFA | Optional for customer/craftsman | Strongly recommended / likely mandatory for admin (Q-AUTH-002) |
+| Admin login | **Forbidden** | **Required channel for all admin roles** |
 
-## 21.9 Questions Requiring Business Decision
+## 21.9 Admin Web-Only Enforcement
 
-`Q-AUTH-001` identifier, `Q-AUTH-002` MFA, `Q-AUTH-003` verification before session, `Q-AUTH-004` reset channel, `Q-AUTH-005` refresh TTL, `Q-AUTH-006` permissions in JWT vs lookup
+1. Login request includes `clientId` / `audience` (e.g. `admin-web`, `store-web`, `customer-app`, `craftsman-app`)  
+2. If principal has any `ADMIN_*` role and audience ∉ `{admin-web}` → reject with `AUTH_ADMIN_WEB_ONLY`  
+3. Access tokens issued for admin sessions carry audience claim `admin-web`  
+4. Admin APIs (`/api/v1/admin/**`) accept only tokens with admin permissions **and** admin-web audience (defense in depth)  
+5. Customer/Craftsman apps never render admin login or accept admin deep links for auth  
+
+## 21.10 Questions Requiring Business Decision
+
+`Q-AUTH-001` identifier, `Q-AUTH-002` MFA, `Q-AUTH-003` verification before session, `Q-AUTH-004` reset channel, `Q-AUTH-005` refresh TTL, `Q-AUTH-006` permissions in JWT vs lookup  
+
+**Decided:** `Q-AUTH-007` — Administrators web-only (Administration Portal); no mobile admin login.

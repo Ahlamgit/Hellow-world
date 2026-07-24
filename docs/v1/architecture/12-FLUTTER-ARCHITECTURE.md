@@ -12,10 +12,12 @@ UI implementation waits for uploaded design video/screenshots/branding. This doc
 
 ## 12.2 App Split
 
-| App | Purpose |
-|-----|---------|
-| `customer_app` | Demand-side marketplace |
-| `craftsman_app` | Supply-side operations + verification |
+| App | Purpose | Admin login |
+|-----|---------|-------------|
+| `customer_app` | Demand-side marketplace | **Not allowed** |
+| `craftsman_app` | Supply-side operations + verification | **Not allowed** |
+
+Administrators use the **Administration Portal (web)** only. Flutter apps must not include admin login screens, admin role switchers, or admin deep-link auth entry points.
 
 Shared Dart packages:
 

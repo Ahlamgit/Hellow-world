@@ -74,6 +74,7 @@ Engagement
 | BR-005 | Identity verification includes GPS proximity, selfie, and QR/OTP job verification |
 | BR-006 | Quality layer includes reminders, surveys, scoring, and restriction rules |
 | BR-007 | Architecture must be multi-language, multi-currency, and multi-region **ready** |
+| BR-008 | **Administrators must authenticate and operate only via the Administration Portal (web). Admin login from Customer or Craftsman mobile apps is forbidden.** |
 
 ## 2.5 Business Rules — Not Confirmed (Do Not Invent)
 

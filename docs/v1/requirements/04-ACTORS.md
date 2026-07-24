@@ -12,10 +12,10 @@
 | **Customer** | End user booking services / purchasing store offerings | Customer Flutter app |
 | **Craftsman** | Service provider subject to onboarding, verification, subscriptions | Craftsman Flutter app |
 | **Store Operator** | Manages a store’s catalog, orders, bookings, ads | Store Dashboard |
-| **Platform Administrator** | Full platform governance | Administration Portal |
-| **Operations / Support Admin** | Day-to-day support within limited permissions | Administration Portal |
-| **Finance Admin** | Settlements, commissions, withdrawal reviews | Administration Portal |
-| **Content / Growth Admin** | Ads, templates, campaigns | Administration Portal |
+| **Platform Administrator** | Full platform governance | Administration Portal (**web only**) |
+| **Operations / Support Admin** | Day-to-day support within limited permissions | Administration Portal (**web only**) |
+| **Finance Admin** | Settlements, commissions, withdrawal reviews | Administration Portal (**web only**) |
+| **Content / Growth Admin** | Ads, templates, campaigns | Administration Portal (**web only**) |
 
 > Exact admin permission matrix is undecided — see Q-RBAC-001.
 
@@ -64,15 +64,21 @@ Platform Admin ----governs----> All domains via Admin Portal
 
 | Actor | Auth Method (V1) |
 |-------|------------------|
-| Customer | Email/phone + password (exact identifier Q-AUTH-001); JWT |
-| Craftsman | Same pattern; JWT; elevated actions require verification state |
-| Store Operator | Email + password; JWT; store-scoped authorization |
-| Admins | Email + password; JWT; permission-scoped; MFA recommended (Q-AUTH-002) |
+| Customer | Email/phone + password (exact identifier Q-AUTH-001); JWT; Customer Flutter app |
+| Craftsman | Same pattern; JWT; elevated actions require verification state; Craftsman Flutter app |
+| Store Operator | Email + password; JWT; store-scoped authorization; Store Dashboard (web) |
+| Admins | Email + password; JWT; permission-scoped; MFA recommended (Q-AUTH-002); **Administration Portal (web) only** |
 | System integrations | Signed webhooks / API keys / mTLS where applicable |
+
+### Confirmed channel rule — Administrators
+
+**Administrators must not log in from mobile apps.**  
+Admin authentication and session use are allowed **only** on the Administration Portal (web). Customer and Craftsman Flutter apps must not offer admin login, and the API must reject admin-role authentication attempts from mobile client audiences.
 
 ## 4.6 Questions Requiring Business Decision
 
 - Q-RBAC-001: Admin role taxonomy and permission matrix  
 - Q-STR-001: Multi-user store accounts vs single operator  
 - Q-AUTH-001: Login identifier (email, phone, both)  
-- Q-AUTH-002: MFA mandatory for admins in V1?
+- Q-AUTH-002: MFA mandatory for admins in V1?  
+- ~~Q-AUTH-007~~ **Decided:** Admins web-only (see above) — not available on Flutter apps

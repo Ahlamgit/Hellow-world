@@ -28,6 +28,9 @@ Admins → Admin Portal → API (privileged permissions)
 - Refresh tokens (rotated, hashed at rest)  
 - Optional admin MFA (Q-AUTH-002)  
 - Account lockout + rate limiting on auth endpoints  
+- **Administrators authenticate only via Administration Portal (web). Mobile app admin login is forbidden (BR-008 / Q-AUTH-007 decided).**  
+- Login requests must declare client audience; admin roles rejected for `customer-app` / `craftsman-app` / `store-web` audiences  
+- Admin API routes additionally require admin-web audience claim (defense in depth)  
 
 ## 20.4 Authorization
 
@@ -92,4 +95,6 @@ Admins → Admin Portal → API (privileged permissions)
 
 ## 20.11 Questions Requiring Business Decision
 
-`Q-SEC-001`, `Q-SEC-002`, `Q-SEC-003`, `Q-AUTH-002`, `Q-CMP-001`, `Q-IDV-006`
+`Q-SEC-001`, `Q-SEC-002`, `Q-SEC-003`, `Q-AUTH-002`, `Q-CMP-001`, `Q-IDV-006`  
+
+**Decided:** Administrators are web-only (Administration Portal); no Flutter admin login.

@@ -16,16 +16,16 @@ Request → Authentication → Permission check → Resource scope check → All
 
 ## 22.2 Base Roles (Proposed — Pending Q-RBAC-001)
 
-| Role | Scope |
-|------|-------|
-| `CUSTOMER` | Own customer resources |
-| `CRAFTSMAN` | Own craftsman resources |
-| `STORE_OPERATOR` | Own store resources |
-| `ADMIN_SUPER` | All |
-| `ADMIN_SUPPORT` | Limited read/update |
-| `ADMIN_FINANCE` | Commissions, settlements, withdrawals |
-| `ADMIN_OPS` | Onboarding, quality, restrictions |
-| `ADMIN_CONTENT` | Ads, templates |
+| Role | Scope | Login channel |
+|------|-------|---------------|
+| `CUSTOMER` | Own customer resources | Customer app |
+| `CRAFTSMAN` | Own craftsman resources | Craftsman app |
+| `STORE_OPERATOR` | Own store resources | Store Dashboard (web) |
+| `ADMIN_SUPER` | All | **Admin Portal (web) only** |
+| `ADMIN_SUPPORT` | Limited read/update | **Admin Portal (web) only** |
+| `ADMIN_FINANCE` | Commissions, settlements, withdrawals | **Admin Portal (web) only** |
+| `ADMIN_OPS` | Onboarding, quality, restrictions | **Admin Portal (web) only** |
+| `ADMIN_CONTENT` | Ads, templates | **Admin Portal (web) only** |
 
 ## 22.3 Permission Catalog (Sample)
 
@@ -80,8 +80,9 @@ Authorization may also fail due to:
 - Missing active subscription (Q-SUB-002)  
 - Active quality restriction  
 - Payment not captured when action requires it  
+- **Admin token presented from a non-admin-web audience** (`AUTH_ADMIN_WEB_ONLY`)  
 
-These return distinct error codes (e.g., `ENTITLEMENT_SUBSCRIPTION_REQUIRED`) so clients can route UX.
+These return distinct error codes (e.g., `ENTITLEMENT_SUBSCRIPTION_REQUIRED`, `AUTH_ADMIN_WEB_ONLY`) so clients can route UX.
 
 ## 22.7 UI Authorization vs API Authorization
 
