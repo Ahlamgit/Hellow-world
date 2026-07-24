@@ -2,12 +2,15 @@
 
 **Document ID:** KHAD-V1-IMPL-GATE  
 **Date:** 2026-07-24  
-**Re-validated:** 2026-07-24 (second gate pass — same controlling sources; Store ADR-027 confirmed present)  
+**Re-validated:** 2026-07-24 (execution readiness plan published; decision remains **B**)  
 **Role:** Lead Solution Architect & Technical Reviewer  
 **Production code / UI / application files:** **None generated**
 
 ### Controlling sources
 Master Prompt v1.0 · [`FINAL_SCOPE_BASELINE.md`](./FINAL_SCOPE_BASELINE.md) · Final Readiness Report · Decisions Complete · FTM · ADR-001…028 · Business proposal · Design requirements (pending assets)
+
+### Execution readiness plan
+[`IMPLEMENTATION_READINESS_EXECUTION_PLAN.md`](./IMPLEMENTATION_READINESS_EXECUTION_PLAN.md) — tracks **BLOCKER-001…007** until this gate can move to **A**.
 
 ---
 
@@ -16,8 +19,10 @@ Master Prompt v1.0 · [`FINAL_SCOPE_BASELINE.md`](./FINAL_SCOPE_BASELINE.md) · 
 | Dimension | Status | Document |
 |-----------|--------|----------|
 | **Product / feature scope** | **A) Scope Frozen** | [`FINAL_SCOPE_BASELINE.md`](./FINAL_SCOPE_BASELINE.md) |
-| **Implementation readiness** | **B) NOT READY** | This report |
+| **Architecture** | **Approved** | Decisions Complete · ADR-001…028 |
+| **Implementation readiness** | **B) NOT READY — CODING BLOCKED** | This report |
 
+Architecture and scope are complete. Remaining work is **execution preparation only** (see Execution Plan).  
 Scope freeze does **not** authorize coding. Implementation remains blocked until blockers below are closed.
 
 ---
@@ -29,14 +34,31 @@ Scope freeze does **not** authorize coding. Implementation remains blocked until
 **Coding is not authorized.**
 
 ## Re-validation result (this pass)
-- **Final Scope Baseline v1.0 published** — product scope status **A) Scope Frozen** (sign-off pending G-00)  
+- **Final Scope Baseline v1.0 published** — product scope status **A) Scope Frozen** (sign-off pending BLOCKER-002 / G-00)  
+- **Implementation Readiness Execution Plan published** — blocker register **BLOCKER-001…007**  
 - Consistency audit rechecked against Master Prompt, FTM, DB, API, RBAC, finance, booking, UI prep, deploy  
 - Store Dashboard correction (services + catalog advertising, **no e-commerce**) verified via ADR-027 and FTM BR-STR-*  
 - **ADR-028** unified Provider capability model + service-first UX documented  
-- No authorization to code — critical delivery blockers **G-00…G-07** remain  
-- Implementation gate remains **B**
+- No authorization to code — critical delivery blockers remain **Open**  
+- Implementation gate remains **B** — **do not flip to A until Execution Plan §3 checklist is complete**
 
-Architecture and business-rule decisions are substantially complete (including Store catalog advertising ADR-027 and unified capability model ADR-028). Critical **delivery inputs and approvals** remain open; therefore the implementation gate **fails**.
+Architecture and business-rule decisions are complete. Critical **delivery inputs and approvals** remain open; therefore the implementation gate **fails**.
+
+---
+
+## Remaining Blocker Tracking
+
+Full detail: [`IMPLEMENTATION_READINESS_EXECUTION_PLAN.md`](./IMPLEMENTATION_READINESS_EXECUTION_PLAN.md)
+
+| Plan ID | Gate ID | Blocker | Status |
+|---------|---------|---------|--------|
+| BLOCKER-001 | G-01 | Design assets & UI/UX specification | **Open** |
+| BLOCKER-002 | G-00 + G-02 | Stakeholder sign-off (scope + gate) | **Open** |
+| BLOCKER-003 | G-03 | External vendor decisions | **Open** |
+| BLOCKER-004 | G-04 | Cloud infrastructure approval | **Open** |
+| BLOCKER-005 | G-05 | Finance Lebanon configuration | **Open** |
+| BLOCKER-006 | G-06 | Compliance & retention defaults | **Open** |
+| BLOCKER-007 | G-07 | Payment.js mobile validation spike | **Open** |
 
 ---
 
@@ -138,14 +160,18 @@ Backend-only scaffolding is also **not authorized** by this gate until G-02 is s
 
 ## How to Reach Decision A (READY FOR IMPLEMENTATION)
 
-1. Complete **G-00** — stakeholder sign-off on [`FINAL_SCOPE_BASELINE.md`](./FINAL_SCOPE_BASELINE.md)  
-2. Upload and approve design assets; complete UI/UX specification deliverables (G-01)  
-3. Record stakeholder signatures on this gate (G-02)  
-4. Select minimum vendors + cloud (G-03, G-04)  
-5. Finance prepares Lebanon policy configs for staging (G-05)  
-6. Compliance sets retention defaults (G-06)  
-7. Evidence Payment.js mobile spike (G-07)  
-8. Re-run gate → amend this report to **A) READY FOR IMPLEMENTATION** with date/sign-off  
+Execute [`IMPLEMENTATION_READINESS_EXECUTION_PLAN.md`](./IMPLEMENTATION_READINESS_EXECUTION_PLAN.md):
+
+1. **BLOCKER-002** — Scope + stakeholder sign-off  
+2. **BLOCKER-001** — Design assets → approved UI/UX Design Specification  
+3. **BLOCKER-003** — Vendors (Payment sandbox path + SMS/Email/Storage/Maps/OCR/Face)  
+4. **BLOCKER-004** — Cloud infrastructure approval  
+5. **BLOCKER-005** — Finance Lebanon configuration content  
+6. **BLOCKER-006** — Compliance retention defaults  
+7. **BLOCKER-007** — Payment.js mobile readiness report  
+8. Confirm Execution Plan §3 checklist complete → amend this report to **A) READY FOR IMPLEMENTATION** with date/sign-off  
+
+**Do not change this report’s decision from B until all blockers are Closed.**
 
 ---
 
@@ -155,9 +181,11 @@ Backend-only scaffolding is also **not authorized** by this gate until G-02 is s
 DO NOT write production code.
 DO NOT create UI implementation.
 DO NOT generate application files.
+DO NOT change approved architecture.
+DO NOT introduce new V1 features.
 ```
 
-**Current gate status: B — NOT READY.**
+**Current gate status: B — NOT READY — CODING BLOCKED.**
 
 ---
 

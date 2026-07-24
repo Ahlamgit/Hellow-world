@@ -5,7 +5,8 @@
 **Source:** Master Implementation Prompt v1.0 · ADR-001…028 · FINAL_SCOPE_BASELINE.md  
 **Rule:** No proposal feature may disappear silently. Status values: `Specified` · `Deferred (ADR)` · `Blocked (Q-*)` · `Implemented` (post-coding) · **`Out of V1`** (see Scope Baseline §8)
 
-> **Scope freeze:** Features marked Included in [`FINAL_SCOPE_BASELINE.md`](./FINAL_SCOPE_BASELINE.md) are the only authorized V1 build targets. Additions require Change Control.
+> **Scope freeze:** Features marked Included in [`FINAL_SCOPE_BASELINE.md`](./FINAL_SCOPE_BASELINE.md) are the only authorized V1 build targets. Additions require Change Control ([`IMPLEMENTATION_READINESS_EXECUTION_PLAN.md`](./IMPLEMENTATION_READINESS_EXECUTION_PLAN.md) §4).  
+> **Implementation:** Coding blocked until gate **A** — see Execution Plan **BLOCKER-001…007** and [`FINAL_IMPLEMENTATION_GATE_REPORT.md`](./FINAL_IMPLEMENTATION_GATE_REPORT.md) (currently **B**).
 
 ---
 

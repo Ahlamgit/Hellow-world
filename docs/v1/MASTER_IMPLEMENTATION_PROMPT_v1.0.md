@@ -4,10 +4,12 @@
 **Version:** 1.0  
 **Status:** Controlling business & architecture brief (pre-implementation)  
 **Scope baseline:** [`FINAL_SCOPE_BASELINE.md`](./FINAL_SCOPE_BASELINE.md) — **V1 Scope Frozen (A)**  
+**Implementation readiness:** [`IMPLEMENTATION_READINESS_EXECUTION_PLAN.md`](./IMPLEMENTATION_READINESS_EXECUTION_PLAN.md) — tracks blockers to gate **A**  
+**Implementation gate:** [`FINAL_IMPLEMENTATION_GATE_REPORT.md`](./FINAL_IMPLEMENTATION_GATE_REPORT.md) — currently **B) NOT READY — CODING BLOCKED**  
 **Supersedes conflicting statements** in earlier draft docs where this prompt / ADRs / scope baseline are more specific.  
 **Companion:** [FEATURE_TRACEABILITY_MATRIX.md](./FEATURE_TRACEABILITY_MATRIX.md) · [ARCHITECTURE_AUDIT_FINAL.md](./ARCHITECTURE_AUDIT_FINAL.md) · [QUESTIONS-REQUIRING-BUSINESS-DECISION.md](./QUESTIONS-REQUIRING-BUSINESS-DECISION.md) · ADR-001…028
 
-**Do not start implementation** until scope sign-off, design assets, vendors, cloud, and finance/compliance configuration gates are met (see Implementation Gate Report).
+**Do not start implementation** until the Execution Plan §3 checklist is complete and the Implementation Gate Report is amended to **READY**.
 
 ---
 
@@ -442,21 +444,21 @@ Create an ADR or request clarification.
 
 Do **NOT** start coding until completed and approved:
 
-- [x] Architecture decisions (ADR-001…028) — documented  
+- [x] Architecture decisions (ADR-001…028) — documented / approved  
 - [x] **Scope baseline frozen** — [`FINAL_SCOPE_BASELINE.md`](./FINAL_SCOPE_BASELINE.md)  
-- [ ] Scope baseline **signed** by Product / Architecture  
-- [ ] Design assets + UI/UX specification (ADR-023)  
-- [ ] Database model approved for build  
-- [ ] API specification / OpenAPI kickoff approved  
-- [ ] Vendors approved  
-- [ ] Cloud decision completed  
-- [ ] Finance/compliance configuration approved  
-- [ ] Security review sign-off  
+- [ ] **BLOCKER-002** — Scope + stakeholder sign-off  
+- [ ] **BLOCKER-001** — Design assets + UI/UX specification (ADR-023)  
+- [ ] **BLOCKER-003** — Vendors approved (adapter architecture retained)  
+- [ ] **BLOCKER-004** — Cloud decision completed  
+- [ ] **BLOCKER-005** — Finance Lebanon configuration approved  
+- [ ] **BLOCKER-006** — Compliance retention defaults approved  
+- [ ] **BLOCKER-007** — Payment.js mobile validation completed  
 - [ ] Implementation Gate Report amended to **READY**  
 
-See [`FINAL_IMPLEMENTATION_GATE_REPORT.md`](./FINAL_IMPLEMENTATION_GATE_REPORT.md) — currently **NOT READY**.
+Tracker: [`IMPLEMENTATION_READINESS_EXECUTION_PLAN.md`](./IMPLEMENTATION_READINESS_EXECUTION_PLAN.md)  
+Gate: [`FINAL_IMPLEMENTATION_GATE_REPORT.md`](./FINAL_IMPLEMENTATION_GATE_REPORT.md) — currently **B) NOT READY — CODING BLOCKED**.
 
-Any feature after scope freeze requires Change Control (§10 of Scope Baseline).  
+Any feature after scope freeze requires Change Control (§10 of Scope Baseline / Execution Plan §4).  
 
 ---
 
