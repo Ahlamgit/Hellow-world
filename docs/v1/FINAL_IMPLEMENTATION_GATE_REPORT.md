@@ -2,7 +2,7 @@
 
 **Document ID:** KHAD-V1-IMPL-GATE  
 **Date:** 2026-07-24  
-**Re-validated:** 2026-07-24 (execution readiness plan published; decision remains **B**)  
+**Re-validated:** 2026-07-24 (blocker closure pack published; decision remains **B**)  
 **Role:** Lead Solution Architect & Technical Reviewer  
 **Production code / UI / application files:** **None generated**
 
@@ -11,6 +11,9 @@ Master Prompt v1.0 · [`FINAL_SCOPE_BASELINE.md`](./FINAL_SCOPE_BASELINE.md) · 
 
 ### Execution readiness plan
 [`IMPLEMENTATION_READINESS_EXECUTION_PLAN.md`](./IMPLEMENTATION_READINESS_EXECUTION_PLAN.md) — tracks **BLOCKER-001…007** until this gate can move to **A**.
+
+### Blocker closure status
+[`READINESS_BLOCKER_CLOSURE_STATUS.md`](./READINESS_BLOCKER_CLOSURE_STATUS.md) — active closure tracking (prep artifacts published; **0/7 closed**).
 
 ---
 
@@ -29,18 +32,18 @@ Scope freeze does **not** authorize coding. Implementation remains blocked until
 
 ## Final Decision
 
-# B) NOT READY — ADDITIONAL WORK REQUIRED
+# B) NOT READY — CODING BLOCKED
 
 **Coding is not authorized.**
 
 ## Re-validation result (this pass)
-- **Final Scope Baseline v1.0 published** — product scope status **A) Scope Frozen** (sign-off pending BLOCKER-002 / G-00)  
+- **Final Scope Baseline v1.0 published** — product scope status **A) Scope Frozen** (sign-off pending BLOCKER-002)  
 - **Implementation Readiness Execution Plan published** — blocker register **BLOCKER-001…007**  
-- Consistency audit rechecked against Master Prompt, FTM, DB, API, RBAC, finance, booking, UI prep, deploy  
-- Store Dashboard correction (services + catalog advertising, **no e-commerce**) verified via ADR-027 and FTM BR-STR-*  
-- **ADR-028** unified Provider capability model + service-first UX documented  
-- No authorization to code — critical delivery blockers remain **Open**  
-- Implementation gate remains **B** — **do not flip to A until Execution Plan §3 checklist is complete**
+- **Readiness Blocker Closure pack published** — checklists/templates/plans for all blockers; **0/7 closed**  
+  - BLOCKER-001: UI/UX spec shell **BLOCKED** (assets missing)  
+  - BLOCKER-003…007: evaluation / decision / config / validation artifacts ready for owner input  
+- No authorization to code — no architecture or scope changes  
+- Implementation gate remains **B**
 
 Architecture and business-rule decisions are complete. Critical **delivery inputs and approvals** remain open; therefore the implementation gate **fails**.
 
@@ -48,17 +51,17 @@ Architecture and business-rule decisions are complete. Critical **delivery input
 
 ## Remaining Blocker Tracking
 
-Full detail: [`IMPLEMENTATION_READINESS_EXECUTION_PLAN.md`](./IMPLEMENTATION_READINESS_EXECUTION_PLAN.md)
+| Plan ID | Gate ID | Blocker | Prep artifact | Closure status |
+|---------|---------|---------|---------------|----------------|
+| BLOCKER-001 | G-01 | Design assets & UI/UX specification | [`design/UI_UX_SPECIFICATION.md`](./design/UI_UX_SPECIFICATION.md) | **BLOCKED** (assets) |
+| BLOCKER-002 | G-00+G-02 | Stakeholder sign-off | [`READINESS_BLOCKER_CLOSURE_STATUS.md`](./READINESS_BLOCKER_CLOSURE_STATUS.md) | **Open** |
+| BLOCKER-003 | G-03 | Vendor selection | [`vendors/VENDOR_EVALUATION_MATRIX.md`](./vendors/VENDOR_EVALUATION_MATRIX.md) | **Open** |
+| BLOCKER-004 | G-04 | Cloud infrastructure | [`infra/CLOUD_INFRASTRUCTURE_DECISION.md`](./infra/CLOUD_INFRASTRUCTURE_DECISION.md) | **Open** |
+| BLOCKER-005 | G-05 | Finance Lebanon config | [`config/FINANCE_POLICY_INITIAL_CONFIGURATION.md`](./config/FINANCE_POLICY_INITIAL_CONFIGURATION.md) | **Open** |
+| BLOCKER-006 | G-06 | Compliance & retention | [`compliance/RETENTION_POLICY_DECISIONS.md`](./compliance/RETENTION_POLICY_DECISIONS.md) | **Open** |
+| BLOCKER-007 | G-07 | Payment.js mobile spike | [`payment/PAYMENT_JS_MOBILE_VALIDATION_PLAN.md`](./payment/PAYMENT_JS_MOBILE_VALIDATION_PLAN.md) | **Open** |
 
-| Plan ID | Gate ID | Blocker | Status |
-|---------|---------|---------|--------|
-| BLOCKER-001 | G-01 | Design assets & UI/UX specification | **Open** |
-| BLOCKER-002 | G-00 + G-02 | Stakeholder sign-off (scope + gate) | **Open** |
-| BLOCKER-003 | G-03 | External vendor decisions | **Open** |
-| BLOCKER-004 | G-04 | Cloud infrastructure approval | **Open** |
-| BLOCKER-005 | G-05 | Finance Lebanon configuration | **Open** |
-| BLOCKER-006 | G-06 | Compliance & retention defaults | **Open** |
-| BLOCKER-007 | G-07 | Payment.js mobile validation spike | **Open** |
+Full closure tracking: [`READINESS_BLOCKER_CLOSURE_STATUS.md`](./READINESS_BLOCKER_CLOSURE_STATUS.md)
 
 ---
 
@@ -160,18 +163,20 @@ Backend-only scaffolding is also **not authorized** by this gate until G-02 is s
 
 ## How to Reach Decision A (READY FOR IMPLEMENTATION)
 
-Execute [`IMPLEMENTATION_READINESS_EXECUTION_PLAN.md`](./IMPLEMENTATION_READINESS_EXECUTION_PLAN.md):
+Track closure in [`READINESS_BLOCKER_CLOSURE_STATUS.md`](./READINESS_BLOCKER_CLOSURE_STATUS.md).
 
-1. **BLOCKER-002** — Scope + stakeholder sign-off  
-2. **BLOCKER-001** — Design assets → approved UI/UX Design Specification  
-3. **BLOCKER-003** — Vendors (Payment sandbox path + SMS/Email/Storage/Maps/OCR/Face)  
-4. **BLOCKER-004** — Cloud infrastructure approval  
-5. **BLOCKER-005** — Finance Lebanon configuration content  
-6. **BLOCKER-006** — Compliance retention defaults  
-7. **BLOCKER-007** — Payment.js mobile readiness report  
-8. Confirm Execution Plan §3 checklist complete → amend this report to **A) READY FOR IMPLEMENTATION** with date/sign-off  
+Amend this report to **A) READY FOR IMPLEMENTATION** **ONLY** when **all** are checked:
 
-**Do not change this report’s decision from B until all blockers are Closed.**
+- [ ] Design specification approved (BLOCKER-001)
+- [ ] Stakeholder sign-off completed (BLOCKER-002)
+- [ ] Vendors approved (BLOCKER-003)
+- [ ] Cloud approved (BLOCKER-004)
+- [ ] Finance configuration approved (BLOCKER-005)
+- [ ] Compliance decisions approved (BLOCKER-006)
+- [ ] Payment.js validation passed (BLOCKER-007)
+
+**Do not change this report’s decision from B until every box above is complete.**  
+If a new requirement appears: create an ADR or change request — no silent scope expansion.
 
 ---
 
@@ -182,6 +187,7 @@ DO NOT write production code.
 DO NOT create UI implementation.
 DO NOT generate application files.
 DO NOT change approved architecture.
+DO NOT change database architecture / provider model / scope.
 DO NOT introduce new V1 features.
 ```
 

@@ -455,8 +455,10 @@ Unauthorized scope additions during readiness or implementation are **out of pro
 | Date | Event | Blockers closed | Gate |
 |------|-------|-----------------|------|
 | 2026-07-24 | Execution plan published | None | **B) NOT READY** |
+| 2026-07-24 | Blocker closure pack published — [`READINESS_BLOCKER_CLOSURE_STATUS.md`](./READINESS_BLOCKER_CLOSURE_STATUS.md) | 0/7 (prep artifacts ready) | **B) NOT READY — CODING BLOCKED** |
 
-Update this table when a blocker moves to Closed. Do **not** change gate decision from B until §3 checklist is complete.
+Active closure tracker: [`READINESS_BLOCKER_CLOSURE_STATUS.md`](./READINESS_BLOCKER_CLOSURE_STATUS.md).  
+Update that dashboard (and this table) when a blocker moves to Closed. Do **not** change gate decision from B until §3 checklist is complete.
 
 ---
 

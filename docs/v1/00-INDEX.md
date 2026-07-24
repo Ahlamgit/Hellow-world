@@ -8,6 +8,7 @@
 **Controlling brief:** [MASTER_IMPLEMENTATION_PROMPT_v1.0.md](./MASTER_IMPLEMENTATION_PROMPT_v1.0.md)  
 **Final scope baseline (frozen):** [FINAL_SCOPE_BASELINE.md](./FINAL_SCOPE_BASELINE.md)  
 **Implementation readiness plan:** [IMPLEMENTATION_READINESS_EXECUTION_PLAN.md](./IMPLEMENTATION_READINESS_EXECUTION_PLAN.md) — **B) NOT READY**; tracks BLOCKER-001…007  
+**Blocker closure status:** [READINESS_BLOCKER_CLOSURE_STATUS.md](./READINESS_BLOCKER_CLOSURE_STATUS.md) — active closure (0/7)  
 **Implementation gate:** [FINAL_IMPLEMENTATION_GATE_REPORT.md](./FINAL_IMPLEMENTATION_GATE_REPORT.md)  
 **Feature Traceability:** [FEATURE_TRACEABILITY_MATRIX.md](./FEATURE_TRACEABILITY_MATRIX.md)  
 **ADRs:** [adr/README.md](./adr/README.md)  
