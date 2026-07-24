@@ -21,6 +21,9 @@ Master Prompt v1.0 · [`FINAL_SCOPE_BASELINE.md`](./FINAL_SCOPE_BASELINE.md) · 
 ### Implementation execution standards (post–Gate A)
 [`IMPLEMENTATION_EXECUTION_STANDARDS.md`](./IMPLEMENTATION_EXECUTION_STANDARDS.md) — engineering workflow/DoD/API/DB/security/testing standards prepared; **does not authorize coding** while gate remains **B**.
 
+### Implementation authorization checklist
+[`governance/IMPLEMENTATION_AUTHORIZATION_CHECKLIST.md`](./governance/IMPLEMENTATION_AUTHORIZATION_CHECKLIST.md) — formal Gate B→A evidence + start signatures; **implementation remains BLOCKED**.
+
 ---
 
 ## Scope Freeze vs Implementation Gate
@@ -45,6 +48,7 @@ Scope freeze does **not** authorize coding. Implementation remains blocked until
 ## Re-validation result (this pass)
 - **Final Pre-Implementation Readiness Review published** — architecture completeness + scope exclusions confirmed; data concepts complete; recommendation **B) Additional preparation required** (0/7 blockers closed)  
 - **Implementation Execution Standards published** — post–Gate A engineering standards ready; implementation remains **BLOCKED**  
+- **Implementation Authorization Checklist published** — Gate B→A process defined; all evidence rows **Pending**; coding **BLOCKED**  
 - **Final Scope Baseline v1.0 published** — product scope status **A) Scope Frozen** (sign-off pending BLOCKER-002)  
 - **Implementation Readiness Execution Plan published** — blocker register **BLOCKER-001…007**  
 - **Readiness Blocker Closure pack published** — checklists/templates/plans for all blockers; **0/7 closed**  
@@ -176,7 +180,8 @@ Backend-only scaffolding is also **not authorized** by this gate until G-02 is s
 
 ## How to Reach Decision A (READY FOR IMPLEMENTATION)
 
-Track closure in [`READINESS_BLOCKER_CLOSURE_STATUS.md`](./READINESS_BLOCKER_CLOSURE_STATUS.md).
+Track closure in [`READINESS_BLOCKER_CLOSURE_STATUS.md`](./READINESS_BLOCKER_CLOSURE_STATUS.md).  
+Formal authorization process: [`governance/IMPLEMENTATION_AUTHORIZATION_CHECKLIST.md`](./governance/IMPLEMENTATION_AUTHORIZATION_CHECKLIST.md).
 
 Amend this report to **A) READY FOR IMPLEMENTATION** **ONLY** when **all** are checked:
 
@@ -187,6 +192,8 @@ Amend this report to **A) READY FOR IMPLEMENTATION** **ONLY** when **all** are c
 - [ ] Finance configuration approved (BLOCKER-005)
 - [ ] Compliance decisions approved (BLOCKER-006)
 - [ ] Payment.js validation passed (BLOCKER-007)
+
+After Gate → **A**, record Product Owner · Business Owner · Technical Architect · Security/Compliance start authorizations (Authorization Checklist §3) before Sprint 1 coding.
 
 **Do not change this report’s decision from B until every box above is complete.**  
 If a new requirement appears: create an ADR or change request — no silent scope expansion.

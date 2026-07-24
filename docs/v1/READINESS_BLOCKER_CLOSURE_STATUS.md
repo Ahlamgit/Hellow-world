@@ -9,6 +9,8 @@
 
 **Pre-implementation consistency review:** [`FINAL_PRE_IMPLEMENTATION_READINESS_REVIEW.md`](./FINAL_PRE_IMPLEMENTATION_READINESS_REVIEW.md) — recommendation **B) Additional preparation required** (architecture APPROVED; 0/7 blockers closed).
 
+**Implementation authorization:** [`governance/IMPLEMENTATION_AUTHORIZATION_CHECKLIST.md`](./governance/IMPLEMENTATION_AUTHORIZATION_CHECKLIST.md) — Gate B→A checklist; implementation **BLOCKED** until Gate **A** + start signatures.
+
 **Constraints:**
 
 ```text
@@ -77,6 +79,9 @@ Change [`FINAL_IMPLEMENTATION_GATE_REPORT.md`](./FINAL_IMPLEMENTATION_GATE_REPOR
 - [ ] Finance configuration approved (BLOCKER-005)
 - [ ] Compliance decisions approved (BLOCKER-006)
 - [ ] Payment.js validation passed (BLOCKER-007)
+
+Formal evidence mapping + start authorizations: [`governance/IMPLEMENTATION_AUTHORIZATION_CHECKLIST.md`](./governance/IMPLEMENTATION_AUTHORIZATION_CHECKLIST.md) §§1–3.  
+After Gate A: record Product / Business / Architect / Security-Compliance signatures before Sprint 1 coding.
 
 ---
 
@@ -457,6 +462,7 @@ Until then: keep **IN PREPARATION**.
 | 2026-07-24 | BLOCKER-006 Retention & Data Governance Framework — **IN PREPARATION** | 0/7 | **B) NOT READY — CODING BLOCKED** |
 | 2026-07-24 | Payment Security & Reconciliation Framework published — BLOCKER-007 still **IN VALIDATION**; coding **BLOCKED** | 0/7 | **B) NOT READY — CODING BLOCKED** |
 | 2026-07-24 | Final Pre-Implementation Readiness Review published — recommendation **B**; coding **BLOCKED** | 0/7 | **B) NOT READY — CODING BLOCKED** |
+| 2026-07-24 | Implementation Authorization Checklist published — coding still **BLOCKED** | 0/7 | **B) NOT READY — CODING BLOCKED** |
 
 ---
 

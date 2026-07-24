@@ -9,6 +9,7 @@
 **Implementation gate:** [`FINAL_IMPLEMENTATION_GATE_REPORT.md`](./FINAL_IMPLEMENTATION_GATE_REPORT.md) — currently **B) NOT READY — CODING BLOCKED**  
 **Pre-implementation review:** [`FINAL_PRE_IMPLEMENTATION_READINESS_REVIEW.md`](./FINAL_PRE_IMPLEMENTATION_READINESS_REVIEW.md) — recommendation **B**  
 **Execution standards (post–Gate A):** [`IMPLEMENTATION_EXECUTION_STANDARDS.md`](./IMPLEMENTATION_EXECUTION_STANDARDS.md) — preparation only; coding still **BLOCKED**  
+**Implementation authorization:** [`governance/IMPLEMENTATION_AUTHORIZATION_CHECKLIST.md`](./governance/IMPLEMENTATION_AUTHORIZATION_CHECKLIST.md) — Gate B→A checklist; coding **BLOCKED**  
 **Supersedes conflicting statements** in earlier draft docs where this prompt / ADRs / scope baseline are more specific.  
 **Companion:** [FEATURE_TRACEABILITY_MATRIX.md](./FEATURE_TRACEABILITY_MATRIX.md) · [ARCHITECTURE_AUDIT_FINAL.md](./ARCHITECTURE_AUDIT_FINAL.md) · [QUESTIONS-REQUIRING-BUSINESS-DECISION.md](./QUESTIONS-REQUIRING-BUSINESS-DECISION.md) · ADR-001…028
 
