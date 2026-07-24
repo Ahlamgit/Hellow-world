@@ -68,7 +68,7 @@ Closing **BLOCKER-001…007** is the path to amend the Implementation Gate Repor
 
 | ID | Blocker | Description | Required Action | Owner | Dependencies | Acceptance Criteria | Status |
 |----|---------|-------------|-----------------|-------|--------------|---------------------|--------|
-| BLOCKER-001 | Design assets & UI/UX specification | Brand/visual inputs missing; UI/UX spec not produced (ADR-023) | Collect assets → produce UI/UX Design Specification → approve | Design (+ Product) | Assets upload | UI specification approved before any UI implementation | **Open** |
+| BLOCKER-001 | Design assets & UI/UX specification | Official logo received; brand + UI/UX + tokens drafted — pending approval | Complete review/approval of design specs; commit master logo binaries to `design/assets/` | Design (+ Product) | Official logo reference | UI specification **approved** before any UI implementation | **ASSET RECEIVED — DESIGN SPECIFICATION IN PROGRESS** |
 | BLOCKER-002 | Stakeholder sign-off | Scope / business / ops / architecture gate approvals not recorded | Complete approval checklist; record signatures on Scope Baseline + Gate Report | Product / Arch / Eng / Business / Ops | Scope Baseline published | Formal approval recorded (names, dates, decisions) | **Open** |
 | BLOCKER-003 | External vendor decisions | SMS, Email, Storage, Maps, OCR/Face not selected; Payment sandbox/process to validate | Complete vendor checklist; confirm adapter-only integration | Business / Eng | ADR-025 ports | Vendors selected (or deferred with risk ack); Payment sandbox path confirmed; no business-logic coupling | **Open** |
 | BLOCKER-004 | Cloud infrastructure approval | Target cloud/region/hosting not approved | Approve infra decision sheet (no architecture change) | DevOps / Business | Portable deploy pattern (ADR-012/024) | Cloud provider, region, and hosting choices approved for staging/prod | **Open** |
@@ -80,48 +80,42 @@ Closing **BLOCKER-001…007** is the path to amend the Implementation Gate Repor
 
 ## BLOCKER-001 — Design Assets & UI/UX Specification
 
-**Gate mapping:** G-01 · **ADR:** ADR-023  
-**Status:** Open  
+**Gate mapping:** G-01 · **ADR:** ADR-023 · ADR-010 · ADR-018  
+**Status:** **ASSET RECEIVED — DESIGN SPECIFICATION IN PROGRESS**
 
 ### Required inputs
 
-- Logo  
-- Brand identity  
-- Colors  
-- Typography  
-- Existing design references  
-- Uploaded design video / screens  
-- Any UI inspiration material  
+| Input | State |
+|-------|-------|
+| Official logo (خدماتي / KHADAMATI · home + tools · orange + navy) | ☑ Received (brand reference) |
+| Brand identity direction | ☑ Documented |
+| Colors / typography from logo | ☑ Tokenized (hex confirm pending master file sample) |
+| Optional: prior UI screens / video / reference apps | ☐ Optional inspiration |
 
-### Required output
+### Required output (drafted)
 
-Create: **UI/UX Design Specification** (under `docs/v1/` when assets exist — not started until inputs arrive)
+| Artifact | Path | State |
+|----------|------|-------|
+| Brand Identity Specification | [`design/BRAND_IDENTITY_SPECIFICATION.md`](./design/BRAND_IDENTITY_SPECIFICATION.md) | ☑ Draft |
+| UI/UX Design Specification | [`design/UI_UX_SPECIFICATION.md`](./design/UI_UX_SPECIFICATION.md) | ☑ Draft — in progress / ready for review |
+| Design System Tokens | [`design/DESIGN_SYSTEM_TOKENS.md`](./design/DESIGN_SYSTEM_TOKENS.md) | ☑ Draft |
 
-Must include:
-
-- Visual analysis  
-- UX analysis  
-- Design tokens  
-- Color system  
-- Typography system  
-- Component library  
-- Screen hierarchy  
-- Navigation structure  
-- RTL/LTR behavior  
-- Responsive rules  
-- Accessibility rules  
+Covers: visual + UX analysis · color/type systems · components · app icon · RTL/LTR · responsive · accessibility · Customer / Craftsman / Store / Admin surfaces.
 
 ### Acceptance criteria
 
 - UI/UX Design Specification **approved** before UI implementation  
-- No UI coding until this blocker is Closed  
+- No UI coding until this blocker is **Closed** (approval) and Implementation Gate → **A**  
+- Logo concept preserved (refinement only)  
 
 ### Tracking
 
 | Item | State |
 |------|-------|
-| Assets uploaded | ☐ |
-| Spec drafted | ☐ |
+| Official logo reference received | ☑ |
+| Specs drafted | ☑ |
+| Master logo binaries in `design/assets/` | ☐ |
+| Hex sampled from master file | ☐ |
 | Spec approved | ☐ |
 | Blocker closed | ☐ |
 
@@ -456,6 +450,7 @@ Unauthorized scope additions during readiness or implementation are **out of pro
 |------|-------|-----------------|------|
 | 2026-07-24 | Execution plan published | None | **B) NOT READY** |
 | 2026-07-24 | Blocker closure pack published — [`READINESS_BLOCKER_CLOSURE_STATUS.md`](./READINESS_BLOCKER_CLOSURE_STATUS.md) | 0/7 (prep artifacts ready) | **B) NOT READY — CODING BLOCKED** |
+| 2026-07-24 | BLOCKER-001 → **ASSET RECEIVED — DESIGN SPECIFICATION IN PROGRESS** (brand + UI/UX + tokens drafted) | 0/7 (none closed; 001 in progress) | **B) NOT READY — CODING BLOCKED** |
 
 Active closure tracker: [`READINESS_BLOCKER_CLOSURE_STATUS.md`](./READINESS_BLOCKER_CLOSURE_STATUS.md).  
 Update that dashboard (and this table) when a blocker moves to Closed. Do **not** change gate decision from B until §3 checklist is complete.

@@ -51,7 +51,7 @@ New requirements → ADR or Change Request (Scope Baseline §10). No silent scop
 
 | ID | Blocker | Prep artifacts | Closure status | Gate flip dependency |
 |----|---------|----------------|----------------|----------------------|
-| BLOCKER-001 | Design assets & UI/UX specification | [`design/UI_UX_SPECIFICATION.md`](./design/UI_UX_SPECIFICATION.md) | **BLOCKED** (assets not provided) | Spec **approved** |
+| BLOCKER-001 | Design assets & UI/UX specification | [`design/UI_UX_SPECIFICATION.md`](./design/UI_UX_SPECIFICATION.md) · [`design/BRAND_IDENTITY_SPECIFICATION.md`](./design/BRAND_IDENTITY_SPECIFICATION.md) · [`design/DESIGN_SYSTEM_TOKENS.md`](./design/DESIGN_SYSTEM_TOKENS.md) | **ASSET RECEIVED — DESIGN SPECIFICATION IN PROGRESS** | Spec **approved** |
 | BLOCKER-002 | Stakeholder sign-off | This doc §BLOCKER-002 | **Open** (approvals pending) | Formal approval recorded |
 | BLOCKER-003 | Vendor selection | [`vendors/VENDOR_EVALUATION_MATRIX.md`](./vendors/VENDOR_EVALUATION_MATRIX.md) | **Open** (evaluation prep ready) | Vendors **approved** |
 | BLOCKER-004 | Cloud infrastructure | [`infra/CLOUD_INFRASTRUCTURE_DECISION.md`](./infra/CLOUD_INFRASTRUCTURE_DECISION.md) | **Open** (decision sheet ready) | Cloud **approved** |
@@ -80,44 +80,49 @@ Change [`FINAL_IMPLEMENTATION_GATE_REPORT.md`](./FINAL_IMPLEMENTATION_GATE_REPOR
 
 # BLOCKER-001 — Design Assets & UI/UX Specification
 
-**Status:** **BLOCKED** until assets are provided  
+**Status:** **ASSET RECEIVED — DESIGN SPECIFICATION IN PROGRESS**  
 **ADR:** ADR-023 · ADR-010 · ADR-018  
 **Owner:** Design (+ Product)  
-**Output path:** [`design/UI_UX_SPECIFICATION.md`](./design/UI_UX_SPECIFICATION.md) (shell created; content blocked)
+
+### Artifacts
+
+| Document | Path | State |
+|----------|------|-------|
+| Brand Identity | [`design/BRAND_IDENTITY_SPECIFICATION.md`](./design/BRAND_IDENTITY_SPECIFICATION.md) | Draft |
+| UI/UX Specification | [`design/UI_UX_SPECIFICATION.md`](./design/UI_UX_SPECIFICATION.md) | Draft — ready for review |
+| Design Tokens | [`design/DESIGN_SYSTEM_TOKENS.md`](./design/DESIGN_SYSTEM_TOKENS.md) | Draft |
 
 ### Required inputs checklist
 
 | Input | Received | Location / link | Notes |
 |-------|----------|-----------------|-------|
-| Logo | ☐ | | |
-| Brand identity | ☐ | | |
-| Color palette | ☐ | | |
-| Typography | ☐ | | |
-| Existing UI designs | ☐ | | |
-| Design video / screens | ☐ | | |
-| Reference applications | ☐ | | |
+| Logo | ☑ | Official brand reference (commit binaries to `design/assets/`) | Home + tools; خدماتي / KHADAMATI; orange + navy |
+| Brand identity | ☑ | Brand Identity Spec | Refinement only — concept locked |
+| Color palette | ☑ | Tokens (confirm hex sample) | KHADAMATI Orange + navy |
+| Typography | ☑ | UI/UX Spec + Tokens | IBM Plex Sans + Arabic |
+| Existing UI designs | ☐ | Optional | Inspiration — do not clone |
+| Design video / screens | ☐ | Optional | |
+| Reference applications | ☐ | Optional | Marketplace feeling only |
 
-### When assets arrive — produce specification covering
+### Specification coverage
 
-**Visual analysis:** design language · visual hierarchy · layout principles · component patterns  
-
-**UX analysis:** Customer journey · Provider journey · Admin journey · navigation improvements  
-
-**Design system:** colors · typography · spacing · elevation · buttons · inputs · cards · lists · tables · dialogs · bottom sheets · navigation · loading / empty / error states · skeleton loaders · notifications  
-
-**Support:** Arabic RTL · English LTR · Light theme · Dark theme (only if assets include it — ADR-018)
+Visual analysis · UX journeys (Customer / Craftsman / Store / Admin) · color & type · components · app icon · RTL/LTR · responsive · accessibility · light theme required (dark UI conditional ADR-018)
 
 ### Acceptance
 
-- [ ] Assets complete  
-- [ ] `UI_UX_SPECIFICATION.md` filled and reviewed  
-- [ ] Specification **approved** before any UI implementation  
+- [x] Official logo reference received  
+- [x] Design specifications drafted  
+- [ ] Master logo files committed under `design/assets/`  
+- [ ] Hex values confirmed from master file  
+- [ ] `UI_UX_SPECIFICATION.md` **approved** (Design + Product)  
+- [ ] BLOCKER-001 marked **Closed**  
 
 ### Closure log
 
 | Date | Event |
 |------|-------|
 | 2026-07-24 | Preparation checklist + blocked spec shell published |
+| 2026-07-24 | Official logo adopted; Brand Identity + UI/UX Spec + Tokens drafted — status **IN PROGRESS** |
 
 ---
 
@@ -315,6 +320,7 @@ Financial records and audit records **cannot** be removed if legally required.
 | Date | Summary | Closed | Gate |
 |------|---------|--------|------|
 | 2026-07-24 | Blocker closure pack published (checklists, templates, plans) | 0/7 | **B) NOT READY — CODING BLOCKED** |
+| 2026-07-24 | BLOCKER-001 design foundation drafted from official logo | 0/7 (001 in progress) | **B) NOT READY — CODING BLOCKED** |
 
 ---
 
