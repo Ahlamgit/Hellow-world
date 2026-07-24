@@ -6,14 +6,12 @@
 
 ---
 
-## 1. Final ADR List (001–026)
+## 1. Final ADR List (001–027)
 
 | ADR | Decision | Status |
 |-----|----------|--------|
 | 001 | Lebanon default Market; multi-market ready | Accepted |
-| 002 | Stores = service providers; no e-commerce (**amended by 027**) | Accepted |
-...
-| **027** | **Store promotional product catalog (non-transactional)** | **Accepted** |
+| 002 | Stores = service providers; no e-commerce (amended by 027) | Accepted |
 | 003 | Unified Provider + Listing | Accepted |
 | 004 | Financial ledger mandatory | Accepted |
 | 005 | Booking: confirm then pay | Accepted |
@@ -27,17 +25,18 @@
 | 013 | Admin-configurable financial business rules | Accepted |
 | 014 | Account deletion (detail → 022) | Superseded by 022 |
 | 015 | Chat scoping (detail → 020) | Superseded by 020 |
-| 016 | Scheduling options | **Superseded by 019** |
-| 017 | Dispute options | **Superseded by 021** |
+| 016 | Scheduling options | Superseded by 019 |
+| 017 | Dispute options | Superseded by 021 |
 | 018 | Dark theme conditional on assets | Accepted |
-| **019** | **Provider Availability Calendar scheduling** | **Accepted** |
-| **020** | **Booking-scoped chat architecture** | **Accepted** |
-| **021** | **Lightweight dispute management** | **Accepted** |
-| **022** | **Account retention & deletion** | **Accepted** |
-| **023** | **Design asset readiness gate** | **Accepted** |
-| **024** | **Cloud & DR (vendor-neutral)** | **Accepted** |
-| **025** | **External integration ports/adapters** | **Accepted** |
-| **026** | **Lebanon finance values = Admin config** | **Accepted** |
+| 019 | Provider Availability Calendar scheduling | Accepted |
+| 020 | Booking-scoped chat architecture | Accepted |
+| 021 | Lightweight dispute management | Accepted |
+| 022 | Account retention & deletion | Accepted |
+| 023 | Design asset readiness gate | Accepted |
+| 024 | Cloud & DR (vendor-neutral) | Accepted |
+| 025 | External integration ports/adapters | Accepted |
+| 026 | Lebanon finance values = Admin config | Accepted |
+| **027** | Store promotional product catalog (non-transactional) | **Accepted** |
 
 ---
 
