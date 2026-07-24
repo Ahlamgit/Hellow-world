@@ -1,129 +1,116 @@
 # KHADAMATI — Logo Asset Package
 
 **Document ID:** KHAD-V1-LOGO-ASSETS  
-**Version:** 1.0  
+**Version:** 1.1  
 **Date:** 2026-07-24  
-**Status:** Package structure ready — **master binaries pending deposit**  
+**Status:** Structure verified — **binaries missing** → BLOCKER-001 remains **READY FOR APPROVAL** (not COMPLETED)  
 **Governance:** Design Governance Lead  
 
 ```text
 DO NOT replace the logo concept.
 DO NOT generate a substitute brand mark.
-Drop the official approved master files into the paths below.
+DO NOT mark BLOCKER-001 COMPLETED until assets deposited and approvals recorded.
 ```
 
 ---
 
-## 1. Package Layout
+## 1. Required Structure (verified)
 
 ```text
-docs/v1/design/assets/
-├── LOGO_ASSET_PACKAGE.md          ← this file
-├── README.md
-├── master/                        ← official source files (required)
-│   ├── khadamati-logo-original.*  ← Original logo file
-│   ├── khadamati-logo-hires.*     ← High-resolution version
-│   └── khadamati-logo-transparent.* ← Transparent background version
-├── variations/                    ← derived exports (after refinement)
-│   ├── primary/
-│   ├── compact/
-│   ├── app-icon/
-│   ├── dark-background/
-│   └── monochrome/
-└── exports/                       ← platform-ready sets (Android/iOS/web)
+design/assets/
+├── master/
+│   ├── original/
+│   ├── transparent/
+│   └── high-resolution/
+├── app-icon/
+│   ├── android/
+│   └── ios/
+└── variations/
+    ├── light/
+    ├── dark/
+    └── monochrome/
 ```
 
 ---
 
-## 2. Master Logo (required drop-in)
+## 2. Completeness Verification (2026-07-24)
 
-| Asset | Target filename (suggested) | Received | Notes |
-|-------|----------------------------|----------|-------|
-| Original logo file | `master/khadamati-logo-original.{png\|svg\|pdf}` | ☐ | Source of truth |
-| High-resolution version | `master/khadamati-logo-hires.png` (≥2000 px or vector) | ☐ | Print / store listing |
-| Transparent background version | `master/khadamati-logo-transparent.png` / `.svg` | ☐ | Preferred for product chrome |
+| Path | Required | Binary present | Notes |
+|------|----------|----------------|-------|
+| `master/original/` | Original logo file | ☐ **Missing** | PENDING.md only |
+| `master/transparent/` | Transparent background version | ☐ **Missing** | PENDING.md only |
+| `master/high-resolution/` | High-resolution version | ☐ **Missing** | PENDING.md only |
+| `app-icon/android/` | Android icon set / adaptive layers | ☐ **Missing** | PENDING.md only |
+| `app-icon/ios/` | iOS App Icon master / set | ☐ **Missing** | PENDING.md only |
+| `variations/light/` | Light-background usage exports | ☐ **Missing** | PENDING.md only |
+| `variations/dark/` | Dark-background usage exports | ☐ **Missing** | PENDING.md only |
+| `variations/monochrome/` | Monochrome exports | ☐ **Missing** | PENDING.md only |
 
-**Concept locked:** Home outline · service tools (wrench, brush, plug) · خدماتي / KHADAMATI · orange + navy.
+**Verification result:** Structure **complete**. Files **incomplete**.  
 
----
-
-## 3. Logo Variations — Specifications
-
-Derivatives must be produced **from the master** (design tooling). No concept redesign.
-
-### 3.1 Primary logo
-
-| Field | Spec |
-|-------|------|
-| **Usage** | Website · Marketing · Documents |
-| **Composition** | Full lockup: symbol + Arabic (خدماتي) + English (KHADAMATI) |
-| **Background** | Transparent preferred; also light-BG preview |
-| **Export path** | `variations/primary/` |
-| **Formats** | SVG + PNG @1x/@2x/@3x |
-| **Min width** | ≥ 140 CSS px digital |
-| **Clear space** | ≥ 0.5× symbol height |
-
-### 3.2 Compact logo
-
-| Field | Spec |
-|-------|------|
-| **Usage** | Mobile headers · Small spaces |
-| **Composition** | Symbol-only (home + tools); wordmarks optional only if width allows |
-| **Export path** | `variations/compact/` |
-| **Formats** | SVG + PNG |
-| **Min size** | Symbol ≥ 24 px; prefer simplified strokes ≤ 32 px |
-
-### 3.3 App icon
-
-| Field | Spec |
-|-------|------|
-| **Usage** | Android · iOS |
-| **Composition** | Symbol only, centered; **no** bilingual wordmark |
-| **Export path** | `variations/app-icon/` + `exports/` |
-| **Master** | 1024×1024 PNG |
-| **Android** | Adaptive foreground + background (orange preferred) |
-| **iOS** | 1024 App Store master (no transparency) |
-| **Test sizes** | 29 / 40 / 60 / 80 / 1024 px readability |
-
-### 3.4 Dark background version
-
-| Field | Spec |
-|-------|------|
-| **Usage** | Dark theme surfaces · navy bands · dark marketing |
-| **Composition** | Orange (or high-contrast) symbol + light wordmarks |
-| **Export path** | `variations/dark-background/` |
-| **Do not** | Invent a new mark; only contrast-safe treatment of official logo |
-
-### 3.5 Monochrome version
-
-| Field | Spec |
-|-------|------|
-| **Usage** | Special cases (single-color print, emboss, watermark, legal B/W) |
-| **Composition** | Single-color silhouette of official home+tools (+ optional wordmark) |
-| **Export path** | `variations/monochrome/` |
-| **Variants** | Black-on-transparent · White-on-transparent |
+**Governance decision:** Keep BLOCKER-001 = **READY FOR APPROVAL**. Do **not** mark **COMPLETED**.
 
 ---
 
-## 4. Deposit Checklist
+## 3. Deposit Guidance
 
-| Step | Owner | State |
-|------|-------|-------|
-| Place original / hires / transparent masters in `master/` | Design / Product | ☐ |
-| Run color extraction → [`../COLOR_REFERENCE.md`](../COLOR_REFERENCE.md) | Design | ☐ |
-| Produce variation exports per §3 | Design | ☐ |
-| Android / iOS export sets in `exports/` | Design | ☐ |
-| Design Lead verifies concept preservation | Design Governance | ☐ |
+| Folder | Suggested contents |
+|--------|-------------------|
+| `master/original/` | Source-of-truth logo (SVG/PDF/PNG) |
+| `master/transparent/` | Transparent-BG PNG/SVG for product chrome |
+| `master/high-resolution/` | ≥2000 px or vector hires for print/store |
+| `app-icon/android/` | 1024 foreground + adaptive background; mipmap exports optional |
+| `app-icon/ios/` | 1024 App Store master (no transparency) |
+| `variations/light/` | Primary/compact lockups for light surfaces |
+| `variations/dark/` | Dark-surface lockups |
+| `variations/monochrome/` | Black / white single-color marks |
+
+**Concept locked:** Home outline · tools (wrench, brush, plug) · خدماتي / KHADAMATI · orange + navy.
 
 ---
 
-## 5. Forbidden
+## 4. Final Logo Approval Checklist
+
+Complete **after** binaries are deposited and reviewed:
+
+- [ ] Original logo preserved
+- [ ] Home + tools concept preserved
+- [ ] Arabic identity preserved
+- [ ] English KHADAMATI identity preserved
+- [ ] Small-size readability validated
+- [ ] App icon suitability validated
+- [ ] Light/dark usage validated
+
+| Check | Reviewer | Date | Pass |
+|-------|----------|------|------|
+| Original logo preserved | | | ☐ |
+| Home + tools concept preserved | | | ☐ |
+| Arabic identity preserved | | | ☐ |
+| English KHADAMATI identity preserved | | | ☐ |
+| Small-size readability validated | | | ☐ |
+| App icon suitability validated | | | ☐ |
+| Light/dark usage validated | | | ☐ |
+
+---
+
+## 5. Variation Specs (for exporters — no redesign)
+
+| Variation | Usage | Composition |
+|-----------|-------|-------------|
+| Light | Website, marketing, documents, light UI | Full or compact lockup on light / transparent |
+| Dark | Dark theme / navy bands | High-contrast symbol + light wordmarks |
+| Monochrome | Special cases | Single-color silhouette |
+| App icon Android/iOS | Launchers / stores | Symbol only; orange identity; no bilingual wordmark in icon |
+
+---
+
+## 6. Forbidden
 
 - AI-generated replacement logos  
 - Removing home or tools  
-- New color systems unrelated to master extraction  
-- Shipping UI code that embeds non-approved marks  
+- Guessing production colors (see [`../COLOR_REFERENCE.md`](../COLOR_REFERENCE.md))  
+- Marking BLOCKER-001 COMPLETED while §2 binaries remain missing  
 
 ---
 
-**End of Logo Asset Package**
+**End of Logo Asset Package v1.1**

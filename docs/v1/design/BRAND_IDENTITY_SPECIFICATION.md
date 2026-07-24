@@ -3,10 +3,12 @@
 **Document ID:** KHAD-V1-BRAND-ID  
 **Version:** 1.1  
 **Date:** 2026-07-24  
-**Status:** **READY FOR APPROVAL** (BLOCKER-001) — not Completed until signatures  
+**Status:** **READY FOR APPROVAL** (BLOCKER-001) — not COMPLETED until assets + colors + signatures  
 **Role:** Design Governance Lead  
 
 **Related:** [`UI_UX_SPECIFICATION.md`](./UI_UX_SPECIFICATION.md) · [`DESIGN_SYSTEM_TOKENS.md`](./DESIGN_SYSTEM_TOKENS.md) · [`COLOR_REFERENCE.md`](./COLOR_REFERENCE.md) · [`DESIGN_APPROVAL_RECORD.md`](./DESIGN_APPROVAL_RECORD.md) · [`assets/LOGO_ASSET_PACKAGE.md`](./assets/LOGO_ASSET_PACKAGE.md) · ADR-010 · ADR-023  
+
+**Design freeze:** After COMPLETED, this document is an implementation reference; changes require Design Change Request + impact review + approval.  
 
 ```text
 DO NOT replace the logo concept.
@@ -284,10 +286,10 @@ Exact hex: sample from master logo file; provisional values documented in tokens
 
 | Check | State |
 |-------|-------|
-| Asset package paths defined | ☑ [`assets/LOGO_ASSET_PACKAGE.md`](./assets/LOGO_ASSET_PACKAGE.md) |
-| Master binaries deposited in repo | ☐ Pending |
-| Variation exports produced | ☐ Pending |
-| Color extraction recorded | ☐ See [`COLOR_REFERENCE.md`](./COLOR_REFERENCE.md) (**Draft**) |
+| Required folder structure verified | ☑ `master/{original,transparent,high-resolution}` · `app-icon/{android,ios}` · `variations/{light,dark,monochrome}` |
+| Master / icon / variation binaries deposited | ☐ **Missing** — keep READY FOR APPROVAL |
+| Logo approval checklist complete | ☐ [`assets/LOGO_ASSET_PACKAGE.md`](./assets/LOGO_ASSET_PACKAGE.md) §4 |
+| Color Approved values recorded | ☐ See [`COLOR_REFERENCE.md`](./COLOR_REFERENCE.md) |
 
 ---
 

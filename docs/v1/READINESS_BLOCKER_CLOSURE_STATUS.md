@@ -51,7 +51,7 @@ New requirements → ADR or Change Request (Scope Baseline §10). No silent scop
 
 | ID | Blocker | Prep artifacts | Closure status | Gate flip dependency |
 |----|---------|----------------|----------------|----------------------|
-| BLOCKER-001 | Design assets & UI/UX specification | [`design/UI_UX_SPECIFICATION.md`](./design/UI_UX_SPECIFICATION.md) · [`design/BRAND_IDENTITY_SPECIFICATION.md`](./design/BRAND_IDENTITY_SPECIFICATION.md) · [`design/DESIGN_SYSTEM_TOKENS.md`](./design/DESIGN_SYSTEM_TOKENS.md) · [`design/COLOR_REFERENCE.md`](./design/COLOR_REFERENCE.md) · [`design/DESIGN_APPROVAL_RECORD.md`](./design/DESIGN_APPROVAL_RECORD.md) | **READY FOR APPROVAL** (not Completed) | Spec **approved** + signatures |
+| BLOCKER-001 | Design assets & UI/UX specification | [`design/DESIGN_APPROVAL_RECORD.md`](./design/DESIGN_APPROVAL_RECORD.md) · UI/UX · Brand · Tokens · Color · [`design/assets/LOGO_ASSET_PACKAGE.md`](./design/assets/LOGO_ASSET_PACKAGE.md) | **READY FOR APPROVAL** (not COMPLETED — binaries missing) | Assets + colors approved + Product/Design signatures |
 | BLOCKER-002 | Stakeholder sign-off | This doc §BLOCKER-002 | **Open** (approvals pending) | Formal approval recorded |
 | BLOCKER-003 | Vendor selection | [`vendors/VENDOR_EVALUATION_MATRIX.md`](./vendors/VENDOR_EVALUATION_MATRIX.md) | **Open** (evaluation prep ready) | Vendors **approved** |
 | BLOCKER-004 | Cloud infrastructure | [`infra/CLOUD_INFRASTRUCTURE_DECISION.md`](./infra/CLOUD_INFRASTRUCTURE_DECISION.md) | **Open** (decision sheet ready) | Cloud **approved** |
@@ -81,7 +81,7 @@ Change [`FINAL_IMPLEMENTATION_GATE_REPORT.md`](./FINAL_IMPLEMENTATION_GATE_REPOR
 # BLOCKER-001 — Design Assets & UI/UX Specification
 
 **Status:** **READY FOR APPROVAL**  
-**Not:** Completed (signatures required)  
+**Not:** **COMPLETED** (assets missing; colors not approved; signatures pending)  
 **ADR:** ADR-023 · ADR-010 · ADR-018  
 **Owner:** Design (+ Product)  
 **Approval record:** [`design/DESIGN_APPROVAL_RECORD.md`](./design/DESIGN_APPROVAL_RECORD.md)
@@ -90,35 +90,31 @@ Change [`FINAL_IMPLEMENTATION_GATE_REPORT.md`](./FINAL_IMPLEMENTATION_GATE_REPOR
 
 | Document | Path | State |
 |----------|------|-------|
-| Brand Identity | [`design/BRAND_IDENTITY_SPECIFICATION.md`](./design/BRAND_IDENTITY_SPECIFICATION.md) | Ready for approval (+ final quality review) |
+| Brand Identity | [`design/BRAND_IDENTITY_SPECIFICATION.md`](./design/BRAND_IDENTITY_SPECIFICATION.md) | Ready for approval |
 | UI/UX Specification | [`design/UI_UX_SPECIFICATION.md`](./design/UI_UX_SPECIFICATION.md) | Ready for approval |
 | Design Tokens | [`design/DESIGN_SYSTEM_TOKENS.md`](./design/DESIGN_SYSTEM_TOKENS.md) | Ready for approval (HEX Draft) |
-| Color Reference | [`design/COLOR_REFERENCE.md`](./design/COLOR_REFERENCE.md) | **Draft** — extraction pending master file |
-| Logo Asset Package | [`design/assets/LOGO_ASSET_PACKAGE.md`](./design/assets/LOGO_ASSET_PACKAGE.md) | Structure ready; binaries pending |
-| Design Approval Record | [`design/DESIGN_APPROVAL_RECORD.md`](./design/DESIGN_APPROVAL_RECORD.md) | Open for signatures |
+| Color Reference | [`design/COLOR_REFERENCE.md`](./design/COLOR_REFERENCE.md) | Draft vs Approved separated; Approved empty |
+| Logo Asset Package | [`design/assets/LOGO_ASSET_PACKAGE.md`](./design/assets/LOGO_ASSET_PACKAGE.md) | Required structure verified; **0 binaries** |
+| Design Approval Record | [`design/DESIGN_APPROVAL_RECORD.md`](./design/DESIGN_APPROVAL_RECORD.md) | Approval table + freeze rule; open for signatures |
 
-### Required inputs checklist
+### Completeness → COMPLETED gate
 
-| Input | Received | Location / link | Notes |
-|-------|----------|-----------------|-------|
-| Logo | ☑ reference / ☐ master binary | [`design/assets/master/`](./design/assets/master/) | Deposit original / hires / transparent |
-| Brand identity | ☑ | Brand Identity Spec | Concept locked |
-| Color palette | ☐ extracted | Color Reference (**Draft**) | No guessed production HEX |
-| Typography | ☑ | UI/UX Spec + Tokens | Pending checklist approval |
-| Existing UI designs | ☐ | Optional | |
-| Design video / screens | ☐ | Optional | |
-| Reference applications | ☐ | Optional | |
+Move to **COMPLETED** only when:
 
-### Acceptance
+- [ ] Assets deposited  
+- [ ] Colors approved  
+- [ ] Product approval recorded  
+- [ ] Design approval recorded  
 
-- [x] Official logo concept / reference adopted  
-- [x] Design specifications prepared for approval  
-- [x] Approval package + checklist published  
-- [ ] Master logo files deposited under `design/assets/master/`  
-- [ ] Colors extracted → Color Reference updated (still Draft until Product approves)  
-- [ ] Design review checklist fully checked  
-- [ ] Design Lead + Product signatures on Approval Record  
-- [ ] BLOCKER-001 marked **Closed / Completed**  
+### Acceptance tracking
+
+- [x] Required asset folder structure verified  
+- [x] Final approval package prepared  
+- [ ] Binaries in `master/`, `app-icon/`, `variations/`  
+- [ ] Color Reference Approved section populated  
+- [ ] Approval table areas Approved  
+- [ ] Design + Product signatures  
+- [ ] BLOCKER-001 → **COMPLETED**  
 
 ### Closure log
 
@@ -127,6 +123,7 @@ Change [`FINAL_IMPLEMENTATION_GATE_REPORT.md`](./FINAL_IMPLEMENTATION_GATE_REPOR
 | 2026-07-24 | Preparation checklist + blocked spec shell published |
 | 2026-07-24 | Official logo adopted; Brand Identity + UI/UX Spec + Tokens drafted — status **IN PROGRESS** |
 | 2026-07-24 | Approval package finalized — status **READY FOR APPROVAL** (not Completed) |
+| 2026-07-24 | Final approval readiness: structure remapped; completeness verified missing binaries — remains **READY FOR APPROVAL** |
 
 ---
 
@@ -326,6 +323,7 @@ Financial records and audit records **cannot** be removed if legally required.
 | 2026-07-24 | Blocker closure pack published (checklists, templates, plans) | 0/7 | **B) NOT READY — CODING BLOCKED** |
 | 2026-07-24 | BLOCKER-001 design foundation drafted from official logo | 0/7 (001 in progress) | **B) NOT READY — CODING BLOCKED** |
 | 2026-07-24 | BLOCKER-001 → **READY FOR APPROVAL** (approval record open; not Completed) | 0/7 | **B) NOT READY — CODING BLOCKED** |
+| 2026-07-24 | BLOCKER-001 final approval package; asset completeness fail (no binaries) — still **READY FOR APPROVAL** | 0/7 | **B) NOT READY — CODING BLOCKED** |
 
 ---
 

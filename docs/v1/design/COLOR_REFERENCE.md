@@ -1,112 +1,160 @@
 # KHADAMATI V1 — Color Reference
 
 **Document ID:** KHAD-V1-COLOR-REF  
-**Version:** 1.0  
+**Version:** 1.1  
 **Date:** 2026-07-24  
-**Status:** **Draft** — pending extraction from master logo asset  
+**Status:** **Draft values only** — Approved values empty until master extraction + Product approval  
 **Governance:** Design Governance Lead  
 
-**Related:** [`assets/LOGO_ASSET_PACKAGE.md`](./assets/LOGO_ASSET_PACKAGE.md) · [`DESIGN_SYSTEM_TOKENS.md`](./DESIGN_SYSTEM_TOKENS.md) · [`BRAND_IDENTITY_SPECIFICATION.md`](./BRAND_IDENTITY_SPECIFICATION.md)
+**Related:** [`assets/LOGO_ASSET_PACKAGE.md`](./assets/LOGO_ASSET_PACKAGE.md) · [`DESIGN_SYSTEM_TOKENS.md`](./DESIGN_SYSTEM_TOKENS.md) · [`DESIGN_APPROVAL_RECORD.md`](./DESIGN_APPROVAL_RECORD.md)
 
 ```text
-Do NOT guess final production colors.
-Use color extraction from the approved master logo asset only.
-All values remain Draft until Product approval.
+Production HEX values must come ONLY from approved master logo extraction.
+No guessed colors.
+Draft values ≠ Approved values.
 ```
 
 ---
 
-## 1. Extraction Status
+## 1. Extraction & Approval Status
 
 | Item | State |
 |------|-------|
-| Master logo present in `assets/master/` | ☐ **Not deposited in repository** |
+| Master logo in `assets/master/original/` (or transparent) | ☐ **Not deposited** |
 | Color extraction performed | ☐ **Not performed** |
-| Values status | **Draft** |
+| Draft section | Active (placeholders only) |
+| Approved section | **Empty** — not yet authorized for implementation |
 | Product color approval | ☐ Pending |
+| Design color approval | ☐ Pending |
 
-Until the official master file is deposited, **no extracted HEX values are claimed**.
+Until extraction + dual approval, implementation must **not** hardcode colors as production truth.
 
-Provisional values previously listed in [`DESIGN_SYSTEM_TOKENS.md`](./DESIGN_SYSTEM_TOKENS.md) are **not** production colors and **must not** be treated as extracted.
-
----
-
-## 2. Extraction Method (when master is available)
-
-1. Open `assets/master/khadamati-logo-original.*` (or transparent SVG/PNG).  
-2. Sample **primary orange** from the dominant orange fill of the home/tools mark (average of 3 solid pixels; avoid anti-aliased edges).  
-3. Sample **secondary navy** from navy fills/strokes in the mark or wordmark.  
-4. Record tool used (e.g. Figma eyedropper / ImageMagick) + date + sampler name.  
-5. Derive hover/light supporting tones systematically from extracted primaries (document formula).  
-6. Update this file → sync tokens → Product approves.
-
-### Suggested extraction command (after PNG master exists)
-
-```bash
-# Example only — run when master PNG is present; do not invent colors.
-# identify assets/master/khadamati-logo-transparent.png
-# Convert/sample solid regions via design tool preferred over CLI guessing.
-```
+Token file provisional HEX (if any) are **Draft context only** — not Approved.
 
 ---
 
-## 3. Brand Core Colors
+## 2. Extraction Method (required before Approved values)
 
-| Role | Token | Extracted HEX | Source region | Status |
-|------|-------|---------------|---------------|--------|
-| Primary orange | `color.brand.orange` | *PENDING_EXTRACTION* | Logo orange fill | **Draft** |
-| Primary hover | `color.brand.orange-hover` | *PENDING_DERIVATION* | Darken extracted orange ~8–12% | **Draft** |
-| Primary light | `color.brand.orange-light` | *PENDING_DERIVATION* | Tint of extracted orange | **Draft** |
-| Secondary navy | `color.brand.navy` | *PENDING_EXTRACTION* | Logo navy / wordmark | **Draft** |
-| Secondary navy soft | `color.brand.navy-soft` | *PENDING_DERIVATION* | Lifted navy | **Draft** |
+1. Open approved master from `assets/master/original/` or `assets/master/transparent/`.  
+2. Sample **Primary Orange** from solid orange fill (avoid anti-aliased edges; average 3 samples).  
+3. Sample **Secondary Navy** from navy fill/stroke / wordmark.  
+4. Record tool, sampler, date.  
+5. Derive hover/light and neutrals systematically; document formulas.  
+6. Copy confirmed values into **§4 Approved values** only after Product + Design sign-off.  
 
 ---
 
-## 4. Supporting Colors
+## 3. Draft Values
 
-| Role | Token | HEX | Status |
-|------|-------|-----|--------|
+> **Draft** = working placeholders / pending extraction. **Not** production authority.
+
+### 3.1 Primary Orange
+
+| Role | Token | Draft HEX | Notes |
+|------|-------|-----------|-------|
+| Primary Orange | `color.brand.orange` | *PENDING_EXTRACTION* | From master logo only |
+| Primary hover | `color.brand.orange-hover` | *PENDING_DERIVATION* | After orange extracted |
+| Primary light | `color.brand.orange-light` | *PENDING_DERIVATION* | After orange extracted |
+
+### 3.2 Secondary Navy
+
+| Role | Token | Draft HEX | Notes |
+|------|-------|-----------|-------|
+| Secondary Navy | `color.brand.navy` | *PENDING_EXTRACTION* | From master logo only |
+| Navy soft | `color.brand.navy-soft` | *PENDING_DERIVATION* | After navy extracted |
+
+### 3.3 Neutral palette
+
+| Role | Token | Draft HEX | Status |
+|------|-------|-----------|--------|
+| Neutral 900 | `color.neutral.900` | *PENDING_DESIGN_SET* | **Draft** |
+| Neutral 700 | `color.neutral.700` | *PENDING_DESIGN_SET* | **Draft** |
+| Neutral 500 | `color.neutral.500` | *PENDING_DESIGN_SET* | **Draft** |
+| Neutral 300 | `color.neutral.300` | *PENDING_DESIGN_SET* | **Draft** |
+| Neutral 200 | `color.neutral.200` | *PENDING_DESIGN_SET* | **Draft** |
+| Neutral 100 | `color.neutral.100` | *PENDING_DESIGN_SET* | **Draft** |
+| Neutral 0 | `color.neutral.0` | *PENDING_DESIGN_SET* | **Draft** |
+
+### 3.4 Background palette
+
+| Role | Token | Draft HEX | Status |
+|------|-------|-----------|--------|
+| App background | `color.bg.app` | *PENDING_DESIGN_SET* | **Draft** |
+| Surface | `color.bg.surface` | *PENDING_DESIGN_SET* | **Draft** |
+| Surface muted | `color.bg.surface-muted` | *PENDING_DESIGN_SET* | **Draft** |
+| Overlay | `color.bg.overlay` | *PENDING_DERIVATION* | **Draft** |
+
+### 3.5 Status colors
+
+| Role | Token | Draft HEX | Status |
+|------|-------|-----------|--------|
 | Error | `color.semantic.error` | *PENDING_DESIGN_SET* | **Draft** |
 | Success | `color.semantic.success` | *PENDING_DESIGN_SET* | **Draft** |
-| Warning | `color.semantic.warning` | *PENDING_DESIGN_SET* (must remain distinct from brand orange) | **Draft** |
+| Warning | `color.semantic.warning` | *PENDING_DESIGN_SET* | **Draft** — must stay distinct from brand orange |
 | Info | `color.semantic.info` | *PENDING_DESIGN_SET* | **Draft** |
-| Neutrals | `color.neutral.*` | *PENDING_DESIGN_SET* (cool undertone aligned to navy) | **Draft** |
-
-Semantic/neutral systems may be completed after brand core extraction; they still require Product approval before implementation.
 
 ---
 
-## 5. Background Colors
+## 4. Approved Values
 
-| Role | Token | HEX | Status |
-|------|-------|-----|--------|
-| App canvas | `color.bg.app` | *PENDING_DESIGN_SET* | **Draft** |
-| Surface | `color.bg.surface` | `#FFFFFF` candidate only if logo is white-BG compatible — **confirm** | **Draft** |
-| Surface muted | `color.bg.surface-muted` | *PENDING_DESIGN_SET* | **Draft** |
-| Overlay scrim | `color.bg.overlay` | Derived from navy @ ~48% opacity | **Draft** |
+> Fill **only** after master extraction and Product + Design approval.  
+> Until then, this section remains intentionally empty of production HEX.
+
+### 4.1 Primary Orange — Approved
+
+| Role | Token | Approved HEX | Approved by | Date |
+|------|-------|--------------|-------------|------|
+| Primary Orange | `color.brand.orange` | — | | |
+| Primary hover | `color.brand.orange-hover` | — | | |
+| Primary light | `color.brand.orange-light` | — | | |
+
+### 4.2 Secondary Navy — Approved
+
+| Role | Token | Approved HEX | Approved by | Date |
+|------|-------|--------------|-------------|------|
+| Secondary Navy | `color.brand.navy` | — | | |
+| Navy soft | `color.brand.navy-soft` | — | | |
+
+### 4.3 Neutral palette — Approved
+
+| Role | Token | Approved HEX | Approved by | Date |
+|------|-------|--------------|-------------|------|
+| Neutral 900…0 | `color.neutral.*` | — | | |
+
+### 4.4 Background palette — Approved
+
+| Role | Token | Approved HEX | Approved by | Date |
+|------|-------|--------------|-------------|------|
+| Backgrounds | `color.bg.*` | — | | |
+
+### 4.5 Status colors — Approved
+
+| Role | Token | Approved HEX | Approved by | Date |
+|------|-------|--------------|-------------|------|
+| Error / Success / Warning / Info | `color.semantic.*` | — | | |
+
+**Approved section authority:** Empty = no production color freeze yet.
 
 ---
 
-## 6. Contrast Notes (post-extraction)
+## 5. Contrast Checks (after Approved values exist)
 
 | Pair | Requirement | Result |
 |------|-------------|--------|
-| Orange CTA text on orange | Prefer white label; verify AA for size | ☐ |
-| Navy text on white | AA for body | ☐ |
-| White wordmark on navy band | AA | ☐ |
-| Orange symbol on navy (dark logo version) | Visible at small size | ☐ |
+| Orange CTA label on orange | Prefer white; AA where applicable | ☐ |
+| Navy text on white | AA body | ☐ |
+| White wordmark on navy | AA | ☐ |
+| Orange symbol on dark variation | Small-size visible | ☐ |
 
 ---
 
-## 7. Approval
+## 6. Color Approval Sign-off
 
 | Role | Name | Date | Decision |
 |------|------|------|----------|
-| Design Lead | | | ☐ Approve extracted values |
+| Design Lead | | | ☐ Approve extracted → Approved section |
 | Product Owner | | | ☐ Approve production colors |
-
-**Values remain Draft until both approvals are recorded.**
 
 ---
 
-**End of Color Reference v1.0**
+**End of Color Reference v1.1**

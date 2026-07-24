@@ -3,12 +3,14 @@
 **Document ID:** KHAD-V1-UI-UX-SPEC  
 **Version:** 1.1  
 **Date:** 2026-07-24  
-**Status:** **READY FOR APPROVAL** (BLOCKER-001) — not Completed until signatures  
+**Status:** **READY FOR APPROVAL** (BLOCKER-001) — not COMPLETED until assets + colors + signatures  
 **Role:** Design Governance Lead  
 **ADR:** ADR-023 · ADR-010 · ADR-018 · ADR-028  
 
 **Companions:**  
-[`BRAND_IDENTITY_SPECIFICATION.md`](./BRAND_IDENTITY_SPECIFICATION.md) · [`DESIGN_SYSTEM_TOKENS.md`](./DESIGN_SYSTEM_TOKENS.md) · [`COLOR_REFERENCE.md`](./COLOR_REFERENCE.md) · [`DESIGN_APPROVAL_RECORD.md`](./DESIGN_APPROVAL_RECORD.md) · [`../FINAL_SCOPE_BASELINE.md`](../FINAL_SCOPE_BASELINE.md)
+[`BRAND_IDENTITY_SPECIFICATION.md`](./BRAND_IDENTITY_SPECIFICATION.md) · [`DESIGN_SYSTEM_TOKENS.md`](./DESIGN_SYSTEM_TOKENS.md) · [`COLOR_REFERENCE.md`](./COLOR_REFERENCE.md) · [`DESIGN_APPROVAL_RECORD.md`](./DESIGN_APPROVAL_RECORD.md) · [`assets/LOGO_ASSET_PACKAGE.md`](./assets/LOGO_ASSET_PACKAGE.md) · [`../FINAL_SCOPE_BASELINE.md`](../FINAL_SCOPE_BASELINE.md)
+
+**Design freeze:** After COMPLETED, this spec becomes an implementation reference; later changes need Design Change Request + impact review + approval ([`DESIGN_APPROVAL_RECORD.md`](./DESIGN_APPROVAL_RECORD.md) §7).
 
 ```text
 DO NOT implement UI.
@@ -28,9 +30,9 @@ This document is the design foundation before implementation.
 | Brand Identity Specification | ☑ Ready for approval |
 | Design System Tokens | ☑ Ready for approval (colors Draft pending extraction) |
 | Color Reference | ☑ Created — **Draft** until master extraction |
-| Logo asset package structure | ☑ Ready — binaries pending deposit |
+| Logo asset package structure | ☑ Verified required layout — **binaries missing** |
 | UI/UX Specification (this doc) | ☑ **READY FOR APPROVAL** |
-| Spec **approved** (closes BLOCKER-001) | ☐ Pending Design + Product signatures |
+| Spec **approved** / BLOCKER-001 COMPLETED | ☐ Requires assets + colors + Design + Product approval |
 | UI implementation authorized | ☐ Blocked until Gate **A** |
 
 ---
