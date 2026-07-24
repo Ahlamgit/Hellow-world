@@ -450,7 +450,7 @@ Do **NOT** start coding until completed and approved:
 - [ ] **BLOCKER-002** — Scope + stakeholder sign-off — **READY FOR APPROVAL** (signatures pending)  
 - [ ] **BLOCKER-001** — Design assets + UI/UX specification (ADR-023) — **READY FOR APPROVAL** (signatures pending; not Completed)  
 - [ ] **BLOCKER-003** — Vendors approved (adapter architecture retained)  
-- [ ] **BLOCKER-004** — Cloud decision completed  
+- [ ] **BLOCKER-004** — Cloud decision — **IN PREPARATION** (vendor-neutral; selections pending)  
 - [ ] **BLOCKER-005** — Finance Lebanon configuration — **IN PREPARATION** (values Pending Business Decision)  
 - [ ] **BLOCKER-006** — Compliance retention defaults approved  
 - [ ] **BLOCKER-007** — Payment.js mobile validation — **IN VALIDATION** (PASS WITH CONDITIONS; not COMPLETED)  

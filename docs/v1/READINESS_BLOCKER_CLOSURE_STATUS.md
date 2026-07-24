@@ -54,7 +54,7 @@ New requirements → ADR or Change Request (Scope Baseline §10). No silent scop
 | BLOCKER-001 | Design assets & UI/UX specification | [`design/DESIGN_APPROVAL_RECORD.md`](./design/DESIGN_APPROVAL_RECORD.md) · UI/UX · Brand · Tokens · Color · [`design/assets/LOGO_ASSET_PACKAGE.md`](./design/assets/LOGO_ASSET_PACKAGE.md) | **READY FOR APPROVAL** (not COMPLETED — binaries missing) | Assets + colors approved + Product/Design signatures |
 | BLOCKER-002 | Stakeholder sign-off | [`governance/STAKEHOLDER_SIGN_OFF_PACKAGE.md`](./governance/STAKEHOLDER_SIGN_OFF_PACKAGE.md) | **READY FOR APPROVAL** (not COMPLETED) | Signatures on package §6 |
 | BLOCKER-003 | Vendor selection | [`vendors/VENDOR_EVALUATION_MATRIX.md`](./vendors/VENDOR_EVALUATION_MATRIX.md) | **Open** (evaluation prep ready) | Vendors **approved** |
-| BLOCKER-004 | Cloud infrastructure | [`infra/CLOUD_INFRASTRUCTURE_DECISION.md`](./infra/CLOUD_INFRASTRUCTURE_DECISION.md) | **Open** (decision sheet ready) | Cloud **approved** |
+| BLOCKER-004 | Cloud infrastructure | [`infra/CLOUD_INFRASTRUCTURE_DECISION.md`](./infra/CLOUD_INFRASTRUCTURE_DECISION.md) | **IN PREPARATION** (vendor-neutral blueprint; selections Pending) | Cloud **approved** (checklist §9) |
 | BLOCKER-005 | Finance Lebanon config | [`config/FINANCE_LEBANON_INITIAL_CONFIGURATION.md`](./config/FINANCE_LEBANON_INITIAL_CONFIGURATION.md) · [`governance/FINANCE_POLICY_APPROVAL_MATRIX.md`](./governance/FINANCE_POLICY_APPROVAL_MATRIX.md) · [`governance/FINANCE_POLICY_LIFECYCLE.md`](./governance/FINANCE_POLICY_LIFECYCLE.md) | **IN PREPARATION** (governance ready; values Pending Business Decision) | Approved finance values + Finance sign-off |
 | BLOCKER-006 | Compliance & retention | [`compliance/RETENTION_POLICY_DECISIONS.md`](./compliance/RETENTION_POLICY_DECISIONS.md) | **Open** (decisions template ready) | Compliance decisions **approved** |
 | BLOCKER-007 | Payment.js mobile spike | [`payment/PAYMENT_JS_MOBILE_VALIDATION_REPORT.md`](./payment/PAYMENT_JS_MOBILE_VALIDATION_REPORT.md) · [`payment/AREEBA_IXOPAY_VENDOR_VALIDATION_CHECKLIST.md`](./payment/AREEBA_IXOPAY_VENDOR_VALIDATION_CHECKLIST.md) | **IN VALIDATION** (PASS WITH CONDITIONS — not COMPLETED) | Checklist §8 + Architect/Eng approval |
@@ -220,27 +220,38 @@ Until then: keep **READY FOR APPROVAL**.
 
 # BLOCKER-004 — Cloud Infrastructure Approval
 
-**Status:** **Open**  
+**Status:** **IN PREPARATION**  
+**Not:** COMPLETED (provider/hosting selections + RPO/RTO still Pending)  
 **ADR:** ADR-012 · ADR-024  
 **Artifact:** [`infra/CLOUD_INFRASTRUCTURE_DECISION.md`](./infra/CLOUD_INFRASTRUCTURE_DECISION.md)  
 
-### Required decisions (pending approval)
+### Preparation coverage
 
-Cloud provider · Region · Database hosting · Storage · Redis · Worker infrastructure · Monitoring · Logging · Backup · Disaster recovery  
+- [x] Platform components documented (API, DB, Redis, workers, storage)  
+- [x] Environment / security / backup-DR / scale / observability / CI-CD defined  
+- [x] Vendor neutrality confirmed  
+- [x] Approval checklist published  
+- [ ] Cloud provider + hosting products selected  
+- [ ] RPO / RTO decided  
+- [ ] DevOps + Business (+ Security) sign-off  
+- [ ] BLOCKER-004 → **COMPLETED**  
 
-Architecture remains **vendor-neutral** until this sheet is approved. **Do not** change approved application architecture.
+Architecture remains **vendor-neutral** until selections are approved. **Do not** change approved application architecture.
 
-### Acceptance
+### Acceptance → COMPLETED
 
-- [ ] Decision sheet filled with approved values  
+- [ ] Decision sheet filled with approved values (not Pending)  
 - [ ] Staging + Production targets acknowledged  
 - [ ] DevOps + Business sign-off recorded  
+
+Until then: keep **IN PREPARATION**.
 
 ### Closure log
 
 | Date | Event |
 |------|-------|
 | 2026-07-24 | Infrastructure decision document published (values TBD) |
+| 2026-07-24 | Vendor-neutral production blueprint expanded — status **IN PREPARATION** |
 
 ---
 
@@ -368,6 +379,7 @@ Financial records and audit records **cannot** be removed if legally required.
 | 2026-07-24 | BLOCKER-005 Finance Lebanon config — **IN PREPARATION** (values Pending Business Decision) | 0/7 | **B) NOT READY — CODING BLOCKED** |
 | 2026-07-24 | BLOCKER-005 Finance Policy Approval Matrix published — still **IN PREPARATION** | 0/7 | **B) NOT READY — CODING BLOCKED** |
 | 2026-07-24 | BLOCKER-005 Finance Policy Lifecycle published — still **IN PREPARATION** | 0/7 | **B) NOT READY — CODING BLOCKED** |
+| 2026-07-24 | BLOCKER-004 Cloud Infrastructure Decision expanded — **IN PREPARATION** | 0/7 | **B) NOT READY — CODING BLOCKED** |
 
 ---
 
