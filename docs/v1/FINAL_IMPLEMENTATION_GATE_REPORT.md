@@ -41,7 +41,8 @@ Scope freeze does **not** authorize coding. Implementation remains blocked until
 - **Implementation Readiness Execution Plan published** — blocker register **BLOCKER-001…007**  
 - **Readiness Blocker Closure pack published** — checklists/templates/plans for all blockers; **0/7 closed**  
   - BLOCKER-001: **READY FOR APPROVAL** — final approval package ready; required asset folders verified; **binaries missing**; colors Draft/Approved split (Approved empty); **not COMPLETED**  
-  - BLOCKER-003…007: evaluation / decision / config / validation artifacts ready for owner input  
+  - BLOCKER-007: **IN VALIDATION** — [`payment/PAYMENT_JS_MOBILE_VALIDATION_REPORT.md`](./payment/PAYMENT_JS_MOBILE_VALIDATION_REPORT.md) result **PASS WITH CONDITIONS** (not COMPLETED; live sandbox pending)  
+  - BLOCKER-002…006: evaluation / decision / config artifacts ready for owner input  
 - No authorization to code — no architecture or scope changes  
 - Implementation gate remains **B**
 
@@ -112,7 +113,7 @@ Backend-only scaffolding is also **not authorized** by this gate until G-02 is s
 | Starting UI without assets | Rework, brand drift | ADR-023 hard stop |
 | Confusing catalog ads with e-commerce | Wrong schema/APIs | ADR-027 naming + forbidden tables/APIs |
 | Hardcoding finance values | Legal/ops failure | ADR-013/026 + code review gates |
-| Payment.js WebView failures | Revenue blocker | Mandatory spike (G-07) |
+| Payment.js WebView failures | Revenue blocker | Architecture PASS WITH CONDITIONS; complete live sandbox (G-07) before pay UI |
 | Vendor lock delay | Schedule slip | Ports ready (ADR-025) |
 | Policy misconfiguration | Money errors | Staging dry-run + audit |
 
