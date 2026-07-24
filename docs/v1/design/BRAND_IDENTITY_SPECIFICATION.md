@@ -274,7 +274,7 @@ Exact hex: sample from master logo file; provisional values documented in tokens
 
 | Evaluate | Finding | Action |
 |----------|---------|--------|
-| Small-size readability | Tool detail may muddy &lt; 32 px | Provide simplified compact / app-icon export |
+| Small-size readability | Tool detail may muddy under 32 px | Provide simplified compact / app-icon export |
 | Icon spacing | Internal tool density | Harmonize gaps; keep house dominant |
 | Tool balance | Three tools must share optical weight | Unify stroke weight in icon exports |
 | Typography alignment | Bilingual lockup | Arabic-leading (market default); optical align with symbol |
