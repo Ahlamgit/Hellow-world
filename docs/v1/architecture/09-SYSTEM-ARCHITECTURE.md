@@ -101,8 +101,9 @@ Rationale for V1:
 - Stateless API instances horizontally scaled  
 - PostgreSQL primary + optional read replica for reporting  
 - Connection pooling (HikariCP)  
-- Cache (Redis) candidate for sessions/rate-limits/feature flags — decision Q-DEP-003  
+- Cache (Redis) — **required** for rate-limits, distributed locks, feature flags (ADR-012)  
 - Object storage for binary load off DB  
+- Background **worker** process required for notifications, schedules, payment reconciliation  
 
 ## 9.7 Resilience
 

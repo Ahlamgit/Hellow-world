@@ -39,10 +39,11 @@ Mobile apps distribute via App Store / Play Store; talk to API endpoint per envi
 | Image | Contents |
 |-------|----------|
 | `khadamati-api` | Spring Boot fat jar |
+| `khadamati-worker` | Same image, worker command (schedulers, outbox, reconcile) |
 | `khadamati-admin` | Nginx + static admin build |
 | `khadamati-store` | Nginx + static store build |
 | `postgres` | Official Postgres + init |
-| optional redis | If Q-DEP-003 true |
+| `redis` | **Required** (ADR-012) — cache, rate-limit, locks, queues support |
 
 ## 36.4 Runtime Options
 
