@@ -17,3 +17,8 @@ Decisions recorded from Master Implementation Prompt v1.0 and architecture audit
 | [ADR-011](./ADR-011-flutter-mobile-stack.md) | Flutter is approved mobile stack | Accepted |
 | [ADR-012](./ADR-012-redis-workers-required.md) | Redis + background workers required in V1 | Accepted |
 | [ADR-013](./ADR-013-admin-configurable-financial-business-rules.md) | Admin configurable financial business rules | Accepted |
+| [ADR-014](./ADR-014-account-deletion-retention.md) | Account deletion & retention | Accepted direction (values pending) |
+| [ADR-015](./ADR-015-chat-transport-scoping.md) | Chat scoping; transport spike pending | Accepted / partial |
+| [ADR-016](./ADR-016-scheduling-model.md) | Scheduling model | **Open — Product** |
+| [ADR-017](./ADR-017-dispute-workflow-depth.md) | Dispute workflow depth | **Open — Product** |
+| [ADR-018](./ADR-018-dark-theme-v1.md) | Dark theme in V1 | **Open — Design** |

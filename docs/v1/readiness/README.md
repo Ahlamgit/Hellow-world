@@ -1,0 +1,18 @@
+# Readiness Pack Index
+
+Final architecture validation artifacts (no production code).
+
+| Doc | Description |
+|-----|-------------|
+| [01-ARCHITECTURE-CONSISTENCY-REVIEW.md](./01-ARCHITECTURE-CONSISTENCY-REVIEW.md) | Conflicts, gaps, ownership |
+| [02-FINAL-DATABASE-ARCHITECTURE.md](./02-FINAL-DATABASE-ARCHITECTURE.md) | Logical DB design |
+| [03-API-ARCHITECTURE-MAP.md](./03-API-ARCHITECTURE-MAP.md) | API map |
+| [04-AUTHORIZATION-MATRIX.md](./04-AUTHORIZATION-MATRIX.md) | RBAC |
+| [05-BUSINESS-WORKFLOW-VALIDATION.md](./05-BUSINESS-WORKFLOW-VALIDATION.md) | Workflows |
+| [06-BUSINESS-RULE-ENGINE-VALIDATION.md](./06-BUSINESS-RULE-ENGINE-VALIDATION.md) | Configurable finance rules |
+| [07-UI-UX-ARCHITECTURE-PREP.md](./07-UI-UX-ARCHITECTURE-PREP.md) | Screen inventory (spec only) |
+| [08-DESIGN-SYSTEM-VALIDATION.md](./08-DESIGN-SYSTEM-VALIDATION.md) | Design system requirements |
+| [09-DEPLOYMENT-ARCHITECTURE.md](./09-DEPLOYMENT-ARCHITECTURE.md) | Deploy/DR |
+| [10-SECURITY-REVIEW-CHECKLIST.md](./10-SECURITY-REVIEW-CHECKLIST.md) | Security checklist |
+
+Parent report: [../FINAL_ARCHITECTURE_READINESS_REPORT.md](../FINAL_ARCHITECTURE_READINESS_REPORT.md)

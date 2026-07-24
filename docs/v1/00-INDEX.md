@@ -89,6 +89,8 @@ It is intentionally **implementation-free**. No application code, UI templates, 
 
 **Cross-cutting:** [QUESTIONS-REQUIRING-BUSINESS-DECISION.md](./QUESTIONS-REQUIRING-BUSINESS-DECISION.md)  
 **Final architecture audit:** [ARCHITECTURE_AUDIT_FINAL.md](./ARCHITECTURE_AUDIT_FINAL.md)  
+**Final readiness report:** [FINAL_ARCHITECTURE_READINESS_REPORT.md](./FINAL_ARCHITECTURE_READINESS_REPORT.md)  
+**Readiness pack:** [readiness/](./readiness/)  
 **Master prompt v1.0 (controlling):** [MASTER_IMPLEMENTATION_PROMPT_v1.0.md](./MASTER_IMPLEMENTATION_PROMPT_v1.0.md)  
 **Feature Traceability Matrix:** [FEATURE_TRACEABILITY_MATRIX.md](./FEATURE_TRACEABILITY_MATRIX.md)  
 **ADRs:** [adr/README.md](./adr/README.md)  
