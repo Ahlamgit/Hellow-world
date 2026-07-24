@@ -1,13 +1,13 @@
 # KHADAMATI V1 — Production Operations Readiness
 
 **Document ID:** KHAD-V1-PROD-OPS-READINESS  
-**Version:** 1.0  
+**Version:** 1.1  
 **Date:** 2026-07-24  
 **Role:** Cloud Operations Architect  
 **BLOCKER-004 status:** **IN PREPARATION**  
 
 **Sources:**  
-[`CLOUD_INFRASTRUCTURE_DECISION.md`](./CLOUD_INFRASTRUCTURE_DECISION.md) · [`CLOUD_SIZING_AND_COST_FRAMEWORK.md`](./CLOUD_SIZING_AND_COST_FRAMEWORK.md) · Master Prompt v1.0 · ADR-024  
+[`CLOUD_INFRASTRUCTURE_DECISION.md`](./CLOUD_INFRASTRUCTURE_DECISION.md) · [`CLOUD_SIZING_AND_COST_FRAMEWORK.md`](./CLOUD_SIZING_AND_COST_FRAMEWORK.md) · Master Prompt v1.0 · Final Architecture Decisions Complete · Scope Baseline · ADR-024 · ADR-012 · ADR-004 · ADR-006  
 
 ```text
 DO NOT write production code.
@@ -15,8 +15,8 @@ DO NOT deploy infrastructure.
 DO NOT create cloud resources.
 DO NOT select a cloud provider.
 
-Operational requirements only — tooling products remain
-Pending Infrastructure Approval until provider is chosen.
+KHADAMATI-specific operational requirements only.
+Tooling products remain Pending Infrastructure Approval.
 ```
 
 ---
@@ -29,136 +29,223 @@ Pending Infrastructure Approval until provider is chosen.
 | Infrastructure | **NOT DEPLOYED** |
 | Provider | **NOT SELECTED** |
 | RPO / RTO | **Pending Infrastructure Approval** |
-| BLOCKER-004 COMPLETED | ☐ No — requires provider, budget, RPO/RTO, and approvals |
+| BLOCKER-004 COMPLETED | ☐ No — requires provider, budget, RPO/RTO, DevOps approval |
 
 ---
 
 ## Purpose
 
-Define **operational requirements** required before production launch, independent of a specific cloud brand.
+Define operational requirements required before **KHADAMATI production launch**, covering:
+
+| Surface / domain |
+|------------------|
+| Marketplace operations (service-first discovery, bookings) |
+| Customer mobile app |
+| Provider (Craftsman) mobile app |
+| Store dashboard |
+| Admin portal (web only) |
+| Payment.js / Areeba IXOPAY payment flow |
+| Ledger and settlement operations |
+| Booking workflows |
+| Booking-scoped chat |
+| Notification workers |
+| Identity verification documents |
+| Multi-country / Market expansion readiness |
+
+No implementation · No infrastructure creation · No provider selection.
 
 ---
 
 # 1. Monitoring Strategy
 
-Tooling/products: **Pending Infrastructure Approval** (portable signals below are mandatory).
+Signals are mandatory; concrete products: **Pending Infrastructure Approval**.
 
-### 1.1 Application
+## 1.1 Application Layer
 
-| Signal | Requirement |
-|--------|-------------|
-| API availability | Health/readiness probes; uptime measurement per environment |
-| Response time | Latency percentiles (e.g. p50/p95/p99) on critical routes |
-| Errors | 5xx rate, exception rate, dependency failure rate |
+| Monitor | KHADAMATI relevance |
+|---------|---------------------|
+| API availability | Customer, Craftsman, Store, Admin all share API |
+| API response time | Search, booking, pay, chat paths |
+| Error rates | 5xx / handled domain error spikes |
+| Authentication failures | Customer/Provider/Store/Admin (Admin web + MFA) |
+| Booking failures | Request → confirm → pay → complete transitions |
+| Payment workflow failures | Intent, debit, REQUIRES_ACTION, finalize |
 
-### 1.2 Database
+Also track Store catalog/ad inquiry endpoints separately from bookable services (no e-commerce).
 
-| Signal | Requirement |
-|--------|-------------|
-| Performance | Query latency / slow query visibility |
-| Connections | Active/idle vs max; saturation alerts |
-| Storage | Used % / free space / growth trend |
+## 1.2 Database Layer
 
-### 1.3 Infrastructure
+| Monitor | Notes |
+|---------|-------|
+| Database availability | Primary health / failover events |
+| Query performance | Slow queries on search, bookings, ledger |
+| Connections | Saturation vs pool limits |
+| Storage growth | OLTP + indexes + WAL |
+| Transaction failures | Deadlocks / abort rates |
 
-| Signal | Requirement |
-|--------|-------------|
-| CPU | Per API/worker node or service |
-| Memory | Utilization + OOM risk |
-| Network | LB errors, egress anomalies, saturation |
+### Special attention — financial records
 
-### 1.4 Workers
+| Monitor | Intent |
+|---------|--------|
+| Ledger integrity | Unexpected post failures; reconcile job gaps |
+| Payment transactions | Stuck Pending; capture/fail imbalance |
+| Settlement records | Batch failures; hold/release anomalies |
 
-| Signal | Requirement |
-|--------|-------------|
-| Queue failures | Consumer errors, DLQ depth |
-| Retry failures | Exhausted retries; poison messages |
-| Lag | Outbox / queue age vs SLO (target Pending Approval) |
+## 1.3 Cache Layer (Redis)
 
-### 1.5 Payments
+| Monitor | Intent |
+|---------|--------|
+| Memory usage | Eviction risk |
+| Connection health | Client errors |
+| Cache failures | Error rate |
+| Queue health | Depth, lag, consumer availability (ADR-012) |
 
-| Signal | Requirement |
-|--------|-------------|
-| Payment failures | Debit decline/error rates; adapter timeouts |
-| Webhook failures | Auth failures, processing errors, lag to finalize |
-| Reconcile gaps | Pending payments past threshold |
+## 1.4 Worker Layer
+
+| Workload | Monitor |
+|----------|---------|
+| Notification jobs | Failures, lag, channel errors |
+| Payment webhook processing | Auth fails, processing errors, lag |
+| Retry queues | Exhausted retries / DLQ |
+| Settlement jobs | Failures, overdue runs |
+| Scheduled availability tasks | Missed schedules; calendar job health |
+
+## 1.5 Payment Operations
+
+| Monitor | Intent |
+|---------|--------|
+| Payment initialization failures | Intent create errors |
+| Payment.js failures | Tokenize / WebView path errors (client signals + server) |
+| IXOPAY webhook failures | Signature/auth/process failures |
+| Duplicate event protection | Idempotent finalize collisions (safe no-ops vs bugs) |
+| Failed transactions | Decline/error rates |
+| Reconciliation issues | Pending past threshold; ledger vs gateway mismatch |
 
 ---
 
 # 2. Alerting Strategy
 
-### 2.1 Critical
+## 2.1 Severity levels
 
-| Alert | Intent |
-|-------|--------|
-| Service unavailable | API/portal down or failing health checks |
-| Database failure | Primary unreachable / failover event |
-| Payment outage | Gateway/adapter systemic failure or webhook pipeline down |
-| Security incident | Suspected breach, mass auth abuse, webhook signature bypass attempts |
+| Severity | Meaning | Response expectation |
+|----------|---------|----------------------|
+| Critical | Outage, money/security risk, data integrity | Immediate on-call |
+| Warning | Degradation trending to user/money impact | Same-day triage |
+| Info (optional) | Notable but non-urgent | Business hours |
 
-**Response:** Immediate page/on-call; incident process §7 (Severity 1).
+Exact SLAs: **Pending Infrastructure Approval**.
 
-### 2.2 Warning
+## 2.2 Critical alerts (examples)
 
-| Alert | Intent |
-|-------|--------|
-| High resource usage | CPU/memory/connection thresholds sustained |
-| Queue delays | Worker lag above warning threshold |
-| Storage growth | DB/object storage approaching capacity |
+| Alert | Owner (primary) | Escalation |
+|-------|-----------------|------------|
+| Application unavailable | DevOps / Eng on-call | Eng Lead → Product |
+| Database unavailable | DevOps | Eng Lead → Architect |
+| Payment processing outage | Eng (Payments) + DevOps | Finance + Product |
+| Webhook processing failure | Eng (Payments) | DevOps → Finance |
+| Ledger inconsistency | Eng + Finance liaison | Architect → Finance |
+| Security incident | Security + DevOps | Product / Legal as needed |
+| Data access violation | Security | Compliance / Legal |
 
-**Response:** Ticket + same-day triage; escalate if trending critical.
+## 2.3 Warning alerts (examples)
 
-Threshold numerics: **Pending Infrastructure Approval** (set with sizing model).
+| Alert | Owner | Escalation |
+|-------|-------|------------|
+| High CPU/memory usage | DevOps | Eng if sustained |
+| Slow APIs | Eng | DevOps capacity |
+| Queue delays | Eng / DevOps | Payments if pay/notify queues |
+| Storage growth | DevOps | Compliance if KYC/finance stores |
+| Failed retries | Eng | Payments/Notifications owners |
+| Increased booking failures | Eng / Ops | Product |
+
+**Alert owner:** named on-call rotation — **Pending Infrastructure Approval** / Ops assignment.  
+**Escalation path:** Primary → secondary on-call → Eng Lead → Product/Finance/Security by domain.  
+**Response expectation:** per severity table above.
 
 ---
 
 # 3. Logging Strategy
 
-| Log class | Content (examples) | Notes |
-|-----------|-------------------|-------|
-| Application logs | Request path, correlation ID, errors (no secrets) | Structured JSON preferred |
-| Audit logs | Admin/finance policy changes, privileged actions | Immutable append; protected retention |
-| Payment logs | Payment id, gateway refs, safe status codes — **never** PAN/CVV/full tokens | Align Payment.js validation security |
-| Security logs | Auth failures, MFA events, webhook auth failures | Restricted access |
+## 3.1 Application logs
+
+| Include | Notes |
+|---------|-------|
+| API requests | Method, path, status, latency, correlation ID |
+| Errors | Stack/safe message; no secrets |
+| Authentication events | Success/fail by audience (customer/craftsman/store/admin) |
+
+## 3.2 Audit logs (mandatory)
+
+| Action class | Examples |
+|--------------|----------|
+| Admin actions | User restrict, verification decisions |
+| Finance policy changes | Commission, cancel, refund, withdrawal, settlement (ADR-013) |
+| Subscription changes | Plan create/update/assign |
+| Commission changes | Rule version activate |
+| Settlement actions | Batch run, hold/release overrides (if any) |
+
+## 3.3 Payment logs
+
+| Include | Constraint |
+|---------|------------|
+| Payment lifecycle events | Pending → Paid/Failed/… |
+| Webhook events | Verified receipt metadata |
+| Gateway responses | Safe codes/refs only |
+| Reconciliation records | Gap/resolution notes |
+| **Never** | PAN, CVV, full payment tokens |
+
+## 3.4 Security logs
+
+| Include |
+|---------|
+| Login attempts |
+| MFA events (Admin) |
+| Permission / role changes |
+| Suspicious activities (rate abuse, webhook auth fail spikes) |
 
 ### Requirements
 
 | Requirement | Confirm |
 |-------------|---------|
-| Retention | Per Compliance/Admin policy — **Pending** numeric defaults (BLOCKER-006) |
+| Retention policy | Align BLOCKER-006 / ADR-022 — numerics Pending |
 | Access control | Least privilege; break-glass audited |
-| Protection from modification | Append-only / WORM-style where offered; no silent delete of audit/finance logs |
-| Correlation | Request/payment/booking IDs across services |
+| Protection from modification | Append-only / immutable where offered |
+| Auditability | Reconstruct who/what/when for finance & admin |
 
 ---
 
 # 4. Backup Operations
 
+### Required backups
+
+| Asset | Notes |
+|-------|-------|
+| Database | PostgreSQL OLTP (bookings, ledger, users) |
+| Financial records | Contained in DB; protected retention |
+| Provider documents | Object storage |
+| Identity verification files | Object storage; restricted |
+| Application configuration | Secrets + non-secret config snapshots/export process |
+
+### Operations
+
 | Element | Requirement |
 |---------|-------------|
-| Backup frequency | DB: daily full + continuous PITR if available; object: versioning (Cloud Decision) |
-| Backup verification | Automated success checks + periodic integrity validation |
-| Restore testing | **Required** before production launch; recurring cadence **Pending Infrastructure Approval** |
-| Backup ownership | DevOps primary; Finance/Compliance informed for financial/audit data restores |
+| Backup frequency | DB: daily + PITR if available; object: versioning |
+| Backup ownership | DevOps primary; Finance/Compliance informed for money/KYC restores |
+| Backup encryption | At rest encryption required |
+| Backup verification | Automated success + periodic integrity checks |
+| Restore testing process | Documented drill before launch; recurring cadence Pending Approval |
 
 | Metric | Value |
 |--------|-------|
 | **RPO** | **Pending Infrastructure Approval** |
 | **RTO** | **Pending Infrastructure Approval** |
 
-Redis: ephemeral — rebuild from DB; not a backup source of truth.
-
 ---
 
 # 5. Deployment Operations
 
-| Element | Requirement |
-|---------|-------------|
-| CI/CD ownership | DevOps / Engineering Lead (process); tooling Pending Approval |
-| Release process | Gated Production releases; changelog; migration plan |
-| Rollback process | Redeploy previous immutable artifact; DB forward-fix with care |
-| Version management | Tagged artifacts; environment promotion record |
-| Environment promotion | Dev → Staging → Production only (no hot-patch prod from laptops as norm) |
+## 5.1 Environment promotion
 
 ```text
 Development
@@ -166,62 +253,144 @@ Development
   → Production
 ```
 
-| Gate | Rule |
-|------|------|
-| Staging | Required before Production for API/worker/payment-touching changes |
-| Production | Explicit approval; migrate job controlled; feature flags for money where applicable |
+| Requirement | Confirm |
+|-------------|---------|
+| Environment isolation | ☑ Required |
+| Configuration management | Per-env config; no prod values in Dev |
+| Secrets management | Per-env secrets; never in git |
+
+## 5.2 Release process
+
+| Element | Requirement |
+|---------|-------------|
+| Versioning | Immutable artifact tags |
+| Approval process | Staging validation; Production gated approval |
+| Deployment window | Prefer low-traffic; avoid settlement/payment batch collisions when possible |
+| Rollback strategy | Redeploy previous artifact |
+| Emergency rollback | Sev-1 path; Eng Lead authorize; document |
+
+## 5.3 CI/CD operations
+
+| Element | Requirement |
+|---------|-------------|
+| Build validation | Compile/lint/unit gates |
+| Automated testing gates | Required suites green before Staging/Prod promote |
+| Deployment approval | Human gate for Production (and money-touching releases) |
+
+Tooling: **Pending Infrastructure Approval**.
 
 ---
 
 # 6. Security Operations
 
+## 6.1 Access management
+
+| Control | KHADAMATI note |
+|---------|----------------|
+| Role-based access | API RBAC + Admin permissions |
+| Least privilege | Cloud IAM + app roles |
+| Admin portal security | Web only; MFA (ADR-006) |
+| MFA enforcement | Mandatory for Admin / Finance Admin |
+
+## 6.2 Secrets management
+
+| Element | Requirement |
+|---------|-------------|
+| Secret storage | Secrets manager (product Pending Approval) |
+| Rotation process | Documented cadence (payment, DB, JWT signing, etc.) |
+| Access restrictions | No broad human read of prod payment secrets |
+
+## 6.3 Vulnerability management
+
 | Practice | Requirement |
 |----------|-------------|
-| Access management | IAM least privilege; MFA for cloud console + Admin Portal (ADR-006) |
-| Secret rotation | Documented cadence; no secrets in git/images |
-| Vulnerability updates | OS/image/runtime patching cadence |
-| Dependency monitoring | SCA on application dependencies in CI |
-| Audit review | Periodic review of privileged cloud + Admin finance actions |
+| Dependency scanning | CI SCA |
+| Security updates | Runtime/OS/image patches |
+| Patch management | Cadence + emergency CVE path |
 
-Cloud security product names: **Pending Infrastructure Approval**.
+## 6.4 Compliance operations
+
+| Data class | Ops consideration |
+|------------|-------------------|
+| User data | Access control; deletion/retention per ADR-022 |
+| Provider documents | Restricted buckets; audit access |
+| Identity verification | Least privilege; retention-aware purge jobs |
+| Financial records | Never casually purged; legal hold capable |
+
+Multi-country: Market-scoped config; residency/region choices later without rewriting ops model (ADR-001 / ADR-024).
 
 ---
 
 # 7. Incident Management
 
-### 7.1 Detection
+## 7.1 Incident detection
 
-Monitoring + alerting (§1–§2); on-call roster **Pending Infrastructure Approval** / Ops assignment.
+| Source |
+|--------|
+| Monitoring |
+| Alerts |
+| Security events |
+| Customer / provider reports (support) |
+| Store / Admin operator reports |
 
-### 7.2 Severity levels
+## 7.2 Severity levels
 
-| Severity | Examples | Response expectation |
-|----------|----------|----------------------|
-| Sev-1 Critical | Full outage, DB down, payment outage, security incident | Immediate |
-| Sev-2 High | Major degradation, payment partial failure, significant queue backlog | Urgent (hours) |
-| Sev-3 Medium | Limited feature impact, elevated errors | Next business day |
-| Sev-4 Low | Minor / cosmetic ops issues | Planned |
+```text
+Critical
+  → High
+  → Medium
+  → Low
+```
 
-Exact SLAs: **Pending Infrastructure Approval**.
+| Level | Examples |
+|-------|----------|
+| Critical | Full API outage, DB down, payment outage, breach, ledger inconsistency |
+| High | Major booking/pay degradation, webhook pipeline delayed, regional worker outage |
+| Medium | Single feature impaired (e.g. notifications delayed), elevated errors |
+| Low | Minor ops noise, non-user-facing |
 
-### 7.3 Response process
+## 7.3 Response process
 
-1. Detect / declare severity  
-2. Assemble responders (Eng + DevOps; Finance if money; Security if Sev-1 security)  
-3. Mitigate (rollback, failover, disable flag)  
-4. Communicate status (internal; customer comms per Ops)  
+```text
+Detection
+  → Assessment
+  → Containment
+  → Recovery
+  → Post-incident review
+```
 
-### 7.4 Recovery process
+## 7.4 Special incident scenarios
 
-Restore service per runbooks; verify payments/ledger consistency after payment incidents; confirm backup restore if data loss.
-
-### 7.5 Post-incident review
-
-Blameless review; action items; update runbooks/alerts; no silent scope changes.
+| Scenario | Containment / recovery focus |
+|----------|------------------------------|
+| Payment outage | Stop new captures if unsafe; preserve Pending; reconcile; Finance notify |
+| Data breach | Isolate access; Security lead; Legal/Compliance; preserve logs |
+| Database failure | Failover/restore per DR; verify ledger continuity |
+| Notification failure | Queue backlog drain; avoid duplicate spam; Ops/Product comms |
+| Provider verification failure | Pause auto-approvals if systemic; Admin manual path; storage/OCR vendor check |
 
 ---
 
-# 8. Production Approval Checklist
+# 8. Disaster Recovery Operations
+
+| Capability | Requirement |
+|------------|-------------|
+| Service recovery | Redeploy API/portals/workers from known artifacts |
+| Database restoration | Restore / promote per runbook; verify migrations |
+| Storage restoration | Object version restore for KYC/media as needed |
+| Payment recovery | Reconcile with IXOPAY; idempotent webhook replay; ledger repair via reversing entries only |
+| Worker recovery | Redeploy consumers; drain backlog; clear poison with audit |
+
+| Metric | Value |
+|--------|-------|
+| **RPO** | **Pending Infrastructure Approval** |
+| **RTO** | **Pending Infrastructure Approval** |
+
+Single primary region for Lebanon V1; expansion-ready (ADR-024).
+
+---
+
+# 9. Production Approval Checklist
 
 | Area | Status |
 |------|--------|
@@ -229,42 +398,44 @@ Blameless review; action items; update runbooks/alerts; no silent scope changes.
 | Alerts | Pending |
 | Logging | Pending |
 | Backup testing | Pending |
+| Restore testing | Pending |
 | Deployment process | Pending |
 | Security operations | Pending |
 | Incident process | Pending |
+| Disaster recovery | Pending |
 
-Also required for BLOCKER-004 overall completion (Cloud Decision / Sizing):
+### BLOCKER-004 overall completion still requires
 
-| Area | Status |
+| Gate | Status |
 |------|--------|
-| Cloud provider | Pending |
-| Infrastructure budget | Pending |
-| RPO | Pending |
-| RTO | Pending |
-| DevOps / Business approval | Pending |
+| Cloud provider selected | Pending |
+| Infrastructure budget approved | Pending |
+| RPO approved | Pending |
+| RTO approved | Pending |
+| DevOps approval completed | Pending |
+
+Until those complete: keep BLOCKER-004 = **IN PREPARATION**.
 
 ---
 
-# 9. Relation to BLOCKER-004
+# 10. Relation to BLOCKER-004 pack
 
 | Artifact | Role |
 |----------|------|
 | [`CLOUD_INFRASTRUCTURE_DECISION.md`](./CLOUD_INFRASTRUCTURE_DECISION.md) | What to host |
 | [`CLOUD_SIZING_AND_COST_FRAMEWORK.md`](./CLOUD_SIZING_AND_COST_FRAMEWORK.md) | How to size/compare cost |
-| **This document** | How to operate production |
+| **This document (v1.1)** | How to operate KHADAMATI in production |
 
-BLOCKER-004 remains **IN PREPARATION** until cloud provider, budget, RPO/RTO, and approvals are completed.  
-This operations document alone does **not** complete BLOCKER-004.
-
----
-
-# 10. Explicit Non-Goals
-
-- No deployment or resource creation  
-- No provider selection  
-- No application code  
-- No invented SLO/RPO/RTO numbers  
+This document alone does **not** complete BLOCKER-004.
 
 ---
 
-**End of Production Operations Readiness v1.0**
+# 11. Explicit Non-Goals
+
+- No code · No deployment · No cloud resources · No provider selection  
+- No invented RPO/RTO/SLO numbers  
+- No application architecture changes  
+
+---
+
+**End of Production Operations Readiness v1.1**
