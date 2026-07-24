@@ -72,7 +72,10 @@ Money columns:
 ### Customer / Provider
 `customers`, `customer_addresses`, `providers`, `craftsman_profiles`, `store_profiles`, `store_users` / affiliations, `listings`, `availability_windows`
 
-> Products / product orders are **out of scope** (ADR-002).
+### Store promotional catalog (ADR-027 — not e-commerce)
+`catalog_items`, `catalog_item_media`, `catalog_inquiries`
+
+> **Forbidden:** `carts`, `product_orders`, `inventory_*`, `shipments`, `warehouses`
 
 ### Catalog
 `categories`, `category_translations`, `service_offerings` (projection or source)

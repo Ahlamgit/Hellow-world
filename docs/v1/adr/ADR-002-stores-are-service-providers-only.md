@@ -1,17 +1,27 @@
-# ADR-002: Stores Are Service Providers Only
+# ADR-002: Stores Are Service Providers (No E-Commerce) — Amended
 
 ## Status
-Accepted — 2026-07-24 (Master Prompt v1.0)
+Accepted — 2026-07-24 · **Amended by ADR-027** (2026-07-24)
 
 ## Context
-Earlier drafts included products, inventory, carts, and product orders for stores.
+Earlier drafts included full e-commerce (inventory, carts, product orders).
 
-## Decision
-Stores **do not** sell products in V1 (or as current product definition).
+## Decision (Amended)
 
-**Out of scope:** product inventory, product catalog, shopping cart, product ordering, product sales.
+Stores are:
 
-Stores offer **services** via the unified Listing model, manage bookings, affiliations, promotions, and analytics.
+- **Service providers** (bookable services via Listing)  
+- **Service advertisers**  
+- **Product catalog advertisers** (promotional content only — see ADR-027)
+
+### Still out of scope (V1 e-commerce)
+
+- Product checkout  
+- Shopping cart  
+- Online product purchasing / product payment  
+- Product delivery workflow  
+- Inventory / warehouse management  
+- Order fulfillment  
 
 ## Consequences
-Removes store commerce module depth. Answers Q-PRD-001 / Q-PAY-001 (no product orders). Update FRS/scope/API/ERD accordingly. Any future product commerce requires a new ADR.
+See ADR-027 for promotional catalog entities. No product-order tables.

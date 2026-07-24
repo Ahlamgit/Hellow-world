@@ -59,15 +59,18 @@ KHADAMATI is a multi-sided marketplace connecting:
 
 | ID | Requirement | Priority |
 |----|-------------|----------|
-| FR-STR-001 | Manage store profile (identity, contact, location, media metadata) | P0 |
-| FR-STR-002 | CRUD **service listings** (stores do **not** sell products — ADR-002) | P0 |
+| FR-STR-001 | Manage store profile (logo, business info, location, service areas, contact, status) | P0 |
+| FR-STR-002 | CRUD **service listings** (bookable) | P0 |
 | FR-STR-003 | Provider/staff affiliation management | P0 |
 | FR-STR-004 | Manage bookings related to store services | P0 |
-| FR-STR-005 | View promotion / advertisement status (admin-managed inventory) | P0 |
-| FR-STR-006 | Store analytics / reports | P1 |
-| FR-STR-007 | Store verification / onboarding status | P0 |
+| FR-STR-005 | **Product catalog advertising** (promotional only — ADR-027) | P0 |
+| FR-STR-006 | Catalog inquiries / leads inbox | P0 |
+| FR-STR-007 | Promotions for services & catalog (subscription + admin rules) | P0 |
+| FR-STR-008 | Store subscription status (Admin-managed plans) | P0 |
+| FR-STR-009 | Analytics (views, impressions, inquiries, booking conversions) | P1 |
+| FR-STR-010 | Store verification / onboarding status | P0 |
 
-**Explicitly out:** product inventory, product catalog, cart, product ordering, product sales.
+**Explicitly out:** cart, checkout, product payment, inventory, warehouse, product orders, fulfillment.
 
 ## 1.6 Customer Mobile App — Functional Requirements
 

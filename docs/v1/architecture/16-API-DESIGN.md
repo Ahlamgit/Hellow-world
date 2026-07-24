@@ -96,14 +96,21 @@
 
 | Method | Path | Description |
 |--------|------|-------------|
-| GET/PUT | `/api/v1/store/me` | Store profile |
-| CRUD | `/api/v1/store/listings` | Service listings (**no products**) |
+| GET/PUT | `/api/v1/store/me` | Store profile (logo, business info, location, areas, contact, status) |
+| CRUD | `/api/v1/store/listings` | Service listings (**bookable**) |
+| CRUD | `/api/v1/store/catalog-items` | **Promotional** product catalog (no checkout) |
+| GET | `/api/v1/store/inquiries` | Catalog inquiry leads |
 | CRUD | `/api/v1/store/staff` | Provider/staff affiliations |
 | GET/PATCH | `/api/v1/store/bookings` | Bookings |
-| GET | `/api/v1/store/promotions` | Promotion / featured status (admin-managed) |
-| GET | `/api/v1/store/reports/*` | Analytics |
+| GET | `/api/v1/store/promotions` | Promotion / featured eligibility (subscription-gated) |
+| GET | `/api/v1/store/subscriptions` | Store subscription status |
+| GET | `/api/v1/store/analytics/*` | Views, impressions, inquiries, booking conversions |
 
-> Product/order commerce endpoints are **out of scope** (ADR-002).
+**Authz:** Store token scoped to own `store_provider_id` only.
+
+> **Forbidden APIs:** cart, product checkout, product payment, inventory, product orders, fulfillment.
+
+Customer inquiry (non-payment): `POST /catalog-items/{id}/inquiries`
 
 ## 16.7 Admin APIs (representative)
 

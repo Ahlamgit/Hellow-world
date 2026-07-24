@@ -58,14 +58,15 @@
 |------|---------|
 | Auth | Login |
 | Profile | Store profile, verification status |
-| Services | Listing CRUD (services only) |
+| Services | Listing CRUD (bookable services) |
+| **Catalog** | Promotional product catalog CRUD (no cart) |
+| Inquiries | Catalog leads |
 | Staff | Affiliations |
 | Bookings | List, detail, respond |
-| Promotions | Status / visibility (admin-managed inventory) |
-| Analytics | Charts/reports |
+| Subscription | Plan status / limits |
+| Promotions | Service + catalog ad eligibility |
+| Analytics | Views, impressions, inquiries, conversions |
 | Notifications | |
-
-**Excluded:** Product catalog, cart, product orders.
 
 ### Admin Portal (React Web Only)
 

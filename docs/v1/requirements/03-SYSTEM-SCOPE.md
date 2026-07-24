@@ -12,7 +12,7 @@
 | Application | In Scope |
 |-------------|----------|
 | Administration Portal (React/TS/MUI) | Admin governance; **web-only**; MFA required |
-| Store Dashboard (React/TS/MUI) | Service provider ops — **no products** |
+| Store Dashboard (React/TS/MUI) | Services, promotional catalog ads, bookings, subscriptions, promotions, analytics — **no e-commerce** |
 | Customer Mobile (Flutter) | Discovery, booking, pay, chat, reviews, notifications |
 | Craftsman Mobile (Flutter) | Onboarding, jobs, IDV field checks, subscriptions, earnings |
 
@@ -51,7 +51,8 @@
 
 | Item | Rationale |
 |------|-----------|
-| Store **product** inventory/catalog/cart/orders/sales | ADR-002 — stores are service providers |
+| Store **e-commerce** (cart, checkout, product payment, inventory, orders, fulfillment) | ADR-002/027 — promotional catalog only |
+| Self-serve advertising marketplace | ADR-007 — admin rules + subscription-gated store promotions |
 | Self-serve advertising marketplace | ADR-007 — admin-managed promotions only |
 | Non-Areeba payment gateways | Explicit V1 constraint |
 | Admin login / admin APIs on mobile | ADR-006 |

@@ -11,7 +11,9 @@
 | ADR | Decision | Status |
 |-----|----------|--------|
 | 001 | Lebanon default Market; multi-market ready | Accepted |
-| 002 | Stores = service providers only (no products) | Accepted |
+| 002 | Stores = service providers; no e-commerce (**amended by 027**) | Accepted |
+...
+| **027** | **Store promotional product catalog (non-transactional)** | **Accepted** |
 | 003 | Unified Provider + Listing | Accepted |
 | 004 | Financial ledger mandatory | Accepted |
 | 005 | Booking: confirm then pay | Accepted |

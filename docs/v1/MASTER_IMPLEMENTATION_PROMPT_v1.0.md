@@ -184,28 +184,33 @@ Arrive → GPS validation → Selfie verification → OTP/QR confirmation
 
 ### Store Dashboard
 
-**Important:** Stores are **service providers**.
+**Important:** Stores are:
 
-Stores **DO NOT** sell products.
+- Service providers  
+- Service advertisers  
+- **Product catalog advertisers** (promotional showcase only)
 
-**Remove / out of scope:**
+Stores **DO NOT** run e-commerce.
 
-- Product inventory  
-- Product catalog  
-- Shopping cart  
-- Product ordering  
-- Product sales  
+**Out of scope (V1):**
+
+- Product checkout / shopping cart  
+- Online product purchasing / product payment  
+- Product delivery / warehouse / inventory management  
+- Order fulfillment  
 
 **Store features:**
 
-- Store profile  
-- Verification  
-- Service listings  
+- Store profile (logo, images, business info, location, service areas, contact, verification docs, business status)  
+- Service management (offerings, categories, descriptions, pricing, areas, availability)  
+- **Product catalog advertising** (name, images, descriptions, categories, brands/models, promo info, inquiry CTA) — no cart/checkout  
 - Provider/staff affiliation  
 - Booking management  
-- Promotions  
-- Advertisements (admin-aligned; see Admin)  
-- Analytics  
+- Store subscriptions (**Admin-managed** plans: duration, visibility, featured, ad limits, promoted services/catalog caps, search benefits)  
+- Advertisements for **services** and **catalog items** (subject to subscription + Admin promotion rules)  
+- Analytics (profile/service/catalog views, ad impressions, inquiries, booking conversions)  
+
+See ADR-002 (amended) and **ADR-027**.
 
 ### Administration Portal
 

@@ -113,22 +113,27 @@
 
 ---
 
-## 5. Store Dashboard (Services Only — No Products)
+## 5. Store Dashboard (Services + Catalog Advertising — No E-Commerce)
 
 | BR-ID | Feature | Module | Entity | API | UI | Status |
 |-------|---------|--------|--------|-----|-----|--------|
-| BR-STR-01 | Store profile | provider | store_profiles | /store/me | STR: Profile | Specified |
-| BR-STR-02 | Store verification | idv, provider | verification_cases | onboarding APIs | STR: Verify | Specified |
-| BR-STR-03 | Service listings | listing | listings | /store/listings | STR: Services | Specified |
+| BR-STR-01 | Store profile (logo, business info, location, areas, contact, status) | provider | store_profiles, media | /store/me | STR: Profile | Specified |
+| BR-STR-02 | Store verification documents / status | idv, provider | verification_cases | onboarding APIs | STR: Verify | Specified |
+| BR-STR-03 | Service listings management | listing | listings | /store/listings | STR: Services | Specified |
 | BR-STR-04 | Provider/staff affiliation | provider | affiliations | /store/staff | STR: Staff | Specified |
 | BR-STR-05 | Booking management | booking | bookings | /store/bookings | STR: Bookings | Specified |
-| BR-STR-06 | Promotions visibility | ads | promotions | /store/promotions (read/request) | STR: Promos | Specified |
-| BR-STR-07 | Advertisements (admin-aligned) | ads | campaigns | limited store APIs | STR: Ads status | Specified |
-| BR-STR-08 | Analytics | reporting | views | /store/reports | STR: Analytics | Specified |
-| BR-STR-X1 | Product inventory | — | — | — | — | **Deferred ADR-002 Out** |
-| BR-STR-X2 | Product catalog | — | — | — | — | **Deferred ADR-002 Out** |
-| BR-STR-X3 | Shopping cart | — | — | — | — | **Deferred ADR-002 Out** |
-| BR-STR-X4 | Product ordering/sales | — | — | — | — | **Deferred ADR-002 Out** |
+| BR-STR-06 | **Product catalog advertising** (non-transactional) | catalog_ads | catalog_items, media | /store/catalog-items | STR: Catalog | Specified |
+| BR-STR-07 | Customer catalog inquiries (leads) | catalog_ads | catalog_inquiries | /store/inquiries | STR: Inquiries | Specified |
+| BR-STR-08 | Promotions — services & catalog (subscription-gated) | ads | placements | /store/promotions | STR: Promos | Specified |
+| BR-STR-09 | Store subscription status (Admin-defined plans) | subscription | subscriptions | /store/subscriptions | STR: Subscription | Specified |
+| BR-STR-10 | Analytics (views, impressions, inquiries, booking conversions) | reporting | projections | /store/analytics | STR: Analytics | Specified |
+| BR-STR-11 | Service areas & availability linkage | provider, booking | service_areas, availability | store APIs | STR | Specified |
+| BR-STR-X1 | Product inventory / warehouse | — | — | — | — | **Out ADR-027** |
+| BR-STR-X2 | Shopping cart | — | — | — | — | **Out ADR-027** |
+| BR-STR-X3 | Product checkout / payment / orders | — | — | — | — | **Out ADR-027** |
+| BR-STR-X4 | Product delivery / fulfillment | — | — | — | — | **Out ADR-027** |
+
+**Admin store subscriptions:** BR-ADM-10 extended — Admin manages store subscription plans (visibility, featured, ad limits, promoted service/catalog caps).
 
 ---
 
@@ -230,13 +235,13 @@
 | Market / i18n | 7 | — |
 | Customer | 17 | — |
 | Craftsman | 22 | — |
-| Store | 8 in / **4 out** (products) | ADR-002 |
+| Store | 11 in / **4 e-commerce out** | ADR-002 amended + ADR-027 catalog advertising |
 | Admin | 28 | Self-serve ads marketplace deferred ADR-007; money policies admin-configurable ADR-013 |
 | Money | 15 | Policies admin-configurable ADR-013; numeric values by Finance Admin |
 | Quality | 7 | Permanent auto-ban forbidden |
 | Platform | 8 | — |
 
-**Silent drop check:** Product commerce features from earlier drafts are **explicitly deferred** via ADR-002 (not silent). Chat retained via ADR-009. Admin mobile login forbidden via ADR-006.
+**Silent drop check:** E-commerce product commerce remains **explicitly out** (ADR-027). Promotional product catalog is **in**. Chat retained. Admin mobile login forbidden.
 
 ---
 

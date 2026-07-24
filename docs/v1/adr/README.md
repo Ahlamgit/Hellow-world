@@ -27,4 +27,5 @@
 | [ADR-023](./ADR-023-design-asset-readiness.md) | Design asset gate | **Accepted** |
 | [ADR-024](./ADR-024-cloud-infrastructure-dr.md) | Cloud & DR (vendor-neutral) | **Accepted** |
 | [ADR-025](./ADR-025-external-integration-strategy.md) | Integration ports/adapters | **Accepted** |
-| [ADR-026](./ADR-026-lebanon-finance-policy-configuration.md) | Lebanon finance config | **Accepted** |
+| [ADR-026](./ADR-026-lebanon-finance-policy-configuration.md) | Lebanon finance config | Accepted |
+| [ADR-027](./ADR-027-store-product-catalog-advertising.md) | Store promotional catalog (no e-commerce) | **Accepted** |

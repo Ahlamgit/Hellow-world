@@ -44,13 +44,16 @@
 | Q-BOOK-010 | Bidding? | **Answered: No** (not in master prompt) |
 | Q-REL-001 | Craftsman independent and/or store-affiliated? | **Answered: Unified Provider; affiliation supported** (ADR-003) |
 | Q-REL-002 | Store services fulfilled via platform? | **Answered: Yes — stores are service providers** |
-| Q-REL-003 | Product delivery? | **N/A — products out of scope** (ADR-002) |
+| Q-REL-003 | Product delivery? | **Answered: Out — no product delivery/fulfillment** (ADR-027) |
+| Q-PAY-001 | Store product orders online pay? | **Answered: No product payments** (catalog is advertising only) |
+| Q-SUB-001 | Store subscriptions in V1? | **Answered: Yes — Admin-managed store subscription plans** (ADR-027) |
+| Q-PRD-001 | Product inventory model? | **Answered: No inventory — promotional catalog_items only** (ADR-027) |
 
 ## D. Payments
 
 | ID | Question | Status |
 |----|----------|--------|
-| Q-PAY-001 | Store product orders online pay? | **N/A — no products** (ADR-002) |
+| Q-PAY-001 | Store product orders online pay? | **Answered: No — catalog advertising only, no product payments** (ADR-027) |
 | Q-PAY-002 | Saved cards / withRegister? | Open |
 | Q-PAY-003 | Currencies on Areeba? | **Answered (directional):** USD for Lebanon launch; confirm merchant config with Areeba |
 
@@ -65,7 +68,7 @@
 
 | ID | Question | Status |
 |----|----------|--------|
-| Q-SUB-001 | Store subscriptions in V1? | Open (craftsman subscriptions required; store TBD) |
+| Q-SUB-001 | Store subscriptions in V1? | **Answered: Yes — Admin-managed store subscription plans** (ADR-027) |
 | Q-SUB-002 | Entitlement gates? | Open (configurable required) |
 | Q-SUB-003 | Auto-renew / grace? | Open |
 | Q-SUB-004 | Free tier? | Open |
@@ -91,7 +94,7 @@
 | ID | Question | Status |
 |----|----------|--------|
 | Q-ADS-001..005 | Ads monetization / slots | **Answered (directional):** Admin-managed promotions/packages/featured/slots; no self-serve ads marketplace (ADR-007) |
-| Q-PRD-001 | Product inventory model? | **N/A — products removed** (ADR-002) |
+| Q-PRD-001 | Product inventory model? | **Answered: No inventory — promotional `catalog_items` only** (ADR-027) |
 | Q-RATE-001 | Editable ratings? | Open |
 | Q-QUA-001/002 | Survey/score formula? | Open |
 | Q-QUA-003 | Restriction rules? | **Answered:** warn → flag → restrict visibility; **admin review**; no permanent auto-block (ADR-008) |
@@ -123,7 +126,8 @@
 | ADR-013 | Commission/cancellation/refund/withdrawal/settlement rules admin-configurable; never hardcoded | 2026-07-24 | ADR-013 |
 | Q-AUTH-002 | Admin MFA required | 2026-07-24 | ADR-006 |
 | Q-LOC-001..003 | Lebanon / AR+EN / USD | 2026-07-24 | ADR-001 |
-| Products | Out of scope for stores | 2026-07-24 | ADR-002 |
+| Products | No e-commerce; promotional catalog advertising allowed | 2026-07-24 | ADR-002 amended · ADR-027 |
+| Store subscriptions | Admin-managed plans in V1 | 2026-07-24 | ADR-027 |
 | Provider/Listing | Unified marketplace model | 2026-07-24 | ADR-003 |
 | Ledger | Mandatory | 2026-07-24 | ADR-004 |
 | Q-BOOK-008/009 | Confirm then pay; customer selects provider | 2026-07-24 | ADR-005 |
