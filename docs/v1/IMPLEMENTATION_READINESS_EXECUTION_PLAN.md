@@ -74,7 +74,7 @@ Closing **BLOCKER-001…007** is the path to amend the Implementation Gate Repor
 | BLOCKER-004 | Cloud infrastructure approval | Blueprint + sizing/cost + prod ops ready; provider/budget/RPO/RTO Pending | Fill workload; select provider; approve budget/RPO/RTO; ops checklist | DevOps / Business | Portable deploy pattern (ADR-012/024) | Provider, budget, RPO/RTO, ops readiness approved | **IN PREPARATION** |
 | BLOCKER-005 | Finance Lebanon configuration | Structure prepared; commercial values **Pending Business Decision** | Business/Finance fill values; approve; keep Admin-configurable | Finance | ADR-013 / 026 | Config values approved; remain Admin-editable; **not** hardcoded | **IN PREPARATION** |
 | BLOCKER-006 | Compliance & retention defaults | Governance framework ready; numeric defaults Pending Business / Legal Approval | Set defaults for account deletion, PII, financial, audit, documents, chat; Legal approve | Compliance / Legal | ADR-022 | Defaults approved; financial & audit records protected | **IN PREPARATION** |
-| BLOCKER-007 | Payment.js mobile validation spike | PASS WITH CONDITIONS; vendor checklist ready; live tests pending | Fill Areeba checklist; sandbox tests; Architect + Eng approval | Eng | Areeba sandbox (BLOCKER-003) | Checklist §8 complete → COMPLETED | **IN VALIDATION** |
+| BLOCKER-007 | Payment.js mobile validation spike | PASS WITH CONDITIONS; vendor checklist + security/recon framework ready; live tests pending | Fill Areeba checklist; sandbox tests; Architect + Eng approval | Eng | Areeba sandbox (BLOCKER-003) | Checklist §8 complete → COMPLETED | **IN VALIDATION** |
 
 ---
 
@@ -414,6 +414,15 @@ Keep **IN PREPARATION** until above are done.
 |----------|-------|
 | [`payment/PAYMENT_JS_MOBILE_VALIDATION_REPORT.md`](./payment/PAYMENT_JS_MOBILE_VALIDATION_REPORT.md) | ☑ PASS WITH CONDITIONS |
 | [`payment/AREEBA_IXOPAY_VENDOR_VALIDATION_CHECKLIST.md`](./payment/AREEBA_IXOPAY_VENDOR_VALIDATION_CHECKLIST.md) | ☑ Published — values PVC |
+| [`payment/PAYMENT_SECURITY_AND_RECONCILIATION_FRAMEWORK.md`](./payment/PAYMENT_SECURITY_AND_RECONCILIATION_FRAMEWORK.md) | ☑ Published — approval checklist Pending |
+
+### Payment integrity preparation (supports implementation design; does not authorize coding)
+
+| Topic | State |
+|-------|-------|
+| Lifecycle / failure / idempotency / ledger / reconcile / security | ☑ Framework published |
+| Framework area approvals (flow, security, recon, ledger, gateway, finance) | ☐ All **Pending** |
+| Live gateway validation | ☐ Pending sandbox |
 
 ### Acceptance criteria → COMPLETED
 
@@ -426,7 +435,8 @@ Keep **IN PREPARATION** until above are done.
 - [ ] Architect approval  
 - [ ] Engineering approval  
 
-Keep status **IN VALIDATION** until all boxes above are checked.
+Keep status **IN VALIDATION** until all boxes above are checked.  
+**Implementation remains BLOCKED** (Gate B).
 
 ### Dependencies
 
@@ -503,6 +513,7 @@ Unauthorized scope additions during readiness or implementation are **out of pro
 | 2026-07-24 | BLOCKER-003 Integration Contract Specification published — still **IN PREPARATION** | 0/7 | **B) NOT READY — CODING BLOCKED** |
 | 2026-07-24 | BLOCKER-003 Vendor Risk & SLA Assessment published — still **IN PREPARATION** | 0/7 | **B) NOT READY — CODING BLOCKED** |
 | 2026-07-24 | BLOCKER-006 → **IN PREPARATION** (Retention & Data Governance Framework) | 0/7 | **B) NOT READY — CODING BLOCKED** |
+| 2026-07-24 | Payment Security & Reconciliation Framework published — BLOCKER-007 still **IN VALIDATION** | 0/7 | **B) NOT READY — CODING BLOCKED** |
 
 Active closure tracker: [`READINESS_BLOCKER_CLOSURE_STATUS.md`](./READINESS_BLOCKER_CLOSURE_STATUS.md).  
 Update that dashboard (and this table) when a blocker moves to Closed. Do **not** change gate decision from B until §3 checklist is complete.

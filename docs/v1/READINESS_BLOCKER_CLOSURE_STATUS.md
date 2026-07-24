@@ -57,7 +57,7 @@ New requirements → ADR or Change Request (Scope Baseline §10). No silent scop
 | BLOCKER-004 | Cloud infrastructure | [`infra/CLOUD_INFRASTRUCTURE_DECISION.md`](./infra/CLOUD_INFRASTRUCTURE_DECISION.md) · [`infra/CLOUD_SIZING_AND_COST_FRAMEWORK.md`](./infra/CLOUD_SIZING_AND_COST_FRAMEWORK.md) · [`infra/PRODUCTION_OPERATIONS_READINESS.md`](./infra/PRODUCTION_OPERATIONS_READINESS.md) | **IN PREPARATION** (ops readiness defined; provider/budget/RPO/RTO Pending) | Cloud **approved** (provider + budget + RPO/RTO + ops checklist) |
 | BLOCKER-005 | Finance Lebanon config | [`config/FINANCE_LEBANON_INITIAL_CONFIGURATION.md`](./config/FINANCE_LEBANON_INITIAL_CONFIGURATION.md) · [`governance/FINANCE_POLICY_APPROVAL_MATRIX.md`](./governance/FINANCE_POLICY_APPROVAL_MATRIX.md) · [`governance/FINANCE_POLICY_LIFECYCLE.md`](./governance/FINANCE_POLICY_LIFECYCLE.md) | **IN PREPARATION** (governance ready; values Pending Business Decision) | Approved finance values + Finance sign-off |
 | BLOCKER-006 | Compliance & retention | [`compliance/RETENTION_AND_DATA_GOVERNANCE_FRAMEWORK.md`](./compliance/RETENTION_AND_DATA_GOVERNANCE_FRAMEWORK.md) · [`compliance/RETENTION_POLICY_DECISIONS.md`](./compliance/RETENTION_POLICY_DECISIONS.md) | **IN PREPARATION** (framework ready; numeric defaults Pending Business / Legal Approval) | Compliance decisions **approved** |
-| BLOCKER-007 | Payment.js mobile spike | [`payment/PAYMENT_JS_MOBILE_VALIDATION_REPORT.md`](./payment/PAYMENT_JS_MOBILE_VALIDATION_REPORT.md) · [`payment/AREEBA_IXOPAY_VENDOR_VALIDATION_CHECKLIST.md`](./payment/AREEBA_IXOPAY_VENDOR_VALIDATION_CHECKLIST.md) | **IN VALIDATION** (PASS WITH CONDITIONS — not COMPLETED) | Checklist §8 + Architect/Eng approval |
+| BLOCKER-007 | Payment.js mobile spike | [`payment/PAYMENT_JS_MOBILE_VALIDATION_REPORT.md`](./payment/PAYMENT_JS_MOBILE_VALIDATION_REPORT.md) · [`payment/AREEBA_IXOPAY_VENDOR_VALIDATION_CHECKLIST.md`](./payment/AREEBA_IXOPAY_VENDOR_VALIDATION_CHECKLIST.md) · [`payment/PAYMENT_SECURITY_AND_RECONCILIATION_FRAMEWORK.md`](./payment/PAYMENT_SECURITY_AND_RECONCILIATION_FRAMEWORK.md) | **IN VALIDATION** (PASS WITH CONDITIONS — not COMPLETED) | Checklist §8 + Architect/Eng approval |
 
 **Closed count:** 0 / 7  
 **Gate decision:** Remains **B** until all seven acceptance criteria below are met.
@@ -394,10 +394,11 @@ Until then: keep **IN PREPARATION**.
 - [`payment/PAYMENT_JS_MOBILE_VALIDATION_REPORT.md`](./payment/PAYMENT_JS_MOBILE_VALIDATION_REPORT.md) — **PASS WITH CONDITIONS**  
 - [`payment/AREEBA_IXOPAY_VENDOR_VALIDATION_CHECKLIST.md`](./payment/AREEBA_IXOPAY_VENDOR_VALIDATION_CHECKLIST.md) — external validation pack (supports BLOCKER-003)  
 - [`payment/PAYMENT_JS_MOBILE_VALIDATION_PLAN.md`](./payment/PAYMENT_JS_MOBILE_VALIDATION_PLAN.md)  
+- [`payment/PAYMENT_SECURITY_AND_RECONCILIATION_FRAMEWORK.md`](./payment/PAYMENT_SECURITY_AND_RECONCILIATION_FRAMEWORK.md) — integrity / security / reconciliation (prep; approval checklist Pending)  
 
 ### Constraint
 
-**No production implementation.** Validation / spike only. Do not invent vendor values.
+**No production implementation.** Validation / spike only. Do not invent vendor values. Do not integrate Areeba or create payment APIs.
 
 ### Final acceptance (→ COMPLETED only when all checked)
 
@@ -415,6 +416,7 @@ Until then: keep **IN PREPARATION**.
 - [x] Architecture / feasibility spike documented  
 - [x] Result recorded: **PASS WITH CONDITIONS**  
 - [x] Vendor validation checklist published  
+- [x] Payment Security & Reconciliation Framework published (approval checklist Pending)  
 - [ ] Live sandbox scenarios PJS-01…10  
 - [ ] BLOCKER-007 → **COMPLETED**  
 
@@ -425,6 +427,7 @@ Until then: keep **IN PREPARATION**.
 | 2026-07-24 | Mobile validation plan published; spike not started |
 | 2026-07-24 | Validation report published — **IN VALIDATION** / PASS WITH CONDITIONS |
 | 2026-07-24 | Areeba IXOPAY vendor validation checklist published — remains **IN VALIDATION** |
+| 2026-07-24 | PAYMENT_SECURITY_AND_RECONCILIATION_FRAMEWORK published — remains **IN VALIDATION**; implementation **BLOCKED** |
 
 ---
 
@@ -450,6 +453,7 @@ Until then: keep **IN PREPARATION**.
 | 2026-07-24 | BLOCKER-003 Integration Contract Specification published — still **IN PREPARATION** | 0/7 | **B) NOT READY — CODING BLOCKED** |
 | 2026-07-24 | BLOCKER-003 Vendor Risk & SLA Assessment published — still **IN PREPARATION** | 0/7 | **B) NOT READY — CODING BLOCKED** |
 | 2026-07-24 | BLOCKER-006 Retention & Data Governance Framework — **IN PREPARATION** | 0/7 | **B) NOT READY — CODING BLOCKED** |
+| 2026-07-24 | Payment Security & Reconciliation Framework published — BLOCKER-007 still **IN VALIDATION**; coding **BLOCKED** | 0/7 | **B) NOT READY — CODING BLOCKED** |
 
 ---
 
