@@ -83,6 +83,7 @@ Engagement
 | BR-014 | **Admin MFA required** |
 | BR-015 | Promotions/ads in V1 are **admin-managed** (no self-serve ads marketplace) |
 | BR-016 | **Chat** is in V1 customer scope |
+| BR-017 | **Redis + background workers** required |
 | BR-018 | **Commission, cancellation, refund, withdrawal, and settlement rules are admin-configurable and must not be hardcoded** (ADR-013) |
 
 ## 2.5 Business Rules — Not Confirmed (Do Not Invent)
