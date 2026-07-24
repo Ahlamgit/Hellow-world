@@ -52,6 +52,10 @@
 | BR-MKT-05 | English LTR secondary | i18n clients | translations | Accept-Language | All | Specified |
 | BR-MKT-06 | Timezone Asia/Beirut default | platform | markets.timezone | scheduling | Booking | Specified |
 | BR-MKT-07 | Multi-market readiness (no Lebanon hardcode) | platform | markets | market_id FKs | — | Specified |
+| BR-MKT-08 | Unified Provider + capability model (ADR-028) | provider | providers, provider_capabilities | capability checks | All | Specified |
+| BR-MKT-09 | Service-first discovery (no mandatory Craftsman/Store chooser) | catalog | listings | search APIs | CUS | Specified |
+| BR-MKT-10 | Booking gated by CanAcceptBookings (type-agnostic) | booking | bookings, capabilities | accept/create | CRF/STR | Specified |
+| BR-MKT-11 | Unified provider ledger/payments (no type-split money flows) | ledger, payment | ledger_accounts | finance APIs | CRF/STR/ADM | Specified |
 
 ---
 
@@ -60,11 +64,13 @@
 | BR-ID | Feature | Module | Entity | API | UI | Status |
 |-------|---------|--------|--------|-----|-----|--------|
 | BR-CUS-01 | Profile management | customer | customers, addresses | /customers/me | CUS: Profile | Specified |
-| BR-CUS-02 | Categories browse | catalog | categories, translations | GET /categories | CUS: Categories | Specified |
-| BR-CUS-03 | Search services | catalog | listings | GET /listings?q= | CUS: Search | Specified |
-| BR-CUS-04 | Filters | catalog | listings | query params | CUS: Filters | Specified |
-| BR-CUS-05 | Provider proximity search | catalog | listings, geo | GET /listings?near= | CUS: Near me | Specified |
-| BR-CUS-06 | Select provider / listing | catalog, provider | listings, providers | GET /listings/{id} | CUS: Detail | Specified |
+| BR-CUS-02 | Categories browse (service-first entry) | catalog | categories, translations | GET /categories | CUS: Categories | Specified |
+| BR-CUS-03 | Search services by need (no mandatory type chooser) | catalog | listings, providers, capabilities | GET /listings?q= | CUS: Search | Specified |
+| BR-CUS-04 | Filters (category, location, price, rating, optional type) | catalog | listings | query params | CUS: Filters | Specified |
+| BR-CUS-05 | Provider proximity / distance | catalog | listings, geo | GET /listings?near= | CUS: Near me | Specified |
+| BR-CUS-05a | Compare providers (rating, reviews, availability, distance, price, verification) | catalog | listings, ratings | list/detail | CUS: Results | Specified |
+| BR-CUS-06 | Select provider then service/listing | catalog, provider | listings, providers | GET detail | CUS: Detail | Specified |
+| BR-CUS-06a | Trust label from type (Professional / Company) — not entry gate | provider | providers.type | display only | CUS: badges | Specified |
 | BR-CUS-07 | Create booking request | booking | bookings | POST /bookings | CUS: Booking form | Specified |
 | BR-CUS-08 | Date/time selection from **provider availability** | booking | availability, booking_schedule | availability + booking APIs | CUS: Available times | Specified |
 | BR-CUS-08a | View provider available slots/windows | booking | working_hours, exceptions | GET listings/{id}/availability | CUS: Calendar | Specified |

@@ -72,6 +72,10 @@ Money columns:
 ### Customer / Provider
 `customers`, `customer_addresses`, `providers`, `craftsman_profiles`, `store_profiles`, `store_users` / affiliations, `listings`, `availability_windows`
 
+### providers / capabilities (ADR-028)
+`providers`, `capability_definitions`, `provider_capabilities`  
+Booking/payment gated by capabilities; ledger owned by `provider_id`.
+
 ### Store promotional catalog (ADR-027 — not e-commerce)
 `catalog_items`, `catalog_item_media`, `catalog_inquiries`
 

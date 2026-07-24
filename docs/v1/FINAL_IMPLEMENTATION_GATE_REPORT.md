@@ -7,7 +7,7 @@
 **Production code / UI / application files:** **None generated**
 
 ### Controlling sources
-Master Prompt v1.0 · Final Readiness Report · Decisions Complete · FTM · ADR-001…027 · Business proposal · Design requirements (pending assets)
+Master Prompt v1.0 · Final Readiness Report · Decisions Complete · FTM · ADR-001…028 · Business proposal · Design requirements (pending assets)
 
 ---
 
@@ -17,13 +17,14 @@ Master Prompt v1.0 · Final Readiness Report · Decisions Complete · FTM · ADR
 
 **Coding is not authorized.**
 
-### Re-validation result (this pass)
+## Re-validation result (this pass)
 - Consistency audit rechecked against Master Prompt, FTM, DB, API, RBAC, finance, booking, UI prep, deploy  
 - Store Dashboard correction (services + catalog advertising, **no e-commerce**) verified via ADR-027 and FTM BR-STR-*  
-- No new architecture forks opened  
-- Critical delivery blockers **G-01…G-07 unchanged** → gate remains **B**
+- **ADR-028** unified Provider capability model + service-first UX documented  
+- No authorization to code — critical delivery blockers **G-01…G-07** remain  
+- Gate remains **B**
 
-Architecture and business-rule decisions are substantially complete (including Store catalog advertising clarification ADR-027). Critical **delivery inputs and approvals** remain open; therefore the implementation gate **fails**.
+Architecture and business-rule decisions are substantially complete (including Store catalog advertising ADR-027 and unified capability model ADR-028). Critical **delivery inputs and approvals** remain open; therefore the implementation gate **fails**.
 
 ---
 
@@ -43,6 +44,7 @@ Architecture and business-rule decisions are substantially complete (including S
 | Integration ports/adapters strategy | Approved |
 | Redis + workers + portable deploy/DR pattern | Approved |
 | **Store domain corrected:** services + **promotional catalog** + ads/subscriptions/analytics; **no e-commerce** | Approved (ADR-027) |
+| **Unified Provider + capabilities; service-first customer UX** | Approved (**ADR-028**) |
 | Feature Traceability Matrix (updated) | Approved as architecture coverage |
 | Logical DB / API / RBAC maps | Approved as architecture baselines |
 

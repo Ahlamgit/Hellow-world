@@ -37,15 +37,18 @@
 | 025 | External integration ports/adapters | Accepted |
 | 026 | Lebanon finance values = Admin config | Accepted |
 | **027** | Store promotional product catalog (non-transactional) | **Accepted** |
+| **028** | Unified Provider capability model; service-first UX | **Accepted** |
 
 ---
 
 ## 2. Approved Decisions (Summary)
 
 ### Marketplace & Booking
+- **Service-first** discovery (no mandatory Craftsman/Store chooser) — ADR-028  
+- Provider Type + **Capabilities**; booking via `CanAcceptBookings`  
+- Unified payments/ledger for all providers  
 - Provider Availability Calendar controls bookable times  
-- Flow: Request → Availability check → Provider confirm → Payment → Service  
-- Conflict prevention, duration, exceptions, Market timezones  
+- Flow: Search service → Providers → Book → Confirm → Pay → Service   
 
 ### Chat
 - Booking-scoped only; Customer ↔ Provider; optional audited admin support  

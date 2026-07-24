@@ -19,21 +19,23 @@
 
 ## 2. Screen Inventory
 
-### Customer App (Flutter)
+### Customer App (Flutter) — Service-First (ADR-028)
 
 | Area | Screens |
 |------|---------|
 | Authentication | Splash, Register, Login, OTP, Reset |
-| Home | Home / discovery |
-| Search | Search, Filters, Results, Proximity |
-| Listing | Listing details, Provider profile |
-| Booking | Schedule, Address, Notes, Request confirm, Status tracker |
+| Home | Home / **service** discovery (categories & needs — **no Craftsman/Store chooser**) |
+| Search | Search by need, Filters (optional type facet), Results compare |
+| Listing / Provider | Listing details, Provider profile with trust badge (Professional/Company) |
+| Booking | Available times, Address, Notes, Request confirm, Status tracker |
 | Payment | Payment.js WebView, 3DS, Result |
 | Tracking | Active job, Verification waiting states |
 | Reviews | Rate/review, Survey |
-| Chat | Conversation list, Thread |
+| Chat | Conversation list, Thread (booking-scoped) |
 | Profile | Profile, Addresses, Settings, Notifications inbox |
 | History | Booking history detail |
+
+**UX rule:** Do not force provider-type selection before search.
 
 ### Craftsman App (Flutter)
 

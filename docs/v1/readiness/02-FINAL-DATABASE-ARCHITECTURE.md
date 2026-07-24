@@ -213,10 +213,22 @@ commission_rules 1—N commission_lines
 `booking_schedule` (on booking: start/end, duration_minutes),  
 `service_duration` on listings.
 
+## `providers` (ADR-028)
+Unified root: `id`, `type` (CRAFTSMAN|STORE|…), `status`, `market_id`, verification fields.
+
+## `capability_definitions` / `provider_capabilities`
+Capability codes (`CanCreateServices`, `CanAcceptBookings`, `CanReceivePayments`, `CanAdvertiseProducts`, `CanManageTeam`, `CanCreatePromotions`, `CanManageAvailability`, …).  
+`provider_capabilities`: provider_id, capability_code, enabled, source (TYPE_DEFAULT|SUBSCRIPTION|ADMIN_OVERRIDE).
+
+Booking and payment authorization **must** check capabilities, not only `providers.type`.
+
+Ledger account owner = `provider_id` (unified financial model).
+
 ### Store promotional catalog (ADR-027)
-`catalog_items`, `catalog_item_media`, `catalog_inquiries` — **not** orders/carts/inventory.
+`catalog_items`, `catalog_item_media`, `catalog_inquiries` — **not** orders/carts/inventory. Requires `CanAdvertiseProducts`.
 
 ## Open Schema Forks
 
 None for scheduling/dispute — ADR-019 and ADR-021 accepted.  
 Dark theme tokens conditional (ADR-018/023).  
+Provider capabilities table required (ADR-028).  

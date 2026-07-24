@@ -77,7 +77,7 @@ Engagement
 | BR-008 | **Administrators authenticate only via Administration Portal (web). No admin login or admin APIs on mobile.** |
 | BR-009 | **Default Market = Lebanon** (USD, +961, Arabic RTL primary, English LTR, Asia/Beirut) — not hardcoded |
 | BR-010 | Stores are service providers + advertisers; **promotional product catalog allowed**; **no e-commerce** (ADR-002/027) |
-| BR-011 | **Unified Provider + Listing** marketplace model |
+| BR-011 | **Unified Provider + Listing + Capabilities** — service-first UX; booking via CanAcceptBookings; unified finance (ADR-003/028) |
 | BR-012 | **Financial ledger is mandatory**; money events immutable |
 | BR-013 | Booking sequence: **request → provider confirmation → payment → execution → …** |
 | BR-014 | **Admin MFA required** |

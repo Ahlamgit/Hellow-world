@@ -28,17 +28,19 @@ Common headers: `Authorization`, `Idempotency-Key` (money/booking creates), `X-C
 
 ---
 
-## 2. Marketplace APIs
+## 2. Marketplace APIs (Service-First — ADR-028)
 
 | API | Purpose | Role | Validation |
 |-----|---------|------|------------|
-| `GET /categories` | Browse categories | Public/Auth | market from header/token |
-| `GET /listings` | Search/filter/proximity | Public/Auth | q, category, near, price, sort, cursor |
-| `GET /listings/{id}` | Listing detail | Public/Auth | |
+| `GET /categories` | Browse service categories | Public/Auth | market from header/token |
+| `GET /listings` | **Primary** search/filter/proximity by need | Public/Auth | q, category, near, price, sort, availability; `providerType` **optional** only |
+| `GET /listings/{id}` | Listing/service detail + provider trust badges | Public/Auth | |
 | `GET /providers/{id}` | Provider public profile | Public/Auth | |
 | `GET /markets/current` | Active market config | Public | |
 
-**Errors:** 400 validation, 404 missing, 429 rate limit.
+**Do not** require `/search?type=CRAFTSMAN|STORE` as entry. Type may be an optional facet.
+
+**Errors:** 400 validation, 404 missing, 429 rate limit, 403 `CAPABILITY_DENIED` when acting without capability.
 
 ---
 
@@ -49,8 +51,8 @@ Common headers: `Authorization`, `Idempotency-Key` (money/booking creates), `X-C
 | `POST /bookings` | Create request | Customer |
 | `GET /bookings` | List mine | Customer / Provider scoped |
 | `GET /bookings/{id}` | Detail | Owner parties / Admin |
-| `POST /bookings/{id}/accept` | Provider confirm | Craftsman/Store |
-| `POST /bookings/{id}/reject` | Provider reject | Craftsman/Store |
+| `POST /bookings/{id}/accept` | Provider confirm — requires **`CanAcceptBookings`** | Provider (any type with capability) |
+| `POST /bookings/{id}/reject` | Provider reject | Provider with capability |
 | `POST /bookings/{id}/cancel` | Cancel (policy-evaluated) | Customer/Provider/Admin |
 | `GET /bookings/{id}/cancellation-preview` | Show policy outcome | Same |
 | `POST /payments/intents` | Start pay after accept | Customer |
@@ -61,9 +63,8 @@ Common headers: `Authorization`, `Idempotency-Key` (money/booking creates), `X-C
 | `POST /bookings/{id}/confirm-completion` | Customer confirm | Customer |
 | `POST /bookings/{id}/ratings` | Review/rating | Customer |
 
-**Authorization:** resource scoping by customer_id / provider_id / store.  
-**Validation:** state machine transitions; Idempotency-Key on create/pay.  
-**Errors:** `BOOKING_INVALID_TRANSITION`, `CANCEL_NOT_ALLOWED`, `ENTITLEMENT_*`.
+**Authorization:** resource scoping by customer_id / **provider_id**; accept path checks capability — **not** craftsman-vs-store branching.  
+**Identical booking contract** for craftsman and store providers.
 
 ---
 
