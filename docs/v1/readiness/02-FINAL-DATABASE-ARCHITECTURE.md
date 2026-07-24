@@ -213,6 +213,9 @@ commission_rules 1—N commission_lines
 `booking_schedule` (on booking: start/end, duration_minutes),  
 `service_duration` on listings.
 
+### Store promotional catalog (ADR-027)
+`catalog_items`, `catalog_item_media`, `catalog_inquiries` — **not** orders/carts/inventory.
+
 ## Open Schema Forks
 
 None for scheduling/dispute — ADR-019 and ADR-021 accepted.  
