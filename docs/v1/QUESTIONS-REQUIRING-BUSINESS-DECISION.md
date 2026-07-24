@@ -45,9 +45,6 @@
 | Q-REL-001 | Craftsman independent and/or store-affiliated? | **Answered: Unified Provider; affiliation supported** (ADR-003) |
 | Q-REL-002 | Store services fulfilled via platform? | **Answered: Yes — stores are service providers** |
 | Q-REL-003 | Product delivery? | **Answered: Out — no product delivery/fulfillment** (ADR-027) |
-| Q-PAY-001 | Store product orders online pay? | **Answered: No product payments** (catalog is advertising only) |
-| Q-SUB-001 | Store subscriptions in V1? | **Answered: Yes — Admin-managed store subscription plans** (ADR-027) |
-| Q-PRD-001 | Product inventory model? | **Answered: No inventory — promotional catalog_items only** (ADR-027) |
 
 ## D. Payments
 
