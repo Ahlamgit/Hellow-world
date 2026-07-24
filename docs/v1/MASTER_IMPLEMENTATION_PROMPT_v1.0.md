@@ -447,7 +447,7 @@ Do **NOT** start coding until completed and approved:
 
 - [x] Architecture decisions (ADR-001…028) — documented / approved  
 - [x] **Scope baseline frozen** — [`FINAL_SCOPE_BASELINE.md`](./FINAL_SCOPE_BASELINE.md)  
-- [ ] **BLOCKER-002** — Scope + stakeholder sign-off  
+- [ ] **BLOCKER-002** — Scope + stakeholder sign-off — **READY FOR APPROVAL** (signatures pending)  
 - [ ] **BLOCKER-001** — Design assets + UI/UX specification (ADR-023) — **READY FOR APPROVAL** (signatures pending; not Completed)  
 - [ ] **BLOCKER-003** — Vendors approved (adapter architecture retained)  
 - [ ] **BLOCKER-004** — Cloud decision completed  

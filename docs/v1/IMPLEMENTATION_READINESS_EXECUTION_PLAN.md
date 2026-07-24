@@ -130,43 +130,46 @@ No UI coding until COMPLETED **and** Implementation Gate → **A**. Logo concept
 ## BLOCKER-002 — Stakeholder Sign-off
 
 **Gate mapping:** G-00 (scope) + G-02 (gate)  
-**Status:** Open  
+**Status:** **READY FOR APPROVAL** (not COMPLETED)  
+**Package:** [`governance/STAKEHOLDER_SIGN_OFF_PACKAGE.md`](./governance/STAKEHOLDER_SIGN_OFF_PACKAGE.md)
 
 ### Approval checklist
 
+Use the Sign-off Package for full detail. Summary:
+
 #### Product
 
-- [ ] V1 scope (Scope Baseline)  
-- [ ] Included features  
-- [ ] Excluded features  
+- [ ] Marketplace model (service-first; no mandatory provider-type chooser)  
+- [ ] Provider model (unified + capabilities)  
+- [ ] Store model (services + catalog ads; no e-commerce)  
+- [ ] Customer + provider workflows  
 
 #### Business
 
-- [ ] Revenue model  
-- [ ] Subscription model  
-- [ ] Promotion model  
-- [ ] Commission approach (admin-configurable; architecture approved)  
+- [ ] Revenue model (subscriptions, promotions, commissions)  
+- [ ] Admin-configurable finance policies (no hardcoded rules)  
 
 #### Operations
 
-- [ ] Booking workflow  
-- [ ] Provider onboarding  
-- [ ] Support workflow  
+- [ ] Verification · support · disputes · notifications  
 
 #### Architecture & delivery gate
 
 - [ ] Sign [`FINAL_SCOPE_BASELINE.md`](./FINAL_SCOPE_BASELINE.md)  
 - [ ] Sign [`FINAL_IMPLEMENTATION_GATE_REPORT.md`](./FINAL_IMPLEMENTATION_GATE_REPORT.md) when other blockers allow READY (or acknowledge current B)  
 - [ ] Confirm no unauthorized V1 feature additions  
+- [ ] Complete Approval Record in Sign-off Package §6  
 
-### Acceptance criteria
+### Acceptance criteria → COMPLETED
 
-Formal approval recorded (role, name, date, decision) on Scope Baseline and Gate Report sign-off tables.
+Formal approval recorded (role, name, date, decision) on Sign-off Package, Scope Baseline, and Gate Report.  
+Keep **READY FOR APPROVAL** until signatures exist.
 
 ### Tracking
 
 | Item | State |
 |------|-------|
+| Sign-off package published | ☑ |
 | Product checklist complete | ☐ |
 | Business checklist complete | ☐ |
 | Operations checklist complete | ☐ |
@@ -471,6 +474,7 @@ Unauthorized scope additions during readiness or implementation are **out of pro
 | 2026-07-24 | BLOCKER-001 final approval readiness; asset completeness verified fail — remains **READY FOR APPROVAL** | 0/7 | **B) NOT READY — CODING BLOCKED** |
 | 2026-07-24 | BLOCKER-007 → **IN VALIDATION** (Payment.js report PASS WITH CONDITIONS) | 0/7 | **B) NOT READY — CODING BLOCKED** |
 | 2026-07-24 | BLOCKER-007 Areeba IXOPAY vendor validation checklist published — still **IN VALIDATION** | 0/7 | **B) NOT READY — CODING BLOCKED** |
+| 2026-07-24 | BLOCKER-002 → **READY FOR APPROVAL** (Stakeholder Sign-off Package; not COMPLETED) | 0/7 | **B) NOT READY — CODING BLOCKED** |
 
 Active closure tracker: [`READINESS_BLOCKER_CLOSURE_STATUS.md`](./READINESS_BLOCKER_CLOSURE_STATUS.md).  
 Update that dashboard (and this table) when a blocker moves to Closed. Do **not** change gate decision from B until §3 checklist is complete.

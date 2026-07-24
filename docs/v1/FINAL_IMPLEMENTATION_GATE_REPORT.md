@@ -93,9 +93,9 @@ Full closure tracking: [`READINESS_BLOCKER_CLOSURE_STATUS.md`](./READINESS_BLOCK
 
 | ID | Blocker | Owner | Severity |
 |----|---------|-------|----------|
-| G-00 | **Scope baseline sign-off** on FINAL_SCOPE_BASELINE.md | Product/Arch | Critical |
+| G-00 | **Scope baseline sign-off** — STAKEHOLDER_SIGN_OFF_PACKAGE READY FOR APPROVAL; signatures pending | Product/Arch | Critical |
 | G-01 | **Design READY FOR APPROVAL** — deposit assets + approve colors + Product/Design signatures before COMPLETED (ADR-023) | Design | Critical |
-| G-02 | **Formal stakeholder sign-off** on architecture gate not recorded | Product/Arch/Eng | Critical |
+| G-02 | **Formal stakeholder sign-off** — package READY FOR APPROVAL; not COMPLETED until signatures | Product/Arch/Eng | Critical |
 | G-03 | **Vendor selections** incomplete (SMS, Email, Object Storage, Maps, OCR, Face) | Business/Eng | Critical |
 | G-04 | **Cloud provider** not approved for target environments | DevOps/Business | Critical |
 | G-05 | **Finance** Lebanon policy configurations not prepared for staging/prod | Finance | Critical for money |
