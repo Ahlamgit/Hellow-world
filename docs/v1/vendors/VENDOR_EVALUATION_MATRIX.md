@@ -1,17 +1,35 @@
 # KHADAMATI V1 — Vendor Evaluation Matrix
 
 **Document ID:** KHAD-V1-VENDOR-MATRIX  
-**Version:** 1.0  
+**Version:** 1.1  
 **Date:** 2026-07-24  
-**Status:** Preparation — selections pending (BLOCKER-003)  
+**Status:** **IN PREPARATION** — selections pending (BLOCKER-003)  
 **ADR:** ADR-025  
 
-**Related:** [`../READINESS_BLOCKER_CLOSURE_STATUS.md`](../READINESS_BLOCKER_CLOSURE_STATUS.md)
+**Related:** [`VENDOR_INTEGRATION_READINESS_MATRIX.md`](./VENDOR_INTEGRATION_READINESS_MATRIX.md) · [`../READINESS_BLOCKER_CLOSURE_STATUS.md`](../READINESS_BLOCKER_CLOSURE_STATUS.md)
 
 ```text
 All integrations MUST use ports/adapters.
 NO vendor-specific business logic in domain services.
+No vendor approved until business + technical validation completes.
 ```
+
+**Integration readiness framework:** [`VENDOR_INTEGRATION_READINESS_MATRIX.md`](./VENDOR_INTEGRATION_READINESS_MATRIX.md) — ports, money flow, approval workflow, security/residency.
+
+---
+
+## Summary Matrix
+
+| Integration | Purpose | Candidate | Status | Approval Owner |
+|-------------|---------|-----------|--------|----------------|
+| Payment | Customer payments | Areeba IXOPAY Payment.js (architecture candidate) | **Pending Vendor Confirmation** | Business + Technical |
+| SMS | OTP / alerts | Pending | **Pending Vendor Selection** | Technical |
+| Email | Notifications | Pending | **Pending Vendor Selection** | Technical |
+| Maps | Location services | Pending | **Pending Vendor Selection** | Product + Technical |
+| OCR/Face | Verification | Pending | **Pending Vendor Selection** | Compliance |
+| Storage | Files / media | Pending | **Pending Vendor Selection** | Technical |
+
+BLOCKER-003 remains **IN PREPARATION** until vendors selected, contracts approved, sandbox credentials available, and technical validation completed.
 
 ---
 

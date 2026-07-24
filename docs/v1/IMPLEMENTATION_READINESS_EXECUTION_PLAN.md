@@ -70,7 +70,7 @@ Closing **BLOCKER-001…007** is the path to amend the Implementation Gate Repor
 |----|---------|-------------|-----------------|-------|--------------|---------------------|--------|
 | BLOCKER-001 | Design assets & UI/UX specification | Approval package ready; **binaries missing**; colors Draft/Approved split (Approved empty) | Deposit assets; extract/approve colors; Product + Design signatures → COMPLETED | Design (+ Product) | Official logo · design docs | Assets + colors approved + dual signatures | **READY FOR APPROVAL** |
 | BLOCKER-002 | Stakeholder sign-off | Sign-off package ready; signatures pending | Record approvals on STAKEHOLDER_SIGN_OFF_PACKAGE + Scope Baseline + Gate Report | Product / Arch / Eng / Business / Ops | Scope Baseline published | Formal approval recorded (names, dates, decisions) | **READY FOR APPROVAL** |
-| BLOCKER-003 | External vendor decisions | SMS, Email, Storage, Maps, OCR/Face not selected; Payment sandbox/process to validate | Complete vendor checklist; confirm adapter-only integration | Business / Eng | ADR-025 ports | Vendors selected (or deferred with risk ack); Payment sandbox path confirmed; no business-logic coupling | **Open** |
+| BLOCKER-003 | External vendor decisions | Integration readiness framework ready; selections Pending | Select vendors; contracts; sandbox; technical validation; ports only | Business / Eng | ADR-025 ports | Vendors selected (or deferred); sandbox + validation; no business-logic coupling | **IN PREPARATION** |
 | BLOCKER-004 | Cloud infrastructure approval | Blueprint + sizing/cost + prod ops ready; provider/budget/RPO/RTO Pending | Fill workload; select provider; approve budget/RPO/RTO; ops checklist | DevOps / Business | Portable deploy pattern (ADR-012/024) | Provider, budget, RPO/RTO, ops readiness approved | **IN PREPARATION** |
 | BLOCKER-005 | Finance Lebanon configuration | Structure prepared; commercial values **Pending Business Decision** | Business/Finance fill values; approve; keep Admin-configurable | Finance | ADR-013 / 026 | Config values approved; remain Admin-editable; **not** hardcoded | **IN PREPARATION** |
 | BLOCKER-006 | Compliance & retention defaults | Numeric retention/deletion defaults unset | Set defaults for account deletion, PII, financial, audit, documents | Compliance / Legal | ADR-022 | Defaults approved; financial & audit records protected | **Open** |
@@ -182,20 +182,21 @@ Keep **READY FOR APPROVAL** until signatures exist.
 ## BLOCKER-003 — External Vendor Decisions
 
 **Gate mapping:** G-03 · **ADR:** ADR-025  
-**Status:** Open  
+**Status:** **IN PREPARATION** (not COMPLETED)  
+**Artifacts:** [`vendors/VENDOR_INTEGRATION_READINESS_MATRIX.md`](./vendors/VENDOR_INTEGRATION_READINESS_MATRIX.md) · [`vendors/VENDOR_EVALUATION_MATRIX.md`](./vendors/VENDOR_EVALUATION_MATRIX.md)
 
-**Rule:** Maintain vendor-neutral **ports/adapters**. Do **not** couple business logic to vendors.
+**Rule:** Maintain vendor-neutral **ports/adapters**. Do **not** couple business logic to vendors. No vendor approved without Technical → Security → Business → Contract → Integration authorization.
 
 ### Vendor decision checklist
 
-#### Payment — Areeba IXOPAY (selected gateway)
+#### Payment — Areeba IXOPAY (architecture candidate; approval pending validation)
 
 | Validate | Owner | State |
 |----------|-------|-------|
-| Sandbox access | Eng / Business | ☐ |
-| Payment.js requirements | Eng | ☐ |
-| Webhook requirements | Eng | ☐ |
-| Credentials process (secrets, rotation) | Eng / DevOps | ☐ |
+| Sandbox access | Eng / Business | ☐ PVC |
+| Payment.js requirements | Eng | ☐ PVC |
+| Webhook requirements | Eng | ☐ PVC |
+| Credentials process (secrets, rotation) | Eng / DevOps | ☐ PVC |
 
 #### SMS
 
@@ -247,11 +248,15 @@ Requirements: Provider onboarding · Identity verification
 | Face verification vendor selected (or phased deferral with Product ack) | ☐ |
 | Adapter contracts confirmed | ☐ |
 
-### Acceptance criteria
+### Acceptance criteria → COMPLETED
 
 - Required vendors selected **or** explicitly deferred with Product risk acknowledgement  
-- Payment sandbox + webhook + credentials path confirmed  
+- Contracts approved (as applicable)  
+- Sandbox credentials available  
+- Technical validation completed (Payment checklist + BLOCKER-007 conditions)  
 - Architecture remains port/adapter based (no vendor leakage into domain services)  
+
+Keep **IN PREPARATION** until above are done.
 
 ---
 
@@ -459,6 +464,7 @@ Unauthorized scope additions during readiness or implementation are **out of pro
 | 2026-07-24 | BLOCKER-004 Cloud Sizing and Cost Framework published — still **IN PREPARATION** | 0/7 | **B) NOT READY — CODING BLOCKED** |
 | 2026-07-24 | BLOCKER-004 Production Operations Readiness published — still **IN PREPARATION** | 0/7 | **B) NOT READY — CODING BLOCKED** |
 | 2026-07-24 | BLOCKER-004 Prod Ops Readiness v1.1 KHADAMATI-specific — still **IN PREPARATION** | 0/7 | **B) NOT READY — CODING BLOCKED** |
+| 2026-07-24 | BLOCKER-003 → **IN PREPARATION** (Vendor Integration Readiness Matrix) | 0/7 | **B) NOT READY — CODING BLOCKED** |
 
 Active closure tracker: [`READINESS_BLOCKER_CLOSURE_STATUS.md`](./READINESS_BLOCKER_CLOSURE_STATUS.md).  
 Update that dashboard (and this table) when a blocker moves to Closed. Do **not** change gate decision from B until §3 checklist is complete.

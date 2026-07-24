@@ -45,7 +45,8 @@ Scope freeze does **not** authorize coding. Implementation remains blocked until
   - BLOCKER-002: **READY FOR APPROVAL** — [`governance/STAKEHOLDER_SIGN_OFF_PACKAGE.md`](./governance/STAKEHOLDER_SIGN_OFF_PACKAGE.md) (not COMPLETED until signatures)  
   - BLOCKER-005: **IN PREPARATION** — Finance Lebanon config + Approval Matrix + [`governance/FINANCE_POLICY_LIFECYCLE.md`](./governance/FINANCE_POLICY_LIFECYCLE.md) (values Pending Business Decision; not COMPLETED)  
   - BLOCKER-004: **IN PREPARATION** — Cloud Decision + Sizing/Cost + Prod Ops Readiness **v1.1** (KHADAMATI-specific; provider/budget/RPO/RTO Pending; not COMPLETED)  
-  - BLOCKER-003, 006: evaluation / decision / config artifacts ready for owner input  
+  - BLOCKER-003: **IN PREPARATION** — [`vendors/VENDOR_INTEGRATION_READINESS_MATRIX.md`](./vendors/VENDOR_INTEGRATION_READINESS_MATRIX.md) (selections/contracts/sandbox Pending; not COMPLETED)  
+  - BLOCKER-006: evaluation / decision / config artifacts ready for owner input  
 - No authorization to code — no architecture or scope changes  
 - Implementation gate remains **B**
 
@@ -59,7 +60,7 @@ Architecture and business-rule decisions are complete. Critical **delivery input
 |---------|---------|---------|---------------|----------------|
 | BLOCKER-001 | G-01 | Design assets & UI/UX specification | [`design/DESIGN_APPROVAL_RECORD.md`](./design/DESIGN_APPROVAL_RECORD.md) · Color · Logo package (structure OK / binaries missing) | **READY FOR APPROVAL** (not COMPLETED) |
 | BLOCKER-002 | G-00+G-02 | Stakeholder sign-off | [`governance/STAKEHOLDER_SIGN_OFF_PACKAGE.md`](./governance/STAKEHOLDER_SIGN_OFF_PACKAGE.md) | **READY FOR APPROVAL** (not COMPLETED) |
-| BLOCKER-003 | G-03 | Vendor selection | [`vendors/VENDOR_EVALUATION_MATRIX.md`](./vendors/VENDOR_EVALUATION_MATRIX.md) | **Open** |
+| BLOCKER-003 | G-03 | Vendor selection | [`vendors/VENDOR_INTEGRATION_READINESS_MATRIX.md`](./vendors/VENDOR_INTEGRATION_READINESS_MATRIX.md) · [`vendors/VENDOR_EVALUATION_MATRIX.md`](./vendors/VENDOR_EVALUATION_MATRIX.md) | **IN PREPARATION** |
 | BLOCKER-004 | G-04 | Cloud infrastructure | [`infra/CLOUD_INFRASTRUCTURE_DECISION.md`](./infra/CLOUD_INFRASTRUCTURE_DECISION.md) · [`infra/CLOUD_SIZING_AND_COST_FRAMEWORK.md`](./infra/CLOUD_SIZING_AND_COST_FRAMEWORK.md) · [`infra/PRODUCTION_OPERATIONS_READINESS.md`](./infra/PRODUCTION_OPERATIONS_READINESS.md) | **IN PREPARATION** |
 | BLOCKER-005 | G-05 | Finance Lebanon config | [`config/FINANCE_LEBANON_INITIAL_CONFIGURATION.md`](./config/FINANCE_LEBANON_INITIAL_CONFIGURATION.md) · [`governance/FINANCE_POLICY_APPROVAL_MATRIX.md`](./governance/FINANCE_POLICY_APPROVAL_MATRIX.md) · [`governance/FINANCE_POLICY_LIFECYCLE.md`](./governance/FINANCE_POLICY_LIFECYCLE.md) | **IN PREPARATION** |
 | BLOCKER-006 | G-06 | Compliance & retention | [`compliance/RETENTION_POLICY_DECISIONS.md`](./compliance/RETENTION_POLICY_DECISIONS.md) | **Open** |
@@ -98,7 +99,7 @@ Full closure tracking: [`READINESS_BLOCKER_CLOSURE_STATUS.md`](./READINESS_BLOCK
 | G-00 | **Scope baseline sign-off** — STAKEHOLDER_SIGN_OFF_PACKAGE READY FOR APPROVAL; signatures pending | Product/Arch | Critical |
 | G-01 | **Design READY FOR APPROVAL** — deposit assets + approve colors + Product/Design signatures before COMPLETED (ADR-023) | Design | Critical |
 | G-02 | **Formal stakeholder sign-off** — package READY FOR APPROVAL; not COMPLETED until signatures | Product/Arch/Eng | Critical |
-| G-03 | **Vendor selections** incomplete (SMS, Email, Object Storage, Maps, OCR, Face) | Business/Eng | Critical |
+| G-03 | **Vendors** **IN PREPARATION** — integration readiness matrix ready; selections/contracts/sandbox Pending | Business/Eng | Critical |
 | G-04 | **Cloud** **IN PREPARATION** — blueprint + sizing/cost + KHADAMATI prod ops (v1.1); provider/budget/RPO/RTO Pending | DevOps/Business | Critical |
 | G-05 | **Finance** Lebanon config **IN PREPARATION** — structure + approval matrix + lifecycle ready; values Pending Business Decision | Finance | Critical for money |
 | G-06 | **Compliance** retention numeric defaults not set | Compliance | High |
