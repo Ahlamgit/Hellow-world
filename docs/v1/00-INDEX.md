@@ -83,7 +83,8 @@ It is intentionally **implementation-free**. No application code, UI templates, 
 | 45 | Future Version 2 Roadmap | [planning/45-FUTURE-V2-ROADMAP.md](./planning/45-FUTURE-V2-ROADMAP.md) |
 
 **Cross-cutting:** [QUESTIONS-REQUIRING-BUSINESS-DECISION.md](./QUESTIONS-REQUIRING-BUSINESS-DECISION.md)  
-**Final architecture audit:** [ARCHITECTURE_AUDIT_FINAL.md](./ARCHITECTURE_AUDIT_FINAL.md)
+**Final architecture audit:** [ARCHITECTURE_AUDIT_FINAL.md](./ARCHITECTURE_AUDIT_FINAL.md)  
+**Full prompt (architecture + design):** [FULL_PROMPT_INCLUDING_DESIGN.md](./FULL_PROMPT_INCLUDING_DESIGN.md)
 
 ---
 
