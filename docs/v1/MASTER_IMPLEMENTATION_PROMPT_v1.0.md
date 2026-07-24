@@ -248,37 +248,51 @@ V1 supports **admin-managed promotions**. Do **not** create a complex self-servi
 
 ## 5. Marketplace Architecture
 
-Implement a **unified provider architecture**.
+Implement a **unified Provider architecture** with **capabilities** (ADR-003, **ADR-028**).
 
-Do not separate marketplace logic by provider type.
+Customer experience is **service-first**. Customers must **not** be required to choose Craftsman vs Store before searching. They search by need (e.g. AC repair, plumbing); the system returns suitable providers.
 
 ```text
 Provider
-  |-- Craftsman Profile
-  |-- Store Profile
+  → Provider Type (CRAFTSMAN | STORE | future)
+  → Provider Capabilities (CanCreateServices, CanAcceptBookings, CanReceivePayments,
+      CanAdvertiseProducts, CanManageTeam, CanCreatePromotions, CanManageAvailability, …)
+  → Listings / Services
+  → Bookings
 ```
 
-Marketplace search operates through:
+Marketplace search operates on **services/listings** (category, location, availability, rating, price, capabilities). Provider type is optional trust info / filter only (e.g. “Verified Professional” / “Verified Company”).
 
-**Listing** — service offering, provider availability, category, location, rating, subscription status.
+**Booking** depends on capability `CanAcceptBookings` (same engine for craftsman and store providers).  
+**Payments / ledger / settlement / withdrawals** use unified Provider accounts — no separate money flows by type.
+
+### Craftsman (type defaults — overridable by capabilities/subscription)
+
+Individual technician / independent professional: services, availability, accept bookings, receive payments, profile.
+
+### Store (type defaults — overridable)
+
+Company / service center: multiple services, promotional product catalogs (ADR-027), promotions, bookings, payments, business profile, team.
+
+Product catalog remains **promotional only** (no cart/checkout/product payment/orders/inventory/delivery).
 
 ---
 
 ## 6. Booking Architecture
 
-Core workflow:
+Core workflow (**service-first**, ADR-028):
 
 ```text
-Customer → Search service → Select provider/listing
-→ View provider availability → Request booking time
-→ Provider Availability Check → Provider Confirmation
-→ Payment → Service execution
-→ Completion approval → Commission (admin rules) → Review
+Search Service → View Providers → Compare (rating, reviews, availability, distance, price, verification)
+→ Select Provider → Select Service → Book request
+→ Provider Availability Check → Provider Confirmation (requires CanAcceptBookings)
+→ Payment → Service execution → Completion → Commission (admin rules) → Review
 ```
 
-**Scheduling (ADR-019):** Provider Availability Calendar — provider controls working days/hours, exceptions, holidays; customers select from available times; conflict prevention; service duration; Market timezones.
+**Scheduling (ADR-019):** Provider Availability Calendar.  
+**Identical booking engine** for craftsman and store providers.
 
-Support: booking status history, timestamps, audit trail, **admin-configurable cancellation rules**, lightweight disputes (ADR-021).
+Support: status history, audit, admin-configurable cancellation, lightweight disputes (ADR-021).
 
 ---
 

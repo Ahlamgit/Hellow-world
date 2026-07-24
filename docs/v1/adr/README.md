@@ -29,3 +29,4 @@
 | [ADR-025](./ADR-025-external-integration-strategy.md) | Integration ports/adapters | **Accepted** |
 | [ADR-026](./ADR-026-lebanon-finance-policy-configuration.md) | Lebanon finance config | Accepted |
 | [ADR-027](./ADR-027-store-product-catalog-advertising.md) | Store promotional catalog (no e-commerce) | **Accepted** |
+| [ADR-028](./ADR-028-unified-provider-capability-model.md) | Unified Provider + capability model; service-first UX | **Accepted** |
