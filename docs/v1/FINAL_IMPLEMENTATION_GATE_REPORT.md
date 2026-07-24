@@ -2,6 +2,7 @@
 
 **Document ID:** KHAD-V1-IMPL-GATE  
 **Date:** 2026-07-24  
+**Re-validated:** 2026-07-24 (second gate pass — same controlling sources; Store ADR-027 confirmed present)  
 **Role:** Lead Solution Architect & Technical Reviewer  
 **Production code / UI / application files:** **None generated**
 
@@ -15,6 +16,12 @@ Master Prompt v1.0 · Final Readiness Report · Decisions Complete · FTM · ADR
 # B) NOT READY — ADDITIONAL WORK REQUIRED
 
 **Coding is not authorized.**
+
+### Re-validation result (this pass)
+- Consistency audit rechecked against Master Prompt, FTM, DB, API, RBAC, finance, booking, UI prep, deploy  
+- Store Dashboard correction (services + catalog advertising, **no e-commerce**) verified via ADR-027 and FTM BR-STR-*  
+- No new architecture forks opened  
+- Critical delivery blockers **G-01…G-07 unchanged** → gate remains **B**
 
 Architecture and business-rule decisions are substantially complete (including Store catalog advertising clarification ADR-027). Critical **delivery inputs and approvals** remain open; therefore the implementation gate **fails**.
 
