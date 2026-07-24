@@ -130,7 +130,7 @@ Backend-only scaffolding is also **not authorized** by this gate until G-02 is s
 | Branding, logo, colors, design references, videos/screens, design direction | **Folders ready / binaries missing** — `master/{original,transparent,high-resolution}`, `app-icon/*`, `variations/{light,dark,monochrome}`; Color Approved section empty |
 | UI analysis, UX analysis, design tokens, component inventory, screen specs | **READY FOR APPROVAL** — Design Approval Record + freeze rule; BLOCKER-001 not COMPLETED |
 | SMS / Email / Storage / Maps / OCR / Face vendor choices | **Missing** |
-| Cloud hosting approval | **Missing** |
+| Cloud hosting approval | **IN PREPARATION** — blueprint ready; provider/hosting Pending Infrastructure Approval |
 | Lebanon commission/cancel/refund/withdrawal/settlement **content** | **IN PREPARATION** — structure in FINANCE_LEBANON_INITIAL_CONFIGURATION; values Pending Business Decision |
 | Retention policy numbers | **Pending Compliance** |
 | Written gate approval signatures | **Pending** |
