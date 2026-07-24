@@ -14,10 +14,12 @@ This document defines technical architecture only. Visual system (colors, typogr
 
 ## 11.2 Application Split
 
-| App | Package | Audience |
-|-----|---------|----------|
-| `admin-portal` | `apps/admin-portal` | Platform admins |
-| `store-dashboard` | `apps/store-dashboard` | Store operators |
+| App | Package | Audience | Notes |
+|-----|---------|----------|-------|
+| `admin-portal` | `apps/admin-portal` | Platform admins | **Sole** admin login/operation surface |
+| `store-dashboard` | `apps/store-dashboard` | Store operators | Not for platform administrators |
+
+Administrators must use `admin-portal` only. Store Dashboard login must reject or not support platform admin roles (API enforces `AUTH_ADMIN_WEB_ONLY` for non-`admin-web` audiences).
 
 Shared libraries are encouraged:
 
@@ -64,7 +66,8 @@ Avoid duplicating server state in Redux unless product complexity demands it.
 2. Store access token in memory; refresh token in HttpOnly cookie **or** secure persistent storage (decision Q-FE-002 — cookies preferred for web)  
 3. Axios/fetch interceptor refreshes on 401 once  
 4. Route guards check auth + permission claims  
-5. Admin portal enforces permission-based menu visibility (hide) **and** server enforces authz (deny)
+5. Admin portal enforces permission-based menu visibility (hide) **and** server enforces authz (deny)  
+6. Admin portal always authenticates with audience `admin-web`
 
 ## 11.6 Internationalization & RTL
 
