@@ -3,11 +3,11 @@
 **Document ID:** KHAD-V1-FINANCE-CONFIG  
 **Version:** 1.0  
 **Date:** 2026-07-24  
-**Status:** Template — values pending Finance approval (BLOCKER-005)  
+**Status:** Superseded for BLOCKER-005 tracking by [`FINANCE_LEBANON_INITIAL_CONFIGURATION.md`](./FINANCE_LEBANON_INITIAL_CONFIGURATION.md) (**IN PREPARATION**)  
 **Market:** Lebanon (default) — ADR-001  
 **ADR:** ADR-013 · ADR-026  
 
-**Related:** [`../READINESS_BLOCKER_CLOSURE_STATUS.md`](../READINESS_BLOCKER_CLOSURE_STATUS.md)
+**Related:** [`FINANCE_LEBANON_INITIAL_CONFIGURATION.md`](./FINANCE_LEBANON_INITIAL_CONFIGURATION.md) · [`../READINESS_BLOCKER_CLOSURE_STATUS.md`](../READINESS_BLOCKER_CLOSURE_STATUS.md)
 
 ```text
 All values MUST remain Admin Portal configurable.

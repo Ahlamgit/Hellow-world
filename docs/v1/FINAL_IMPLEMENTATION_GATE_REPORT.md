@@ -43,7 +43,8 @@ Scope freeze does **not** authorize coding. Implementation remains blocked until
   - BLOCKER-001: **READY FOR APPROVAL** — final approval package ready; required asset folders verified; **binaries missing**; colors Draft/Approved split (Approved empty); **not COMPLETED**  
   - BLOCKER-007: **IN VALIDATION** — [`payment/PAYMENT_JS_MOBILE_VALIDATION_REPORT.md`](./payment/PAYMENT_JS_MOBILE_VALIDATION_REPORT.md) result **PASS WITH CONDITIONS** (not COMPLETED; live sandbox pending)  
   - BLOCKER-002: **READY FOR APPROVAL** — [`governance/STAKEHOLDER_SIGN_OFF_PACKAGE.md`](./governance/STAKEHOLDER_SIGN_OFF_PACKAGE.md) (not COMPLETED until signatures)  
-  - BLOCKER-003…006: evaluation / decision / config artifacts ready for owner input  
+  - BLOCKER-005: **IN PREPARATION** — [`config/FINANCE_LEBANON_INITIAL_CONFIGURATION.md`](./config/FINANCE_LEBANON_INITIAL_CONFIGURATION.md) (values Pending Business Decision; not COMPLETED)  
+  - BLOCKER-003…004, 006: evaluation / decision / config artifacts ready for owner input  
 - No authorization to code — no architecture or scope changes  
 - Implementation gate remains **B**
 
@@ -59,7 +60,7 @@ Architecture and business-rule decisions are complete. Critical **delivery input
 | BLOCKER-002 | G-00+G-02 | Stakeholder sign-off | [`governance/STAKEHOLDER_SIGN_OFF_PACKAGE.md`](./governance/STAKEHOLDER_SIGN_OFF_PACKAGE.md) | **READY FOR APPROVAL** (not COMPLETED) |
 | BLOCKER-003 | G-03 | Vendor selection | [`vendors/VENDOR_EVALUATION_MATRIX.md`](./vendors/VENDOR_EVALUATION_MATRIX.md) | **Open** |
 | BLOCKER-004 | G-04 | Cloud infrastructure | [`infra/CLOUD_INFRASTRUCTURE_DECISION.md`](./infra/CLOUD_INFRASTRUCTURE_DECISION.md) | **Open** |
-| BLOCKER-005 | G-05 | Finance Lebanon config | [`config/FINANCE_POLICY_INITIAL_CONFIGURATION.md`](./config/FINANCE_POLICY_INITIAL_CONFIGURATION.md) | **Open** |
+| BLOCKER-005 | G-05 | Finance Lebanon config | [`config/FINANCE_LEBANON_INITIAL_CONFIGURATION.md`](./config/FINANCE_LEBANON_INITIAL_CONFIGURATION.md) | **IN PREPARATION** |
 | BLOCKER-006 | G-06 | Compliance & retention | [`compliance/RETENTION_POLICY_DECISIONS.md`](./compliance/RETENTION_POLICY_DECISIONS.md) | **Open** |
 | BLOCKER-007 | G-07 | Payment.js mobile spike | [`payment/PAYMENT_JS_MOBILE_VALIDATION_REPORT.md`](./payment/PAYMENT_JS_MOBILE_VALIDATION_REPORT.md) · [`payment/AREEBA_IXOPAY_VENDOR_VALIDATION_CHECKLIST.md`](./payment/AREEBA_IXOPAY_VENDOR_VALIDATION_CHECKLIST.md) | **IN VALIDATION** (PASS WITH CONDITIONS) |
 
@@ -98,7 +99,7 @@ Full closure tracking: [`READINESS_BLOCKER_CLOSURE_STATUS.md`](./READINESS_BLOCK
 | G-02 | **Formal stakeholder sign-off** — package READY FOR APPROVAL; not COMPLETED until signatures | Product/Arch/Eng | Critical |
 | G-03 | **Vendor selections** incomplete (SMS, Email, Object Storage, Maps, OCR, Face) | Business/Eng | Critical |
 | G-04 | **Cloud provider** not approved for target environments | DevOps/Business | Critical |
-| G-05 | **Finance** Lebanon policy configurations not prepared for staging/prod | Finance | Critical for money |
+| G-05 | **Finance** Lebanon config **IN PREPARATION** — structure ready; values Pending Business Decision | Finance | Critical for money |
 | G-06 | **Compliance** retention numeric defaults not set | Compliance | High |
 | G-07 | **Payment.js mobile spike IN VALIDATION** — report PASS WITH CONDITIONS; live sandbox + acceptance pending | Eng | High for payments UI |
 
@@ -129,7 +130,7 @@ Backend-only scaffolding is also **not authorized** by this gate until G-02 is s
 | UI analysis, UX analysis, design tokens, component inventory, screen specs | **READY FOR APPROVAL** — Design Approval Record + freeze rule; BLOCKER-001 not COMPLETED |
 | SMS / Email / Storage / Maps / OCR / Face vendor choices | **Missing** |
 | Cloud hosting approval | **Missing** |
-| Lebanon commission/cancel/refund/withdrawal/settlement **content** | **Pending Finance** |
+| Lebanon commission/cancel/refund/withdrawal/settlement **content** | **IN PREPARATION** — structure in FINANCE_LEBANON_INITIAL_CONFIGURATION; values Pending Business Decision |
 | Retention policy numbers | **Pending Compliance** |
 | Written gate approval signatures | **Pending** |
 

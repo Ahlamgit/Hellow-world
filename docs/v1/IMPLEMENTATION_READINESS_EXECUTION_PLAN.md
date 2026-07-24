@@ -72,7 +72,7 @@ Closing **BLOCKER-001…007** is the path to amend the Implementation Gate Repor
 | BLOCKER-002 | Stakeholder sign-off | Sign-off package ready; signatures pending | Record approvals on STAKEHOLDER_SIGN_OFF_PACKAGE + Scope Baseline + Gate Report | Product / Arch / Eng / Business / Ops | Scope Baseline published | Formal approval recorded (names, dates, decisions) | **READY FOR APPROVAL** |
 | BLOCKER-003 | External vendor decisions | SMS, Email, Storage, Maps, OCR/Face not selected; Payment sandbox/process to validate | Complete vendor checklist; confirm adapter-only integration | Business / Eng | ADR-025 ports | Vendors selected (or deferred with risk ack); Payment sandbox path confirmed; no business-logic coupling | **Open** |
 | BLOCKER-004 | Cloud infrastructure approval | Target cloud/region/hosting not approved | Approve infra decision sheet (no architecture change) | DevOps / Business | Portable deploy pattern (ADR-012/024) | Cloud provider, region, and hosting choices approved for staging/prod | **Open** |
-| BLOCKER-005 | Finance Lebanon configuration | Policy **content** not prepared; architecture already approved | Provide initial admin-configurable values for commission/cancel/refund/withdrawal/settlement | Finance | ADR-013 / 026 | Config values approved for staging; remain Admin-editable; **not** hardcoded | **Open** |
+| BLOCKER-005 | Finance Lebanon configuration | Structure prepared; commercial values **Pending Business Decision** | Business/Finance fill values; approve; keep Admin-configurable | Finance | ADR-013 / 026 | Config values approved; remain Admin-editable; **not** hardcoded | **IN PREPARATION** |
 | BLOCKER-006 | Compliance & retention defaults | Numeric retention/deletion defaults unset | Set defaults for account deletion, PII, financial, audit, documents | Compliance / Legal | ADR-022 | Defaults approved; financial & audit records protected | **Open** |
 | BLOCKER-007 | Payment.js mobile validation spike | PASS WITH CONDITIONS; vendor checklist ready; live tests pending | Fill Areeba checklist; sandbox tests; Architect + Eng approval | Eng | Areeba sandbox (BLOCKER-003) | Checklist §8 complete → COMPLETED | **IN VALIDATION** |
 
@@ -294,57 +294,33 @@ Cloud provider, region, and hosting choices for DB / Redis / workers / storage /
 ## BLOCKER-005 — Finance Lebanon Configuration
 
 **Gate mapping:** G-05 · **ADR:** ADR-013 / ADR-026  
-**Status:** Open  
+**Status:** **IN PREPARATION** (not COMPLETED)  
+**Artifact:** [`config/FINANCE_LEBANON_INITIAL_CONFIGURATION.md`](./config/FINANCE_LEBANON_INITIAL_CONFIGURATION.md)
 
 **Architecture:** Approved.  
 **Need:** Initial **business configuration values** only.
 
-**Important:** Values must remain **Admin-configurable**. Do **not** hardcode.
+**Important:** Values must remain **Admin-configurable**. Do **not** hardcode. Mark unknowns **Pending Business Decision**.
 
 ### Required inputs
 
-#### Commission
+| Area | Structure documented | Values |
+|------|---------------------|--------|
+| Currency (Lebanon / USD) | ☑ | Defaults set; display nuances PBD |
+| Commission | ☑ | **Pending Business Decision** |
+| Subscriptions (provider + store) | ☑ | **Pending Business Decision** |
+| Cancellation | ☑ | **Pending Business Decision** |
+| Refund | ☑ | **Pending Business Decision** |
+| Withdrawal | ☑ | **Pending Business Decision** |
+| Settlement | ☑ | **Pending Business Decision** |
+| Admin permissions / audit | ☑ | Confirmed required |
 
-| Input | Value / notes | State |
-|-------|---------------|-------|
-| Default commission rules | | ☐ |
-| Exceptions | | ☐ |
+### Acceptance criteria → COMPLETED
 
-#### Cancellation
-
-| Input | Value / notes | State |
-|-------|---------------|-------|
-| Time rules | | ☐ |
-| Penalties | | ☐ |
-
-#### Refund
-
-| Input | Value / notes | State |
-|-------|---------------|-------|
-| Full refund rules | | ☐ |
-| Partial refund rules | | ☐ |
-| Manual approval cases | | ☐ |
-
-#### Withdrawal
-
-| Input | Value / notes | State |
-|-------|---------------|-------|
-| Available methods | | ☐ |
-| Minimum withdrawal | | ☐ |
-| Approval process | | ☐ |
-
-#### Settlement
-
-| Input | Value / notes | State |
-|-------|---------------|-------|
-| Holding period | | ☐ |
-| Release rules | | ☐ |
-
-### Acceptance criteria
-
-- Finance signs off initial Lebanon policy content for staging  
+- Finance signs off Lebanon initial values (no remaining PBD for launch set)  
 - Documented as configuration (seed/admin), **not** constants in application code  
 - Change history / audit expectations acknowledged  
+- Keep **IN PREPARATION** until values approved
 
 ---
 
@@ -475,6 +451,7 @@ Unauthorized scope additions during readiness or implementation are **out of pro
 | 2026-07-24 | BLOCKER-007 → **IN VALIDATION** (Payment.js report PASS WITH CONDITIONS) | 0/7 | **B) NOT READY — CODING BLOCKED** |
 | 2026-07-24 | BLOCKER-007 Areeba IXOPAY vendor validation checklist published — still **IN VALIDATION** | 0/7 | **B) NOT READY — CODING BLOCKED** |
 | 2026-07-24 | BLOCKER-002 → **READY FOR APPROVAL** (Stakeholder Sign-off Package; not COMPLETED) | 0/7 | **B) NOT READY — CODING BLOCKED** |
+| 2026-07-24 | BLOCKER-005 → **IN PREPARATION** (Finance Lebanon structure; values PBD) | 0/7 | **B) NOT READY — CODING BLOCKED** |
 
 Active closure tracker: [`READINESS_BLOCKER_CLOSURE_STATUS.md`](./READINESS_BLOCKER_CLOSURE_STATUS.md).  
 Update that dashboard (and this table) when a blocker moves to Closed. Do **not** change gate decision from B until §3 checklist is complete.
