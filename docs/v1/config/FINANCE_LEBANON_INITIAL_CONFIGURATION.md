@@ -12,6 +12,8 @@
 **Sources:**  
 [`../FINAL_ARCHITECTURE_DECISIONS_COMPLETE.md`](../FINAL_ARCHITECTURE_DECISIONS_COMPLETE.md) · ADR-013 · ADR-026 · [`../payment/PAYMENT_JS_MOBILE_VALIDATION_REPORT.md`](../payment/PAYMENT_JS_MOBILE_VALIDATION_REPORT.md) · [`../governance/STAKEHOLDER_SIGN_OFF_PACKAGE.md`](../governance/STAKEHOLDER_SIGN_OFF_PACKAGE.md)
 
+**Governance:** [`../governance/FINANCE_POLICY_APPROVAL_MATRIX.md`](../governance/FINANCE_POLICY_APPROVAL_MATRIX.md) — ownership & approval responsibility per policy domain  
+
 **Companion (earlier template):** [`FINANCE_POLICY_INITIAL_CONFIGURATION.md`](./FINANCE_POLICY_INITIAL_CONFIGURATION.md) — superseded for tracking by this document.
 
 ```text
