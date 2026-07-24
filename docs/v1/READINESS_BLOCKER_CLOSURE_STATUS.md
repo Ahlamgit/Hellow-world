@@ -55,7 +55,7 @@ New requirements → ADR or Change Request (Scope Baseline §10). No silent scop
 | BLOCKER-002 | Stakeholder sign-off | [`governance/STAKEHOLDER_SIGN_OFF_PACKAGE.md`](./governance/STAKEHOLDER_SIGN_OFF_PACKAGE.md) | **READY FOR APPROVAL** (not COMPLETED) | Signatures on package §6 |
 | BLOCKER-003 | Vendor selection | [`vendors/VENDOR_EVALUATION_MATRIX.md`](./vendors/VENDOR_EVALUATION_MATRIX.md) | **Open** (evaluation prep ready) | Vendors **approved** |
 | BLOCKER-004 | Cloud infrastructure | [`infra/CLOUD_INFRASTRUCTURE_DECISION.md`](./infra/CLOUD_INFRASTRUCTURE_DECISION.md) | **Open** (decision sheet ready) | Cloud **approved** |
-| BLOCKER-005 | Finance Lebanon config | [`config/FINANCE_LEBANON_INITIAL_CONFIGURATION.md`](./config/FINANCE_LEBANON_INITIAL_CONFIGURATION.md) · [`governance/FINANCE_POLICY_APPROVAL_MATRIX.md`](./governance/FINANCE_POLICY_APPROVAL_MATRIX.md) | **IN PREPARATION** (structure + ownership ready; values Pending Business Decision) | Approved finance values + Finance sign-off |
+| BLOCKER-005 | Finance Lebanon config | [`config/FINANCE_LEBANON_INITIAL_CONFIGURATION.md`](./config/FINANCE_LEBANON_INITIAL_CONFIGURATION.md) · [`governance/FINANCE_POLICY_APPROVAL_MATRIX.md`](./governance/FINANCE_POLICY_APPROVAL_MATRIX.md) · [`governance/FINANCE_POLICY_LIFECYCLE.md`](./governance/FINANCE_POLICY_LIFECYCLE.md) | **IN PREPARATION** (governance ready; values Pending Business Decision) | Approved finance values + Finance sign-off |
 | BLOCKER-006 | Compliance & retention | [`compliance/RETENTION_POLICY_DECISIONS.md`](./compliance/RETENTION_POLICY_DECISIONS.md) | **Open** (decisions template ready) | Compliance decisions **approved** |
 | BLOCKER-007 | Payment.js mobile spike | [`payment/PAYMENT_JS_MOBILE_VALIDATION_REPORT.md`](./payment/PAYMENT_JS_MOBILE_VALIDATION_REPORT.md) · [`payment/AREEBA_IXOPAY_VENDOR_VALIDATION_CHECKLIST.md`](./payment/AREEBA_IXOPAY_VENDOR_VALIDATION_CHECKLIST.md) | **IN VALIDATION** (PASS WITH CONDITIONS — not COMPLETED) | Checklist §8 + Architect/Eng approval |
 
@@ -252,6 +252,7 @@ Architecture remains **vendor-neutral** until this sheet is approved. **Do not**
 **Artifacts:**  
 - [`config/FINANCE_LEBANON_INITIAL_CONFIGURATION.md`](./config/FINANCE_LEBANON_INITIAL_CONFIGURATION.md)  
 - [`governance/FINANCE_POLICY_APPROVAL_MATRIX.md`](./governance/FINANCE_POLICY_APPROVAL_MATRIX.md)  
+- [`governance/FINANCE_POLICY_LIFECYCLE.md`](./governance/FINANCE_POLICY_LIFECYCLE.md)  
 
 ### Scope of this blocker
 
@@ -263,6 +264,7 @@ All values remain **Admin Portal configurable**. **No hardcoding.**
 - [x] Currency / commission / subscription / cancel / refund / withdrawal / settlement structures documented  
 - [x] Admin permissions + audit requirements confirmed  
 - [x] Policy ownership / approval matrix published  
+- [x] Policy lifecycle (versioning, history, change workflow) published  
 - [ ] Business values filled (replace Pending Business Decision)  
 - [ ] Finance (+ Product) approval per matrix  
 - [ ] BLOCKER-005 → **COMPLETED**  
@@ -282,6 +284,7 @@ Until then: keep **IN PREPARATION**.
 | 2026-07-24 | Finance policy initial configuration template published |
 | 2026-07-24 | FINANCE_LEBANON_INITIAL_CONFIGURATION published — status **IN PREPARATION** |
 | 2026-07-24 | FINANCE_POLICY_APPROVAL_MATRIX published — remains **IN PREPARATION** |
+| 2026-07-24 | FINANCE_POLICY_LIFECYCLE published — remains **IN PREPARATION** |
 
 ---
 
@@ -364,6 +367,7 @@ Financial records and audit records **cannot** be removed if legally required.
 | 2026-07-24 | BLOCKER-002 Stakeholder Sign-off Package — **READY FOR APPROVAL** (not COMPLETED) | 0/7 | **B) NOT READY — CODING BLOCKED** |
 | 2026-07-24 | BLOCKER-005 Finance Lebanon config — **IN PREPARATION** (values Pending Business Decision) | 0/7 | **B) NOT READY — CODING BLOCKED** |
 | 2026-07-24 | BLOCKER-005 Finance Policy Approval Matrix published — still **IN PREPARATION** | 0/7 | **B) NOT READY — CODING BLOCKED** |
+| 2026-07-24 | BLOCKER-005 Finance Policy Lifecycle published — still **IN PREPARATION** | 0/7 | **B) NOT READY — CODING BLOCKED** |
 
 ---
 

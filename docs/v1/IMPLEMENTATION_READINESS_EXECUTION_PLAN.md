@@ -295,7 +295,7 @@ Cloud provider, region, and hosting choices for DB / Redis / workers / storage /
 
 **Gate mapping:** G-05 · **ADR:** ADR-013 / ADR-026  
 **Status:** **IN PREPARATION** (not COMPLETED)  
-**Artifacts:** [`config/FINANCE_LEBANON_INITIAL_CONFIGURATION.md`](./config/FINANCE_LEBANON_INITIAL_CONFIGURATION.md) · [`governance/FINANCE_POLICY_APPROVAL_MATRIX.md`](./governance/FINANCE_POLICY_APPROVAL_MATRIX.md)
+**Artifacts:** [`config/FINANCE_LEBANON_INITIAL_CONFIGURATION.md`](./config/FINANCE_LEBANON_INITIAL_CONFIGURATION.md) · [`governance/FINANCE_POLICY_APPROVAL_MATRIX.md`](./governance/FINANCE_POLICY_APPROVAL_MATRIX.md) · [`governance/FINANCE_POLICY_LIFECYCLE.md`](./governance/FINANCE_POLICY_LIFECYCLE.md)
 
 **Architecture:** Approved.  
 **Need:** Initial **business configuration values** only.
@@ -453,6 +453,7 @@ Unauthorized scope additions during readiness or implementation are **out of pro
 | 2026-07-24 | BLOCKER-002 → **READY FOR APPROVAL** (Stakeholder Sign-off Package; not COMPLETED) | 0/7 | **B) NOT READY — CODING BLOCKED** |
 | 2026-07-24 | BLOCKER-005 → **IN PREPARATION** (Finance Lebanon structure; values PBD) | 0/7 | **B) NOT READY — CODING BLOCKED** |
 | 2026-07-24 | BLOCKER-005 Finance Policy Approval Matrix published — still **IN PREPARATION** | 0/7 | **B) NOT READY — CODING BLOCKED** |
+| 2026-07-24 | BLOCKER-005 Finance Policy Lifecycle published — still **IN PREPARATION** | 0/7 | **B) NOT READY — CODING BLOCKED** |
 
 Active closure tracker: [`READINESS_BLOCKER_CLOSURE_STATUS.md`](./READINESS_BLOCKER_CLOSURE_STATUS.md).  
 Update that dashboard (and this table) when a blocker moves to Closed. Do **not** change gate decision from B until §3 checklist is complete.
