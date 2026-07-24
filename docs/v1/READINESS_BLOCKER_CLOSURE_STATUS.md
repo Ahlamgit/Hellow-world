@@ -449,6 +449,7 @@ Until then: keep **IN PREPARATION**.
 | 2026-07-24 | BLOCKER-003 Vendor Integration Readiness Matrix — **IN PREPARATION** | 0/7 | **B) NOT READY — CODING BLOCKED** |
 | 2026-07-24 | BLOCKER-003 Integration Contract Specification published — still **IN PREPARATION** | 0/7 | **B) NOT READY — CODING BLOCKED** |
 | 2026-07-24 | BLOCKER-003 Vendor Risk & SLA Assessment published — still **IN PREPARATION** | 0/7 | **B) NOT READY — CODING BLOCKED** |
+| 2026-07-24 | BLOCKER-006 Retention & Data Governance Framework — **IN PREPARATION** | 0/7 | **B) NOT READY — CODING BLOCKED** |
 
 ---
 

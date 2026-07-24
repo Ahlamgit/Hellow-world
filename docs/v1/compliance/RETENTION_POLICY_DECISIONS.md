@@ -3,10 +3,10 @@
 **Document ID:** KHAD-V1-RETENTION  
 **Version:** 1.0  
 **Date:** 2026-07-24  
-**Status:** Decisions pending Compliance / Legal (BLOCKER-006)  
+**Status:** Decisions pending Compliance / Legal (BLOCKER-006 **IN PREPARATION**)  
 **ADR:** ADR-022 · ADR-014  
 
-**Related:** [`../READINESS_BLOCKER_CLOSURE_STATUS.md`](../READINESS_BLOCKER_CLOSURE_STATUS.md)
+**Related:** [`RETENTION_AND_DATA_GOVERNANCE_FRAMEWORK.md`](./RETENTION_AND_DATA_GOVERNANCE_FRAMEWORK.md) · [`../READINESS_BLOCKER_CLOSURE_STATUS.md`](../READINESS_BLOCKER_CLOSURE_STATUS.md)
 
 ```text
 Financial records and audit records MUST remain protected

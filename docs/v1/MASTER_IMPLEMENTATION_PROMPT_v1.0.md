@@ -452,7 +452,7 @@ Do **NOT** start coding until completed and approved:
 - [ ] **BLOCKER-003** — Vendors — **IN PREPARATION** (readiness matrix + contracts + risk/SLA; selections pending)  
 - [ ] **BLOCKER-004** — Cloud decision — **IN PREPARATION** (vendor-neutral; selections pending)  
 - [ ] **BLOCKER-005** — Finance Lebanon configuration — **IN PREPARATION** (values Pending Business Decision)  
-- [ ] **BLOCKER-006** — Compliance retention defaults approved  
+- [ ] **BLOCKER-006** — Compliance — **IN PREPARATION** (governance framework; numeric defaults pending Legal/Compliance)  
 - [ ] **BLOCKER-007** — Payment.js mobile validation — **IN VALIDATION** (PASS WITH CONDITIONS; not COMPLETED)  
 - [ ] Implementation Gate Report amended to **READY**  
 
