@@ -11,50 +11,56 @@
 
 | Application | In Scope |
 |-------------|----------|
-| Administration Portal (React/TS/MUI) | Full P0 admin modules listed in FRS |
-| Store Dashboard (React/TS/MUI) | Store profile, catalog, orders, ads, bookings, customers, reports |
-| Customer Mobile (Flutter) | Auth, browse/search, booking, pay, history, notifications, reviews |
-| Craftsman Mobile (Flutter) | Auth, onboarding, verification, catalog, jobs verification, subscriptions, earnings, withdrawals, notifications |
+| Administration Portal (React/TS/MUI) | Admin governance; **web-only**; MFA required |
+| Store Dashboard (React/TS/MUI) | Service provider ops — **no products** |
+| Customer Mobile (Flutter) | Discovery, booking, pay, chat, reviews, notifications |
+| Craftsman Mobile (Flutter) | Onboarding, jobs, IDV field checks, subscriptions, earnings |
 
 ### 3.1.2 Backend & Platform
 
 - Spring Boot 3.x modular REST API (Java 21, Maven)
-- Spring Security JWT authentication/authorization
+- Spring Security JWT (+ admin MFA)
 - PostgreSQL + Flyway
 - OpenAPI documentation
+- **Market** config (Lebanon default; multi-market ready)
+- **Provider + Listing** unified marketplace model
 - Payment abstraction + Areeba IXOPAY Payment.js adapter
-- Notification orchestration (email, SMS, in-app)
-- Booking engine
-- Commission calculation engine (rules configurable; values TBD)
-- Subscription entitlement engine
-- Identity verification orchestration (OCR, face, GPS, QR/OTP)
+- **Financial ledger** (immutable)
+- Notification orchestration (email, SMS, in-app, push)
+- Booking engine (**confirm → pay**)
+- Commission engine + settlements views
+- Subscription entitlement engine (craftsman)
+- Identity verification (OCR/face/GPS/QR-OTP integration points)
+- **Chat** (customer ↔ provider)
+- Admin-managed promotions / featured listings
 - Audit logging
-- Reporting read models / exports (P0/P1 as defined)
+- Reporting / analytics
+- **Redis** + **background workers** / queues
 - Dockerized deployment + CI/CD readiness
 
 ### 3.1.3 Quality / Follow-up Layer
 
-- Scheduled reminders (including 24-hour booking reminders)
-- Arrival verification hooks
-- Job progress monitoring states
+- 24-hour booking reminders
+- Arrival GPS + selfie verification
+- Job progress monitoring
 - Customer satisfaction survey
 - Quality scoring
-- Restriction rules for poor performance
-- Operational visibility dashboards (admin)
+- Restriction rules: warn → flag → restrict visibility → **admin review** (no permanent auto-block)
 
 ## 3.2 Out of Scope (V1)
 
 | Item | Rationale |
 |------|-----------|
+| Store **product** inventory/catalog/cart/orders/sales | ADR-002 — stores are service providers |
+| Self-serve advertising marketplace | ADR-007 — admin-managed promotions only |
 | Non-Areeba payment gateways | Explicit V1 constraint |
-| Reusing prior ASP.NET / SQL Server codebase as runtime | New version / new stack |
-| UI implementation before design asset upload | Explicit process gate |
-| Native Kotlin/Swift apps | Flutter is the mobile stack |
-| Full multi-tenant white-label SaaS | Multi-region readiness only |
+| Admin login / admin APIs on mobile | ADR-006 |
+| Permanent automatic provider bans without review | ADR-008 |
+| Reusing prior ASP.NET / SQL Server runtime | New version / new stack |
+| UI coding before UI/UX specification from design analysis | ADR-010 + Master Prompt §14/20 |
+| Native Kotlin/Swift rewrite as primary apps | ADR-011 — Flutter approved |
+| Full multi-tenant white-label SaaS | Market readiness only |
 | Advanced ML recommendations / dynamic pricing | V2 candidate |
-| In-app chat / voice calling | Pending Q-COMMS-001; default out |
-| Complex ERP/accounting sync | V2 candidate |
-| Marketplace wallet cash-out to arbitrary networks without decided rails | Pending Q-SET-* |
 
 ## 3.3 Scope Boundaries by Bounded Context
 

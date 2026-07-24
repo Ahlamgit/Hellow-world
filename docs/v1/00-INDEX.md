@@ -1,10 +1,14 @@
 # KHADAMATI Platform — Version 1 Architecture Pack
 
-**Document Status:** Draft — Pending Business & Technical Approval  
-**Version:** 1.0.0-DRAFT  
+**Document Status:** Draft — Aligned to Master Prompt v1.0  
+**Version:** 1.1.0-DRAFT  
 **Date:** 2026-07-24  
 **Classification:** Internal — Architecture & Product Discovery  
 **Stack Decision (Fixed):** Spring Boot 3.x / Java 21 / PostgreSQL / Flyway / React+MUI / Flutter / JWT / Areeba IXOPAY Payment.js  
+**Controlling brief:** [MASTER_IMPLEMENTATION_PROMPT_v1.0.md](./MASTER_IMPLEMENTATION_PROMPT_v1.0.md)  
+**Feature Traceability:** [FEATURE_TRACEABILITY_MATRIX.md](./FEATURE_TRACEABILITY_MATRIX.md)  
+**ADRs:** [adr/README.md](./adr/README.md)  
+**Alignment changelog:** [ALIGNMENT_CHANGELOG_MASTER_PROMPT_v1.md](./ALIGNMENT_CHANGELOG_MASTER_PROMPT_v1.md)  
 
 ---
 
@@ -84,7 +88,10 @@ It is intentionally **implementation-free**. No application code, UI templates, 
 
 **Cross-cutting:** [QUESTIONS-REQUIRING-BUSINESS-DECISION.md](./QUESTIONS-REQUIRING-BUSINESS-DECISION.md)  
 **Final architecture audit:** [ARCHITECTURE_AUDIT_FINAL.md](./ARCHITECTURE_AUDIT_FINAL.md)  
-**Full prompt (architecture + design):** [FULL_PROMPT_INCLUDING_DESIGN.md](./FULL_PROMPT_INCLUDING_DESIGN.md)
+**Master prompt v1.0 (controlling):** [MASTER_IMPLEMENTATION_PROMPT_v1.0.md](./MASTER_IMPLEMENTATION_PROMPT_v1.0.md)  
+**Feature Traceability Matrix:** [FEATURE_TRACEABILITY_MATRIX.md](./FEATURE_TRACEABILITY_MATRIX.md)  
+**ADRs:** [adr/README.md](./adr/README.md)  
+**Full prompt (earlier composite):** [FULL_PROMPT_INCLUDING_DESIGN.md](./FULL_PROMPT_INCLUDING_DESIGN.md)
 
 ---
 

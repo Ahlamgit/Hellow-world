@@ -72,9 +72,18 @@ Engagement
 | BR-003 | Platform has four primary client surfaces: Admin Portal, Store Dashboard, Customer App, Craftsman App |
 | BR-004 | Craftsman onboarding requires approval workflow |
 | BR-005 | Identity verification includes GPS proximity, selfie, and QR/OTP job verification |
-| BR-006 | Quality layer includes reminders, surveys, scoring, and restriction rules |
+| BR-006 | Quality layer includes reminders, surveys, scoring, and restriction rules (no permanent auto-block without admin review) |
 | BR-007 | Architecture must be multi-language, multi-currency, and multi-region **ready** |
-| BR-008 | **Administrators must authenticate and operate only via the Administration Portal (web). Admin login from Customer or Craftsman mobile apps is forbidden.** |
+| BR-008 | **Administrators authenticate only via Administration Portal (web). No admin login or admin APIs on mobile.** |
+| BR-009 | **Default Market = Lebanon** (USD, +961, Arabic RTL primary, English LTR, Asia/Beirut) — not hardcoded |
+| BR-010 | **Stores are service providers only** — no products, inventory, cart, or product orders |
+| BR-011 | **Unified Provider + Listing** marketplace model |
+| BR-012 | **Financial ledger is mandatory**; money events immutable |
+| BR-013 | Booking sequence: **request → provider confirmation → payment → execution → …** |
+| BR-014 | **Admin MFA required** |
+| BR-015 | Promotions/ads in V1 are **admin-managed** (no self-serve ads marketplace) |
+| BR-016 | **Chat** is in V1 customer scope |
+| BR-017 | **Redis + background workers** required |
 
 ## 2.5 Business Rules — Not Confirmed (Do Not Invent)
 

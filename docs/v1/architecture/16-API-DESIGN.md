@@ -97,13 +97,13 @@
 | Method | Path | Description |
 |--------|------|-------------|
 | GET/PUT | `/api/v1/store/me` | Store profile |
-| CRUD | `/api/v1/store/products` | Products |
-| CRUD | `/api/v1/store/services` | Services |
-| GET/PATCH | `/api/v1/store/orders` | Orders |
+| CRUD | `/api/v1/store/listings` | Service listings (**no products**) |
+| CRUD | `/api/v1/store/staff` | Provider/staff affiliations |
 | GET/PATCH | `/api/v1/store/bookings` | Bookings |
-| CRUD | `/api/v1/store/ads` | Ad campaigns requests |
-| GET | `/api/v1/store/customers` | Customers projection |
-| GET | `/api/v1/store/reports/*` | Reports |
+| GET | `/api/v1/store/promotions` | Promotion / featured status (admin-managed) |
+| GET | `/api/v1/store/reports/*` | Analytics |
+
+> Product/order commerce endpoints are **out of scope** (ADR-002).
 
 ## 16.7 Admin APIs (representative)
 

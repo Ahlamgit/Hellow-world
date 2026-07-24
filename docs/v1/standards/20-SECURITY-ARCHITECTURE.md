@@ -26,11 +26,12 @@ Admins → Admin Portal → API (privileged permissions)
 - Password hashing: Argon2id or BCrypt (cost calibrated) — choose Q-SEC-001  
 - JWT access tokens (short-lived)  
 - Refresh tokens (rotated, hashed at rest)  
-- Optional admin MFA (Q-AUTH-002)  
+- **Admin MFA required** (ADR-006)  
+- OTP authentication for customer/craftsman mobile flows  
 - Account lockout + rate limiting on auth endpoints  
-- **Administrators authenticate only via Administration Portal (web). Mobile app admin login is forbidden (BR-008 / Q-AUTH-007 decided).**  
-- Login requests must declare client audience; admin roles rejected for `customer-app` / `craftsman-app` / `store-web` audiences  
-- Admin API routes additionally require admin-web audience claim (defense in depth)  
+- **Administrators authenticate only via Administration Portal (web). No admin login or admin functionality on mobile APIs (ADR-006).**  
+- Login requests must declare client audience; admin roles rejected for non-`admin-web`  
+- Admin API routes require admin permissions **and** admin-web audience  
 
 ## 20.4 Authorization
 

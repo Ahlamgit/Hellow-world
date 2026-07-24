@@ -56,13 +56,14 @@ KHADAMATI is a multi-sided marketplace connecting:
 | ID | Requirement | Priority |
 |----|-------------|----------|
 | FR-STR-001 | Manage store profile (identity, contact, location, media metadata) | P0 |
-| FR-STR-002 | CRUD products with inventory/availability fields (exact inventory model Q-PRD-001) | P0 |
-| FR-STR-003 | CRUD store services with pricing metadata | P0 |
-| FR-STR-004 | View and update order statuses within allowed transitions | P0 |
-| FR-STR-005 | Manage store advertisements (request/schedule within policy) | P0 |
-| FR-STR-006 | Manage bookings related to store services | P0 |
-| FR-STR-007 | View store customers (derived from orders/bookings; PII access rules apply) | P0 |
-| FR-STR-008 | Store reports (sales/bookings summaries) | P1 |
+| FR-STR-002 | CRUD **service listings** (stores do **not** sell products — ADR-002) | P0 |
+| FR-STR-003 | Provider/staff affiliation management | P0 |
+| FR-STR-004 | Manage bookings related to store services | P0 |
+| FR-STR-005 | View promotion / advertisement status (admin-managed inventory) | P0 |
+| FR-STR-006 | Store analytics / reports | P1 |
+| FR-STR-007 | Store verification / onboarding status | P0 |
+
+**Explicitly out:** product inventory, product catalog, cart, product ordering, product sales.
 
 ## 1.6 Customer Mobile App — Functional Requirements
 
@@ -79,7 +80,11 @@ KHADAMATI is a multi-sided marketplace connecting:
 | FR-CUS-009 | Pay online via Areeba IXOPAY Payment.js (tokenized card flow) | P0 |
 | FR-CUS-010 | Receive and view notifications | P0 |
 | FR-CUS-011 | Submit reviews and ratings for completed jobs | P0 |
-| FR-CUS-012 | Multi-language UI readiness (at least AR/EN capability in architecture) | P0 |
+| FR-CUS-012 | Multi-language UI (Arabic RTL primary, English LTR) | P0 |
+| FR-CUS-013 | OTP authentication | P0 |
+| FR-CUS-014 | Provider proximity search | P0 |
+| FR-CUS-015 | Chat with provider | P0 |
+| FR-CUS-016 | Service completion confirmation | P0 |
 
 ## 1.7 Craftsman Mobile App — Functional Requirements
 

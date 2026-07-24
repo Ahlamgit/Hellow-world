@@ -1,0 +1,244 @@
+# Feature Traceability Matrix — KHADAMATI V1
+
+**Document ID:** KHAD-V1-FTM  
+**Status:** Draft for Approval (pre-implementation gate)  
+**Source:** Master Implementation Prompt v1.0  
+**Rule:** No proposal feature may disappear silently. Status values: `Specified` · `Deferred (ADR)` · `Blocked (Q-*)` · `Implemented` (post-coding)
+
+---
+
+## Legend
+
+| Column | Meaning |
+|--------|---------|
+| BR-ID | Business requirement / feature id |
+| Module | Bounded context |
+| Entity | Primary DB entities |
+| API | Representative endpoints |
+| UI | Screen / surface |
+| Status | Traceability state |
+
+**Apps:** `CUS` Customer Flutter · `CRF` Craftsman Flutter · `STR` Store Dashboard · `ADM` Admin Portal (web only)
+
+---
+
+## 1. Identity & Access
+
+| BR-ID | Feature | Module | Entity | API | UI | Status |
+|-------|---------|--------|--------|-----|-----|--------|
+| BR-IAM-01 | Customer registration | iam, customer | users, customers | POST /auth/register/customer | CUS: Register | Specified |
+| BR-IAM-02 | Customer login | iam | users, refresh_tokens | POST /auth/login (audience customer-app) | CUS: Login | Specified |
+| BR-IAM-03 | Customer OTP authentication | iam, notification | otp_challenges | POST /auth/otp/* | CUS: OTP | Specified |
+| BR-IAM-04 | Craftsman registration/login | iam, provider | users, providers, craftsman_profiles | POST /auth/register/craftsman, /auth/login | CRF: Auth | Specified |
+| BR-IAM-05 | Store operator login | iam, provider | users, store_profiles, store_users | POST /auth/login (store-web) | STR: Login | Specified |
+| BR-IAM-06 | Admin login (web only) | iam | users, roles | POST /auth/login (admin-web only) | ADM: Login | Specified |
+| BR-IAM-07 | Admin MFA | iam | mfa_credentials | POST /auth/mfa/* | ADM: MFA | Specified |
+| BR-IAM-08 | Reject admin on mobile APIs | iam | — | AUTH_ADMIN_WEB_ONLY | CUS/CRF: none | Specified |
+| BR-IAM-09 | Session / refresh / logout | iam | refresh_tokens | /auth/refresh, /logout | All | Specified |
+| BR-IAM-10 | RBAC permissions | iam | roles, permissions | enforced on all /admin/** | ADM | Specified |
+| BR-IAM-11 | Rate limiting / lockout | iam, platform | login_attempts | filters | All | Specified |
+| BR-IAM-12 | Account deletion (validation, retention, anonymization, audit) | iam, audit | users + related | DELETE /me or admin delete | CUS/CRF/ADM | Specified |
+
+---
+
+## 2. Market & Localization
+
+| BR-ID | Feature | Module | Entity | API | UI | Status |
+|-------|---------|--------|--------|-----|-----|--------|
+| BR-MKT-01 | Default Market Lebanon | platform | markets | GET /markets/current | All (config) | Specified |
+| BR-MKT-02 | Currency USD default | platform, ledger | markets, money cols | money DTO | All | Specified |
+| BR-MKT-03 | Phone +961 formatting | iam | users.phone_e164 | validation | Auth screens | Specified |
+| BR-MKT-04 | Arabic RTL primary | i18n clients | translations | Accept-Language | All | Specified |
+| BR-MKT-05 | English LTR secondary | i18n clients | translations | Accept-Language | All | Specified |
+| BR-MKT-06 | Timezone Asia/Beirut default | platform | markets.timezone | scheduling | Booking | Specified |
+| BR-MKT-07 | Multi-market readiness (no Lebanon hardcode) | platform | markets | market_id FKs | — | Specified |
+
+---
+
+## 3. Customer — Discovery & Booking
+
+| BR-ID | Feature | Module | Entity | API | UI | Status |
+|-------|---------|--------|--------|-----|-----|--------|
+| BR-CUS-01 | Profile management | customer | customers, addresses | /customers/me | CUS: Profile | Specified |
+| BR-CUS-02 | Categories browse | catalog | categories, translations | GET /categories | CUS: Categories | Specified |
+| BR-CUS-03 | Search services | catalog | listings | GET /listings?q= | CUS: Search | Specified |
+| BR-CUS-04 | Filters | catalog | listings | query params | CUS: Filters | Specified |
+| BR-CUS-05 | Provider proximity search | catalog | listings, geo | GET /listings?near= | CUS: Near me | Specified |
+| BR-CUS-06 | Select provider / listing | catalog, provider | listings, providers | GET /listings/{id} | CUS: Detail | Specified |
+| BR-CUS-07 | Create booking request | booking | bookings | POST /bookings | CUS: Booking form | Specified |
+| BR-CUS-08 | Date/time selection | booking | bookings | payload | CUS: Schedule | Specified |
+| BR-CUS-09 | Location/address | booking, customer | addresses, booking snapshot | payload | CUS: Address | Specified |
+| BR-CUS-10 | Notes | booking | bookings.notes | payload | CUS: Notes | Specified |
+| BR-CUS-11 | Booking tracking / history | booking | bookings, status_history | GET /bookings | CUS: Bookings | Specified |
+| BR-CUS-12 | Payment after provider confirm | payment, ledger | payments, ledger_entries | /payments/* | CUS: Pay | Specified |
+| BR-CUS-13 | Completion confirmation | booking | bookings | POST /bookings/{id}/confirm-completion | CUS: Complete | Specified |
+| BR-CUS-14 | Ratings | trust | ratings | POST /bookings/{id}/ratings | CUS: Rate | Specified |
+| BR-CUS-15 | Reviews | trust | reviews | same / separate | CUS: Review | Specified |
+| BR-CUS-16 | Notifications | notification | deliveries, in_app | GET /notifications | CUS: Inbox | Specified |
+| BR-CUS-17 | Chat | chat | conversations, messages | /chat/** | CUS: Chat | Specified |
+
+---
+
+## 4. Craftsman
+
+| BR-ID | Feature | Module | Entity | API | UI | Status |
+|-------|---------|--------|--------|-----|-----|--------|
+| BR-CRF-01 | Profile / skills / services | provider, listing | craftsman_profiles, listings | /craftsmen/me/** | CRF: Profile/Catalog | Specified |
+| BR-CRF-02 | Service areas | provider | service_areas | CRUD | CRF: Areas | Specified |
+| BR-CRF-03 | Pricing | listing | listings.price | CRUD | CRF: Pricing | Specified |
+| BR-CRF-04 | Availability | provider | availability_windows | CRUD | CRF: Availability | Specified |
+| BR-CRF-05 | Document submission | idv, media | verification_documents | upload APIs | CRF: Documents | Specified |
+| BR-CRF-06 | Identity verification workflow | idv | verification_cases | /verifications/** | CRF: Verify | Specified |
+| BR-CRF-07 | Approval status | provider | onboarding_status | GET onboarding | CRF: Status | Specified |
+| BR-CRF-08 | OCR integration point | idv | ocr_results | async jobs | CRF/ADM | Specified |
+| BR-CRF-09 | Face verification integration | idv | face_checks | async jobs | CRF | Specified |
+| BR-CRF-10 | Receive bookings | booking | bookings | GET jobs | CRF: Jobs | Specified |
+| BR-CRF-11 | Accept/reject requests | booking | bookings | POST accept/reject | CRF: Respond | Specified |
+| BR-CRF-12 | Daily schedule | booking | bookings | GET schedule | CRF: Schedule | Specified |
+| BR-CRF-13 | Job lifecycle | booking | bookings, history | progress APIs | CRF: Job detail | Specified |
+| BR-CRF-14 | GPS proximity validation | idv | gps_checks | POST gps-checks | CRF: Arrive | Specified |
+| BR-CRF-15 | Selfie verification | idv | face_checks | POST face-checks | CRF: Selfie | Specified |
+| BR-CRF-16 | QR/OTP handshake | idv | job_challenges | POST challenges/verify | CRF: Confirm | Specified |
+| BR-CRF-17 | Start / complete job | booking | bookings | progress transitions | CRF: Job | Specified |
+| BR-CRF-18 | Earnings dashboard | ledger, reporting | ledger_entries | GET earnings | CRF: Earnings | Specified |
+| BR-CRF-19 | KPIs | reporting | projections | GET kpis | CRF: Dashboard | Specified |
+| BR-CRF-20 | Subscriptions | subscription, payment | plans, subscriptions | /subscriptions/** | CRF: Plans | Specified |
+| BR-CRF-21 | Withdrawal requests | ledger | withdrawal_requests | POST withdrawals | CRF: Withdraw | Specified |
+| BR-CRF-22 | Notifications | notification | in_app | inbox APIs | CRF: Inbox | Specified |
+
+---
+
+## 5. Store Dashboard (Services Only — No Products)
+
+| BR-ID | Feature | Module | Entity | API | UI | Status |
+|-------|---------|--------|--------|-----|-----|--------|
+| BR-STR-01 | Store profile | provider | store_profiles | /store/me | STR: Profile | Specified |
+| BR-STR-02 | Store verification | idv, provider | verification_cases | onboarding APIs | STR: Verify | Specified |
+| BR-STR-03 | Service listings | listing | listings | /store/listings | STR: Services | Specified |
+| BR-STR-04 | Provider/staff affiliation | provider | affiliations | /store/staff | STR: Staff | Specified |
+| BR-STR-05 | Booking management | booking | bookings | /store/bookings | STR: Bookings | Specified |
+| BR-STR-06 | Promotions visibility | ads | promotions | /store/promotions (read/request) | STR: Promos | Specified |
+| BR-STR-07 | Advertisements (admin-aligned) | ads | campaigns | limited store APIs | STR: Ads status | Specified |
+| BR-STR-08 | Analytics | reporting | views | /store/reports | STR: Analytics | Specified |
+| BR-STR-X1 | Product inventory | — | — | — | — | **Deferred ADR-002 Out** |
+| BR-STR-X2 | Product catalog | — | — | — | — | **Deferred ADR-002 Out** |
+| BR-STR-X3 | Shopping cart | — | — | — | — | **Deferred ADR-002 Out** |
+| BR-STR-X4 | Product ordering/sales | — | — | — | — | **Deferred ADR-002 Out** |
+
+---
+
+## 6. Administration Portal (Web Only)
+
+| BR-ID | Feature | Module | Entity | API | UI | Status |
+|-------|---------|--------|--------|-----|-----|--------|
+| BR-ADM-01 | Manage customers | customer, admin | customers | /admin/customers | ADM: Customers | Specified |
+| BR-ADM-02 | Manage craftsmen | provider | craftsman_profiles | /admin/craftsmen | ADM: Craftsmen | Specified |
+| BR-ADM-03 | Manage stores | provider | store_profiles | /admin/stores | ADM: Stores | Specified |
+| BR-ADM-04 | Craftsman onboarding approval | provider, idv | verification_cases | approve/reject | ADM: Onboarding | Specified |
+| BR-ADM-05 | Store onboarding approval | provider, idv | verification_cases | approve/reject | ADM: Store onboard | Specified |
+| BR-ADM-06 | Verification workflow ops | idv | cases, docs | /admin/verifications | ADM: IDV | Specified |
+| BR-ADM-07 | Status management | provider | status fields | PATCH status | ADM | Specified |
+| BR-ADM-08 | Ad packages / featured / slots | ads | packages, placements | /admin/ads/** | ADM: Ads | Specified |
+| BR-ADM-09 | Provider visibility promotions | ads | placements | /admin/promotions | ADM: Promos | Specified |
+| BR-ADM-10 | Subscription plans CRUD | subscription | plans | /admin/subscription-plans | ADM: Plans | Specified |
+| BR-ADM-11 | Subscription status/expiry/payments | subscription | subscriptions | /admin/subscriptions | ADM | Specified |
+| BR-ADM-12 | Commission rules | commission | commission_rules | /admin/commission-rules | ADM: Commission | Specified |
+| BR-ADM-13 | Settlement views | ledger, reporting | ledger + views | /admin/settlements | ADM: Settlements | Specified |
+| BR-ADM-14 | Financial reports | reporting, ledger | exports | /admin/reports/finance | ADM: Finance reports | Specified |
+| BR-ADM-15 | Notification templates | notification | templates | /admin/notification-templates | ADM: Templates | Specified |
+| BR-ADM-16 | Channel config SMS/Email/Push/In-app | notification | settings | /admin/notifications | ADM | Specified |
+| BR-ADM-17 | Scheduling / event triggers | notification | rules | /admin/notification-rules | ADM | Specified |
+| BR-ADM-18 | Analytics dashboards | reporting | aggregates | /admin/analytics/** | ADM: Analytics | Specified |
+| BR-ADM-19 | Follow-up metrics | trust, quality | scores, surveys | /admin/quality/** | ADM: Quality | Specified |
+| BR-ADM-20 | Restriction review (no silent permanent ban) | trust | actor_restrictions | approve restriction | ADM: Restrictions | Specified |
+| BR-ADM-21 | Audit logs | audit | audit_events | /admin/audit-events | ADM: Audit | Specified |
+| BR-ADM-22 | Global settings | platform | global_settings | /admin/settings | ADM: Settings | Specified |
+| BR-ADM-23 | Ratings moderation | trust | ratings, reviews | /admin/ratings | ADM: Ratings | Specified |
+
+---
+
+## 7. Payments, Ledger, Subscriptions, Commissions
+
+| BR-ID | Feature | Module | Entity | API | UI | Status |
+|-------|---------|--------|--------|-----|-----|--------|
+| BR-PAY-01 | Payment.js tokenization | payment | — (client) | public key only | CUS/CRF WebView | Specified |
+| BR-PAY-02 | Debit via token | payment | payments | POST /payments/{id}/debit | CUS/CRF | Specified |
+| BR-PAY-03 | Webhook verification + idempotency | payment | payment_webhooks | POST /webhooks/areeba-ixopay | — | Specified |
+| BR-PAY-04 | Payment state machine | payment | payments | GET /payments/{id} | CUS | Specified |
+| BR-PAY-05 | Failure handling + reconcile job | payment, worker | payments | worker | ADM ops | Specified |
+| BR-PAY-06 | Ledger update on money events | ledger | ledger_entries | internal | — | Specified |
+| BR-PAY-07 | Escrow readiness (hold accounts) | ledger | ledger_accounts | internal | — | Specified |
+| BR-PAY-08 | Commission calculation | commission, ledger | commission_lines, ledger | events | ADM | Specified |
+| BR-PAY-09 | Provider payout / withdrawals | ledger | withdrawal_requests | craftsman + admin approve | CRF/ADM | Specified |
+| BR-PAY-10 | Subscription charge via Payment.js | subscription, payment | subscriptions, payments | subscribe APIs | CRF | Specified |
+| BR-PAY-11 | Gateway abstraction port | payment | — | adapters | — | Specified |
+
+---
+
+## 8. Quality / Follow-up
+
+| BR-ID | Feature | Module | Entity | API | UI | Status |
+|-------|---------|--------|--------|-----|-----|--------|
+| BR-QUA-01 | 24h reminder | notification, worker | booking_reminders | scheduler | Push/In-app | Specified |
+| BR-QUA-02 | Arrival GPS + selfie | idv | gps_checks, face_checks | job APIs | CRF | Specified |
+| BR-QUA-03 | During-service progress tracking | booking | status_history | progress | CRF/CUS | Specified |
+| BR-QUA-04 | Completion confirmation | booking | bookings | confirm APIs | CUS/CRF | Specified |
+| BR-QUA-05 | Satisfaction survey | trust | surveys, responses | survey APIs | CUS | Specified |
+| BR-QUA-06 | Warn / flag / restrict visibility | trust | actor_restrictions | system + admin | ADM | Specified |
+| BR-QUA-07 | No permanent auto-block w/o review | trust | actor_restrictions | admin gate | ADM | Specified |
+
+---
+
+## 9. Cross-cutting Platform
+
+| BR-ID | Feature | Module | Entity | API | UI | Status |
+|-------|---------|--------|--------|-----|-----|--------|
+| BR-PLT-01 | Redis cache / locks / rate limit | platform | — | infra | — | Specified |
+| BR-PLT-02 | Background workers / queues | platform | outbox, jobs | workers | — | Specified |
+| BR-PLT-03 | Flyway migrations | db | — | — | — | Specified |
+| BR-PLT-04 | OpenAPI versioned REST | api | — | /api/v1 | — | Specified |
+| BR-PLT-05 | Structured logging / monitoring | platform | — | — | — | Specified |
+| BR-PLT-06 | Soft delete (non-financial) | all masters | deleted_at | — | — | Specified |
+| BR-PLT-07 | Immutable financial records | ledger, payment | ledger_entries, payments | — | — | Specified |
+| BR-PLT-08 | Design system / tokens (post analysis) | ui packages | — | — | All clients | Specified (pre-UI gate) |
+
+---
+
+## Coverage Statement
+
+| Category | Count Specified | Explicitly Out / Deferred |
+|----------|----------------:|---------------------------|
+| IAM / Auth | 12 | — |
+| Market / i18n | 7 | — |
+| Customer | 17 | — |
+| Craftsman | 22 | — |
+| Store | 8 in / **4 out** (products) | ADR-002 |
+| Admin | 23 | Self-serve ads marketplace deferred ADR-007 |
+| Money | 11 | — |
+| Quality | 7 | Permanent auto-ban forbidden |
+| Platform | 8 | — |
+
+**Silent drop check:** Product commerce features from earlier drafts are **explicitly deferred** via ADR-002 (not silent). Chat retained via ADR-009. Admin mobile login forbidden via ADR-006.
+
+---
+
+## Remaining Open Items (do not invent)
+
+Still require ADR or Q-* before coding those behaviors:
+
+- Exact cancellation/refund fee matrix (Q-BOOK-001..004)  
+- Commission percentage model (Q-COM-001)  
+- Withdrawal rail details (Q-SET-002)  
+- Chat transport (WebSocket vs poll) — engineering spike ADR  
+- OCR/Face provider vendors (Q-OCR-001, Q-IDV-002)  
+- Email/SMS providers (Q-NTF-001/002)  
+
+---
+
+## Gate Sign-off
+
+| Reviewer | Date | Ack |
+|----------|------|-----|
+| Product Owner | | ☐ |
+| Solution Architect | | ☐ |
+| Engineering Lead | | ☐ |

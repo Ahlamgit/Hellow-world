@@ -27,22 +27,28 @@ Define the booking aggregate lifecycle connecting customer demand, craftsman/sto
 
 **Questions Requiring Business Decision:** exact states and transitions — Q-BOOK-008, Q-BOOK-009, Q-BOOK-010.
 
-## 24.3 Main Flow (Customer Prepaid Model — Candidate)
+## 24.3 Canonical V1 Flow (Master Prompt — Confirm Then Pay)
 
 ```mermaid
 stateDiagram-v2
-  [*] --> DRAFT
-  DRAFT --> PENDING_PAYMENT
+  [*] --> REQUESTED: customer creates booking
+  REQUESTED --> REJECTED: provider rejects
+  REQUESTED --> ACCEPTED: provider accepts
+  ACCEPTED --> PENDING_PAYMENT: payment intent
   PENDING_PAYMENT --> CONFIRMED: PaymentCaptured
-  PENDING_PAYMENT --> CANCELLED: timeout/cancel
-  PENDING_PAYMENT --> EXPIRED: pay window elapsed
-  CONFIRMED --> EN_ROUTE
-  EN_ROUTE --> ARRIVED: GPS/arrival verification
-  ARRIVED --> IN_PROGRESS: QR/OTP ok
-  IN_PROGRESS --> COMPLETED
-  CONFIRMED --> CANCELLED
+  PENDING_PAYMENT --> CANCELLED: pay timeout/cancel
+  CONFIRMED --> IN_PROGRESS: GPS+selfie+QR/OTP ok
+  IN_PROGRESS --> AWAITING_CUSTOMER_CONFIRM: provider completes
+  AWAITING_CUSTOMER_CONFIRM --> COMPLETED: customer confirms
   COMPLETED --> [*]
+  REQUESTED --> CANCELLED
+  ACCEPTED --> CANCELLED
+  CONFIRMED --> CANCELLED
 ```
+
+**Side effects:** CONFIRMED → schedule 24h reminder; COMPLETED → commission/ledger, survey, unlock rating; payment events → ledger.
+
+> Earlier “prepaid before confirm” drafts are **superseded** by ADR-005.
 
 ## 24.4 Side Effects by Transition
 
@@ -65,19 +71,13 @@ Options:
 
 Decision: Q-BOOK-007.
 
-## 24.6 Assignment Model (**OPEN**)
+## 24.6 Assignment Model
 
-Options:
-
-1. Customer selects craftsman directly  
-2. Platform auto-assigns  
-3. Store assigns staff/craftsman  
-
-Decision: Q-BOOK-009, Q-REL-001.
+**Decided (Master Prompt / ADR-005):** Customer selects provider/listing. Provider accepts/rejects. Store staff affiliation may fulfill store listings.
 
 ## 24.7 Reminder: 24-hour
 
-Scheduler finds bookings with `scheduled_start` in [now+23h, now+25h] (exact window Q-NTF-004), not yet reminded, status eligible → send notification → mark reminder sent.
+Scheduler finds bookings with `scheduled_start` in configured window, not yet reminded, status eligible → notify → mark sent. Uses **Market timezone** (default Asia/Beirut).
 
 ## 24.8 Cancellation & Refund
 

@@ -11,25 +11,26 @@ Modules are logical bounded contexts inside a **modular monolith** for V1 (extra
 
 | Module | Code | Responsibility | Primary Clients |
 |--------|------|----------------|-----------------|
-| Platform Kernel | `platform` | Config, i18n keys, clock, idempotency, outbox | All |
-| Identity & Access | `iam` | Users, credentials, JWT, roles, permissions, sessions | All |
-| Admin Ops | `admin` | Admin-facing aggregation, settings UX APIs, audit query | Admin |
+| Platform Kernel | `platform` | Market, config, i18n keys, clock, idempotency, outbox, Redis ports | All |
+| Identity & Access | `iam` | Users, OTP, JWT, MFA, roles, sessions, audience enforcement | All |
 | Customer | `customer` | Customer profile, addresses | Customer, Admin |
-| Craftsman | `craftsman` | Craftsman profile, catalog, onboarding aggregate | Craftsman, Admin |
-| Store | `store` | Store profile, products, services, orders | Store, Customer, Admin |
-| Catalog & Search | `catalog` | Categories, search projections | Customer, Admin |
-| Booking Engine | `booking` | Booking aggregate, lifecycle, reminders hooks | Customer, Craftsman, Store, Admin |
-| Payments | `payment` | Payment intents, gateway ports, IXOPAY adapter, webhooks | Customer, Craftsman, Admin |
-| Commissions | `commission` | Rules, commission lines, settlement projections | Admin, Finance |
-| Subscriptions | `subscription` | Plans, subscriptions, entitlements | Craftsman, Admin (, Store?) |
+| Provider | `provider` | Unified provider + craftsman/store profiles, affiliations, availability | Craftsman, Store, Admin, Customer |
+| Listing / Catalog | `listing` | Categories, listings, search/proximity projections | Customer, providers, Admin |
+| Booking Engine | `booking` | Booking aggregate, lifecycle, reminders hooks | All apps |
+| Payments | `payment` | Payment intents, IXOPAY adapter, webhooks | Customer, Craftsman, Admin |
+| Ledger | `ledger` | Immutable financial entries, escrow-ready accounts, withdrawals | System, Admin, Craftsman |
+| Commissions | `commission` | Rules + commission lines posting to ledger | Admin, Finance |
+| Subscriptions | `subscription` | Plans, subscriptions, entitlements | Craftsman, Admin |
 | Notifications | `notification` | Templates, dispatcher, providers, in-app inbox | All |
-| Trust & Safety / IDV | `identity_verification` | Documents metadata, OCR, face, GPS, QR/OTP cases | Craftsman, Admin |
-| Advertisements | `ads` | Campaigns, placements, scheduling | Admin, Store, Customer |
-| Ratings & Reviews | `rating` | Ratings, reviews, moderation | Customer, Admin |
-| Quality Follow-up | `quality` | Surveys, scores, restrictions, monitoring | Admin, system jobs |
-| Reporting | `reporting` | Dashboards///exports read models | Admin, Store |
-| Files / Media | `media` | Upload URLs, virus scan hook, object storage adapter | All |
+| Chat | `chat` | Booking-scoped conversations/messages | Customer, Provider |
+| Trust & Safety / IDV | `identity_verification` | Documents, OCR/face/GPS/QR-OTP cases | Craftsman, Store, Admin |
+| Promotions / Ads | `ads` | Admin-managed packages, featured slots, visibility | Admin, Store (read) |
+| Trust (ratings/quality) | `trust` | Ratings, reviews, surveys, restrictions (review-gated) | Customer, Admin |
+| Reporting | `reporting` | Dashboards/exports | Admin, Store, Craftsman |
+| Media | `media` | Presigned uploads, object storage | All |
 | Audit | `audit` | Append-only audit events | Admin, system |
+
+> **Removed from V1 module catalog:** product commerce / store orders. Admin ops is an API facade over modules, not a separate domain owning rules.
 
 ## 8.2 Module Dependency Rules
 

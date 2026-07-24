@@ -1,9 +1,10 @@
 # KHADAMATI V1 — Full Prompt (Architecture + Design)
 
+> **Superseded as controlling brief by** [`MASTER_IMPLEMENTATION_PROMPT_v1.0.md`](./MASTER_IMPLEMENTATION_PROMPT_v1.0.md).  
+> Keep this file for historical composite notes. Prefer Master Prompt + Feature Traceability Matrix + ADRs.
+
 **Document ID:** KHAD-V1-FULL-PROMPT  
-**Status:** Ready for use after architecture approval + design asset upload  
-**Audience:** Implementation agents / engineering team  
-**Rule:** Do **not** start coding until (1) architecture remediations are accepted and (2) design assets listed below are present and reviewed.
+**Status:** Historical / secondary — use Master Prompt v1.0
 
 ---
 
