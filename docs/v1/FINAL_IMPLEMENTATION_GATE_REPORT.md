@@ -18,6 +18,9 @@ Master Prompt v1.0 · [`FINAL_SCOPE_BASELINE.md`](./FINAL_SCOPE_BASELINE.md) · 
 ### Pre-implementation consistency review
 [`FINAL_PRE_IMPLEMENTATION_READINESS_REVIEW.md`](./FINAL_PRE_IMPLEMENTATION_READINESS_REVIEW.md) — architecture APPROVED / scope FROZEN; recommendation **B) Additional preparation required**.
 
+### Implementation execution standards (post–Gate A)
+[`IMPLEMENTATION_EXECUTION_STANDARDS.md`](./IMPLEMENTATION_EXECUTION_STANDARDS.md) — engineering workflow/DoD/API/DB/security/testing standards prepared; **does not authorize coding** while gate remains **B**.
+
 ---
 
 ## Scope Freeze vs Implementation Gate
@@ -41,6 +44,7 @@ Scope freeze does **not** authorize coding. Implementation remains blocked until
 
 ## Re-validation result (this pass)
 - **Final Pre-Implementation Readiness Review published** — architecture completeness + scope exclusions confirmed; data concepts complete; recommendation **B) Additional preparation required** (0/7 blockers closed)  
+- **Implementation Execution Standards published** — post–Gate A engineering standards ready; implementation remains **BLOCKED**  
 - **Final Scope Baseline v1.0 published** — product scope status **A) Scope Frozen** (sign-off pending BLOCKER-002)  
 - **Implementation Readiness Execution Plan published** — blocker register **BLOCKER-001…007**  
 - **Readiness Blocker Closure pack published** — checklists/templates/plans for all blockers; **0/7 closed**  

@@ -461,12 +461,21 @@ Before coding authorization, **all** must be complete:
 
 **Gate flip rule:** Only when all rows above are satisfied may [`FINAL_IMPLEMENTATION_GATE_REPORT.md`](./FINAL_IMPLEMENTATION_GATE_REPORT.md) be amended to **A) READY FOR IMPLEMENTATION**.
 
-Until then:
+### Post–Gate A execution standards (prepared; not an authorization)
+
+| Artifact | State |
+|----------|-------|
+| [`IMPLEMENTATION_EXECUTION_STANDARDS.md`](./IMPLEMENTATION_EXECUTION_STANDARDS.md) | ☑ Published — workflow, DoD, coding/DB/API/security/testing/release/traceability |
+| Use of standards for coding | ☐ Only after Gate → **A** |
+
+Until Gate A:
 
 ```text
 DO NOT write production code.
 DO NOT implement UI.
 DO NOT generate application files.
+DO NOT create database migrations.
+DO NOT create APIs.
 DO NOT change approved architecture.
 DO NOT introduce new V1 features.
 ```
@@ -515,6 +524,7 @@ Unauthorized scope additions during readiness or implementation are **out of pro
 | 2026-07-24 | BLOCKER-006 → **IN PREPARATION** (Retention & Data Governance Framework) | 0/7 | **B) NOT READY — CODING BLOCKED** |
 | 2026-07-24 | Payment Security & Reconciliation Framework published — BLOCKER-007 still **IN VALIDATION** | 0/7 | **B) NOT READY — CODING BLOCKED** |
 | 2026-07-24 | Final Pre-Implementation Readiness Review — recommendation **B**; still **0/7** closed | 0/7 | **B) NOT READY — CODING BLOCKED** |
+| 2026-07-24 | Implementation Execution Standards published — coding still **BLOCKED** | 0/7 | **B) NOT READY — CODING BLOCKED** |
 
 Active closure tracker: [`READINESS_BLOCKER_CLOSURE_STATUS.md`](./READINESS_BLOCKER_CLOSURE_STATUS.md).  
 Update that dashboard (and this table) when a blocker moves to Closed. Do **not** change gate decision from B until §3 checklist is complete.
