@@ -453,7 +453,7 @@ Do **NOT** start coding until completed and approved:
 - [ ] **BLOCKER-004** — Cloud decision completed  
 - [ ] **BLOCKER-005** — Finance Lebanon configuration approved  
 - [ ] **BLOCKER-006** — Compliance retention defaults approved  
-- [ ] **BLOCKER-007** — Payment.js mobile validation completed  
+- [ ] **BLOCKER-007** — Payment.js mobile validation — **IN VALIDATION** (PASS WITH CONDITIONS; not COMPLETED)  
 - [ ] Implementation Gate Report amended to **READY**  
 
 Tracker: [`IMPLEMENTATION_READINESS_EXECUTION_PLAN.md`](./IMPLEMENTATION_READINESS_EXECUTION_PLAN.md)  

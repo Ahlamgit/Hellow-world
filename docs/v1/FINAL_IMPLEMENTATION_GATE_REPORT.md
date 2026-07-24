@@ -2,7 +2,7 @@
 
 **Document ID:** KHAD-V1-IMPL-GATE  
 **Date:** 2026-07-24  
-**Re-validated:** 2026-07-24 (BLOCKER-001 READY FOR APPROVAL; decision remains **B**)  
+**Re-validated:** 2026-07-24 (BLOCKER-007 IN VALIDATION — Payment.js PASS WITH CONDITIONS; decision remains **B**)  
 **Role:** Lead Solution Architect & Technical Reviewer  
 **Production code / UI / application files:** **None generated**
 
@@ -59,7 +59,7 @@ Architecture and business-rule decisions are complete. Critical **delivery input
 | BLOCKER-004 | G-04 | Cloud infrastructure | [`infra/CLOUD_INFRASTRUCTURE_DECISION.md`](./infra/CLOUD_INFRASTRUCTURE_DECISION.md) | **Open** |
 | BLOCKER-005 | G-05 | Finance Lebanon config | [`config/FINANCE_POLICY_INITIAL_CONFIGURATION.md`](./config/FINANCE_POLICY_INITIAL_CONFIGURATION.md) | **Open** |
 | BLOCKER-006 | G-06 | Compliance & retention | [`compliance/RETENTION_POLICY_DECISIONS.md`](./compliance/RETENTION_POLICY_DECISIONS.md) | **Open** |
-| BLOCKER-007 | G-07 | Payment.js mobile spike | [`payment/PAYMENT_JS_MOBILE_VALIDATION_PLAN.md`](./payment/PAYMENT_JS_MOBILE_VALIDATION_PLAN.md) | **Open** |
+| BLOCKER-007 | G-07 | Payment.js mobile spike | [`payment/PAYMENT_JS_MOBILE_VALIDATION_REPORT.md`](./payment/PAYMENT_JS_MOBILE_VALIDATION_REPORT.md) | **IN VALIDATION** (PASS WITH CONDITIONS) |
 
 Full closure tracking: [`READINESS_BLOCKER_CLOSURE_STATUS.md`](./READINESS_BLOCKER_CLOSURE_STATUS.md)
 
@@ -98,7 +98,7 @@ Full closure tracking: [`READINESS_BLOCKER_CLOSURE_STATUS.md`](./READINESS_BLOCK
 | G-04 | **Cloud provider** not approved for target environments | DevOps/Business | Critical |
 | G-05 | **Finance** Lebanon policy configurations not prepared for staging/prod | Finance | Critical for money |
 | G-06 | **Compliance** retention numeric defaults not set | Compliance | High |
-| G-07 | **Payment.js mobile spike** not evidenced | Eng | High for payments UI |
+| G-07 | **Payment.js mobile spike IN VALIDATION** — report PASS WITH CONDITIONS; live sandbox + acceptance pending | Eng | High for payments UI |
 
 Until G-01 and G-02 are closed, **no UI and no authorized application implementation** shall start.  
 Backend-only scaffolding is also **not authorized** by this gate until G-02 is signed (optional later amendment may allow phased backend-only if Product explicitly approves).

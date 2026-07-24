@@ -74,7 +74,7 @@ Closing **BLOCKER-001…007** is the path to amend the Implementation Gate Repor
 | BLOCKER-004 | Cloud infrastructure approval | Target cloud/region/hosting not approved | Approve infra decision sheet (no architecture change) | DevOps / Business | Portable deploy pattern (ADR-012/024) | Cloud provider, region, and hosting choices approved for staging/prod | **Open** |
 | BLOCKER-005 | Finance Lebanon configuration | Policy **content** not prepared; architecture already approved | Provide initial admin-configurable values for commission/cancel/refund/withdrawal/settlement | Finance | ADR-013 / 026 | Config values approved for staging; remain Admin-editable; **not** hardcoded | **Open** |
 | BLOCKER-006 | Compliance & retention defaults | Numeric retention/deletion defaults unset | Set defaults for account deletion, PII, financial, audit, documents | Compliance / Legal | ADR-022 | Defaults approved; financial & audit records protected | **Open** |
-| BLOCKER-007 | Payment.js mobile validation spike | Mobile Payment.js feasibility not evidenced | Run non-production spike; publish readiness report | Eng | Areeba sandbox access (BLOCKER-003 Payment) | Readiness report accepted; critical failures resolved or risk accepted | **Open** |
+| BLOCKER-007 | Payment.js mobile validation spike | Architecture feasibility validated — **PASS WITH CONDITIONS**; live sandbox pending | Accept report; run device sandbox PJS-01…10 when credentials available | Eng | Areeba sandbox (BLOCKER-003) | Accepted PASS / PASS WITH CONDITIONS; live conditions closed or waived | **IN VALIDATION** |
 
 ---
 
@@ -370,8 +370,8 @@ Cloud provider, region, and hosting choices for DB / Redis / workers / storage /
 
 ## BLOCKER-007 — Payment.js Mobile Validation Spike
 
-**Gate mapping:** G-07 · **ADR:** ADR-004 / Payment architecture  
-**Status:** Open  
+**Gate mapping:** G-07 · **ADR:** ADR-004 / ADR-025 / Payment architecture  
+**Status:** **IN VALIDATION** (not COMPLETED)  
 
 **Constraint:** Validation only. **No production implementation.**
 
@@ -379,24 +379,25 @@ Cloud provider, region, and hosting choices for DB / Redis / workers / storage /
 
 | Area | Validate | State |
 |------|----------|-------|
-| Mobile payment flow | Customer app WebView / Payment.js path | ☐ |
-| Payment.js compatibility | Flutter host + required browser APIs | ☐ |
-| Token handling | No PAN storage; token lifecycle | ☐ |
-| Secure communication | TLS, CSP/origin rules as required | ☐ |
-| Webhook lifecycle | Auth, idempotency, ledger post | ☐ |
-| Failure scenarios | Timeout, cancel, decline, network drop | ☐ |
-| Duplicate payment prevention | Idempotency keys / gateway refs | ☐ |
+| Mobile payment flow | Customer app WebView / Payment.js path | ☑ Architecture validated |
+| Payment.js compatibility | Flutter host + required browser APIs | ☑ Feasible; device proof pending |
+| Token handling | No PAN storage; token lifecycle | ☑ Architecture validated |
+| Secure communication | TLS, CSP/origin rules as required | ☑ Requirements confirmed |
+| Webhook lifecycle | Auth, idempotency, ledger post | ☑ Architecture validated; signature algo pending vendor |
+| Failure scenarios | Timeout, cancel, decline, network drop | ☑ Documented |
+| Duplicate payment prevention | Idempotency keys / gateway refs | ☑ Architecture validated |
+| Live sandbox PJS-01…10 | Android/iOS WebView | ☐ Blocked on credentials |
 
 ### Required output
 
-`docs/v1/PAYMENTJS_MOBILE_INTEGRATION_READINESS_REPORT.md` (or equivalent named report)
-
-Must state: Pass / Conditional Pass / Fail, with risks and follow-ups.
+[`payment/PAYMENT_JS_MOBILE_VALIDATION_REPORT.md`](./payment/PAYMENT_JS_MOBILE_VALIDATION_REPORT.md) — **PASS WITH CONDITIONS**
 
 ### Acceptance criteria
 
-- Readiness report published and accepted by Eng Lead + Architect  
-- Blocking technical failures resolved **or** Product accepts documented risk with mitigation date  
+- [x] Readiness report published  
+- [ ] Accepted by Eng Lead + Architect  
+- [ ] Live sandbox conditions closed or explicitly waived with dates  
+- [ ] Status → COMPLETED  
 
 ### Dependencies
 
@@ -459,6 +460,7 @@ Unauthorized scope additions during readiness or implementation are **out of pro
 | 2026-07-24 | BLOCKER-001 → **ASSET RECEIVED — DESIGN SPECIFICATION IN PROGRESS** (brand + UI/UX + tokens drafted) | 0/7 (none closed; 001 in progress) | **B) NOT READY — CODING BLOCKED** |
 | 2026-07-24 | BLOCKER-001 → **READY FOR APPROVAL** (approval package; not Completed) | 0/7 | **B) NOT READY — CODING BLOCKED** |
 | 2026-07-24 | BLOCKER-001 final approval readiness; asset completeness verified fail — remains **READY FOR APPROVAL** | 0/7 | **B) NOT READY — CODING BLOCKED** |
+| 2026-07-24 | BLOCKER-007 → **IN VALIDATION** (Payment.js report PASS WITH CONDITIONS) | 0/7 | **B) NOT READY — CODING BLOCKED** |
 
 Active closure tracker: [`READINESS_BLOCKER_CLOSURE_STATUS.md`](./READINESS_BLOCKER_CLOSURE_STATUS.md).  
 Update that dashboard (and this table) when a blocker moves to Closed. Do **not** change gate decision from B until §3 checklist is complete.

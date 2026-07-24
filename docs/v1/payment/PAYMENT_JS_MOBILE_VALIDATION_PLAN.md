@@ -3,10 +3,10 @@
 **Document ID:** KHAD-V1-PAYMENTJS-SPIKE  
 **Version:** 1.0  
 **Date:** 2026-07-24  
-**Status:** Plan ready — spike not executed (BLOCKER-007)  
+**Status:** Architecture validation executed — see [`PAYMENT_JS_MOBILE_VALIDATION_REPORT.md`](./PAYMENT_JS_MOBILE_VALIDATION_REPORT.md) (BLOCKER-007 **IN VALIDATION**)  
 **ADR:** ADR-004 · ADR-025 · Payment architecture  
 
-**Related:** [`../READINESS_BLOCKER_CLOSURE_STATUS.md`](../READINESS_BLOCKER_CLOSURE_STATUS.md) · [`../vendors/VENDOR_EVALUATION_MATRIX.md`](../vendors/VENDOR_EVALUATION_MATRIX.md)
+**Related:** [`PAYMENT_JS_MOBILE_VALIDATION_REPORT.md`](./PAYMENT_JS_MOBILE_VALIDATION_REPORT.md) · [`../READINESS_BLOCKER_CLOSURE_STATUS.md`](../READINESS_BLOCKER_CLOSURE_STATUS.md) · [`../vendors/VENDOR_EVALUATION_MATRIX.md`](../vendors/VENDOR_EVALUATION_MATRIX.md)
 
 ```text
 NO production implementation.
@@ -89,13 +89,13 @@ Prove that **Areeba IXOPAY Payment.js** can support the Customer Flutter payment
 
 | Field | Value |
 |-------|-------|
-| Executed by | |
-| Date | |
-| Environment | Sandbox / isolated |
-| **Result** | ☐ **Pass** · ☐ **Conditional Pass** · ☐ **Fail** |
-| Blocking issues | |
-| Accepted risks (if Conditional) | |
-| Follow-ups before production pay UI | |
+| Executed by | Solution Architect / Payment Integration Specialist (architecture spike) |
+| Date | 2026-07-24 |
+| Environment | Architecture validation (sandbox device run **not** executed — credentials pending) |
+| **Result** | ☐ Pass · ☑ **PASS WITH CONDITIONS** (Conditional Pass) · ☐ Fail |
+| Blocking issues | Live Android/iOS WebView + webhook sandbox proof pending vendor credentials |
+| Accepted risks (if Conditional) | Pending Eng Lead / Architect acceptance of report |
+| Follow-ups before production pay UI | Complete PJS-01…10 in sandbox; confirm 3DS/webhook signature; see Validation Report §9 |
 
 ### Result definitions
 
