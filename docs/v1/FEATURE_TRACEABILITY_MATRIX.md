@@ -66,7 +66,8 @@
 | BR-CUS-05 | Provider proximity search | catalog | listings, geo | GET /listings?near= | CUS: Near me | Specified |
 | BR-CUS-06 | Select provider / listing | catalog, provider | listings, providers | GET /listings/{id} | CUS: Detail | Specified |
 | BR-CUS-07 | Create booking request | booking | bookings | POST /bookings | CUS: Booking form | Specified |
-| BR-CUS-08 | Date/time selection | booking | bookings | payload | CUS: Schedule | Specified |
+| BR-CUS-08 | Date/time selection from **provider availability** | booking | availability, booking_schedule | availability + booking APIs | CUS: Available times | Specified |
+| BR-CUS-08a | View provider available slots/windows | booking | working_hours, exceptions | GET listings/{id}/availability | CUS: Calendar | Specified |
 | BR-CUS-09 | Location/address | booking, customer | addresses, booking snapshot | payload | CUS: Address | Specified |
 | BR-CUS-10 | Notes | booking | bookings.notes | payload | CUS: Notes | Specified |
 | BR-CUS-11 | Booking tracking / history | booking | bookings, status_history | GET /bookings | CUS: Bookings | Specified |
@@ -75,7 +76,9 @@
 | BR-CUS-14 | Ratings | trust | ratings | POST /bookings/{id}/ratings | CUS: Rate | Specified |
 | BR-CUS-15 | Reviews | trust | reviews | same / separate | CUS: Review | Specified |
 | BR-CUS-16 | Notifications | notification | deliveries, in_app | GET /notifications | CUS: Inbox | Specified |
-| BR-CUS-17 | Chat | chat | conversations, messages | /chat/** | CUS: Chat | Specified |
+| BR-CUS-17 | Chat (booking-scoped only) | chat | conversations, messages, read_status | /chat/** | CUS: Chat | Specified |
+| BR-CUS-18 | Open dispute/complaint | trust | disputes, evidence | POST /bookings/{id}/disputes | CUS: Dispute | Specified |
+| BR-CUS-19 | Account deletion request | iam | deletion workflow | DELETE flow / request | CUS: Settings | Specified |
 
 ---
 
@@ -86,7 +89,7 @@
 | BR-CRF-01 | Profile / skills / services | provider, listing | craftsman_profiles, listings | /craftsmen/me/** | CRF: Profile/Catalog | Specified |
 | BR-CRF-02 | Service areas | provider | service_areas | CRUD | CRF: Areas | Specified |
 | BR-CRF-03 | Pricing | listing | listings.price | CRUD | CRF: Pricing | Specified |
-| BR-CRF-04 | Availability | provider | availability_windows | CRUD | CRF: Availability | Specified |
+| BR-CRF-04 | Availability calendar (hours, exceptions, holidays) | provider, booking | working_hours, calendar_exceptions | /providers/me/availability | CRF: Availability | Specified |
 | BR-CRF-05 | Document submission | idv, media | verification_documents | upload APIs | CRF: Documents | Specified |
 | BR-CRF-06 | Identity verification workflow | idv | verification_cases | /verifications/** | CRF: Verify | Specified |
 | BR-CRF-07 | Approval status | provider | onboarding_status | GET onboarding | CRF: Status | Specified |
@@ -105,6 +108,8 @@
 | BR-CRF-20 | Subscriptions | subscription, payment | plans, subscriptions | /subscriptions/** | CRF: Plans | Specified |
 | BR-CRF-21 | Withdrawal requests | ledger | withdrawal_requests | POST withdrawals | CRF: Withdraw | Specified |
 | BR-CRF-22 | Notifications | notification | in_app | inbox APIs | CRF: Inbox | Specified |
+| BR-CRF-23 | Booking-scoped chat | chat | conversations, messages | /chat/** | CRF: Chat | Specified |
+| BR-CRF-24 | Provider dispute/complaint | trust | disputes | dispute APIs | CRF: Dispute | Specified |
 
 ---
 
@@ -159,6 +164,9 @@
 | BR-ADM-26 | Withdrawal configuration (methods, mins, approval) | ledger | withdrawal_methods, configs, history | /admin/withdrawal-configs | ADM: Withdrawal Config | Specified |
 | BR-ADM-27 | Finance RBAC (Finance Admin vs Super Admin) | iam | roles, permissions | admin authz | ADM: Roles | Specified |
 | BR-ADM-28 | Policy change history + MFA-gated money rule edits | audit, iam | *_history, audit_events | all policy APIs | ADM | Specified |
+| BR-ADM-29 | Dispute review queue & resolution | trust | disputes | /admin/disputes | ADM: Disputes | Specified |
+| BR-ADM-30 | Chat support access (audited) | chat | conversations | /admin/chat/** | ADM: Support chat | Specified |
+| BR-ADM-31 | Retention policy configuration | platform | retention_settings | /admin/settings/retention | ADM: Retention | Specified |
 
 ---
 

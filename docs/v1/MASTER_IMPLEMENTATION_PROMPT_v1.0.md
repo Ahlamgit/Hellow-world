@@ -264,12 +264,16 @@ Marketplace search operates through:
 Core workflow:
 
 ```text
-Customer → Search service → Select provider → Choose date/time/location
-→ Booking request → Provider confirmation → Payment → Service execution
-→ Completion approval → Commission calculation → Provider payout → Review
+Customer → Search service → Select provider/listing
+→ View provider availability → Request booking time
+→ Provider Availability Check → Provider Confirmation
+→ Payment → Service execution
+→ Completion approval → Commission (admin rules) → Review
 ```
 
-Support: booking status history, timestamps, audit trail, **admin-configurable cancellation rules** (evaluated dynamically; not hardcoded).
+**Scheduling (ADR-019):** Provider Availability Calendar — provider controls working days/hours, exceptions, holidays; customers select from available times; conflict prevention; service duration; Market timezones.
+
+Support: booking status history, timestamps, audit trail, **admin-configurable cancellation rules**, lightweight disputes (ADR-021).
 
 ---
 
@@ -335,6 +339,28 @@ Required: Idempotency, webhook verification, payment state management, failure h
 ## 10. Subscription System
 
 Craftsman subscriptions: plans, duration, payment, activation, expiry, renewal status, access restrictions — **configurable**.
+
+---
+
+## 10A. Chat (ADR-020)
+
+Booking-scoped chat only (Customer ↔ Provider). No open marketplace messaging. Real-time + history + read status + push. Optional admin support access with audit.
+
+## 10B. Disputes (ADR-021)
+
+Lightweight: complaint → admin review → evidence → resolution notes → Open/Under Review/Resolved/Closed. May hold escrow/settlement; no complex arbitration in V1.
+
+## 10C. Account Lifecycle (ADR-022)
+
+Deletion request → verify → anonymize → retain financial/audit per configurable retention policies.
+
+## 10D. Integrations (ADR-025)
+
+All external systems behind ports/adapters (Payment, SMS, Email, Maps, OCR, Face).
+
+## 10E. Design Gate (ADR-023)
+
+UI coding blocked until branding/logo/colors/references/videos/screens and design direction are available; then UI/UX analysis + tokens + specs before UI build.
 
 ---
 

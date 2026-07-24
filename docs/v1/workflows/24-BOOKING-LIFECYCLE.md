@@ -61,19 +61,18 @@ stateDiagram-v2
 | → COMPLETED | Commission calculation event; survey schedule; unlock rating |
 | → CANCELLED | Refund policy execution; notifications; release slots |
 
-## 24.5 Scheduling Model (**OPEN**)
+## 24.5 Scheduling Model
 
-Options:
+**Decided (ADR-019):** Provider Availability Calendar.
 
-1. Free-text preferred time window  
-2. Discrete slot inventory  
-3. Immediate “ASAP” jobs  
-
-Decision: Q-BOOK-007.
+- Providers define working days/hours, exceptions, holidays, unavailable periods  
+- Customers view available times and request a slot/window  
+- System checks availability + service duration + conflicts  
+- Then provider confirmation → payment  
 
 ## 24.6 Assignment Model
 
-**Decided (Master Prompt / ADR-005):** Customer selects provider/listing. Provider accepts/rejects. Store staff affiliation may fulfill store listings.
+**Decided:** Customer selects provider/listing. Provider accepts/rejects. Store staff affiliation may fulfill store listings.
 
 ## 24.7 Reminder: 24-hour
 
