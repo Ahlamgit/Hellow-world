@@ -123,8 +123,8 @@ Backend-only scaffolding is also **not authorized** by this gate until G-02 is s
 | Input | Status |
 |-------|--------|
 | Scope baseline document | **Published** — signature pending |
-| Branding, logo, colors, design references, videos/screens, design direction | **Missing** |
-| UI analysis, UX analysis, design tokens, component inventory, screen specs | **Not started** (blocked on assets) |
+| Branding, logo, colors, design references, videos/screens, design direction | **Logo/brand received** — optional refs still open; commit master files to `design/assets/` |
+| UI analysis, UX analysis, design tokens, component inventory, screen specs | **Drafted** — approval pending (BLOCKER-001) |
 | SMS / Email / Storage / Maps / OCR / Face vendor choices | **Missing** |
 | Cloud hosting approval | **Missing** |
 | Lebanon commission/cancel/refund/withdrawal/settlement **content** | **Pending Finance** |
