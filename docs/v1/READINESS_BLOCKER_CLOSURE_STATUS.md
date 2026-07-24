@@ -54,7 +54,7 @@ New requirements → ADR or Change Request (Scope Baseline §10). No silent scop
 | BLOCKER-001 | Design assets & UI/UX specification | [`design/DESIGN_APPROVAL_RECORD.md`](./design/DESIGN_APPROVAL_RECORD.md) · UI/UX · Brand · Tokens · Color · [`design/assets/LOGO_ASSET_PACKAGE.md`](./design/assets/LOGO_ASSET_PACKAGE.md) | **READY FOR APPROVAL** (not COMPLETED — binaries missing) | Assets + colors approved + Product/Design signatures |
 | BLOCKER-002 | Stakeholder sign-off | [`governance/STAKEHOLDER_SIGN_OFF_PACKAGE.md`](./governance/STAKEHOLDER_SIGN_OFF_PACKAGE.md) | **READY FOR APPROVAL** (not COMPLETED) | Signatures on package §6 |
 | BLOCKER-003 | Vendor selection | [`vendors/VENDOR_EVALUATION_MATRIX.md`](./vendors/VENDOR_EVALUATION_MATRIX.md) | **Open** (evaluation prep ready) | Vendors **approved** |
-| BLOCKER-004 | Cloud infrastructure | [`infra/CLOUD_INFRASTRUCTURE_DECISION.md`](./infra/CLOUD_INFRASTRUCTURE_DECISION.md) · [`infra/CLOUD_SIZING_AND_COST_FRAMEWORK.md`](./infra/CLOUD_SIZING_AND_COST_FRAMEWORK.md) | **IN PREPARATION** (blueprint + sizing/cost framework; selections Pending) | Cloud **approved** (checklist + budget/RPO/RTO) |
+| BLOCKER-004 | Cloud infrastructure | [`infra/CLOUD_INFRASTRUCTURE_DECISION.md`](./infra/CLOUD_INFRASTRUCTURE_DECISION.md) · [`infra/CLOUD_SIZING_AND_COST_FRAMEWORK.md`](./infra/CLOUD_SIZING_AND_COST_FRAMEWORK.md) · [`infra/PRODUCTION_OPERATIONS_READINESS.md`](./infra/PRODUCTION_OPERATIONS_READINESS.md) | **IN PREPARATION** (ops readiness defined; provider/budget/RPO/RTO Pending) | Cloud **approved** (provider + budget + RPO/RTO + ops checklist) |
 | BLOCKER-005 | Finance Lebanon config | [`config/FINANCE_LEBANON_INITIAL_CONFIGURATION.md`](./config/FINANCE_LEBANON_INITIAL_CONFIGURATION.md) · [`governance/FINANCE_POLICY_APPROVAL_MATRIX.md`](./governance/FINANCE_POLICY_APPROVAL_MATRIX.md) · [`governance/FINANCE_POLICY_LIFECYCLE.md`](./governance/FINANCE_POLICY_LIFECYCLE.md) | **IN PREPARATION** (governance ready; values Pending Business Decision) | Approved finance values + Finance sign-off |
 | BLOCKER-006 | Compliance & retention | [`compliance/RETENTION_POLICY_DECISIONS.md`](./compliance/RETENTION_POLICY_DECISIONS.md) | **Open** (decisions template ready) | Compliance decisions **approved** |
 | BLOCKER-007 | Payment.js mobile spike | [`payment/PAYMENT_JS_MOBILE_VALIDATION_REPORT.md`](./payment/PAYMENT_JS_MOBILE_VALIDATION_REPORT.md) · [`payment/AREEBA_IXOPAY_VENDOR_VALIDATION_CHECKLIST.md`](./payment/AREEBA_IXOPAY_VENDOR_VALIDATION_CHECKLIST.md) | **IN VALIDATION** (PASS WITH CONDITIONS — not COMPLETED) | Checklist §8 + Architect/Eng approval |
@@ -226,6 +226,7 @@ Until then: keep **READY FOR APPROVAL**.
 **Artifacts:**  
 - [`infra/CLOUD_INFRASTRUCTURE_DECISION.md`](./infra/CLOUD_INFRASTRUCTURE_DECISION.md)  
 - [`infra/CLOUD_SIZING_AND_COST_FRAMEWORK.md`](./infra/CLOUD_SIZING_AND_COST_FRAMEWORK.md)  
+- [`infra/PRODUCTION_OPERATIONS_READINESS.md`](./infra/PRODUCTION_OPERATIONS_READINESS.md)  
 
 ### Preparation coverage
 
@@ -234,6 +235,7 @@ Until then: keep **READY FOR APPROVAL**.
 - [x] Vendor neutrality confirmed  
 - [x] Approval checklist published  
 - [x] Sizing & cost comparison framework published (no vendor prices)  
+- [x] Production operations readiness (monitoring, alerts, logging, backup ops, deploy, security ops, incidents)  
 - [ ] Expected workload estimates filled  
 - [ ] Cloud provider + hosting products selected  
 - [ ] Infrastructure budget approved  
@@ -258,6 +260,7 @@ Until then: keep **IN PREPARATION**.
 | 2026-07-24 | Infrastructure decision document published (values TBD) |
 | 2026-07-24 | Vendor-neutral production blueprint expanded — status **IN PREPARATION** |
 | 2026-07-24 | CLOUD_SIZING_AND_COST_FRAMEWORK published — remains **IN PREPARATION** |
+| 2026-07-24 | PRODUCTION_OPERATIONS_READINESS published — remains **IN PREPARATION** |
 
 ---
 
@@ -387,6 +390,7 @@ Financial records and audit records **cannot** be removed if legally required.
 | 2026-07-24 | BLOCKER-005 Finance Policy Lifecycle published — still **IN PREPARATION** | 0/7 | **B) NOT READY — CODING BLOCKED** |
 | 2026-07-24 | BLOCKER-004 Cloud Infrastructure Decision expanded — **IN PREPARATION** | 0/7 | **B) NOT READY — CODING BLOCKED** |
 | 2026-07-24 | BLOCKER-004 Cloud Sizing and Cost Framework published — still **IN PREPARATION** | 0/7 | **B) NOT READY — CODING BLOCKED** |
+| 2026-07-24 | BLOCKER-004 Production Operations Readiness published — still **IN PREPARATION** | 0/7 | **B) NOT READY — CODING BLOCKED** |
 
 ---
 
