@@ -372,12 +372,14 @@ Also tracked under BLOCKER-003 Payment checklist.
 
 ### Required actions before implementation authorization (conditions)
 
-1. Obtain Areeba IXOPAY sandbox + merchant config (BLOCKER-003)  
-2. Execute live plan scenarios PJS-01…PJS-10 on Android and iOS WebViews ([`PAYMENT_JS_MOBILE_VALIDATION_PLAN.md`](./PAYMENT_JS_MOBILE_VALIDATION_PLAN.md))  
-3. Confirm webhook signature verification method with vendor docs  
-4. Confirm 3DS / redirect behavior on both platforms  
-5. Eng Lead + Solution Architect accept this report (and update result to PASS if live tests succeed, or keep PASS WITH CONDITIONS with dated mitigations)  
-6. Do **not** implement production payment UI until Implementation Gate → **A** and conditions above addressed  
+1. Complete [`AREEBA_IXOPAY_VENDOR_VALIDATION_CHECKLIST.md`](./AREEBA_IXOPAY_VENDOR_VALIDATION_CHECKLIST.md) §§1–7 with vendor (no invented values)  
+2. Obtain Areeba IXOPAY sandbox + merchant config (BLOCKER-003)  
+3. Execute live plan scenarios PJS-01…PJS-10 on Android and iOS WebViews ([`PAYMENT_JS_MOBILE_VALIDATION_PLAN.md`](./PAYMENT_JS_MOBILE_VALIDATION_PLAN.md))  
+4. Confirm webhook signature verification + 3DS / redirect behavior (checklist §§4–5)  
+5. Complete Final Acceptance Checklist (vendor checklist §8): sandbox, Android, iOS, webhook, 3DS, lifecycle, Architect + Eng approval  
+6. Eng Lead + Solution Architect accept this report (upgrade to PASS if live tests succeed, or keep PASS WITH CONDITIONS with dated mitigations)  
+7. Do **not** implement production payment UI until Implementation Gate → **A**  
+8. Keep BLOCKER-007 **IN VALIDATION** until checklist §8 is fully satisfied — then COMPLETED
 
 ### Result definitions applied
 
