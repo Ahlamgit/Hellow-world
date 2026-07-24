@@ -52,7 +52,7 @@ New requirements → ADR or Change Request (Scope Baseline §10). No silent scop
 | ID | Blocker | Prep artifacts | Closure status | Gate flip dependency |
 |----|---------|----------------|----------------|----------------------|
 | BLOCKER-001 | Design assets & UI/UX specification | [`design/DESIGN_APPROVAL_RECORD.md`](./design/DESIGN_APPROVAL_RECORD.md) · UI/UX · Brand · Tokens · Color · [`design/assets/LOGO_ASSET_PACKAGE.md`](./design/assets/LOGO_ASSET_PACKAGE.md) | **READY FOR APPROVAL** (not COMPLETED — binaries missing) | Assets + colors approved + Product/Design signatures |
-| BLOCKER-002 | Stakeholder sign-off | This doc §BLOCKER-002 | **Open** (approvals pending) | Formal approval recorded |
+| BLOCKER-002 | Stakeholder sign-off | [`governance/STAKEHOLDER_SIGN_OFF_PACKAGE.md`](./governance/STAKEHOLDER_SIGN_OFF_PACKAGE.md) | **READY FOR APPROVAL** (not COMPLETED) | Signatures on package §6 |
 | BLOCKER-003 | Vendor selection | [`vendors/VENDOR_EVALUATION_MATRIX.md`](./vendors/VENDOR_EVALUATION_MATRIX.md) | **Open** (evaluation prep ready) | Vendors **approved** |
 | BLOCKER-004 | Cloud infrastructure | [`infra/CLOUD_INFRASTRUCTURE_DECISION.md`](./infra/CLOUD_INFRASTRUCTURE_DECISION.md) | **Open** (decision sheet ready) | Cloud **approved** |
 | BLOCKER-005 | Finance Lebanon config | [`config/FINANCE_POLICY_INITIAL_CONFIGURATION.md`](./config/FINANCE_POLICY_INITIAL_CONFIGURATION.md) | **Open** (template ready; values TBD) | Finance config **approved** |
@@ -129,36 +129,31 @@ Move to **COMPLETED** only when:
 
 # BLOCKER-002 — Stakeholder Sign-off
 
-**Status:** **Open**  
+**Status:** **READY FOR APPROVAL**  
+**Not:** COMPLETED (awaiting actual stakeholder signatures)  
 **Gate mapping:** G-00 + G-02  
 **Owners:** Product · Business · Operations · Architecture · Engineering  
+**Package:** [`governance/STAKEHOLDER_SIGN_OFF_PACKAGE.md`](./governance/STAKEHOLDER_SIGN_OFF_PACKAGE.md)
 
-### Product approvals
+### Approval areas (mirror of package §6)
 
-| Confirm | Approved | Name | Date |
-|---------|----------|------|------|
-| V1 scope ([`FINAL_SCOPE_BASELINE.md`](./FINAL_SCOPE_BASELINE.md)) | ☐ | | |
-| Exclusions (Scope Baseline §8) | ☐ | | |
-| User roles (Customer, Craftsman, Store, Admin web-only) | ☐ | | |
-| Workflows (booking, onboarding, chat scope, disputes lightweight) | ☐ | | |
+| Area | Status | Approved By | Date |
+|------|--------|-------------|------|
+| Product scope | Pending | | |
+| Business model | Pending | | |
+| Operations | Pending | | |
+| Provider model | Pending | | |
+| Store model | Pending | | |
 
-### Business approvals
+### Package coverage
 
-| Confirm | Approved | Name | Date |
-|---------|----------|------|------|
-| Subscription plans model (craftsman + store; Admin-managed) | ☐ | | |
-| Promotion model (Admin-configured / subscription-gated) | ☐ | | |
-| Commission approach (admin-configurable; not hardcoded) | ☐ | | |
-| Store advertising model (services + promotional catalog; no e-commerce) | ☐ | | |
-
-### Operations approvals
-
-| Confirm | Approved | Name | Date |
-|---------|----------|------|------|
-| Provider onboarding | ☐ | | |
-| Verification workflow | ☐ | | |
-| Booking operations | ☐ | | |
-| Support workflow (incl. booking-scoped chat access + audit) | ☐ | | |
+- [x] Product checklist (marketplace / provider / store) published  
+- [x] Customer workflow approval section published  
+- [x] Provider workflow approval section published  
+- [x] Business model + Admin finance policies section published  
+- [x] Operational approval section published  
+- [ ] Actual approvals recorded (names + dates)  
+- [ ] BLOCKER-002 → **COMPLETED**  
 
 ### Formal record
 
@@ -166,17 +161,22 @@ Also complete sign-off tables in:
 
 - [`FINAL_SCOPE_BASELINE.md`](./FINAL_SCOPE_BASELINE.md) §12  
 - [`FINAL_IMPLEMENTATION_GATE_REPORT.md`](./FINAL_IMPLEMENTATION_GATE_REPORT.md) Sign-off  
+- [`governance/STAKEHOLDER_SIGN_OFF_PACKAGE.md`](./governance/STAKEHOLDER_SIGN_OFF_PACKAGE.md) §6  
 
-### Acceptance
+### Acceptance → COMPLETED
 
-- [ ] All Product / Business / Operations rows above checked  
-- [ ] Formal approval recorded (names + dates)  
+- [ ] All checklist areas in Sign-off Package approved  
+- [ ] Approval Record table fully Approved  
+- [ ] Product (+ Business/Ops) signatures recorded  
+
+Until then: keep **READY FOR APPROVAL**.
 
 ### Closure log
 
 | Date | Event |
 |------|-------|
 | 2026-07-24 | Approval checklist published; signatures pending |
+| 2026-07-24 | Stakeholder Sign-off Package published — status **READY FOR APPROVAL** (not COMPLETED) |
 
 ---
 
@@ -345,6 +345,7 @@ Financial records and audit records **cannot** be removed if legally required.
 | 2026-07-24 | BLOCKER-001 final approval package; asset completeness fail (no binaries) — still **READY FOR APPROVAL** | 0/7 | **B) NOT READY — CODING BLOCKED** |
 | 2026-07-24 | BLOCKER-007 Payment.js validation report — **IN VALIDATION** (PASS WITH CONDITIONS) | 0/7 | **B) NOT READY — CODING BLOCKED** |
 | 2026-07-24 | BLOCKER-007 Areeba vendor checklist added (supports BLOCKER-003) — still **IN VALIDATION** | 0/7 | **B) NOT READY — CODING BLOCKED** |
+| 2026-07-24 | BLOCKER-002 Stakeholder Sign-off Package — **READY FOR APPROVAL** (not COMPLETED) | 0/7 | **B) NOT READY — CODING BLOCKED** |
 
 ---
 

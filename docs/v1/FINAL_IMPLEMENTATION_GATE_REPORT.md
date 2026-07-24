@@ -42,7 +42,8 @@ Scope freeze does **not** authorize coding. Implementation remains blocked until
 - **Readiness Blocker Closure pack published** — checklists/templates/plans for all blockers; **0/7 closed**  
   - BLOCKER-001: **READY FOR APPROVAL** — final approval package ready; required asset folders verified; **binaries missing**; colors Draft/Approved split (Approved empty); **not COMPLETED**  
   - BLOCKER-007: **IN VALIDATION** — [`payment/PAYMENT_JS_MOBILE_VALIDATION_REPORT.md`](./payment/PAYMENT_JS_MOBILE_VALIDATION_REPORT.md) result **PASS WITH CONDITIONS** (not COMPLETED; live sandbox pending)  
-  - BLOCKER-002…006: evaluation / decision / config artifacts ready for owner input  
+  - BLOCKER-002: **READY FOR APPROVAL** — [`governance/STAKEHOLDER_SIGN_OFF_PACKAGE.md`](./governance/STAKEHOLDER_SIGN_OFF_PACKAGE.md) (not COMPLETED until signatures)  
+  - BLOCKER-003…006: evaluation / decision / config artifacts ready for owner input  
 - No authorization to code — no architecture or scope changes  
 - Implementation gate remains **B**
 
@@ -55,7 +56,7 @@ Architecture and business-rule decisions are complete. Critical **delivery input
 | Plan ID | Gate ID | Blocker | Prep artifact | Closure status |
 |---------|---------|---------|---------------|----------------|
 | BLOCKER-001 | G-01 | Design assets & UI/UX specification | [`design/DESIGN_APPROVAL_RECORD.md`](./design/DESIGN_APPROVAL_RECORD.md) · Color · Logo package (structure OK / binaries missing) | **READY FOR APPROVAL** (not COMPLETED) |
-| BLOCKER-002 | G-00+G-02 | Stakeholder sign-off | [`READINESS_BLOCKER_CLOSURE_STATUS.md`](./READINESS_BLOCKER_CLOSURE_STATUS.md) | **Open** |
+| BLOCKER-002 | G-00+G-02 | Stakeholder sign-off | [`governance/STAKEHOLDER_SIGN_OFF_PACKAGE.md`](./governance/STAKEHOLDER_SIGN_OFF_PACKAGE.md) | **READY FOR APPROVAL** (not COMPLETED) |
 | BLOCKER-003 | G-03 | Vendor selection | [`vendors/VENDOR_EVALUATION_MATRIX.md`](./vendors/VENDOR_EVALUATION_MATRIX.md) | **Open** |
 | BLOCKER-004 | G-04 | Cloud infrastructure | [`infra/CLOUD_INFRASTRUCTURE_DECISION.md`](./infra/CLOUD_INFRASTRUCTURE_DECISION.md) | **Open** |
 | BLOCKER-005 | G-05 | Finance Lebanon config | [`config/FINANCE_POLICY_INITIAL_CONFIGURATION.md`](./config/FINANCE_POLICY_INITIAL_CONFIGURATION.md) | **Open** |
