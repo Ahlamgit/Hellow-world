@@ -38,7 +38,7 @@
 | ID | Question | Status |
 |----|----------|--------|
 | Q-BOOK-001..006 | Cancel/refund/no-show/dispute policy details | **Partially answered:** Cancellation + refund rules are **admin-configurable** (ADR-013). Lebanon values set by Finance Admin. No-show/dispute detail may remain Open. |
-| Q-BOOK-007 | Scheduling model | Open (date/time selection required; slot inventory TBD) |
+| Q-BOOK-007 | Scheduling model | **Answered: Provider Availability Calendar (ADR-019)** |
 | Q-BOOK-008 | Prepay before confirm? | **Answered: No — provider confirmation then payment** (ADR-005) |
 | Q-BOOK-009 | Assignment model? | **Answered: Customer selects provider/listing** |
 | Q-BOOK-010 | Bidding? | **Answered: No** (not in master prompt) |

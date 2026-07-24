@@ -1,185 +1,107 @@
 # KHADAMATI V1 — Final Architecture Readiness Report
 
 **Document ID:** KHAD-V1-READINESS-FINAL  
-**Date:** 2026-07-24  
-**Prepared by:** Lead Solution Architect (Architecture Phase)  
-**Production code written:** None  
-**UI implementation:** None  
+**Updated:** 2026-07-24 (post ADR-019…026)  
+**Production code / UI implementation:** None  
 
-### Controlling sources
-- `MASTER_IMPLEMENTATION_PROMPT_v1.0.md`  
-- `FEATURE_TRACEABILITY_MATRIX.md`  
-- ADR-001 … ADR-018  
-- `architecture/47-ADMIN-CONFIGURABLE-FINANCIAL-RULES.md`  
-- Readiness pack under `docs/v1/readiness/`  
+**Companion:** [`FINAL_ARCHITECTURE_DECISIONS_COMPLETE.md`](./FINAL_ARCHITECTURE_DECISIONS_COMPLETE.md)
 
 ---
 
 ## Executive Summary
 
-The architecture package is **substantially complete** for a Lebanon-first, multi-market-ready marketplace with:
+Core architecture remains approved. **Previously open product forks are now decided:**
 
-- Unified Provider + Listing model  
-- Confirm → Pay booking  
-- Payment.js PCI-safe payments + ledger  
-- Admin-configurable financial policies (no hardcoded money rules)  
-- Admin web-only + MFA  
-- Redis + workers  
-- Flutter + React surfaces  
-
-However, **implementation must not begin** until the **Blocked** items below are dispositioned (especially scheduling model, design-asset UI specification, vendor/infra choices, and compliance retention values).
+| Former blocker | Resolution |
+|----------------|------------|
+| Scheduling model | **ADR-019** Provider Availability Calendar |
+| Chat architecture | **ADR-020** Booking-scoped chat |
+| Dispute depth | **ADR-021** Lightweight disputes |
+| Account retention | **ADR-022** Configurable lifecycle |
+| Design coding gate | **ADR-023** Explicit asset requirements |
+| Cloud/DR | **ADR-024** Vendor-neutral architecture |
+| Integrations | **ADR-025** Ports/adapters |
+| Lebanon finance values | **ADR-026** Admin configuration only |
 
 ### Final Recommendation
 
-# Requires additional architecture decisions
+**Architecture decisions: COMPLETE** for the listed ADRs.
 
-*(Conditional: core domain architecture is sound; remaining decisions are listed under Blocked. Do not treat as blanket “Ready for implementation.”)*
+**Implementation: NOT AUTHORIZED** until:
 
----
+1. Design assets + UI/UX specification (ADR-023)  
+2. Formal stakeholder sign-off  
+3. Minimum vendor + cloud selections  
+4. Finance/Compliance ready to configure Lebanon policies/retention  
 
-## Package Index
+Choose formal status:
 
-| # | Deliverable | Path |
-|---|-------------|------|
-| 1 | Consistency review | [readiness/01-ARCHITECTURE-CONSISTENCY-REVIEW.md](./readiness/01-ARCHITECTURE-CONSISTENCY-REVIEW.md) |
-| 2 | Final database architecture | [readiness/02-FINAL-DATABASE-ARCHITECTURE.md](./readiness/02-FINAL-DATABASE-ARCHITECTURE.md) |
-| 3 | API architecture map | [readiness/03-API-ARCHITECTURE-MAP.md](./readiness/03-API-ARCHITECTURE-MAP.md) |
-| 4 | Authorization matrix | [readiness/04-AUTHORIZATION-MATRIX.md](./readiness/04-AUTHORIZATION-MATRIX.md) |
-| 5 | Workflow validation | [readiness/05-BUSINESS-WORKFLOW-VALIDATION.md](./readiness/05-BUSINESS-WORKFLOW-VALIDATION.md) |
-| 6 | Rule engine validation | [readiness/06-BUSINESS-RULE-ENGINE-VALIDATION.md](./readiness/06-BUSINESS-RULE-ENGINE-VALIDATION.md) |
-| 7 | UI/UX prep (spec only) | [readiness/07-UI-UX-ARCHITECTURE-PREP.md](./readiness/07-UI-UX-ARCHITECTURE-PREP.md) |
-| 8 | Design system validation | [readiness/08-DESIGN-SYSTEM-VALIDATION.md](./readiness/08-DESIGN-SYSTEM-VALIDATION.md) |
-| 9 | Deployment architecture | [readiness/09-DEPLOYMENT-ARCHITECTURE.md](./readiness/09-DEPLOYMENT-ARCHITECTURE.md) |
-| 10 | Security checklist | [readiness/10-SECURITY-REVIEW-CHECKLIST.md](./readiness/10-SECURITY-REVIEW-CHECKLIST.md) |
-| — | New ADRs 014–018 | [adr/](./adr/) |
+> **Requires gate completion (design/vendors/sign-off) — architecture decisions no longer blocking.**
 
 ---
 
-## Approved (Ready as Architecture)
+## Approved
 
-| Item | Evidence |
-|------|----------|
-| Product surfaces & stack (Spring/PG/React×2/Flutter/Payment.js) | Master Prompt §17 · ADR-011 |
-| Lebanon default Market, multi-market ready | ADR-001 |
-| Stores = services only | ADR-002 |
-| Provider + Listing marketplace | ADR-003 |
-| Confirm → Pay booking sequence | ADR-005 |
-| Admin web-only + MFA + no mobile admin APIs | ADR-006 |
-| Admin-managed promotions (no ads marketplace) | ADR-007 |
-| Quality restrictions require review | ADR-008 |
-| Chat in V1 scope (booking-scoped) | ADR-009 · ADR-015 product part |
-| Design process (analyze/improve, not blind clone) | ADR-010 |
-| Redis + workers required | ADR-012 |
-| Financial ledger + escrow path | ADR-004 |
-| Admin-configurable commission/cancel/refund/withdrawal/settlement | ADR-013 · Rule engine validation PASS |
-| Logical DB design (core, booking, finance, config) | readiness/02 |
-| API map including admin policy APIs | readiness/03 |
-| RBAC matrix including Finance Admin | readiness/04 |
-| Payment.js flow controls (no PAN, idempotent webhooks, reconcile) | readiness/05 |
-| Screen inventory (spec only) | readiness/07 |
-| RTL/LTR + light theme design-system requirements | readiness/08 |
-| Deploy topology (API/worker/Redis/DB/storage) | readiness/09 |
-| Security checklist baseline | readiness/10 |
-| Feature Traceability Matrix coverage | FTM |
+- Full ADR-001…013 and **019…026** decision set  
+- Provider availability scheduling + confirm → pay  
+- Booking-scoped chat  
+- Lightweight disputes with escrow hold capability  
+- Admin-configurable finance policies; no hardcoded rates  
+- Admin web-only + MFA  
+- Ledger + Payment.js  
+- Redis + workers  
+- Portable deploy/DR  
+- Integration abstraction strategy  
+- FTM updated for availability, chat, disputes, retention  
+- Readiness pack (`docs/v1/readiness/`)  
 
 ---
 
-## Blocked (Must Resolve Before Coding / Before Affected Slice)
+## Blocked (Implementation Gates — Not Open Architecture Forks)
 
-| ID | Blocker | Owner | Blocks |
-|----|---------|-------|--------|
-| B-01 | **Scheduling model** A/B/C not chosen | Product | ADR-016 · Booking create validation schema |
-| B-02 | **Dispute depth** V1 minimal vs full | Product | ADR-017 · Booking/finance edge cases |
-| B-03 | **Design assets** not ingested → UI/UX specification incomplete | Design | UI coding gate · ADR-010 |
-| B-04 | **Dark theme** yes/no for V1 | Design | ADR-018 |
-| B-05 | **Chat transport** WebSocket vs SSE/poll | Engineering spike | ADR-015a · Chat impl |
-| B-06 | **Account retention durations** (anonymize/purge) | Compliance | ADR-014 |
-| B-07 | **KYC/media retention** (Q-IDV-006) | Compliance | IDV storage |
-| B-08 | **Cloud provider** (Q-DEP-001) | DevOps | Prod deploy |
-| B-09 | **RPO/RTO targets** (Q-DEP-004) | DevOps/Business | DR |
-| B-10 | **Object storage / maps / email / SMS / OCR / Face vendors** | Eng + Business | Integrations |
-| B-11 | **Store subscriptions in V1?** (Q-SUB-001) | Product | Subscription entitlements |
-| B-12 | **Finance Admin starter policies** for Lebanon (rates/windows/methods) | Finance | Money go-live (config content, not code) |
-| B-13 | Pen-test scope sign-off | Security | Production launch |
-
-> B-12 is **not** an excuse to hardcode rates; it is a go-live configuration task.
+| ID | Item | Owner |
+|----|------|-------|
+| G-01 | Design assets + UI analysis/tokens/specs | Design |
+| G-02 | Stakeholder sign-off on decisions package | Product/Arch/Eng |
+| G-03 | SMS / Email / Storage / Maps / OCR / Face vendor choice | Business/Eng |
+| G-04 | Cloud provider approval | DevOps/Business |
+| G-05 | Lebanon finance policy content loaded (Admin) | Finance |
+| G-06 | Retention numeric defaults for production | Compliance |
+| G-07 | Payment.js mobile spike evidence before payment UI | Eng |
 
 ---
 
 ## Risks
 
-| Risk | Severity | Mitigation |
-|------|----------|------------|
-| Coding starts before B-01 scheduling decision | High | Freeze booking schema until ADR-016 closed |
-| UI built without design analysis | High | Hard gate: assets + UI spec |
-| Payment.js WebView/3DS friction on Flutter | High | Mandatory spike before payment UI |
-| Policy engine under-tested → money leaks | Critical | Contract tests for policy evaluation + ledger |
-| Vendor lock-in delay (OCR/SMS) | Medium | Ports/adapters already required |
-| Chat abuse | Medium | Booking-scoped chat + report queue |
-| Scope creep restoring products/ads marketplace | Medium | ADR-002/007 enforcement in PR review |
+Design delay · Payment.js WebView · Policy misconfig · Vendor lag · Availability UX complexity · Chat abuse within bookings  
+
+Mitigations: ADR gates, feature flags, ports/adapters, audit, staging policy dry-run.
 
 ---
 
-## Gate Checklist (Master Prompt §20)
+## Scores (Updated)
 
-| Gate | Status |
-|------|--------|
-| Final architecture document | ✓ Pack complete |
-| Database model | ✓ Logical final published; optional forks blocked on ADR-016/017 |
-| API specification | ✓ Map published (OpenAPI artifact still an implementation deliverable) |
-| Feature traceability matrix | ✓ Exists |
-| UI/UX specification | ✗ **Blocked** on design assets + analysis |
-| Security review | ✓ Checklist; pen-test pending |
-| Payment flow review | ✓ Validated architecturally |
-| Deployment architecture | ✓ Portable design; cloud vendor blocked |
-| Architecture approved (sign-off) | ☐ Pending stakeholders |
-| Database approved | ☐ Pending stakeholders |
-| API contract approved | ☐ Pending stakeholders |
-| Authorization approved | ☐ Pending stakeholders |
-| UI specification approved | ☐ Blocked |
-| Payment flow approved | ☐ Pending stakeholders |
-| Deployment approved | ☐ Pending cloud/DR choices |
-| Security approved | ☐ Pending residual vendor/retention |
+| Score | Value |
+|------:|------:|
+| Architecture decision completeness | **94 / 100** |
+| Implementation readiness | **70 / 100** (up — forks closed; design/vendors remain) |
+| Production readiness | **30 / 100** |
 
 ---
 
-## Scores (Architecture Phase)
+## Coding Rule
 
-| Score | Value | Note |
-|------:|------:|------|
-| Architecture completeness | **86 / 100** | Strong; blocked items explicit |
-| Implementation readiness | **62 / 100** | Blocked on Product/Design/Compliance/DevOps decisions |
-| Production readiness | **28 / 100** | No runtime yet |
-
----
-
-## What “Go” Looks Like
-
-Implementation may begin **only when**:
-
-1. Stakeholders sign Approved sections  
-2. B-01 and B-02 decided (or explicitly deferred with flags)  
-3. Design assets uploaded and UI/UX specification approved  
-4. Minimum vendor set chosen for email/SMS/storage (adapters)  
-5. Finance confirms process to load Lebanon policy configs before money enablement  
-6. This report’s recommendation flips to **Ready for implementation** via written amendment  
-
-Until then: **no production code, no UI implementation, no application scaffolding as “the build.”**
+Do **not** begin coding until architecture package signed **and** ADR-023 design gate satisfied (and G-02…G-04 as required for the first implementation phase).
 
 ---
 
 ## Sign-off
 
-| Role | Name | Date | Decision |
-|------|------|------|----------|
-| Product Owner | | | ☐ Approve / ☐ Reject |
-| Solution Architect | | | ☐ Approve / ☐ Reject |
-| Engineering Lead | | | ☐ Approve / ☐ Reject |
-| Finance | | | ☐ Acknowledge policy model |
-| Security/Compliance | | | ☐ Approve / ☐ Conditional |
-| Design Lead | | | ☐ Assets + UI spec pending |
-
----
-
-**Report conclusion:** Architecture direction is approved for continuation of **decision closure**.  
-**Coding status:** **NOT AUTHORIZED.**
+| Role | Decision |
+|------|----------|
+| Product Owner | ☐ Approve decisions complete |
+| Solution Architect | ☐ Approve |
+| Engineering Lead | ☐ Approve |
+| Finance | ☐ Acknowledge Admin policy model |
+| Design | ☐ Assets pending / ☐ Received |
+| Security/Compliance | ☐ Approve retention model |

@@ -207,7 +207,13 @@ commission_rules 1—N commission_lines
 
 ---
 
-## Open Schema Forks (Blocked)
+## `availability` / calendar (ADR-019)
+`working_hours` (provider_id, day_of_week, start_local, end_local),  
+`calendar_exceptions` (provider_id, date/range, type OPEN/CLOSED, hours override),  
+`booking_schedule` (on booking: start/end, duration_minutes),  
+`service_duration` on listings.
 
-- Slot inventory table — only if ADR-016 Option C  
-- Full dispute tables — only if ADR-017 Option 2  
+## Open Schema Forks
+
+None for scheduling/dispute — ADR-019 and ADR-021 accepted.  
+Dark theme tokens conditional (ADR-018/023).  
