@@ -261,6 +261,7 @@ Until then: keep **IN PREPARATION**.
 | 2026-07-24 | Vendor-neutral production blueprint expanded — status **IN PREPARATION** |
 | 2026-07-24 | CLOUD_SIZING_AND_COST_FRAMEWORK published — remains **IN PREPARATION** |
 | 2026-07-24 | PRODUCTION_OPERATIONS_READINESS published — remains **IN PREPARATION** |
+| 2026-07-24 | PRODUCTION_OPERATIONS_READINESS v1.1 (KHADAMATI-specific) — remains **IN PREPARATION** |
 
 ---
 
@@ -391,6 +392,7 @@ Financial records and audit records **cannot** be removed if legally required.
 | 2026-07-24 | BLOCKER-004 Cloud Infrastructure Decision expanded — **IN PREPARATION** | 0/7 | **B) NOT READY — CODING BLOCKED** |
 | 2026-07-24 | BLOCKER-004 Cloud Sizing and Cost Framework published — still **IN PREPARATION** | 0/7 | **B) NOT READY — CODING BLOCKED** |
 | 2026-07-24 | BLOCKER-004 Production Operations Readiness published — still **IN PREPARATION** | 0/7 | **B) NOT READY — CODING BLOCKED** |
+| 2026-07-24 | BLOCKER-004 Prod Ops Readiness v1.1 (marketplace/pay/ledger-specific) — still **IN PREPARATION** | 0/7 | **B) NOT READY — CODING BLOCKED** |
 
 ---
 
