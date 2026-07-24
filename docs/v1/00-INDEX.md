@@ -8,6 +8,7 @@
 **Controlling brief:** [MASTER_IMPLEMENTATION_PROMPT_v1.0.md](./MASTER_IMPLEMENTATION_PROMPT_v1.0.md)  
 **Feature Traceability:** [FEATURE_TRACEABILITY_MATRIX.md](./FEATURE_TRACEABILITY_MATRIX.md)  
 **ADRs:** [adr/README.md](./adr/README.md)  
+**Admin configurable finance rules:** [architecture/47-ADMIN-CONFIGURABLE-FINANCIAL-RULES.md](./architecture/47-ADMIN-CONFIGURABLE-FINANCIAL-RULES.md) · [ADR-013](./adr/ADR-013-admin-configurable-financial-business-rules.md)  
 **Alignment changelog:** [ALIGNMENT_CHANGELOG_MASTER_PROMPT_v1.md](./ALIGNMENT_CHANGELOG_MASTER_PROMPT_v1.md)  
 
 ---

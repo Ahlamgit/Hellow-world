@@ -84,8 +84,8 @@ Admins → Admin Portal → API (privileged permissions)
 
 ## 20.9 Audit & Monitoring
 
-- Audit privileged admin actions and money movements  
-- Alert on repeated auth failures, webhook signature failures, privilege denials spikes  
+- Audit privileged admin actions and **all money-policy changes** (commission, cancellation, refund, withdrawal, settlement configs) with before/after  
+- Alert on repeated auth failures, webhook signature failures, privilege denials spikes, unauthorized policy-write attempts  
 
 ## 20.10 Secure SDLC
 

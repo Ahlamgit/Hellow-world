@@ -81,7 +81,11 @@ Scheduler finds bookings with `scheduled_start` in configured window, not yet re
 
 ## 24.8 Cancellation & Refund
 
-Not invented here. See Q-BOOK-001..006.
+**Decided structurally (ADR-013):** Cancellation and refund behavior is loaded from **admin-configured policies/rules** at runtime.
+
+The booking engine must not embed fixed cancellation windows, actors, penalties, or refund percentages.
+
+Finance Admin configures Lebanon policies before money go-live. Specific numeric values are configuration content, not code.
 
 ## 24.9 Data Integrity Rules
 

@@ -19,7 +19,8 @@ Modules are logical bounded contexts inside a **modular monolith** for V1 (extra
 | Booking Engine | `booking` | Booking aggregate, lifecycle, reminders hooks | All apps |
 | Payments | `payment` | Payment intents, IXOPAY adapter, webhooks | Customer, Craftsman, Admin |
 | Ledger | `ledger` | Immutable financial entries, escrow-ready accounts, withdrawals | System, Admin, Craftsman |
-| Commissions | `commission` | Rules + commission lines posting to ledger | Admin, Finance |
+| Commissions | `commission` | Rules config + calculation posting to ledger | Admin, Finance, system |
+| Policy (cancel/refund/withdraw/settle config) | `policy` (or split across booking/payment/ledger with shared engine) | Admin-configurable financial business rules (ADR-013) | Admin |
 | Subscriptions | `subscription` | Plans, subscriptions, entitlements | Craftsman, Admin |
 | Notifications | `notification` | Templates, dispatcher, providers, in-app inbox | All |
 | Chat | `chat` | Booking-scoped conversations/messages | Customer, Provider |

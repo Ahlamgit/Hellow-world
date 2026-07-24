@@ -23,7 +23,7 @@ Request → Authentication → Permission check → Resource scope check → All
 | `STORE_OPERATOR` | Own store resources | Store Dashboard (web) |
 | `ADMIN_SUPER` | All | **Admin Portal (web) only** |
 | `ADMIN_SUPPORT` | Limited read/update | **Admin Portal (web) only** |
-| `ADMIN_FINANCE` | Commissions, settlements, withdrawals | **Admin Portal (web) only** |
+| `ADMIN_FINANCE` | Commissions, refunds, withdrawals, cancellation/settlement policies, settlements | **Admin Portal (web) only** + MFA |
 | `ADMIN_OPS` | Onboarding, quality, restrictions | **Admin Portal (web) only** |
 | `ADMIN_CONTENT` | Ads, templates | **Admin Portal (web) only** |
 
@@ -34,6 +34,10 @@ Request → Authentication → Permission check → Resource scope check → All
 | `users:read` / `users:write` | User management |
 | `onboarding:approve` | Craftsman approval |
 | `commission:write` | Edit commission rules |
+| `cancellation_policies:write` | Edit cancellation policies |
+| `refund_rules:write` | Edit refund rules |
+| `withdrawal_config:write` | Edit withdrawal methods/config |
+| `settlement:write` | Edit settlement rules |
 | `settlement:read` | Settlement overview |
 | `withdrawal:approve` | Approve payouts |
 | `templates:write` | Notification templates |

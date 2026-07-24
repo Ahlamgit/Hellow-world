@@ -229,11 +229,15 @@ V1 supports **admin-managed promotions**. Do **not** create a complex self-servi
 
 **Subscription Management** — Plans, duration, pricing, status, expiry, payments  
 
-**Commission Management** — Commission rules, settlement views, financial reports  
+**Commission Management** — Admin-configurable commission rules (not hardcoded), settlement views, financial reports  
+
+**Cancellation / Refund / Withdrawal / Settlement Policy Management** — Admin-configurable policies evaluated dynamically by booking/payment/ledger engines (ADR-013). No hardcoded commission, cancellation, refund, withdrawal, or settlement business values.
 
 **Notification Management** — SMS, Email, Push, In-app; templates, scheduling, event triggers  
 
 **Analytics** — Users, Providers, Bookings, Revenue, Ratings, Performance, Follow-up metrics  
+
+**Finance Admin RBAC** — Manage commissions, refunds, withdrawals, cancellation/settlement policies; Super Admin full access; MFA + audit + change history required for all money-rule changes.  
 
 ---
 
@@ -265,7 +269,7 @@ Customer → Search service → Select provider → Choose date/time/location
 → Completion approval → Commission calculation → Provider payout → Review
 ```
 
-Support: booking status history, timestamps, audit trail, cancellation rules.
+Support: booking status history, timestamps, audit trail, **admin-configurable cancellation rules** (evaluated dynamically; not hardcoded).
 
 ---
 
@@ -288,6 +292,26 @@ Do **not** automatically permanently block without review.
 Support: Payments, Escrow readiness, Commissions, Provider earnings, Withdrawals, Subscriptions, Financial reporting.
 
 Ledger entries are **immutable and auditable** (ID, User, Booking, Type, Debit, Credit, Currency, Status, Timestamp).
+
+### Admin-configurable financial business rules (mandatory)
+
+The following **must not be hardcoded** in backend logic; they are configured in the Administration Portal:
+
+1. Commission rules  
+2. Cancellation rules  
+3. Refund rules  
+4. Withdrawal rules  
+5. Settlement rules  
+
+Canonical money path:
+
+```text
+Customer Payment → Payment Gateway → Escrow / Holding → Ledger
+→ Completion Approval → Commission Calculation (admin rules)
+→ Provider Earnings → Withdrawal Request → Admin Approval → Settlement
+```
+
+See ADR-013 and `architecture/47-ADMIN-CONFIGURABLE-FINANCIAL-RULES.md`.
 
 ---
 

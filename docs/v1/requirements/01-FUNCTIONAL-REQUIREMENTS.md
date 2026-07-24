@@ -40,16 +40,20 @@ KHADAMATI is a multi-sided marketplace connecting:
 | FR-ADM-005 | Review and decide craftsman onboarding applications | P0 |
 | FR-ADM-006 | Manage notification templates (email, SMS, in-app) with locale keys | P0 |
 | FR-ADM-007 | Trigger/monitor outbound notification deliveries (operational visibility) | P0 |
-| FR-ADM-008 | Configure commission rules (structure TBD — see Q-COM-*) | P0 |
-| FR-ADM-009 | View settlement overview (read model; payout execution rules TBD — see Q-SET-*) | P0 |
+| FR-ADM-008 | Configure multi-dimensional commission rules (effective-dated; history; audit) — **not hardcoded** | P0 |
+| FR-ADM-009 | Configure settlement rules + view settlement overview | P0 |
 | FR-ADM-010 | Manage subscription plans for craftsmen (and optionally stores — Q-SUB-001) | P0 |
-| FR-ADM-011 | Manage advertisements (create/approve/schedule/place — rules TBD Q-ADS-*) | P0 |
+| FR-ADM-011 | Manage admin promotions / featured listings | P0 |
 | FR-ADM-012 | Manage ratings moderation (hide/flag/restore) | P0 |
 | FR-ADM-013 | Configure global settings (feature flags, operational parameters) | P0 |
 | FR-ADM-014 | View audit logs (who/what/when/before-after for sensitive actions) | P0 |
 | FR-ADM-015 | Analytics dashboards (core KPIs) | P1 |
-| FR-ADM-016 | Exportable operational reports | P1 |
-| FR-ADM-017 | Quality restriction rule configuration | P1 |
+| FR-ADM-016 | Exportable operational / financial reports | P1 |
+| FR-ADM-017 | Quality restriction review (no permanent auto-ban) | P1 |
+| FR-ADM-018 | Configure cancellation policies (actors, statuses, time, penalties, approvals) | P0 |
+| FR-ADM-019 | Configure refund rules (full/partial/none/manual) | P0 |
+| FR-ADM-020 | Configure withdrawal methods, minimums, approval workflows | P0 |
+| FR-ADM-021 | Finance Admin RBAC + MFA for all money-policy changes | P0 |
 
 ## 1.5 Store Dashboard — Functional Requirements
 

@@ -69,8 +69,10 @@ Money columns:
 ### IAM
 `users`, `roles`, `permissions`, `role_permissions`, `user_roles`, `refresh_tokens`, `login_attempts`
 
-### Customer / Craftsman / Store
-`customers`, `customer_addresses`, `craftsmen`, `craftsman_services`, `stores`, `store_users` (if Q-STR-001), `products`, `store_services`, `orders`, `order_items`
+### Customer / Provider
+`customers`, `customer_addresses`, `providers`, `craftsman_profiles`, `store_profiles`, `store_users` / affiliations, `listings`, `availability_windows`
+
+> Products / product orders are **out of scope** (ADR-002).
 
 ### Catalog
 `categories`, `category_translations`, `service_offerings` (projection or source)
@@ -81,8 +83,15 @@ Money columns:
 ### Payment
 `payments`, `payment_attempts`, `payment_webhooks`, `refunds`
 
-### Commission / Settlement
-`commission_rules`, `commission_lines`, `settlement_periods`, `withdrawal_requests`
+### Commission / Settlement / Financial Policies (Admin Configurable — ADR-013)
+`commission_rules`, `commission_rule_history`, `commission_lines`,  
+`cancellation_policies`, `cancellation_policy_history`,  
+`refund_rules`, `refund_rule_history`, `refunds`,  
+`withdrawal_methods`, `withdrawal_configs`, `withdrawal_config_history`, `withdrawal_requests`,  
+`settlement_rules`, `settlement_rule_history`, `settlement_periods` / `settlement_batches`,  
+`ledger_accounts`, `ledger_entries`
+
+> Soft-delete does **not** apply to ledger_entries, payments, refunds, commission_lines, or policy history tables.
 
 ### Subscription
 `subscription_plans`, `subscription_plan_translations`, `subscriptions`, `subscription_payments`
@@ -130,9 +139,10 @@ Retention periods TBD (Q-DB-003): PII, biometrics, audit, payment logs.
 - Never drop columns in same release as code removal  
 - Backup verification in staging before prod migrate  
 
-## 13.10 Questions Requiring Business Decision
+## 13.11 Admin Financial Policy Tables (Detail Notes)
 
-- Q-DB-001: translation storage model  
-- Q-DB-002: UUIDv4 vs v7  
-- Q-DB-003: retention policy  
-- Q-STR-001: store_users table needed?
+Policy rows should include at minimum: `id`, `market_id` (nullable for global default), matching criteria, outcome fields, `priority`, `effective_from`, `effective_to`, `active`, `version`, audit columns.
+
+History tables store full before-snapshot on each mutation by Finance/Super Admin.
+
+Computed money artifacts (`commission_lines`, `refunds`, `withdrawal_requests`) **must reference** `rule_id` + `rule_version` for explainability.

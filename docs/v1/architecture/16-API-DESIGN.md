@@ -114,7 +114,12 @@ Prefix `/api/v1/admin`
 | Users | `/users`, `/users/{id}/roles`, `/users/{id}/status` |
 | Customers/Craftsmen/Stores | `/customers`, `/craftsmen`, `/stores` |
 | Onboarding | `/craftsmen/onboarding`, `/craftsmen/onboarding/{id}/approve\|reject\|request-info` |
-| Commissions | `/commission-rules`, `/commission-lines`, `/settlements/overview` |
+| Commissions | `/commission-rules`, history, activate |
+| Cancellation policies | `/cancellation-policies`, history |
+| Refund rules | `/refund-rules`, history |
+| Withdrawals config | `/withdrawal-methods`, `/withdrawal-configs`, history |
+| Withdrawals ops | `/withdrawals/{id}/approve\|reject` |
+| Settlements | `/settlement-rules`, `/settlements/overview`, batches |
 | Subscriptions | `/subscription-plans` |
 | Notifications | `/notification-templates`, `/notification-deliveries` |
 | Ads | `/ads/campaigns`, `/ads/placements` |
@@ -123,7 +128,6 @@ Prefix `/api/v1/admin`
 | Audit | `/audit-events` |
 | Analytics/Reports | `/analytics/*`, `/reports/*` |
 | Quality | `/quality/rules`, `/quality/scores`, `/restrictions` |
-| Withdrawals | `/withdrawals/{id}/approve\|reject` |
 
 ## 16.8 Webhooks
 

@@ -1,75 +1,68 @@
 # 27. Commission Workflow
 
 **Document ID:** KHAD-V1-COM  
-**Status:** Draft for Approval  
+**Status:** Aligned to ADR-013  
 
 ---
 
 ## 27.1 Purpose
 
-Calculate platform revenue share from monetizable events and feed settlement/withdrawal views.
+Calculate platform revenue share from monetizable events using **admin-configured commission rules**, then post immutable ledger entries and feed settlement/withdrawal views.
 
 ## 27.2 Design Principle
 
-Commission **engine** is deterministic given a rule set. Rule **values and model** are business decisions and must not be invented in code.
+- Commission **engine** is deterministic given an active rule set  
+- Rule **definitions and values** live in Admin Portal configuration — **never hardcoded**  
+- Do **not** assume one global commission percentage  
+- Matching may use: market, service category, provider type, subscription level, booking value, effective dates, priority  
 
-## 27.3 Trigger Events (Candidates)
+## 27.3 Admin Configuration Capabilities
+
+Authorized Finance/Super Admin can configure:
+
+- Default percentage and/or fixed amount  
+- Category-based rules  
+- Provider-type based rules (craftsman vs store)  
+- Market-specific rules (Lebanon now; GCC later)  
+- Effective dates + activate/deactivate  
+- History + audit trail on every change  
+
+## 27.4 Trigger Events
 
 | Event | Commissionable? |
 |-------|-----------------|
-| Booking payment captured | Likely yes |
-| Store order payment captured | Q-COM-002 |
-| Subscription payment | Usually platform revenue (not commission) |
-| Ad payment | Platform revenue vs commission Q-COM-003 |
+| Booking completed / completion approved (canonical) | Yes — per active rules |
+| Payment captured into escrow | May create holds; commission typically on completion (configurable trigger if needed) |
+| Subscription payment | Platform revenue (usually not provider commission) |
+| Ads/promotions | Platform revenue unless rule says otherwise |
 
-## 27.4 Proposed Calculation Flow
+## 27.5 Calculation Flow
 
 ```mermaid
 sequenceDiagram
-  participant Payment
+  participant Booking
   participant Outbox
   participant Commission
-  participant DB
-  Payment->>Outbox: PaymentCaptured
+  participant Rules
+  participant Ledger
+  Booking->>Outbox: BookingCompleted / CompletionApproved
   Outbox->>Commission: consume
-  Commission->>DB: load applicable rules
-  Commission->>Commission: compute line(s)
-  Commission->>DB: insert commission_lines
+  Commission->>Rules: resolveActiveRule(context)
+  Rules-->>Commission: rule_id + version + outcomes
+  Commission->>Commission: compute commission_line
+  Commission->>Ledger: post immutable entries
   Commission->>Outbox: CommissionCalculated
 ```
 
-## 27.5 Rule Model Options (**OPEN** — Q-COM-001)
-
-1. Flat percentage of booking amount  
-2. Percentage by category  
-3. Percentage by craftsman tier/subscription  
-4. Fixed fee + percentage  
-5. Separate store vs craftsman splits  
-
-Architecture stores versioned rules with effective dating regardless of option.
-
 ## 27.6 Commission Line Lifecycle
 
-`ESTIMATED` → `FINALIZED` → `SETTLED` / `WRITE_OFF` (names pending)
-
-Reversals on refund: Q-COM-004.
+`CALCULATED` → `FINALIZED` → `SETTLED` (names may refine)  
+Refunds reverse via **admin refund rules** + reversing ledger entries (ADR-013).
 
 ## 27.7 Settlement Overview
 
-Admin read model aggregating:
-
-- Gross captured volume  
-- Platform commission  
-- Craftsman/store net  
-- Pending withdrawals  
-- Settled amounts  
-
-Settlement cadence Q-SET-001.
+Admin read model + **settlement_rules** configuration (cadence, reserves). Not hardcoded schedules-as-business-truth.
 
 ## 27.8 Withdrawal Interaction
 
-Withdrawals should only allow amounts consistent with available net earnings after commissions/reserves. Reserve/hold policy: Q-SET-004.
-
-## 27.9 Questions Requiring Business Decision
-
-`Q-COM-001`..`Q-COM-005`, `Q-SET-001`, `Q-SET-004`
+Withdrawals validated by **withdrawal_methods / withdrawal_configs** (min amounts, methods, approval). Available balance derived from ledger, not a lone mutable wallet field.

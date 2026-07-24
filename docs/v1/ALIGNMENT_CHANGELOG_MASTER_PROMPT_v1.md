@@ -18,7 +18,7 @@ This changelog records **superseding decisions**. Where earlier `docs/v1` drafts
 | Chat | Default V2 | **In V1** (customer) | ADR-009 |
 | Design fidelity | Faithful reproduction | **Inspiration + analyze/improve** + design system deliverables first | ADR-010 |
 | Mobile stack | Flutter | Flutter confirmed as approved mobile direction | ADR-011 |
-| Redis / workers | Optional / TBD | **Required** | ADR-012 |
+| Money policies | Hardcoded TBD values | **Admin-configurable** commission/cancel/refund/withdrawal/settlement | ADR-013 |
 
 ## Implementation gate (from Master Prompt §20)
 

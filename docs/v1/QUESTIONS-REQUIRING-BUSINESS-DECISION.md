@@ -37,7 +37,7 @@
 
 | ID | Question | Status |
 |----|----------|--------|
-| Q-BOOK-001..006 | Cancel/refund/no-show/dispute policy details | **Open** (do not invent money rules) |
+| Q-BOOK-001..006 | Cancel/refund/no-show/dispute policy details | **Partially answered:** Cancellation + refund rules are **admin-configurable** (ADR-013). Lebanon values set by Finance Admin. No-show/dispute detail may remain Open. |
 | Q-BOOK-007 | Scheduling model | Open (date/time selection required; slot inventory TBD) |
 | Q-BOOK-008 | Prepay before confirm? | **Answered: No — provider confirmation then payment** (ADR-005) |
 | Q-BOOK-009 | Assignment model? | **Answered: Customer selects provider/listing** |
@@ -58,8 +58,8 @@
 
 | ID | Question | Status |
 |----|----------|--------|
-| Q-COM-001..005 | Commission structure details | **Open** (engine + ledger mandatory; rates TBD) |
-| Q-SET-001..004 | Settlement cadence / rails / reserves | **Open** (ledger + withdrawal requests in scope) |
+| Q-COM-001..005 | Commission structure details | **Answered (structural):** Admin-configurable multi-dimensional rules (ADR-013). Rates/content set by Finance Admin — not hardcoded. |
+| Q-SET-001..004 | Settlement cadence / rails / reserves | **Answered (structural):** Admin-configurable settlement + withdrawal methods (ADR-013). Lebanon methods configured, not hardcoded. |
 
 ## F. Subscriptions
 
@@ -120,6 +120,7 @@
 | ID | Decision | Date | Links |
 |----|----------|------|-------|
 | Q-AUTH-007 / BR-008 | Admins web-only; no mobile admin APIs | 2026-07-24 | ADR-006 |
+| ADR-013 | Commission/cancellation/refund/withdrawal/settlement rules admin-configurable; never hardcoded | 2026-07-24 | ADR-013 |
 | Q-AUTH-002 | Admin MFA required | 2026-07-24 | ADR-006 |
 | Q-LOC-001..003 | Lebanon / AR+EN / USD | 2026-07-24 | ADR-001 |
 | Products | Out of scope for stores | 2026-07-24 | ADR-002 |
@@ -137,8 +138,15 @@
 
 ## Still Blocking Money Go-Live
 
-Even with Master Prompt, **do not invent**:
+Policy **structures** are decided (ADR-013 — admin configurable).  
+**Numeric commercial values** are entered by Finance Admin (not invented in code/docs as production truth).
 
-1. Commission rates / formula (Q-COM-001)  
-2. Cancellation & refund fee matrix (Q-BOOK-001..004)  
-3. Withdrawal payout rails (Q-SET-002)  
+Before money go-live, Finance Admin must configure at least one active set for Lebanon:
+
+1. Commission rule(s)  
+2. Cancellation policy set  
+3. Refund rule set  
+4. Withdrawal method(s) + mins/approval  
+5. Settlement rule  
+
+Open questions Q-COM-*/Q-BOOK-001..004/Q-SET-* become **configuration content**, not justification to hardcode.  

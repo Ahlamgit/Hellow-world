@@ -142,8 +142,8 @@
 | BR-ADM-09 | Provider visibility promotions | ads | placements | /admin/promotions | ADM: Promos | Specified |
 | BR-ADM-10 | Subscription plans CRUD | subscription | plans | /admin/subscription-plans | ADM: Plans | Specified |
 | BR-ADM-11 | Subscription status/expiry/payments | subscription | subscriptions | /admin/subscriptions | ADM | Specified |
-| BR-ADM-12 | Commission rules | commission | commission_rules | /admin/commission-rules | ADM: Commission | Specified |
-| BR-ADM-13 | Settlement views | ledger, reporting | ledger + views | /admin/settlements | ADM: Settlements | Specified |
+| BR-ADM-12 | Commission rules configuration (multi-dimensional, effective-dated; not hardcoded) | commission | commission_rules, history | /admin/commission-rules | ADM: Commission Config | Specified |
+| BR-ADM-13 | Settlement rule configuration + settlement views | ledger, reporting | settlement_rules, views | /admin/settlement-rules, /admin/settlements | ADM: Settlements | Specified |
 | BR-ADM-14 | Financial reports | reporting, ledger | exports | /admin/reports/finance | ADM: Finance reports | Specified |
 | BR-ADM-15 | Notification templates | notification | templates | /admin/notification-templates | ADM: Templates | Specified |
 | BR-ADM-16 | Channel config SMS/Email/Push/In-app | notification | settings | /admin/notifications | ADM | Specified |
@@ -154,6 +154,11 @@
 | BR-ADM-21 | Audit logs | audit | audit_events | /admin/audit-events | ADM: Audit | Specified |
 | BR-ADM-22 | Global settings | platform | global_settings | /admin/settings | ADM: Settings | Specified |
 | BR-ADM-23 | Ratings moderation | trust | ratings, reviews | /admin/ratings | ADM: Ratings | Specified |
+| BR-ADM-24 | Cancellation policy management | booking, policy | cancellation_policies, history | /admin/cancellation-policies | ADM: Cancellation Policies | Specified |
+| BR-ADM-25 | Refund rules management | payment, ledger | refund_rules, history | /admin/refund-rules | ADM: Refund Rules | Specified |
+| BR-ADM-26 | Withdrawal configuration (methods, mins, approval) | ledger | withdrawal_methods, configs, history | /admin/withdrawal-configs | ADM: Withdrawal Config | Specified |
+| BR-ADM-27 | Finance RBAC (Finance Admin vs Super Admin) | iam | roles, permissions | admin authz | ADM: Roles | Specified |
+| BR-ADM-28 | Policy change history + MFA-gated money rule edits | audit, iam | *_history, audit_events | all policy APIs | ADM | Specified |
 
 ---
 
@@ -167,11 +172,15 @@
 | BR-PAY-04 | Payment state machine | payment | payments | GET /payments/{id} | CUS | Specified |
 | BR-PAY-05 | Failure handling + reconcile job | payment, worker | payments | worker | ADM ops | Specified |
 | BR-PAY-06 | Ledger update on money events | ledger | ledger_entries | internal | — | Specified |
-| BR-PAY-07 | Escrow readiness (hold accounts) | ledger | ledger_accounts | internal | — | Specified |
-| BR-PAY-08 | Commission calculation | commission, ledger | commission_lines, ledger | events | ADM | Specified |
-| BR-PAY-09 | Provider payout / withdrawals | ledger | withdrawal_requests | craftsman + admin approve | CRF/ADM | Specified |
+| BR-PAY-07 | Escrow / holding state then release | ledger | ledger_accounts, entries | internal | — | Specified |
+| BR-PAY-08 | Commission calculation from **active admin rules** | commission, ledger | commission_lines, commission_rules | events | ADM config + runtime | Specified |
+| BR-PAY-09 | Provider withdrawal request validated by **admin withdrawal config** | ledger | withdrawal_requests, methods | POST withdrawals | CRF/ADM | Specified |
 | BR-PAY-10 | Subscription charge via Payment.js | subscription, payment | subscriptions, payments | subscribe APIs | CRF | Specified |
 | BR-PAY-11 | Gateway abstraction port | payment | — | adapters | — | Specified |
+| BR-PAY-12 | Dynamic cancellation evaluation via admin policies | booking | cancellation_policies | cancel + preview APIs | CUS/CRF/STR/ADM | Specified |
+| BR-PAY-13 | Dynamic refund evaluation via admin refund rules | payment, ledger | refund_rules, refunds | refund APIs | System/ADM | Specified |
+| BR-PAY-14 | Settlement execution per admin settlement rules | ledger | settlement_rules, batches | workers + ADM | ADM | Specified |
+| BR-PAY-15 | No hardcoded commission/cancel/refund/withdrawal/settlement values | policy | — | code review gate | — | Specified |
 
 ---
 
@@ -201,6 +210,7 @@
 | BR-PLT-06 | Soft delete (non-financial) | all masters | deleted_at | — | — | Specified |
 | BR-PLT-07 | Immutable financial records | ledger, payment | ledger_entries, payments | — | — | Specified |
 | BR-PLT-08 | Design system / tokens (post analysis) | ui packages | — | — | All clients | Specified (pre-UI gate) |
+| BR-PLT-09 | No hardcoded commission/cancel/refund/withdrawal/settlement business values | policy | config tables | code review gate | ADM config UIs | Specified |
 
 ---
 
@@ -213,8 +223,8 @@
 | Customer | 17 | — |
 | Craftsman | 22 | — |
 | Store | 8 in / **4 out** (products) | ADR-002 |
-| Admin | 23 | Self-serve ads marketplace deferred ADR-007 |
-| Money | 11 | — |
+| Admin | 28 | Self-serve ads marketplace deferred ADR-007; money policies admin-configurable ADR-013 |
+| Money | 15 | Policies admin-configurable ADR-013; numeric values by Finance Admin |
 | Quality | 7 | Permanent auto-ban forbidden |
 | Platform | 8 | — |
 

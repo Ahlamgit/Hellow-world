@@ -16,3 +16,4 @@ Decisions recorded from Master Implementation Prompt v1.0 and architecture audit
 | [ADR-010](./ADR-010-design-inspiration-not-pixel-clone.md) | Design assets as inspiration; analyze & improve | Accepted |
 | [ADR-011](./ADR-011-flutter-mobile-stack.md) | Flutter is approved mobile stack | Accepted |
 | [ADR-012](./ADR-012-redis-workers-required.md) | Redis + background workers required in V1 | Accepted |
+| [ADR-013](./ADR-013-admin-configurable-financial-business-rules.md) | Admin configurable financial business rules | Accepted |
