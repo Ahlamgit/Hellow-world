@@ -82,7 +82,8 @@ It is intentionally **implementation-free**. No application code, UI templates, 
 | 44 | Technical Recommendations | [planning/44-TECHNICAL-RECOMMENDATIONS.md](./planning/44-TECHNICAL-RECOMMENDATIONS.md) |
 | 45 | Future Version 2 Roadmap | [planning/45-FUTURE-V2-ROADMAP.md](./planning/45-FUTURE-V2-ROADMAP.md) |
 
-**Cross-cutting:** [QUESTIONS-REQUIRING-BUSINESS-DECISION.md](./QUESTIONS-REQUIRING-BUSINESS-DECISION.md)
+**Cross-cutting:** [QUESTIONS-REQUIRING-BUSINESS-DECISION.md](./QUESTIONS-REQUIRING-BUSINESS-DECISION.md)  
+**Final architecture audit:** [ARCHITECTURE_AUDIT_FINAL.md](./ARCHITECTURE_AUDIT_FINAL.md)
 
 ---
 
