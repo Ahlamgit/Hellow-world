@@ -1,122 +1,38 @@
 # KHADAMATI Platform
 
-Enterprise-grade maintenance and home services marketplace connecting **Customers**, **Craftsmen**, **Stores**, and **Administrators**.
+Enterprise marketplace connecting **Customers**, **Craftsmen**, **Stores**, and **Administrators**.
 
-## Architecture
+## Version 1 Status
 
-```
-┌─────────────┐  ┌─────────────┐  ┌─────────────┐
-│  Web (React)│  │   Android   │  │     iOS     │
-└──────┬──────┘  └──────┬──────┘  └──────┬──────┘
-       │                │                │
-       └────────────────┼────────────────┘
-                        │ REST API (JWT)
-              ┌─────────▼─────────┐
-              │  ASP.NET Core 9   │
-              │   Clean Arch.     │
-              └─────────┬─────────┘
-                        │
-              ┌─────────▼─────────┐
-              │   SQL Server DB   │
-              └───────────────────┘
-```
+KHADAMATI V1 is in **architecture & discovery**. Implementation has not started for the new stack.
 
-## Technology Stack
+**Architecture pack (for approval):** [`docs/v1/00-INDEX.md`](./docs/v1/00-INDEX.md)
+
+### V1 Target Stack (Fixed)
 
 | Layer | Technology |
-|-------|-----------|
-| Backend | ASP.NET Core 9, EF Core, JWT, Serilog, FluentValidation, AutoMapper, MediatR |
-| Database | Microsoft SQL Server (stored procedures, views, indexes, audit logs) |
-| Web | React 19, TypeScript, Material UI 9, i18next (AR/EN), RTL |
-| Android | Kotlin, Jetpack Compose, MVVM, Retrofit, Room |
-| iOS | Swift, SwiftUI, MVVM, async/await, Keychain |
+|-------|------------|
+| Backend | Spring Boot 3.x, Java 21, Spring Security, Spring Data JPA, Maven |
+| API | REST, JWT, OpenAPI |
+| Database | PostgreSQL, Flyway |
+| Administration Portal | React, TypeScript, Material UI |
+| Store Dashboard | React, TypeScript, Material UI |
+| Customer App | Flutter |
+| Craftsman App | Flutter |
+| Payments | Areeba IXOPAY Payment.js only (gateway abstraction required) |
 
-## Project Structure
+### Process Gate
 
-```
-/workspace
-├── src/
-│   ├── backend/          # ASP.NET Core 9 Web API (Clean Architecture)
-│   ├── database/         # SQL Server scripts (views, SPs, indexes)
-│   ├── web/              # React TypeScript web application
-│   ├── android/          # Native Android application
-│   └── ios/              # Native iOS application
-├── docs/                 # Architecture documentation
-└── docker-compose.yml    # Full stack deployment
-```
+1. Approve architecture pack + disposition open questions  
+2. Upload UI design video, screenshots, branding, colors, UX requirements  
+3. **Only then** begin implementation (UI must follow provided designs)
 
-## Quick Start
+Open questions: [`docs/v1/QUESTIONS-REQUIRING-BUSINESS-DECISION.md`](./docs/v1/QUESTIONS-REQUIRING-BUSINESS-DECISION.md)
 
-### Prerequisites
+## Legacy Codebase Notice
 
-- .NET 9 SDK
-- Node.js 22+
-- Docker & Docker Compose (for SQL Server + full stack)
-- Android Studio (for Android)
-- Xcode 15+ (for iOS)
-
-### Run with Docker
-
-```bash
-docker compose up -d
-```
-
-- API: http://localhost:5000/swagger
-- Web: http://localhost:3000
-- SQL Server: localhost:1433
-
-### Run Backend Locally
-
-```bash
-cd src/backend
-dotnet run --project Khadamati.API
-```
-
-### Run Web Locally
-
-```bash
-cd src/web
-cp .env.example .env
-npm install
-npm run dev
-```
-
-### Default Admin Credentials
-
-| Field | Value |
-|-------|-------|
-| Email | admin@khadamati.com |
-| Password | Admin@123456 |
-
-## Security Features
-
-- JWT authentication with refresh tokens
-- BCrypt password hashing (work factor 12)
-- Role-based authorization (Customer, Craftsman, Store, Administrator)
-- Rate limiting on auth endpoints
-- Account lockout after failed login attempts
-- Soft delete with audit trails
-- Input validation (FluentValidation)
-- HTTPS enforcement
-- CSRF protection (antiforgery tokens)
-- SQL injection protection (parameterized queries via EF Core)
-
-## API Endpoints
-
-| Method | Endpoint | Description |
-|--------|----------|-------------|
-| POST | `/api/v1/auth/register` | Register new user |
-| POST | `/api/v1/auth/login` | Login |
-| POST | `/api/v1/auth/refresh` | Refresh JWT token |
-| POST | `/api/v1/auth/revoke` | Revoke refresh token |
-| GET | `/api/v1/users/me` | Get current user profile |
-| PUT | `/api/v1/users/me` | Update profile |
-| POST | `/api/v1/users/me/addresses` | Add address |
-| GET | `/api/v1/services/categories` | List service categories |
-| GET | `/api/v1/services` | List services |
-| POST | `/api/v1/services/requests` | Create service request |
-| GET | `/api/v1/health` | Health check |
+Existing `/src` content and older docs under `/docs/*.md` reflect a **previous** direction (ASP.NET / SQL Server / native mobile). They are **not** authoritative for V1 without re-validation.
 
 ## License
 
-Proprietary - KHADAMATI Platform
+Proprietary — KHADAMATI Platform
