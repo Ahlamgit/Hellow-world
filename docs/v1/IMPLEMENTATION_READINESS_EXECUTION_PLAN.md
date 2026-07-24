@@ -68,7 +68,7 @@ Closing **BLOCKER-001…007** is the path to amend the Implementation Gate Repor
 
 | ID | Blocker | Description | Required Action | Owner | Dependencies | Acceptance Criteria | Status |
 |----|---------|-------------|-----------------|-------|--------------|---------------------|--------|
-| BLOCKER-001 | Design assets & UI/UX specification | Official logo received; brand + UI/UX + tokens drafted — pending approval | Complete review/approval of design specs; commit master logo binaries to `design/assets/` | Design (+ Product) | Official logo reference | UI specification **approved** before any UI implementation | **ASSET RECEIVED — DESIGN SPECIFICATION IN PROGRESS** |
+| BLOCKER-001 | Design assets & UI/UX specification | Design package ready for signatures; master binary + color extraction pending | Sign Design Approval Record; deposit masters; extract colors (Draft→approved) | Design (+ Product) | Official logo · design docs | UI specification **approved** (signatures) before any UI implementation | **READY FOR APPROVAL** |
 | BLOCKER-002 | Stakeholder sign-off | Scope / business / ops / architecture gate approvals not recorded | Complete approval checklist; record signatures on Scope Baseline + Gate Report | Product / Arch / Eng / Business / Ops | Scope Baseline published | Formal approval recorded (names, dates, decisions) | **Open** |
 | BLOCKER-003 | External vendor decisions | SMS, Email, Storage, Maps, OCR/Face not selected; Payment sandbox/process to validate | Complete vendor checklist; confirm adapter-only integration | Business / Eng | ADR-025 ports | Vendors selected (or deferred with risk ack); Payment sandbox path confirmed; no business-logic coupling | **Open** |
 | BLOCKER-004 | Cloud infrastructure approval | Target cloud/region/hosting not approved | Approve infra decision sheet (no architecture change) | DevOps / Business | Portable deploy pattern (ADR-012/024) | Cloud provider, region, and hosting choices approved for staging/prod | **Open** |
@@ -81,31 +81,33 @@ Closing **BLOCKER-001…007** is the path to amend the Implementation Gate Repor
 ## BLOCKER-001 — Design Assets & UI/UX Specification
 
 **Gate mapping:** G-01 · **ADR:** ADR-023 · ADR-010 · ADR-018  
-**Status:** **ASSET RECEIVED — DESIGN SPECIFICATION IN PROGRESS**
+**Status:** **READY FOR APPROVAL** (not Completed until signatures)
 
 ### Required inputs
 
 | Input | State |
 |-------|-------|
-| Official logo (خدماتي / KHADAMATI · home + tools · orange + navy) | ☑ Received (brand reference) |
-| Brand identity direction | ☑ Documented |
-| Colors / typography from logo | ☑ Tokenized (hex confirm pending master file sample) |
+| Official logo (خدماتي / KHADAMATI · home + tools · orange + navy) | ☑ Brand reference · ☐ Master binary in `design/assets/master/` |
+| Brand identity direction | ☑ Documented + final quality review |
+| Colors | ☐ Extraction pending — [`design/COLOR_REFERENCE.md`](./design/COLOR_REFERENCE.md) **Draft** |
+| Typography | ☑ Specified — checklist approval pending |
 | Optional: prior UI screens / video / reference apps | ☐ Optional inspiration |
 
-### Required output (drafted)
+### Required output
 
 | Artifact | Path | State |
 |----------|------|-------|
-| Brand Identity Specification | [`design/BRAND_IDENTITY_SPECIFICATION.md`](./design/BRAND_IDENTITY_SPECIFICATION.md) | ☑ Draft |
-| UI/UX Design Specification | [`design/UI_UX_SPECIFICATION.md`](./design/UI_UX_SPECIFICATION.md) | ☑ Draft — in progress / ready for review |
-| Design System Tokens | [`design/DESIGN_SYSTEM_TOKENS.md`](./design/DESIGN_SYSTEM_TOKENS.md) | ☑ Draft |
-
-Covers: visual + UX analysis · color/type systems · components · app icon · RTL/LTR · responsive · accessibility · Customer / Craftsman / Store / Admin surfaces.
+| Brand Identity Specification | [`design/BRAND_IDENTITY_SPECIFICATION.md`](./design/BRAND_IDENTITY_SPECIFICATION.md) | ☑ Ready for approval |
+| UI/UX Design Specification | [`design/UI_UX_SPECIFICATION.md`](./design/UI_UX_SPECIFICATION.md) | ☑ Ready for approval |
+| Design System Tokens | [`design/DESIGN_SYSTEM_TOKENS.md`](./design/DESIGN_SYSTEM_TOKENS.md) | ☑ Ready for approval |
+| Color Reference | [`design/COLOR_REFERENCE.md`](./design/COLOR_REFERENCE.md) | ☑ Draft (no guessed production HEX) |
+| Logo Asset Package | [`design/assets/LOGO_ASSET_PACKAGE.md`](./design/assets/LOGO_ASSET_PACKAGE.md) | ☑ Structure ready |
+| Design Approval Record | [`design/DESIGN_APPROVAL_RECORD.md`](./design/DESIGN_APPROVAL_RECORD.md) | ☑ Open for signatures |
 
 ### Acceptance criteria
 
-- UI/UX Design Specification **approved** before UI implementation  
-- No UI coding until this blocker is **Closed** (approval) and Implementation Gate → **A**  
+- Design review checklist complete + Design Lead / Product signatures  
+- No UI coding until this blocker is **Closed** (Completed) and Implementation Gate → **A**  
 - Logo concept preserved (refinement only)  
 
 ### Tracking
@@ -113,11 +115,12 @@ Covers: visual + UX analysis · color/type systems · components · app icon · 
 | Item | State |
 |------|-------|
 | Official logo reference received | ☑ |
-| Specs drafted | ☑ |
-| Master logo binaries in `design/assets/` | ☐ |
-| Hex sampled from master file | ☐ |
-| Spec approved | ☐ |
-| Blocker closed | ☐ |
+| Specs ready for approval | ☑ |
+| Approval record published | ☑ |
+| Master logo binaries in `design/assets/master/` | ☐ |
+| Colors extracted (not guessed) | ☐ |
+| Spec approved (signatures) | ☐ |
+| Blocker **Closed / Completed** | ☐ |
 
 ---
 
@@ -451,6 +454,7 @@ Unauthorized scope additions during readiness or implementation are **out of pro
 | 2026-07-24 | Execution plan published | None | **B) NOT READY** |
 | 2026-07-24 | Blocker closure pack published — [`READINESS_BLOCKER_CLOSURE_STATUS.md`](./READINESS_BLOCKER_CLOSURE_STATUS.md) | 0/7 (prep artifacts ready) | **B) NOT READY — CODING BLOCKED** |
 | 2026-07-24 | BLOCKER-001 → **ASSET RECEIVED — DESIGN SPECIFICATION IN PROGRESS** (brand + UI/UX + tokens drafted) | 0/7 (none closed; 001 in progress) | **B) NOT READY — CODING BLOCKED** |
+| 2026-07-24 | BLOCKER-001 → **READY FOR APPROVAL** (approval package; not Completed) | 0/7 | **B) NOT READY — CODING BLOCKED** |
 
 Active closure tracker: [`READINESS_BLOCKER_CLOSURE_STATUS.md`](./READINESS_BLOCKER_CLOSURE_STATUS.md).  
 Update that dashboard (and this table) when a blocker moves to Closed. Do **not** change gate decision from B until §3 checklist is complete.

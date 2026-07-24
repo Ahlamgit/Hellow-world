@@ -40,7 +40,7 @@ Scope freeze does **not** authorize coding. Implementation remains blocked until
 - **Final Scope Baseline v1.0 published** — product scope status **A) Scope Frozen** (sign-off pending BLOCKER-002)  
 - **Implementation Readiness Execution Plan published** — blocker register **BLOCKER-001…007**  
 - **Readiness Blocker Closure pack published** — checklists/templates/plans for all blockers; **0/7 closed**  
-  - BLOCKER-001: **ASSET RECEIVED — DESIGN SPECIFICATION IN PROGRESS** (Brand Identity + UI/UX Spec + Tokens drafted; approval pending)  
+  - BLOCKER-001: **READY FOR APPROVAL** (approval package published; not Completed until signatures; colors Draft pending master extraction)  
   - BLOCKER-003…007: evaluation / decision / config / validation artifacts ready for owner input  
 - No authorization to code — no architecture or scope changes  
 - Implementation gate remains **B**
@@ -53,7 +53,7 @@ Architecture and business-rule decisions are complete. Critical **delivery input
 
 | Plan ID | Gate ID | Blocker | Prep artifact | Closure status |
 |---------|---------|---------|---------------|----------------|
-| BLOCKER-001 | G-01 | Design assets & UI/UX specification | [`design/UI_UX_SPECIFICATION.md`](./design/UI_UX_SPECIFICATION.md) · [`design/BRAND_IDENTITY_SPECIFICATION.md`](./design/BRAND_IDENTITY_SPECIFICATION.md) · [`design/DESIGN_SYSTEM_TOKENS.md`](./design/DESIGN_SYSTEM_TOKENS.md) | **ASSET RECEIVED — SPEC IN PROGRESS** |
+| BLOCKER-001 | G-01 | Design assets & UI/UX specification | [`design/DESIGN_APPROVAL_RECORD.md`](./design/DESIGN_APPROVAL_RECORD.md) · UI/UX · Brand · Tokens · [`design/COLOR_REFERENCE.md`](./design/COLOR_REFERENCE.md) · [`design/assets/LOGO_ASSET_PACKAGE.md`](./design/assets/LOGO_ASSET_PACKAGE.md) | **READY FOR APPROVAL** |
 | BLOCKER-002 | G-00+G-02 | Stakeholder sign-off | [`READINESS_BLOCKER_CLOSURE_STATUS.md`](./READINESS_BLOCKER_CLOSURE_STATUS.md) | **Open** |
 | BLOCKER-003 | G-03 | Vendor selection | [`vendors/VENDOR_EVALUATION_MATRIX.md`](./vendors/VENDOR_EVALUATION_MATRIX.md) | **Open** |
 | BLOCKER-004 | G-04 | Cloud infrastructure | [`infra/CLOUD_INFRASTRUCTURE_DECISION.md`](./infra/CLOUD_INFRASTRUCTURE_DECISION.md) | **Open** |
@@ -92,7 +92,7 @@ Full closure tracking: [`READINESS_BLOCKER_CLOSURE_STATUS.md`](./READINESS_BLOCK
 | ID | Blocker | Owner | Severity |
 |----|---------|-------|----------|
 | G-00 | **Scope baseline sign-off** on FINAL_SCOPE_BASELINE.md | Product/Arch | Critical |
-| G-01 | **Design specification approval pending** (assets received; specs drafted — ADR-023) | Design | Critical |
+| G-01 | **Design specification READY FOR APPROVAL** — signatures + master color extraction pending (ADR-023) | Design | Critical |
 | G-02 | **Formal stakeholder sign-off** on architecture gate not recorded | Product/Arch/Eng | Critical |
 | G-03 | **Vendor selections** incomplete (SMS, Email, Object Storage, Maps, OCR, Face) | Business/Eng | Critical |
 | G-04 | **Cloud provider** not approved for target environments | DevOps/Business | Critical |
@@ -123,8 +123,8 @@ Backend-only scaffolding is also **not authorized** by this gate until G-02 is s
 | Input | Status |
 |-------|--------|
 | Scope baseline document | **Published** — signature pending |
-| Branding, logo, colors, design references, videos/screens, design direction | **Logo/brand received** — optional refs still open; commit master files to `design/assets/` |
-| UI analysis, UX analysis, design tokens, component inventory, screen specs | **Drafted** — approval pending (BLOCKER-001) |
+| Branding, logo, colors, design references, videos/screens, design direction | **Package ready** — deposit masters in `design/assets/master/`; colors **Draft** in Color Reference |
+| UI analysis, UX analysis, design tokens, component inventory, screen specs | **READY FOR APPROVAL** — see Design Approval Record (BLOCKER-001 not Completed) |
 | SMS / Email / Storage / Maps / OCR / Face vendor choices | **Missing** |
 | Cloud hosting approval | **Missing** |
 | Lebanon commission/cancel/refund/withdrawal/settlement **content** | **Pending Finance** |

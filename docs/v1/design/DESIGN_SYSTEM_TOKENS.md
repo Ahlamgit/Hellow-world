@@ -3,12 +3,13 @@
 **Document ID:** KHAD-V1-DESIGN-TOKENS  
 **Version:** 1.0  
 **Date:** 2026-07-24  
-**Status:** Draft from official logo — confirm hex via color-pick from master asset  
-**Related:** [`BRAND_IDENTITY_SPECIFICATION.md`](./BRAND_IDENTITY_SPECIFICATION.md) · [`UI_UX_SPECIFICATION.md`](./UI_UX_SPECIFICATION.md)
+**Status:** Ready for approval package — **color HEX remain Draft** pending extraction ([`COLOR_REFERENCE.md`](./COLOR_REFERENCE.md))  
+**Related:** [`BRAND_IDENTITY_SPECIFICATION.md`](./BRAND_IDENTITY_SPECIFICATION.md) · [`UI_UX_SPECIFICATION.md`](./UI_UX_SPECIFICATION.md) · [`DESIGN_APPROVAL_RECORD.md`](./DESIGN_APPROVAL_RECORD.md)
 
 ```text
 Tokens are a design foundation. DO NOT implement UI components yet.
-Provisional hex values must be confirmed against the official logo file in assets/.
+Do NOT treat provisional hex as extracted production colors.
+Authoritative extraction status lives in COLOR_REFERENCE.md (Draft until master deposit).
 ```
 
 ---

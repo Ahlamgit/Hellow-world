@@ -1,14 +1,14 @@
 # KHADAMATI V1 — UI/UX Design Specification
 
 **Document ID:** KHAD-V1-UI-UX-SPEC  
-**Version:** 1.0  
+**Version:** 1.1  
 **Date:** 2026-07-24  
-**Status:** **ASSET RECEIVED — DESIGN SPECIFICATION IN PROGRESS**  
-**Role:** Lead Product Designer & UX Architect  
+**Status:** **READY FOR APPROVAL** (BLOCKER-001) — not Completed until signatures  
+**Role:** Design Governance Lead  
 **ADR:** ADR-023 · ADR-010 · ADR-018 · ADR-028  
 
 **Companions:**  
-[`BRAND_IDENTITY_SPECIFICATION.md`](./BRAND_IDENTITY_SPECIFICATION.md) · [`DESIGN_SYSTEM_TOKENS.md`](./DESIGN_SYSTEM_TOKENS.md) · [`../FINAL_SCOPE_BASELINE.md`](../FINAL_SCOPE_BASELINE.md)
+[`BRAND_IDENTITY_SPECIFICATION.md`](./BRAND_IDENTITY_SPECIFICATION.md) · [`DESIGN_SYSTEM_TOKENS.md`](./DESIGN_SYSTEM_TOKENS.md) · [`COLOR_REFERENCE.md`](./COLOR_REFERENCE.md) · [`DESIGN_APPROVAL_RECORD.md`](./DESIGN_APPROVAL_RECORD.md) · [`../FINAL_SCOPE_BASELINE.md`](../FINAL_SCOPE_BASELINE.md)
 
 ```text
 DO NOT implement UI.
@@ -25,10 +25,12 @@ This document is the design foundation before implementation.
 | Item | State |
 |------|-------|
 | Official logo / brand reference received | ☑ **Yes** |
-| Brand Identity Specification | ☑ Drafted |
-| Design System Tokens | ☑ Drafted |
-| UI/UX Specification (this doc) | ☑ **In progress → ready for review** |
-| Spec **approved** (closes BLOCKER-001) | ☐ Pending Design + Product |
+| Brand Identity Specification | ☑ Ready for approval |
+| Design System Tokens | ☑ Ready for approval (colors Draft pending extraction) |
+| Color Reference | ☑ Created — **Draft** until master extraction |
+| Logo asset package structure | ☑ Ready — binaries pending deposit |
+| UI/UX Specification (this doc) | ☑ **READY FOR APPROVAL** |
+| Spec **approved** (closes BLOCKER-001) | ☐ Pending Design + Product signatures |
 | UI implementation authorized | ☐ Blocked until Gate **A** |
 
 ---
@@ -367,7 +369,24 @@ New needs → ADR or Change Request.
 
 ---
 
-# 15. Approval (closes BLOCKER-001 when signed)
+# 15. Approval Section
+
+**Package record:** [`DESIGN_APPROVAL_RECORD.md`](./DESIGN_APPROVAL_RECORD.md)  
+**BLOCKER-001 governance status:** **READY FOR APPROVAL** (not Completed until signatures).
+
+## Design review checklist
+
+- [ ] Brand identity approved
+- [ ] Color system approved
+- [ ] Typography approved
+- [ ] Component system approved
+- [ ] RTL/LTR approach approved
+- [ ] Mobile-first approach approved
+- [ ] Customer journey approved
+- [ ] Provider journey approved
+- [ ] Admin experience approved
+
+## Signatures
 
 | Role | Name | Date | Decision |
 |------|------|------|----------|
@@ -375,9 +394,10 @@ New needs → ADR or Change Request.
 | Product Owner | | | ☐ Approve (scope-aligned) |
 | Solution Architect | | | ☐ Acknowledge (no architecture change) |
 
-After approval: update [`../READINESS_BLOCKER_CLOSURE_STATUS.md`](../READINESS_BLOCKER_CLOSURE_STATUS.md) BLOCKER-001 → **Closed** (specification approved).  
+After checklist + signatures: update [`../READINESS_BLOCKER_CLOSURE_STATUS.md`](../READINESS_BLOCKER_CLOSURE_STATUS.md) BLOCKER-001 → **Closed** (Completed).  
+Until then, status remains **READY FOR APPROVAL** — **not** Completed.  
 UI coding still requires Implementation Gate **A**.
 
 ---
 
-**End of UI/UX Design Specification v1.0**
+**End of UI/UX Design Specification v1.1**

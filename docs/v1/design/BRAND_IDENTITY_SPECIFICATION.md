@@ -1,12 +1,12 @@
 # KHADAMATI V1 — Brand Identity Specification
 
 **Document ID:** KHAD-V1-BRAND-ID  
-**Version:** 1.0  
+**Version:** 1.1  
 **Date:** 2026-07-24  
-**Status:** Asset received — specification in progress (BLOCKER-001)  
-**Role:** Lead Product Designer & UX Architect  
+**Status:** **READY FOR APPROVAL** (BLOCKER-001) — not Completed until signatures  
+**Role:** Design Governance Lead  
 
-**Related:** [`UI_UX_SPECIFICATION.md`](./UI_UX_SPECIFICATION.md) · [`DESIGN_SYSTEM_TOKENS.md`](./DESIGN_SYSTEM_TOKENS.md) · ADR-010 · ADR-023  
+**Related:** [`UI_UX_SPECIFICATION.md`](./UI_UX_SPECIFICATION.md) · [`DESIGN_SYSTEM_TOKENS.md`](./DESIGN_SYSTEM_TOKENS.md) · [`COLOR_REFERENCE.md`](./COLOR_REFERENCE.md) · [`DESIGN_APPROVAL_RECORD.md`](./DESIGN_APPROVAL_RECORD.md) · [`assets/LOGO_ASSET_PACKAGE.md`](./assets/LOGO_ASSET_PACKAGE.md) · ADR-010 · ADR-023  
 
 ```text
 DO NOT replace the logo concept.
@@ -255,7 +255,43 @@ Exact hex: sample from master logo file; provisional values documented in tokens
 
 ---
 
-## 7. Approval
+## 7. Final Logo Quality Review (Governance)
+
+### 7.1 Preserve (mandatory — no brand replacement)
+
+| Must preserve | Confirmed |
+|---------------|-----------|
+| Home outline | ☑ Required |
+| Service tools concept (wrench · paint brush · electrical plug) | ☑ Required |
+| KHADAMATI identity (English wordmark system) | ☑ Required |
+| Arabic brand recognition (**خدماتي**) | ☑ Required |
+| Trust feeling (navy + professional craft metaphor) | ☑ Required |
+| Orange primary brand energy | ☑ Required |
+
+**Verdict:** Concept is **locked**. Refinement of exports only — **no redesign / no substitute mark**.
+
+### 7.2 Improve if required (refinement only)
+
+| Evaluate | Finding | Action |
+|----------|---------|--------|
+| Small-size readability | Tool detail may muddy &lt; 32 px | Provide simplified compact / app-icon export |
+| Icon spacing | Internal tool density | Harmonize gaps; keep house dominant |
+| Tool balance | Three tools must share optical weight | Unify stroke weight in icon exports |
+| Typography alignment | Bilingual lockup | Arabic-leading (market default); optical align with symbol |
+| Mobile icon clarity | Wordmark does not belong in launcher icon | Symbol-only app icon; orange identity preserved |
+
+### 7.3 Quality gate
+
+| Check | State |
+|-------|-------|
+| Asset package paths defined | ☑ [`assets/LOGO_ASSET_PACKAGE.md`](./assets/LOGO_ASSET_PACKAGE.md) |
+| Master binaries deposited in repo | ☐ Pending |
+| Variation exports produced | ☐ Pending |
+| Color extraction recorded | ☐ See [`COLOR_REFERENCE.md`](./COLOR_REFERENCE.md) (**Draft**) |
+
+---
+
+## 8. Approval
 
 | Role | Name | Date | Decision |
 |------|------|------|----------|
@@ -263,6 +299,8 @@ Exact hex: sample from master logo file; provisional values documented in tokens
 | Product Owner | | | ☐ Approve (concept preserved) |
 | Solution Architect | | | ☐ Acknowledge (no scope/architecture impact) |
 
+Formal package record: [`DESIGN_APPROVAL_RECORD.md`](./DESIGN_APPROVAL_RECORD.md).
+
 ---
 
-**End of Brand Identity Specification v1.0**
+**End of Brand Identity Specification v1.1**
