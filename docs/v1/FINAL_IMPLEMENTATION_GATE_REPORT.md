@@ -60,7 +60,7 @@ Architecture and business-rule decisions are complete. Critical **delivery input
 | BLOCKER-004 | G-04 | Cloud infrastructure | [`infra/CLOUD_INFRASTRUCTURE_DECISION.md`](./infra/CLOUD_INFRASTRUCTURE_DECISION.md) | **Open** |
 | BLOCKER-005 | G-05 | Finance Lebanon config | [`config/FINANCE_POLICY_INITIAL_CONFIGURATION.md`](./config/FINANCE_POLICY_INITIAL_CONFIGURATION.md) | **Open** |
 | BLOCKER-006 | G-06 | Compliance & retention | [`compliance/RETENTION_POLICY_DECISIONS.md`](./compliance/RETENTION_POLICY_DECISIONS.md) | **Open** |
-| BLOCKER-007 | G-07 | Payment.js mobile spike | [`payment/PAYMENT_JS_MOBILE_VALIDATION_REPORT.md`](./payment/PAYMENT_JS_MOBILE_VALIDATION_REPORT.md) | **IN VALIDATION** (PASS WITH CONDITIONS) |
+| BLOCKER-007 | G-07 | Payment.js mobile spike | [`payment/PAYMENT_JS_MOBILE_VALIDATION_REPORT.md`](./payment/PAYMENT_JS_MOBILE_VALIDATION_REPORT.md) · [`payment/AREEBA_IXOPAY_VENDOR_VALIDATION_CHECKLIST.md`](./payment/AREEBA_IXOPAY_VENDOR_VALIDATION_CHECKLIST.md) | **IN VALIDATION** (PASS WITH CONDITIONS) |
 
 Full closure tracking: [`READINESS_BLOCKER_CLOSURE_STATUS.md`](./READINESS_BLOCKER_CLOSURE_STATUS.md)
 

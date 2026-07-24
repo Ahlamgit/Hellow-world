@@ -74,7 +74,7 @@ Closing **BLOCKER-001…007** is the path to amend the Implementation Gate Repor
 | BLOCKER-004 | Cloud infrastructure approval | Target cloud/region/hosting not approved | Approve infra decision sheet (no architecture change) | DevOps / Business | Portable deploy pattern (ADR-012/024) | Cloud provider, region, and hosting choices approved for staging/prod | **Open** |
 | BLOCKER-005 | Finance Lebanon configuration | Policy **content** not prepared; architecture already approved | Provide initial admin-configurable values for commission/cancel/refund/withdrawal/settlement | Finance | ADR-013 / 026 | Config values approved for staging; remain Admin-editable; **not** hardcoded | **Open** |
 | BLOCKER-006 | Compliance & retention defaults | Numeric retention/deletion defaults unset | Set defaults for account deletion, PII, financial, audit, documents | Compliance / Legal | ADR-022 | Defaults approved; financial & audit records protected | **Open** |
-| BLOCKER-007 | Payment.js mobile validation spike | Architecture feasibility validated — **PASS WITH CONDITIONS**; live sandbox pending | Accept report; run device sandbox PJS-01…10 when credentials available | Eng | Areeba sandbox (BLOCKER-003) | Accepted PASS / PASS WITH CONDITIONS; live conditions closed or waived | **IN VALIDATION** |
+| BLOCKER-007 | Payment.js mobile validation spike | PASS WITH CONDITIONS; vendor checklist ready; live tests pending | Fill Areeba checklist; sandbox tests; Architect + Eng approval | Eng | Areeba sandbox (BLOCKER-003) | Checklist §8 complete → COMPLETED | **IN VALIDATION** |
 
 ---
 
@@ -390,18 +390,27 @@ Cloud provider, region, and hosting choices for DB / Redis / workers / storage /
 
 ### Required output
 
-[`payment/PAYMENT_JS_MOBILE_VALIDATION_REPORT.md`](./payment/PAYMENT_JS_MOBILE_VALIDATION_REPORT.md) — **PASS WITH CONDITIONS**
+| Artifact | State |
+|----------|-------|
+| [`payment/PAYMENT_JS_MOBILE_VALIDATION_REPORT.md`](./payment/PAYMENT_JS_MOBILE_VALIDATION_REPORT.md) | ☑ PASS WITH CONDITIONS |
+| [`payment/AREEBA_IXOPAY_VENDOR_VALIDATION_CHECKLIST.md`](./payment/AREEBA_IXOPAY_VENDOR_VALIDATION_CHECKLIST.md) | ☑ Published — values PVC |
 
-### Acceptance criteria
+### Acceptance criteria → COMPLETED
 
-- [x] Readiness report published  
-- [ ] Accepted by Eng Lead + Architect  
-- [ ] Live sandbox conditions closed or explicitly waived with dates  
-- [ ] Status → COMPLETED  
+- [ ] Sandbox credentials received  
+- [ ] Android payment flow tested  
+- [ ] iOS payment flow tested  
+- [ ] Webhook verified  
+- [ ] 3DS behaviour confirmed  
+- [ ] Payment lifecycle validated  
+- [ ] Architect approval  
+- [ ] Engineering approval  
+
+Keep status **IN VALIDATION** until all boxes above are checked.
 
 ### Dependencies
 
-- BLOCKER-003 Payment sandbox / credentials path  
+- BLOCKER-003 Payment sandbox / credentials path (use Areeba checklist as evidence)  
 
 ---
 
@@ -461,6 +470,7 @@ Unauthorized scope additions during readiness or implementation are **out of pro
 | 2026-07-24 | BLOCKER-001 → **READY FOR APPROVAL** (approval package; not Completed) | 0/7 | **B) NOT READY — CODING BLOCKED** |
 | 2026-07-24 | BLOCKER-001 final approval readiness; asset completeness verified fail — remains **READY FOR APPROVAL** | 0/7 | **B) NOT READY — CODING BLOCKED** |
 | 2026-07-24 | BLOCKER-007 → **IN VALIDATION** (Payment.js report PASS WITH CONDITIONS) | 0/7 | **B) NOT READY — CODING BLOCKED** |
+| 2026-07-24 | BLOCKER-007 Areeba IXOPAY vendor validation checklist published — still **IN VALIDATION** | 0/7 | **B) NOT READY — CODING BLOCKED** |
 
 Active closure tracker: [`READINESS_BLOCKER_CLOSURE_STATUS.md`](./READINESS_BLOCKER_CLOSURE_STATUS.md).  
 Update that dashboard (and this table) when a blocker moves to Closed. Do **not** change gate decision from B until §3 checklist is complete.

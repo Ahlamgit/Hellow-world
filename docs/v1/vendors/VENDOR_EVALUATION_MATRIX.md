@@ -33,21 +33,24 @@ NO vendor-specific business logic in domain services.
 
 ## 1. Payment — Areeba IXOPAY (Locked)
 
+**Evidence pack:** [`../payment/AREEBA_IXOPAY_VENDOR_VALIDATION_CHECKLIST.md`](../payment/AREEBA_IXOPAY_VENDOR_VALIDATION_CHECKLIST.md)  
+**Mobile spike:** [`../payment/PAYMENT_JS_MOBILE_VALIDATION_REPORT.md`](../payment/PAYMENT_JS_MOBILE_VALIDATION_REPORT.md) — PASS WITH CONDITIONS · BLOCKER-007 **IN VALIDATION**
+
 | Item | Status | Notes |
 |------|--------|-------|
 | Gateway locked for V1 | ✅ | Payment.js only |
 | Port | `PaymentGatewayPort` | Adapter: IXOPAY |
-| Sandbox availability | ☐ Validate | |
-| Payment.js requirements | ☐ Validate | Docs, CSP, origins |
-| Mobile flow | ☐ Validate | Ties to BLOCKER-007 |
-| Webhook process | ☐ Validate | Auth, idempotency, retries |
-| Credentials process | ☐ Validate | Secrets manager; rotation |
+| Sandbox availability | ☐ Validate | Checklist §1 — PVC |
+| Payment.js requirements | ☐ Validate | Checklist §2 — PVC |
+| Mobile flow | ☐ Validate | Checklist §3 + BLOCKER-007 |
+| Webhook process | ☐ Validate | Checklist §5 — PVC |
+| Credentials process | ☐ Validate | Checklist §1.3 — secrets manager |
 
 | Field | Value |
 |-------|-------|
-| Sandbox account owner | TBD |
-| Webhook URL pattern (staging) | TBD |
-| Credential custody | TBD |
+| Sandbox account owner | **Pending Vendor Confirmation** |
+| Webhook URL pattern (staging) | **Pending Vendor Confirmation** |
+| Credential custody | **Pending Vendor Confirmation** |
 | Validation owner | Eng |
 | Validated date | |
 

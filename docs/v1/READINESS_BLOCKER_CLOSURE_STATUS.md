@@ -57,7 +57,7 @@ New requirements → ADR or Change Request (Scope Baseline §10). No silent scop
 | BLOCKER-004 | Cloud infrastructure | [`infra/CLOUD_INFRASTRUCTURE_DECISION.md`](./infra/CLOUD_INFRASTRUCTURE_DECISION.md) | **Open** (decision sheet ready) | Cloud **approved** |
 | BLOCKER-005 | Finance Lebanon config | [`config/FINANCE_POLICY_INITIAL_CONFIGURATION.md`](./config/FINANCE_POLICY_INITIAL_CONFIGURATION.md) | **Open** (template ready; values TBD) | Finance config **approved** |
 | BLOCKER-006 | Compliance & retention | [`compliance/RETENTION_POLICY_DECISIONS.md`](./compliance/RETENTION_POLICY_DECISIONS.md) | **Open** (decisions template ready) | Compliance decisions **approved** |
-| BLOCKER-007 | Payment.js mobile spike | [`payment/PAYMENT_JS_MOBILE_VALIDATION_REPORT.md`](./payment/PAYMENT_JS_MOBILE_VALIDATION_REPORT.md) · plan | **IN VALIDATION** (PASS WITH CONDITIONS — not COMPLETED) | Accepted PASS / PASS WITH CONDITIONS + live conditions addressed or waived |
+| BLOCKER-007 | Payment.js mobile spike | [`payment/PAYMENT_JS_MOBILE_VALIDATION_REPORT.md`](./payment/PAYMENT_JS_MOBILE_VALIDATION_REPORT.md) · [`payment/AREEBA_IXOPAY_VENDOR_VALIDATION_CHECKLIST.md`](./payment/AREEBA_IXOPAY_VENDOR_VALIDATION_CHECKLIST.md) | **IN VALIDATION** (PASS WITH CONDITIONS — not COMPLETED) | Checklist §8 + Architect/Eng approval |
 
 **Closed count:** 0 / 7  
 **Gate decision:** Remains **B** until all seven acceptance criteria below are met.
@@ -296,21 +296,33 @@ Financial records and audit records **cannot** be removed if legally required.
 # BLOCKER-007 — Payment.js Mobile Validation Spike
 
 **Status:** **IN VALIDATION**  
-**Not:** COMPLETED (awaiting acceptance + sandbox conditions)  
+**Not:** COMPLETED (vendor checklist + live tests + approvals pending)  
 **Artifacts:**  
 - [`payment/PAYMENT_JS_MOBILE_VALIDATION_REPORT.md`](./payment/PAYMENT_JS_MOBILE_VALIDATION_REPORT.md) — **PASS WITH CONDITIONS**  
+- [`payment/AREEBA_IXOPAY_VENDOR_VALIDATION_CHECKLIST.md`](./payment/AREEBA_IXOPAY_VENDOR_VALIDATION_CHECKLIST.md) — external validation pack (supports BLOCKER-003)  
 - [`payment/PAYMENT_JS_MOBILE_VALIDATION_PLAN.md`](./payment/PAYMENT_JS_MOBILE_VALIDATION_PLAN.md)  
 
 ### Constraint
 
-**No production implementation.** Validation / spike only.
+**No production implementation.** Validation / spike only. Do not invent vendor values.
 
-### Acceptance
+### Final acceptance (→ COMPLETED only when all checked)
+
+- [ ] Sandbox credentials received  
+- [ ] Android payment flow tested  
+- [ ] iOS payment flow tested  
+- [ ] Webhook verified  
+- [ ] 3DS behaviour confirmed  
+- [ ] Payment lifecycle validated  
+- [ ] Architect approval  
+- [ ] Engineering approval  
+
+### Progress
 
 - [x] Architecture / feasibility spike documented  
 - [x] Result recorded: **PASS WITH CONDITIONS**  
-- [ ] Live sandbox scenarios PJS-01…10 (depends on BLOCKER-003 credentials)  
-- [ ] Readiness accepted by Eng Lead + Architect  
+- [x] Vendor validation checklist published  
+- [ ] Live sandbox scenarios PJS-01…10  
 - [ ] BLOCKER-007 → **COMPLETED**  
 
 ### Closure log
@@ -319,6 +331,7 @@ Financial records and audit records **cannot** be removed if legally required.
 |------|-------|
 | 2026-07-24 | Mobile validation plan published; spike not started |
 | 2026-07-24 | Validation report published — **IN VALIDATION** / PASS WITH CONDITIONS |
+| 2026-07-24 | Areeba IXOPAY vendor validation checklist published — remains **IN VALIDATION** |
 
 ---
 
@@ -331,6 +344,7 @@ Financial records and audit records **cannot** be removed if legally required.
 | 2026-07-24 | BLOCKER-001 → **READY FOR APPROVAL** (approval record open; not Completed) | 0/7 | **B) NOT READY — CODING BLOCKED** |
 | 2026-07-24 | BLOCKER-001 final approval package; asset completeness fail (no binaries) — still **READY FOR APPROVAL** | 0/7 | **B) NOT READY — CODING BLOCKED** |
 | 2026-07-24 | BLOCKER-007 Payment.js validation report — **IN VALIDATION** (PASS WITH CONDITIONS) | 0/7 | **B) NOT READY — CODING BLOCKED** |
+| 2026-07-24 | BLOCKER-007 Areeba vendor checklist added (supports BLOCKER-003) — still **IN VALIDATION** | 0/7 | **B) NOT READY — CODING BLOCKED** |
 
 ---
 

@@ -16,7 +16,9 @@ DO NOT replace Areeba IXOPAY / Payment.js.
 
 **Sources:** Master Prompt v1.0 · Scope Baseline · Decisions Complete · ADR-004 · ADR-005 · ADR-025 · workflows/23-PAYMENT-FLOW · Flutter Architecture §12.8 · IXOPAY Payment.js public documentation (hosted fields / tokenization)
 
-**Related:** [`PAYMENT_JS_MOBILE_VALIDATION_PLAN.md`](./PAYMENT_JS_MOBILE_VALIDATION_PLAN.md) · [`../vendors/VENDOR_EVALUATION_MATRIX.md`](../vendors/VENDOR_EVALUATION_MATRIX.md)
+**Related:** [`PAYMENT_JS_MOBILE_VALIDATION_PLAN.md`](./PAYMENT_JS_MOBILE_VALIDATION_PLAN.md) · [`AREEBA_IXOPAY_VENDOR_VALIDATION_CHECKLIST.md`](./AREEBA_IXOPAY_VENDOR_VALIDATION_CHECKLIST.md) · [`../vendors/VENDOR_EVALUATION_MATRIX.md`](../vendors/VENDOR_EVALUATION_MATRIX.md)
+
+**Vendor evidence pack:** Fill [`AREEBA_IXOPAY_VENDOR_VALIDATION_CHECKLIST.md`](./AREEBA_IXOPAY_VENDOR_VALIDATION_CHECKLIST.md) before live mobile tests. BLOCKER-007 remains **IN VALIDATION** until that checklist §8 is complete.
 
 ---
 
@@ -321,7 +323,9 @@ Finance configuration remains Admin-configurable (commission/cancel/refund) — 
 
 # 8. Payment Decisions Required
 
-Do **not** invent values. Unknowns:
+Do **not** invent values. Track and fill exclusively via:
+
+**[`AREEBA_IXOPAY_VENDOR_VALIDATION_CHECKLIST.md`](./AREEBA_IXOPAY_VENDOR_VALIDATION_CHECKLIST.md)**
 
 | Decision | Status |
 |----------|--------|

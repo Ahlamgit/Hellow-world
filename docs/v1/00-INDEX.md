@@ -11,7 +11,7 @@
 **Blocker closure status:** [READINESS_BLOCKER_CLOSURE_STATUS.md](./READINESS_BLOCKER_CLOSURE_STATUS.md) — active closure (0/7; BLOCKER-001 **READY FOR APPROVAL**)  
 **Design foundation:** [design/DESIGN_APPROVAL_RECORD.md](./design/DESIGN_APPROVAL_RECORD.md) · [design/BRAND_IDENTITY_SPECIFICATION.md](./design/BRAND_IDENTITY_SPECIFICATION.md) · [design/UI_UX_SPECIFICATION.md](./design/UI_UX_SPECIFICATION.md) · [design/DESIGN_SYSTEM_TOKENS.md](./design/DESIGN_SYSTEM_TOKENS.md) · [design/COLOR_REFERENCE.md](./design/COLOR_REFERENCE.md) · [design/assets/LOGO_ASSET_PACKAGE.md](./design/assets/LOGO_ASSET_PACKAGE.md)  
 **Implementation gate:** [FINAL_IMPLEMENTATION_GATE_REPORT.md](./FINAL_IMPLEMENTATION_GATE_REPORT.md)  
-**Payment.js validation:** [payment/PAYMENT_JS_MOBILE_VALIDATION_REPORT.md](./payment/PAYMENT_JS_MOBILE_VALIDATION_REPORT.md) — BLOCKER-007 **IN VALIDATION** (PASS WITH CONDITIONS)  
+**Payment.js validation:** [payment/PAYMENT_JS_MOBILE_VALIDATION_REPORT.md](./payment/PAYMENT_JS_MOBILE_VALIDATION_REPORT.md) · [payment/AREEBA_IXOPAY_VENDOR_VALIDATION_CHECKLIST.md](./payment/AREEBA_IXOPAY_VENDOR_VALIDATION_CHECKLIST.md) — BLOCKER-007 **IN VALIDATION**  
 **Feature Traceability:** [FEATURE_TRACEABILITY_MATRIX.md](./FEATURE_TRACEABILITY_MATRIX.md)  
 **ADRs:** [adr/README.md](./adr/README.md)  
 **Admin configurable finance rules:** [architecture/47-ADMIN-CONFIGURABLE-FINANCIAL-RULES.md](./architecture/47-ADMIN-CONFIGURABLE-FINANCIAL-RULES.md) · [ADR-013](./adr/ADR-013-admin-configurable-financial-business-rules.md)  
