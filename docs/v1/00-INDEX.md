@@ -9,6 +9,7 @@
 **Final scope baseline (frozen):** [FINAL_SCOPE_BASELINE.md](./FINAL_SCOPE_BASELINE.md)  
 **Implementation readiness plan:** [IMPLEMENTATION_READINESS_EXECUTION_PLAN.md](./IMPLEMENTATION_READINESS_EXECUTION_PLAN.md) — **B) NOT READY**; tracks BLOCKER-001…007  
 **Blocker closure status:** [READINESS_BLOCKER_CLOSURE_STATUS.md](./READINESS_BLOCKER_CLOSURE_STATUS.md) — active closure (0/7)  
+**Blocker evidence repository:** [governance/evidence/README.md](./governance/evidence/README.md) — standard trio per `BLOCKER-001-design/` … `BLOCKER-007-payment/`  
 **Stakeholder sign-off:** [governance/STAKEHOLDER_SIGN_OFF_PACKAGE.md](./governance/STAKEHOLDER_SIGN_OFF_PACKAGE.md) — BLOCKER-002 **READY FOR APPROVAL**  
 **Implementation authorization:** [governance/IMPLEMENTATION_AUTHORIZATION_CHECKLIST.md](./governance/IMPLEMENTATION_AUTHORIZATION_CHECKLIST.md) — Gate B→A; coding **BLOCKED**  
 **Finance Lebanon config:** [config/FINANCE_LEBANON_INITIAL_CONFIGURATION.md](./config/FINANCE_LEBANON_INITIAL_CONFIGURATION.md) · [governance/FINANCE_POLICY_APPROVAL_MATRIX.md](./governance/FINANCE_POLICY_APPROVAL_MATRIX.md) · [governance/FINANCE_POLICY_LIFECYCLE.md](./governance/FINANCE_POLICY_LIFECYCLE.md) — BLOCKER-005 **IN PREPARATION**  

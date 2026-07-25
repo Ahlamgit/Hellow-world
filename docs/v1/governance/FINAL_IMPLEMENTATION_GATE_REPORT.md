@@ -3,7 +3,7 @@
 | Field | Value |
 |-------|-------|
 | **Document ID** | GOV-FIGR-001 |
-| **Version** | 2.3 |
+| **Version** | 2.4 |
 | **Report date** | 2026-07-25 |
 | **Prepared by** | Program Governance Manager |
 
@@ -74,7 +74,7 @@ KHADAMATI remains blocked for all implementation activity. Seven pre-implementat
 ### Authorized (Gate B)
 
 - Blocker evidence collection, review, and approval per `BLOCKER_EVIDENCE_MANAGEMENT_FRAMEWORK.md`
-- Evidence archival under `docs/v1/governance/evidence/`
+- Evidence archival under `docs/v1/governance/evidence/` — each `BLOCKER-00x-*/` folder contains `README.md`, `APPROVAL_RECORD.md`, and `EVIDENCE_CHECKLIST.md`
 - Governance document updates
 - Readiness reviews and steering reporting
 
@@ -138,3 +138,4 @@ Sprint 0 scope is defined in `SPRINT_0_FOUNDATION_CHARTER.md` (GOV-S0FC-001).
 | 2.1 | 2026-07-25 | Gate A transition & blocker execution package (GOV-GATC-001) |
 | 2.2 | 2026-07-25 | Independent Gate A readiness audit (GOV-GA-AUDIT-001) — remain Gate B |
 | 2.3 | 2026-07-25 | Blocker closure execution tracker (GOV-BLOCKER-TRACKER-001) |
+| 2.4 | 2026-07-25 | Standard evidence trio prepared in all seven blocker folders; Gate B unchanged — 0/7 closed |

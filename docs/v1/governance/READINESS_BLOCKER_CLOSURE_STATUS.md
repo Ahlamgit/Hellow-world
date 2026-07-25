@@ -3,7 +3,7 @@
 | Field | Value |
 |-------|-------|
 | **Document ID** | GOV-RBCS-001 |
-| **Version** | 2.2 |
+| **Version** | 2.3 |
 | **Last updated** | 2026-07-25 |
 | **Gate** | B — NOT READY — CODING BLOCKED |
 | **Owner** | Program Governance Manager |
@@ -51,6 +51,7 @@
 
 **Status:** **READY FOR APPROVAL** (signatures and assets pending)  
 **Package:** `evidence/BLOCKER-001-design/DESIGN_APPROVAL_PACKAGE.md` (EVD-001-PKG-001 v1.0)  
+**Evidence trio:** `README.md` · `APPROVAL_RECORD.md` · `EVIDENCE_CHECKLIST.md`
 **ADR-023:** UI implementation **blocked** until Closed
 
 | Evidence item | In package | Asset filed | Approved |
@@ -71,7 +72,8 @@
 ### BLOCKER-002 — Stakeholder Approval
 
 **Status:** **READY FOR APPROVAL** (signatures pending)  
-**Package:** `evidence/BLOCKER-002-stakeholder/STAKEHOLDER_APPROVAL_PACKAGE.md` (EVD-002-PKG-001 v1.0)
+**Package:** `evidence/BLOCKER-002-stakeholder/STAKEHOLDER_APPROVAL_PACKAGE.md` (EVD-002-PKG-001 v1.0)  
+**Evidence trio:** `README.md` · `APPROVAL_RECORD.md` · `EVIDENCE_CHECKLIST.md`
 
 | Approver | Package received | Signed (§6) |
 |----------|------------------|-------------|
@@ -87,6 +89,9 @@
 
 ### BLOCKER-003 — Vendor Readiness
 
+**Folder:** `evidence/BLOCKER-003-vendors/`  
+**Evidence trio:** `README.md` · `APPROVAL_RECORD.md` · `EVIDENCE_CHECKLIST.md`
+
 | Integration | Contract | Sandbox/access | Technical validation |
 |-------------|----------|----------------|----------------------|
 | Payment | No | No | No |
@@ -101,6 +106,9 @@
 ---
 
 ### BLOCKER-004 — Cloud Readiness
+
+**Folder:** `evidence/BLOCKER-004-cloud/`  
+**Evidence trio:** `README.md` · `APPROVAL_RECORD.md` · `EVIDENCE_CHECKLIST.md`
 
 | Decision | Recorded | Approved |
 |----------|----------|----------|
@@ -119,6 +127,7 @@
 
 **Status:** **READY FOR APPROVAL** (signatures and values pending)  
 **Package:** `evidence/BLOCKER-005-finance/FINANCE_POLICY_APPROVAL_PACKAGE.md` (EVD-005-PKG-001 v1.0)  
+**Evidence trio:** `README.md` · `APPROVAL_RECORD.md` · `EVIDENCE_CHECKLIST.md`  
 **Financial architecture:** **APPROVED** · **Finance values:** **NOT APPROVED**
 
 | Rule domain | Structure in package | Values approved | Signed |
@@ -137,7 +146,8 @@
 ### BLOCKER-006 — Compliance
 
 **Status:** **READY FOR APPROVAL** (signatures and legal values pending)  
-**Package:** `evidence/BLOCKER-006-compliance/COMPLIANCE_APPROVAL_PACKAGE.md` (EVD-006-PKG-001 v1.0)
+**Package:** `evidence/BLOCKER-006-compliance/COMPLIANCE_APPROVAL_PACKAGE.md` (EVD-006-PKG-001 v1.0)  
+**Evidence trio:** `README.md` · `APPROVAL_RECORD.md` · `EVIDENCE_CHECKLIST.md`
 
 | Policy area | In package | Duration / detail approved | Signed |
 |-------------|------------|---------------------------|--------|
@@ -153,6 +163,9 @@
 ---
 
 ### BLOCKER-007 — Payment.js Validation
+
+**Folder:** `evidence/BLOCKER-007-payment/`  
+**Evidence trio:** `README.md` · `APPROVAL_RECORD.md` · `EVIDENCE_CHECKLIST.md`
 
 | Check | Passed |
 |-------|--------|
@@ -193,7 +206,7 @@ Refer to `BLOCKER_CLOSURE_EXECUTION_TRACKER.md` (GOV-BLOCKER-TRACKER-001) for op
 
 **Gate A transition:** When all seven blockers are **Closed**, complete `IMPLEMENTATION_AUTHORIZATION_CHECKLIST.md` and obtain §8 signatures on `GATE_A_IMPLEMENTATION_AUTHORIZATION_RECORD.md` (GOV-GAIR-001) before declaring Gate A.
 
-**Evidence repository:** `docs/v1/governance/evidence/`
+**Evidence repository:** `docs/v1/governance/evidence/` — each `BLOCKER-00x-*/` folder contains `README.md`, `APPROVAL_RECORD.md`, and `EVIDENCE_CHECKLIST.md`
 
 ---
 
@@ -214,3 +227,4 @@ Refer to `BLOCKER_CLOSURE_EXECUTION_TRACKER.md` (GOV-BLOCKER-TRACKER-001) for op
 | 2.0 | 2026-07-25 | Linked Gate A transition & blocker execution package (GOV-GATC-001) |
 | 2.1 | 2026-07-25 | Independent Gate A readiness audit (GOV-GA-AUDIT-001) — 0/7 closed |
 | 2.2 | 2026-07-25 | Operational blocker execution tracker (GOV-BLOCKER-TRACKER-001) |
+| 2.3 | 2026-07-25 | Standard evidence trio in all seven blocker folders; 0/7 closed — Gate B unchanged |

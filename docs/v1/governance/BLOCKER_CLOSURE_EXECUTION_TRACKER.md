@@ -3,7 +3,7 @@
 | Field | Value |
 |-------|-------|
 | **Document ID** | GOV-BLOCKER-TRACKER-001 |
-| **Version** | 1.0 |
+| **Version** | 1.1 |
 | **Date** | 2026-07-25 |
 | **Owner** | Program Execution Manager |
 | **Gate** | **B — NOT READY — CODING BLOCKED** |
@@ -58,15 +58,17 @@ This tracker is the **operational working document** for closing BLOCKER-001 thr
 
 ### Evidence package paths
 
-| ID | Package / folder |
-|----|------------------|
-| BLOCKER-001 | `evidence/BLOCKER-001-design/DESIGN_APPROVAL_PACKAGE.md` |
-| BLOCKER-002 | `evidence/BLOCKER-002-stakeholder/STAKEHOLDER_APPROVAL_PACKAGE.md` |
-| BLOCKER-003 | `evidence/BLOCKER-003-vendors/` |
-| BLOCKER-004 | `evidence/BLOCKER-004-cloud/` |
-| BLOCKER-005 | `evidence/BLOCKER-005-finance/FINANCE_POLICY_APPROVAL_PACKAGE.md` |
-| BLOCKER-006 | `evidence/BLOCKER-006-compliance/COMPLIANCE_APPROVAL_PACKAGE.md` |
-| BLOCKER-007 | `evidence/BLOCKER-007-payment/` |
+Each blocker folder includes **`README.md`**, **`APPROVAL_RECORD.md`**, and **`EVIDENCE_CHECKLIST.md`** (standard evidence trio). See `evidence/README.md`.
+
+| ID | Folder | Package (if prepared) | Standard trio |
+|----|--------|----------------------|---------------|
+| BLOCKER-001 | `evidence/BLOCKER-001-design/` | `DESIGN_APPROVAL_PACKAGE.md` | ✓ |
+| BLOCKER-002 | `evidence/BLOCKER-002-stakeholder/` | `STAKEHOLDER_APPROVAL_PACKAGE.md` | ✓ |
+| BLOCKER-003 | `evidence/BLOCKER-003-vendors/` | — | ✓ |
+| BLOCKER-004 | `evidence/BLOCKER-004-cloud/` | — | ✓ |
+| BLOCKER-005 | `evidence/BLOCKER-005-finance/` | `FINANCE_POLICY_APPROVAL_PACKAGE.md` | ✓ |
+| BLOCKER-006 | `evidence/BLOCKER-006-compliance/` | `COMPLIANCE_APPROVAL_PACKAGE.md` | ✓ |
+| BLOCKER-007 | `evidence/BLOCKER-007-payment/` | — | ✓ |
 
 ---
 
@@ -178,10 +180,11 @@ A blocker may be marked **CLOSED** only when **all** criteria are met:
 |---|-----------|
 | 1 | **Required evidence exists** per §2 and GOV-BCEP-001 §2 |
 | 2 | **Evidence reviewed** by designated approver(s) |
-| 3 | **Required approvals signed** using `evidence/_templates/APPROVAL_RECORD_TEMPLATE.md` |
-| 4 | **Approval record archived** under `governance/evidence/BLOCKER-00x-*/` |
-| 5 | **Closure artifact** filed with version ID |
-| 6 | **This tracker updated** + GOV-RBCS-001 within **1 business day** (GOV-BEMF-001 E-005) |
+| 3 | **Required approvals signed** in `evidence/BLOCKER-00x-*/APPROVAL_RECORD.md` (Decision: **Approved**) |
+| 4 | **`EVIDENCE_CHECKLIST.md`** complete for the blocker |
+| 5 | **Approval record archived** under `governance/evidence/BLOCKER-00x-*/` |
+| 6 | **Closure artifact** filed with version ID |
+| 7 | **This tracker updated** + GOV-RBCS-001 within **1 business day** (GOV-BEMF-001 E-005) |
 
 **No verbal approval accepted** (GOV-BEMF-001 E-002).
 
@@ -344,5 +347,6 @@ If a blocker is **delayed** beyond agreed target:
 | Version | Date | Change |
 |---------|------|--------|
 | 1.0 | 2026-07-25 | Initial operational blocker closure execution tracker |
+| 1.1 | 2026-07-25 | Standard evidence trio (`README.md`, `APPROVAL_RECORD.md`, `EVIDENCE_CHECKLIST.md`) in all seven blocker folders |
 
 **Sync with:** GOV-RBCS-001 on every closure event.

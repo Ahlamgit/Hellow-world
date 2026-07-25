@@ -1,30 +1,52 @@
 # KHADAMATI — Evidence Repository
 
-**Gate:** B — NOT READY — CODING BLOCKED  
-**Framework:** `BLOCKER_EVIDENCE_MANAGEMENT_FRAMEWORK.md` (GOV-BEMF-001)
+| Field | Value |
+|-------|-------|
+| **Gate** | **B — NOT READY — CODING BLOCKED** |
+| **Blockers closed** | **0 / 7** |
+| **Framework** | `BLOCKER_EVIDENCE_MANAGEMENT_FRAMEWORK.md` (GOV-BEMF-001) |
+| **Operational tracker** | `BLOCKER_CLOSURE_EXECUTION_TRACKER.md` (GOV-BLOCKER-TRACKER-001) |
 
 This directory stores **blocker closure evidence only**. No production code, UI builds, or infrastructure artifacts belong here.
 
 ## Structure
 
-| Folder | Blocker |
-|--------|---------|
-| `BLOCKER-001-design/` | Design approval |
-| `BLOCKER-002-stakeholder/` | Stakeholder approval |
-| `BLOCKER-003-vendors/` | Vendor readiness |
-| `BLOCKER-004-cloud/` | Cloud readiness |
-| `BLOCKER-005-finance/` | Finance configuration |
-| `BLOCKER-006-compliance/` | Compliance approval |
-| `BLOCKER-007-payment/` | Payment.js validation |
-| `_templates/` | Approval record templates |
+Each blocker folder contains a **standard evidence trio**:
+
+| File | Purpose |
+|------|---------|
+| `README.md` | Purpose, owner, required evidence, approval authority, status, closure criteria |
+| `APPROVAL_RECORD.md` | Signed approval template (Pending / Approved / Rejected) |
+| `EVIDENCE_CHECKLIST.md` | Blocker-specific checklist — all items required before closure |
+
+| Folder | Blocker | Status |
+|--------|---------|--------|
+| `BLOCKER-001-design/` | Design approval | Ready for Approval |
+| `BLOCKER-002-stakeholder/` | Stakeholder approval | Ready for Approval |
+| `BLOCKER-003-vendors/` | Vendor readiness | Open |
+| `BLOCKER-004-cloud/` | Cloud readiness | Open |
+| `BLOCKER-005-finance/` | Finance configuration | Ready for Approval |
+| `BLOCKER-006-compliance/` | Compliance approval | Ready for Approval |
+| `BLOCKER-007-payment/` | Payment.js validation | Open |
+| `_templates/` | Legacy / supplemental templates | Reference |
+
+## Approval packages (where prepared)
+
+| Blocker | Package |
+|---------|---------|
+| BLOCKER-001 | `BLOCKER-001-design/DESIGN_APPROVAL_PACKAGE.md` |
+| BLOCKER-002 | `BLOCKER-002-stakeholder/STAKEHOLDER_APPROVAL_PACKAGE.md` |
+| BLOCKER-005 | `BLOCKER-005-finance/FINANCE_POLICY_APPROVAL_PACKAGE.md` |
+| BLOCKER-006 | `BLOCKER-006-compliance/COMPLIANCE_APPROVAL_PACKAGE.md` |
 
 ## Rules
 
-1. Every submission uses `APPROVAL_RECORD_TEMPLATE.md`
-2. Verbal approval is not sufficient
-3. Update `READINESS_BLOCKER_CLOSURE_STATUS.md` after each approval
+1. Every closure requires completed `EVIDENCE_CHECKLIST.md` and signed `APPROVAL_RECORD.md` in the blocker folder
+2. Verbal approval is not sufficient (GOV-BEMF-001 E-002)
+3. Update `READINESS_BLOCKER_CLOSURE_STATUS.md` and `BLOCKER_CLOSURE_EXECUTION_TRACKER.md` within one business day of each submission or approval
 4. No blocker **Closed** without full evidence per framework §3
+5. **No blocker closes automatically** — only approved evidence and signed records close blockers
 
 ## Status
 
-**Closed blockers:** 0 / 7
+**Closed blockers:** 0 / 7 · **Implementation:** NOT AUTHORIZED · **Gate:** B
