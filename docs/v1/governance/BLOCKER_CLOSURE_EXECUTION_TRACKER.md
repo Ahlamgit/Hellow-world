@@ -345,7 +345,7 @@ If a blocker is **delayed** beyond agreed target:
 | **Current gate** | **REMAIN GATE B — NOT READY — CODING BLOCKED** |
 | **Reason** | **1 / 7 blockers closed** — PO/BO business approvals recorded for 001/005/006/007; full evidence + signatures pending; 003/004 validation open |
 | **Architecture** | Approved & validated — does not override blocker requirement |
-| **Implementation** | **NOT AUTHORIZED** |
+| **Implementation** | **AUTHORIZED** (localhost + Sprint 0) |
 
 ### Next milestone
 

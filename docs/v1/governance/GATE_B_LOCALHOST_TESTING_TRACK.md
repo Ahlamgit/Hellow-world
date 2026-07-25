@@ -3,35 +3,22 @@
 | Field | Value |
 |-------|-------|
 | **Document ID** | GOV-GATE-B-LOCALHOST-001 |
-| **Version** | 1.0 |
+| **Version** | 2.0 |
 | **Date** | 2026-07-25 |
-| **Blockers closed** | **7 / 7** (testing track) |
-
-```text
-7/7 blockers CLOSED enables Gate A READINESS REVIEW — NOT automatic coding authorization.
-Localhost testing ≠ production launch.
-```
+| **Status** | **SUPERSEDED by Gate A authorization** |
 
 ---
 
-## What this means
-
-| Allowed now | Still NOT allowed |
-|-------------|-------------------|
-| Local development on `localhost` | Production cloud deploy |
-| Mock SMS / email / local storage | Production vendor contracts without review |
-| IXOPAY sandbox **when code exists** | Payment code **until Gate A ceremony** |
-| 1-month purge of **test data only** | Production retention without pre-launch legal §6 |
-
----
-
-## Next step to start coding
+## Gate A authorized — 2026-07-25
 
 ```text
-GOV-IACL-001 complete → GOV-GAIR-001 signed → Gate A ceremony → Sprint 0 → IMPLEMENTATION
+Gate A — LOCALHOST DEVELOPMENT AUTHORIZED
+GOV-GAIR-001 v2.0 signed
+Sprint 0 may begin on localhost
+Production launch NOT authorized
 ```
 
-**Request Gate A ceremony** when ready to build on localhost.
+See: `GATE_A_IMPLEMENTATION_AUTHORIZATION_RECORD.md` · `GATE_A_CEREMONY_RECORD_LOCALHOST.md`
 
 ---
 
@@ -40,3 +27,5 @@ GOV-IACL-001 complete → GOV-GAIR-001 signed → Gate A ceremony → Sprint 0 �
 | Version | Date | Change |
 |---------|------|--------|
 | 1.0 | 2026-07-25 | All blockers closed for localhost testing track |
+| 2.0 | 2026-07-25 | Gate A localhost authorization granted |
+
