@@ -3,7 +3,7 @@
 | Field | Value |
 |-------|-------|
 | **Document ID** | GOV-RBCS-001 |
-| **Version** | 2.8 |
+| **Version** | 2.9 |
 | **Last updated** | 2026-07-25 |
 | **Gate** | B — NOT READY — CODING BLOCKED |
 | **Owner** | Program Governance Manager |
@@ -18,6 +18,7 @@
 | **Phase 1 approval execution** | `PHASE_1_APPROVAL_EXECUTION_PACK.md` (GOV-P1-EXEC-001) |
 | **Phase 1 approval tracking** | `PHASE_1_APPROVAL_TRACKING_REGISTER.md` (GOV-P1-TRACK-001) — live register |
 | **Gate A authorization record** | `GATE_A_IMPLEMENTATION_AUTHORIZATION_RECORD.md` (GOV-GAIR-001) — Draft, unsigned |
+| **Master governance control** | `FINAL_GOVERNANCE_GATE_A_AND_IMPLEMENTATION_CONTROL.md` (GOV-MASTER-CTRL-001) |
 
 ---
 
@@ -238,3 +239,4 @@ Refer to `BLOCKER_CLOSURE_EXECUTION_TRACKER.md` (GOV-BLOCKER-TRACKER-001) for op
 | 2.6 | 2026-07-25 | Phase 1 approval finalization report (GOV-P1-FINAL-001); Phase 2 preview |
 | 2.7 | 2026-07-25 | Phase 1 approval execution pack (GOV-P1-EXEC-001) |
 | 2.8 | 2026-07-25 | Phase 1 approval tracking register (GOV-P1-TRACK-001) |
+| 2.9 | 2026-07-25 | Master governance control document (GOV-MASTER-CTRL-001) |

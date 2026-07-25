@@ -3,7 +3,7 @@
 | Field | Value |
 |-------|-------|
 | **Document ID** | GOV-FIGR-001 |
-| **Version** | 2.9 |
+| **Version** | 3.0 |
 | **Report date** | 2026-07-25 |
 | **Prepared by** | Program Governance Manager |
 
@@ -17,7 +17,7 @@
 | **Target gate** | A — READY FOR IMPLEMENTATION |
 | **Implementation authorization** | **DENIED** |
 
-KHADAMATI remains blocked for all implementation activity. Seven pre-implementation blockers are open. **Phase 1 approval tracking:** `PHASE_1_APPROVAL_TRACKING_REGISTER.md` (GOV-P1-TRACK-001). **Operational tracker:** `BLOCKER_CLOSURE_EXECUTION_TRACKER.md` (GOV-BLOCKER-TRACKER-001). **Independent Gate A audit:** `FINAL_GATE_A_READINESS_AUDIT_REPORT.md` (GOV-GA-AUDIT-001) — recommendation **remain Gate B**. Evidence collection and validation is governed by `BLOCKER_EVIDENCE_MANAGEMENT_FRAMEWORK.md` (GOV-BEMF-001 v1.0). The formal Gate A transition instrument is `GATE_A_IMPLEMENTATION_AUTHORIZATION_RECORD.md` (GOV-GAIR-001) — **Draft, unsigned**; implementation authorization is granted only upon its §8 approval after 7 / 7 blockers closed.
+KHADAMATI remains blocked for all implementation activity. **Master control:** `FINAL_GOVERNANCE_GATE_A_AND_IMPLEMENTATION_CONTROL.md` (GOV-MASTER-CTRL-001) — **REMAIN GATE B**. Seven pre-implementation blockers are open. **Phase 1 tracking:** GOV-P1-TRACK-001. **Operational tracker:** GOV-BLOCKER-TRACKER-001. **Audit:** GOV-GA-AUDIT-001 — remain Gate B. Gate A instrument GOV-GAIR-001 — Draft, unsigned; authorization only after 7/7 blockers closed.
 
 ---
 

@@ -3,7 +3,7 @@
 | Field | Value |
 |-------|-------|
 | **Document ID** | GOV-BLOCKER-TRACKER-001 |
-| **Version** | 1.6 |
+| **Version** | 1.7 |
 | **Date** | 2026-07-25 |
 | **Owner** | Program Execution Manager |
 | **Gate** | **B — NOT READY — CODING BLOCKED** |
@@ -37,6 +37,9 @@ This tracker is the **operational working document** for closing BLOCKER-001 thr
 | GOV-BEMF-001 | Evidence rules & approval workflow |
 | GOV-GATC-001 | Phase execution & Gate A ceremony |
 | GOV-GA-AUDIT-001 | Independent readiness audit |
+| GOV-MASTER-CTRL-001 | Master governance, Gate A readiness & implementation control |
+
+**Master control:** `FINAL_GOVERNANCE_GATE_A_AND_IMPLEMENTATION_CONTROL.md` (GOV-MASTER-CTRL-001)
 
 **Phase 1 readiness:** `PHASE_1_BLOCKER_APPROVAL_READINESS_REPORT.md` (GOV-P1-READINESS-001)  
 **Phase 1 closure review:** `PHASE_1_CLOSURE_EXECUTION_REPORT.md` (GOV-P1-CLOSURE-001)  
@@ -359,5 +362,6 @@ If a blocker is **delayed** beyond agreed target:
 | 1.4 | 2026-07-25 | Phase 1 approval finalization report (GOV-P1-FINAL-001); Phase 2 preview |
 | 1.5 | 2026-07-25 | Phase 1 approval execution pack (GOV-P1-EXEC-001) |
 | 1.6 | 2026-07-25 | Phase 1 approval tracking register (GOV-P1-TRACK-001) |
+| 1.7 | 2026-07-25 | Master governance control document (GOV-MASTER-CTRL-001) |
 
 **Sync with:** GOV-RBCS-001 on every closure event.
