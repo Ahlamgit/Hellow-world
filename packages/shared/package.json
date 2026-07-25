@@ -1,0 +1,10 @@
+{
+  "name": "@khadamati/shared",
+  "version": "0.1.0",
+  "private": true,
+  "description": "Shared design tokens and i18n resources for KHADAMATI",
+  "files": [
+    "tokens",
+    "i18n"
+  ]
+}

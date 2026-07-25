@@ -1,0 +1,44 @@
+{
+  "brand": {
+    "primary": "#F57C00",
+    "primaryDark": "#E65100",
+    "primaryLight": "#FFB74D"
+  },
+  "neutral": {
+    "0": "#FFFFFF",
+    "50": "#FAFAFA",
+    "100": "#F5F5F5",
+    "200": "#EEEEEE",
+    "300": "#E0E0E0",
+    "500": "#9E9E9E",
+    "700": "#616161",
+    "900": "#212121"
+  },
+  "semantic": {
+    "success": "#2E7D32",
+    "warning": "#ED6C02",
+    "error": "#D32F2F",
+    "info": "#0288D1"
+  },
+  "spacing": {
+    "1": 4,
+    "2": 8,
+    "3": 12,
+    "4": 16,
+    "5": 20,
+    "6": 24,
+    "8": 32,
+    "10": 40,
+    "12": 48
+  },
+  "radius": {
+    "sm": 4,
+    "md": 8,
+    "lg": 12,
+    "xl": 16
+  },
+  "typography": {
+    "fontFamilyLatin": "Roboto, Helvetica, Arial, sans-serif",
+    "fontFamilyArabic": "Noto Sans Arabic, Arial, sans-serif"
+  }
+}

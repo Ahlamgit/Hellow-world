@@ -14,11 +14,11 @@
 | **Blockers closed** | **7 / 7** |
 | **Business consolidation** | GOV-BUSINESS-APPROVAL-001 v1.2 |
 | **Role correction** | GOV-BLOCKER-002-ROLE-CORR-001 |
-| **Status** | **Active — Gate A transition execution** |
+| **Status** | **Gate A — localhost development active** |
 
 ```text
-This document does NOT authorize coding.
-It only tracks evidence collection, approval, and closure toward Gate A.
+Gate A localhost development AUTHORIZED — Sprint 0 may begin.
+Production launch NOT authorized.
 ```
 
 ---

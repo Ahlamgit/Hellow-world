@@ -1,0 +1,24 @@
+{
+  "app": {
+    "name": "KHADAMATI",
+    "tagline": "Your services marketplace"
+  },
+  "nav": {
+    "home": "Home",
+    "bookings": "Bookings",
+    "messages": "Messages",
+    "profile": "Profile",
+    "dashboard": "Dashboard",
+    "services": "Services",
+    "analytics": "Analytics",
+    "settings": "Settings",
+    "users": "Users",
+    "finance": "Finance"
+  },
+  "common": {
+    "loading": "Loading...",
+    "error": "Something went wrong",
+    "retry": "Try again",
+    "language": "Language"
+  }
+}
