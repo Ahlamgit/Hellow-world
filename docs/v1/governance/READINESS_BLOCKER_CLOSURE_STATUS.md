@@ -3,13 +3,14 @@
 | Field | Value |
 |-------|-------|
 | **Document ID** | GOV-RBCS-001 |
-| **Version** | 2.0 |
+| **Version** | 2.1 |
 | **Last updated** | 2026-07-25 |
 | **Gate** | B — NOT READY — CODING BLOCKED |
 | **Owner** | Program Governance Manager |
 | **Evidence framework** | `BLOCKER_EVIDENCE_MANAGEMENT_FRAMEWORK.md` (GOV-BEMF-001) |
 | **Gate A preparation package** | `FINAL_PRE_IMPLEMENTATION_READINESS_AND_GATE_A_PACKAGE.md` (GOV-FPRG-001) |
-| **Gate A transition & blocker execution** | `FINAL_GATE_A_TRANSITION_AND_BLOCKER_CLOSURE_PACKAGE.md` (GOV-GATC-001) — **active** |
+| **Gate A transition & blocker execution** | `FINAL_GATE_A_TRANSITION_AND_BLOCKER_CLOSURE_PACKAGE.md` (GOV-GATC-001) |
+| **Gate A readiness audit** | `FINAL_GATE_A_READINESS_AUDIT_REPORT.md` (GOV-GA-AUDIT-001) — **remain Gate B** |
 | **Gate A authorization record** | `GATE_A_IMPLEMENTATION_AUTHORIZATION_RECORD.md` (GOV-GAIR-001) — Draft, unsigned |
 
 ---
@@ -210,3 +211,4 @@ Refer to `FINAL_GATE_A_TRANSITION_AND_BLOCKER_CLOSURE_PACKAGE.md` (GOV-GATC-001)
 | 1.8 | 2026-07-25 | Linked Gate A authorization record (GOV-GAIR-001); Gate B unchanged — 0/7 closed |
 | 1.9 | 2026-07-25 | Linked Gate A preparation package (GOV-FPRG-001) |
 | 2.0 | 2026-07-25 | Linked Gate A transition & blocker execution package (GOV-GATC-001) |
+| 2.1 | 2026-07-25 | Independent Gate A readiness audit (GOV-GA-AUDIT-001) — 0/7 closed |
