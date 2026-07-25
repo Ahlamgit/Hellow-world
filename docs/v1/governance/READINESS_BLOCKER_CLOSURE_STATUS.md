@@ -3,8 +3,8 @@
 | Field | Value |
 |-------|-------|
 | **Document ID** | GOV-RBCS-001 |
-| **Version** | 3.11 |
-| **Evidence finalization** | `GATE_B_EVIDENCE_FINALIZATION_RECORD.md` (GOV-GATE-B-FINALIZE-001) |
+| **Version** | 3.12 |
+| **Final closure** | `GATE_B_FINAL_CLOSURE_STATUS.md` (GOV-GATE-B-FINAL-CLOSURE-001) |
 | **Closure execution** | `GATE_B_FINAL_CLOSURE_EXECUTION_RECORD.md` (GOV-GATE-B-CLOSURE-EXEC-001) |
 | **Gate A readiness** | `GATE_A_READINESS_ASSESSMENT.md` (GOV-GATE-A-READINESS-ASSESS-001) |
 | **Evidence completion** | `GATE_B_EVIDENCE_COMPLETION_REPORT.md` (GOV-GATE-B-EVIDENCE-001) |
@@ -50,15 +50,15 @@
 
 | Blocker | Description | Status | Owner | Closure validation report | Closure artifact | Evidence received | Approved date |
 |---------|-------------|--------|-------|-------------------------|------------------|-------------------|---------------|
-| BLOCKER-001 | Design approval | **READY FOR APPROVAL** | Design Lead + PO/BO | `DESIGN_CLOSURE_VALIDATION_REPORT.md` | `DESIGN_APPROVAL_SIGNOFF_v1.0` | `DESIGN_APPROVAL_RECORD.md` v1.1 | 2026-07-25 (PO/BO) |
-| BLOCKER-002 | Stakeholder approval | **CLOSED** | Project Owner / Business Owner | — | `BLOCKER_002_CLOSURE_RECORD.md` | 2/2 complete | 2026-07-25 |
-| BLOCKER-003 | Vendor readiness | **READY FOR APPROVAL** | Integration Lead + TA | `VENDOR_CLOSURE_VALIDATION_REPORT.md` | `VENDOR_READINESS_DOSSIER_v1.0` | `VENDOR_APPROVAL_MATRIX.md` v1.1 | 2026-07-25 (PO/BO) |
-| BLOCKER-004 | Cloud readiness | **READY FOR APPROVAL** | Architect + DevOps | `CLOUD_CLOSURE_VALIDATION_REPORT.md` | `CLOUD_READINESS_DECISION_RECORD_v1.0` | `CLOUD_READINESS_RECORD.md` | 2026-07-25 (PO/BO) |
-| BLOCKER-005 | Finance configuration | **READY FOR APPROVAL** | Technical Architect | `FINANCE_CLOSURE_VALIDATION_REPORT.md` | `FINANCE_RULE_MATRIX.md` | Business approval complete | 2026-07-25 (PO/BO) |
-| BLOCKER-006 | Compliance approval | **READY FOR APPROVAL** | Legal + TA | `COMPLIANCE_CLOSURE_VALIDATION_REPORT.md` | `COMPLIANCE_APPROVAL_PACK_v1.0` | `COMPLIANCE_GOVERNANCE_RECORD.md` v1.1 | 2026-07-25 (PO/BO) |
-| BLOCKER-007 | Payment.js validation | **READY FOR APPROVAL** | IL + TA | `PAYMENT_CLOSURE_VALIDATION_REPORT.md` | `PAYMENT_JS_VALIDATION_REPORT_v1.0` | `PAYMENT_FLOW_APPROVAL_RECORD.md` v1.1 | 2026-07-25 (PO/BO) |
+| BLOCKER-001 | Design approval | **READY FOR CLOSURE VALIDATION** | Design Lead | `DESIGN_FINAL_CLOSURE_CHECKLIST.md` | Partial — assets missing | Design Lead ☐ | ❌ |
+| BLOCKER-002 | Stakeholder approval | **CLOSED** | Project Owner / Business Owner | `BLOCKER_002_CLOSURE_RECORD.md` | Complete | ☑ | ✅ |
+| BLOCKER-003 | Vendor readiness | **READY FOR CLOSURE VALIDATION** | IL + TA | `VENDOR_FINAL_VALIDATION_CHECKLIST.md` | Partial | IL + TA ☐ | ❌ |
+| BLOCKER-004 | Cloud readiness | **READY FOR CLOSURE VALIDATION** | TA + DevOps | `CLOUD_FINAL_VALIDATION_CHECKLIST.md` | Partial | TA + DevOps ☐ | ❌ |
+| BLOCKER-005 | Finance configuration | **READY FOR CLOSURE VALIDATION** | TA | `ADMIN_FINANCE_CONFIGURATION_FINAL_APPROVAL.md` | Complete docs | TA ☐ | ❌ |
+| BLOCKER-006 | Compliance approval | **READY FOR CLOSURE VALIDATION** | Legal + TA | `LEGAL_COMPLIANCE_FINALIZATION_CHECKLIST.md` | Partial — retention pending | Legal + TA ☐ | ❌ |
+| BLOCKER-007 | Payment.js validation | **READY FOR CLOSURE VALIDATION** | IL + TA | `AREEBA_IXOPAY_FINAL_VALIDATION_CHECKLIST.md` | Partial — sandbox pending | IL + TA ☐ | ❌ |
 
-**Summary:** **1 Closed** · **6 READY FOR APPROVAL** (closure validation reports filed; human/technical signatures pending) · **0** auto-closed beyond BLOCKER-002
+**Summary:** **1 Closed** · **6 READY FOR CLOSURE VALIDATION** · signatures and technical validation pending
 
 ---
 
@@ -270,3 +270,4 @@ Refer to `BLOCKER_CLOSURE_EXECUTION_TRACKER.md` (GOV-BLOCKER-TRACKER-001) for op
 | 3.9 | 2026-07-25 | Governance approval sync — Administrator finance configuration model |
 | 3.10 | 2026-07-25 | GOV-GATE-B-CLOSURE-EXEC-001 — closure validation reports; READY FOR APPROVAL ladder (001, 003–007) |
 | 3.11 | 2026-07-25 | GOV-GATE-B-FINALIZE-001 — evidence finalization per approved theme and logo |
+| 3.12 | 2026-07-25 | GOV-GATE-B-FINAL-CLOSURE-001 — final closure checklists; READY FOR CLOSURE VALIDATION |

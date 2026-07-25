@@ -3,8 +3,8 @@
 | Field | Value |
 |-------|-------|
 | **Document ID** | GOV-BLOCKER-TRACKER-001 |
-| **Version** | 2.9 |
-| **Evidence finalization** | GOV-GATE-B-FINALIZE-001 v1.0 |
+| **Version** | 3.0 |
+| **Final closure** | `GATE_B_FINAL_CLOSURE_STATUS.md` (GOV-GATE-B-FINAL-CLOSURE-001) |
 | **Closure execution** | GOV-GATE-B-CLOSURE-EXEC-001 v1.0 |
 | **Closure validation** | `GATE_B_FINAL_CLOSURE_EXECUTION_RECORD.md` · `GATE_A_READINESS_ASSESSMENT.md` |
 | **Date** | 2026-07-25 |
@@ -63,17 +63,17 @@ This tracker is the **operational working document** for closing BLOCKER-001 thr
 
 **Master closure status:** [GATE_B_CLOSURE_EXECUTION_STATUS.md](./GATE_B_CLOSURE_EXECUTION_STATUS.md) (GOV-GATE-B-CLOSURE-001 v1.1) · [GOV-GATE-B-CLOSURE-EXEC-001](./GATE_B_FINAL_CLOSURE_EXECUTION_RECORD.md)
 
-**Status ladder:** `OPEN` → `READY FOR APPROVAL` → `APPROVED` → `CLOSED`
+**Status ladder:** `OPEN` → `READY FOR APPROVAL` → `READY FOR CLOSURE VALIDATION` → `APPROVED` → `CLOSED`
 
-| ID | Name | Owner | Governance status | Closure validation report | Gate impact |
-|----|------|-------|-------------------|---------------------------|-------------|
-| **BLOCKER-001** | Design | Design Lead + PO/BO | **READY FOR APPROVAL** | `DESIGN_CLOSURE_VALIDATION_REPORT.md` | Blocks **all UI** (ADR-023) |
-| **BLOCKER-002** | Stakeholder | PO/BO | **CLOSED** | `BLOCKER_002_CLOSURE_RECORD.md` | — |
-| **BLOCKER-003** | Vendors | IL + TA | **READY FOR APPROVAL** | `VENDOR_CLOSURE_VALIDATION_REPORT.md` | Blocks **integrations** |
-| **BLOCKER-004** | Cloud | TA + DevOps | **READY FOR APPROVAL** | `CLOUD_CLOSURE_VALIDATION_REPORT.md` | Blocks **environment** |
-| **BLOCKER-005** | Finance | TA + Administrator | **READY FOR APPROVAL** | `FINANCE_CLOSURE_VALIDATION_REPORT.md` | Blocks **finance rules** |
-| **BLOCKER-006** | Compliance | Legal + TA | **READY FOR APPROVAL** | `COMPLIANCE_CLOSURE_VALIDATION_REPORT.md` | Blocks **domain schema** |
-| **BLOCKER-007** | Payment.js | IL + TA | **READY FOR APPROVAL** | `PAYMENT_CLOSURE_VALIDATION_REPORT.md` | Blocks **booking payment** |
+| ID | Name | Owner | Governance status | Final closure checklist | Validation | Signature | Closed |
+|----|------|-------|-------------------|-------------------------|------------|-----------|--------|
+| **BLOCKER-001** | Design | Design Lead | **READY FOR CLOSURE VALIDATION** | `DESIGN_FINAL_CLOSURE_CHECKLIST.md` | ☐ | Design Lead ☐ | ☐ |
+| **BLOCKER-002** | Stakeholder | PO/BO | **CLOSED** | — | ☑ | ☑ | ☑ |
+| **BLOCKER-003** | Vendors | IL + TA | **READY FOR CLOSURE VALIDATION** | `VENDOR_FINAL_VALIDATION_CHECKLIST.md` | ☐ | IL + TA ☐ | ☐ |
+| **BLOCKER-004** | Cloud | TA + DevOps | **READY FOR CLOSURE VALIDATION** | `CLOUD_FINAL_VALIDATION_CHECKLIST.md` | ☐ | TA + DevOps ☐ | ☐ |
+| **BLOCKER-005** | Finance | TA | **READY FOR CLOSURE VALIDATION** | `ADMIN_FINANCE_CONFIGURATION_FINAL_APPROVAL.md` | ☐ | TA ☐ | ☐ |
+| **BLOCKER-006** | Compliance | Legal + TA | **READY FOR CLOSURE VALIDATION** | `LEGAL_COMPLIANCE_FINALIZATION_CHECKLIST.md` | ☐ | Legal + TA ☐ | ☐ |
+| **BLOCKER-007** | Payment.js | IL + TA | **READY FOR CLOSURE VALIDATION** | `AREEBA_IXOPAY_FINAL_VALIDATION_CHECKLIST.md` | ☐ | IL + TA ☐ | ☐ |
 
 ### Evidence package paths
 
@@ -405,5 +405,7 @@ If a blocker is **delayed** beyond agreed target:
 | 2.6 | 2026-07-25 | Governance approval sync — Administrator finance configuration model; blocker status matrix |
 | 2.7 | 2026-07-25 | GOV-GATE-B-CLOSURE-001 — closure preparation artifacts for blockers 001, 003–007 |
 | 2.8 | 2026-07-25 | GOV-GATE-B-CLOSURE-EXEC-001 — closure validation reports; status ladder READY FOR APPROVAL (001, 003–007) |
+| 2.9 | 2026-07-25 | GOV-GATE-B-FINALIZE-001 — design system baseline, signoff pack, cross-blocker evidence finalization |
+| 3.0 | 2026-07-25 | GOV-GATE-B-FINAL-CLOSURE-001 — final closure checklists; READY FOR CLOSURE VALIDATION ladder |
 
 **Sync with:** GOV-RBCS-001 on every closure event.

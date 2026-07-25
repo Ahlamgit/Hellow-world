@@ -41,13 +41,13 @@ Checklist for **Gate A — READY FOR IMPLEMENTATION** authorization. All items m
 
 | # | Blocker | Evidence complete | Approved | Archived | Status |
 |---|---------|-------------------|----------|----------|--------|
-| C-01 | BLOCKER-001 Design | Validation report filed | Yes (PO/BO) | No | **READY FOR APPROVAL** — Design Lead pending |
+| C-01 | BLOCKER-001 Design | Final checklist filed | Yes (PO/BO) | No | **READY FOR CLOSURE VALIDATION** — Design Lead pending |
 | C-02 | BLOCKER-002 Stakeholder | Complete | Yes | Yes | **Closed** |
-| C-03 | BLOCKER-003 Vendors | Validation report filed | Yes (PO/BO) | No | **READY FOR APPROVAL** — IL + TA pending |
-| C-04 | BLOCKER-004 Cloud | Validation report filed | Yes (PO/BO) | No | **READY FOR APPROVAL** — TA + DevOps pending |
-| C-05 | BLOCKER-005 Finance | Validation report filed | Yes (PO/BO) | No | **READY FOR APPROVAL** — TA attestation pending |
-| C-06 | BLOCKER-006 Compliance | Validation report filed | Yes (PO/BO) | No | **READY FOR APPROVAL** — Legal + TA pending |
-| C-07 | BLOCKER-007 Payment.js | Validation report filed | Yes (PO/BO) | No | **READY FOR APPROVAL** — sandbox + IL + TA pending |
+| C-03 | BLOCKER-003 Vendors | Final checklist filed | Yes (PO/BO) | No | **READY FOR CLOSURE VALIDATION** — IL + TA pending |
+| C-04 | BLOCKER-004 Cloud | Final checklist filed | Yes (PO/BO) | No | **READY FOR CLOSURE VALIDATION** — TA + DevOps pending |
+| C-05 | BLOCKER-005 Finance | Final checklist filed | Yes (PO/BO) | No | **READY FOR CLOSURE VALIDATION** — TA attestation pending |
+| C-06 | BLOCKER-006 Compliance | Final checklist filed | Yes (PO/BO) | No | **READY FOR CLOSURE VALIDATION** — Legal + TA pending |
+| C-07 | BLOCKER-007 Payment.js | Final checklist filed | Yes (PO/BO) | No | **READY FOR CLOSURE VALIDATION** — sandbox + IL + TA pending |
 
 **Rule:** No item may be marked complete without evidence per `BLOCKER_EVIDENCE_MANAGEMENT_FRAMEWORK.md` §1.3.
 
@@ -120,3 +120,4 @@ Checklist for **Gate A — READY FOR IMPLEMENTATION** authorization. All items m
 | 1.9 | 2026-07-25 | Governance approval sync — Administrator finance model |
 | 1.10 | 2026-07-25 | GOV-GATE-B-CLOSURE-EXEC-001 — closure validation reports; READY FOR APPROVAL statuses |
 | 1.11 | 2026-07-25 | GOV-GATE-B-FINALIZE-001 — design/finance/compliance/payment evidence packages finalized |
+| 1.12 | 2026-07-25 | GOV-GATE-B-FINAL-CLOSURE-001 — final closure checklists for blockers 001, 003–007 |
