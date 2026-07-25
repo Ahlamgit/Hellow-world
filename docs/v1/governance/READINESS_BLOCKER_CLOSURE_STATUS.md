@@ -3,7 +3,7 @@
 | Field | Value |
 |-------|-------|
 | **Document ID** | GOV-RBCS-001 |
-| **Version** | 1.5 |
+| **Version** | 1.6 |
 | **Last updated** | 2026-07-25 |
 | **Gate** | B — NOT READY — CODING BLOCKED |
 | **Owner** | Program Governance Manager |
@@ -33,10 +33,10 @@
 | BLOCKER-003 | Vendor readiness | **Open** | Technical Lead / Integration Lead | `VENDOR_READINESS_DOSSIER_v1.0` | No | — |
 | BLOCKER-004 | Cloud readiness | **Open** | Technical Architect + DevOps Lead | `CLOUD_READINESS_DECISION_RECORD_v1.0` | No | — |
 | BLOCKER-005 | Finance configuration | **Ready for Approval** | Finance + Business Operations | `FINANCE_RULE_MATRIX_v1.0` | Package prepared | — |
-| BLOCKER-006 | Compliance approval | **Open** | Legal / Compliance Officer | `COMPLIANCE_APPROVAL_PACK_v1.0` | No | — |
+| BLOCKER-006 | Compliance approval | **Ready for Approval** | Legal / Compliance Officer | `COMPLIANCE_APPROVAL_PACK_v1.0` | Package prepared | — |
 | BLOCKER-007 | Payment.js validation | **Open** | Technical Lead + Finance Ops | `PAYMENT_JS_VALIDATION_REPORT_v1.0` | No | — |
 
-**Summary:** 0 Closed · 4 Open · 3 Ready for Approval · 0 Under Review
+**Summary:** 0 Closed · 3 Open · 4 Ready for Approval · 0 Under Review
 
 ---
 
@@ -131,13 +131,19 @@
 
 ### BLOCKER-006 — Compliance
 
-| Policy | Approved |
-|--------|----------|
-| Retention periods | No |
-| KYC retention | No |
-| Financial record retention | No |
-| Chat retention | No |
-| Account deletion rules | No |
+**Status:** **READY FOR APPROVAL** (signatures and legal values pending)  
+**Package:** `evidence/BLOCKER-006-compliance/COMPLIANCE_APPROVAL_PACKAGE.md` (EVD-006-PKG-001 v1.0)
+
+| Policy area | In package | Duration / detail approved | Signed |
+|-------------|------------|---------------------------|--------|
+| Data classification | Yes | Governance approved — pending §10 | No |
+| Retention periods | Yes | **Pending Legal / Compliance Approval** | No |
+| KYC retention / governance | Yes | **Pending Compliance** | No |
+| Financial record retention | Yes | **Pending Finance / Legal** | No |
+| Chat retention | Yes | **Pending Compliance** | No |
+| Account deletion rules | Yes | Workflow approved — pending §10 | No |
+
+**Rule:** Engineering must not assume retention or legal basis. No deletion/KYC/chat implementation until Closed.
 
 ---
 
@@ -174,7 +180,7 @@
 | Priority | Action | Owner | Target |
 |----------|--------|-------|--------|
 | 1 | **Distribute and obtain signatures on `STAKEHOLDER_APPROVAL_PACKAGE.md` (BLOCKER-002)** | Program Sponsor | Immediate |
-| 2 | Initiate compliance approval pack (BLOCKER-006) | Legal / Compliance | TBD |
+| 2 | Distribute compliance package — `COMPLIANCE_APPROVAL_PACKAGE.md` (BLOCKER-006) | Legal / Compliance | Immediate |
 | 3 | Distribute design approval package — `DESIGN_APPROVAL_PACKAGE.md` (BLOCKER-001) | Design Lead + Product Owner | Immediate |
 | 4 | Schedule finance policy sign-off — `FINANCE_POLICY_APPROVAL_PACKAGE.md` (BLOCKER-005) | Finance + Business Owner | Immediate |
 
@@ -194,3 +200,4 @@ Refer to `BLOCKER_CLOSURE_EXECUTION_PLAN.md` for phase sequencing and `BLOCKER_E
 | 1.3 | 2026-07-25 | BLOCKER-002 → Ready for Approval; stakeholder package prepared |
 | 1.4 | 2026-07-25 | BLOCKER-005 → Ready for Approval; finance policy package prepared |
 | 1.5 | 2026-07-25 | BLOCKER-001 → Ready for Approval; design approval package prepared |
+| 1.6 | 2026-07-25 | BLOCKER-006 → Ready for Approval; compliance approval package prepared |

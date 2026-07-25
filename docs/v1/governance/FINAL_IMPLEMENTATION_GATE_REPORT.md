@@ -3,7 +3,7 @@
 | Field | Value |
 |-------|-------|
 | **Document ID** | GOV-FIGR-001 |
-| **Version** | 1.5 |
+| **Version** | 1.6 |
 | **Report date** | 2026-07-25 |
 | **Prepared by** | Program Governance Manager |
 
@@ -30,6 +30,7 @@ KHADAMATI remains blocked for all implementation activity. Seven pre-implementat
 | Financial architecture | **APPROVED** (ADR-013, ADR-026) |
 | Finance policy values | **NOT APPROVED** — `FINANCE_POLICY_APPROVAL_PACKAGE.md` ready for signature |
 | Design assets & sign-off | **NOT APPROVED** — `DESIGN_APPROVAL_PACKAGE.md` ready for signature |
+| Compliance policies & retention | **NOT APPROVED** — `COMPLIANCE_APPROVAL_PACKAGE.md` ready for signature |
 | Engineering standards | **DEFINED** |
 | Implementation | **NOT AUTHORIZED** |
 
@@ -39,7 +40,7 @@ KHADAMATI remains blocked for all implementation activity. Seven pre-implementat
 
 | Blocker | Status | Closure artifact | Gate impact |
 |---------|--------|------------------|-------------|
-| BLOCKER-001 Design approval | **Open** | `DESIGN_APPROVAL_SIGNOFF_v1.0` | Blocks UI implementation |
+| BLOCKER-001 Design approval | **Ready for Approval** | `DESIGN_APPROVAL_PACKAGE.md` → `DESIGN_APPROVAL_SIGNOFF_v1.0` | Blocks UI implementation (ADR-023) |
 | BLOCKER-002 Stakeholder approval | **Ready for Approval** | `STAKEHOLDER_APPROVAL_PACKAGE.md` → `STAKEHOLDER_APPROVAL_REGISTER_v1.0` | Blocks program authorization |
 | BLOCKER-003 Vendor readiness | **Open** | `VENDOR_READINESS_DOSSIER_v1.0` | Blocks integrations |
 | BLOCKER-004 Cloud readiness | **Open** | `CLOUD_READINESS_DECISION_RECORD_v1.0` | Blocks environment planning execution |
@@ -48,7 +49,7 @@ KHADAMATI remains blocked for all implementation activity. Seven pre-implementat
 | BLOCKER-007 Payment.js validation | **Open** | `PAYMENT_JS_VALIDATION_REPORT_v1.0` | Blocks booking payment implementation |
 
 **Blockers closed:** 0 / 7  
-**Ready for approval:** 2 (BLOCKER-002, BLOCKER-005 — signatures/values pending)
+**Ready for approval:** 3 (BLOCKER-001, BLOCKER-002, BLOCKER-005 — signatures/assets/values pending)
 
 ---
 
@@ -59,7 +60,7 @@ KHADAMATI remains blocked for all implementation activity. Seven pre-implementat
 | Architecture | ADR-001 → ADR-028 | Technical Architect | **Pending** |
 | Scope | Frozen scope + traceability matrix | Product Owner | **Pending** |
 | Stakeholder | `STAKEHOLDER_APPROVAL_PACKAGE.md` | Product / Business / Operations Owners | **Ready for Approval** |
-| Design | Design approval package | Design Lead + Product Owner | **Pending** |
+| Design | `DESIGN_APPROVAL_PACKAGE.md` | Product / Design / Business Owners | **Ready for Approval** |
 | Vendors | Vendor readiness dossier | Technical Lead | **Pending** |
 | Cloud | Cloud readiness decision record | Technical Architect + Ops | **Pending** |
 | Finance | `FINANCE_POLICY_APPROVAL_PACKAGE.md` | Business / Finance / Operations Owners | **Ready for Approval** |
@@ -118,3 +119,4 @@ KHADAMATI remains blocked for all implementation activity. Seven pre-implementat
 | 1.2 | 2026-07-25 | Linked evidence management framework (GOV-BEMF-001); Gate B unchanged |
 | 1.3 | 2026-07-25 | BLOCKER-002 stakeholder package prepared — Ready for Approval; 0/7 closed |
 | 1.4 | 2026-07-25 | BLOCKER-005 finance policy package prepared — Ready for Approval |
+| 1.5 | 2026-07-25 | BLOCKER-001 design approval package prepared — Ready for Approval |

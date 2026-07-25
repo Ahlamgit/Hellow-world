@@ -53,7 +53,7 @@ Move KHADAMATI from **Gate B: NOT READY — CODING BLOCKED** to **Gate A: READY 
 
 | Blocker | Description | Current Status | Required Closure Evidence | Owner |
 |---------|-------------|----------------|---------------------------|-------|
-| BLOCKER-001 | Design approval | **Open — Pending** | Signed design approval package (see §2.1) | Design Lead + Product Owner |
+| BLOCKER-001 | Design approval | **Ready for Approval** | Signed design approval package + `DESIGN_APPROVAL_PACKAGE.md` (see §2.1) | Design Lead + Product Owner |
 | BLOCKER-002 | Stakeholder approval | **Open — Pending** | Multi-function sign-off register (see §2.2) | Program Sponsor |
 | BLOCKER-003 | Vendor readiness | **Open — Pending** | Vendor readiness dossier per integration (see §2.3) | Technical Lead / Integration Lead |
 | BLOCKER-004 | Cloud readiness | **Open — Pending** | Cloud decision record + approvals (see §2.4) | Technical Architect + DevOps Lead |
@@ -90,7 +90,9 @@ No implementation work (coding, schema, UI build, deployment) may proceed until 
 
 **Evidence path:** `docs/v1/governance/evidence/BLOCKER-001-design/`
 
-**Rule:** **No UI implementation until BLOCKER-001 is closed.**
+**Evidence package:** `DESIGN_APPROVAL_PACKAGE.md` (EVD-001-PKG-001) — **READY FOR APPROVAL**; assets and signatures pending.
+
+**Rule:** **No UI implementation until BLOCKER-001 is closed** (ADR-023).
 
 **Traceability:** Map screens to `FEATURE_TRACEABILITY_MATRIX.md` feature IDs.
 
@@ -359,5 +361,6 @@ Phase 4 — Payment validation (sequential)
 | 1.0 | 2026-07-25 | Program Readiness Manager | Initial blocker closure execution plan |
 | 1.1 | 2026-07-25 | Program Governance Manager | Linked evidence management framework (GOV-BEMF-001) |
 | 1.2 | 2026-07-25 | Finance Governance Manager | BLOCKER-005 finance policy package — Ready for Approval |
+| 1.3 | 2026-07-25 | Product Design Governance Manager | BLOCKER-001 design approval package — Ready for Approval |
 
 **Related documents:** `BLOCKER_EVIDENCE_MANAGEMENT_FRAMEWORK.md`, `IMPLEMENTATION_AUTHORIZATION_CHECKLIST.md`
