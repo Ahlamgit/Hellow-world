@@ -33,3 +33,4 @@
 | [ADR-029](./ADR-029-simplified-payment-experience-ledger-control.md) | Simplified customer/provider payment UX; internal ledger control | **Accepted Architecture Direction** |
 | [ADR-030](./ADR-030-booking-payment-financial-state-separation.md) | Booking / payment / ledger / settlement state separation | **Accepted Architecture Direction** |
 | [ADR-031](./ADR-031-payment-failure-retry-and-recovery-strategy.md) | Payment failure, retry, and recovery strategy | **Accepted Architecture Direction** |
+| [ADR-032](./ADR-032-notification-delivery-architecture.md) | Notification delivery architecture (event-driven, vendor-agnostic) | **Accepted Architecture Direction** |

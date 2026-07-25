@@ -11,7 +11,7 @@
 **Execution standards (post–Gate A):** [`IMPLEMENTATION_EXECUTION_STANDARDS.md`](./IMPLEMENTATION_EXECUTION_STANDARDS.md) — preparation only; coding still **BLOCKED**  
 **Implementation authorization:** [`governance/IMPLEMENTATION_AUTHORIZATION_CHECKLIST.md`](./governance/IMPLEMENTATION_AUTHORIZATION_CHECKLIST.md) — Gate B→A checklist; coding **BLOCKED**  
 **Supersedes conflicting statements** in earlier draft docs where this prompt / ADRs / scope baseline are more specific.  
-**Companion:** [FEATURE_TRACEABILITY_MATRIX.md](./FEATURE_TRACEABILITY_MATRIX.md) · [ARCHITECTURE_AUDIT_FINAL.md](./ARCHITECTURE_AUDIT_FINAL.md) · [QUESTIONS-REQUIRING-BUSINESS-DECISION.md](./QUESTIONS-REQUIRING-BUSINESS-DECISION.md) · ADR-001…031
+**Companion:** [FEATURE_TRACEABILITY_MATRIX.md](./FEATURE_TRACEABILITY_MATRIX.md) · [ARCHITECTURE_AUDIT_FINAL.md](./ARCHITECTURE_AUDIT_FINAL.md) · [QUESTIONS-REQUIRING-BUSINESS-DECISION.md](./QUESTIONS-REQUIRING-BUSINESS-DECISION.md) · ADR-001…032
 
 **Do not start implementation** until the Execution Plan §3 checklist is complete and the Implementation Gate Report is amended to **READY**.
 
@@ -380,6 +380,10 @@ Craftsman subscriptions: plans, duration, payment, activation, expiry, renewal s
 
 Booking-scoped chat only (Customer ↔ Provider). No open marketplace messaging. Real-time + history + read status + push. Optional admin support access with audit.
 
+## 10A-1. Notifications (ADR-032)
+
+Notifications are **event-driven**: business modules emit domain events; the notification module delivers via **in-app (primary)**, **push (secondary)**, and optional **SMS/email** behind ports/adapters (ADR-025). Users see business messages only — not technical delivery failures. Chat activity may trigger notifications but does not create open messaging. See [ADR-032](./adr/ADR-032-notification-delivery-architecture.md).
+
 ## 10B. Disputes (ADR-021)
 
 Lightweight: complaint → admin review → evidence → resolution notes → Open/Under Review/Resolved/Closed. May hold escrow/settlement; no complex arbitration in V1.
@@ -454,7 +458,7 @@ Create an ADR or request clarification.
 
 Do **NOT** start coding until completed and approved:
 
-- [x] Architecture decisions (ADR-001…031) — documented / approved  
+- [x] Architecture decisions (ADR-001…032) — documented / approved  
 - [x] **Scope baseline frozen** — [`FINAL_SCOPE_BASELINE.md`](./FINAL_SCOPE_BASELINE.md)  
 - [ ] **BLOCKER-002** — Scope + stakeholder sign-off — **READY FOR APPROVAL** (signatures pending)  
 - [ ] **BLOCKER-001** — Design assets + UI/UX specification (ADR-023) — **READY FOR APPROVAL** (signatures pending; not Completed)  
