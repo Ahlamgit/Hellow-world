@@ -3,9 +3,11 @@
 | Field | Value |
 |-------|-------|
 | **Document ID** | GOV-RBCS-001 |
-| **Version** | 3.1 |
+| **Version** | 3.2 |
 | **Last updated** | 2026-07-25 |
-| **Gate** | B — NOT READY — CODING BLOCKED |
+| **Gate** | **Gate A TRANSITION IN PROGRESS** |
+| **Previous gate** | B — NOT READY — CODING BLOCKED |
+| **Human authorization** | **Received** — Project Owner (GOV-GA-HUMAN-AUTH-001) |
 | **Owner** | Program Governance Manager |
 | **Evidence framework** | `BLOCKER_EVIDENCE_MANAGEMENT_FRAMEWORK.md` (GOV-BEMF-001) |
 | **Gate A preparation package** | `FINAL_PRE_IMPLEMENTATION_READINESS_AND_GATE_A_PACKAGE.md` (GOV-FPRG-001) |
@@ -32,7 +34,7 @@
 | **Open** | Blocker not started or evidence incomplete |
 | **In Progress** | Evidence collection underway |
 | **Ready for Approval** | Evidence package prepared; awaiting signatures |
-| **Under Review** | Evidence submitted; awaiting approval decision |
+| **Under Review** | Evidence submitted; partial approvals received; closure criteria not yet met |
 | **Closed** | Evidence approved, archived per GOV-BEMF-001, artifact on file |
 | **Blocked** | Dependency not met |
 
@@ -42,15 +44,15 @@
 
 | Blocker | Description | Status | Owner | Closure artifact | Evidence received | Approved date |
 |---------|-------------|--------|-------|------------------|-------------------|---------------|
-| BLOCKER-001 | Design approval | **Ready for Approval** | Design Lead + Product Owner | `DESIGN_APPROVAL_SIGNOFF_v1.0` | Package prepared | — |
-| BLOCKER-002 | Stakeholder approval | **Ready for Approval** | Program Sponsor | `STAKEHOLDER_APPROVAL_REGISTER_v1.0` | Package prepared | — |
-| BLOCKER-003 | Vendor readiness | **Open** | Technical Lead / Integration Lead | `VENDOR_READINESS_DOSSIER_v1.0` | No | — |
-| BLOCKER-004 | Cloud readiness | **Open** | Technical Architect + DevOps Lead | `CLOUD_READINESS_DECISION_RECORD_v1.0` | No | — |
-| BLOCKER-005 | Finance configuration | **Ready for Approval** | Finance + Business Operations | `FINANCE_RULE_MATRIX_v1.0` | Package prepared | — |
-| BLOCKER-006 | Compliance approval | **Ready for Approval** | Legal / Compliance Officer | `COMPLIANCE_APPROVAL_PACK_v1.0` | Package prepared | — |
-| BLOCKER-007 | Payment.js validation | **Open** | Technical Lead + Finance Ops | `PAYMENT_JS_VALIDATION_REPORT_v1.0` | No | — |
+| BLOCKER-001 | Design approval | **Ready for Approval** | Design Lead + Product Owner | `DESIGN_APPROVAL_SIGNOFF_v1.0` | Package + `CLOSURE_READINESS.md` | — |
+| BLOCKER-002 | Stakeholder approval | **Under Review** | Program Sponsor | `STAKEHOLDER_APPROVAL_REGISTER` | 1/3 signatures (Project Owner ✓) | 2026-07-25 (partial) |
+| BLOCKER-003 | Vendor readiness | **Open** | Technical Lead / Integration Lead | `VENDOR_READINESS_DOSSIER_v1.0` | `CLOSURE_READINESS.md` prepared | — |
+| BLOCKER-004 | Cloud readiness | **Open** | Technical Architect + DevOps Lead | `CLOUD_READINESS_DECISION_RECORD_v1.0` | `CLOSURE_READINESS.md` prepared | — |
+| BLOCKER-005 | Finance configuration | **Ready for Approval** | Finance + Business Operations | `FINANCE_RULE_MATRIX_v1.0` | Package + `CLOSURE_READINESS.md` | — |
+| BLOCKER-006 | Compliance approval | **Under Review** | Legal / Compliance Officer | `COMPLIANCE_APPROVAL_PACK_v1.0` | Project Owner proceed auth; Legal pending | 2026-07-25 (partial) |
+| BLOCKER-007 | Payment.js validation | **Open** | Technical Lead + Finance Ops | `PAYMENT_JS_VALIDATION_REPORT_v1.0` | `CLOSURE_READINESS.md` prepared | — |
 
-**Summary:** 0 Closed · 3 Open · 4 Ready for Approval · 0 Under Review · **Phase 1:** 0 / 2 closed (GOV-P1-READINESS-001)
+**Summary:** 0 Closed · 3 Open · 2 Ready for Approval · **2 Under Review** · **Phase 1:** 0 / 2 closed
 
 ---
 
@@ -80,19 +82,18 @@
 
 ### BLOCKER-002 — Stakeholder Approval
 
-**Status:** **READY FOR APPROVAL** (signatures pending) · **Phase 1 readiness:** **PASS** (distribution) per GOV-P1-READINESS-001  
+**Status:** **UNDER REVIEW** — Project Owner approved 2026-07-25 (1/3 signatures)  
 **Package:** `evidence/BLOCKER-002-stakeholder/STAKEHOLDER_APPROVAL_PACKAGE.md` (EVD-002-PKG-001 v1.0)  
-**Evidence trio:** `README.md` · `APPROVAL_RECORD.md` · `EVIDENCE_CHECKLIST.md`
+**Human authorization:** GOV-GA-HUMAN-AUTH-001  
+**Scope baseline:** `FINAL_SCOPE_BASELINE.md` v1.0 — **Approved by Project Owner**
 
-| Approver | Package received | Signed (§6) |
-|----------|------------------|-------------|
-| Product Owner | Prepared — pending distribution | No |
-| Business Owner | Prepared — pending distribution | No |
-| Operations Owner | Prepared — pending distribution | No |
+| Approver | Package received | Signed |
+|----------|------------------|--------|
+| Project Owner | Yes | **Yes — 2026-07-25** |
+| Business Owner | Under review | No |
+| Operations Owner | Under review | No |
 
-**Confirmations pending signature:** Scope frozen · Workflows approved · Exclusions accepted · Provider model · Payment/financial model
-
-**Not closed until:** All §6 signatures archived per `BLOCKER_EVIDENCE_MANAGEMENT_FRAMEWORK.md`
+**Not closed until:** Business Owner + Operations Owner signatures + full checklist per GOV-BEMF-001
 
 ---
 
@@ -154,20 +155,22 @@
 
 ### BLOCKER-006 — Compliance
 
-**Status:** **READY FOR APPROVAL** (signatures and legal values pending) · **Phase 1 readiness:** **PASS** (distribution); **FAIL** (closure — §2 retention pending) per GOV-P1-READINESS-001  
+**Status:** **UNDER REVIEW** — Project Owner proceed authorization 2026-07-25; Legal retention pending  
 **Package:** `evidence/BLOCKER-006-compliance/COMPLIANCE_APPROVAL_PACKAGE.md` (EVD-006-PKG-001 v1.0)  
-**Evidence trio:** `README.md` · `APPROVAL_RECORD.md` · `EVIDENCE_CHECKLIST.md`
+**Status doc:** `COMPLIANCE_APPROVAL_STATUS.md` (EVD-006-STATUS-001)  
+**Human authorization:** GOV-GA-HUMAN-AUTH-001
 
 | Policy area | In package | Duration / detail approved | Signed |
 |-------------|------------|---------------------------|--------|
-| Data classification | Yes | Governance approved — pending §10 | No |
+| Proceed with finalization | `COMPLIANCE_APPROVAL_STATUS.md` | Project Owner authorized | **Yes — 2026-07-25** |
+| Data classification | Yes | Pending Legal review | No |
 | Retention periods | Yes | **Pending Legal / Compliance Approval** | No |
 | KYC retention / governance | Yes | **Pending Compliance** | No |
 | Financial record retention | Yes | **Pending Finance / Legal** | No |
 | Chat retention | Yes | **Pending Compliance** | No |
 | Account deletion rules | Yes | Workflow approved — pending §10 | No |
 
-**Rule:** Engineering must not assume retention or legal basis. No deletion/KYC/chat implementation until Closed.
+**Rule:** Engineering must not assume retention or legal basis. **BLOCKER-006 not Closed** until Legal values + 3/3 signatures.
 
 ---
 

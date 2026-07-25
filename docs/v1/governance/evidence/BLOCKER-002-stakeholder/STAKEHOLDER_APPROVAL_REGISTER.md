@@ -4,17 +4,17 @@
 |-------|-------|
 | **Document ID** | EVD-002-REGISTER-001 |
 | **Blocker** | BLOCKER-002 — Stakeholder Approval |
-| **Version** | 1.0 |
-| **Status** | **OPEN — Signatures pending** |
-| **Gate** | B — NOT READY — CODING BLOCKED |
+| **Version** | 1.1 |
+| **Status** | **UNDER REVIEW — 1/3 signatures received** |
+| **Gate** | **Gate A TRANSITION IN PROGRESS** |
 | **Prepared by** | Program Governance Manager |
 | **Date** | 2026-07-25 |
-| **Scope baseline reviewed** | [`FINAL_SCOPE_BASELINE.md`](../../../FINAL_SCOPE_BASELINE.md) v1.0 |
+| **Scope baseline reviewed** | [`FINAL_SCOPE_BASELINE.md`](../../../FINAL_SCOPE_BASELINE.md) v1.0 — **Approved by Project Owner** |
 | **Approval package** | `STAKEHOLDER_APPROVAL_PACKAGE.md` (EVD-002-PKG-001) |
+| **Human authorization** | `GATE_A_HUMAN_AUTHORIZATION_RECORD.md` (GOV-GA-HUMAN-AUTH-001) |
 
 ```text
-LIVE REGISTER — Update on each signature receipt.
-Does NOT close BLOCKER-002 until all criteria met per GOV-BEMF-001.
+LIVE REGISTER — 1/3 signatures received. NOT CLOSED until 3/3 + full checklist.
 ```
 
 ---
@@ -23,12 +23,12 @@ Does NOT close BLOCKER-002 until all criteria met per GOV-BEMF-001.
 
 | Item | Confirmed by approver | PO | BO | Ops |
 |------|----------------------|----|----|-----|
-| Included V1 scope (§3 of scope baseline) | ☐ | ☐ | ☐ |
-| Excluded V1 scope (§4 of scope baseline) | ☐ | ☐ | ☐ |
-| Service-first marketplace model | ☐ | ☐ | ☐ |
-| Unified provider/listing model | ☐ | ☐ | ☐ |
-| Payment/booking domain separation | ☐ | ☐ | ☐ |
-| Scope frozen — change control required for additions | ☐ | ☐ | ☐ |
+| Included V1 scope (§3 of scope baseline) | ☑ | ☑ | ☐ | ☐ |
+| Excluded V1 scope (§4 of scope baseline) | ☑ | ☑ | ☐ | ☐ |
+| Service-first marketplace model | ☑ | ☑ | ☐ | ☐ |
+| Unified provider/listing model | ☑ | ☑ | ☐ | ☐ |
+| Payment/booking domain separation | ☑ | ☑ | ☐ | ☐ |
+| Scope frozen — change control required for additions | ☑ | ☑ | ☐ | ☐ |
 
 ---
 
@@ -36,23 +36,17 @@ Does NOT close BLOCKER-002 until all criteria met per GOV-BEMF-001.
 
 | Role | Name | Package reviewed | Scope baseline reviewed | Decision | Date | Signature | Status |
 |------|------|------------------|-------------------------|----------|------|-----------|--------|
-| **Product Owner** | — | ☐ | ☐ | **Pending** | — | — | **Open** |
+| **Project Owner** | Project Owner | ☑ | ☑ | **Approved** | 2026-07-25 | Recorded | **Complete** |
 | **Business Owner** | — | ☐ | ☐ | **Pending** | — | — | **Open** |
 | **Operations Owner** | — | ☐ | ☐ | **Pending** | — | — | **Open** |
 
-**Approvals received:** **0 / 3**
-
-### Decision values
-
-- **Approved** — No material objections
-- **Approved with conditions** — Document in Comments
-- **Rejected** — BLOCKER-002 remains open
+**Approvals received:** **1 / 3**
 
 ### Comments / conditions
 
 | Role | Comments |
 |------|----------|
-| Product Owner | |
+| Project Owner | Approved Gate A transition; scope baseline v1.0 accepted |
 | Business Owner | |
 | Operations Owner | |
 
@@ -62,14 +56,14 @@ Does NOT close BLOCKER-002 until all criteria met per GOV-BEMF-001.
 
 | # | Item | Status |
 |---|------|--------|
-| 1 | `FINAL_SCOPE_BASELINE.md` in repository | **Complete** — canonical at `docs/v1/FINAL_SCOPE_BASELINE.md` |
-| 2 | `STAKEHOLDER_APPROVAL_PACKAGE.md` distributed | **Pending** |
-| 3 | Product Owner signature | **Pending** |
+| 1 | `FINAL_SCOPE_BASELINE.md` in repository | **Complete** — approved by Project Owner |
+| 2 | `STAKEHOLDER_APPROVAL_PACKAGE.md` distributed | **Complete** — under review |
+| 3 | Project Owner signature | **Complete** — 2026-07-25 |
 | 4 | Business Owner signature | **Pending** |
 | 5 | Operations Owner signature | **Pending** |
-| 6 | `APPROVAL_RECORD.md` — Approved | **Pending** |
+| 6 | `APPROVAL_RECORD.md` — full blocker Approved | **Partial** — 1/3 attestation |
 | 7 | `EVIDENCE_CHECKLIST.md` complete | **Pending** |
-| 8 | GOV-RBCS-001 + GOV-BLOCKER-TRACKER-001 updated | **Pending** |
+| 8 | GOV-RBCS-001 + GOV-BLOCKER-TRACKER-001 updated | **In progress** |
 
 ---
 
@@ -77,7 +71,7 @@ Does NOT close BLOCKER-002 until all criteria met per GOV-BEMF-001.
 
 | Item | Value |
 |------|-------|
-| **BLOCKER-002** | **READY FOR APPROVAL** |
+| **BLOCKER-002** | **UNDER REVIEW** — 1/3 signatures |
 | **BLOCKER-002 Closed** | **No** |
 | **Closed blockers (program)** | **0 / 7** |
 | **Implementation authorized** | **No** |
@@ -88,4 +82,5 @@ Does NOT close BLOCKER-002 until all criteria met per GOV-BEMF-001.
 
 | Version | Date | Change |
 |---------|------|--------|
-| 1.0 | 2026-07-25 | Initial register — scope baseline restored; signatures pending |
+| 1.0 | 2026-07-25 | Initial register — scope baseline restored |
+| 1.1 | 2026-07-25 | Project Owner human authorization recorded — 1/3 |

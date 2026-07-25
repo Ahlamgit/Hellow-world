@@ -8,8 +8,9 @@
 | **Owner** | Program Governance Manager |
 | **Campaign** | Phase 1 — BLOCKER-002 & BLOCKER-006 approval collection |
 | **Companion** | GOV-P1-EXEC-001 (execution pack) |
-| **Gate** | **B — NOT READY — CODING BLOCKED** |
+| **Gate** | **Gate A TRANSITION IN PROGRESS** |
 | **Blockers closed** | **0 / 7** |
+| **Human authorization** | Project Owner — 2026-07-25 (GOV-GA-HUMAN-AUTH-001) |
 | **Implementation** | **NOT AUTHORIZED** |
 
 ```text
@@ -81,10 +82,10 @@ Gate B remains until Gate A ceremony (7/7 blockers + GOV-GAIR-001 §8).
 
 | Record | Location | Status |
 |--------|----------|--------|
-| `APPROVAL_RECORD.md` (EVD-002-APPROVAL-001) | `evidence/BLOCKER-002-stakeholder/` | **Pending** |
-| `EVIDENCE_CHECKLIST.md` | Same folder | **2 / 8** evidence prepared (signatures pending) |
-| `STAKEHOLDER_APPROVAL_REGISTER.md` (EVD-002-REGISTER-001) | `evidence/BLOCKER-002-stakeholder/` | **Prepared** — 0/3 signatures |
-| `FINAL_SCOPE_BASELINE.md` in repo | `docs/v1/FINAL_SCOPE_BASELINE.md` | **Restored** v1.0 (2026-07-25) |
+| `APPROVAL_RECORD.md` (EVD-002-APPROVAL-001) | `evidence/BLOCKER-002-stakeholder/` | **Approved** — Project Owner (partial) |
+| `EVIDENCE_CHECKLIST.md` | Same folder | **3 / 8** complete |
+| `STAKEHOLDER_APPROVAL_REGISTER.md` (EVD-002-REGISTER-001) | Same folder | **1/3 signatures** |
+| `FINAL_SCOPE_BASELINE.md` in repo | `docs/v1/FINAL_SCOPE_BASELINE.md` | **Approved by Project Owner** |
 
 **Campaign owner:** Program Sponsor
 
@@ -148,7 +149,7 @@ Gate B remains until Gate A ceremony (7/7 blockers + GOV-GAIR-001 §8).
 
 | Date | Action | Owner | Result | Next step |
 |------|--------|-------|--------|-----------|
-| 2026-07-25 | Restored `FINAL_SCOPE_BASELINE.md` v1.0; prepared BLOCKER-002 register + BLOCKER-006 policy docs | Program Governance Manager | Evidence prepared; 0/3 + 0/3 approvals | Distribute BLOCKER-002 package; schedule Legal workshop for BLOCKER-006 |
+| 2026-07-25 | Project Owner human authorization — Gate A transition | Governance Transition Manager | GOV-GA-HUMAN-AUTH-001 filed; BLOCKER-002 1/3; BLOCKER-006 proceed auth | BO + Ops signatures; Legal retention workshop |
 | — | Distribute `STAKEHOLDER_APPROVAL_PACKAGE.md` + scope baseline + GOV-P1-EXEC-001 | Program Sponsor | *Pending* | Collect §6 signatures |
 | — | Schedule Legal retention workshop (BLOCKER-006 §2) | Legal / Compliance Officer | *Pending* | Complete retention table before §10 signatures |
 | — | Distribute `COMPLIANCE_APPROVAL_PACKAGE.md` | Legal / Compliance Officer | *Pending* | Collect §10 signatures after §2 complete |
@@ -226,7 +227,6 @@ No code. No implementation. No architecture changes.
 | Version | Date | Change |
 |---------|------|--------|
 | 1.0 | 2026-07-25 | Initial Phase 1 approval tracking register — campaign open |
-
-**Update rule:** Amend §2, §3, §4, and §5 within **1 business day** of any distribution, signature, or escalation event.
+| 1.1 | 2026-07-25 | Scope baseline restored; BLOCKER-002 register + BLOCKER-006 policy docs prepared | Amend §2, §3, §4, and §5 within **1 business day** of any distribution, signature, or escalation event.
 
 **Sync with:** GOV-P1-EXEC-001 · GOV-BLOCKER-TRACKER-001 · GOV-RBCS-001

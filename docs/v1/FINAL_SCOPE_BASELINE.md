@@ -267,15 +267,17 @@ No conflicting technologies without new ADR and approval.
 
 ## 8. Approval record (BLOCKER-002)
 
-**Status:** **READY FOR APPROVAL** — signatures pending. Closure package: `governance/evidence/BLOCKER-002-stakeholder/`
+**Status:** **UNDER REVIEW** — Project Owner approval received (1/3 signatures)
 
 | Role | Name | Decision | Date | Signature |
 |------|------|----------|------|-----------|
-| Product Owner | | Pending | | |
+| **Project Owner** | Project Owner | **Approved** | 2026-07-25 | Recorded |
 | Business Owner | | Pending | | |
 | Operations Owner | | Pending | | |
 
-Until §8 signatures exist, scope is **frozen by policy** but **not formally closed** in governance trackers.
+**Scope baseline v1.0 accepted by Project Owner** — 2026-07-25 (human authorization per GOV-GA-HUMAN-AUTH-001).
+
+Until all required signatures exist, scope is **frozen by policy** but BLOCKER-002 is **not Closed** in governance trackers.
 
 ---
 

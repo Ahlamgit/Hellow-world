@@ -3,12 +3,14 @@
 | Field | Value |
 |-------|-------|
 | **Document ID** | GOV-BLOCKER-TRACKER-001 |
-| **Version** | 1.9 |
+| **Version** | 2.0 |
 | **Date** | 2026-07-25 |
 | **Owner** | Program Execution Manager |
-| **Gate** | **B — NOT READY — CODING BLOCKED** |
+| **Gate** | **Gate A TRANSITION IN PROGRESS** |
+| **Previous gate** | B — NOT READY — CODING BLOCKED |
 | **Blockers closed** | **0 / 7** |
-| **Status** | **Active — operational tracker** |
+| **Human authorization** | **Received** — Project Owner (GOV-GA-HUMAN-AUTH-001) |
+| **Status** | **Active — Gate A transition execution** |
 
 ```text
 This document does NOT authorize coding.
@@ -53,17 +55,17 @@ This tracker is the **operational working document** for closing BLOCKER-001 thr
 
 ## 2. Master blocker dashboard
 
-**Last updated:** 2026-07-25 · **Progress:** 0 / 7 **Closed**
+**Last updated:** 2026-07-25 · **Progress:** 0 / 7 **Closed** · **Human approval:** Project Owner (Gate A transition)
 
 | ID | Name | Owner | Current status | Required evidence | Gate impact |
 |----|------|-------|----------------|-------------------|-------------|
-| **BLOCKER-001** | Design | Design Lead + Product Owner | **Ready for Approval** | Approved logo assets · Design system approval · UI/UX approval signatures · `DESIGN_APPROVAL_SIGNOFF_v1.0` | Blocks **all UI** (ADR-023); Sprint 0 A7–A8 |
-| **BLOCKER-002** | Stakeholder | Program Sponsor | **Ready for Approval** | Product approval · Business approval · Operations approval · `STAKEHOLDER_APPROVAL_REGISTER_v1.0` | Blocks **program authorization** |
-| **BLOCKER-003** | Vendors | Integration Lead | **Open** | Vendor evaluation · Selected vendors · Contracts/agreements · Sandbox readiness · `VENDOR_READINESS_DOSSIER_v1.0` | Blocks **integrations** (payment, SMS, email, maps, OCR, storage) |
-| **BLOCKER-004** | Cloud | Technical Architect + DevOps Lead | **Open** | Hosting decision · Budget approval · Backup strategy · RPO/RTO approval · `CLOUD_READINESS_DECISION_RECORD_v1.0` | Blocks **environment planning** (decisions only — no provisioning) |
-| **BLOCKER-005** | Finance | Finance + Business Operations | **Ready for Approval** | Commission rules · Subscription rules · Refund policy · Settlement rules · Finance signatures · `FINANCE_RULE_MATRIX_v1.0` | Blocks **settlement/payment rules**; input to BLOCKER-007 |
-| **BLOCKER-006** | Compliance | Legal / Compliance Officer | **Ready for Approval** | Retention approval · Data governance approval · Legal/compliance signatures · `COMPLIANCE_APPROVAL_PACK_v1.0` | Blocks **data lifecycle / domain schema** |
-| **BLOCKER-007** | Payment.js validation | Technical Lead + Finance Ops | **Open** | Sandbox validation · Mobile validation · Webhook validation · Finance acceptance · `PAYMENT_JS_VALIDATION_REPORT_v1.0` | Blocks **booking payment**; excluded from Sprint 0 |
+| **BLOCKER-001** | Design | Design Lead + Product Owner | **Ready for Approval** | Approved logo assets · Design system approval · UI/UX approval signatures · `DESIGN_APPROVAL_SIGNOFF_v1.0` · `CLOSURE_READINESS.md` | Blocks **all UI** (ADR-023); Sprint 0 Wave 4 |
+| **BLOCKER-002** | Stakeholder | Program Sponsor | **Under Review** — **1/3 signatures** (Project Owner ✓) | Business + Operations approval · full checklist · archival | Blocks **program authorization** |
+| **BLOCKER-003** | Vendors | Integration Lead | **Open** — `CLOSURE_READINESS.md` prepared | Vendor evaluation · Selected vendors · Sandbox · `VENDOR_READINESS_DOSSIER_v1.0` | Blocks **integrations** |
+| **BLOCKER-004** | Cloud | Technical Architect + DevOps Lead | **Open** — `CLOSURE_READINESS.md` prepared | Hosting · Budget · Backup/DR · `CLOUD_READINESS_DECISION_RECORD_v1.0` | Blocks **environment planning** |
+| **BLOCKER-005** | Finance | Finance + Business Operations | **Ready for Approval** — `CLOSURE_READINESS.md` prepared | Commission/subscription/refund/settlement values · signatures · `FINANCE_RULE_MATRIX_v1.0` | Blocks **settlement/payment rules** |
+| **BLOCKER-006** | Compliance | Legal / Compliance Officer | **Under Review** — Project Owner proceed auth ✓; Legal pending | Retention durations (Legal) · 3/3 signatures · `COMPLIANCE_APPROVAL_PACK_v1.0` | Blocks **data lifecycle / domain schema** |
+| **BLOCKER-007** | Payment.js validation | Technical Lead + Finance Ops | **Open** — `CLOSURE_READINESS.md` prepared | Sandbox · Webhook · Reconciliation · `PAYMENT_JS_VALIDATION_REPORT_v1.0` | Blocks **booking payment** |
 
 ### Evidence package paths
 
@@ -100,12 +102,13 @@ Each blocker folder includes **`README.md`**, **`APPROVAL_RECORD.md`**, and **`E
 
 | Evidence item | On file | Approved |
 |---------------|---------|----------|
-| Product Owner approval | Package §6 | ☐ |
+| Project Owner approval | `APPROVAL_RECORD.md` — Approved 2026-07-25 | ☑ |
+| `FINAL_SCOPE_BASELINE.md` v1.0 approved by Project Owner | Canonical + §8 | ☑ |
 | Business Owner approval | Package §6 | ☐ |
 | Operations Owner approval | Package §6 | ☐ |
-| Closure artifact `STAKEHOLDER_APPROVAL_REGISTER_v1.0` | — | ☐ |
+| Closure artifact complete | `STAKEHOLDER_APPROVAL_REGISTER.md` — 1/3 | ☐ |
 
-**Tracker status:** Ready for Approval · **Closed:** ☐
+**Tracker status:** Under Review (1/3) · **Closed:** ☐
 
 ---
 
