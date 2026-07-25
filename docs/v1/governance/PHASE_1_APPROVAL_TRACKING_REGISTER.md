@@ -3,11 +3,11 @@
 | Field | Value |
 |-------|-------|
 | **Document ID** | GOV-P1-TRACK-001 |
-| **Version** | 1.2 |
+| **Version** | 1.3 |
 | **Date** | 2026-07-25 |
 | **Owner** | Program Governance Manager |
 | **Campaign** | Phase 1 — BLOCKER-002 & BLOCKER-006 approval collection |
-| **Companion** | GOV-P1-EXEC-001 (execution pack) · GOV-BUSINESS-APPROVAL-001 (business consolidation) |
+| **Companion** | GOV-P1-EXEC-001 (execution pack) · GOV-BUSINESS-APPROVAL-001 v1.1 (business consolidation) |
 | **Gate** | **B — NOT READY — CODING BLOCKED** |
 | **Blockers closed** | **1 / 7** |
 | **Human authorization** | Project Owner — 2026-07-25 (GOV-GA-HUMAN-AUTH-001) |

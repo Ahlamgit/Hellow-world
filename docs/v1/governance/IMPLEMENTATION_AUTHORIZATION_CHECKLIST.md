@@ -3,10 +3,10 @@
 | Field | Value |
 |-------|-------|
 | **Document ID** | GOV-IACL-001 |
-| **Version** | 1.4 |
+| **Version** | 1.5 |
 | **Gate** | B — NOT READY — CODING BLOCKED |
 | **Last updated** | 2026-07-25 |
-| **Business consolidation** | GOV-BUSINESS-APPROVAL-001 |
+| **Business consolidation** | GOV-BUSINESS-APPROVAL-001 v1.1 |
 | **Owner** | Program Governance Manager |
 
 ---
@@ -39,8 +39,8 @@ Checklist for **Gate A — READY FOR IMPLEMENTATION** authorization. All items m
 |---|---------|-------------------|----------|----------|--------|
 | C-01 | BLOCKER-001 Design | Package + PO/BO business approval | Partial (PO/BO) | No | **Under Review** |
 | C-02 | BLOCKER-002 Stakeholder | Complete | Yes | Yes | **Closed** |
-| C-03 | BLOCKER-003 Vendors | No | No | No | **Pending** |
-| C-04 | BLOCKER-004 Cloud | No | No | No | **Pending** |
+| C-03 | BLOCKER-003 Vendors | PO/BO partial + maps exclusion | Partial (PO/BO) | No | **Under Review** |
+| C-04 | BLOCKER-004 Cloud | PO/BO business approval | Partial (PO/BO) | No | **Under Review** |
 | C-05 | BLOCKER-005 Finance | Package + PO/BO business approval | Partial (PO/BO) | No | **Under Review** |
 | C-06 | BLOCKER-006 Compliance | Package + PO/BO direction | Partial (PO/BO) | No | **Under Review** |
 | C-07 | BLOCKER-007 Payment.js | PO/BO business approval | Partial (PO/BO) | No | **Under Review** |
@@ -66,8 +66,8 @@ Checklist for **Gate A — READY FOR IMPLEMENTATION** authorization. All items m
 | A-02 | Scope baseline accepted | Project Owner / Business Owner | **Complete** | `FINAL_SCOPE_BASELINE.md` v1.0 — BLOCKER-002 Closed |
 | A-03 | Design package approved | Design Lead + PO/BO | **Partial** — PO/BO business approved | `evidence/BLOCKER-001-design/BUSINESS_APPROVAL_RECORD.md` |
 | A-04 | Stakeholder register complete | Project Owner / Business Owner | **Complete** | `evidence/BLOCKER-002-stakeholder/BLOCKER_002_CLOSURE_RECORD.md` |
-| A-05 | Vendor readiness confirmed | Technical Lead | **Pending** | `evidence/BLOCKER-003-vendors/` |
-| A-06 | Cloud decisions approved | Technical Architect + Ops | **Pending** | `evidence/BLOCKER-004-cloud/` |
+| A-05 | Vendor readiness confirmed | Integration Lead + TA | **Partial** — PO/BO categories; dossier pending | `evidence/BLOCKER-003-vendors/BUSINESS_APPROVAL_RECORD.md` |
+| A-06 | Cloud decisions approved | Technical Architect + DevOps | **Partial** — PO/BO direction approved | `evidence/BLOCKER-004-cloud/BUSINESS_APPROVAL_RECORD.md` |
 | A-07 | Finance rules approved | Finance + PO/BO | **Partial** — PO/BO business model approved | `evidence/BLOCKER-005-finance/BUSINESS_APPROVAL_RECORD.md` |
 | A-08 | Compliance pack approved | Legal + Technical Architect | **Partial** — PO/BO direction approved | `evidence/BLOCKER-006-compliance/BUSINESS_APPROVAL_RECORD.md` |
 | A-09 | Payment.js validation approved | PO/BO + Technical Architect | **Partial** — PO/BO flow approved | `evidence/BLOCKER-007-payment/BUSINESS_APPROVAL_RECORD.md` |
@@ -110,3 +110,4 @@ Checklist for **Gate A — READY FOR IMPLEMENTATION** authorization. All items m
 | 1.3 | 2026-07-25 | BLOCKER-002 closed; 1/7 |
 | 1.4 | 2026-07-25 | GOV-BUSINESS-APPROVAL-001 — PO/BO partial approvals for 001, 005, 006, 007 |
 | 1.5 | 2026-07-25 | GOV-BUSINESS-APPROVAL-001 v1.1 — remaining blocking items matrix |
+| 1.6 | 2026-07-25 | GOV-BUSINESS-APPROVAL-001 v1.2 — BLOCKER-003/004 business partial approvals |

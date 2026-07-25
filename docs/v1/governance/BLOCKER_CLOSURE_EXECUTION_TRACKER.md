@@ -60,10 +60,10 @@ This tracker is the **operational working document** for closing BLOCKER-001 thr
 
 | ID | Name | Owner | Current status | Required evidence | Gate impact |
 |----|------|-------|----------------|-------------------|-------------|
-| **BLOCKER-001** | Design | Design Lead + PO/BO | **Under Review** — PO/BO **APPROVED** | `BUSINESS_APPROVAL_RECORD.md` v1.1 ✓ · reference assets · Design Lead · `DESIGN_APPROVAL_SIGNOFF_v1.0` | Blocks **all UI** (ADR-023); Sprint 0 Wave 4 |
-| **BLOCKER-002** | Stakeholder | Project Owner / Business Owner | **Closed** | `BLOCKER_002_CLOSURE_RECORD.md` · 2/2 approvals | **Closed** — 2026-07-25 |
-| **BLOCKER-003** | Vendors | Integration Lead | **Open** — `CLOSURE_READINESS.md` prepared | Vendor evaluation · Selected vendors · Sandbox · `VENDOR_READINESS_DOSSIER_v1.0` | Blocks **integrations** |
-| **BLOCKER-004** | Cloud | Technical Architect + DevOps Lead | **Open** — `CLOSURE_READINESS.md` prepared | Hosting · Budget · Backup/DR · `CLOUD_READINESS_DECISION_RECORD_v1.0` | Blocks **environment planning** |
+| **BLOCKER-001** | Design | Design Lead + PO/BO | **Under Review** — PO/BO **APPROVED** | `theme(1).mp4` · `ic-khadamati(1).jpg` · logo spec · Design Lead · signoff | Blocks **all UI** (ADR-023) |
+| **BLOCKER-002** | Stakeholder | Project Owner / Business Owner | **Closed** | `BLOCKER_002_CLOSURE_RECORD.md` · 2/2 | **Closed** 2026-07-25 |
+| **BLOCKER-003** | Vendors | Integration Lead + TA | **Under Review** — PO/BO **partial** | SMS/email/storage approved · maps **excluded** · dossier · TA | Blocks **integrations** |
+| **BLOCKER-004** | Cloud | Architect + DevOps | **Under Review** — PO/BO **APPROVED** | `BUSINESS_APPROVAL_RECORD.md` ✓ · hosting · backup/DR · TA + DevOps | Blocks **environment planning** |
 | **BLOCKER-005** | Finance | Finance + PO/BO | **Under Review** — PO/BO **APPROVED** | `BUSINESS_APPROVAL_RECORD.md` v1.1 ✓ · Finance matrix · Finance attestation | Blocks **settlement/payment rules** |
 | **BLOCKER-006** | Compliance | Legal + Technical Architect | **Under Review** — PO/BO direction **APPROVED** | `BUSINESS_APPROVAL_RECORD.md` v1.1 ✓ · Legal retention (not invented) · Legal + TA signatures | Blocks **data lifecycle / domain schema** |
 | **BLOCKER-007** | Payment.js validation | PO/BO + Technical Architect | **Under Review** — PO/BO **APPROVED** | `BUSINESS_APPROVAL_RECORD.md` v1.1 ✓ · sandbox · webhook · TA attestation | Blocks **booking payment** |
@@ -276,7 +276,8 @@ When **all phases complete** (7 / 7 Closed):
 |------|----------------|
 | **Program Execution Manager** | Maintain this tracker; weekly status; escalation coordination |
 | **Program Sponsor** | BLOCKER-002 accountable; Gate A decision |
-| **Project Owner / Business Owner** (unified) | Business decisions; scope; BLOCKER-001/005/006/007 business approvals; BLOCKER-002 closed |
+| **Project Owner / Business Owner** (unified) | Business decisions · marketplace · revenue · commission · subscription pricing · scope · experience approval |
+| **Administrator** | Platform governance · provider/user workflows · subscriptions · ads · categories · moderation · configuration — **not** business strategy, commission, pricing, architecture, scope |
 | **Design Owner (Design Lead)** | BLOCKER-001 evidence and signatures |
 | **Finance Owner** | BLOCKER-005 values; BLOCKER-007 finance co-sign |
 | **Compliance Owner (Legal)** | BLOCKER-006 retention and governance signatures |
@@ -386,5 +387,6 @@ If a blocker is **delayed** beyond agreed target:
 | 2.1 | 2026-07-25 | Role correction sync (GOV-BLOCKER-002-ROLE-CORR-001) |
 | 2.2 | 2026-07-25 | GOV-BUSINESS-APPROVAL-001 — PO/BO business approvals for 001, 005, 006, 007 |
 | 2.3 | 2026-07-25 | GOV-BUSINESS-APPROVAL-001 v1.1 — expanded evidence; remaining blocking items matrix |
+| 2.4 | 2026-07-25 | GOV-BUSINESS-APPROVAL-001 v1.2 — design assets, vendor/cloud business approvals, maps V1 exclusion |
 
 **Sync with:** GOV-RBCS-001 on every closure event.

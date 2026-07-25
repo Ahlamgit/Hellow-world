@@ -3,7 +3,7 @@
 | Field | Value |
 |-------|-------|
 | **Document ID** | EVD-005-BUSINESS-001 |
-| **Version** | 1.1 |
+| **Version** | 1.2 |
 | **Blocker** | BLOCKER-005 — Finance |
 | **Decision** | **APPROVED** (business model) |
 | **Approver** | Project Owner / Business Owner |
@@ -35,13 +35,22 @@ Customer Payment → Payment Domain → Ledger → KHADAMATI Commission → Prov
 
 ## Subscription pricing — APPROVED
 
-| Revenue mechanism | Status |
-|-------------------|--------|
-| Provider subscriptions | **Approved** |
-| Store/service advertising subscriptions | **Approved** |
-| Advertisement packages | **Approved** |
+### Provider subscriptions
 
-**Pricing management** belongs to **Administrator configuration** after implementation (not hardcoded). **No new pricing features** added beyond frozen V1 scope.
+| Tier | Status |
+|------|--------|
+| Basic | **Approved** |
+| Pro | **Approved** |
+| Premium | **Approved** |
+
+### Advertising subscriptions
+
+| Type | Status |
+|------|--------|
+| Service / store advertising packages | **Approved** |
+| Featured placement | **Approved** |
+
+**Administrator** manages configuration after implementation. Values **not hardcoded** (ADR-013).
 
 ---
 

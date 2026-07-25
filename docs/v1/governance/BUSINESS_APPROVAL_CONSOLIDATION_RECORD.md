@@ -3,122 +3,103 @@
 | Field | Value |
 |-------|-------|
 | **Document ID** | GOV-BUSINESS-APPROVAL-001 |
-| **Version** | 1.1 |
+| **Version** | 1.2 |
 | **Date** | 2026-07-25 |
 | **Approved by** | **Project Owner / Business Owner** (unified) |
 | **Gate** | **B — NOT READY — CODING BLOCKED** |
 | **Implementation** | **NOT AUTHORIZED** |
-| **Business approvals recorded** | BLOCKER-001, 002, 005, 006, 007 — **APPROVED** (PO/BO) |
-| **Official blocker closure (Gate A)** | **1 / 7** — BLOCKER-002 only; **6 / 7** pending evidence validation |
+| **Business approvals recorded** | 001, 002, 003 (partial), 004, 005, 006, 007 — PO/BO |
+| **Official blocker closure (Gate A)** | **1 / 7** — BLOCKER-002 only |
 
 ```text
-BUSINESS APPROVAL CONSOLIDATION — NOT IMPLEMENTATION AUTHORIZATION
+FINAL GATE B BUSINESS APPROVAL CONSOLIDATION — NOT IMPLEMENTATION AUTHORIZATION
 Business approval ≠ blocker closure until evidence + checklist + signatures + archive + tracker update.
-Documentation ≠ approval.
 ```
 
 ---
 
-## 1. Approved ownership model
+## 1. Final ownership model
 
-| Role | Responsibility |
-|------|----------------|
-| **Project Owner / Business Owner** (unified) | Business decisions · product direction · revenue model · scope approval · final business approvals |
-| **Administrator** (Platform Governance Owner) | Platform governance execution · user/provider approval workflow enforcement · moderation governance · configuration management · subscription enforcement · advertisement governance |
+### Project Owner = Business Owner
 
-**No separate mandatory Business Owner signature.**
+Authority over: business decisions · marketplace model · revenue model · commission model · subscription pricing · product scope · customer/provider experience approval.
 
-### Administrator does NOT approve
+### Administrator = Platform Governance Owner
 
-- Business model
-- Commission strategy
-- Pricing strategy
-- Architecture changes
-- Scope changes
+Controls: user/provider approval workflows · verification governance · subscription management · advertisement management · service categories · platform configuration · moderation · operational enforcement.
+
+**Administrator does NOT control:** business strategy · commission decisions · pricing strategy · architecture · scope changes.
 
 ---
 
-## 2. Approved by
+## 2. Business approvals recorded
 
-| Field | Value |
-|-------|-------|
-| **Approver** | Project Owner / Business Owner |
-| **Date** | 2026-07-25 |
-| **Approval type** | Business governance consolidation (v1.1) |
-
-### BLOCKER-002 — Stakeholder (also closed with full evidence)
-
-| Approval | Status |
-|----------|--------|
-| Project Owner / Business Owner | **Approved** |
-| Administrator Governance Acceptance | **Approved** |
-| Official closure | **CLOSED** — 2026-07-25 (`BLOCKER_002_CLOSURE_RECORD.md`) |
+| Blocker | PO/BO Decision | Official status |
+|---------|----------------|-----------------|
+| **BLOCKER-001** Design | **APPROVED** — `theme(1).mp4` · `ic-khadamati(1).jpg` | **Open** |
+| **BLOCKER-002** Stakeholder | **APPROVED** | **Closed** |
+| **BLOCKER-003** Vendors | **PARTIAL** — SMS · email · storage approved; **maps excluded V1** | **Open** |
+| **BLOCKER-004** Cloud | **APPROVED** (business direction) | **Open** |
+| **BLOCKER-005** Finance | **APPROVED** — commission + subscriptions (Basic/Pro/Premium) | **Open** |
+| **BLOCKER-006** Compliance | **APPROVED** (direction; retention **not** invented) | **Open** |
+| **BLOCKER-007** Payment | **APPROVED** — Areeba IXOPAY Payment.js flow | **Open** |
 
 ---
 
-## 3. Business approvals recorded
+## 3. Design governance (BLOCKER-001)
 
-| Blocker | Area | PO/BO Decision | Official blocker status |
-|---------|------|----------------|-------------------------|
-| **BLOCKER-001** | Design — theme, Customer/Provider/Admin experiences | **APPROVED** | **Open** — evidence pending |
-| **BLOCKER-002** | Stakeholder governance + ownership model | **APPROVED** | **Closed** — full evidence complete |
-| **BLOCKER-005** | Commission model + subscription pricing | **APPROVED** | **Open** — evidence pending |
-| **BLOCKER-006** | Compliance governance direction | **APPROVED** | **Open** — Legal finalization pending |
-| **BLOCKER-007** | Payment flow (Areeba IXOPAY Payment.js) | **APPROVED** | **Open** — technical validation pending |
-
----
-
-## 4. Approved areas (detail)
-
-| Area | Blocker | Record |
-|------|---------|--------|
-| Platform design theme (reference video/assets) | BLOCKER-001 | `evidence/BLOCKER-001-design/BUSINESS_APPROVAL_RECORD.md` |
-| Customer mobile application | BLOCKER-001 | Same |
-| Provider application / dashboard | BLOCKER-001 | Same |
-| Administrator web portal | BLOCKER-001 | Same |
-| Marketplace commission model (configurable) | BLOCKER-005 | `evidence/BLOCKER-005-finance/BUSINESS_APPROVAL_RECORD.md` |
-| Provider + store/service advertising subscriptions | BLOCKER-005 | Same |
-| Compliance governance · data protection approach · retention process | BLOCKER-006 | `evidence/BLOCKER-006-compliance/BUSINESS_APPROVAL_RECORD.md` |
-| Customer payment flow (booking → Payment.js → ledger) | BLOCKER-007 | `evidence/BLOCKER-007-payment/BUSINESS_APPROVAL_RECORD.md` |
-
-**Retention durations:** **NOT approved** in this record — Legal-controlled only.
+| Asset / topic | Record |
+|---------------|--------|
+| Theme video `theme(1).mp4` | `evidence/BLOCKER-001-design/DESIGN_ASSET_REFERENCE.md` |
+| Logo `ic-khadamati(1).jpg` | Same + `LOGO_REFINEMENT_SPECIFICATION.md` |
+| Surfaces & features | `DESIGN_GOVERNANCE_RECORD.md` |
+| Lebanon defaults (+961 · USD) | Configurable — not hardcoded |
 
 ---
 
-## 5. Remaining non-business validation
+## 4. Vendor governance (BLOCKER-003)
 
-| Blocker | Required (no further PO/BO business approval) |
-|---------|-----------------------------------------------|
-| **BLOCKER-003** | Vendor technical dossier · integration validation · Technical Architect approval |
-| **BLOCKER-004** | Hosting decision · security validation · backup/DR · DevOps approval |
-| **BLOCKER-001** | Design Lead attestation · design assets · `DESIGN_APPROVAL_SIGNOFF_v1.0` |
-| **BLOCKER-005** | Finance matrix · Finance attestation · `FINANCE_RULE_MATRIX_v1.0` |
-| **BLOCKER-006** | Legal retention values (**do not invent**) · Legal signature · Technical Architect signature |
-| **BLOCKER-007** | Sandbox validation · webhook validation · Technical Architect attestation |
+| Category | Business decision |
+|----------|-------------------|
+| SMS | **Approved** — verification only (no marketing) |
+| Email | **Approved** — transactional/security only |
+| Storage | **Approved** — media/documents |
+| Maps / location | **NOT APPROVED V1** — `MAPS_V1_EXCLUSION_RECORD.md` |
 
 ---
 
-## 6. Remaining blocking items (Gate A path)
+## 5. Cloud governance (BLOCKER-004)
 
-1. BLOCKER-001 — evidence completion  
-2. BLOCKER-003 — vendor validation  
-3. BLOCKER-004 — cloud validation  
-4. BLOCKER-005 — finance evidence completion  
-5. BLOCKER-006 — legal finalization  
-6. BLOCKER-007 — technical payment validation  
-
-**Gate A path:** 7/7 blockers closed → GOV-IACL-001 complete → GOV-GAIR-001 §8 signed → Gate A ceremony → Sprint 0 authorization.
+PO/BO **approved** cloud hosting direction. Technical Architect + DevOps: provider selection, backup, DR, monitoring, scalability, cost control.
 
 ---
 
-## 7. Closure discipline
+## 6. Remaining evidence closure
+
+| Blocker | Still required |
+|---------|----------------|
+| **001** | Asset archival · logo refinement · Design Lead · signoff |
+| **003** | Vendor dossier · TA approval · payment/OCR technical |
+| **004** | Cloud validation evidence · TA + DevOps |
+| **005** | Commission matrix · subscription matrix · Finance attestation |
+| **006** | Legal retention values · Legal + TA signatures |
+| **007** | IXOPAY sandbox · webhook · TA approval |
+
+---
+
+## 7. Gate A authorization rule
+
+Implementation begins **ONLY** after:
 
 ```text
-Evidence complete + Checklist complete + Required signatures complete + Archive complete + Tracker update
-    → Closure review → Blocker CLOSED
+7/7 blockers CLOSED
+  → GOV-IACL-001 complete
+  → GOV-GAIR-001 §8 signed
+  → Gate A ceremony
+  → Sprint 0 authorization (GOV-S0FC-001)
 ```
 
-**This record does not auto-close blockers.**
+**Until then:** NO CODING · NO SCHEMA · NO APIs · NO UI · NO PAYMENT IMPLEMENTATION · NO INFRASTRUCTURE DEPLOYMENT
 
 ---
 
@@ -126,8 +107,8 @@ Evidence complete + Checklist complete + Required signatures complete + Archive 
 
 | Dimension | Impact |
 |-----------|--------|
-| Architecture (ADR-001 → ADR-032) | **NONE** |
-| V1 scope | **NONE** — frozen; no new pricing features |
+| ADR-001 → ADR-032 | **NONE** — frozen |
+| V1 scope | Maps/location **excluded** — documented exclusion only; no new features |
 
 ---
 
@@ -135,5 +116,6 @@ Evidence complete + Checklist complete + Required signatures complete + Archive 
 
 | Version | Date | Change |
 |---------|------|--------|
-| 1.0 | 2026-07-25 | Consolidated PO/BO business approvals for blockers 001, 002, 005, 006, 007 |
-| 1.1 | 2026-07-25 | Expanded design/finance/payment detail; Administrator boundaries; remaining validation matrix; Lebanon/multi-region design principles |
+| 1.0 | 2026-07-25 | Initial PO/BO consolidation |
+| 1.1 | 2026-07-25 | Expanded design/finance/payment detail |
+| 1.2 | 2026-07-25 | Design assets · logo spec · vendor/cloud business approvals · maps V1 exclusion · final ownership model |

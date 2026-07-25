@@ -3,11 +3,11 @@
 | Field | Value |
 |-------|-------|
 | **Document ID** | GOV-RBCS-001 |
-| **Version** | 3.4 |
+| **Version** | 3.5 |
 | **Blockers closed** | **1 / 7** |
 | **Last updated** | 2026-07-25 |
 | **Gate** | **B — NOT READY — CODING BLOCKED** |
-| **Business consolidation** | `BUSINESS_APPROVAL_CONSOLIDATION_RECORD.md` (GOV-BUSINESS-APPROVAL-001) |
+| **Business consolidation** | `BUSINESS_APPROVAL_CONSOLIDATION_RECORD.md` (GOV-BUSINESS-APPROVAL-001 v1.1) |
 | **Role correction** | GOV-BLOCKER-002-ROLE-CORR-001 |
 | **Owner** | Program Governance Manager |
 | **Evidence framework** | `BLOCKER_EVIDENCE_MANAGEMENT_FRAMEWORK.md` (GOV-BEMF-001) |
@@ -47,8 +47,8 @@
 |---------|-------------|--------|-------|------------------|-------------------|---------------|
 | BLOCKER-001 | Design approval | **Under Review** — PO/BO **APPROVED** | Design Lead + PO/BO | `DESIGN_APPROVAL_SIGNOFF_v1.0` | `BUSINESS_APPROVAL_RECORD.md` v1.1 | 2026-07-25 (business) |
 | BLOCKER-002 | Stakeholder approval | **Closed** | Project Owner / Business Owner | `BLOCKER_002_CLOSURE_RECORD.md` | 2/2 complete | 2026-07-25 |
-| BLOCKER-003 | Vendor readiness | **Open** | Technical Lead / Integration Lead | `VENDOR_READINESS_DOSSIER_v1.0` | `CLOSURE_READINESS.md` prepared | — |
-| BLOCKER-004 | Cloud readiness | **Open** | Technical Architect + DevOps Lead | `CLOUD_READINESS_DECISION_RECORD_v1.0` | `CLOSURE_READINESS.md` prepared | — |
+| BLOCKER-003 | Vendor readiness | **Under Review** — PO/BO partial | Integration Lead + TA | `VENDOR_READINESS_DOSSIER_v1.0` | SMS/email/storage approved; maps excluded | 2026-07-25 (business) |
+| BLOCKER-004 | Cloud readiness | **Under Review** — PO/BO **APPROVED** | Architect + DevOps | `CLOUD_READINESS_DECISION_RECORD_v1.0` | `BUSINESS_APPROVAL_RECORD.md` | 2026-07-25 (business) |
 | BLOCKER-005 | Finance configuration | **Under Review** — PO/BO **APPROVED** | Finance + PO/BO | `FINANCE_RULE_MATRIX_v1.0` | `BUSINESS_APPROVAL_RECORD.md` v1.1 | 2026-07-25 (business) |
 | BLOCKER-006 | Compliance approval | **Under Review** — PO/BO direction **APPROVED** | Legal + Technical Architect | `COMPLIANCE_APPROVAL_PACK_v1.0` | `BUSINESS_APPROVAL_RECORD.md` v1.1; Legal pending | 2026-07-25 (business) |
 | BLOCKER-007 | Payment.js validation | **Under Review** — PO/BO **APPROVED** | PO/BO + Technical Architect | `PAYMENT_JS_VALIDATION_REPORT_v1.0` | `BUSINESS_APPROVAL_RECORD.md` v1.1; technical pending | 2026-07-25 (business) |
@@ -258,4 +258,5 @@ Refer to `BLOCKER_CLOSURE_EXECUTION_TRACKER.md` (GOV-BLOCKER-TRACKER-001) for op
 | 3.2 | 2026-07-25 | BLOCKER-002 closed; 1/7; role correction |
 | 3.3 | 2026-07-25 | Gate B reaffirmed; tracker sync |
 | 3.4 | 2026-07-25 | GOV-BUSINESS-APPROVAL-001 — PO/BO business approvals for 001, 005, 006, 007 |
-| 3.5 | 2026-07-25 | GOV-BUSINESS-APPROVAL-001 v1.1 — expanded business evidence; remaining validation matrix |
+| 3.5 | 2026-07-25 | GOV-BUSINESS-APPROVAL-001 v1.1 |
+| 3.6 | 2026-07-25 | GOV-BUSINESS-APPROVAL-001 v1.2 — design assets, vendor/cloud, maps exclusion |

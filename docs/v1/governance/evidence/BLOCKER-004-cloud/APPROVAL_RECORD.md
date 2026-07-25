@@ -4,29 +4,30 @@
 |-------|-------|
 | **Document ID** | EVD-004-APPROVAL-001 |
 | **Blocker ID** | BLOCKER-004 — Cloud |
-| **Decision** | **Pending** |
-| **Approver Name** | |
-| **Role** | Technical Architect / DevOps Lead / Business Owner |
+| **Decision** | **Partially Approved** — PO/BO business authorization |
+| **Approver Name** | **Project Owner / Business Owner** (business) · Technical Architect / DevOps (technical — pending) |
+| **Role** | Project Owner / Business Owner · Technical Architect · DevOps Lead |
 | **Organization** | KHADAMATI |
-| **Date** | |
-| **Version Reviewed** | `CLOUD_READINESS_DECISION_RECORD_v1.0` (draft) |
-| **Comments** | |
-| **Signature / Confirmation** | |
+| **Date** | **2026-07-25** (business partial) |
+| **Version Reviewed** | `BUSINESS_APPROVAL_RECORD.md` · `CLOUD_READINESS_DECISION_RECORD_v1.0` (draft) |
+| **Comments** | PO/BO approved cloud hosting direction. Provider selection and technical validation by Architect + DevOps pending. No provisioning during evidence collection. |
+| **Signature / Confirmation** | **Recorded — business partial 2026-07-25** |
 
 ### Decision options
 
 - [ ] **Pending**
-- [ ] **Approved**
+- [x] **Partially Approved** (business — technical closure pending)
+- [ ] **Approved** (full closure)
 - [ ] **Rejected**
 
 ---
 
 ## Attestation
 
-| Approver | Role | Signature / Date |
-|----------|------|------------------|
-| | Technical Architect | |
-| | DevOps Lead | |
-| | Business Owner / Finance (budget) | |
+| Approver | Role | Decision | Signature / Date |
+|----------|------|----------|------------------|
+| **Project Owner / Business Owner** | Cloud business approval | **Approved** | **2026-07-25** |
+| | Technical Architect | **Pending** | |
+| | DevOps Lead | **Pending** | |
 
-**On Approved:** File closure artifact `CLOUD_READINESS_DECISION_RECORD_v1.0` and update trackers.
+**BLOCKER-004 NOT CLOSED** per GOV-BEMF-001.
