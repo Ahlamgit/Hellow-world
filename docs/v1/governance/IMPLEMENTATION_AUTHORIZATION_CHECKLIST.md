@@ -3,10 +3,10 @@
 | Field | Value |
 |-------|-------|
 | **Document ID** | GOV-IACL-001 |
-| **Version** | 1.5 |
+| **Version** | 1.6 |
 | **Gate** | B — NOT READY — CODING BLOCKED |
 | **Last updated** | 2026-07-25 |
-| **Business consolidation** | GOV-BUSINESS-APPROVAL-001 v1.1 |
+| **Business consolidation** | GOV-BUSINESS-APPROVAL-001 v1.2 |
 | **Owner** | Program Governance Manager |
 
 ---

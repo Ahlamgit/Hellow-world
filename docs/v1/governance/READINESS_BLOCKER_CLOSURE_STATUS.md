@@ -3,11 +3,11 @@
 | Field | Value |
 |-------|-------|
 | **Document ID** | GOV-RBCS-001 |
-| **Version** | 3.5 |
+| **Version** | 3.6 |
 | **Blockers closed** | **1 / 7** |
 | **Last updated** | 2026-07-25 |
 | **Gate** | **B — NOT READY — CODING BLOCKED** |
-| **Business consolidation** | `BUSINESS_APPROVAL_CONSOLIDATION_RECORD.md` (GOV-BUSINESS-APPROVAL-001 v1.1) |
+| **Business consolidation** | `BUSINESS_APPROVAL_CONSOLIDATION_RECORD.md` (GOV-BUSINESS-APPROVAL-001 v1.2) |
 | **Role correction** | GOV-BLOCKER-002-ROLE-CORR-001 |
 | **Owner** | Program Governance Manager |
 | **Evidence framework** | `BLOCKER_EVIDENCE_MANAGEMENT_FRAMEWORK.md` (GOV-BEMF-001) |

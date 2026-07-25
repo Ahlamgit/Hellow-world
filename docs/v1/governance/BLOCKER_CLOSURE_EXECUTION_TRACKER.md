@@ -3,13 +3,13 @@
 | Field | Value |
 |-------|-------|
 | **Document ID** | GOV-BLOCKER-TRACKER-001 |
-| **Version** | 2.3 |
+| **Version** | 2.4 |
 | **Date** | 2026-07-25 |
 | **Owner** | Program Execution Manager |
 | **Gate** | **B — NOT READY — CODING BLOCKED** |
 | **Previous gate note** | Gate A transition activities recorded; authorization state unchanged |
 | **Blockers closed** | **1 / 7** (BLOCKER-002); **6 / 7** pending evidence validation |
-| **Business consolidation** | GOV-BUSINESS-APPROVAL-001 v1.1 — PO/BO business approvals **APPROVED** for 001, 002, 005, 006, 007 |
+| **Business consolidation** | GOV-BUSINESS-APPROVAL-001 v1.2 |
 | **Role correction** | GOV-BLOCKER-002-ROLE-CORR-001 |
 | **Status** | **Active — Gate A transition execution** |
 
