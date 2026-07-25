@@ -3,29 +3,33 @@
 | Field | Value |
 |-------|-------|
 | **Document ID** | GOV-GATE-B-CLOSURE-001 |
-| **Version** | 1.0 |
+| **Version** | 1.1 |
 | **Date** | 2026-07-25 |
+| **Final closure execution** | GOV-GATE-B-CLOSURE-EXEC-001 |
 | **Gate** | **B — NOT READY — CODING BLOCKED** |
 | **Implementation** | **NOT AUTHORIZED** |
 | **Blockers closed** | **1 / 7** |
+| **Gate A readiness** | **~25%** — see `GATE_A_READINESS_ASSESSMENT.md` |
 
 ```text
-Closure preparation ≠ blocker closure ≠ Gate A ≠ implementation authorization
+Closure preparation ≠ closure validation ≠ blocker closure ≠ Gate A ≠ implementation authorization
 ```
 
 ---
 
 ## Blocker closure readiness
 
-| Blocker | Business | Evidence prep | Human/tech validation | Closed |
-|---------|----------|---------------|----------------------|--------|
-| **001** Design | ✅ Approved | ✅ Prepared | ☐ Archival + Design Lead | ☐ |
-| **002** Stakeholder | ✅ | ✅ | ✅ | ✅ |
-| **003** Vendors | ✅ V1 restrictions | ✅ Prepared | ☐ IL + TA | ☐ |
-| **004** Cloud | ✅ Direction | ✅ Prepared | ☐ TA + DevOps | ☐ |
-| **005** Finance | ✅ Admin model | ✅ Prepared | ☐ TA attestation | ☐ |
-| **006** Compliance | ✅ Direction | ✅ Prepared | ☐ Legal + TA | ☐ |
-| **007** Payment | ✅ Flow | ✅ Prepared | ☐ Sandbox + IL + TA | ☐ |
+| Blocker | Governance status | Business | Validation report | Human/tech validation | Closed |
+|---------|-------------------|----------|-------------------|----------------------|--------|
+| **001** Design | **READY FOR APPROVAL** | ✅ Approved | `DESIGN_CLOSURE_VALIDATION_REPORT.md` | ☐ Archival + Design Lead | ☐ |
+| **002** Stakeholder | **CLOSED** | ✅ | — | ✅ | ✅ |
+| **003** Vendors | **READY FOR APPROVAL** | ✅ V1 restrictions | `VENDOR_CLOSURE_VALIDATION_REPORT.md` | ☐ IL + TA | ☐ |
+| **004** Cloud | **READY FOR APPROVAL** | ✅ Direction | `CLOUD_CLOSURE_VALIDATION_REPORT.md` | ☐ TA + DevOps | ☐ |
+| **005** Finance | **READY FOR APPROVAL** | ✅ Admin model | `FINANCE_CLOSURE_VALIDATION_REPORT.md` | ☐ TA attestation | ☐ |
+| **006** Compliance | **READY FOR APPROVAL** | ✅ Direction | `COMPLIANCE_CLOSURE_VALIDATION_REPORT.md` | ☐ Legal + TA | ☐ |
+| **007** Payment | **READY FOR APPROVAL** | ✅ Flow | `PAYMENT_CLOSURE_VALIDATION_REPORT.md` | ☐ Sandbox + IL + TA | ☐ |
+
+**Status ladder:** `OPEN` → `READY FOR APPROVAL` → `APPROVED` → `CLOSED`
 
 ---
 
@@ -40,6 +44,8 @@ Closure preparation ≠ blocker closure ≠ Gate A ≠ implementation authorizat
 | **006** | `COMPLIANCE_CLOSURE_PREPARATION_RECORD.md` |
 | **007** | `PAYMENT_VALIDATION_RECORD.md` |
 
+**Execution record:** `GATE_B_FINAL_CLOSURE_EXECUTION_RECORD.md` (GOV-GATE-B-CLOSURE-EXEC-001)
+
 ---
 
 ## Evidence missing (cannot close without)
@@ -49,9 +55,9 @@ Closure preparation ≠ blocker closure ≠ Gate A ≠ implementation authorizat
 | **001** | Binary archive: `theme(1).mp4`, `ic-khadamati(1).jpg`; refined logo package; Design Lead sign-off; `DESIGN_APPROVAL_SIGNOFF_v1.0` |
 | **003** | Vendor names/contracts; sandbox results; completed security review; `VENDOR_READINESS_DOSSIER_v1.0`; IL + TA signatures |
 | **004** | Hosting provider decision; RPO/RTO values; TA + DevOps signatures; `CLOUD_READINESS_DECISION_RECORD_v1.0` |
-| **005** | Technical Architect validation sign-off on admin configuration model |
+| **005** | Technical Architect validation sign-off on admin configuration model; confirm no hardcoded financial values |
 | **006** | Legal retention durations (**not invented**); Legal + TA signatures; `COMPLIANCE_APPROVAL_PACK_v1.0` |
-| **007** | IXOPAY sandbox/webhook/callback test results; `PAYMENT_JS_VALIDATION_REPORT_v1.0`; IL + TA signatures |
+| **007** | IXOPAY sandbox/webhook/callback/failure test results; `PAYMENT_JS_VALIDATION_REPORT_v1.0`; IL + TA signatures |
 
 ---
 
@@ -71,7 +77,16 @@ Closure preparation ≠ blocker closure ≠ Gate A ≠ implementation authorizat
 ## Gate A prerequisites (unchanged)
 
 ```text
-7/7 blockers CLOSED → GOV-IACL-001 → GOV-GAIR-001 §8 → Gate A ceremony → Sprint 0
+7/7 blockers CLOSED → GOV-IACL-001 complete → GOV-GAIR-001 §8 signed → Gate A ceremony → Sprint 0
 ```
 
-**Next allowed action:** Human approval collection and technical validation execution. **No coding.**
+**Next allowed action:** Human approval collection and technical validation execution per closure validation reports. **No coding.**
+
+---
+
+## Document history
+
+| Version | Date | Change |
+|---------|------|--------|
+| 1.0 | 2026-07-25 | Initial closure execution status (GOV-GATE-B-CLOSURE-001) |
+| 1.1 | 2026-07-25 | GOV-GATE-B-CLOSURE-EXEC-001 — closure validation reports; READY FOR APPROVAL ladder; Gate A readiness link |

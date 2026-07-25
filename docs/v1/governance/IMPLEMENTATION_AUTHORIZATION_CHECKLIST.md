@@ -3,8 +3,9 @@
 | Field | Value |
 |-------|-------|
 | **Document ID** | GOV-IACL-001 |
-| **Version** | 1.9 |
-| **Closure execution** | GOV-GATE-B-CLOSURE-001 |
+| **Version** | 1.10 |
+| **Closure execution** | GOV-GATE-B-CLOSURE-EXEC-001 |
+| **Gate A readiness** | GOV-GATE-A-READINESS-ASSESS-001 (~25%) |
 | **Evidence completion** | GOV-GATE-B-EVIDENCE-001 |
 | **Gate** | B — NOT READY — CODING BLOCKED |
 | **Last updated** | 2026-07-25 |
@@ -39,13 +40,13 @@ Checklist for **Gate A — READY FOR IMPLEMENTATION** authorization. All items m
 
 | # | Blocker | Evidence complete | Approved | Archived | Status |
 |---|---------|-------------------|----------|----------|--------|
-| C-01 | BLOCKER-001 Design | Approved — archival pending | Yes (PO/BO) | No | **Approved** — archival pending |
+| C-01 | BLOCKER-001 Design | Validation report filed | Yes (PO/BO) | No | **READY FOR APPROVAL** — Design Lead pending |
 | C-02 | BLOCKER-002 Stakeholder | Complete | Yes | Yes | **Closed** |
-| C-03 | BLOCKER-003 Vendors | Approved V1 restrictions | Yes (PO/BO) | No | **Approved** — TA validation pending |
-| C-04 | BLOCKER-004 Cloud | Direction approved | Yes (PO/BO) | No | **Approved direction** — TA/DevOps pending |
-| C-05 | BLOCKER-005 Finance | Admin config model complete | Yes (PO/BO) | No | **Approved** — TA attestation pending |
-| C-06 | BLOCKER-006 Compliance | Direction approved | Yes (PO/BO) | No | **Approved direction** — Legal pending |
-| C-07 | BLOCKER-007 Payment.js | Flow approved | Yes (PO/BO) | No | **Approved flow** — technical validation pending |
+| C-03 | BLOCKER-003 Vendors | Validation report filed | Yes (PO/BO) | No | **READY FOR APPROVAL** — IL + TA pending |
+| C-04 | BLOCKER-004 Cloud | Validation report filed | Yes (PO/BO) | No | **READY FOR APPROVAL** — TA + DevOps pending |
+| C-05 | BLOCKER-005 Finance | Validation report filed | Yes (PO/BO) | No | **READY FOR APPROVAL** — TA attestation pending |
+| C-06 | BLOCKER-006 Compliance | Validation report filed | Yes (PO/BO) | No | **READY FOR APPROVAL** — Legal + TA pending |
+| C-07 | BLOCKER-007 Payment.js | Validation report filed | Yes (PO/BO) | No | **READY FOR APPROVAL** — sandbox + IL + TA pending |
 
 **Rule:** No item may be marked complete without evidence per `BLOCKER_EVIDENCE_MANAGEMENT_FRAMEWORK.md` §1.3.
 
@@ -114,3 +115,6 @@ Checklist for **Gate A — READY FOR IMPLEMENTATION** authorization. All items m
 | 1.5 | 2026-07-25 | GOV-BUSINESS-APPROVAL-001 v1.1 — remaining blocking items matrix |
 | 1.6 | 2026-07-25 | GOV-BUSINESS-APPROVAL-001 v1.2 — BLOCKER-003/004 business partial approvals |
 | 1.7 | 2026-07-25 | GOV-GATE-B-EVIDENCE-001 — evidence completion; Evidence Prepared statuses |
+| 1.8 | 2026-07-25 | GOV-GATE-B-CLOSURE-001 — closure preparation sync |
+| 1.9 | 2026-07-25 | Governance approval sync — Administrator finance model |
+| 1.10 | 2026-07-25 | GOV-GATE-B-CLOSURE-EXEC-001 — closure validation reports; READY FOR APPROVAL statuses |

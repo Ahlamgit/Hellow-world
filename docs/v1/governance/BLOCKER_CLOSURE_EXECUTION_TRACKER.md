@@ -3,8 +3,9 @@
 | Field | Value |
 |-------|-------|
 | **Document ID** | GOV-BLOCKER-TRACKER-001 |
-| **Version** | 2.7 |
-| **Closure execution** | GOV-GATE-B-CLOSURE-001 v1.0 |
+| **Version** | 2.8 |
+| **Closure execution** | GOV-GATE-B-CLOSURE-EXEC-001 v1.0 |
+| **Closure validation** | `GATE_B_FINAL_CLOSURE_EXECUTION_RECORD.md` · `GATE_A_READINESS_ASSESSMENT.md` |
 | **Date** | 2026-07-25 |
 | **Owner** | Program Execution Manager |
 | **Gate** | **B — NOT READY — CODING BLOCKED** |
@@ -59,17 +60,19 @@ This tracker is the **operational working document** for closing BLOCKER-001 thr
 
 **Last updated:** 2026-07-25 · **Progress:** **1 / 7 Closed** (BLOCKER-002 ✓)
 
-**Master closure status:** [GATE_B_CLOSURE_EXECUTION_STATUS.md](./GATE_B_CLOSURE_EXECUTION_STATUS.md) (GOV-GATE-B-CLOSURE-001)
+**Master closure status:** [GATE_B_CLOSURE_EXECUTION_STATUS.md](./GATE_B_CLOSURE_EXECUTION_STATUS.md) (GOV-GATE-B-CLOSURE-001 v1.1) · [GOV-GATE-B-CLOSURE-EXEC-001](./GATE_B_FINAL_CLOSURE_EXECUTION_RECORD.md)
 
-| ID | Name | Owner | Current status | Closure prep artifact | Gate impact |
-|----|------|-------|----------------|-------------------|-------------|
-| **BLOCKER-001** | Design | Design Lead + PO/BO | **Approved** — closure prep complete | `DESIGN_CLOSURE_PREPARATION_RECORD.md` | Blocks **all UI** (ADR-023) |
-| **BLOCKER-002** | Stakeholder | PO/BO | **Closed** | `BLOCKER_002_CLOSURE_RECORD.md` | — |
-| **BLOCKER-003** | Vendors | IL + TA | **Approved direction** — closure prep complete | `VENDOR_DOSSIER_PREPARATION.md` | Blocks **integrations** |
-| **BLOCKER-004** | Cloud | TA + DevOps | **Approved direction** — closure prep complete | `CLOUD_READINESS_RECORD.md` v1.1 | Blocks **environment** |
-| **BLOCKER-005** | Finance | TA + Administrator | **Approved** — closure prep complete | `ADMIN_CONFIG_MODEL_VALIDATION.md` | Blocks **finance rules** |
-| **BLOCKER-006** | Compliance | Legal + TA | **Approved direction** — closure prep complete | `COMPLIANCE_CLOSURE_PREPARATION_RECORD.md` | Blocks **domain schema** |
-| **BLOCKER-007** | Payment.js | IL + TA | **Approved flow** — closure prep complete | `PAYMENT_VALIDATION_RECORD.md` | Blocks **booking payment** |
+**Status ladder:** `OPEN` → `READY FOR APPROVAL` → `APPROVED` → `CLOSED`
+
+| ID | Name | Owner | Governance status | Closure validation report | Gate impact |
+|----|------|-------|-------------------|---------------------------|-------------|
+| **BLOCKER-001** | Design | Design Lead + PO/BO | **READY FOR APPROVAL** | `DESIGN_CLOSURE_VALIDATION_REPORT.md` | Blocks **all UI** (ADR-023) |
+| **BLOCKER-002** | Stakeholder | PO/BO | **CLOSED** | `BLOCKER_002_CLOSURE_RECORD.md` | — |
+| **BLOCKER-003** | Vendors | IL + TA | **READY FOR APPROVAL** | `VENDOR_CLOSURE_VALIDATION_REPORT.md` | Blocks **integrations** |
+| **BLOCKER-004** | Cloud | TA + DevOps | **READY FOR APPROVAL** | `CLOUD_CLOSURE_VALIDATION_REPORT.md` | Blocks **environment** |
+| **BLOCKER-005** | Finance | TA + Administrator | **READY FOR APPROVAL** | `FINANCE_CLOSURE_VALIDATION_REPORT.md` | Blocks **finance rules** |
+| **BLOCKER-006** | Compliance | Legal + TA | **READY FOR APPROVAL** | `COMPLIANCE_CLOSURE_VALIDATION_REPORT.md` | Blocks **domain schema** |
+| **BLOCKER-007** | Payment.js | IL + TA | **READY FOR APPROVAL** | `PAYMENT_CLOSURE_VALIDATION_REPORT.md` | Blocks **booking payment** |
 
 ### Evidence package paths
 
@@ -99,8 +102,9 @@ Each blocker folder includes **`README.md`**, **`APPROVAL_RECORD.md`**, and **`E
 | Design Lead attestation | Pending | ☐ |
 | UI/UX approval signatures | §9 pending | ☐ |
 | Closure artifact `DESIGN_APPROVAL_SIGNOFF_v1.0` | — | ☐ |
+| `DESIGN_CLOSURE_VALIDATION_REPORT.md` | Filed | ☐ |
 
-**Tracker status:** Under Review (PO/BO business approved) · **Closed:** ☐
+**Tracker status:** **READY FOR APPROVAL** (PO/BO business approved; validation report filed) · **Closed:** ☐
 
 ---
 
@@ -126,8 +130,9 @@ Each blocker folder includes **`README.md`**, **`APPROVAL_RECORD.md`**, and **`E
 | Contracts/agreements referenced | ☐ | ☐ |
 | Sandbox readiness (payment, SMS, email, maps, OCR, storage) | ☐ | ☐ |
 | Closure artifact `VENDOR_READINESS_DOSSIER_v1.0` | — | ☐ |
+| `VENDOR_CLOSURE_VALIDATION_REPORT.md` | Filed | ☐ |
 
-**Tracker status:** Open · **Closed:** ☐
+**Tracker status:** **READY FOR APPROVAL** (validation report filed) · **Closed:** ☐
 
 ---
 
@@ -140,8 +145,9 @@ Each blocker folder includes **`README.md`**, **`APPROVAL_RECORD.md`**, and **`E
 | Backup strategy | ☐ | ☐ |
 | RPO/RTO approval | ☐ | ☐ |
 | Closure artifact `CLOUD_READINESS_DECISION_RECORD_v1.0` | — | ☐ |
+| `CLOUD_CLOSURE_VALIDATION_REPORT.md` | Filed | ☐ |
 
-**Tracker status:** Open · **Closed:** ☐
+**Tracker status:** **READY FOR APPROVAL** (validation report filed) · **Closed:** ☐
 
 ---
 
@@ -157,8 +163,9 @@ Each blocker folder includes **`README.md`**, **`APPROVAL_RECORD.md`**, and **`E
 | Settlement rules | Package — pending | ☐ |
 | Finance attestation | Pending | ☐ |
 | Closure artifact `FINANCE_RULE_MATRIX_v1.0` | — | ☐ |
+| `FINANCE_CLOSURE_VALIDATION_REPORT.md` | Filed | ☐ |
 
-**Tracker status:** Under Review (PO/BO business approved) · **Closed:** ☐
+**Tracker status:** **READY FOR APPROVAL** (PO/BO business approved; validation report filed) · **Closed:** ☐
 
 ---
 
@@ -171,8 +178,9 @@ Each blocker folder includes **`README.md`**, **`APPROVAL_RECORD.md`**, and **`E
 | Data governance approval | Package prepared | ☐ |
 | Legal + Technical Architect signatures | Pending | ☐ |
 | Closure artifact `COMPLIANCE_APPROVAL_PACK_v1.0` | — | ☐ |
+| `COMPLIANCE_CLOSURE_VALIDATION_REPORT.md` | Filed | ☐ |
 
-**Tracker status:** Under Review (PO/BO direction approved) · **Closed:** ☐
+**Tracker status:** **READY FOR APPROVAL** (PO/BO direction approved; validation report filed) · **Closed:** ☐
 
 ---
 
@@ -186,8 +194,9 @@ Each blocker folder includes **`README.md`**, **`APPROVAL_RECORD.md`**, and **`E
 | Webhook validation | ☐ | ☐ |
 | Technical Architect validation | Pending | ☐ |
 | Closure artifact `PAYMENT_JS_VALIDATION_REPORT_v1.0` | — | ☐ |
+| `PAYMENT_CLOSURE_VALIDATION_REPORT.md` | Filed | ☐ |
 
-**Tracker status:** Under Review (PO/BO business approved) · **Closed:** ☐
+**Tracker status:** **READY FOR APPROVAL** (PO/BO business approved; validation report filed) · **Closed:** ☐
 
 **Dependencies:** BLOCKER-003 (payment sandbox) · BLOCKER-005 (ledger/finance expectations)
 
@@ -394,5 +403,6 @@ If a blocker is **delayed** beyond agreed target:
 | 2.5 | 2026-07-25 | GOV-GATE-B-EVIDENCE-001 — evidence completion; Evidence Prepared statuses |
 | 2.6 | 2026-07-25 | Governance approval sync — Administrator finance configuration model; blocker status matrix |
 | 2.7 | 2026-07-25 | GOV-GATE-B-CLOSURE-001 — closure preparation artifacts for blockers 001, 003–007 |
+| 2.8 | 2026-07-25 | GOV-GATE-B-CLOSURE-EXEC-001 — closure validation reports; status ladder READY FOR APPROVAL (001, 003–007) |
 
 **Sync with:** GOV-RBCS-001 on every closure event.

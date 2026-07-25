@@ -3,8 +3,9 @@
 | Field | Value |
 |-------|-------|
 | **Document ID** | GOV-RBCS-001 |
-| **Version** | 3.9 |
-| **Closure execution** | `GATE_B_CLOSURE_EXECUTION_STATUS.md` (GOV-GATE-B-CLOSURE-001) |
+| **Version** | 3.10 |
+| **Closure execution** | `GATE_B_FINAL_CLOSURE_EXECUTION_RECORD.md` (GOV-GATE-B-CLOSURE-EXEC-001) |
+| **Gate A readiness** | `GATE_A_READINESS_ASSESSMENT.md` (GOV-GATE-A-READINESS-ASSESS-001) |
 | **Evidence completion** | `GATE_B_EVIDENCE_COMPLETION_REPORT.md` (GOV-GATE-B-EVIDENCE-001) |
 | **Blockers closed** | **1 / 7** |
 | **Last updated** | 2026-07-25 |
@@ -46,17 +47,17 @@
 
 ## Blocker Register
 
-| Blocker | Description | Status | Owner | Closure artifact | Evidence received | Approved date |
-|---------|-------------|--------|-------|------------------|-------------------|---------------|
-| BLOCKER-001 | Design approval | **Approved** — evidence archival pending | Design Lead + PO/BO | `DESIGN_APPROVAL_SIGNOFF_v1.0` | `DESIGN_APPROVAL_RECORD.md` v1.1 | 2026-07-25 |
-| BLOCKER-002 | Stakeholder approval | **Closed** | Project Owner / Business Owner | `BLOCKER_002_CLOSURE_RECORD.md` | 2/2 complete | 2026-07-25 |
-| BLOCKER-003 | Vendor readiness | **Approved (V1 restrictions)** — technical validation pending | Integration Lead + TA | `VENDOR_READINESS_DOSSIER_v1.0` | `VENDOR_APPROVAL_MATRIX.md` v1.1 | 2026-07-25 |
-| BLOCKER-004 | Cloud readiness | **Approved direction** — technical validation pending | Architect + DevOps | `CLOUD_READINESS_DECISION_RECORD_v1.0` | `CLOUD_READINESS_RECORD.md` | 2026-07-25 |
-| BLOCKER-005 | Finance configuration | **Approved** — admin configuration model | Administrator + PO/BO | `FINANCE_RULE_MATRIX.md` | Business approval complete | 2026-07-25 |
-| BLOCKER-006 | Compliance approval | **Approved direction** — Legal retention pending | Legal + TA | `COMPLIANCE_APPROVAL_PACK_v1.0` | `COMPLIANCE_GOVERNANCE_RECORD.md` v1.1 | 2026-07-25 |
-| BLOCKER-007 | Payment.js validation | **Approved flow** — technical validation pending | PO/BO + TA | `PAYMENT_JS_VALIDATION_REPORT_v1.0` | `PAYMENT_FLOW_APPROVAL_RECORD.md` v1.1 | 2026-07-25 |
+| Blocker | Description | Status | Owner | Closure validation report | Closure artifact | Evidence received | Approved date |
+|---------|-------------|--------|-------|-------------------------|------------------|-------------------|---------------|
+| BLOCKER-001 | Design approval | **READY FOR APPROVAL** | Design Lead + PO/BO | `DESIGN_CLOSURE_VALIDATION_REPORT.md` | `DESIGN_APPROVAL_SIGNOFF_v1.0` | `DESIGN_APPROVAL_RECORD.md` v1.1 | 2026-07-25 (PO/BO) |
+| BLOCKER-002 | Stakeholder approval | **CLOSED** | Project Owner / Business Owner | — | `BLOCKER_002_CLOSURE_RECORD.md` | 2/2 complete | 2026-07-25 |
+| BLOCKER-003 | Vendor readiness | **READY FOR APPROVAL** | Integration Lead + TA | `VENDOR_CLOSURE_VALIDATION_REPORT.md` | `VENDOR_READINESS_DOSSIER_v1.0` | `VENDOR_APPROVAL_MATRIX.md` v1.1 | 2026-07-25 (PO/BO) |
+| BLOCKER-004 | Cloud readiness | **READY FOR APPROVAL** | Architect + DevOps | `CLOUD_CLOSURE_VALIDATION_REPORT.md` | `CLOUD_READINESS_DECISION_RECORD_v1.0` | `CLOUD_READINESS_RECORD.md` | 2026-07-25 (PO/BO) |
+| BLOCKER-005 | Finance configuration | **READY FOR APPROVAL** | Technical Architect | `FINANCE_CLOSURE_VALIDATION_REPORT.md` | `FINANCE_RULE_MATRIX.md` | Business approval complete | 2026-07-25 (PO/BO) |
+| BLOCKER-006 | Compliance approval | **READY FOR APPROVAL** | Legal + TA | `COMPLIANCE_CLOSURE_VALIDATION_REPORT.md` | `COMPLIANCE_APPROVAL_PACK_v1.0` | `COMPLIANCE_GOVERNANCE_RECORD.md` v1.1 | 2026-07-25 (PO/BO) |
+| BLOCKER-007 | Payment.js validation | **READY FOR APPROVAL** | IL + TA | `PAYMENT_CLOSURE_VALIDATION_REPORT.md` | `PAYMENT_JS_VALIDATION_REPORT_v1.0` | `PAYMENT_FLOW_APPROVAL_RECORD.md` v1.1 | 2026-07-25 (PO/BO) |
 
-**Summary:** **1 Closed** · **6 Approved (business/direction)** — closure pending evidence validation · **0** auto-closed beyond BLOCKER-002
+**Summary:** **1 Closed** · **6 READY FOR APPROVAL** (closure validation reports filed; human/technical signatures pending) · **0** auto-closed beyond BLOCKER-002
 
 ---
 
@@ -264,3 +265,6 @@ Refer to `BLOCKER_CLOSURE_EXECUTION_TRACKER.md` (GOV-BLOCKER-TRACKER-001) for op
 | 3.5 | 2026-07-25 | GOV-BUSINESS-APPROVAL-001 v1.1 |
 | 3.6 | 2026-07-25 | GOV-BUSINESS-APPROVAL-001 v1.2 |
 | 3.7 | 2026-07-25 | GOV-GATE-B-EVIDENCE-001 — evidence completion report; Evidence Prepared statuses |
+| 3.8 | 2026-07-25 | GOV-GATE-B-CLOSURE-001 — closure preparation package |
+| 3.9 | 2026-07-25 | Governance approval sync — Administrator finance configuration model |
+| 3.10 | 2026-07-25 | GOV-GATE-B-CLOSURE-EXEC-001 — closure validation reports; READY FOR APPROVAL ladder (001, 003–007) |
