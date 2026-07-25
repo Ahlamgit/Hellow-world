@@ -3,7 +3,7 @@
 | Field | Value |
 |-------|-------|
 | **Document ID** | GOV-MASTER-CTRL-001 |
-| **Version** | 1.3 |
+| **Version** | 1.4 |
 | **Date** | 2026-07-25 |
 | **Owner** | Program Governance Manager · Technical Program Manager |
 | **Gate** | **B — NOT READY — CODING BLOCKED** |
@@ -245,11 +245,16 @@ Before implementation authorization, **all** must be true:
 | Wave | Allowed (after Gate A) | Blocker / gate |
 |------|------------------------|----------------|
 | **Wave 1** | Repository setup · CI/CD foundation · Backend skeleton | Gate A |
-| **Wave 2** | Authentication foundation · RBAC foundation · Migration tooling · Logging foundation | Gate A |
-| **Wave 3** | Localization foundation | Gate A |
+| **Wave 2** | Authentication foundation · RBAC foundation · **Audit foundation** · Migration **framework/tooling** (not business schema) · Logging foundation | Gate A |
+| **Wave 3** | Localization foundation · Logging · **Observability** | Gate A |
 | **Wave 4** | Design system · Application shells | Gate A **and** BLOCKER-001 **Closed** |
 
-**Sprint 0 exclusions (never before Gate A):** Payment · booking completion · settlement · production deployment · feature expansion
+**Sprint 0 exclusions (never before Gate A):** Payment · booking completion · settlement · production deployment · feature expansion · **business domain schema creation**
+
+| Migration rule | Detail |
+|----------------|--------|
+| **Allowed** | Migration framework / tooling setup |
+| **Not allowed** | Business domain schema migrations until BLOCKER-006 Closed + domain design authorized |
 
 | Also not allowed in Sprint 0 | Reference |
 |------------------------------|-----------|
@@ -313,22 +318,22 @@ Customer experience remains simple (ADR-029). Internal: ledger, commission, sett
 
 ## 12. Standard execution response format
 
-Every governance execution response **must** include:
+Every governance execution response **must** include (in order):
 
-| Field | Current value |
-|-------|---------------|
-| **Current Gate** | Gate B — NOT READY — CODING BLOCKED |
-| **Implementation Status** | NOT AUTHORIZED |
-| **Blockers** | Closed 0 / 7 |
-| **Executed Action** | *(describe governance action completed)* |
-| **Files Created/Updated** | *(list paths or None)* |
-| **Architecture Impact** | None — architecture APPROVED & VALIDATED; no ADR changes |
-| **Scope Impact** | None — scope FROZEN; no feature additions |
-| **Next Allowed Action** | Phase 1 approval campaign; human signatures required |
+| # | Field | Current value |
+|---|-------|---------------|
+| 1 | **Current Gate** | Gate B — NOT READY — CODING BLOCKED |
+| 2 | **Implementation Status** | NOT AUTHORIZED |
+| 3 | **Blockers** | Closed 0 / 7 |
+| 4 | **Architecture Impact** | None — APPROVED & VALIDATED; no ADR changes |
+| 5 | **Scope Impact** | None — FROZEN; no feature additions |
+| 6 | **Executed Action** | *(governance action completed)* |
+| 7 | **Files Created/Updated** | *(paths or None)* |
+| 8 | **Next Allowed Action** | Phase 1 human approvals; no coding |
 
-**Canonical control prompt:** `KHADAMATI_GOVERNANCE_CONTROL_PROMPT.md` (GOV-CONTROL-PROMPT-001)
+**Canonical prompt:** `KHADAMATI_GOVERNANCE_CONTROL_PROMPT.md` (GOV-CONTROL-PROMPT-001 v1.1)
 
-No exceptions. No shortcuts. No coding before Gate A.
+No exceptions. No shortcuts. No coding before Gate A. **Documentation ≠ approval.**
 
 ---
 
@@ -340,6 +345,7 @@ No exceptions. No shortcuts. No coding before Gate A.
 | 1.1 | 2026-07-25 | Gate A ceremony prep + Phase 1 roadmap status references |
 | 1.2 | 2026-07-25 | Traceability Gate A requirement; GOV-ARCH-READINESS-001 reference |
 | 1.3 | 2026-07-25 | Sprint 0 waves; design/finance/compliance governance; GOV-CONTROL-PROMPT-001 response format |
+| 1.4 | 2026-07-25 | Sprint 0 migration framework vs business schema; payment ADR refs; doc≠approval rule |
 
 **Supersedes:** Informal status summaries for gate and implementation authorization decisions.  
 **Subordinate to:** `MASTER_IMPLEMENTATION_PROMPT_v1.0.md`, ADRs, `FINAL_SCOPE_BASELINE.md`.
