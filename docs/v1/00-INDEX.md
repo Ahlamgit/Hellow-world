@@ -20,7 +20,9 @@
 **Pre-implementation review:** [FINAL_PRE_IMPLEMENTATION_READINESS_REVIEW.md](./FINAL_PRE_IMPLEMENTATION_READINESS_REVIEW.md) — recommendation **B) Additional preparation required**  
 **Execution standards (after Gate A):** [IMPLEMENTATION_EXECUTION_STANDARDS.md](./IMPLEMENTATION_EXECUTION_STANDARDS.md) — prepared; coding **BLOCKED** until Gate A  
 **Payment.js validation:** [payment/PAYMENT_JS_MOBILE_VALIDATION_REPORT.md](./payment/PAYMENT_JS_MOBILE_VALIDATION_REPORT.md) · [payment/AREEBA_IXOPAY_VENDOR_VALIDATION_CHECKLIST.md](./payment/AREEBA_IXOPAY_VENDOR_VALIDATION_CHECKLIST.md) · [payment/PAYMENT_SECURITY_AND_RECONCILIATION_FRAMEWORK.md](./payment/PAYMENT_SECURITY_AND_RECONCILIATION_FRAMEWORK.md) · [ADR-029](./adr/ADR-029-simplified-payment-experience-ledger-control.md) — BLOCKER-007 **IN VALIDATION**  
-**ADRs:** [adr/README.md](./adr/README.md) (001–029)  
+**Feature Traceability:** [FEATURE_TRACEABILITY_MATRIX.md](./FEATURE_TRACEABILITY_MATRIX.md)  
+**Architecture consistency review:** [FINAL_ARCHITECTURE_CONSISTENCY_REVIEW.md](./FINAL_ARCHITECTURE_CONSISTENCY_REVIEW.md) — **validated 2026-07-25** (KHAD-V1-FACR-001)  
+**ADRs:** [adr/README.md](./adr/README.md) (001–032)  
 **Admin configurable finance rules:** [architecture/47-ADMIN-CONFIGURABLE-FINANCIAL-RULES.md](./architecture/47-ADMIN-CONFIGURABLE-FINANCIAL-RULES.md) · [ADR-013](./adr/ADR-013-admin-configurable-financial-business-rules.md)  
 **Alignment changelog:** [ALIGNMENT_CHANGELOG_MASTER_PROMPT_v1.md](./ALIGNMENT_CHANGELOG_MASTER_PROMPT_v1.md)  
 

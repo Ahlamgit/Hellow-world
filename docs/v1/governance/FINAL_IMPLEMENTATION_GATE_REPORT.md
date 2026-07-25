@@ -3,7 +3,7 @@
 | Field | Value |
 |-------|-------|
 | **Document ID** | GOV-FIGR-001 |
-| **Version** | 1.8 |
+| **Version** | 1.9 |
 | **Report date** | 2026-07-25 |
 | **Prepared by** | Program Governance Manager |
 
@@ -26,7 +26,7 @@ KHADAMATI remains blocked for all implementation activity. Seven pre-implementat
 | Dimension | Status |
 |-----------|--------|
 | Product scope | **FROZEN** |
-| Architecture | **APPROVED** (ADR-001 → ADR-028) |
+| Architecture | **APPROVED** (ADR-001 → ADR-032) — see `FINAL_ARCHITECTURE_CONSISTENCY_REVIEW.md` |
 | Financial architecture | **APPROVED** (ADR-013, ADR-026) |
 | Finance policy values | **NOT APPROVED** — `FINANCE_POLICY_APPROVAL_PACKAGE.md` ready for signature |
 | Design assets & sign-off | **NOT APPROVED** — `DESIGN_APPROVAL_PACKAGE.md` ready for signature |
@@ -57,7 +57,7 @@ KHADAMATI remains blocked for all implementation activity. Seven pre-implementat
 
 | Requirement | Evidence | Approved By | Status |
 |-------------|----------|-------------|--------|
-| Architecture | ADR-001 → ADR-028 | Technical Architect | **Pending** |
+| Architecture | ADR-001 → ADR-032 | Technical Architect | **Pending** — consistency review complete (KHAD-V1-FACR-001) |
 | Scope | Frozen scope + traceability matrix | Product Owner | **Pending** |
 | Stakeholder | `STAKEHOLDER_APPROVAL_PACKAGE.md` | Product / Business / Operations Owners | **Ready for Approval** |
 | Design | `DESIGN_APPROVAL_PACKAGE.md` | Product / Design / Business Owners | **Ready for Approval** |
@@ -133,3 +133,4 @@ Sprint 0 scope is defined in `SPRINT_0_FOUNDATION_CHARTER.md` (GOV-S0FC-001).
 | 1.6 | 2026-07-25 | BLOCKER-006 compliance approval package prepared — Ready for Approval |
 | 1.7 | 2026-07-25 | Sprint 0 Foundation Charter added; coding still Gate B blocked |
 | 1.8 | 2026-07-25 | Gate A authorization record (GOV-GAIR-001) prepared; Gate B unchanged — 0/7 closed |
+| 1.9 | 2026-07-25 | Final architecture consistency review (KHAD-V1-FACR-001); ADR-001→032 |

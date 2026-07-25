@@ -6,7 +6,7 @@
 
 ---
 
-## 1. Final ADR List (001–029)
+## 1. Final ADR List (001–032)
 
 | ADR | Decision | Status |
 |-----|----------|--------|
@@ -39,6 +39,9 @@
 | **027** | Store promotional product catalog (non-transactional) | **Accepted** |
 | **028** | Unified Provider capability model; service-first UX | **Accepted** |
 | **029** | Simplified customer/provider payment experience; internal ledger control | **Accepted Architecture Direction** |
+| **030** | Booking / payment / ledger / settlement state separation | **Accepted Architecture Direction** |
+| **031** | Payment failure, retry, and recovery strategy | **Accepted Architecture Direction** |
+| **032** | Notification delivery architecture (event-driven, vendor-agnostic) | **Accepted Architecture Direction** |
 
 ---
 
@@ -77,10 +80,15 @@
 - Lebanon commercial **values** configured in Admin Portal — never hardcoded  
 - **Customer/provider payment UX simplified** — ledger, commission, and settlement remain internal (ADR-029)  
 - Customers see payment status only; providers see earnings summaries — not ledger operations  
+- **Separate domain states** for booking, payment, ledger, settlement (ADR-030)  
+- **Payment failure/recovery** event-driven and idempotent (ADR-031)  
+
+### Notifications
+- Business modules emit events; notification module delivers (ADR-032)  
+- In-app primary; push secondary; SMS/email optional via ports  
+- Chat remains booking-scoped (ADR-020); notifications alert only — no open messaging  
 
 ---
-
-## 3. Remaining Risks
 
 | Risk | Severity | Mitigation |
 |------|----------|------------|
@@ -107,7 +115,7 @@ Coding remains **blocked** until:
 | 5 | **Finance** ready to load Lebanon policy configs before money enablement | Finance |
 | 6 | **Compliance** numeric retention defaults for Lebanon production | Compliance |
 
-Architecture decisions **019–029 are no longer open product forks** — they are accepted (ADR-029: architecture direction only; no implementation).
+Architecture decisions **019–032 are no longer open product forks** — they are accepted (ADR-029…032: architecture direction only; no implementation).
 
 ---
 
@@ -123,6 +131,8 @@ Architecture decisions **019–029 are no longer open product forks** — they a
 | Financial policy model | **Approved (ADR-013/026)** |
 | Integration strategy | **Approved (ADR-025)** |
 | Cloud/DR pattern | **Approved (ADR-024)** — vendor TBD |
+| Payment / state / recovery model | **Approved (ADR-029/030/031)** |
+| Notification delivery model | **Approved (ADR-032)** |
 | Design / UI implementation | **Blocked (ADR-023)** |
 | Production coding | **Blocked** |
 
@@ -138,7 +148,8 @@ When design assets arrive and sign-off is recorded, amend readiness to **Ready f
 
 ## 6. Document Cross-Links
 
-- ADRs: [`docs/v1/adr/`](./adr/README.md)  
+- ADRs: [`docs/v1/adr/`](./adr/README.md) — includes **ADR-029…032** (payment & notification architecture)  
+- **Consistency review:** [`FINAL_ARCHITECTURE_CONSISTENCY_REVIEW.md`](./FINAL_ARCHITECTURE_CONSISTENCY_REVIEW.md) — **validated 2026-07-25**  
 - Master Prompt: [`MASTER_IMPLEMENTATION_PROMPT_v1.0.md`](./MASTER_IMPLEMENTATION_PROMPT_v1.0.md)  
 - FTM: [`FEATURE_TRACEABILITY_MATRIX.md`](./FEATURE_TRACEABILITY_MATRIX.md)  
 - Readiness report: [`FINAL_ARCHITECTURE_READINESS_REPORT.md`](./FINAL_ARCHITECTURE_READINESS_REPORT.md)  
