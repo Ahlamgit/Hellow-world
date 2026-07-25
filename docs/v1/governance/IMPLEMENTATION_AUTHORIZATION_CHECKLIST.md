@@ -3,7 +3,7 @@
 | Field | Value |
 |-------|-------|
 | **Document ID** | GOV-IACL-001 |
-| **Version** | 1.7 |
+| **Version** | 1.8 |
 | **Evidence completion** | GOV-GATE-B-EVIDENCE-001 |
 | **Gate** | B — NOT READY — CODING BLOCKED |
 | **Last updated** | 2026-07-25 |
@@ -38,13 +38,13 @@ Checklist for **Gate A — READY FOR IMPLEMENTATION** authorization. All items m
 
 | # | Blocker | Evidence complete | Approved | Archived | Status |
 |---|---------|-------------------|----------|----------|--------|
-| C-01 | BLOCKER-001 Design | Evidence package prepared | Partial (PO/BO) | No | **Evidence Prepared** |
+| C-01 | BLOCKER-001 Design | Approved — archival pending | Yes (PO/BO) | No | **Approved** — archival pending |
 | C-02 | BLOCKER-002 Stakeholder | Complete | Yes | Yes | **Closed** |
-| C-03 | BLOCKER-003 Vendors | Matrix + maps exclusion prepared | Partial (PO/BO) | No | **Evidence Prepared** |
-| C-04 | BLOCKER-004 Cloud | Readiness record prepared | Partial (PO/BO) | No | **Evidence Prepared** |
-| C-05 | BLOCKER-005 Finance | Commission + subscription docs prepared | Partial (PO/BO) | No | **Evidence Prepared** |
-| C-06 | BLOCKER-006 Compliance | Governance record prepared | Partial (PO/BO) | No | **Evidence Prepared** |
-| C-07 | BLOCKER-007 Payment.js | Flow approval record prepared | Partial (PO/BO) | No | **Evidence Prepared** |
+| C-03 | BLOCKER-003 Vendors | Approved V1 restrictions | Yes (PO/BO) | No | **Approved** — TA validation pending |
+| C-04 | BLOCKER-004 Cloud | Direction approved | Yes (PO/BO) | No | **Approved direction** — TA/DevOps pending |
+| C-05 | BLOCKER-005 Finance | Admin config model complete | Yes (PO/BO) | No | **Approved** — TA attestation pending |
+| C-06 | BLOCKER-006 Compliance | Direction approved | Yes (PO/BO) | No | **Approved direction** — Legal pending |
+| C-07 | BLOCKER-007 Payment.js | Flow approved | Yes (PO/BO) | No | **Approved flow** — technical validation pending |
 
 **Rule:** No item may be marked complete without evidence per `BLOCKER_EVIDENCE_MANAGEMENT_FRAMEWORK.md` §1.3.
 

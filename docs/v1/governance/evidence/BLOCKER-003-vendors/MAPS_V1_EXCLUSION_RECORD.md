@@ -3,41 +3,43 @@
 | Field | Value |
 |-------|-------|
 | **Document ID** | EVD-003-MAPS-EXCL-001 |
-| **Version** | 1.1 |
+| **Version** | 1.2 |
 | **Date** | 2026-07-25 |
 | **Decision** | **NOT APPROVED FOR V1** |
 | **Approver** | Project Owner / Business Owner |
 
 ---
 
-## Governance decision
+## Decision
 
 Maps and location services are **intentionally excluded from KHADAMATI V1**.
 
+Architecture may remain **future-ready**; **V1 implementation must contain NO maps dependency.**
+
 ---
 
-## V1 position
+## DO NOT implement in V1
+
+| Forbidden |
+|-----------|
+| Google Maps |
+| Mapbox |
+| Location APIs |
+| Distance calculation |
+| Map screens |
+| Geolocation dependency |
+| GPS tracking |
+| Location-based matching |
+
+---
+
+## V1 rule
 
 | Statement | Confirmation |
 |-----------|--------------|
-| No maps implementation in V1 | **Yes** |
-| No V1 dependency on maps/location providers | **Yes** |
-| Reserved for future product evolution only | **Yes** |
+| No maps integration | **Yes** |
+| No geolocation dependency | **Yes** |
+| Reserved for future product evolution | **Yes** |
 | Separate governance approval required for future inclusion | **Yes** |
 
----
-
-## Forbidden in V1
-
-- Maps integration
-- GPS tracking
-- Location tracking
-- Location-based matching
-
----
-
-## Architecture note
-
-ADR-001 → ADR-032 unchanged. Ports/adapters pattern may exist at architecture level; **no V1 maps implementation or integration dependency**.
-
-**BLOCKER-003 checklist:** Maps sandbox item = **N/A — V1 excluded**.
+**BLOCKER-003 checklist:** Maps items = **N/A — V1 excluded**.

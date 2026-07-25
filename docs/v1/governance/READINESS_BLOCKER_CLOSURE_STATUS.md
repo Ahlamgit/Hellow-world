@@ -3,7 +3,7 @@
 | Field | Value |
 |-------|-------|
 | **Document ID** | GOV-RBCS-001 |
-| **Version** | 3.7 |
+| **Version** | 3.8 |
 | **Evidence completion** | `GATE_B_EVIDENCE_COMPLETION_REPORT.md` (GOV-GATE-B-EVIDENCE-001) |
 | **Blockers closed** | **1 / 7** |
 | **Last updated** | 2026-07-25 |
@@ -47,15 +47,15 @@
 
 | Blocker | Description | Status | Owner | Closure artifact | Evidence received | Approved date |
 |---------|-------------|--------|-------|------------------|-------------------|---------------|
-| BLOCKER-001 | Design approval | **Evidence Prepared** — Awaiting Design Lead | Design Lead + PO/BO | `DESIGN_APPROVAL_SIGNOFF_v1.0` | `DESIGN_APPROVAL_RECORD.md` + asset refs | 2026-07-25 (business) |
+| BLOCKER-001 | Design approval | **Approved** — evidence archival pending | Design Lead + PO/BO | `DESIGN_APPROVAL_SIGNOFF_v1.0` | `DESIGN_APPROVAL_RECORD.md` v1.1 | 2026-07-25 |
 | BLOCKER-002 | Stakeholder approval | **Closed** | Project Owner / Business Owner | `BLOCKER_002_CLOSURE_RECORD.md` | 2/2 complete | 2026-07-25 |
-| BLOCKER-003 | Vendor readiness | **Evidence Prepared** — Awaiting TA | Integration Lead + TA | `VENDOR_READINESS_DOSSIER_v1.0` | `VENDOR_APPROVAL_MATRIX.md` | 2026-07-25 (business partial) |
-| BLOCKER-004 | Cloud readiness | **Evidence Prepared** — Pending technical validation | Architect + DevOps | `CLOUD_READINESS_DECISION_RECORD_v1.0` | `CLOUD_READINESS_RECORD.md` | 2026-07-25 (business) |
-| BLOCKER-005 | Finance configuration | **Evidence Prepared** — Awaiting Finance | Finance + PO/BO | `FINANCE_RULE_MATRIX_v1.0` | Commission + subscription approval docs | 2026-07-25 (business) |
-| BLOCKER-006 | Compliance approval | **Evidence Prepared** — Awaiting Legal + TA | Legal + TA | `COMPLIANCE_APPROVAL_PACK_v1.0` | `COMPLIANCE_GOVERNANCE_RECORD.md` | 2026-07-25 (business) |
-| BLOCKER-007 | Payment.js validation | **Evidence Prepared** — Awaiting technical validation | PO/BO + TA | `PAYMENT_JS_VALIDATION_REPORT_v1.0` | `PAYMENT_FLOW_APPROVAL_RECORD.md` | 2026-07-25 (business) |
+| BLOCKER-003 | Vendor readiness | **Approved (V1 restrictions)** — technical validation pending | Integration Lead + TA | `VENDOR_READINESS_DOSSIER_v1.0` | `VENDOR_APPROVAL_MATRIX.md` v1.1 | 2026-07-25 |
+| BLOCKER-004 | Cloud readiness | **Approved direction** — technical validation pending | Architect + DevOps | `CLOUD_READINESS_DECISION_RECORD_v1.0` | `CLOUD_READINESS_RECORD.md` | 2026-07-25 |
+| BLOCKER-005 | Finance configuration | **Approved** — admin configuration model | Administrator + PO/BO | `FINANCE_RULE_MATRIX.md` | Business approval complete | 2026-07-25 |
+| BLOCKER-006 | Compliance approval | **Approved direction** — Legal retention pending | Legal + TA | `COMPLIANCE_APPROVAL_PACK_v1.0` | `COMPLIANCE_GOVERNANCE_RECORD.md` v1.1 | 2026-07-25 |
+| BLOCKER-007 | Payment.js validation | **Approved flow** — technical validation pending | PO/BO + TA | `PAYMENT_JS_VALIDATION_REPORT_v1.0` | `PAYMENT_FLOW_APPROVAL_RECORD.md` v1.1 | 2026-07-25 |
 
-**Summary:** **1 Closed** · **6 Evidence Prepared** (awaiting human/technical approval) · **0** auto-closed
+**Summary:** **1 Closed** · **6 Approved (business/direction)** — closure pending evidence validation · **0** auto-closed beyond BLOCKER-002
 
 ---
 

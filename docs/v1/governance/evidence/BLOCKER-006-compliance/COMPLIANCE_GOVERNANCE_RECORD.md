@@ -3,10 +3,10 @@
 | Field | Value |
 |-------|-------|
 | **Document ID** | EVD-006-GOV-001 |
-| **Version** | 1.0 |
-| **Date** | 2026-07-25 |
-| **Blocker** | BLOCKER-006 — Compliance |
-| **Evidence status** | **Prepared** — awaiting Legal + Technical Architect approval |
+| **Version** | 1.1 |
+| **Decision** | **APPROVED** (direction only) |
+| **Business approval** | **COMPLETE** — 2026-07-25 |
+| **Evidence status** | **Approved direction** — Pending Legal final retention values |
 | **Blocker closure** | **NOT CLOSED** |
 
 ---

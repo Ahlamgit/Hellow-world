@@ -3,11 +3,12 @@
 | Field | Value |
 |-------|-------|
 | **Document ID** | EVD-003-MATRIX-001 |
-| **Version** | 1.0 |
+| **Version** | 1.1 |
 | **Date** | 2026-07-25 |
 | **Blocker** | BLOCKER-003 — Vendors |
-| **Evidence status** | **Prepared** — awaiting technical validation |
+| **Decision** | **APPROVED WITH V1 RESTRICTIONS** |
 | **Business approver** | Project Owner / Business Owner |
+| **Blocker closure** | **NOT CLOSED** — technical validation pending |
 
 ---
 
@@ -15,65 +16,51 @@
 
 | Vendor capability | Business decision | V1 implementation | Technical validation |
 |-------------------|-------------------|-------------------|----------------------|
-| SMS verification (OTP) | **Approved** | Allowed — purpose-limited | **Pending** — Integration Lead + TA |
-| Email verification | **Approved** | Allowed — purpose-limited | **Pending** |
-| Account security emails | **Approved** | Allowed | **Pending** |
-| Storage (images, documents, attachments, verification files) | **Approved** | Allowed | **Pending** |
+| SMS — phone / OTP / account verification | **Approved** | Allowed — purpose-limited | **Pending** |
+| Email — verification & security communication | **Approved** | Allowed — purpose-limited | **Pending** |
+| Storage — files, documents, media | **Approved** | Allowed | **Pending** |
 | Marketing SMS | **Not approved** | **Forbidden** | N/A |
-| Marketing / campaign email | **Not approved** | **Forbidden** | N/A |
-| Maps / location services | **Excluded V1** | **Forbidden** | N/A — see `MAPS_V1_EXCLUSION_RECORD.md` |
-| Payment gateway (IXOPAY) | Business approved (BLOCKER-007) | Pending technical dossier | **Pending** |
-| OCR / face verification | Not in business matrix | Evaluation pending | **Pending** |
+| Unnecessary / promotional notifications | **Not approved** | **Forbidden** | N/A |
+| Marketing email campaigns | **Not approved** | **Forbidden** | N/A |
+| Maps / location (all providers) | **Excluded V1** | **Forbidden** | N/A |
+| Payment (IXOPAY) | Business approved (007) | Pending dossier | **Pending** |
+| OCR / face | — | Evaluation pending | **Pending** |
 
 ---
 
-## SMS provider — purpose scope
+## SMS provider — APPROVED purpose
 
-**ONLY:**
+**ONLY:** phone verification · OTP verification · account verification
 
-- Phone verification
-- OTP delivery
-
-**NOT:**
-
-- Marketing SMS
-- Promotional notifications
-- Campaign messaging
+**NOT:** marketing SMS · unnecessary notifications
 
 ---
 
-## Email provider — purpose scope
+## Email provider — APPROVED purpose
 
-**ONLY:**
-
-- Email verification
-- Account security emails
-
-**NOT:**
-
-- Marketing campaigns
-- Marketing automation (without future governance approval)
+**ONLY:** email verification · account communication · security-related emails
 
 ---
 
-## Storage provider — purpose scope
+## Storage provider — APPROVED purpose
 
-- Images
-- Documents
-- Attachments
-- Provider verification files
-
-**Requirements:** Secure access · backup policy · permission control.
+- Application file storage
+- User / provider documents
+- Approved media storage
 
 ---
 
-## Required future approvals
+## Maps — NOT APPROVED FOR V1
 
-| Role | Responsibility | Status |
-|------|----------------|--------|
-| Integration Lead | Vendor dossier · sandbox evidence | **Pending** |
-| Technical Architect | Ports/adapters compliance · final approval | **Pending** |
+See `MAPS_V1_EXCLUSION_RECORD.md`. **No V1 maps dependency.**
 
-**Closure artifact:** `VENDOR_READINESS_DOSSIER_v1.0` — not filed.
+---
+
+## Technical validation required
+
+| Role | Status |
+|------|--------|
+| Integration Lead | **Pending** — vendor dossier · sandbox |
+| Technical Architect | **Pending** — ports/adapters · sign-off |
 
 **BLOCKER-003 NOT CLOSED.**

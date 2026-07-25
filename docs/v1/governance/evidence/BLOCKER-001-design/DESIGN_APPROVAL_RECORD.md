@@ -3,75 +3,72 @@
 | Field | Value |
 |-------|-------|
 | **Document ID** | EVD-001-DESIGN-APPROVAL-001 |
-| **Version** | 1.0 |
+| **Version** | 1.1 |
 | **Date** | 2026-07-25 |
 | **Blocker** | BLOCKER-001 — Design |
-| **Evidence status** | **Prepared** — awaiting Design Lead attestation |
-| **Blocker closure** | **NOT CLOSED** |
+| **Decision** | **APPROVED** |
+| **Approver** | Project Owner / Business Owner |
+| **Blocker closure** | **NOT CLOSED** — evidence archival pending |
 
 ---
 
-## 1. Design direction (approved)
+## 1. Approved design inputs
 
-| Reference | Status | Approver |
-|-----------|--------|----------|
-| Theme video `theme(1).mp4` | **Approved** | Project Owner / Business Owner |
-| Logo reference `ic-khadamati(1).jpg` | **Approved** (refinement required) | Project Owner / Business Owner |
-| Mobile-first marketplace design | **Approved** | Project Owner / Business Owner |
+| Input | Reference | Decision |
+|-------|-----------|----------|
+| Reference theme video | `theme(1).mp4` | **APPROVED** |
+| KHADAMATI logo reference | `ic-khadamati(1).jpg` | **APPROVED** |
+| Logo refinement to match mobile design system | `LOGO_REFINEMENT_SPECIFICATION.md` | **APPROVED** |
 
----
-
-## 2. Customer application — APPROVED
-
-| Capability | Business approval | Design Lead attestation |
-|------------|-------------------|-------------------------|
-| Service categories | **Approved** | Pending |
-| Search | **Approved** | Pending |
-| Provider profiles | **Approved** | Pending |
-| Booking request | **Approved** | Pending |
-| Booking tracking | **Approved** | Pending |
-| Chat (booking-scoped) | **Approved** | Pending |
-| Reviews | **Approved** | Pending |
-| Payment initiation | **Approved** | Pending |
+**Logo requirements:** Modern marketplace appearance · mobile-first · clean icon adaptation · Arabic-friendly branding · consistent across Customer / Provider / Administrator experiences. **Do not redesign** — refine only.
 
 ---
 
-## 3. Provider application — APPROVED
+## 2. Customer app — APPROVED
 
-| Capability | Business approval | Design Lead attestation |
-|------------|-------------------|-------------------------|
-| Provider profile | **Approved** | Pending |
-| Service management | **Approved** | Pending |
-| Availability management | **Approved** | Pending |
-| Booking management | **Approved** | Pending |
-| Customer communication | **Approved** | Pending |
-| Earnings visibility | **Approved** | Pending |
-
-**Excluded:** Wallet withdrawal UI (V1 scope).
+- Mobile-first design
+- Service discovery
+- Booking flow
+- Service provider interaction
 
 ---
 
-## 4. Administrator web portal — APPROVED
+## 3. Provider experience — APPROVED
 
-| Domain | Business approval | Design Lead attestation |
-|--------|-------------------|-------------------------|
-| User / provider approval workflows | **Approved** | Pending |
-| Verification governance | **Approved** | Pending |
-| Service categories & subcategories | **Approved** | Pending |
-| Subscription management | **Approved** | Pending |
-| Advertisement management | **Approved** | Pending |
-| Moderation | **Approved** | Pending |
-| Platform configuration | **Approved** | Pending |
+- Provider mobile / dashboard experience
+- Availability management
+- Service management
+- Booking management
 
 ---
 
-## 5. Required signatures (closure)
+## 4. Administrator portal — APPROVED
 
-| Approver | Role | Status | Date |
-|----------|------|--------|------|
-| Project Owner / Business Owner | Business design approval | **Recorded** | 2026-07-25 |
-| Design Lead | Design system & surface attestation | **Pending** | — |
+- Web administration
+- Governance controls
+- Configuration management
 
-Full blocker approval: `APPROVAL_RECORD.md` — **Partially Approved** until Design Lead signs.
+---
 
-**No implementation authorization.** ADR-023 applies.
+## 5. Design requirements — APPROVED
+
+| Requirement | Status |
+|-------------|--------|
+| Arabic RTL support | **Approved** |
+| English LTR support | **Approved** |
+| Lebanon launch baseline | **Approved** |
+| Future multi-region readiness | **Approved** |
+
+---
+
+## 6. Remaining requirement (closure)
+
+| Item | Status |
+|------|--------|
+| Archive `theme(1).mp4` to `reference-assets/` | **Pending** |
+| Archive `ic-khadamati(1).jpg` to `reference-assets/` | **Pending** |
+| Refined logo package (per spec) | **Pending** |
+| `DESIGN_APPROVAL_SIGNOFF_v1.0` | **Pending** |
+
+**Business approval:** **COMPLETE** — 2026-07-25.  
+**Blocker status:** **Approved** — evidence archival pending. **NOT CLOSED** until GOV-BEMF-001 checklist complete (ADR-023).

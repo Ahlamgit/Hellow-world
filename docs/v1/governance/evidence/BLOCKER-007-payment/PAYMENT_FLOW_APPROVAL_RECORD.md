@@ -3,10 +3,9 @@
 | Field | Value |
 |-------|-------|
 | **Document ID** | EVD-007-FLOW-001 |
-| **Version** | 1.0 |
-| **Date** | 2026-07-25 |
-| **Blocker** | BLOCKER-007 — Payment.js |
-| **Evidence status** | **Prepared** — awaiting technical validation |
+| **Version** | 1.1 |
+| **Decision** | **APPROVED** (business flow) |
+| **Business approval** | **COMPLETE** — 2026-07-25 |
 | **Blocker closure** | **NOT CLOSED** |
 
 ---
@@ -51,7 +50,10 @@ Settlement Process
 | Ledger separation — immutable financial truth | ADR-004 |
 | Adapter / ports architecture — vendor isolation | ADR-025 |
 | No direct card handling by KHADAMATI | Payment security framework |
-| Booking/payment separation | ADR-030 |
+| Ledger remains immutable | **Confirmed** (ADR-004) |
+| No wallet implementation | **Confirmed** — V1 excluded |
+| No instant withdrawal | **Confirmed** — V1 excluded |
+| No financial bypass | **Confirmed** |
 
 ---
 

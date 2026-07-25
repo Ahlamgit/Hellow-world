@@ -3,8 +3,8 @@
 | Field | Value |
 |-------|-------|
 | **Document ID** | GOV-BLOCKER-TRACKER-001 |
-| **Version** | 2.5 |
-| **Evidence completion** | GOV-GATE-B-EVIDENCE-001 v1.0 |
+| **Version** | 2.6 |
+| **Sync** | Governance approval update — admin finance model · blocker status matrix |
 | **Date** | 2026-07-25 |
 | **Owner** | Program Execution Manager |
 | **Gate** | **B — NOT READY — CODING BLOCKED** |
@@ -61,13 +61,13 @@ This tracker is the **operational working document** for closing BLOCKER-001 thr
 
 | ID | Name | Owner | Current status | Required evidence | Gate impact |
 |----|------|-------|----------------|-------------------|-------------|
-| **BLOCKER-001** | Design | Design Lead + PO/BO | **Evidence Prepared** — Awaiting Design Lead | `DESIGN_APPROVAL_RECORD.md` ✓ · assets upload · signoff | Blocks **all UI** (ADR-023) |
+| **BLOCKER-001** | Design | Design Lead + PO/BO | **Approved** — evidence archival pending | `DESIGN_APPROVAL_RECORD.md` ✓ · asset upload · signoff | Blocks **all UI** (ADR-023) |
 | **BLOCKER-002** | Stakeholder | Project Owner / Business Owner | **Closed** | `BLOCKER_002_CLOSURE_RECORD.md` · 2/2 | **Closed** 2026-07-25 |
-| **BLOCKER-003** | Vendors | Integration Lead + TA | **Evidence Prepared** — Awaiting TA validation | `VENDOR_APPROVAL_MATRIX.md` ✓ · dossier · sandbox | Blocks **integrations** |
-| **BLOCKER-004** | Cloud | Architect + DevOps | **Evidence Prepared** — Pending technical validation | `CLOUD_READINESS_RECORD.md` ✓ · TA + DevOps | Blocks **environment planning** |
-| **BLOCKER-005** | Finance | Finance + PO/BO | **Evidence Prepared** — Awaiting Finance attestation | `COMMISSION_MODEL_APPROVAL.md` ✓ · `SUBSCRIPTION_PRICING_APPROVAL.md` ✓ · matrix | Blocks **settlement/payment rules** |
-| **BLOCKER-006** | Compliance | Legal + TA | **Evidence Prepared** — Awaiting Legal + TA | `COMPLIANCE_GOVERNANCE_RECORD.md` ✓ · retention (Legal) | Blocks **data lifecycle / domain schema** |
-| **BLOCKER-007** | Payment.js | PO/BO + TA | **Evidence Prepared** — Awaiting technical validation | `PAYMENT_FLOW_APPROVAL_RECORD.md` ✓ · sandbox · webhook | Blocks **booking payment** |
+| **BLOCKER-003** | Vendors | Integration Lead + TA | **Approved (V1 restrictions)** — technical validation pending | `VENDOR_APPROVAL_MATRIX.md` ✓ · dossier · TA | Blocks **integrations** |
+| **BLOCKER-004** | Cloud | Architect + DevOps | **Approved direction** — technical validation pending | `CLOUD_READINESS_RECORD.md` ✓ · TA + DevOps | Blocks **environment planning** |
+| **BLOCKER-005** | Finance | Administrator config + PO/BO | **Approved** — admin configuration model | `FINANCE_RULE_MATRIX.md` ✓ · TA attestation | Blocks **settlement/payment rules** |
+| **BLOCKER-006** | Compliance | Legal + TA | **Approved direction** — Legal retention pending | `COMPLIANCE_GOVERNANCE_RECORD.md` ✓ | Blocks **data lifecycle / domain schema** |
+| **BLOCKER-007** | Payment.js | PO/BO + TA | **Approved flow** — technical validation pending | `PAYMENT_FLOW_APPROVAL_RECORD.md` ✓ · sandbox · webhook | Blocks **booking payment** |
 
 ### Evidence package paths
 
@@ -364,7 +364,7 @@ If a blocker is **delayed** beyond agreed target:
 | 2026-07-25 | — | Tracker initialized — 0 / 7 closed | Program Execution Manager |
 | 2026-07-25 | BLOCKER-002 | **CLOSED** — 2/2 PO/BO + Administrator | Program Execution Manager |
 | 2026-07-25 | 001, 005, 006, 007 | PO/BO business approvals recorded (GOV-BUSINESS-APPROVAL-001); blockers remain open | Program Execution Manager |
-| 2026-07-25 | 001–007 (exc. 002) | GOV-GATE-B-EVIDENCE-001 — evidence completion documents prepared | Program Execution Manager |
+| 2026-07-25 | All (exc. 002) | Governance approval sync — admin finance model · approved status matrix | Program Execution Manager |
 
 *Add a row within 1 business day of any blocker status change.*
 
@@ -390,5 +390,6 @@ If a blocker is **delayed** beyond agreed target:
 | 2.3 | 2026-07-25 | GOV-BUSINESS-APPROVAL-001 v1.1 — expanded evidence; remaining blocking items matrix |
 | 2.4 | 2026-07-25 | GOV-BUSINESS-APPROVAL-001 v1.2 — design assets, vendor/cloud business approvals, maps V1 exclusion |
 | 2.5 | 2026-07-25 | GOV-GATE-B-EVIDENCE-001 — evidence completion; Evidence Prepared statuses |
+| 2.6 | 2026-07-25 | Governance approval sync — Administrator finance configuration model; blocker status matrix |
 
 **Sync with:** GOV-RBCS-001 on every closure event.

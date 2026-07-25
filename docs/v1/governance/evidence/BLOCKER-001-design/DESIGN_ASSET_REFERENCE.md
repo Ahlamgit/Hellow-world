@@ -6,7 +6,7 @@
 | **Version** | 1.1 |
 | **Date** | 2026-07-25 |
 | **Blocker** | BLOCKER-001 — Design |
-| **Evidence status** | **Prepared** — awaiting asset archival + Design Lead approval |
+| **Evidence status** | **Approved** — evidence archival pending |
 | **Approver (business)** | Project Owner / Business Owner |
 
 ---

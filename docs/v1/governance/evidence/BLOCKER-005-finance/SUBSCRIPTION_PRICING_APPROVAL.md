@@ -3,67 +3,57 @@
 | Field | Value |
 |-------|-------|
 | **Document ID** | EVD-005-SUBSCRIPTION-001 |
-| **Version** | 1.0 |
+| **Version** | 1.1 |
 | **Date** | 2026-07-25 |
 | **Blocker** | BLOCKER-005 — Finance |
-| **Evidence status** | **Prepared** — awaiting Finance matrix + attestation |
-| **Blocker closure** | **NOT CLOSED** |
+| **Decision** | **APPROVED** |
+| **Approver** | Project Owner / Business Owner |
+| **Business approval** | **COMPLETE** |
+| **Blocker closure** | **NOT CLOSED** — technical attestation pending |
 
 ---
 
-## 1. Provider subscription plans — APPROVED (concept)
+## 1. Provider subscription plans — APPROVED
 
-| Tier | Business decision | Price values |
-|------|-------------------|--------------|
-| **Basic** | **Approved** | Pending Finance matrix |
-| **Pro** | **Approved** | Pending Finance matrix |
-| **Premium** | **Approved** | Pending Finance matrix |
-
-**Approver:** Project Owner / Business Owner — 2026-07-25
-
-**Administrator** manages plan configuration after implementation (not hardcoded).
+| Tier | Business decision |
+|------|-------------------|
+| **Basic** | **Approved** |
+| **Pro** | **Approved** |
+| **Premium** | **Approved** |
 
 ---
 
-## 2. Store / service advertising subscriptions — APPROVED (concept)
+## 2. Subscription management (Administrator controls)
 
-| Type | Business decision | Detail |
-|------|-------------------|--------|
-| Service / store advertising packages | **Approved** | Concept documented |
-| Featured placement subscriptions | **Approved** | Concept documented |
+| Setting | Administrator control |
+|---------|----------------------|
+| Price | **Configurable** |
+| Duration | **Configurable** |
+| Included features | **Configurable** |
+| Limits | **Configurable** |
+| Activation | **Configurable** |
 
-**Specific pricing values:** Pending `FINANCE_RULE_MATRIX_v1.0` — Finance attestation required.
-
----
-
-## 3. Subscription pricing matrix
-
-| Matrix item | Prepared | Finance approved |
-|-------------|----------|------------------|
-| Provider Basic plan pricing | Concept only | Pending |
-| Provider Pro plan pricing | Concept only | Pending |
-| Provider Premium plan pricing | Concept only | Pending |
-| Advertising package pricing | Concept only | Pending |
-| Activation / billing rules | Framework in package | Pending |
+**No hardcoded plan prices in application code.**
 
 ---
 
-## 4. Scope constraint
+## 3. Advertisement management (Administrator controls)
 
-| Item | Status |
-|------|--------|
-| No new pricing features beyond V1 frozen scope | Confirmed |
-| No payment implementation in this evidence | Confirmed |
-| No wallet / withdrawal features | Excluded (V1) |
+| Setting | Administrator control |
+|---------|----------------------|
+| Advertisement packages | **Configurable** |
+| Pricing | **Configurable** |
+| Duration | **Configurable** |
+| Featured listing rules | **Configurable** |
+| Activation | **Configurable** |
 
 ---
 
-## 5. Required approvals
+## 4. Financial governance rule
 
-| Approver | Role | Status |
-|----------|------|--------|
-| Project Owner / Business Owner | Business model | **Approved** — 2026-07-25 |
-| Finance Owner | Values + attestation | **Pending** |
-| Technical Architect | Configurable rules alignment | **Pending** |
+| Role | May configure | May NOT |
+|------|---------------|---------|
+| **Administrator** | Operational commission, subscription, and ad values via platform configuration | Change business strategy without PO approval · modify architecture · bypass governance |
+| **Project Owner / Business Owner** | Business model and revenue model approval | — |
 
-See also: `COMMISSION_MODEL_APPROVAL.md`
+See: `FINANCE_RULE_MATRIX.md` · `COMMISSION_MODEL_APPROVAL.md`

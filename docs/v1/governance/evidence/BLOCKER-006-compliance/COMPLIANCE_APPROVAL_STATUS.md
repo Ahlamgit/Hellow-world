@@ -7,7 +7,7 @@
 | **Version** | 1.1 |
 | **Date** | 2026-07-25 |
 | **Gate** | **B — NOT READY — CODING BLOCKED** |
-| **Blocker status** | **UNDER REVIEW** — not Closed |
+| **Blocker status** | **APPROVED (direction)** — Pending Legal final values · **not Closed** |
 | **Business consolidation** | `BUSINESS_APPROVAL_RECORD.md` — PO/BO compliance governance direction **approved** 2026-07-25 |
 
 ---

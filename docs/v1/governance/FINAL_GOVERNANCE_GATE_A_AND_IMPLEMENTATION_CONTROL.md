@@ -356,6 +356,7 @@ No exceptions. No shortcuts. No coding before Gate A. **Documentation ≠ approv
 | 1.7 | 2026-07-25 | Apex prompt GOV-MASTER-IMPL-AUTH-001; provider availability calendar rule |
 | 1.8 | 2026-07-25 | Apex prompt v1.1 — expanded role, Sprint 0 waves, blocker dashboard, agent behaviour |
 | 1.9 | 2026-07-25 | GOV-BUSINESS-APPROVAL-001 — PO/BO business approvals for 001, 005, 006, 007; 1/7 closed |
+| 2.0 | 2026-07-25 | GOV-GATE-B-EVIDENCE-001 — Gate B evidence completion package |
 
 **Supersedes:** Informal status summaries for gate and implementation authorization decisions.  
 **Subordinate to:** `MASTER_IMPLEMENTATION_PROMPT_v1.0.md`, ADRs, `FINAL_SCOPE_BASELINE.md`.
