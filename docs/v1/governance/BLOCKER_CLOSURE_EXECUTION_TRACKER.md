@@ -3,7 +3,7 @@
 | Field | Value |
 |-------|-------|
 | **Document ID** | GOV-BLOCKER-TRACKER-001 |
-| **Version** | 1.7 |
+| **Version** | 1.8 |
 | **Date** | 2026-07-25 |
 | **Owner** | Program Execution Manager |
 | **Gate** | **B — NOT READY — CODING BLOCKED** |
@@ -38,6 +38,7 @@ This tracker is the **operational working document** for closing BLOCKER-001 thr
 | GOV-GATC-001 | Phase execution & Gate A ceremony |
 | GOV-GA-AUDIT-001 | Independent readiness audit |
 | GOV-MASTER-CTRL-001 | Master governance, Gate A readiness & implementation control |
+| GOV-GA-CEREMONY-001 | Gate A ceremony preparation package |
 
 **Master control:** `FINAL_GOVERNANCE_GATE_A_AND_IMPLEMENTATION_CONTROL.md` (GOV-MASTER-CTRL-001)
 
@@ -363,5 +364,6 @@ If a blocker is **delayed** beyond agreed target:
 | 1.5 | 2026-07-25 | Phase 1 approval execution pack (GOV-P1-EXEC-001) |
 | 1.6 | 2026-07-25 | Phase 1 approval tracking register (GOV-P1-TRACK-001) |
 | 1.7 | 2026-07-25 | Master governance control document (GOV-MASTER-CTRL-001) |
+| 1.8 | 2026-07-25 | Gate A ceremony prep (GOV-GA-CEREMONY-001); Phase 1 roadmap status (GOV-P1-ROADMAP-001) |
 
 **Sync with:** GOV-RBCS-001 on every closure event.

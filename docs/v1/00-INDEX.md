@@ -28,6 +28,8 @@
 **Phase 1 approval tracking:** [governance/PHASE_1_APPROVAL_TRACKING_REGISTER.md](./governance/PHASE_1_APPROVAL_TRACKING_REGISTER.md) — **GOV-P1-TRACK-001**  
 **Gate A readiness audit:** [governance/FINAL_GATE_A_READINESS_AUDIT_REPORT.md](./governance/FINAL_GATE_A_READINESS_AUDIT_REPORT.md) — **GOV-GA-AUDIT-001** (recommendation: remain Gate B)  
 **Governance & implementation control:** [governance/FINAL_GOVERNANCE_GATE_A_AND_IMPLEMENTATION_CONTROL.md](./governance/FINAL_GOVERNANCE_GATE_A_AND_IMPLEMENTATION_CONTROL.md) — **GOV-MASTER-CTRL-001**  
+**Gate A ceremony preparation:** [governance/GATE_A_CEREMONY_PREPARATION_PACKAGE.md](./governance/GATE_A_CEREMONY_PREPARATION_PACKAGE.md) — **GOV-GA-CEREMONY-001**  
+**Phase 1 roadmap status:** [governance/PHASE_1_GOVERNANCE_EXECUTION_ROADMAP_STATUS.md](./governance/PHASE_1_GOVERNANCE_EXECUTION_ROADMAP_STATUS.md) — **GOV-P1-ROADMAP-001**  
 **Gate A transition & blocker execution:** [governance/FINAL_GATE_A_TRANSITION_AND_BLOCKER_CLOSURE_PACKAGE.md](./governance/FINAL_GATE_A_TRANSITION_AND_BLOCKER_CLOSURE_PACKAGE.md) — **GOV-GATC-001**  
 **Execution standards (after Gate A):** [IMPLEMENTATION_EXECUTION_STANDARDS.md](./IMPLEMENTATION_EXECUTION_STANDARDS.md) — prepared; coding **BLOCKED** until Gate A  
 **Payment.js validation:** [payment/PAYMENT_JS_MOBILE_VALIDATION_REPORT.md](./payment/PAYMENT_JS_MOBILE_VALIDATION_REPORT.md) · [payment/AREEBA_IXOPAY_VENDOR_VALIDATION_CHECKLIST.md](./payment/AREEBA_IXOPAY_VENDOR_VALIDATION_CHECKLIST.md) · [payment/PAYMENT_SECURITY_AND_RECONCILIATION_FRAMEWORK.md](./payment/PAYMENT_SECURITY_AND_RECONCILIATION_FRAMEWORK.md) · [ADR-029](./adr/ADR-029-simplified-payment-experience-ledger-control.md) — BLOCKER-007 **IN VALIDATION**  

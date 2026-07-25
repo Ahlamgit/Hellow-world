@@ -3,7 +3,7 @@
 | Field | Value |
 |-------|-------|
 | **Document ID** | GOV-RBCS-001 |
-| **Version** | 2.9 |
+| **Version** | 3.0 |
 | **Last updated** | 2026-07-25 |
 | **Gate** | B — NOT READY — CODING BLOCKED |
 | **Owner** | Program Governance Manager |
@@ -19,6 +19,8 @@
 | **Phase 1 approval tracking** | `PHASE_1_APPROVAL_TRACKING_REGISTER.md` (GOV-P1-TRACK-001) — live register |
 | **Gate A authorization record** | `GATE_A_IMPLEMENTATION_AUTHORIZATION_RECORD.md` (GOV-GAIR-001) — Draft, unsigned |
 | **Master governance control** | `FINAL_GOVERNANCE_GATE_A_AND_IMPLEMENTATION_CONTROL.md` (GOV-MASTER-CTRL-001) |
+| **Gate A ceremony preparation** | `GATE_A_CEREMONY_PREPARATION_PACKAGE.md` (GOV-GA-CEREMONY-001) — not schedulable |
+| **Phase 1 roadmap status** | `PHASE_1_GOVERNANCE_EXECUTION_ROADMAP_STATUS.md` (GOV-P1-ROADMAP-001) |
 
 ---
 
@@ -240,3 +242,4 @@ Refer to `BLOCKER_CLOSURE_EXECUTION_TRACKER.md` (GOV-BLOCKER-TRACKER-001) for op
 | 2.7 | 2026-07-25 | Phase 1 approval execution pack (GOV-P1-EXEC-001) |
 | 2.8 | 2026-07-25 | Phase 1 approval tracking register (GOV-P1-TRACK-001) |
 | 2.9 | 2026-07-25 | Master governance control document (GOV-MASTER-CTRL-001) |
+| 3.0 | 2026-07-25 | Gate A ceremony prep + Phase 1 roadmap execution status |
