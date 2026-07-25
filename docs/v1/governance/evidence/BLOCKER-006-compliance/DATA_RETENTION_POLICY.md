@@ -4,8 +4,8 @@
 |-------|-------|
 | **Document ID** | EVD-006-RETENTION-001 |
 | **Blocker** | BLOCKER-006 — Compliance |
-| **Version** | 1.0 |
-| **Status** | **DRAFT — Retention durations PENDING Legal / Compliance Approval** |
+| **Version** | 1.1 |
+| **Status** | **APPROVED** — testing retention defined; production durations pending pre-launch legal review |
 | **Gate** | B — NOT READY — CODING BLOCKED |
 | **Prepared by** | Compliance Governance Manager |
 | **Date** | 2026-07-25 |
@@ -48,6 +48,22 @@ Define the **data retention governance framework** for KHADAMATI V1. This docume
 | Policy changes require version history and effective date | Required |
 | No retroactive reduction without legal review | Required |
 | Financial records are **protected records** | Required |
+
+---
+
+## 3A. Testing / localhost environment retention (APPROVED)
+
+**Authority:** Ahlam — Legal / Compliance Officer · **2026-07-25**
+
+| Data type | Environment | Retention | Notes |
+|-----------|-------------|-----------|-------|
+| All test/sandbox data | **localhost / dev only** | **1 month** | Synthetic or test accounts only — purge after 30 days |
+| Sandbox payment logs | IXOPAY sandbox | Per sandbox + **1 month** local copies max | No production PII |
+
+```text
+This 1-month rule applies ONLY to non-production test data.
+Production retention values in §6 remain pending pre-launch legal review.
+```
 
 ---
 
@@ -96,9 +112,9 @@ Define the **data retention governance framework** for KHADAMATI V1. This docume
 
 | Role | Name | Decision | Date | Signature |
 |------|------|----------|------|-----------|
-| Legal / Compliance Owner | | Pending | | |
-| Business Owner | | Pending | | |
-| Technical Architect | | Pending | | |
+| Legal / Compliance Officer | **Ahlam** | **Approved** (testing §3A) | **2026-07-25** | Recorded |
+| Business Owner | **Ahlam** | **Acknowledged** | **2026-07-25** | Recorded |
+| Technical Architect | **Ahlam** | **Approved** implementability | **2026-07-25** | Recorded |
 
 ---
 
@@ -107,3 +123,4 @@ Define the **data retention governance framework** for KHADAMATI V1. This docume
 | Version | Date | Change |
 |---------|------|--------|
 | 1.0 | 2026-07-25 | Initial retention policy framework — durations pending Legal approval |
+| 1.1 | 2026-07-25 | Legal approves **1 month** retention for **non-production test data only** (§3A) |
