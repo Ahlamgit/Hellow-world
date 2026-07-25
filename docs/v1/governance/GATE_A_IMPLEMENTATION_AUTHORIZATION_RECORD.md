@@ -29,6 +29,7 @@ This record is the **official governance instrument** authorizing transition fro
 - `FINAL_ARCHITECTURE_CONSISTENCY_REVIEW.md` (KHAD-V1-FACR-001)
 - `FINAL_PRE_IMPLEMENTATION_READINESS_AND_GATE_A_PACKAGE.md` (GOV-FPRG-001)
 - `FINAL_GATE_A_TRANSITION_AND_BLOCKER_CLOSURE_PACKAGE.md` (GOV-GATC-001)
+- `MASTER_GOVERNANCE_CONTROLLED_IMPLEMENTATION_AUTHORIZATION_PROMPT.md` (GOV-MASTER-IMPL-AUTH-001) — apex
 - `GATE_A_CONTROLLED_IMPLEMENTATION_AUTHORIZATION_PROMPT.md` (GOV-GA-IMPL-AUTH-PROMPT-001)
 
 **This document does not authorize:** production code, database schema, migrations, infrastructure, cloud resources, vendor selection, feature implementation, architecture changes, or scope changes until formally signed and all entry criteria are met.

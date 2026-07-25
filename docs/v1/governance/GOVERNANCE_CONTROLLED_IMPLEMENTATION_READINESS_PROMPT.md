@@ -7,7 +7,7 @@
 | **Date** | 2026-07-25 |
 | **Status** | **Active** |
 | **Role** | Solution Governance Architect · Implementation Readiness Manager |
-| **Companion** | GOV-CONTROL-PROMPT-001 · GOV-MASTER-CTRL-001 |
+| **Companion** | GOV-MASTER-IMPL-AUTH-001 (apex) · GOV-CONTROL-PROMPT-001 · GOV-MASTER-CTRL-001 |
 
 ```text
 GOVERNANCE + READINESS ONLY

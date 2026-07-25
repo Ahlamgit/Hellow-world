@@ -14,6 +14,7 @@
 **Evidence framework:** [`governance/BLOCKER_EVIDENCE_MANAGEMENT_FRAMEWORK.md`](./governance/BLOCKER_EVIDENCE_MANAGEMENT_FRAMEWORK.md) (GOV-BEMF-001)  
 **Evidence repository:** [`governance/evidence/README.md`](./governance/evidence/README.md) — `BLOCKER-001-design/` … `BLOCKER-007-payment/` (standard trio per folder)  
 **Governance & implementation control:** [`governance/FINAL_GOVERNANCE_GATE_A_AND_IMPLEMENTATION_CONTROL.md`](./governance/FINAL_GOVERNANCE_GATE_A_AND_IMPLEMENTATION_CONTROL.md) (GOV-MASTER-CTRL-001) — **REMAIN GATE B**  
+**Master implementation authorization (apex):** [`governance/MASTER_GOVERNANCE_CONTROLLED_IMPLEMENTATION_AUTHORIZATION_PROMPT.md`](./governance/MASTER_GOVERNANCE_CONTROLLED_IMPLEMENTATION_AUTHORIZATION_PROMPT.md) (GOV-MASTER-IMPL-AUTH-001) — **NOT AUTHORIZED**  
 **Gate A authorization record:** [`governance/GATE_A_IMPLEMENTATION_AUTHORIZATION_RECORD.md`](./governance/GATE_A_IMPLEMENTATION_AUTHORIZATION_RECORD.md) (GOV-GAIR-001) — Draft, unsigned  
 **Implementation authorization:** [`governance/IMPLEMENTATION_AUTHORIZATION_CHECKLIST.md`](./governance/IMPLEMENTATION_AUTHORIZATION_CHECKLIST.md) — Gate B→A; coding **BLOCKED**  
 **Execution standards (post–Gate A):** [`IMPLEMENTATION_EXECUTION_STANDARDS.md`](./IMPLEMENTATION_EXECUTION_STANDARDS.md) — preparation only; coding still **BLOCKED**  

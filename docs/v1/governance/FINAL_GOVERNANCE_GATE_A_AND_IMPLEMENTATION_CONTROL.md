@@ -3,7 +3,8 @@
 | Field | Value |
 |-------|-------|
 | **Document ID** | GOV-MASTER-CTRL-001 |
-| **Version** | 1.6 |
+| **Apex authorization prompt** | GOV-MASTER-IMPL-AUTH-001 (`MASTER_GOVERNANCE_CONTROLLED_IMPLEMENTATION_AUTHORIZATION_PROMPT.md`) |
+| **Version** | 1.7 |
 | **Date** | 2026-07-25 |
 | **Owner** | Program Governance Manager · Technical Program Manager |
 | **Gate** | **B — NOT READY — CODING BLOCKED** |
@@ -331,7 +332,7 @@ Every governance execution response **must** include (in order):
 | 7 | **Files Created/Updated** | *(paths or None)* |
 | 8 | **Next Allowed Action** | Phase 1 human approvals; no coding |
 
-**Canonical prompts:** GOV-CONTROL-PROMPT-001 · GOV-READINESS-PROMPT-001 · GOV-GA-IMPL-AUTH-PROMPT-001
+**Canonical prompts:** GOV-MASTER-IMPL-AUTH-001 (apex) · GOV-CONTROL-PROMPT-001 · GOV-READINESS-PROMPT-001 · GOV-GA-IMPL-AUTH-PROMPT-001
 
 No exceptions. No shortcuts. No coding before Gate A. **Documentation ≠ approval.**
 
@@ -348,6 +349,7 @@ No exceptions. No shortcuts. No coding before Gate A. **Documentation ≠ approv
 | 1.4 | 2026-07-25 | Sprint 0 migration framework vs business schema; payment ADR refs; doc≠approval rule |
 | 1.5 | 2026-07-25 | Sprint 0 wave alignment (GOV-READINESS-PROMPT-001); Gate A checklist |
 | 1.6 | 2026-07-25 | Sprint 0 waves per GOV-GA-IMPL-AUTH-PROMPT-001; authorization sequence |
+| 1.7 | 2026-07-25 | Apex prompt GOV-MASTER-IMPL-AUTH-001; provider availability calendar rule |
 
 **Supersedes:** Informal status summaries for gate and implementation authorization decisions.  
 **Subordinate to:** `MASTER_IMPLEMENTATION_PROMPT_v1.0.md`, ADRs, `FINAL_SCOPE_BASELINE.md`.
