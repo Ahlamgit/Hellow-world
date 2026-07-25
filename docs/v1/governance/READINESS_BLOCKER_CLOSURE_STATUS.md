@@ -3,7 +3,7 @@
 | Field | Value |
 |-------|-------|
 | **Document ID** | GOV-RBCS-001 |
-| **Version** | 1.2 |
+| **Version** | 1.3 |
 | **Last updated** | 2026-07-25 |
 | **Gate** | B — NOT READY — CODING BLOCKED |
 | **Owner** | Program Governance Manager |
@@ -17,7 +17,8 @@
 |--------|---------|
 | **Open** | Blocker not started or evidence incomplete |
 | **In Progress** | Evidence collection underway |
-| **Under Review** | Evidence submitted; awaiting approval |
+| **Ready for Approval** | Evidence package prepared; awaiting signatures |
+| **Under Review** | Evidence submitted; awaiting approval decision |
 | **Closed** | Evidence approved, archived per GOV-BEMF-001, artifact on file |
 | **Blocked** | Dependency not met |
 
@@ -28,14 +29,14 @@
 | Blocker | Description | Status | Owner | Closure artifact | Evidence received | Approved date |
 |---------|-------------|--------|-------|------------------|-------------------|---------------|
 | BLOCKER-001 | Design approval | **Open** | Design Lead + Product Owner | `DESIGN_APPROVAL_SIGNOFF_v1.0` | No | — |
-| BLOCKER-002 | Stakeholder approval | **Open** | Program Sponsor | `STAKEHOLDER_APPROVAL_REGISTER_v1.0` | No | — |
+| BLOCKER-002 | Stakeholder approval | **Ready for Approval** | Program Sponsor | `STAKEHOLDER_APPROVAL_REGISTER_v1.0` | Package prepared | — |
 | BLOCKER-003 | Vendor readiness | **Open** | Technical Lead / Integration Lead | `VENDOR_READINESS_DOSSIER_v1.0` | No | — |
 | BLOCKER-004 | Cloud readiness | **Open** | Technical Architect + DevOps Lead | `CLOUD_READINESS_DECISION_RECORD_v1.0` | No | — |
 | BLOCKER-005 | Finance configuration | **Open** | Finance + Business Operations | `FINANCE_RULE_MATRIX_v1.0` | No | — |
 | BLOCKER-006 | Compliance approval | **Open** | Legal / Compliance Officer | `COMPLIANCE_APPROVAL_PACK_v1.0` | No | — |
 | BLOCKER-007 | Payment.js validation | **Open** | Technical Lead + Finance Ops | `PAYMENT_JS_VALIDATION_REPORT_v1.0` | No | — |
 
-**Summary:** 0 Closed · 7 Open · 0 In Progress · 0 Under Review
+**Summary:** 0 Closed · 6 Open · 1 Ready for Approval · 0 Under Review
 
 ---
 
@@ -60,14 +61,18 @@
 
 ### BLOCKER-002 — Stakeholder Approval
 
-| Approver | Received | Approved |
-|----------|----------|----------|
-| Product | No | No |
-| Business | No | No |
-| Operations | No | No |
-| Technical architecture | No | No |
+**Status:** **READY FOR APPROVAL** (signatures pending)  
+**Package:** `evidence/BLOCKER-002-stakeholder/STAKEHOLDER_APPROVAL_PACKAGE.md` (EVD-002-PKG-001 v1.0)
 
-**Confirmations pending:** Scope frozen · Workflows approved · Exclusions accepted
+| Approver | Package received | Signed (§6) |
+|----------|------------------|-------------|
+| Product Owner | Prepared — pending distribution | No |
+| Business Owner | Prepared — pending distribution | No |
+| Operations Owner | Prepared — pending distribution | No |
+
+**Confirmations pending signature:** Scope frozen · Workflows approved · Exclusions accepted · Provider model · Payment/financial model
+
+**Not closed until:** All §6 signatures archived per `BLOCKER_EVIDENCE_MANAGEMENT_FRAMEWORK.md`
 
 ---
 
@@ -160,7 +165,7 @@
 
 | Priority | Action | Owner | Target |
 |----------|--------|-------|--------|
-| 1 | Initiate stakeholder approval register (BLOCKER-002) | Program Sponsor | TBD |
+| 1 | **Distribute and obtain signatures on `STAKEHOLDER_APPROVAL_PACKAGE.md` (BLOCKER-002)** | Program Sponsor | Immediate |
 | 2 | Initiate compliance approval pack (BLOCKER-006) | Legal / Compliance | TBD |
 | 3 | Schedule design approval review (BLOCKER-001) | Design Lead | TBD |
 | 4 | Schedule finance rule workshop (BLOCKER-005) | Finance | TBD |
@@ -178,3 +183,4 @@ Refer to `BLOCKER_CLOSURE_EXECUTION_PLAN.md` for phase sequencing and `BLOCKER_E
 | 1.0 | — | Initial register — all blockers open |
 | 1.1 | 2026-07-25 | Aligned with GOV-BCEP-001; no blockers closed |
 | 1.2 | 2026-07-25 | Linked GOV-BEMF-001 evidence framework; repository structure defined |
+| 1.3 | 2026-07-25 | BLOCKER-002 → Ready for Approval; stakeholder package prepared |

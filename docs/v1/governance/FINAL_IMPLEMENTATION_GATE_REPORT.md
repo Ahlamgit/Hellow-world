@@ -3,7 +3,7 @@
 | Field | Value |
 |-------|-------|
 | **Document ID** | GOV-FIGR-001 |
-| **Version** | 1.2 |
+| **Version** | 1.3 |
 | **Report date** | 2026-07-25 |
 | **Prepared by** | Program Governance Manager |
 
@@ -37,14 +37,15 @@ KHADAMATI remains blocked for all implementation activity. Seven pre-implementat
 | Blocker | Status | Closure artifact | Gate impact |
 |---------|--------|------------------|-------------|
 | BLOCKER-001 Design approval | **Open** | `DESIGN_APPROVAL_SIGNOFF_v1.0` | Blocks UI implementation |
-| BLOCKER-002 Stakeholder approval | **Open** | `STAKEHOLDER_APPROVAL_REGISTER_v1.0` | Blocks program authorization |
+| BLOCKER-002 Stakeholder approval | **Ready for Approval** | `STAKEHOLDER_APPROVAL_PACKAGE.md` → `STAKEHOLDER_APPROVAL_REGISTER_v1.0` | Blocks program authorization |
 | BLOCKER-003 Vendor readiness | **Open** | `VENDOR_READINESS_DOSSIER_v1.0` | Blocks integrations |
 | BLOCKER-004 Cloud readiness | **Open** | `CLOUD_READINESS_DECISION_RECORD_v1.0` | Blocks environment planning execution |
 | BLOCKER-005 Finance configuration | **Open** | `FINANCE_RULE_MATRIX_v1.0` | Blocks settlement/payment rules |
 | BLOCKER-006 Compliance approval | **Open** | `COMPLIANCE_APPROVAL_PACK_v1.0` | Blocks data lifecycle implementation |
 | BLOCKER-007 Payment.js validation | **Open** | `PAYMENT_JS_VALIDATION_REPORT_v1.0` | Blocks booking payment implementation |
 
-**Blockers closed:** 0 / 7
+**Blockers closed:** 0 / 7  
+**Ready for approval:** 1 (BLOCKER-002 — signatures pending)
 
 ---
 
@@ -53,7 +54,7 @@ KHADAMATI remains blocked for all implementation activity. Seven pre-implementat
 | Requirement | Evidence | Approved By | Status |
 |-------------|----------|-------------|--------|
 | Architecture | ADR-001 → ADR-028 | Technical Architect | **Pending** |
-| Scope | Frozen scope + traceability matrix | Product Owner | **Pending** |
+| Stakeholder | Stakeholder approval package | Program Sponsor | **Ready for Approval** |
 | Design | Design approval package | Design Lead + Product Owner | **Pending** |
 | Vendors | Vendor readiness dossier | Technical Lead | **Pending** |
 | Cloud | Cloud readiness decision record | Technical Architect + Ops | **Pending** |
