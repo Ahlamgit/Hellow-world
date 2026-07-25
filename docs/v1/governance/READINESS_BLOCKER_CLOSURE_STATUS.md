@@ -3,7 +3,7 @@
 | Field | Value |
 |-------|-------|
 | **Document ID** | GOV-RBCS-001 |
-| **Version** | 2.6 |
+| **Version** | 2.7 |
 | **Last updated** | 2026-07-25 |
 | **Gate** | B — NOT READY — CODING BLOCKED |
 | **Owner** | Program Governance Manager |
@@ -15,6 +15,7 @@
 | **Phase 1 readiness** | `PHASE_1_BLOCKER_APPROVAL_READINESS_REPORT.md` (GOV-P1-READINESS-001) |
 | **Phase 1 closure review** | `PHASE_1_CLOSURE_EXECUTION_REPORT.md` (GOV-P1-CLOSURE-001) |
 | **Phase 1 approval finalization** | `PHASE_1_APPROVAL_FINALIZATION_REPORT.md` (GOV-P1-FINAL-001) |
+| **Phase 1 approval execution** | `PHASE_1_APPROVAL_EXECUTION_PACK.md` (GOV-P1-EXEC-001) |
 | **Gate A authorization record** | `GATE_A_IMPLEMENTATION_AUTHORIZATION_RECORD.md` (GOV-GAIR-001) — Draft, unsigned |
 
 ---
@@ -234,3 +235,4 @@ Refer to `BLOCKER_CLOSURE_EXECUTION_TRACKER.md` (GOV-BLOCKER-TRACKER-001) for op
 | 2.4 | 2026-07-25 | Phase 1 approval readiness report (GOV-P1-READINESS-001); Phase 1 execution authorized, not complete |
 | 2.5 | 2026-07-25 | Phase 1 closure execution report (GOV-P1-CLOSURE-001); 0/7 closed — Gate B unchanged |
 | 2.6 | 2026-07-25 | Phase 1 approval finalization report (GOV-P1-FINAL-001); Phase 2 preview |
+| 2.7 | 2026-07-25 | Phase 1 approval execution pack (GOV-P1-EXEC-001) |

@@ -3,7 +3,7 @@
 | Field | Value |
 |-------|-------|
 | **Document ID** | GOV-BLOCKER-TRACKER-001 |
-| **Version** | 1.4 |
+| **Version** | 1.5 |
 | **Date** | 2026-07-25 |
 | **Owner** | Program Execution Manager |
 | **Gate** | **B — NOT READY — CODING BLOCKED** |
@@ -40,7 +40,8 @@ This tracker is the **operational working document** for closing BLOCKER-001 thr
 
 **Phase 1 readiness:** `PHASE_1_BLOCKER_APPROVAL_READINESS_REPORT.md` (GOV-P1-READINESS-001)  
 **Phase 1 closure review:** `PHASE_1_CLOSURE_EXECUTION_REPORT.md` (GOV-P1-CLOSURE-001)  
-**Phase 1 approval finalization:** `PHASE_1_APPROVAL_FINALIZATION_REPORT.md` (GOV-P1-FINAL-001) — **0 / 2 Phase 1 closed**
+**Phase 1 approval finalization:** `PHASE_1_APPROVAL_FINALIZATION_REPORT.md` (GOV-P1-FINAL-001)  
+**Phase 1 approval execution:** `PHASE_1_APPROVAL_EXECUTION_PACK.md` (GOV-P1-EXEC-001) — **0 / 2 Phase 1 closed**
 
 ---
 
@@ -355,5 +356,6 @@ If a blocker is **delayed** beyond agreed target:
 | 1.2 | 2026-07-25 | Phase 1 approval readiness report (GOV-P1-READINESS-001); Phase 1 not complete |
 | 1.3 | 2026-07-25 | Phase 1 closure execution report (GOV-P1-CLOSURE-001); 0/7 closed |
 | 1.4 | 2026-07-25 | Phase 1 approval finalization report (GOV-P1-FINAL-001); Phase 2 preview |
+| 1.5 | 2026-07-25 | Phase 1 approval execution pack (GOV-P1-EXEC-001) |
 
 **Sync with:** GOV-RBCS-001 on every closure event.

@@ -122,7 +122,7 @@ When ALL seven = Closed:
 
 ### Phase 1 — Governance alignment (start immediately)
 
-**Readiness validation:** GOV-P1-READINESS-001 · **Closure review:** GOV-P1-CLOSURE-001 · **Approval finalization:** GOV-P1-FINAL-001 — **0 / 2 closed**
+**Readiness validation:** GOV-P1-READINESS-001 · **Closure review:** GOV-P1-CLOSURE-001 · **Approval finalization:** GOV-P1-FINAL-001 · **Execution pack:** GOV-P1-EXEC-001 — **0 / 2 closed**
 
 | Action | Owner | Deliverable | Blocks |
 |--------|-------|-------------|--------|
