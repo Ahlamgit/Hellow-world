@@ -19,7 +19,8 @@ Obtain multi-function stakeholder sign-off on frozen scope, workflows, exclusion
 | Item | Location |
 |------|----------|
 | Stakeholder approval package | `STAKEHOLDER_APPROVAL_PACKAGE.md` (EVD-002-PKG-001) |
-| Product / Business / Operations attestations | `product/`, `business/`, `operations/` |
+| Scope baseline (canonical) | [`../../../FINAL_SCOPE_BASELINE.md`](../../../FINAL_SCOPE_BASELINE.md) · evidence link `FINAL_SCOPE_BASELINE.md` |
+| Stakeholder approval register | `STAKEHOLDER_APPROVAL_REGISTER.md` (EVD-002-REGISTER-001) |
 | Signed approval record | `APPROVAL_RECORD.md` |
 | Completed checklist | `EVIDENCE_CHECKLIST.md` |
 

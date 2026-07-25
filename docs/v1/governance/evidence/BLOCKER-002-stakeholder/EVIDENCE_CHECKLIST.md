@@ -4,9 +4,11 @@
 
 | # | Item | Evidence on file | Approved |
 |---|------|------------------|----------|
-| 1 | Product signoff | ☐ | ☐ |
-| 2 | Business signoff | ☐ | ☐ |
-| 3 | Operations signoff | ☐ | ☐ |
-| 4 | Scope frozen confirmed | ☐ | ☐ |
-| 5 | `APPROVAL_RECORD.md` — Approved | ☐ | ☐ |
-| 6 | Closure artifact `STAKEHOLDER_APPROVAL_REGISTER_v1.0` filed | ☐ | ☐ |
+| 1 | `FINAL_SCOPE_BASELINE.md` in repository | ☑ | ☐ |
+| 2 | `STAKEHOLDER_APPROVAL_REGISTER.md` prepared | ☑ | ☐ |
+| 3 | Product signoff | ☐ | ☐ |
+| 4 | Business signoff | ☐ | ☐ |
+| 5 | Operations signoff | ☐ | ☐ |
+| 6 | Scope frozen confirmed | ☐ | ☐ |
+| 7 | `APPROVAL_RECORD.md` — Approved | ☐ | ☐ |
+| 8 | Closure artifact filed | ☐ | ☐ |

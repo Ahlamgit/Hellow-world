@@ -3,7 +3,7 @@
 | Field | Value |
 |-------|-------|
 | **Document ID** | GOV-P1-TRACK-001 |
-| **Version** | 1.0 |
+| **Version** | 1.1 |
 | **Date** | 2026-07-25 |
 | **Owner** | Program Governance Manager |
 | **Campaign** | Phase 1 — BLOCKER-002 & BLOCKER-006 approval collection |
@@ -82,9 +82,9 @@ Gate B remains until Gate A ceremony (7/7 blockers + GOV-GAIR-001 §8).
 | Record | Location | Status |
 |--------|----------|--------|
 | `APPROVAL_RECORD.md` (EVD-002-APPROVAL-001) | `evidence/BLOCKER-002-stakeholder/` | **Pending** |
-| `EVIDENCE_CHECKLIST.md` | Same folder | **0 / 13** complete |
-| `STAKEHOLDER_APPROVAL_REGISTER_v1.0` | Not filed | **Missing** |
-| `FINAL_SCOPE_BASELINE.md` in repo | — | **Missing** — restore before review |
+| `EVIDENCE_CHECKLIST.md` | Same folder | **2 / 8** evidence prepared (signatures pending) |
+| `STAKEHOLDER_APPROVAL_REGISTER.md` (EVD-002-REGISTER-001) | `evidence/BLOCKER-002-stakeholder/` | **Prepared** — 0/3 signatures |
+| `FINAL_SCOPE_BASELINE.md` in repo | `docs/v1/FINAL_SCOPE_BASELINE.md` | **Restored** v1.0 (2026-07-25) |
 
 **Campaign owner:** Program Sponsor
 
@@ -107,8 +107,10 @@ Gate B remains until Gate A ceremony (7/7 blockers + GOV-GAIR-001 §8).
 | Record | Location | Status |
 |--------|----------|--------|
 | `APPROVAL_RECORD.md` (EVD-006-APPROVAL-001) | `evidence/BLOCKER-006-compliance/` | **Pending** |
-| `EVIDENCE_CHECKLIST.md` | Same folder | **0 / 15** complete |
-| `COMPLIANCE_APPROVAL_PACK_v1.0` | Not filed | **Missing** |
+| `EVIDENCE_CHECKLIST.md` | Same folder | **2 / 11** evidence prepared (Legal values pending) |
+| `COMPLIANCE_POLICY.md` (EVD-006-POLICY-001) | Same folder | **Prepared** |
+| `DATA_RETENTION_POLICY.md` (EVD-006-RETENTION-001) | Same folder | **Prepared** — durations pending Legal |
+| `COMPLIANCE_APPROVAL_PACK_v1.0` | Not filed | **Pending** closure |
 | §2 retention durations | Package §2 | **Pending Legal / Compliance Approval** |
 | §9 open items | Package §9 | **Unresolved** |
 
@@ -126,7 +128,7 @@ Gate B remains until Gate A ceremony (7/7 blockers + GOV-GAIR-001 §8).
 | **002** | Scope confirmation vs `FINAL_SCOPE_BASELINE.md` | Product Owner / Business Owner | **Pending** |
 | **002** | V1 exclusions acknowledged | PO / BO / Operations | **Pending** |
 | **002** | `APPROVAL_RECORD.md` → **Approved** | Program Governance Manager | **Pending** |
-| **002** | `STAKEHOLDER_APPROVAL_REGISTER_v1.0` filed | Program Governance Manager | **Pending** |
+| **002** | `STAKEHOLDER_APPROVAL_REGISTER.md` filed | Program Governance Manager | **Prepared** — signatures pending |
 | **002** | Tracker update (GOV-RBCS-001, GOV-BLOCKER-TRACKER-001) | Program Governance Manager | **Pending** |
 | **006** | Retention approval (§2 durations) | Legal / Compliance | **Pending** |
 | **006** | §9 open items resolved | Legal / Compliance | **Pending** |
@@ -146,9 +148,8 @@ Gate B remains until Gate A ceremony (7/7 blockers + GOV-GAIR-001 §8).
 
 | Date | Action | Owner | Result | Next step |
 |------|--------|-------|--------|-----------|
-| 2026-07-25 | Phase 1 approval tracking register initialized (GOV-P1-TRACK-001) | Program Governance Manager | Register created; 0/3 + 0/3 approvals | Distribute BLOCKER-002 package; schedule Legal workshop for BLOCKER-006 |
-| — | Distribute `STAKEHOLDER_APPROVAL_PACKAGE.md` + GOV-P1-EXEC-001 | Program Sponsor | *Pending* | Collect §6 signatures |
-| — | Restore `FINAL_SCOPE_BASELINE.md` to repository | Program Governance Manager | *Pending* | Enable scope review for BLOCKER-002 |
+| 2026-07-25 | Restored `FINAL_SCOPE_BASELINE.md` v1.0; prepared BLOCKER-002 register + BLOCKER-006 policy docs | Program Governance Manager | Evidence prepared; 0/3 + 0/3 approvals | Distribute BLOCKER-002 package; schedule Legal workshop for BLOCKER-006 |
+| — | Distribute `STAKEHOLDER_APPROVAL_PACKAGE.md` + scope baseline + GOV-P1-EXEC-001 | Program Sponsor | *Pending* | Collect §6 signatures |
 | — | Schedule Legal retention workshop (BLOCKER-006 §2) | Legal / Compliance Officer | *Pending* | Complete retention table before §10 signatures |
 | — | Distribute `COMPLIANCE_APPROVAL_PACKAGE.md` | Legal / Compliance Officer | *Pending* | Collect §10 signatures after §2 complete |
 

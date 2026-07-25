@@ -130,7 +130,7 @@ Open → Ready for Approval → Approved → Closed
 |---|-------------|--------|----------|
 | 1 | **7 / 7 blockers Closed** | **Not met** (0/7) | GOV-RBCS-001 |
 | 2 | Architecture **Approved** | **Met** | ADR-001…032; FACR |
-| 3 | Scope **Frozen** | **Met** (policy) — sign-off **Pending** | BLOCKER-002; `FINAL_SCOPE_BASELINE.md` *(missing from repo)* |
+| 3 | Scope **Frozen** | **Met** (policy) — sign-off **Pending** | BLOCKER-002; `FINAL_SCOPE_BASELINE.md` v1.0 **restored** |
 | 4 | **Traceability complete** | **Specified** — implementation status blocked | `FEATURE_TRACEABILITY_MATRIX.md` (KHAD-V1-FTM); all V1 features traced; `Implemented` post–Gate A only |
 | 5 | GOV-IACL-001 **complete** | **Not met** | Checklist |
 | 6 | GOV-GAIR-001 **signed** | **Not met** | Draft |

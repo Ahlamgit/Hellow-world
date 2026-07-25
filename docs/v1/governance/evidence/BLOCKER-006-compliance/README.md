@@ -19,7 +19,8 @@ Collect and archive retention, data governance, and legal compliance approval ev
 | Item | Location |
 |------|----------|
 | Primary approval package | `COMPLIANCE_APPROVAL_PACKAGE.md` (EVD-006-PKG-001) |
-| Retention policies | `retention/` |
+| Compliance policy | `COMPLIANCE_POLICY.md` (EVD-006-POLICY-001) |
+| Data retention policy | `DATA_RETENTION_POLICY.md` (EVD-006-RETENTION-001) |
 | KYC evidence | `kyc/` |
 | Financial records retention | `financial-records/` |
 | Chat / messaging retention | `chat/` |
