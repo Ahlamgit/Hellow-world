@@ -25,6 +25,7 @@
 **Phase 1 closure execution:** [governance/PHASE_1_CLOSURE_EXECUTION_REPORT.md](./governance/PHASE_1_CLOSURE_EXECUTION_REPORT.md) — **GOV-P1-CLOSURE-001**  
 **Phase 1 approval finalization:** [governance/PHASE_1_APPROVAL_FINALIZATION_REPORT.md](./governance/PHASE_1_APPROVAL_FINALIZATION_REPORT.md) — **GOV-P1-FINAL-001**  
 **Phase 1 approval execution:** [governance/PHASE_1_APPROVAL_EXECUTION_PACK.md](./governance/PHASE_1_APPROVAL_EXECUTION_PACK.md) — **GOV-P1-EXEC-001**  
+**Phase 1 approval tracking:** [governance/PHASE_1_APPROVAL_TRACKING_REGISTER.md](./governance/PHASE_1_APPROVAL_TRACKING_REGISTER.md) — **GOV-P1-TRACK-001**  
 **Gate A readiness audit:** [governance/FINAL_GATE_A_READINESS_AUDIT_REPORT.md](./governance/FINAL_GATE_A_READINESS_AUDIT_REPORT.md) — **GOV-GA-AUDIT-001** (recommendation: remain Gate B)  
 **Gate A transition & blocker execution:** [governance/FINAL_GATE_A_TRANSITION_AND_BLOCKER_CLOSURE_PACKAGE.md](./governance/FINAL_GATE_A_TRANSITION_AND_BLOCKER_CLOSURE_PACKAGE.md) — **GOV-GATC-001**  
 **Execution standards (after Gate A):** [IMPLEMENTATION_EXECUTION_STANDARDS.md](./IMPLEMENTATION_EXECUTION_STANDARDS.md) — prepared; coding **BLOCKED** until Gate A  
