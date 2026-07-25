@@ -57,7 +57,7 @@ Move KHADAMATI from **Gate B: NOT READY — CODING BLOCKED** to **Gate A: READY 
 | BLOCKER-002 | Stakeholder approval | **Open — Pending** | Multi-function sign-off register (see §2.2) | Program Sponsor |
 | BLOCKER-003 | Vendor readiness | **Open — Pending** | Vendor readiness dossier per integration (see §2.3) | Technical Lead / Integration Lead |
 | BLOCKER-004 | Cloud readiness | **Open — Pending** | Cloud decision record + approvals (see §2.4) | Technical Architect + DevOps Lead |
-| BLOCKER-005 | Finance configuration | **Open — Pending** | Approved finance rule matrix (see §2.5) | Finance + Business Operations |
+| BLOCKER-005 | Finance configuration | **Ready for Approval** | Approved finance rule matrix + `FINANCE_POLICY_APPROVAL_PACKAGE.md` (see §2.5) | Finance + Business Operations |
 | BLOCKER-006 | Compliance approval | **Open — Pending** | Compliance sign-off pack (see §2.6) | Legal / Compliance Officer |
 | BLOCKER-007 | Payment.js validation | **Open — Pending** | Payment validation report (see §2.7) | Technical Lead + Finance Ops |
 
@@ -356,5 +356,6 @@ Phase 4 — Payment validation (sequential)
 |---------|------|--------|--------|
 | 1.0 | 2026-07-25 | Program Readiness Manager | Initial blocker closure execution plan |
 | 1.1 | 2026-07-25 | Program Governance Manager | Linked evidence management framework (GOV-BEMF-001) |
+| 1.2 | 2026-07-25 | Finance Governance Manager | BLOCKER-005 finance policy package — Ready for Approval |
 
 **Related documents:** `BLOCKER_EVIDENCE_MANAGEMENT_FRAMEWORK.md`, `IMPLEMENTATION_AUTHORIZATION_CHECKLIST.md`
