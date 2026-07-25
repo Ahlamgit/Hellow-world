@@ -22,7 +22,7 @@ Checklist for **Gate A — READY FOR IMPLEMENTATION** authorization. All items m
 
 | # | Requirement | Status | Evidence reference |
 |---|-------------|--------|-------------------|
-| P-01 | Product scope frozen | **Pending sign-off** | `FINAL_SCOPE_BASELINE.md` v1.0 — BLOCKER-002 signatures required |
+| P-01 | Product scope frozen | **Partial** — Project Owner approved; BO/Ops pending | `FINAL_SCOPE_BASELINE.md` v1.0 |
 | P-02 | Architecture approved | **Validated** — sign-off pending | ADR-001 → ADR-032; `FINAL_ARCHITECTURE_CONSISTENCY_REVIEW.md` |
 | P-03 | Engineering standards defined | **Confirmed** | Engineering standards baseline |
 | P-04 | Current gate = B (coding blocked) | **Confirmed** | `FINAL_IMPLEMENTATION_GATE_REPORT.md` |

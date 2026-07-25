@@ -74,7 +74,7 @@ Gate B remains until Gate A ceremony (7/7 blockers + GOV-GAIR-001 §8).
 
 | Role | Person | Package reviewed | Decision | Date | Signature | Status |
 |------|--------|------------------|----------|------|-----------|--------|
-| **Product Owner** | — | No | **Pending** | — | — | **Open** |
+| **Project Owner** | Project Owner | Yes | **Approved** | 2026-07-25 | Recorded | **Complete** |
 | **Business Owner** | — | No | **Pending** | — | — | **Open** |
 | **Operations Owner** | — | No | **Pending** | — | — | **Open** |
 
