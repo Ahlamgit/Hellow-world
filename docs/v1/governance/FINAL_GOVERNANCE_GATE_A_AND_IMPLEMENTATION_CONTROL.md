@@ -4,7 +4,8 @@
 |-------|-------|
 | **Document ID** | GOV-MASTER-CTRL-001 |
 | **Apex authorization prompt** | GOV-MASTER-IMPL-AUTH-001 v1.1 (`MASTER_GOVERNANCE_CONTROLLED_IMPLEMENTATION_AUTHORIZATION_PROMPT.md`) |
-| **Version** | 2.3 |
+| **Version** | 2.4 |
+| **Evidence finalization** | GOV-GATE-B-FINALIZE-001 |
 | **Closure execution** | GOV-GATE-B-CLOSURE-EXEC-001 |
 | **Gate A readiness** | GOV-GATE-A-READINESS-ASSESS-001 (~25%) |
 | **Evidence completion** | GOV-GATE-B-EVIDENCE-001 |
@@ -362,6 +363,7 @@ No exceptions. No shortcuts. No coding before Gate A. **Documentation ≠ approv
 | 2.1 | 2026-07-25 | Governance approval sync — Administrator finance configuration; blocker status matrix |
 | 2.2 | 2026-07-25 | GOV-GATE-B-CLOSURE-001 — closure preparation package |
 | 2.3 | 2026-07-25 | GOV-GATE-B-CLOSURE-EXEC-001 — final closure validation reports; Gate A readiness ~25% |
+| 2.4 | 2026-07-25 | GOV-GATE-B-FINALIZE-001 — Gate B evidence finalization (design theme + logo baseline) |
 
 **Supersedes:** Informal status summaries for gate and implementation authorization decisions.  
 **Subordinate to:** `MASTER_IMPLEMENTATION_PROMPT_v1.0.md`, ADRs, `FINAL_SCOPE_BASELINE.md`.

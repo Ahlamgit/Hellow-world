@@ -3,7 +3,7 @@
 | Field | Value |
 |-------|-------|
 | **Document ID** | EVD-001-GOV-001 |
-| **Version** | 1.0 |
+| **Version** | 1.1 |
 | **Date** | 2026-07-25 |
 | **Status** | **BUSINESS APPROVED** — evidence closure pending |
 | **ADR** | ADR-023 (UI blocked until BLOCKER-001 Closed) |
@@ -117,6 +117,10 @@ Defaults only — administrator / configuration layer; **no hardcoding** in appl
 | `BUSINESS_APPROVAL_RECORD.md` | PO/BO business approval |
 | `DESIGN_ASSET_REFERENCE.md` | `theme(1).mp4` · `ic-khadamati(1).jpg` |
 | `LOGO_REFINEMENT_SPECIFICATION.md` | Logo deliverables |
+| `LOGO_USAGE_GUIDELINES.md` | Logo usage rules |
+| `DESIGN_FINAL_SPECIFICATION.md` | Surface and journey specification |
+| `DESIGN_SYSTEM_BASELINE.md` | Typography, spacing, components |
+| `DESIGN_APPROVAL_SIGNOFF.md` | Design Lead sign-off (pending) |
 | `APPROVAL_RECORD.md` | Full blocker approval (pending) |
 | `EVIDENCE_CHECKLIST.md` | Closure checklist |
 

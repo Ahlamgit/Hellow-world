@@ -3,12 +3,24 @@
 | Field | Value |
 |-------|-------|
 | **Document ID** | EVD-001-DESIGN-APPROVAL-001 |
-| **Version** | 1.1 |
+| **Version** | 1.2 |
 | **Date** | 2026-07-25 |
 | **Blocker** | BLOCKER-001 — Design |
 | **Decision** | **APPROVED** |
 | **Approver** | Project Owner / Business Owner |
-| **Blocker closure** | **NOT CLOSED** — evidence archival pending |
+| **Blocker closure** | **NOT CLOSED** — Design Lead sign-off + asset archive pending |
+
+---
+
+## 0. Brand (approved)
+
+| Element | Value |
+|---------|-------|
+| Application name | **KHADAMATI** / **خدماتي** |
+| Logo reference | `ic-khadamati(1).jpg` — **approved; refine only** |
+| Theme reference | `theme(1).mp4` — authoritative visual direction |
+
+**Specification:** `DESIGN_FINAL_SPECIFICATION.md` · `DESIGN_SYSTEM_BASELINE.md`
 
 ---
 
@@ -24,29 +36,30 @@
 
 ---
 
-## 2. Customer app — APPROVED
+## 2. Customer mobile application — APPROVED
 
+- Service discovery · provider browsing
+- Booking journey · payment journey initiation
+- Chat experience · profile
+- Arabic **RTL** · English **LTR**
 - Mobile-first design
-- Service discovery
-- Booking flow
-- Service provider interaction
 
 ---
 
-## 3. Provider experience — APPROVED
+## 3. Provider mobile application — APPROVED
 
-- Provider mobile / dashboard experience
-- Availability management
-- Service management
-- Booking management
+- Provider onboarding · verification status
+- Availability · booking management
+- Earnings visibility · subscription status
+- Customer communication
 
 ---
 
-## 4. Administrator portal — APPROVED
+## 4. Administrator web portal — APPROVED
 
-- Web administration
-- Governance controls
-- Configuration management
+- Dashboard · provider approval · user moderation
+- Subscription management · advertisements
+- Categories · platform configuration
 
 ---
 
@@ -68,7 +81,10 @@
 | Archive `theme(1).mp4` to `reference-assets/` | **Pending** |
 | Archive `ic-khadamati(1).jpg` to `reference-assets/` | **Pending** |
 | Refined logo package (per spec) | **Pending** |
-| `DESIGN_APPROVAL_SIGNOFF_v1.0` | **Pending** |
+| `DESIGN_APPROVAL_SIGNOFF.md` | **Pending** Design Lead |
+| `DESIGN_FINAL_SPECIFICATION.md` | ☑ On file |
+| `DESIGN_SYSTEM_BASELINE.md` | ☑ On file |
+| `LOGO_USAGE_GUIDELINES.md` | ☑ On file |
 
 **Business approval:** **COMPLETE** — 2026-07-25.  
 **Blocker status:** **Approved** — evidence archival pending. **NOT CLOSED** until GOV-BEMF-001 checklist complete (ADR-023).

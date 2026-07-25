@@ -3,7 +3,8 @@
 | Field | Value |
 |-------|-------|
 | **Document ID** | GOV-IACL-001 |
-| **Version** | 1.10 |
+| **Version** | 1.11 |
+| **Evidence finalization** | GOV-GATE-B-FINALIZE-001 |
 | **Closure execution** | GOV-GATE-B-CLOSURE-EXEC-001 |
 | **Gate A readiness** | GOV-GATE-A-READINESS-ASSESS-001 (~25%) |
 | **Evidence completion** | GOV-GATE-B-EVIDENCE-001 |
@@ -118,3 +119,4 @@ Checklist for **Gate A — READY FOR IMPLEMENTATION** authorization. All items m
 | 1.8 | 2026-07-25 | GOV-GATE-B-CLOSURE-001 — closure preparation sync |
 | 1.9 | 2026-07-25 | Governance approval sync — Administrator finance model |
 | 1.10 | 2026-07-25 | GOV-GATE-B-CLOSURE-EXEC-001 — closure validation reports; READY FOR APPROVAL statuses |
+| 1.11 | 2026-07-25 | GOV-GATE-B-FINALIZE-001 — design/finance/compliance/payment evidence packages finalized |

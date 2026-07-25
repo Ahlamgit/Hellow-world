@@ -3,7 +3,7 @@
 | Field | Value |
 |-------|-------|
 | **Document ID** | EVD-005-MATRIX-001 |
-| **Version** | 1.0 |
+| **Version** | 1.1 |
 | **Date** | 2026-07-25 |
 | **Blocker** | BLOCKER-005 — Finance |
 | **Type** | **Governance framework** — not a values table |
@@ -60,6 +60,8 @@ Operational values are Administrator-configured after implementation (ADR-013).
 | Technical Architect | Configurable-rules architecture alignment | **Pending** |
 | Finance Owner (optional attestation) | Operational finance process alignment | **Pending** |
 
+**Administrator model:** `ADMIN_FINANCE_CONTROL_MODEL.md` v1.0
+
 **Closure artifact note:** If `FINANCE_RULE_MATRIX_v1.0` is required as signed closure artifact, this document is the governance baseline; launch values are **not** pre-filled.
 
 ---
@@ -69,3 +71,4 @@ Operational values are Administrator-configured after implementation (ADR-013).
 | Version | Date | Change |
 |---------|------|--------|
 | 1.0 | 2026-07-25 | Administrator configuration governance model; business approval complete |
+| 1.1 | 2026-07-25 | Linked `ADMIN_FINANCE_CONTROL_MODEL.md` — Gate B evidence finalization |

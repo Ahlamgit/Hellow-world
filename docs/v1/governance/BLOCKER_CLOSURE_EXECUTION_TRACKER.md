@@ -3,7 +3,8 @@
 | Field | Value |
 |-------|-------|
 | **Document ID** | GOV-BLOCKER-TRACKER-001 |
-| **Version** | 2.8 |
+| **Version** | 2.9 |
+| **Evidence finalization** | GOV-GATE-B-FINALIZE-001 v1.0 |
 | **Closure execution** | GOV-GATE-B-CLOSURE-EXEC-001 v1.0 |
 | **Closure validation** | `GATE_B_FINAL_CLOSURE_EXECUTION_RECORD.md` · `GATE_A_READINESS_ASSESSMENT.md` |
 | **Date** | 2026-07-25 |

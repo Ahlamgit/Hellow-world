@@ -3,7 +3,8 @@
 | Field | Value |
 |-------|-------|
 | **Document ID** | GOV-RBCS-001 |
-| **Version** | 3.10 |
+| **Version** | 3.11 |
+| **Evidence finalization** | `GATE_B_EVIDENCE_FINALIZATION_RECORD.md` (GOV-GATE-B-FINALIZE-001) |
 | **Closure execution** | `GATE_B_FINAL_CLOSURE_EXECUTION_RECORD.md` (GOV-GATE-B-CLOSURE-EXEC-001) |
 | **Gate A readiness** | `GATE_A_READINESS_ASSESSMENT.md` (GOV-GATE-A-READINESS-ASSESS-001) |
 | **Evidence completion** | `GATE_B_EVIDENCE_COMPLETION_REPORT.md` (GOV-GATE-B-EVIDENCE-001) |
@@ -268,3 +269,4 @@ Refer to `BLOCKER_CLOSURE_EXECUTION_TRACKER.md` (GOV-BLOCKER-TRACKER-001) for op
 | 3.8 | 2026-07-25 | GOV-GATE-B-CLOSURE-001 — closure preparation package |
 | 3.9 | 2026-07-25 | Governance approval sync — Administrator finance configuration model |
 | 3.10 | 2026-07-25 | GOV-GATE-B-CLOSURE-EXEC-001 — closure validation reports; READY FOR APPROVAL ladder (001, 003–007) |
+| 3.11 | 2026-07-25 | GOV-GATE-B-FINALIZE-001 — evidence finalization per approved theme and logo |

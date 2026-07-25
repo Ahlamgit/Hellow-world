@@ -3,7 +3,8 @@
 | Field | Value |
 |-------|-------|
 | **Document ID** | GOV-GATE-A-READINESS-ASSESS-001 |
-| **Version** | 1.0 |
+| **Version** | 1.1 |
+| **Gate A readiness** | **~30%** — evidence finalization complete; signatures pending |
 | **Date** | 2026-07-25 |
 | **Authority** | GOV-GATE-B-CLOSURE-EXEC-001 |
 | **Current gate** | **B — NOT READY — CODING BLOCKED** |
@@ -58,12 +59,12 @@
 | Dimension | Weight | Complete | Score |
 |-----------|--------|----------|-------|
 | Blocker closure (7 required) | 50% | 1/7 | **7.1%** |
-| GOV-IACL-001 | 15% | Partial | **~8%** |
+| GOV-IACL-001 | 15% | Partial — evidence finalized | **~10%** |
 | GOV-GAIR-001 §8 | 15% | Not signed | **0%** |
 | Architecture & scope frozen | 10% | Yes | **10%** |
 | Ceremony / Sprint 0 auth | 10% | Not held | **0%** |
 
-**Overall Gate A readiness: ~25%** (governance preparation advanced; **authorization path not complete**)
+**Overall Gate A readiness: ~30%** (evidence packages finalized; **authorization path not complete**)
 
 ---
 
