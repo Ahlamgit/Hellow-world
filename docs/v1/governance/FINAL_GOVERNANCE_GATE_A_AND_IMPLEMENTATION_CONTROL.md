@@ -4,7 +4,8 @@
 |-------|-------|
 | **Document ID** | GOV-MASTER-CTRL-001 |
 | **Apex authorization prompt** | GOV-MASTER-IMPL-AUTH-001 v1.1 (`MASTER_GOVERNANCE_CONTROLLED_IMPLEMENTATION_AUTHORIZATION_PROMPT.md`) |
-| **Version** | 1.9 |
+| **Version** | 2.0 |
+| **Evidence completion** | GOV-GATE-B-EVIDENCE-001 |
 | **Date** | 2026-07-25 |
 | **Owner** | Program Governance Manager · Technical Program Manager |
 | **Gate** | **B — NOT READY — CODING BLOCKED** |
@@ -179,15 +180,17 @@ Each folder: `README.md` · `APPROVAL_RECORD.md` · `EVIDENCE_CHECKLIST.md`
 
 | ID | Name | Status | Owner | Evidence |
 |----|------|--------|-------|----------|
-| **BLOCKER-001** | Design | **Under Review** — PO/BO approved | Design Lead + PO/BO | `evidence/BLOCKER-001-design/` |
+| **BLOCKER-001** | Design | **Evidence Prepared** — Awaiting Design Lead | Design Lead + PO/BO | `DESIGN_APPROVAL_RECORD.md` |
 | **BLOCKER-002** | Stakeholder | **Closed** | Project Owner / Business Owner | `BLOCKER_002_CLOSURE_RECORD.md` |
-| **BLOCKER-003** | Vendors | **Open** | Integration Lead | `evidence/BLOCKER-003-vendors/` |
-| **BLOCKER-004** | Cloud | **Open** | Architect + DevOps | `evidence/BLOCKER-004-cloud/` |
-| **BLOCKER-005** | Finance | **Under Review** — PO/BO approved | Finance + PO/BO | `evidence/BLOCKER-005-finance/` |
-| **BLOCKER-006** | Compliance | **Under Review** — PO/BO direction approved | Legal + Technical Architect | `evidence/BLOCKER-006-compliance/` |
-| **BLOCKER-007** | Payment.js | **Under Review** — PO/BO approved | PO/BO + Technical Architect | `evidence/BLOCKER-007-payment/` |
+| **BLOCKER-003** | Vendors | **Evidence Prepared** — Awaiting TA | Integration Lead + TA | `VENDOR_APPROVAL_MATRIX.md` |
+| **BLOCKER-004** | Cloud | **Evidence Prepared** — Pending technical validation | Architect + DevOps | `CLOUD_READINESS_RECORD.md` |
+| **BLOCKER-005** | Finance | **Evidence Prepared** — Awaiting Finance | Finance + PO/BO | `COMMISSION_MODEL_APPROVAL.md` |
+| **BLOCKER-006** | Compliance | **Evidence Prepared** — Awaiting Legal + TA | Legal + TA | `COMPLIANCE_GOVERNANCE_RECORD.md` |
+| **BLOCKER-007** | Payment.js | **Evidence Prepared** — Awaiting technical validation | PO/BO + TA | `PAYMENT_FLOW_APPROVAL_RECORD.md` |
 
-**Progress:** **1 / 7 CLOSED**
+**Progress:** **1 / 7 CLOSED** · **6 / 7 Evidence Prepared** (human/technical approval pending)
+
+**Report:** `GATE_B_EVIDENCE_COMPLETION_REPORT.md` (GOV-GATE-B-EVIDENCE-001)
 
 ---
 

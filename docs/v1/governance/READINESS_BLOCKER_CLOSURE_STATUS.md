@@ -3,7 +3,8 @@
 | Field | Value |
 |-------|-------|
 | **Document ID** | GOV-RBCS-001 |
-| **Version** | 3.6 |
+| **Version** | 3.7 |
+| **Evidence completion** | `GATE_B_EVIDENCE_COMPLETION_REPORT.md` (GOV-GATE-B-EVIDENCE-001) |
 | **Blockers closed** | **1 / 7** |
 | **Last updated** | 2026-07-25 |
 | **Gate** | **B — NOT READY — CODING BLOCKED** |
@@ -37,7 +38,8 @@
 | **Ready for Approval** | Evidence package prepared; awaiting signatures |
 | **Under Review** | Evidence submitted; partial approvals received; closure criteria not yet met |
 | **Closed** | Evidence approved, archived per GOV-BEMF-001, artifact on file |
-| **Blocked** | Dependency not met |
+| **Evidence Prepared** | Governance documents complete; awaiting human signatures / technical validation |
+| **Pending Technical Validation** | Business evidence prepared; TA/DevOps validation required |
 
 ---
 
@@ -45,15 +47,15 @@
 
 | Blocker | Description | Status | Owner | Closure artifact | Evidence received | Approved date |
 |---------|-------------|--------|-------|------------------|-------------------|---------------|
-| BLOCKER-001 | Design approval | **Under Review** — PO/BO **APPROVED** | Design Lead + PO/BO | `DESIGN_APPROVAL_SIGNOFF_v1.0` | `BUSINESS_APPROVAL_RECORD.md` v1.1 | 2026-07-25 (business) |
+| BLOCKER-001 | Design approval | **Evidence Prepared** — Awaiting Design Lead | Design Lead + PO/BO | `DESIGN_APPROVAL_SIGNOFF_v1.0` | `DESIGN_APPROVAL_RECORD.md` + asset refs | 2026-07-25 (business) |
 | BLOCKER-002 | Stakeholder approval | **Closed** | Project Owner / Business Owner | `BLOCKER_002_CLOSURE_RECORD.md` | 2/2 complete | 2026-07-25 |
-| BLOCKER-003 | Vendor readiness | **Under Review** — PO/BO partial | Integration Lead + TA | `VENDOR_READINESS_DOSSIER_v1.0` | SMS/email/storage approved; maps excluded | 2026-07-25 (business) |
-| BLOCKER-004 | Cloud readiness | **Under Review** — PO/BO **APPROVED** | Architect + DevOps | `CLOUD_READINESS_DECISION_RECORD_v1.0` | `BUSINESS_APPROVAL_RECORD.md` | 2026-07-25 (business) |
-| BLOCKER-005 | Finance configuration | **Under Review** — PO/BO **APPROVED** | Finance + PO/BO | `FINANCE_RULE_MATRIX_v1.0` | `BUSINESS_APPROVAL_RECORD.md` v1.1 | 2026-07-25 (business) |
-| BLOCKER-006 | Compliance approval | **Under Review** — PO/BO direction **APPROVED** | Legal + Technical Architect | `COMPLIANCE_APPROVAL_PACK_v1.0` | `BUSINESS_APPROVAL_RECORD.md` v1.1; Legal pending | 2026-07-25 (business) |
-| BLOCKER-007 | Payment.js validation | **Under Review** — PO/BO **APPROVED** | PO/BO + Technical Architect | `PAYMENT_JS_VALIDATION_REPORT_v1.0` | `BUSINESS_APPROVAL_RECORD.md` v1.1; technical pending | 2026-07-25 (business) |
+| BLOCKER-003 | Vendor readiness | **Evidence Prepared** — Awaiting TA | Integration Lead + TA | `VENDOR_READINESS_DOSSIER_v1.0` | `VENDOR_APPROVAL_MATRIX.md` | 2026-07-25 (business partial) |
+| BLOCKER-004 | Cloud readiness | **Evidence Prepared** — Pending technical validation | Architect + DevOps | `CLOUD_READINESS_DECISION_RECORD_v1.0` | `CLOUD_READINESS_RECORD.md` | 2026-07-25 (business) |
+| BLOCKER-005 | Finance configuration | **Evidence Prepared** — Awaiting Finance | Finance + PO/BO | `FINANCE_RULE_MATRIX_v1.0` | Commission + subscription approval docs | 2026-07-25 (business) |
+| BLOCKER-006 | Compliance approval | **Evidence Prepared** — Awaiting Legal + TA | Legal + TA | `COMPLIANCE_APPROVAL_PACK_v1.0` | `COMPLIANCE_GOVERNANCE_RECORD.md` | 2026-07-25 (business) |
+| BLOCKER-007 | Payment.js validation | **Evidence Prepared** — Awaiting technical validation | PO/BO + TA | `PAYMENT_JS_VALIDATION_REPORT_v1.0` | `PAYMENT_FLOW_APPROVAL_RECORD.md` | 2026-07-25 (business) |
 
-**Summary:** **1 Closed** · 2 Open · 4 Under Review · **PO/BO business approvals:** 001, 002, 005, 006, 007 **APPROVED** · **6 blockers** pending evidence closure toward Gate A
+**Summary:** **1 Closed** · **6 Evidence Prepared** (awaiting human/technical approval) · **0** auto-closed
 
 ---
 
@@ -259,4 +261,5 @@ Refer to `BLOCKER_CLOSURE_EXECUTION_TRACKER.md` (GOV-BLOCKER-TRACKER-001) for op
 | 3.3 | 2026-07-25 | Gate B reaffirmed; tracker sync |
 | 3.4 | 2026-07-25 | GOV-BUSINESS-APPROVAL-001 — PO/BO business approvals for 001, 005, 006, 007 |
 | 3.5 | 2026-07-25 | GOV-BUSINESS-APPROVAL-001 v1.1 |
-| 3.6 | 2026-07-25 | GOV-BUSINESS-APPROVAL-001 v1.2 — design assets, vendor/cloud, maps exclusion |
+| 3.6 | 2026-07-25 | GOV-BUSINESS-APPROVAL-001 v1.2 |
+| 3.7 | 2026-07-25 | GOV-GATE-B-EVIDENCE-001 — evidence completion report; Evidence Prepared statuses |

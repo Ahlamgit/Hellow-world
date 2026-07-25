@@ -3,7 +3,8 @@
 | Field | Value |
 |-------|-------|
 | **Document ID** | GOV-IACL-001 |
-| **Version** | 1.6 |
+| **Version** | 1.7 |
+| **Evidence completion** | GOV-GATE-B-EVIDENCE-001 |
 | **Gate** | B — NOT READY — CODING BLOCKED |
 | **Last updated** | 2026-07-25 |
 | **Business consolidation** | GOV-BUSINESS-APPROVAL-001 v1.2 |
@@ -37,13 +38,13 @@ Checklist for **Gate A — READY FOR IMPLEMENTATION** authorization. All items m
 
 | # | Blocker | Evidence complete | Approved | Archived | Status |
 |---|---------|-------------------|----------|----------|--------|
-| C-01 | BLOCKER-001 Design | Package + PO/BO business approval | Partial (PO/BO) | No | **Under Review** |
+| C-01 | BLOCKER-001 Design | Evidence package prepared | Partial (PO/BO) | No | **Evidence Prepared** |
 | C-02 | BLOCKER-002 Stakeholder | Complete | Yes | Yes | **Closed** |
-| C-03 | BLOCKER-003 Vendors | PO/BO partial + maps exclusion | Partial (PO/BO) | No | **Under Review** |
-| C-04 | BLOCKER-004 Cloud | PO/BO business approval | Partial (PO/BO) | No | **Under Review** |
-| C-05 | BLOCKER-005 Finance | Package + PO/BO business approval | Partial (PO/BO) | No | **Under Review** |
-| C-06 | BLOCKER-006 Compliance | Package + PO/BO direction | Partial (PO/BO) | No | **Under Review** |
-| C-07 | BLOCKER-007 Payment.js | PO/BO business approval | Partial (PO/BO) | No | **Under Review** |
+| C-03 | BLOCKER-003 Vendors | Matrix + maps exclusion prepared | Partial (PO/BO) | No | **Evidence Prepared** |
+| C-04 | BLOCKER-004 Cloud | Readiness record prepared | Partial (PO/BO) | No | **Evidence Prepared** |
+| C-05 | BLOCKER-005 Finance | Commission + subscription docs prepared | Partial (PO/BO) | No | **Evidence Prepared** |
+| C-06 | BLOCKER-006 Compliance | Governance record prepared | Partial (PO/BO) | No | **Evidence Prepared** |
+| C-07 | BLOCKER-007 Payment.js | Flow approval record prepared | Partial (PO/BO) | No | **Evidence Prepared** |
 
 **Rule:** No item may be marked complete without evidence per `BLOCKER_EVIDENCE_MANAGEMENT_FRAMEWORK.md` §1.3.
 
@@ -111,3 +112,4 @@ Checklist for **Gate A — READY FOR IMPLEMENTATION** authorization. All items m
 | 1.4 | 2026-07-25 | GOV-BUSINESS-APPROVAL-001 — PO/BO partial approvals for 001, 005, 006, 007 |
 | 1.5 | 2026-07-25 | GOV-BUSINESS-APPROVAL-001 v1.1 — remaining blocking items matrix |
 | 1.6 | 2026-07-25 | GOV-BUSINESS-APPROVAL-001 v1.2 — BLOCKER-003/004 business partial approvals |
+| 1.7 | 2026-07-25 | GOV-GATE-B-EVIDENCE-001 — evidence completion; Evidence Prepared statuses |

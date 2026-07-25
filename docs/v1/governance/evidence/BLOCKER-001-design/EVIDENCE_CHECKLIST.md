@@ -1,18 +1,19 @@
 # BLOCKER-001 — Evidence Checklist
 
-**Blocker:** Design · **Status:** Under Review — PO/BO **APPROVED** · **Closed:** No
+**Blocker:** Design · **Status:** Evidence Prepared — Awaiting Design Lead · **Closed:** No
 
 | # | Item | Evidence on file | Approved |
 |---|------|------------------|----------|
-| 1 | `BUSINESS_APPROVAL_RECORD.md` v1.2 — PO/BO design approval | ☑ | ☑ |
-| 2 | `DESIGN_GOVERNANCE_RECORD.md` — surfaces & localization | ☑ | ☑ |
-| 3 | `DESIGN_ASSET_REFERENCE.md` — `theme(1).mp4` · `ic-khadamati(1).jpg` | ☑ | ☑ |
-| 4 | Reference video `theme(1).mp4` archived | ☐ | ☐ |
-| 5 | Logo reference `ic-khadamati(1).jpg` archived | ☐ | ☐ |
-| 6 | `LOGO_REFINEMENT_SPECIFICATION.md` — refined logo package delivered | ☐ | ☐ |
-| 7 | Design system approved | ☐ | ☐ |
-| 8 | Design Lead attestation | ☐ | ☐ |
-| 9 | `APPROVAL_RECORD.md` — full blocker Approved | ☐ | ☐ |
-| 10 | Closure artifact `DESIGN_APPROVAL_SIGNOFF_v1.0` filed | ☐ | ☐ |
+| 1 | `BUSINESS_APPROVAL_RECORD.md` v1.2 | ☑ | ☑ |
+| 2 | `DESIGN_ASSET_REFERENCE.md` v1.1 | ☑ | ☑ |
+| 3 | `DESIGN_APPROVAL_RECORD.md` | ☑ | ☑ |
+| 4 | `DESIGN_GOVERNANCE_RECORD.md` | ☑ | ☑ |
+| 5 | `LOGO_REFINEMENT_SPECIFICATION.md` | ☑ | ☑ |
+| 6 | Reference video `theme(1).mp4` archived | ☐ | ☐ |
+| 7 | Logo reference `ic-khadamati(1).jpg` archived | ☐ | ☐ |
+| 8 | Refined logo package delivered | ☐ | ☐ |
+| 9 | Design Lead attestation | ☐ | ☐ |
+| 10 | `APPROVAL_RECORD.md` — full blocker Approved | ☐ | ☐ |
+| 11 | Closure artifact `DESIGN_APPROVAL_SIGNOFF_v1.0` filed | ☐ | ☐ |
 
-**BLOCKER-001 remains open** until full checklist per GOV-BEMF-001 (ADR-023).
+**BLOCKER-001 remains open** per GOV-BEMF-001 (ADR-023).

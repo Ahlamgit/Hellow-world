@@ -1,23 +1,21 @@
 # BLOCKER-003 — Evidence Checklist
 
-**Blocker:** Vendors · **Status:** Under Review — PO/BO partial · **Closed:** No
+**Blocker:** Vendors · **Status:** Evidence Prepared — Awaiting TA · **Closed:** No
 
 | # | Item | Evidence on file | Approved |
 |---|------|------------------|----------|
-| 1 | `BUSINESS_APPROVAL_RECORD.md` — SMS category (purpose-limited) | ☑ | ☑ |
-| 2 | `BUSINESS_APPROVAL_RECORD.md` — email category (purpose-limited) | ☑ | ☑ |
-| 3 | `BUSINESS_APPROVAL_RECORD.md` — storage category | ☑ | ☑ |
-| 4 | `MAPS_V1_EXCLUSION_RECORD.md` — maps **NOT** approved for V1 | ☑ | ☑ |
-| 5 | Maps sandbox | N/A — V1 excluded | N/A |
-| 6 | SMS vendor dossier + technical validation | ☐ | ☐ |
-| 7 | Email vendor dossier + technical validation | ☐ | ☐ |
-| 8 | Storage vendor dossier + technical validation | ☐ | ☐ |
-| 9 | Payment vendor evaluation + sandbox | ☐ | ☐ |
-| 10 | OCR/face vendor evaluation + sandbox | ☐ | ☐ |
-| 11 | Ports/adapters unchanged attestation (TA) | ☐ | ☐ |
-| 12 | Integration Lead attestation | ☐ | ☐ |
-| 13 | Technical Architect approval | ☐ | ☐ |
-| 14 | `APPROVAL_RECORD.md` — full blocker Approved | ☐ | ☐ |
-| 15 | Closure artifact `VENDOR_READINESS_DOSSIER_v1.0` filed | ☐ | ☐ |
+| 1 | `BUSINESS_APPROVAL_RECORD.md` | ☑ | ☑ |
+| 2 | `VENDOR_APPROVAL_MATRIX.md` | ☑ | ☑ |
+| 3 | `MAPS_V1_EXCLUSION_RECORD.md` v1.1 | ☑ | ☑ |
+| 4 | Maps sandbox | N/A — V1 excluded | N/A |
+| 5 | SMS vendor dossier + sandbox | ☐ | ☐ |
+| 6 | Email vendor dossier + sandbox | ☐ | ☐ |
+| 7 | Storage vendor dossier + validation | ☐ | ☐ |
+| 8 | Payment vendor evaluation + sandbox | ☐ | ☐ |
+| 9 | OCR/face vendor evaluation | ☐ | ☐ |
+| 10 | Integration Lead attestation | ☐ | ☐ |
+| 11 | Technical Architect approval | ☐ | ☐ |
+| 12 | `APPROVAL_RECORD.md` — full blocker Approved | ☐ | ☐ |
+| 13 | Closure artifact `VENDOR_READINESS_DOSSIER_v1.0` filed | ☐ | ☐ |
 
-**BLOCKER-003 remains open** until full checklist per GOV-BEMF-001.
+**BLOCKER-003 remains open** per GOV-BEMF-001.

@@ -3,17 +3,27 @@
 | Field | Value |
 |-------|-------|
 | **Document ID** | EVD-003-MAPS-EXCL-001 |
-| **Version** | 1.0 |
+| **Version** | 1.1 |
 | **Date** | 2026-07-25 |
 | **Decision** | **NOT APPROVED FOR V1** |
 | **Approver** | Project Owner / Business Owner |
-| **Scope impact** | V1 exclusion — no architecture change |
 
 ---
 
-## Decision
+## Governance decision
 
-Maps and location services are **excluded from KHADAMATI V1**.
+Maps and location services are **intentionally excluded from KHADAMATI V1**.
+
+---
+
+## V1 position
+
+| Statement | Confirmation |
+|-----------|--------------|
+| No maps implementation in V1 | **Yes** |
+| No V1 dependency on maps/location providers | **Yes** |
+| Reserved for future product evolution only | **Yes** |
+| Separate governance approval required for future inclusion | **Yes** |
 
 ---
 
@@ -26,14 +36,8 @@ Maps and location services are **excluded from KHADAMATI V1**.
 
 ---
 
-## Future use
+## Architecture note
 
-Maps/location may be considered **only** after separate governance approval and scope change process. **Not** part of current V1 frozen scope.
+ADR-001 → ADR-032 unchanged. Ports/adapters pattern may exist at architecture level; **no V1 maps implementation or integration dependency**.
 
----
-
-## Evidence checklist impact
-
-BLOCKER-003 maps sandbox item: **N/A — V1 excluded** (see `EVIDENCE_CHECKLIST.md`).
-
-**Architecture:** ADR-001 → ADR-032 unchanged; ports may exist but **no V1 maps implementation**.
+**BLOCKER-003 checklist:** Maps sandbox item = **N/A — V1 excluded**.
