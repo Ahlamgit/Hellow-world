@@ -4,25 +4,22 @@
 |-------|-------|
 | **Document ID** | EVD-006-APPROVAL-001 |
 | **Blocker ID** | BLOCKER-006 — Compliance |
-| **Decision** | **Approved to proceed** (partial — compliance finalization) |
-| **Approver Name** | **Project Owner** |
-| **Role** | Project Owner |
+| **Decision** | **Partially Approved** — PO/BO compliance direction + proceed auth |
+| **Approver Name** | **Project Owner / Business Owner** |
+| **Role** | Project Owner / Business Owner (unified) |
 | **Organization** | KHADAMATI |
 | **Date** | **2026-07-25** |
-| **Approval type** | **Human authorization — proceed with compliance finalization** |
-| **Version Reviewed** | `COMPLIANCE_APPROVAL_PACKAGE.md` v1.0 · `COMPLIANCE_POLICY.md` · `DATA_RETENTION_POLICY.md` |
-| **Comments** | Project Owner authorizes proceeding with compliance finalization and Legal review. Retention durations remain **pending Legal / Compliance validation**. Does not close BLOCKER-006 until Legal values approved and 3/3 signatures complete. |
-| **Signature / Confirmation** | **Recorded — Project Owner human authorization (2026-07-25)** |
+| **Approval type** | Business compliance governance direction |
+| **Version Reviewed** | `COMPLIANCE_APPROVAL_PACKAGE.md` · `BUSINESS_APPROVAL_RECORD.md` |
+| **Comments** | Compliance governance direction approved. **Retention durations NOT approved** — pending Legal. Full §10 signatures pending. |
+| **Signature / Confirmation** | **Recorded — 2026-07-25** |
 
 ### Decision options
 
 - [ ] **Pending**
-- [x] **Approved to proceed** (partial — not full blocker closure)
+- [x] **Partially Approved** (business — Legal closure pending)
+- [ ] **Approved** (full closure)
 - [ ] **Rejected**
-
-### Closure note
-
-**BLOCKER-006 is NOT Closed.** Legal / Compliance retention durations and full §10 signatures still required.
 
 ---
 
@@ -30,9 +27,8 @@
 
 | Approver | Role | Decision | Signature / Date |
 |----------|------|----------|------------------|
-| **Project Owner** | Proceed authorization | **Approved to proceed** | **2026-07-25** |
+| **Project Owner / Business Owner** | Business compliance direction | **Approved** | **2026-07-25** |
 | | Legal / Compliance Officer | **Pending** | |
-| | Business Owner | **Pending** | |
 | | Technical Architect | **Pending** | |
 
-**Full compliance approvals received:** **0 / 3** (Legal block pending)
+**BLOCKER-006 NOT CLOSED** — Legal retention values required.

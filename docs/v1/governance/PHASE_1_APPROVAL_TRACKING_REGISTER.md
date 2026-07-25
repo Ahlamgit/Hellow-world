@@ -3,13 +3,13 @@
 | Field | Value |
 |-------|-------|
 | **Document ID** | GOV-P1-TRACK-001 |
-| **Version** | 1.1 |
+| **Version** | 1.2 |
 | **Date** | 2026-07-25 |
 | **Owner** | Program Governance Manager |
 | **Campaign** | Phase 1 — BLOCKER-002 & BLOCKER-006 approval collection |
-| **Companion** | GOV-P1-EXEC-001 (execution pack) |
+| **Companion** | GOV-P1-EXEC-001 (execution pack) · GOV-BUSINESS-APPROVAL-001 (business consolidation) |
 | **Gate** | **B — NOT READY — CODING BLOCKED** |
-| **Blockers closed** | **0 / 7** |
+| **Blockers closed** | **1 / 7** |
 | **Human authorization** | Project Owner — 2026-07-25 (GOV-GA-HUMAN-AUTH-001) |
 | **Implementation** | **NOT AUTHORIZED** |
 
@@ -44,7 +44,7 @@ This register is the **operational tracking instrument** for Phase 1 approval co
 | Item | Value |
 |------|-------|
 | **Gate** | **B — NOT READY — CODING BLOCKED** |
-| **Phase 1 approvals** | **0 / 3** (BLOCKER-002) · **0 / 3** (BLOCKER-006) |
+| **Phase 1 approvals** | BLOCKER-002: **2/2** · BLOCKER-006: **PO/BO direction ✓**; Legal + TA pending |
 | **Phase 1 blockers closed** | **1 / 2** |
 
 ### Implementation restriction
@@ -94,20 +94,21 @@ Gate B remains until Gate A ceremony (7/7 blockers + GOV-GAIR-001 §8).
 ## 3. BLOCKER-006 — Approval Register
 
 **Package:** `evidence/BLOCKER-006-compliance/COMPLIANCE_APPROVAL_PACKAGE.md` (EVD-006-PKG-001)  
-**Blocker status:** **BLOCKED** (§2 retention pending) · **Closed:** No  
-**Approvals received:** **0 / 3**
+**Blocker status:** **UNDER REVIEW** — PO/BO direction approved · **Closed:** No  
+**Approvals received:** **1 / 3** (PO/BO business direction) + Legal + TA pending
 
 | Role | Person | Package reviewed | Decision | Date | Signature | Status |
 |------|--------|------------------|----------|------|-----------|--------|
+| **Project Owner / Business Owner** | Project Owner | Yes | **Approved** (governance direction) | 2026-07-25 | Recorded | **Complete** |
 | **Legal / Compliance Owner** | — | No | **Pending** | — | — | **Open** |
-| **Business Owner** | — | No | **Pending** | — | — | **Open** |
 | **Technical Architect** | — | No | **Pending** | — | — | **Open** |
 
 ### BLOCKER-006 supporting records
 
 | Record | Location | Status |
 |--------|----------|--------|
-| `APPROVAL_RECORD.md` (EVD-006-APPROVAL-001) | `evidence/BLOCKER-006-compliance/` | **Pending** |
+| `BUSINESS_APPROVAL_RECORD.md` | Same folder | **PO/BO direction approved** |
+| `APPROVAL_RECORD.md` (EVD-006-APPROVAL-001) | `evidence/BLOCKER-006-compliance/` | **Partially Approved** |
 | `EVIDENCE_CHECKLIST.md` | Same folder | **2 / 11** evidence prepared (Legal values pending) |
 | `COMPLIANCE_POLICY.md` (EVD-006-POLICY-001) | Same folder | **Prepared** |
 | `DATA_RETENTION_POLICY.md` (EVD-006-RETENTION-001) | Same folder | **Prepared** — durations pending Legal |
@@ -125,13 +126,14 @@ Gate B remains until Gate A ceremony (7/7 blockers + GOV-GAIR-001 §8).
 
 | Blocker | Required evidence | Owner | Status |
 |---------|-------------------|-------|--------|
-| **002** | Signed stakeholder approvals (§6 × 2 required) | Project Owner / Business Owner | **1/2** |
+| **002** | Signed stakeholder approvals (2/2 required) | Project Owner / Business Owner | **Complete** |
 | **002** | Scope confirmation vs `FINAL_SCOPE_BASELINE.md` | Project Owner / Business Owner | **Complete** |
-| **002** | V1 exclusions acknowledged | PO/BO + Administrator | **Partial** |
-| **002** | Administrator Governance Acceptance | Administrator | **Pending** |
-| **002** | `APPROVAL_RECORD.md` → **Approved** | Program Governance Manager | **Pending** |
-| **002** | `STAKEHOLDER_APPROVAL_REGISTER.md` filed | Program Governance Manager | **Prepared** — signatures pending |
-| **002** | Tracker update (GOV-RBCS-001, GOV-BLOCKER-TRACKER-001) | Program Governance Manager | **Pending** |
+| **002** | V1 exclusions acknowledged | PO/BO + Administrator | **Complete** |
+| **002** | Administrator Governance Acceptance | Administrator | **Complete** |
+| **002** | `APPROVAL_RECORD.md` → **Approved** | Program Governance Manager | **Complete** |
+| **002** | `BLOCKER_002_CLOSURE_RECORD.md` filed | Program Governance Manager | **Complete** |
+| **002** | Tracker update (GOV-RBCS-001, GOV-BLOCKER-TRACKER-001) | Program Governance Manager | **Complete** |
+| **006** | PO/BO compliance governance direction | Project Owner / Business Owner | **Complete** |
 | **006** | Retention approval (§2 durations) | Legal / Compliance | **Pending** |
 | **006** | §9 open items resolved | Legal / Compliance | **Pending** |
 | **006** | Compliance signatures (§10 × 3) | Legal / Compliance Officer | **Pending** |
@@ -151,9 +153,8 @@ Gate B remains until Gate A ceremony (7/7 blockers + GOV-GAIR-001 §8).
 | Date | Action | Owner | Result | Next step |
 |------|--------|-------|--------|-----------|
 | 2026-07-25 | BLOCKER-002 **CLOSED** — Administrator Governance Acceptance | Governance Architect | 2/2 approvals; `BLOCKER_002_CLOSURE_RECORD.md` filed | BLOCKER-006 compliance finalization |
-| — | Distribute `STAKEHOLDER_APPROVAL_PACKAGE.md` + scope baseline + GOV-P1-EXEC-001 | Program Sponsor | *Pending* | Collect §6 signatures |
-| — | Schedule Legal retention workshop (BLOCKER-006 §2) | Legal / Compliance Officer | *Pending* | Complete retention table before §10 signatures |
-| — | Distribute `COMPLIANCE_APPROVAL_PACKAGE.md` | Legal / Compliance Officer | *Pending* | Collect §10 signatures after §2 complete |
+| 2026-07-25 | GOV-BUSINESS-APPROVAL-001 — PO/BO business approvals recorded (001, 005, 006, 007) | Governance Architect | Evidence updated; blockers not auto-closed | Complete evidence validation per blocker |
+| — | Schedule Legal retention workshop (BLOCKER-006 §2) | Legal / Compliance Officer | *Pending* | Complete retention table before Legal/TA signatures |
 
 ---
 
@@ -163,11 +164,11 @@ A blocker is **CLOSED** only when **all** criteria are met (GOV-BEMF-001 · GOV-
 
 | # | Rule | BLOCKER-002 | BLOCKER-006 |
 |---|------|-------------|-------------|
-| 1 | **Required approvers signed** | ☑ 2/2 | ☐ 0/3 |
-| 2 | **Evidence checklist completed** | ☐ | ☐ |
-| 3 | **Approval record marked Approved** | ☐ | ☐ |
-| 4 | **Evidence archived** (closure artifact + signed records) | ☐ | ☐ |
-| 5 | **Governance tracker updated** (≤ 1 business day) | ☐ | ☐ |
+| 1 | **Required approvers signed** | ☑ 2/2 | ☐ 1/3 (PO/BO ✓) |
+| 2 | **Evidence checklist completed** | ☑ | ☐ |
+| 3 | **Approval record marked Approved** | ☑ | ☐ Partial |
+| 4 | **Evidence archived** (closure artifact + signed records) | ☑ | ☐ |
+| 5 | **Governance tracker updated** (≤ 1 business day) | ☑ | ☐ |
 
 **Additional BLOCKER-006 rule:** §2 retention durations must be approved by Legal before closure.
 
@@ -177,8 +178,8 @@ A blocker is **CLOSED** only when **all** criteria are met (GOV-BEMF-001 · GOV-
 
 | Blocker | Ready to close? | Blocker |
 |---------|-----------------|---------|
-| BLOCKER-002 | **No** | Signatures + register + baseline + checklist |
-| BLOCKER-006 | **No** | Retention + §9 + signatures + pack + checklist |
+| BLOCKER-002 | **Yes — CLOSED** | — |
+| BLOCKER-006 | **No** | Retention (Legal) + Legal/TA signatures + pack + checklist |
 
 ---
 
@@ -187,8 +188,8 @@ A blocker is **CLOSED** only when **all** criteria are met (GOV-BEMF-001 · GOV-
 | Dimension | Assessment |
 |-----------|------------|
 | **Architecture** | **PASS** (ADR-001…032; KHAD-V1-FACR-001) |
-| **Scope** | **Pending stakeholder approval** (BLOCKER-002) |
-| **Blockers** | **0 / 7 CLOSED** |
+| **Scope** | **Approved** — BLOCKER-002 Closed |
+| **Blockers** | **1 / 7 CLOSED** |
 | **Implementation** | **NOT AUTHORIZED** |
 
 Completing entries in this register moves toward Phase 1 closure only. Gate A requires **7 / 7** blockers **Closed** and GOV-GAIR-001 §8 signatures.
@@ -199,14 +200,10 @@ Completing entries in this register moves toward Phase 1 closure only. Gate A re
 
 | # | Action | Owner | Priority |
 |---|--------|-------|----------|
-| 1 | Distribute stakeholder approval package (`STAKEHOLDER_APPROVAL_PACKAGE.md` + GOV-P1-EXEC-001) | Program Sponsor | **Immediate** |
-| 2 | Restore `FINAL_SCOPE_BASELINE.md` for approver review | Program Governance Manager | **Immediate** |
-| 3 | Schedule compliance / legal retention workshop (BLOCKER-006 §2) | Legal / Compliance Officer | **Immediate** |
-| 4 | Collect BLOCKER-002 signatures; log each receipt in §2 and §5 | Program Sponsor | **High** |
-| 5 | Complete retention decisions; collect BLOCKER-006 signatures | Legal / Compliance Officer | **High** |
-| 6 | Archive approvals; update §4 evidence tracker and closure rules §6 | Program Governance Manager | **On receipt** |
-| 7 | Update GOV-BLOCKER-TRACKER-001 §9 change log on each event | Program Governance Manager | **Ongoing** |
-| 8 | Prepare Phase 2 closure (BLOCKER-001, BLOCKER-005) — distribute when Phase 1 underway | Design Lead + Finance | **Parallel prep** |
+| 1 | Complete BLOCKER-006 — Legal retention values (do not invent) + Legal/TA signatures | Legal / Compliance Officer | **Immediate** |
+| 2 | Archive BLOCKER-006 approvals; update trackers on closure | Program Governance Manager | **On receipt** |
+| 3 | Support Phase 2 evidence — BLOCKER-001 Design Lead + BLOCKER-005 Finance matrix | Design Lead + Finance | **High** |
+| 4 | Update GOV-BLOCKER-TRACKER-001 §9 change log on each event | Program Governance Manager | **Ongoing** |
 
 ---
 
@@ -216,8 +213,8 @@ Completing entries in this register moves toward Phase 1 closure only. Gate A re
 |------|-------|
 | **Gate** | **B — NOT READY — CODING BLOCKED** |
 | **Implementation** | **NOT AUTHORIZED** |
-| **Blockers closed** | **0 / 7** |
-| **Next milestone** | Phase 1 approvals completed → Close BLOCKER-002 and BLOCKER-006 → Begin Phase 2 |
+| **Blockers closed** | **1 / 7** |
+| **Next milestone** | Close BLOCKER-006 → Phase 1 complete → Continue Phase 2–4 blocker closure |
 
 No code. No implementation. No architecture changes.
 
@@ -228,6 +225,9 @@ No code. No implementation. No architecture changes.
 | Version | Date | Change |
 |---------|------|--------|
 | 1.0 | 2026-07-25 | Initial Phase 1 approval tracking register — campaign open |
-| 1.1 | 2026-07-25 | Scope baseline restored; BLOCKER-002 register + BLOCKER-006 policy docs prepared | Amend §2, §3, §4, and §5 within **1 business day** of any distribution, signature, or escalation event.
+| 1.1 | 2026-07-25 | Scope baseline restored; BLOCKER-002 register + BLOCKER-006 policy docs prepared |
+| 1.2 | 2026-07-25 | BLOCKER-002 closed sync; GOV-BUSINESS-APPROVAL-001 PO/BO direction for BLOCKER-006 |
+
+Amend §2, §3, §4, and §5 within **1 business day** of any distribution, signature, or escalation event.
 
 **Sync with:** GOV-P1-EXEC-001 · GOV-BLOCKER-TRACKER-001 · GOV-RBCS-001

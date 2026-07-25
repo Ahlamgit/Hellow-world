@@ -4,7 +4,7 @@
 |-------|-------|
 | **Document ID** | GOV-MASTER-CTRL-001 |
 | **Apex authorization prompt** | GOV-MASTER-IMPL-AUTH-001 v1.1 (`MASTER_GOVERNANCE_CONTROLLED_IMPLEMENTATION_AUTHORIZATION_PROMPT.md`) |
-| **Version** | 1.8 |
+| **Version** | 1.9 |
 | **Date** | 2026-07-25 |
 | **Owner** | Program Governance Manager · Technical Program Manager |
 | **Gate** | **B — NOT READY — CODING BLOCKED** |
@@ -78,6 +78,7 @@ Always align with:
 | Evidence framework | `BLOCKER_EVIDENCE_MANAGEMENT_FRAMEWORK.md` (GOV-BEMF-001) |
 | Gate A authorization | `GATE_A_IMPLEMENTATION_AUTHORIZATION_RECORD.md` (GOV-GAIR-001) |
 | Authorization checklist | `IMPLEMENTATION_AUTHORIZATION_CHECKLIST.md` (GOV-IACL-001) |
+| Business approval consolidation | `BUSINESS_APPROVAL_CONSOLIDATION_RECORD.md` (GOV-BUSINESS-APPROVAL-001) |
 | Independent audit | `FINAL_GATE_A_READINESS_AUDIT_REPORT.md` (GOV-GA-AUDIT-001) |
 | Scope baseline | `FINAL_SCOPE_BASELINE.md` *(restore to repo if missing)* |
 
@@ -178,15 +179,15 @@ Each folder: `README.md` · `APPROVAL_RECORD.md` · `EVIDENCE_CHECKLIST.md`
 
 | ID | Name | Status | Owner | Evidence |
 |----|------|--------|-------|----------|
-| **BLOCKER-001** | Design | **Ready for Approval** | Design Lead + PO | `evidence/BLOCKER-001-design/` |
+| **BLOCKER-001** | Design | **Under Review** — PO/BO approved | Design Lead + PO/BO | `evidence/BLOCKER-001-design/` |
 | **BLOCKER-002** | Stakeholder | **Closed** | Project Owner / Business Owner | `BLOCKER_002_CLOSURE_RECORD.md` |
 | **BLOCKER-003** | Vendors | **Open** | Integration Lead | `evidence/BLOCKER-003-vendors/` |
 | **BLOCKER-004** | Cloud | **Open** | Architect + DevOps | `evidence/BLOCKER-004-cloud/` |
-| **BLOCKER-005** | Finance | **Ready for Approval** | Finance + Business Ops | `evidence/BLOCKER-005-finance/` |
-| **BLOCKER-006** | Compliance | **Ready for Approval** *(closure blocked on retention)* | Legal / Compliance | `evidence/BLOCKER-006-compliance/` |
-| **BLOCKER-007** | Payment.js | **Open** | Tech Lead + Finance Ops | `evidence/BLOCKER-007-payment/` |
+| **BLOCKER-005** | Finance | **Under Review** — PO/BO approved | Finance + PO/BO | `evidence/BLOCKER-005-finance/` |
+| **BLOCKER-006** | Compliance | **Under Review** — PO/BO direction approved | Legal + Technical Architect | `evidence/BLOCKER-006-compliance/` |
+| **BLOCKER-007** | Payment.js | **Under Review** — PO/BO approved | PO/BO + Technical Architect | `evidence/BLOCKER-007-payment/` |
 
-**Progress:** **0 / 7 CLOSED**
+**Progress:** **1 / 7 CLOSED**
 
 ---
 
@@ -206,7 +207,7 @@ Evidence Submitted → Reviewed → Approved → Signed → Archived → Tracker
 | `EVIDENCE_CHECKLIST.md` complete | Per-blocker evidence folder |
 | Closure artifact filed | Per GOV-RBCS-001 register |
 
-**Live tracking:** GOV-P1-TRACK-001 (Phase 1 approvals: **0/3 + 0/3**)
+**Live tracking:** GOV-P1-TRACK-001 (Phase 1: BLOCKER-002 **closed**; BLOCKER-006 PO/BO direction ✓) · GOV-BUSINESS-APPROVAL-001
 
 ---
 
@@ -214,8 +215,8 @@ Evidence Submitted → Reviewed → Approved → Signed → Archived → Tracker
 
 | Phase | Close | Status |
 |-------|-------|--------|
-| **Phase 1** | BLOCKER-002, BLOCKER-006 | **In progress** — 0/2 |
-| **Phase 2** | BLOCKER-001, BLOCKER-005 | Ready for approval prep |
+| **Phase 1** | BLOCKER-002, BLOCKER-006 | **In progress** — 002 closed; 006 open |
+| **Phase 2** | BLOCKER-001, BLOCKER-005 | PO/BO business approved — Design Lead + Finance pending |
 | **Phase 3** | BLOCKER-003, BLOCKER-004 | Open |
 | **Phase 4** | BLOCKER-007 | Open (depends on 003, 005) |
 | **Ceremony** | Gate A | **Gated** on 7/7 |
@@ -228,9 +229,9 @@ Before implementation authorization, **all** must be true:
 
 | # | Requirement | Status |
 |---|-------------|--------|
-| 1 | **7 / 7 blockers CLOSED** | **Not met** (0/7) |
+| 1 | **7 / 7 blockers CLOSED** | **Not met** (1/7) |
 | 2 | Architecture **APPROVED** | **Met** |
-| 3 | Scope **FROZEN** + stakeholder evidence | **Pending** (BLOCKER-002) |
+| 3 | Scope **FROZEN** + stakeholder evidence | **Met** — BLOCKER-002 Closed |
 | 4 | **Traceability complete** (FTM — V1 specified) | **Met** (specified); scope baseline file pending |
 | 5 | GOV-GAIR-001 **signed** (§8) | **Not met** |
 | 6 | GOV-IACL-001 **complete** | **Not met** |
@@ -325,7 +326,7 @@ Every governance execution response **must** include (in order):
 |---|-------|---------------|
 | 1 | **Current Gate** | Gate B — NOT READY — CODING BLOCKED |
 | 2 | **Implementation Status** | NOT AUTHORIZED |
-| 3 | **Blockers** | Closed 0 / 7 |
+| 3 | **Blockers** | Closed **1 / 7** |
 | 4 | **Architecture Impact** | None — APPROVED & VALIDATED; no ADR changes |
 | 5 | **Scope Impact** | None — FROZEN; no feature additions |
 | 6 | **Executed Action** | *(governance action completed)* |
@@ -351,6 +352,7 @@ No exceptions. No shortcuts. No coding before Gate A. **Documentation ≠ approv
 | 1.6 | 2026-07-25 | Sprint 0 waves per GOV-GA-IMPL-AUTH-PROMPT-001; authorization sequence |
 | 1.7 | 2026-07-25 | Apex prompt GOV-MASTER-IMPL-AUTH-001; provider availability calendar rule |
 | 1.8 | 2026-07-25 | Apex prompt v1.1 — expanded role, Sprint 0 waves, blocker dashboard, agent behaviour |
+| 1.9 | 2026-07-25 | GOV-BUSINESS-APPROVAL-001 — PO/BO business approvals for 001, 005, 006, 007; 1/7 closed |
 
 **Supersedes:** Informal status summaries for gate and implementation authorization decisions.  
 **Subordinate to:** `MASTER_IMPLEMENTATION_PROMPT_v1.0.md`, ADRs, `FINAL_SCOPE_BASELINE.md`.

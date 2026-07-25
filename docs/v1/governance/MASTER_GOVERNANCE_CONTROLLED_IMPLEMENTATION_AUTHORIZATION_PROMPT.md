@@ -3,13 +3,14 @@
 | Field | Value |
 |-------|-------|
 | **Document ID** | GOV-MASTER-IMPL-AUTH-001 |
-| **Version** | 1.1 |
+| **Version** | 1.2 |
 | **Date** | 2026-07-25 |
 | **Status** | **Active — apex implementation authorization control** |
 | **Role** | Solution Governance Architect · Implementation Control Agent |
 | **Gate** | **GATE B — NOT READY — CODING BLOCKED** |
 | **Implementation** | **NOT AUTHORIZED** |
-| **Blockers closed** | **0 / 7** |
+| **Blockers closed** | **1 / 7** |
+| **Business consolidation** | GOV-BUSINESS-APPROVAL-001 |
 
 ```text
 APEX GOVERNANCE PROMPT — NO IMPLEMENTATION WITHOUT GATE A
@@ -305,13 +306,15 @@ All blockers must be **closed** before Gate A.
 
 | ID | Blocker | Status |
 |----|---------|--------|
-| BLOCKER-001 | Design | Open |
+| BLOCKER-001 | Design | **Under Review** — PO/BO business approved |
 | BLOCKER-002 | Stakeholder | **Closed** — 2026-07-25 |
 | BLOCKER-003 | Vendors | Open |
 | BLOCKER-004 | Cloud | Open |
-| BLOCKER-005 | Finance | Ready for Approval |
-| BLOCKER-006 | Compliance | Ready for Approval |
-| BLOCKER-007 | Payment.js | Open |
+| BLOCKER-005 | Finance | **Under Review** — PO/BO business approved |
+| BLOCKER-006 | Compliance | **Under Review** — PO/BO direction approved |
+| BLOCKER-007 | Payment.js | **Under Review** — PO/BO business approved |
+
+**Business consolidation:** `BUSINESS_APPROVAL_CONSOLIDATION_RECORD.md` (GOV-BUSINESS-APPROVAL-001) — approvals recorded; blockers **not** auto-closed.
 
 **Closure requires:**
 
@@ -429,3 +432,4 @@ KHADAMATI implementation begins **ONLY** after formal authorization:
 |---------|------|--------|
 | 1.0 | 2026-07-25 | Initial master governance controlled implementation authorization prompt |
 | 1.1 | 2026-07-25 | Expanded role mandate; business model; architecture freeze; domain principles; Sprint 0 waves; agent behaviour; blocker dashboard |
+| 1.2 | 2026-07-25 | GOV-BUSINESS-APPROVAL-001 — PO/BO business approvals; blocker dashboard sync (1/7 closed) |

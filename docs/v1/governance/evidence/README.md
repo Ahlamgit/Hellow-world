@@ -3,7 +3,8 @@
 | Field | Value |
 |-------|-------|
 | **Gate** | **B — NOT READY — CODING BLOCKED** |
-| **Blockers closed** | **0 / 7** |
+| **Blockers closed** | **1 / 7** |
+| **Business consolidation** | `BUSINESS_APPROVAL_CONSOLIDATION_RECORD.md` (GOV-BUSINESS-APPROVAL-001) |
 | **Framework** | `BLOCKER_EVIDENCE_MANAGEMENT_FRAMEWORK.md` (GOV-BEMF-001) |
 | **Operational tracker** | `BLOCKER_CLOSURE_EXECUTION_TRACKER.md` (GOV-BLOCKER-TRACKER-001) |
 
@@ -16,18 +17,19 @@ Each blocker folder contains a **standard evidence trio**:
 | File | Purpose |
 |------|---------|
 | `README.md` | Purpose, owner, required evidence, approval authority, status, closure criteria |
-| `APPROVAL_RECORD.md` | Signed approval template (Pending / Approved / Rejected) |
+| `APPROVAL_RECORD.md` | Signed approval template (Pending / Partially Approved / Approved / Rejected) |
 | `EVIDENCE_CHECKLIST.md` | Blocker-specific checklist — all items required before closure |
+| `BUSINESS_APPROVAL_RECORD.md` | PO/BO business approval (where recorded — GOV-BUSINESS-APPROVAL-001) |
 
 | Folder | Blocker | Status |
 |--------|---------|--------|
-| `BLOCKER-001-design/` | Design approval | Ready for Approval |
-| `BLOCKER-002-stakeholder/` | Stakeholder approval | Ready for Approval |
+| `BLOCKER-001-design/` | Design approval | Under Review — PO/BO approved |
+| `BLOCKER-002-stakeholder/` | Stakeholder approval | **Closed** |
 | `BLOCKER-003-vendors/` | Vendor readiness | Open |
 | `BLOCKER-004-cloud/` | Cloud readiness | Open |
-| `BLOCKER-005-finance/` | Finance configuration | Ready for Approval |
-| `BLOCKER-006-compliance/` | Compliance approval | Ready for Approval |
-| `BLOCKER-007-payment/` | Payment.js validation | Open |
+| `BLOCKER-005-finance/` | Finance configuration | Under Review — PO/BO approved |
+| `BLOCKER-006-compliance/` | Compliance approval | Under Review — PO/BO direction approved |
+| `BLOCKER-007-payment/` | Payment.js validation | Under Review — PO/BO approved |
 | `_templates/` | Legacy / supplemental templates | Reference |
 
 ## Approval packages (where prepared)
@@ -49,4 +51,4 @@ Each blocker folder contains a **standard evidence trio**:
 
 ## Status
 
-**Closed blockers:** 0 / 7 · **Implementation:** NOT AUTHORIZED · **Gate:** B
+**Closed blockers:** 1 / 7 · **Implementation:** NOT AUTHORIZED · **Gate:** B

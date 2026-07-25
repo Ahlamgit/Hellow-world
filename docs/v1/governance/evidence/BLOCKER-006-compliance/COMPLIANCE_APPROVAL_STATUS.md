@@ -4,10 +4,11 @@
 |-------|-------|
 | **Document ID** | EVD-006-STATUS-001 |
 | **Blocker** | BLOCKER-006 — Compliance |
-| **Version** | 1.0 |
+| **Version** | 1.1 |
 | **Date** | 2026-07-25 |
-| **Gate** | **Gate A TRANSITION IN PROGRESS** |
+| **Gate** | **B — NOT READY — CODING BLOCKED** |
 | **Blocker status** | **UNDER REVIEW** — not Closed |
+| **Business consolidation** | `BUSINESS_APPROVAL_RECORD.md` — PO/BO compliance governance direction **approved** 2026-07-25 |
 
 ---
 
@@ -58,12 +59,12 @@
 
 | Role | Decision | Date | Status |
 |------|----------|------|--------|
-| Project Owner | Approved to proceed | 2026-07-25 | **Complete** |
+| Project Owner / Business Owner | Compliance governance direction approved | 2026-07-25 | **Complete** |
+| Project Owner | Approved to proceed with finalization | 2026-07-25 | **Complete** |
 | Legal / Compliance Officer | Pending | — | **Open** |
-| Business Owner | Pending | — | **Open** |
 | Technical Architect | Pending | — | **Open** |
 
-**Full blocker approvals:** **0 / 3**
+**Full blocker approvals:** **1 / 3** (PO/BO direction) — retention values **not invented**
 
 ---
 
@@ -86,3 +87,4 @@
 | Version | Date | Change |
 |---------|------|--------|
 | 1.0 | 2026-07-25 | Project Owner proceed authorization recorded; Legal validation outstanding |
+| 1.1 | 2026-07-25 | GOV-BUSINESS-APPROVAL-001 — PO/BO compliance governance direction approved; unified ownership model |

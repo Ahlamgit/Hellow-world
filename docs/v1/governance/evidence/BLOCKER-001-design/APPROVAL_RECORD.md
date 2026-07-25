@@ -4,29 +4,30 @@
 |-------|-------|
 | **Document ID** | EVD-001-APPROVAL-001 |
 | **Blocker ID** | BLOCKER-001 — Design |
-| **Decision** | **Pending** |
-| **Approver Name** | |
-| **Role** | Design Lead / Product Owner / Business Owner |
+| **Decision** | **Partially Approved** — PO/BO business direction |
+| **Approver Name** | **Project Owner / Business Owner** |
+| **Role** | Project Owner / Business Owner (unified) |
 | **Organization** | KHADAMATI |
-| **Date** | |
-| **Version Reviewed** | `DESIGN_APPROVAL_PACKAGE.md` v1.0 |
-| **Comments** | |
-| **Signature / Confirmation** | |
+| **Date** | **2026-07-25** |
+| **Version Reviewed** | `DESIGN_APPROVAL_PACKAGE.md` v1.0 · `BUSINESS_APPROVAL_RECORD.md` |
+| **Comments** | Business design direction approved (video theme, UX flows). Design Lead attestation and asset archival still required for closure. |
+| **Signature / Confirmation** | **Recorded — 2026-07-25** |
 
 ### Decision options
 
 - [ ] **Pending**
-- [ ] **Approved**
+- [x] **Partially Approved** (business — closure pending)
+- [ ] **Approved** (full closure)
 - [ ] **Rejected**
 
 ---
 
 ## Attestation
 
-| Approver | Role | Signature / Date |
-|----------|------|------------------|
-| | Design Lead | |
-| | Product Owner | |
-| | Business Owner | |
+| Approver | Role | Decision | Signature / Date |
+|----------|------|----------|------------------|
+| **Project Owner / Business Owner** | Business design approval | **Approved** | **2026-07-25** |
+| | Design Lead | **Pending** | |
+| | Administrator | **Pending** | |
 
-**On Approved:** File closure artifact `DESIGN_APPROVAL_SIGNOFF_v1.0` and update trackers.
+**BLOCKER-001 NOT CLOSED** per GOV-BEMF-001.

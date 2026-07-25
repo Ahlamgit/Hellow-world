@@ -3,12 +3,13 @@
 | Field | Value |
 |-------|-------|
 | **Document ID** | GOV-BLOCKER-TRACKER-001 |
-| **Version** | 2.1 |
+| **Version** | 2.2 |
 | **Date** | 2026-07-25 |
 | **Owner** | Program Execution Manager |
 | **Gate** | **B — NOT READY — CODING BLOCKED** |
 | **Previous gate note** | Gate A transition activities recorded; authorization state unchanged |
 | **Blockers closed** | **1 / 7** |
+| **Business consolidation** | GOV-BUSINESS-APPROVAL-001 — PO/BO approvals recorded for 001, 005, 006, 007 (not auto-closed) |
 | **Role correction** | GOV-BLOCKER-002-ROLE-CORR-001 |
 | **Status** | **Active — Gate A transition execution** |
 
@@ -49,7 +50,7 @@ This tracker is the **operational working document** for closing BLOCKER-001 thr
 **Phase 1 closure review:** `PHASE_1_CLOSURE_EXECUTION_REPORT.md` (GOV-P1-CLOSURE-001)  
 **Phase 1 approval finalization:** `PHASE_1_APPROVAL_FINALIZATION_REPORT.md` (GOV-P1-FINAL-001)  
 **Phase 1 approval execution:** `PHASE_1_APPROVAL_EXECUTION_PACK.md` (GOV-P1-EXEC-001)  
-**Phase 1 approval tracking:** `PHASE_1_APPROVAL_TRACKING_REGISTER.md` (GOV-P1-TRACK-001) — **0 / 2 Phase 1 closed**
+**Phase 1 approval tracking:** `PHASE_1_APPROVAL_TRACKING_REGISTER.md` (GOV-P1-TRACK-001) — **1 / 2 Phase 1 closed**
 
 ---
 
@@ -59,13 +60,13 @@ This tracker is the **operational working document** for closing BLOCKER-001 thr
 
 | ID | Name | Owner | Current status | Required evidence | Gate impact |
 |----|------|-------|----------------|-------------------|-------------|
-| **BLOCKER-001** | Design | Design Lead + Product Owner | **Ready for Approval** | Approved logo assets · Design system approval · UI/UX approval signatures · `DESIGN_APPROVAL_SIGNOFF_v1.0` · `CLOSURE_READINESS.md` | Blocks **all UI** (ADR-023); Sprint 0 Wave 4 |
+| **BLOCKER-001** | Design | Design Lead + PO/BO | **Under Review** — PO/BO business **approved** | `BUSINESS_APPROVAL_RECORD.md` ✓ · Design Lead + assets · `DESIGN_APPROVAL_SIGNOFF_v1.0` | Blocks **all UI** (ADR-023); Sprint 0 Wave 4 |
 | **BLOCKER-002** | Stakeholder | Project Owner / Business Owner | **Closed** | `BLOCKER_002_CLOSURE_RECORD.md` · 2/2 approvals | **Closed** — 2026-07-25 |
 | **BLOCKER-003** | Vendors | Integration Lead | **Open** — `CLOSURE_READINESS.md` prepared | Vendor evaluation · Selected vendors · Sandbox · `VENDOR_READINESS_DOSSIER_v1.0` | Blocks **integrations** |
 | **BLOCKER-004** | Cloud | Technical Architect + DevOps Lead | **Open** — `CLOSURE_READINESS.md` prepared | Hosting · Budget · Backup/DR · `CLOUD_READINESS_DECISION_RECORD_v1.0` | Blocks **environment planning** |
-| **BLOCKER-005** | Finance | Finance + Business Operations | **Ready for Approval** — `CLOSURE_READINESS.md` prepared | Commission/subscription/refund/settlement values · signatures · `FINANCE_RULE_MATRIX_v1.0` | Blocks **settlement/payment rules** |
-| **BLOCKER-006** | Compliance | Legal / Compliance Officer | **Under Review** — Project Owner proceed auth ✓; Legal pending | Retention durations (Legal) · 3/3 signatures · `COMPLIANCE_APPROVAL_PACK_v1.0` | Blocks **data lifecycle / domain schema** |
-| **BLOCKER-007** | Payment.js validation | Technical Lead + Finance Ops | **Open** — `CLOSURE_READINESS.md` prepared | Sandbox · Webhook · Reconciliation · `PAYMENT_JS_VALIDATION_REPORT_v1.0` | Blocks **booking payment** |
+| **BLOCKER-005** | Finance | Finance + PO/BO | **Under Review** — PO/BO business **approved** | `BUSINESS_APPROVAL_RECORD.md` ✓ · Finance matrix · Finance attestation · `FINANCE_RULE_MATRIX_v1.0` | Blocks **settlement/payment rules** |
+| **BLOCKER-006** | Compliance | Legal + Technical Architect | **Under Review** — PO/BO direction **approved** | `BUSINESS_APPROVAL_RECORD.md` ✓ · Retention (Legal) · Legal + TA signatures · `COMPLIANCE_APPROVAL_PACK_v1.0` | Blocks **data lifecycle / domain schema** |
+| **BLOCKER-007** | Payment.js validation | PO/BO + Technical Architect | **Under Review** — PO/BO business **approved** | `BUSINESS_APPROVAL_RECORD.md` ✓ · Sandbox · Webhook · `PAYMENT_JS_VALIDATION_REPORT_v1.0` | Blocks **booking payment** |
 
 ### Evidence package paths
 
@@ -89,12 +90,14 @@ Each blocker folder includes **`README.md`**, **`APPROVAL_RECORD.md`**, and **`E
 
 | Evidence item | On file | Approved |
 |---------------|---------|----------|
+| PO/BO business design approval | `BUSINESS_APPROVAL_RECORD.md` | ☑ |
 | Approved logo assets | Package — assets pending | ☐ |
 | Design system approval | Package prepared | ☐ |
+| Design Lead attestation | Pending | ☐ |
 | UI/UX approval signatures | §9 pending | ☐ |
 | Closure artifact `DESIGN_APPROVAL_SIGNOFF_v1.0` | — | ☐ |
 
-**Tracker status:** Ready for Approval · **Closed:** ☐
+**Tracker status:** Under Review (PO/BO business approved) · **Closed:** ☐
 
 ---
 
@@ -143,14 +146,16 @@ Each blocker folder includes **`README.md`**, **`APPROVAL_RECORD.md`**, and **`E
 
 | Evidence item | On file | Approved |
 |---------------|---------|----------|
+| PO/BO commission model approval | `BUSINESS_APPROVAL_RECORD.md` | ☑ |
+| PO/BO subscription pricing approval | `BUSINESS_APPROVAL_RECORD.md` | ☑ |
 | Commission rules (values approved) | Package — pending | ☐ |
 | Subscription rules | Package — pending | ☐ |
 | Refund policy | Package — pending | ☐ |
 | Settlement rules | Package — pending | ☐ |
-| Finance / Business signatures | Pending | ☐ |
+| Finance attestation | Pending | ☐ |
 | Closure artifact `FINANCE_RULE_MATRIX_v1.0` | — | ☐ |
 
-**Tracker status:** Ready for Approval · **Closed:** ☐
+**Tracker status:** Under Review (PO/BO business approved) · **Closed:** ☐
 
 ---
 
@@ -158,12 +163,13 @@ Each blocker folder includes **`README.md`**, **`APPROVAL_RECORD.md`**, and **`E
 
 | Evidence item | On file | Approved |
 |---------------|---------|----------|
-| Retention approval (legal values) | Package — pending | ☐ |
+| PO/BO compliance governance direction | `BUSINESS_APPROVAL_RECORD.md` | ☑ |
+| Retention approval (legal values) | Package — **not invented** | ☐ |
 | Data governance approval | Package prepared | ☐ |
-| Legal/compliance signatures | §10 pending | ☐ |
+| Legal + Technical Architect signatures | Pending | ☐ |
 | Closure artifact `COMPLIANCE_APPROVAL_PACK_v1.0` | — | ☐ |
 
-**Tracker status:** Ready for Approval · **Closed:** ☐
+**Tracker status:** Under Review (PO/BO direction approved) · **Closed:** ☐
 
 ---
 
@@ -171,15 +177,16 @@ Each blocker folder includes **`README.md`**, **`APPROVAL_RECORD.md`**, and **`E
 
 | Evidence item | On file | Approved |
 |---------------|---------|----------|
+| PO/BO payment flow approval | `BUSINESS_APPROVAL_RECORD.md` | ☑ |
 | Sandbox validation | ☐ | ☐ |
 | Mobile validation (Android/iOS) | ☐ | ☐ |
 | Webhook validation | ☐ | ☐ |
-| Finance acceptance | ☐ | ☐ |
+| Technical Architect validation | Pending | ☐ |
 | Closure artifact `PAYMENT_JS_VALIDATION_REPORT_v1.0` | — | ☐ |
 
-**Dependencies:** BLOCKER-003 (payment sandbox) · BLOCKER-005 (ledger/finance expectations)
+**Tracker status:** Under Review (PO/BO business approved) · **Closed:** ☐
 
-**Tracker status:** Open · **Closed:** ☐
+**Dependencies:** BLOCKER-003 (payment sandbox) · BLOCKER-005 (ledger/finance expectations)
 
 ---
 
@@ -207,14 +214,14 @@ Execute per GOV-GATC-001. Update this tracker as each blocker closes.
 
 ### Phase 1 — Governance alignment
 
-**Readiness validation:** GOV-P1-READINESS-001 · **Closure review:** GOV-P1-CLOSURE-001 (2026-07-25) — BLOCKER-002 **READY**, BLOCKER-006 **BLOCKED**; **0 / 2 closed**
+**Readiness validation:** GOV-P1-READINESS-001 · **Closure review:** GOV-P1-CLOSURE-001 (2026-07-25) · **Business consolidation:** GOV-BUSINESS-APPROVAL-001
 
 | Close | Owner | Distribution | Signatures | Status |
 |-------|-------|--------------|------------|--------|
-| **BLOCKER-002** Stakeholder | Program Sponsor | Package ready | §6 pending (PO, BO, Ops) | ☐ Not closed |
-| **BLOCKER-006** Compliance | Legal / Compliance | Package ready | §10 pending; §2 retention values pending | ☐ Not closed |
+| **BLOCKER-002** Stakeholder | Project Owner / Business Owner | Closed | 2/2 (PO/BO + Administrator) | ☑ **Closed** — 2026-07-25 |
+| **BLOCKER-006** Compliance | Legal / Compliance | Package ready | PO/BO direction ✓; Legal + TA pending; §2 retention not invented | ☐ Not closed |
 
-**Phase 1 complete:** ☐
+**Phase 1 complete:** ☐ (BLOCKER-006 open)
 
 ---
 
@@ -222,8 +229,8 @@ Execute per GOV-GATC-001. Update this tracker as each blocker closes.
 
 | Close | Owner | Status |
 |-------|-------|--------|
-| **BLOCKER-001** Design | Design Lead + PO | ☐ Not closed |
-| **BLOCKER-005** Finance | Finance + Business | ☐ Not closed |
+| **BLOCKER-001** Design | Design Lead + PO/BO | ☐ Not closed — PO/BO business approved |
+| **BLOCKER-005** Finance | Finance + PO/BO | ☐ Not closed — PO/BO business approved |
 
 **Phase 2 complete:** ☐
 
@@ -269,8 +276,7 @@ When **all phases complete** (7 / 7 Closed):
 |------|----------------|
 | **Program Execution Manager** | Maintain this tracker; weekly status; escalation coordination |
 | **Program Sponsor** | BLOCKER-002 accountable; Gate A decision |
-| **Product Owner** | Scope confirmation; BLOCKER-001 co-sign; stakeholder content |
-| **Business Owner** | BLOCKER-002 / BLOCKER-005 business decisions |
+| **Project Owner / Business Owner** (unified) | Business decisions; scope; BLOCKER-001/005/006/007 business approvals; BLOCKER-002 closed |
 | **Design Owner (Design Lead)** | BLOCKER-001 evidence and signatures |
 | **Finance Owner** | BLOCKER-005 values; BLOCKER-007 finance co-sign |
 | **Compliance Owner (Legal)** | BLOCKER-006 retention and governance signatures |
@@ -302,14 +308,14 @@ If a blocker is **delayed** beyond agreed target:
 
 | Requirement | Status | Evidence |
 |-------------|--------|----------|
-| BLOCKER-001 Closed | **PENDING** | — |
-| BLOCKER-002 Closed | **PENDING** | — |
+| BLOCKER-001 Closed | **PENDING** — PO/BO business approved | `BUSINESS_APPROVAL_RECORD.md` |
+| BLOCKER-002 Closed | **COMPLETE** | `BLOCKER_002_CLOSURE_RECORD.md` |
 | BLOCKER-003 Closed | **PENDING** | — |
 | BLOCKER-004 Closed | **PENDING** | — |
-| BLOCKER-005 Closed | **PENDING** | — |
-| BLOCKER-006 Closed | **PENDING** | — |
-| BLOCKER-007 Closed | **PENDING** | — |
-| **7 / 7 blockers closed** | **PENDING** (0 / 7) | This tracker + GOV-RBCS-001 |
+| BLOCKER-005 Closed | **PENDING** — PO/BO business approved | `BUSINESS_APPROVAL_RECORD.md` |
+| BLOCKER-006 Closed | **PENDING** — PO/BO direction approved | `BUSINESS_APPROVAL_RECORD.md` |
+| BLOCKER-007 Closed | **PENDING** — PO/BO business approved | `BUSINESS_APPROVAL_RECORD.md` |
+| **7 / 7 blockers closed** | **PENDING** (1 / 7) | This tracker + GOV-RBCS-001 |
 | **Evidence archived** | **PENDING** | `governance/evidence/` per GOV-BEMF-001 |
 | **GOV-IACL-001 complete** | **PENDING** | Authorization checklist |
 | **Gate authorization signed** | **PENDING** | GOV-GAIR-001 §8 |
@@ -323,7 +329,7 @@ If a blocker is **delayed** beyond agreed target:
 | Field | Value |
 |-------|-------|
 | **Current gate** | **REMAIN GATE B — NOT READY — CODING BLOCKED** |
-| **Reason** | **0 / 7 blockers closed** — four Ready for Approval awaiting signatures/values; three In Preparation |
+| **Reason** | **1 / 7 blockers closed** — PO/BO business approvals recorded for 001/005/006/007; full evidence + signatures pending; 003/004 validation open |
 | **Architecture** | Approved & validated — does not override blocker requirement |
 | **Implementation** | **NOT AUTHORIZED** |
 
@@ -336,12 +342,15 @@ If a blocker is **delayed** beyond agreed target:
   → Sprint 0 authorization (GOV-S0FC-001)
 ```
 
-### Immediate execution focus (Phase 1 + 2)
+### Immediate execution focus
 
-1. Sign and archive BLOCKER-002 stakeholder package  
-2. Obtain compliance retention values + sign BLOCKER-006  
-3. Sign and archive BLOCKER-001 design package + assets  
-4. Approve finance values + sign BLOCKER-005  
+1. Complete BLOCKER-006 — Legal retention values (do not invent) + Legal/TA signatures  
+2. Complete BLOCKER-001 — Design Lead attestation + assets + closure artifact  
+3. Complete BLOCKER-005 — Finance matrix + Finance attestation  
+4. Execute BLOCKER-003 vendor validation + BLOCKER-004 cloud validation  
+5. Execute BLOCKER-007 sandbox/webhook/TA validation (after 003/005 dependencies)  
+
+**Business consolidation:** [BUSINESS_APPROVAL_CONSOLIDATION_RECORD.md](./BUSINESS_APPROVAL_CONSOLIDATION_RECORD.md) (GOV-BUSINESS-APPROVAL-001)
 
 ---
 
@@ -350,6 +359,8 @@ If a blocker is **delayed** beyond agreed target:
 | Date | Blocker | Change | Updated by |
 |------|---------|--------|------------|
 | 2026-07-25 | — | Tracker initialized — 0 / 7 closed | Program Execution Manager |
+| 2026-07-25 | BLOCKER-002 | **CLOSED** — 2/2 PO/BO + Administrator | Program Execution Manager |
+| 2026-07-25 | 001, 005, 006, 007 | PO/BO business approvals recorded (GOV-BUSINESS-APPROVAL-001); blockers remain open | Program Execution Manager |
 
 *Add a row within 1 business day of any blocker status change.*
 
@@ -369,5 +380,8 @@ If a blocker is **delayed** beyond agreed target:
 | 1.7 | 2026-07-25 | Master governance control document (GOV-MASTER-CTRL-001) |
 | 1.8 | 2026-07-25 | Gate A ceremony prep (GOV-GA-CEREMONY-001); Phase 1 roadmap status (GOV-P1-ROADMAP-001) |
 | 1.9 | 2026-07-25 | Architecture compliance register (GOV-ARCH-READINESS-001) |
+| 2.0 | 2026-07-25 | BLOCKER-002 closed; 1/7; Gate B |
+| 2.1 | 2026-07-25 | Role correction sync (GOV-BLOCKER-002-ROLE-CORR-001) |
+| 2.2 | 2026-07-25 | GOV-BUSINESS-APPROVAL-001 — PO/BO business approvals for 001, 005, 006, 007 |
 
 **Sync with:** GOV-RBCS-001 on every closure event.
