@@ -5,11 +5,17 @@
 **Status:** Controlling business & architecture brief (pre-implementation)  
 **Scope baseline:** [`FINAL_SCOPE_BASELINE.md`](./FINAL_SCOPE_BASELINE.md) — **V1 Scope Frozen (A)**  
 **Implementation readiness:** [`IMPLEMENTATION_READINESS_EXECUTION_PLAN.md`](./IMPLEMENTATION_READINESS_EXECUTION_PLAN.md) — tracks blockers to gate **A**  
-**Blocker closure status:** [`READINESS_BLOCKER_CLOSURE_STATUS.md`](./READINESS_BLOCKER_CLOSURE_STATUS.md) — active closure tracking  
-**Implementation gate:** [`FINAL_IMPLEMENTATION_GATE_REPORT.md`](./FINAL_IMPLEMENTATION_GATE_REPORT.md) — currently **B) NOT READY — CODING BLOCKED**  
-**Pre-implementation / Gate A prep:** [`governance/FINAL_PRE_IMPLEMENTATION_READINESS_AND_GATE_A_PACKAGE.md`](./governance/FINAL_PRE_IMPLEMENTATION_READINESS_AND_GATE_A_PACKAGE.md) (GOV-FPRG-001) · [`FINAL_PRE_IMPLEMENTATION_READINESS_REVIEW.md`](./FINAL_PRE_IMPLEMENTATION_READINESS_REVIEW.md) — Gate B; blockers 0/7  
+**Blocker closure status:** [`governance/READINESS_BLOCKER_CLOSURE_STATUS.md`](./governance/READINESS_BLOCKER_CLOSURE_STATUS.md) (GOV-RBCS-001) — **0 / 7 closed**  
+**Implementation gate:** [`governance/FINAL_IMPLEMENTATION_GATE_REPORT.md`](./governance/FINAL_IMPLEMENTATION_GATE_REPORT.md) (GOV-FIGR-001) — **B — NOT READY — CODING BLOCKED**  
+**Pre-implementation / Gate A prep:** [`governance/FINAL_PRE_IMPLEMENTATION_READINESS_AND_GATE_A_PACKAGE.md`](./governance/FINAL_PRE_IMPLEMENTATION_READINESS_AND_GATE_A_PACKAGE.md) (GOV-FPRG-001) · [`FINAL_PRE_IMPLEMENTATION_READINESS_REVIEW.md`](./FINAL_PRE_IMPLEMENTATION_READINESS_REVIEW.md)  
+**Gate A transition & blocker execution:** [`governance/FINAL_GATE_A_TRANSITION_AND_BLOCKER_CLOSURE_PACKAGE.md`](./governance/FINAL_GATE_A_TRANSITION_AND_BLOCKER_CLOSURE_PACKAGE.md) (GOV-GATC-001)  
+**Gate A readiness audit:** [`governance/FINAL_GATE_A_READINESS_AUDIT_REPORT.md`](./governance/FINAL_GATE_A_READINESS_AUDIT_REPORT.md) (GOV-GA-AUDIT-001) — recommendation: **remain Gate B**  
+**Blocker execution tracker:** [`governance/BLOCKER_CLOSURE_EXECUTION_TRACKER.md`](./governance/BLOCKER_CLOSURE_EXECUTION_TRACKER.md) (GOV-BLOCKER-TRACKER-001)  
+**Evidence framework:** [`governance/BLOCKER_EVIDENCE_MANAGEMENT_FRAMEWORK.md`](./governance/BLOCKER_EVIDENCE_MANAGEMENT_FRAMEWORK.md) (GOV-BEMF-001)  
+**Evidence repository:** [`governance/evidence/README.md`](./governance/evidence/README.md) — `BLOCKER-001-design/` … `BLOCKER-007-payment/` (standard trio per folder)  
+**Gate A authorization record:** [`governance/GATE_A_IMPLEMENTATION_AUTHORIZATION_RECORD.md`](./governance/GATE_A_IMPLEMENTATION_AUTHORIZATION_RECORD.md) (GOV-GAIR-001) — Draft, unsigned  
+**Implementation authorization:** [`governance/IMPLEMENTATION_AUTHORIZATION_CHECKLIST.md`](./governance/IMPLEMENTATION_AUTHORIZATION_CHECKLIST.md) — Gate B→A; coding **BLOCKED**  
 **Execution standards (post–Gate A):** [`IMPLEMENTATION_EXECUTION_STANDARDS.md`](./IMPLEMENTATION_EXECUTION_STANDARDS.md) — preparation only; coding still **BLOCKED**  
-**Implementation authorization:** [`governance/IMPLEMENTATION_AUTHORIZATION_CHECKLIST.md`](./governance/IMPLEMENTATION_AUTHORIZATION_CHECKLIST.md) — Gate B→A checklist; coding **BLOCKED**  
 **Supersedes conflicting statements** in earlier draft docs where this prompt / ADRs / scope baseline are more specific.  
 **Companion:** [FEATURE_TRACEABILITY_MATRIX.md](./FEATURE_TRACEABILITY_MATRIX.md) · [ARCHITECTURE_AUDIT_FINAL.md](./ARCHITECTURE_AUDIT_FINAL.md) · [QUESTIONS-REQUIRING-BUSINESS-DECISION.md](./QUESTIONS-REQUIRING-BUSINESS-DECISION.md) · ADR-001…032
 
@@ -462,15 +468,15 @@ Do **NOT** start coding until completed and approved:
 - [x] **Scope baseline frozen** — [`FINAL_SCOPE_BASELINE.md`](./FINAL_SCOPE_BASELINE.md)  
 - [ ] **BLOCKER-002** — Scope + stakeholder sign-off — **READY FOR APPROVAL** (signatures pending)  
 - [ ] **BLOCKER-001** — Design assets + UI/UX specification (ADR-023) — **READY FOR APPROVAL** (signatures pending; not Completed)  
-- [ ] **BLOCKER-003** — Vendors — **IN PREPARATION** (readiness matrix + contracts + risk/SLA; selections pending)  
-- [ ] **BLOCKER-004** — Cloud decision — **IN PREPARATION** (vendor-neutral; selections pending)  
-- [ ] **BLOCKER-005** — Finance Lebanon configuration — **IN PREPARATION** (values Pending Business Decision)  
-- [ ] **BLOCKER-006** — Compliance — **IN PREPARATION** (governance framework; numeric defaults pending Legal/Compliance)  
-- [ ] **BLOCKER-007** — Payment.js mobile validation — **IN VALIDATION** (PASS WITH CONDITIONS; security/recon framework published; not COMPLETED)  
+- [ ] **BLOCKER-003** — Vendors — **OPEN** (evidence: `governance/evidence/BLOCKER-003-vendors/`)  
+- [ ] **BLOCKER-004** — Cloud decision — **OPEN** (evidence: `governance/evidence/BLOCKER-004-cloud/`)  
+- [ ] **BLOCKER-005** — Finance configuration — **READY FOR APPROVAL** (evidence: `governance/evidence/BLOCKER-005-finance/`)  
+- [ ] **BLOCKER-006** — Compliance — **READY FOR APPROVAL** (evidence: `governance/evidence/BLOCKER-006-compliance/`)  
+- [ ] **BLOCKER-007** — Payment.js validation — **OPEN** (evidence: `governance/evidence/BLOCKER-007-payment/`)    
 - [ ] Implementation Gate Report amended to **READY**  
 
-Tracker: [`IMPLEMENTATION_READINESS_EXECUTION_PLAN.md`](./IMPLEMENTATION_READINESS_EXECUTION_PLAN.md)  
-Gate: [`FINAL_IMPLEMENTATION_GATE_REPORT.md`](./FINAL_IMPLEMENTATION_GATE_REPORT.md) — currently **B) NOT READY — CODING BLOCKED**.
+Tracker: [`governance/BLOCKER_CLOSURE_EXECUTION_TRACKER.md`](./governance/BLOCKER_CLOSURE_EXECUTION_TRACKER.md) (GOV-BLOCKER-TRACKER-001) · [`governance/READINESS_BLOCKER_CLOSURE_STATUS.md`](./governance/READINESS_BLOCKER_CLOSURE_STATUS.md) (GOV-RBCS-001)  
+Gate: [`governance/FINAL_IMPLEMENTATION_GATE_REPORT.md`](./governance/FINAL_IMPLEMENTATION_GATE_REPORT.md) (GOV-FIGR-001) — **B — NOT READY — CODING BLOCKED** · **0 / 7 blockers closed**
 
 Any feature after scope freeze requires Change Control (§10 of Scope Baseline / Execution Plan §4).  
 
