@@ -25,7 +25,9 @@ This record is the **official governance instrument** authorizing transition fro
 - `IMPLEMENTATION_AUTHORIZATION_CHECKLIST.md`
 - `BLOCKER_EVIDENCE_MANAGEMENT_FRAMEWORK.md`
 - `SPRINT_0_FOUNDATION_CHARTER.md`
-- ADR-001 through ADR-028
+- ADR-001 through ADR-032
+- `FINAL_ARCHITECTURE_CONSISTENCY_REVIEW.md` (KHAD-V1-FACR-001)
+- `FINAL_PRE_IMPLEMENTATION_READINESS_AND_GATE_A_PACKAGE.md` (GOV-FPRG-001)
 
 **This document does not authorize:** production code, database schema, migrations, infrastructure, cloud resources, vendor selection, feature implementation, architecture changes, or scope changes until formally signed and all entry criteria are met.
 
@@ -43,7 +45,7 @@ KHADAMATI **implementation starts only after**:
 | 2 | **Approval evidence is archived** under `docs/v1/governance/evidence/` |
 | 3 | **Stakeholders sign authorization** in §8 of this record |
 | 4 | **Scope remains frozen** per `FINAL_SCOPE_BASELINE.md` |
-| 5 | **Architecture remains approved** per ADR-001 → ADR-028 |
+| 5 | **Architecture remains approved** per ADR-001 → ADR-032 |
 
 ### 1.2 Confirmation
 
@@ -62,7 +64,7 @@ All criteria must be **satisfied** before this record may be signed and Gate A d
 
 | Requirement | Status | Evidence / notes |
 |-------------|--------|------------------|
-| Architecture approved | **Approved** | ADR-001 → ADR-028 |
+| Architecture approved | **Approved** | ADR-001 → ADR-032; KHAD-V1-FACR-001 validated |
 | Scope frozen | **Approved** | `FINAL_SCOPE_BASELINE.md` |
 | BLOCKER-001 Design closed | **Pending** | Package ready: `DESIGN_APPROVAL_PACKAGE.md` — signatures/assets required |
 | BLOCKER-002 Stakeholder closed | **Pending** | Package ready: `STAKEHOLDER_APPROVAL_PACKAGE.md` — signatures required |

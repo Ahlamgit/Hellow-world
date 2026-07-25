@@ -7,7 +7,7 @@
 **Implementation readiness:** [`IMPLEMENTATION_READINESS_EXECUTION_PLAN.md`](./IMPLEMENTATION_READINESS_EXECUTION_PLAN.md) — tracks blockers to gate **A**  
 **Blocker closure status:** [`READINESS_BLOCKER_CLOSURE_STATUS.md`](./READINESS_BLOCKER_CLOSURE_STATUS.md) — active closure tracking  
 **Implementation gate:** [`FINAL_IMPLEMENTATION_GATE_REPORT.md`](./FINAL_IMPLEMENTATION_GATE_REPORT.md) — currently **B) NOT READY — CODING BLOCKED**  
-**Pre-implementation review:** [`FINAL_PRE_IMPLEMENTATION_READINESS_REVIEW.md`](./FINAL_PRE_IMPLEMENTATION_READINESS_REVIEW.md) — recommendation **B**  
+**Pre-implementation / Gate A prep:** [`governance/FINAL_PRE_IMPLEMENTATION_READINESS_AND_GATE_A_PACKAGE.md`](./governance/FINAL_PRE_IMPLEMENTATION_READINESS_AND_GATE_A_PACKAGE.md) (GOV-FPRG-001) · [`FINAL_PRE_IMPLEMENTATION_READINESS_REVIEW.md`](./FINAL_PRE_IMPLEMENTATION_READINESS_REVIEW.md) — Gate B; blockers 0/7  
 **Execution standards (post–Gate A):** [`IMPLEMENTATION_EXECUTION_STANDARDS.md`](./IMPLEMENTATION_EXECUTION_STANDARDS.md) — preparation only; coding still **BLOCKED**  
 **Implementation authorization:** [`governance/IMPLEMENTATION_AUTHORIZATION_CHECKLIST.md`](./governance/IMPLEMENTATION_AUTHORIZATION_CHECKLIST.md) — Gate B→A checklist; coding **BLOCKED**  
 **Supersedes conflicting statements** in earlier draft docs where this prompt / ADRs / scope baseline are more specific.  

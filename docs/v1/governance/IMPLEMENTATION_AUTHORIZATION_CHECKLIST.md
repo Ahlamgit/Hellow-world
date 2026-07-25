@@ -23,7 +23,7 @@ Checklist for **Gate A — READY FOR IMPLEMENTATION** authorization. All items m
 | # | Requirement | Status | Evidence reference |
 |---|-------------|--------|-------------------|
 | P-01 | Product scope frozen | **Pending** | `FINAL_SCOPE_BASELINE.md` |
-| P-02 | Architecture approved | **Pending** | ADR-001 → ADR-028 |
+| P-02 | Architecture approved | **Validated** — sign-off pending | ADR-001 → ADR-032; `FINAL_ARCHITECTURE_CONSISTENCY_REVIEW.md` |
 | P-03 | Engineering standards defined | **Confirmed** | Engineering standards baseline |
 | P-04 | Current gate = B (coding blocked) | **Confirmed** | `FINAL_IMPLEMENTATION_GATE_REPORT.md` |
 | P-05 | Evidence framework active | **Confirmed** | `BLOCKER_EVIDENCE_MANAGEMENT_FRAMEWORK.md` |
@@ -50,7 +50,7 @@ Checklist for **Gate A — READY FOR IMPLEMENTATION** authorization. All items m
 
 | # | Requirement | Approver | Status | Evidence path |
 |---|-------------|----------|--------|---------------|
-| A-01 | Architecture baseline accepted | Technical Architect | **Pending** | ADR register |
+| A-01 | Architecture baseline accepted | Technical Architect | **Validated** — KHAD-V1-FACR-001; TA signature pending | ADR register + FACR |
 | A-02 | Scope baseline accepted | Product Owner | **Pending** | `FINAL_SCOPE_BASELINE.md` |
 | A-03 | Design package approved | Design Lead + Product Owner | **Pending** | `evidence/BLOCKER-001-design/` |
 | A-04 | Stakeholder register complete | Program Sponsor | **Pending** | `evidence/BLOCKER-002-stakeholder/` |
@@ -60,7 +60,7 @@ Checklist for **Gate A — READY FOR IMPLEMENTATION** authorization. All items m
 | A-08 | Compliance pack approved | Legal / Compliance | **Pending** | `evidence/BLOCKER-006-compliance/` |
 | A-09 | Payment.js validation approved | Technical Lead + Finance Ops | **Pending** | `evidence/BLOCKER-007-payment/` |
 | A-10 | Gate A review meeting held | Program Sponsor | **Pending** | Meeting minutes |
-| A-11 | No unresolved architecture issues | Technical Architect | **Pending** | Gate A minutes |
+| A-11 | No unresolved architecture issues | Technical Architect | **Validated** — KHAD-V1-FACR-001 §9 | FACR + Gate A minutes |
 | A-12 | No unresolved scope changes | Product Owner | **Pending** | Gate A minutes |
 
 ---
@@ -92,3 +92,4 @@ Checklist for **Gate A — READY FOR IMPLEMENTATION** authorization. All items m
 | Version | Date | Change |
 |---------|------|--------|
 | 1.0 | 2026-07-25 | Initial checklist; linked to evidence framework |
+| 1.1 | 2026-07-25 | Architecture consistency validated (KHAD-V1-FACR-001); ADR-001→032 |

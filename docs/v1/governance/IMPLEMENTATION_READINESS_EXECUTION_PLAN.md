@@ -3,7 +3,7 @@
 | Field | Value |
 |-------|-------|
 | **Document ID** | GOV-IREP-001 |
-| **Version** | 1.2 |
+| **Version** | 1.3 |
 | **Status** | Active — Gate B phase; Sprint 0 planned |
 | **Last updated** | 2026-07-25 |
 | **Prepared by** | Program Readiness Manager |
@@ -14,7 +14,7 @@
 
 This plan defines **what the program may execute now** (readiness phase) versus **what remains blocked** until Gate A. It supersedes any informal implementation start.
 
-**Companion document:** `BLOCKER_CLOSURE_EXECUTION_PLAN.md` (GOV-BCEP-001 v1.0)
+**Companion documents:** `BLOCKER_CLOSURE_EXECUTION_PLAN.md` (GOV-BCEP-001) · `FINAL_PRE_IMPLEMENTATION_READINESS_AND_GATE_A_PACKAGE.md` (GOV-FPRG-001)
 
 ---
 
@@ -185,3 +185,4 @@ Phase 4 (sequential): BLOCKER-007
 | 1.0 | — | Initial readiness execution plan |
 | 1.1 | 2026-07-25 | Refocused on Phase 0 blocker closure; Phase 2 explicitly gated |
 | 1.2 | 2026-07-25 | Added Sprint 0 Foundation Charter (GOV-S0FC-001); Phase 2/3 split |
+| 1.3 | 2026-07-25 | Linked Gate A preparation package (GOV-FPRG-001) |
