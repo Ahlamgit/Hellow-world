@@ -3,10 +3,11 @@
 | Field | Value |
 |-------|-------|
 | **Document ID** | GOV-RBCS-001 |
-| **Version** | 1.1 |
+| **Version** | 1.2 |
 | **Last updated** | 2026-07-25 |
 | **Gate** | B — NOT READY — CODING BLOCKED |
-| **Owner** | Program Readiness Manager |
+| **Owner** | Program Governance Manager |
+| **Evidence framework** | `BLOCKER_EVIDENCE_MANAGEMENT_FRAMEWORK.md` (GOV-BEMF-001) |
 
 ---
 
@@ -17,7 +18,7 @@
 | **Open** | Blocker not started or evidence incomplete |
 | **In Progress** | Evidence collection underway |
 | **Under Review** | Evidence submitted; awaiting approval |
-| **Closed** | Evidence approved; artifact on file |
+| **Closed** | Evidence approved, archived per GOV-BEMF-001, artifact on file |
 | **Blocked** | Dependency not met |
 
 ---
@@ -164,7 +165,9 @@
 | 3 | Schedule design approval review (BLOCKER-001) | Design Lead | TBD |
 | 4 | Schedule finance rule workshop (BLOCKER-005) | Finance | TBD |
 
-Refer to `BLOCKER_CLOSURE_EXECUTION_PLAN.md` for full phase sequencing.
+Refer to `BLOCKER_CLOSURE_EXECUTION_PLAN.md` for phase sequencing and `BLOCKER_EVIDENCE_MANAGEMENT_FRAMEWORK.md` for submission and approval workflow.
+
+**Evidence repository:** `docs/v1/governance/evidence/`
 
 ---
 
@@ -174,3 +177,4 @@ Refer to `BLOCKER_CLOSURE_EXECUTION_PLAN.md` for full phase sequencing.
 |---------|------|--------|
 | 1.0 | — | Initial register — all blockers open |
 | 1.1 | 2026-07-25 | Aligned with GOV-BCEP-001; no blockers closed |
+| 1.2 | 2026-07-25 | Linked GOV-BEMF-001 evidence framework; repository structure defined |

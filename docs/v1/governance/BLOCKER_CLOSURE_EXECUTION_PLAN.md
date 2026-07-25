@@ -3,14 +3,14 @@
 | Field | Value |
 |-------|-------|
 | **Document ID** | GOV-BCEP-001 |
-| **Version** | 1.0 |
+| **Version** | 1.1 |
 | **Status** | Active |
 | **Gate** | B — NOT READY (CODING BLOCKED) |
 | **Target Gate** | A — READY FOR IMPLEMENTATION |
 | **Product Scope** | FROZEN |
 | **Architecture** | APPROVED (ADR-001 → ADR-028) |
 | **Engineering Standards** | DEFINED |
-| **Prepared by** | Program Readiness Manager |
+| **Prepared by** | Program Governance Manager |
 | **Date** | 2026-07-25 |
 
 ---
@@ -23,6 +23,7 @@ This plan is derived from and subordinate to:
 - `FINAL_IMPLEMENTATION_GATE_REPORT.md`
 - `FINAL_PRE_IMPLEMENTATION_READINESS_REVIEW.md`
 - `IMPLEMENTATION_AUTHORIZATION_CHECKLIST.md`
+- `BLOCKER_EVIDENCE_MANAGEMENT_FRAMEWORK.md`
 - `READINESS_BLOCKER_CLOSURE_STATUS.md`
 - `IMPLEMENTATION_READINESS_EXECUTION_PLAN.md`
 - `FEATURE_TRACEABILITY_MATRIX.md`
@@ -43,6 +44,8 @@ This plan is derived from and subordinate to:
 ## Objective
 
 Move KHADAMATI from **Gate B: NOT READY — CODING BLOCKED** to **Gate A: READY FOR IMPLEMENTATION** by closing all seven implementation blockers with auditable evidence only.
+
+**Evidence process:** All evidence must be collected, reviewed, approved, and archived per `BLOCKER_EVIDENCE_MANAGEMENT_FRAMEWORK.md` (GOV-BEMF-001) before any blocker may be marked **Closed**.
 
 ---
 
@@ -84,6 +87,8 @@ No implementation work (coding, schema, UI build, deployment) may proceed until 
 | 8 | Admin portal screens | Complete screen inventory with approved wireframes/high-fidelity for frozen scope |
 
 **Closure artifact:** `DESIGN_APPROVAL_SIGNOFF_v1.0` (signed by Design Lead + Product Owner)
+
+**Evidence path:** `docs/v1/governance/evidence/BLOCKER-001-design/`
 
 **Rule:** **No UI implementation until BLOCKER-001 is closed.**
 
@@ -327,6 +332,7 @@ Phase 4 — Payment validation (sequential)
 | Activity | Frequency | Output |
 |----------|-----------|--------|
 | Blocker status review | Weekly | Update `READINESS_BLOCKER_CLOSURE_STATUS.md` |
+| Evidence submission review | Per submission | Approval record per `BLOCKER_EVIDENCE_MANAGEMENT_FRAMEWORK.md` §4 |
 | Steering checkpoint | Bi-weekly | Escalate stuck blockers |
 | Gate readiness assessment | On any blocker closure | Update `FINAL_IMPLEMENTATION_GATE_REPORT.md` |
 | Traceability check | Per blocker closure | Confirm evidence maps to gate checklist |
@@ -349,5 +355,6 @@ Phase 4 — Payment validation (sequential)
 | Version | Date | Author | Change |
 |---------|------|--------|--------|
 | 1.0 | 2026-07-25 | Program Readiness Manager | Initial blocker closure execution plan |
+| 1.1 | 2026-07-25 | Program Governance Manager | Linked evidence management framework (GOV-BEMF-001) |
 
-**Distribution:** Program Sponsor, Product Owner, Technical Architect, Design Lead, Finance, Legal/Compliance, Integration Lead
+**Related documents:** `BLOCKER_EVIDENCE_MANAGEMENT_FRAMEWORK.md`, `IMPLEMENTATION_AUTHORIZATION_CHECKLIST.md`

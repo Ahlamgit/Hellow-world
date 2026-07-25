@@ -3,9 +3,9 @@
 | Field | Value |
 |-------|-------|
 | **Document ID** | GOV-FIGR-001 |
-| **Version** | 1.1 |
+| **Version** | 1.2 |
 | **Report date** | 2026-07-25 |
-| **Prepared by** | Program Readiness Manager |
+| **Prepared by** | Program Governance Manager |
 
 ---
 
@@ -17,7 +17,7 @@
 | **Target gate** | A — READY FOR IMPLEMENTATION |
 | **Implementation authorization** | **DENIED** |
 
-KHADAMATI remains blocked for all implementation activity. Seven pre-implementation blockers are open. Closure execution is governed by `BLOCKER_CLOSURE_EXECUTION_PLAN.md` (GOV-BCEP-001 v1.0).
+KHADAMATI remains blocked for all implementation activity. Seven pre-implementation blockers are open. Closure execution is governed by `BLOCKER_CLOSURE_EXECUTION_PLAN.md` (GOV-BCEP-001). Evidence collection and validation is governed by `BLOCKER_EVIDENCE_MANAGEMENT_FRAMEWORK.md` (GOV-BEMF-001 v1.0).
 
 ---
 
@@ -67,7 +67,8 @@ KHADAMATI remains blocked for all implementation activity. Seven pre-implementat
 
 ### Authorized (Gate B)
 
-- Blocker evidence collection and approval workflows
+- Blocker evidence collection, review, and approval per `BLOCKER_EVIDENCE_MANAGEMENT_FRAMEWORK.md`
+- Evidence archival under `docs/v1/governance/evidence/`
 - Governance document updates
 - Readiness reviews and steering reporting
 
@@ -85,9 +86,11 @@ KHADAMATI remains blocked for all implementation activity. Seven pre-implementat
 ## Path to Gate A
 
 1. Execute `BLOCKER_CLOSURE_EXECUTION_PLAN.md` dependency order (Phases 1–4).
-2. Update `READINESS_BLOCKER_CLOSURE_STATUS.md` on each evidence submission.
-3. When all seven blockers show **Closed** with artifacts on file, convene Gate A review.
-4. Upon unanimous Gate A checklist approval, update this report to **Gate A — READY FOR IMPLEMENTATION**.
+2. Collect and validate evidence per `BLOCKER_EVIDENCE_MANAGEMENT_FRAMEWORK.md`.
+3. Update `READINESS_BLOCKER_CLOSURE_STATUS.md` within one business day of each submission or approval.
+4. Complete `IMPLEMENTATION_AUTHORIZATION_CHECKLIST.md`.
+5. When all seven blockers show **Closed** with evidence archived, convene Gate A readiness review (framework §6).
+6. Upon Gate A approval, update this report to **Gate A — READY FOR IMPLEMENTATION**.
 
 ---
 
@@ -107,3 +110,4 @@ KHADAMATI remains blocked for all implementation activity. Seven pre-implementat
 |---------|------|--------|
 | 1.0 | — | Initial gate assessment (Gate B) |
 | 1.1 | 2026-07-25 | Updated for blocker closure execution plan; status reaffirmed Gate B |
+| 1.2 | 2026-07-25 | Linked evidence management framework (GOV-BEMF-001); Gate B unchanged |
