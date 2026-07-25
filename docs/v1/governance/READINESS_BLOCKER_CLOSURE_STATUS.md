@@ -3,7 +3,7 @@
 | Field | Value |
 |-------|-------|
 | **Document ID** | GOV-RBCS-001 |
-| **Version** | 1.4 |
+| **Version** | 1.5 |
 | **Last updated** | 2026-07-25 |
 | **Gate** | B — NOT READY — CODING BLOCKED |
 | **Owner** | Program Governance Manager |
@@ -28,7 +28,7 @@
 
 | Blocker | Description | Status | Owner | Closure artifact | Evidence received | Approved date |
 |---------|-------------|--------|-------|------------------|-------------------|---------------|
-| BLOCKER-001 | Design approval | **Open** | Design Lead + Product Owner | `DESIGN_APPROVAL_SIGNOFF_v1.0` | No | — |
+| BLOCKER-001 | Design approval | **Ready for Approval** | Design Lead + Product Owner | `DESIGN_APPROVAL_SIGNOFF_v1.0` | Package prepared | — |
 | BLOCKER-002 | Stakeholder approval | **Ready for Approval** | Program Sponsor | `STAKEHOLDER_APPROVAL_REGISTER_v1.0` | Package prepared | — |
 | BLOCKER-003 | Vendor readiness | **Open** | Technical Lead / Integration Lead | `VENDOR_READINESS_DOSSIER_v1.0` | No | — |
 | BLOCKER-004 | Cloud readiness | **Open** | Technical Architect + DevOps Lead | `CLOUD_READINESS_DECISION_RECORD_v1.0` | No | — |
@@ -36,7 +36,7 @@
 | BLOCKER-006 | Compliance approval | **Open** | Legal / Compliance Officer | `COMPLIANCE_APPROVAL_PACK_v1.0` | No | — |
 | BLOCKER-007 | Payment.js validation | **Open** | Technical Lead + Finance Ops | `PAYMENT_JS_VALIDATION_REPORT_v1.0` | No | — |
 
-**Summary:** 0 Closed · 5 Open · 2 Ready for Approval · 0 Under Review
+**Summary:** 0 Closed · 4 Open · 3 Ready for Approval · 0 Under Review
 
 ---
 
@@ -44,18 +44,22 @@
 
 ### BLOCKER-001 — Design
 
-| Evidence item | Received | Approved |
-|---------------|----------|----------|
-| Final logo assets | No | No |
-| Approved colour palette | No | No |
-| Approved design tokens | No | No |
-| Approved UI/UX specification | No | No |
-| Customer app screens | No | No |
-| Craftsman app screens | No | No |
-| Store dashboard screens | No | No |
-| Admin portal screens | No | No |
+**Status:** **READY FOR APPROVAL** (signatures and assets pending)  
+**Package:** `evidence/BLOCKER-001-design/DESIGN_APPROVAL_PACKAGE.md` (EVD-001-PKG-001 v1.0)  
+**ADR-023:** UI implementation **blocked** until Closed
 
-**Note:** No UI implementation until closed.
+| Evidence item | In package | Asset filed | Approved |
+|---------------|------------|-------------|----------|
+| Final logo assets | Yes | Pending | No |
+| Approved colour palette | Yes | Pending | No |
+| Approved design tokens | Yes | Pending | No |
+| Approved UI/UX specification | Yes | Pending | No |
+| Customer app screens | Yes | Pending | No |
+| Craftsman app screens | Yes | Pending | No |
+| Store dashboard screens | Yes | Pending | No |
+| Admin portal screens | Yes | Pending | No |
+
+**Not closed until:** Assets archived + Product / Design / Business Owner signatures in package §9
 
 ---
 
@@ -171,7 +175,7 @@
 |----------|--------|-------|--------|
 | 1 | **Distribute and obtain signatures on `STAKEHOLDER_APPROVAL_PACKAGE.md` (BLOCKER-002)** | Program Sponsor | Immediate |
 | 2 | Initiate compliance approval pack (BLOCKER-006) | Legal / Compliance | TBD |
-| 3 | Schedule design approval review (BLOCKER-001) | Design Lead | TBD |
+| 3 | Distribute design approval package — `DESIGN_APPROVAL_PACKAGE.md` (BLOCKER-001) | Design Lead + Product Owner | Immediate |
 | 4 | Schedule finance policy sign-off — `FINANCE_POLICY_APPROVAL_PACKAGE.md` (BLOCKER-005) | Finance + Business Owner | Immediate |
 
 Refer to `BLOCKER_CLOSURE_EXECUTION_PLAN.md` for phase sequencing and `BLOCKER_EVIDENCE_MANAGEMENT_FRAMEWORK.md` for submission and approval workflow.
@@ -189,3 +193,4 @@ Refer to `BLOCKER_CLOSURE_EXECUTION_PLAN.md` for phase sequencing and `BLOCKER_E
 | 1.2 | 2026-07-25 | Linked GOV-BEMF-001 evidence framework; repository structure defined |
 | 1.3 | 2026-07-25 | BLOCKER-002 → Ready for Approval; stakeholder package prepared |
 | 1.4 | 2026-07-25 | BLOCKER-005 → Ready for Approval; finance policy package prepared |
+| 1.5 | 2026-07-25 | BLOCKER-001 → Ready for Approval; design approval package prepared |

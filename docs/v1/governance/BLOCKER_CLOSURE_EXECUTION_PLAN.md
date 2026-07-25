@@ -198,6 +198,8 @@ No implementation work (coding, schema, UI build, deployment) may proceed until 
 
 **Closure artifact:** `FINANCE_RULE_MATRIX_v1.0` (approved)
 
+**Evidence package:** `FINANCE_POLICY_APPROVAL_PACKAGE.md` (EVD-005-PKG-001) — **READY FOR APPROVAL**; financial architecture approved; policy values pending.
+
 **Dependency note:** Required before settlement, commission, and payment settlement implementation sprints.
 
 ---
