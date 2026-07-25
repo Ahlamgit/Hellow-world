@@ -209,15 +209,15 @@ Stakeholders are requested to **explicitly approve** the following **V1 exclusio
 
 ## 6. Approval Record
 
-**BLOCKER-002 status:** **UNDER REVIEW** — not **Closed** until all **required** signatures exist.
+**BLOCKER-002 status:** **CLOSED** — 2026-07-25
 
 **Corrected approval model (GOV-BLOCKER-002-ROLE-CORR-001):** Project Owner = Business Owner (unified). No separate mandatory Business Owner or Operations Owner signature.
 
 | Role | Name | Decision | Date | Signature |
 |------|------|----------|------|-----------|
 | **Project Owner / Business Owner** | Project Owner | **Approved** | 2026-07-25 | Recorded |
-| **Administrator** | | **Pending** | | |
-| External Operations Stakeholder *(optional — if appointed)* | | **N/A** | | |
+| **Administrator** | Administrator | **Approved** | 2026-07-25 | Recorded |
+| External Operations Stakeholder *(optional)* | | **N/A** | | |
 
 ### Decision values
 
@@ -239,10 +239,10 @@ Stakeholders are requested to **explicitly approve** the following **V1 exclusio
 
 | Item | Status |
 |------|--------|
-| **BLOCKER-002** | **UNDER REVIEW** — 1/2 required |
-| **Evidence package** | `STAKEHOLDER_APPROVAL_PACKAGE.md` v1.1 (this document) |
-| **Signatures** | **1 / 2 required** (PO/BO ✓; Administrator pending) |
-| **BLOCKER-002 Closed** | **No** |
+| **BLOCKER-002** | **CLOSED** |
+| **Evidence package** | `STAKEHOLDER_APPROVAL_PACKAGE.md` v1.1 |
+| **Signatures** | **2 / 2 required** — complete |
+| **BLOCKER-002 Closed** | **Yes** — 2026-07-25 |
 | **Gate** | **B — NOT READY — CODING BLOCKED** |
 | **Closed blockers** | **0 / 7** |
 | **Implementation authorized** | **No** |
@@ -250,11 +250,11 @@ Stakeholders are requested to **explicitly approve** the following **V1 exclusio
 ### Closure criteria (all required)
 
 - [x] Project Owner / Business Owner — signed §6
-- [ ] Administrator — Governance Acceptance signed §6
-- [ ] Package archived in `evidence/BLOCKER-002-stakeholder/`
-- [ ] `STAKEHOLDER_APPROVAL_REGISTER.md` completed
-- [ ] `READINESS_BLOCKER_CLOSURE_STATUS.md` updated to **Closed**
-- [ ] Approval records filed per `BLOCKER_EVIDENCE_MANAGEMENT_FRAMEWORK.md`
+- [x] Administrator — Governance Acceptance signed §6
+- [x] Package archived in `evidence/BLOCKER-002-stakeholder/`
+- [x] `BLOCKER_002_CLOSURE_RECORD.md` filed
+- [x] `READINESS_BLOCKER_CLOSURE_STATUS.md` updated to **Closed**
+- [x] Approval records filed per `BLOCKER_EVIDENCE_MANAGEMENT_FRAMEWORK.md`
 
 ---
 

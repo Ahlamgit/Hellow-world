@@ -48,7 +48,7 @@ Human approval → Evidence → Blocker closure → Gate A → Sprint 0
 | Blocker | Evidence path | Action |
 |---------|---------------|--------|
 | BLOCKER-002 | `evidence/BLOCKER-002-stakeholder/APPROVAL_RECORD.md` | Project Owner approval recorded |
-| BLOCKER-002 | `evidence/BLOCKER-002-stakeholder/STAKEHOLDER_APPROVAL_REGISTER.md` | 1/3 signatures |
+| BLOCKER-002 | `evidence/BLOCKER-002-stakeholder/STAKEHOLDER_APPROVAL_REGISTER.md` | 1/2 required (corrected model) |
 | BLOCKER-002 | `FINAL_SCOPE_BASELINE.md` §8 | Project Owner scope approval recorded |
 | BLOCKER-006 | `evidence/BLOCKER-006-compliance/COMPLIANCE_APPROVAL_STATUS.md` | Proceed-with-finalization authorization |
 | BLOCKER-006 | `evidence/BLOCKER-006-compliance/APPROVAL_RECORD.md` | Partial authorization recorded |
@@ -59,7 +59,7 @@ Human approval → Evidence → Blocker closure → Gate A → Sprint 0
 
 | ID | Status | Closed |
 |----|--------|--------|
-| BLOCKER-002 | **Under Review** — 1/3 stakeholder signatures | **No** |
+| BLOCKER-002 | **Under Review** — 1/2 required (PO/BO ✓; Administrator pending) | **No** |
 | BLOCKER-006 | **Under Review** — Project Owner proceed auth; Legal pending | **No** |
 | BLOCKER-001 | Ready for Approval | No |
 | BLOCKER-003 | Open | No |
@@ -73,7 +73,7 @@ Human approval → Evidence → Blocker closure → Gate A → Sprint 0
 
 ## 5. Next governance milestones
 
-1. Collect Business Owner + Operations Owner signatures (BLOCKER-002)
+1. Collect **Administrator Governance Acceptance** (BLOCKER-002)
 2. Complete Legal retention durations + compliance signatures (BLOCKER-006)
 3. Close remaining blockers per phase plan
 4. Complete GOV-IACL-001
@@ -88,3 +88,4 @@ Human approval → Evidence → Blocker closure → Gate A → Sprint 0
 | Version | Date | Change |
 |---------|------|--------|
 | 1.0 | 2026-07-25 | Project Owner human authorization for Gate A transition recorded |
+| 1.1 | 2026-07-25 | Superseded approval counts — see GOV-BLOCKER-002-ROLE-CORR-001 (PO/BO unified; 2 required) |

@@ -72,7 +72,7 @@ The system **MUST** remain designed for future: multiple countries · multiple c
 |------|-------|
 | **Current Gate** | **GATE B — NOT READY — CODING BLOCKED** |
 | **Implementation** | **NOT AUTHORIZED** |
-| **Blockers** | **0 / 7 CLOSED** |
+| **Blockers** | **1 / 7 CLOSED** |
 | **Architecture** | **APPROVED & VALIDATED** (ADR-001 → ADR-032) |
 | **Scope** | **FROZEN** |
 | **Sprint 0** | **NOT STARTED** |
@@ -306,7 +306,7 @@ All blockers must be **closed** before Gate A.
 | ID | Blocker | Status |
 |----|---------|--------|
 | BLOCKER-001 | Design | Open |
-| BLOCKER-002 | Stakeholder | Under Review (1/2 — PO/BO ✓; Administrator pending) |
+| BLOCKER-002 | Stakeholder | **Closed** — 2026-07-25 |
 | BLOCKER-003 | Vendors | Open |
 | BLOCKER-004 | Cloud | Open |
 | BLOCKER-005 | Finance | Ready for Approval |

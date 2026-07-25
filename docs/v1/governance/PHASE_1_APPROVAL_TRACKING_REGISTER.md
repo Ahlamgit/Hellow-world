@@ -45,7 +45,7 @@ This register is the **operational tracking instrument** for Phase 1 approval co
 |------|-------|
 | **Gate** | **B — NOT READY — CODING BLOCKED** |
 | **Phase 1 approvals** | **0 / 3** (BLOCKER-002) · **0 / 3** (BLOCKER-006) |
-| **Phase 1 blockers closed** | **0 / 2** |
+| **Phase 1 blockers closed** | **1 / 2** |
 
 ### Implementation restriction
 
@@ -70,23 +70,22 @@ Gate B remains until Gate A ceremony (7/7 blockers + GOV-GAIR-001 §8).
 
 **Package:** `evidence/BLOCKER-002-stakeholder/STAKEHOLDER_APPROVAL_PACKAGE.md` v1.1 (EVD-002-PKG-001)  
 **Role model:** GOV-BLOCKER-002-ROLE-CORR-001  
-**Blocker status:** **UNDER REVIEW** · **Closed:** No  
-**Approvals received:** **1 / 2** required
+**Blocker status:** **CLOSED** · **Closed:** 2026-07-25  
+**Approvals received:** **2 / 2 Complete**
 
 | Role | Person | Package reviewed | Decision | Date | Signature | Status |
 |------|--------|------------------|----------|------|-----------|--------|
 | **Project Owner / Business Owner** | Project Owner | Yes | **Approved** | 2026-07-25 | Recorded | **Complete** |
-| **Administrator** | — | No | **Pending** | — | — | **Open** |
-| External Operations Stakeholder *(optional)* | — | N/A | N/A | — | — | **Not required** |
+| **Administrator** | Administrator | Yes | **Approved** | 2026-07-25 | Recorded | **Complete** |
 
 ### BLOCKER-002 supporting records
 
 | Record | Location | Status |
 |--------|----------|--------|
-| `APPROVAL_RECORD.md` (EVD-002-APPROVAL-001) | `evidence/BLOCKER-002-stakeholder/` | **Partial** — 1/2 |
-| `EVIDENCE_CHECKLIST.md` | Same folder | **3 / 8** complete |
-| `STAKEHOLDER_APPROVAL_REGISTER.md` (EVD-002-REGISTER-001) | Same folder | **1/2 required** |
-| `FINAL_SCOPE_BASELINE.md` in repo | `docs/v1/FINAL_SCOPE_BASELINE.md` | **Approved by PO/BO** |
+| `APPROVAL_RECORD.md` | `evidence/BLOCKER-002-stakeholder/` | **Approved** — 2/2 |
+| `EVIDENCE_CHECKLIST.md` | Same folder | **Complete** |
+| `BLOCKER_002_CLOSURE_RECORD.md` | Same folder | **Filed** |
+| `FINAL_SCOPE_BASELINE.md` | `docs/v1/FINAL_SCOPE_BASELINE.md` | **Approved** |
 
 **Campaign owner:** Project Owner / Business Owner
 
@@ -151,8 +150,7 @@ Gate B remains until Gate A ceremony (7/7 blockers + GOV-GAIR-001 §8).
 
 | Date | Action | Owner | Result | Next step |
 |------|--------|-------|--------|-----------|
-| 2026-07-25 | BLOCKER-002 role ownership correction (GOV-BLOCKER-002-ROLE-CORR-001) | Governance Architect | PO/BO unified; Administrator required; 1/2 | Administrator signature |
-| 2026-07-25 | Project Owner / Business Owner approval recorded | Governance Transition Manager | Scope baseline accepted | Administrator Governance Acceptance |
+| 2026-07-25 | BLOCKER-002 **CLOSED** — Administrator Governance Acceptance | Governance Architect | 2/2 approvals; `BLOCKER_002_CLOSURE_RECORD.md` filed | BLOCKER-006 compliance finalization |
 | — | Distribute `STAKEHOLDER_APPROVAL_PACKAGE.md` + scope baseline + GOV-P1-EXEC-001 | Program Sponsor | *Pending* | Collect §6 signatures |
 | — | Schedule Legal retention workshop (BLOCKER-006 §2) | Legal / Compliance Officer | *Pending* | Complete retention table before §10 signatures |
 | — | Distribute `COMPLIANCE_APPROVAL_PACKAGE.md` | Legal / Compliance Officer | *Pending* | Collect §10 signatures after §2 complete |
@@ -165,7 +163,7 @@ A blocker is **CLOSED** only when **all** criteria are met (GOV-BEMF-001 · GOV-
 
 | # | Rule | BLOCKER-002 | BLOCKER-006 |
 |---|------|-------------|-------------|
-| 1 | **Required approvers signed** | ☐ 1/2 | ☐ 0/3 |
+| 1 | **Required approvers signed** | ☑ 2/2 | ☐ 0/3 |
 | 2 | **Evidence checklist completed** | ☐ | ☐ |
 | 3 | **Approval record marked Approved** | ☐ | ☐ |
 | 4 | **Evidence archived** (closure artifact + signed records) | ☐ | ☐ |

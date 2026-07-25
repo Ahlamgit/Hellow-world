@@ -267,17 +267,14 @@ No conflicting technologies without new ADR and approval.
 
 ## 8. Approval record (BLOCKER-002)
 
-**Status:** **UNDER REVIEW** — 1/2 required approvals (GOV-BLOCKER-002-ROLE-CORR-001)
+**Status:** **CLOSED** — 2026-07-25 (GOV-BLOCKER-002-ROLE-CORR-001)
 
 | Role | Name | Decision | Date | Signature |
 |------|------|----------|------|-----------|
 | **Project Owner / Business Owner** | Project Owner | **Approved** | 2026-07-25 | Recorded |
-| **Administrator** | | Pending | | |
-| External Operations Stakeholder *(optional)* | | N/A | | |
+| **Administrator** | Administrator | **Approved** | 2026-07-25 | Recorded |
 
-**Project Owner = Business Owner (unified).** No separate Business Owner signature required.
-
-Until Administrator Governance Acceptance and full checklist complete, BLOCKER-002 is **not Closed**.
+**BLOCKER-002 CLOSED.** Closure artifact: `governance/evidence/BLOCKER-002-stakeholder/BLOCKER_002_CLOSURE_RECORD.md`
 
 ---
 

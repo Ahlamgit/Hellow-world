@@ -3,12 +3,12 @@
 | Field | Value |
 |-------|-------|
 | **Document ID** | GOV-BLOCKER-TRACKER-001 |
-| **Version** | 2.0 |
+| **Version** | 2.1 |
 | **Date** | 2026-07-25 |
 | **Owner** | Program Execution Manager |
 | **Gate** | **B — NOT READY — CODING BLOCKED** |
 | **Previous gate note** | Gate A transition activities recorded; authorization state unchanged |
-| **Blockers closed** | **0 / 7** |
+| **Blockers closed** | **1 / 7** |
 | **Role correction** | GOV-BLOCKER-002-ROLE-CORR-001 |
 | **Status** | **Active — Gate A transition execution** |
 
@@ -55,12 +55,12 @@ This tracker is the **operational working document** for closing BLOCKER-001 thr
 
 ## 2. Master blocker dashboard
 
-**Last updated:** 2026-07-25 · **Progress:** 0 / 7 **Closed** · **Human approval:** Project Owner (Gate A transition)
+**Last updated:** 2026-07-25 · **Progress:** **1 / 7 Closed** (BLOCKER-002 ✓)
 
 | ID | Name | Owner | Current status | Required evidence | Gate impact |
 |----|------|-------|----------------|-------------------|-------------|
 | **BLOCKER-001** | Design | Design Lead + Product Owner | **Ready for Approval** | Approved logo assets · Design system approval · UI/UX approval signatures · `DESIGN_APPROVAL_SIGNOFF_v1.0` · `CLOSURE_READINESS.md` | Blocks **all UI** (ADR-023); Sprint 0 Wave 4 |
-| **BLOCKER-002** | Stakeholder | Project Owner / Business Owner | **Under Review** — **1/2** (PO/BO ✓; Administrator pending) | Administrator Governance Acceptance · checklist · archival | Blocks **program authorization** |
+| **BLOCKER-002** | Stakeholder | Project Owner / Business Owner | **Closed** | `BLOCKER_002_CLOSURE_RECORD.md` · 2/2 approvals | **Closed** — 2026-07-25 |
 | **BLOCKER-003** | Vendors | Integration Lead | **Open** — `CLOSURE_READINESS.md` prepared | Vendor evaluation · Selected vendors · Sandbox · `VENDOR_READINESS_DOSSIER_v1.0` | Blocks **integrations** |
 | **BLOCKER-004** | Cloud | Technical Architect + DevOps Lead | **Open** — `CLOSURE_READINESS.md` prepared | Hosting · Budget · Backup/DR · `CLOUD_READINESS_DECISION_RECORD_v1.0` | Blocks **environment planning** |
 | **BLOCKER-005** | Finance | Finance + Business Operations | **Ready for Approval** — `CLOSURE_READINESS.md` prepared | Commission/subscription/refund/settlement values · signatures · `FINANCE_RULE_MATRIX_v1.0` | Blocks **settlement/payment rules** |
@@ -102,12 +102,12 @@ Each blocker folder includes **`README.md`**, **`APPROVAL_RECORD.md`**, and **`E
 
 | Evidence item | On file | Approved |
 |---------------|---------|----------|
-| Project Owner / Business Owner approval (unified) | `APPROVAL_RECORD.md` — 2026-07-25 | ☑ |
-| `FINAL_SCOPE_BASELINE.md` v1.0 approved | Canonical + §8 | ☑ |
-| Administrator Governance Acceptance | Package §6 | ☐ |
-| Closure artifact complete | `STAKEHOLDER_APPROVAL_REGISTER.md` — 1/2 | ☐ |
+| Project Owner / Business Owner approval | `APPROVAL_RECORD.md` | ☑ |
+| Administrator Governance Acceptance | `APPROVAL_RECORD.md` | ☑ |
+| `FINAL_SCOPE_BASELINE.md` v1.0 | Canonical + §8 | ☑ |
+| `BLOCKER_002_CLOSURE_RECORD.md` | Filed | ☑ |
 
-**Tracker status:** Under Review (1/2) · **Closed:** ☐
+**Tracker status:** **Closed** · **Closed date:** 2026-07-25
 
 ---
 

@@ -70,7 +70,7 @@ All criteria must be **satisfied** before this record may be signed and Gate A d
 | Architecture approved | **Approved** | ADR-001 → ADR-032; KHAD-V1-FACR-001 validated |
 | Scope frozen | **Approved** | `FINAL_SCOPE_BASELINE.md` |
 | BLOCKER-001 Design closed | **Pending** | Package ready: `DESIGN_APPROVAL_PACKAGE.md` — signatures/assets required |
-| BLOCKER-002 Stakeholder closed | **Pending** | Package v1.1 — **1/2 required**: PO/BO ✓; **Administrator Governance Acceptance pending** (GOV-BLOCKER-002-ROLE-CORR-001) |
+| BLOCKER-002 Stakeholder closed | **Closed** | `BLOCKER_002_CLOSURE_RECORD.md` — 2026-07-25 |
 | BLOCKER-003 Vendors closed | **Pending** | In preparation — `VENDOR_READINESS_DOSSIER_v1.0` |
 | BLOCKER-004 Cloud closed | **Pending** | In preparation — `CLOUD_READINESS_DECISION_RECORD_v1.0` |
 | BLOCKER-005 Finance closed | **Pending** | Package ready: `FINANCE_POLICY_APPROVAL_PACKAGE.md` — values/signatures required |
@@ -79,7 +79,7 @@ All criteria must be **satisfied** before this record may be signed and Gate A d
 | `IMPLEMENTATION_AUTHORIZATION_CHECKLIST.md` complete | **Pending** | GOV-IACL-001 |
 | §8 approvers signed | **Pending** | This record |
 
-**Blockers closed:** **0 / 7**  
+**Blockers closed:** **1 / 7**  
 **Ready for approval:** BLOCKER-001, 002, 005, 006  
 **In preparation:** BLOCKER-003, 004, 007
 

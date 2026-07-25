@@ -9,45 +9,42 @@
 
 ## Purpose
 
-Obtain stakeholder sign-off on frozen scope, workflows, exclusions, and program authorization before Gate A.
+Stakeholder sign-off on frozen scope, workflows, exclusions, and program authorization before Gate A.
 
-## Owner
+## Ownership model
 
-**Project Owner / Business Owner** (accountable for business acceptance)
+| Role | Responsibility |
+|------|----------------|
+| **Project Owner / Business Owner** | Same role — business vision, product direction, revenue model, V1 scope |
+| **Administrator** | Platform governance authority — enforcement of approved rules (not business strategy) |
+| **External Operations Stakeholder** | Optional — only if formally appointed |
+
+**Operations Owner is not mandatory** for V1 governance.
 
 ## Required evidence
 
 | Item | Location |
 |------|----------|
 | Stakeholder approval package | `STAKEHOLDER_APPROVAL_PACKAGE.md` (EVD-002-PKG-001) |
-| Scope baseline (canonical) | [`../../../FINAL_SCOPE_BASELINE.md`](../../../FINAL_SCOPE_BASELINE.md) |
-| Stakeholder approval register | `STAKEHOLDER_APPROVAL_REGISTER.md` (EVD-002-REGISTER-001) |
-| Signed approval record | `APPROVAL_RECORD.md` |
-| Completed checklist | `EVIDENCE_CHECKLIST.md` |
-
-**Closure artifact:** `STAKEHOLDER_APPROVAL_REGISTER` (filed on closure)
-
-## Approval authority (corrected model)
-
-| # | Role | Required | Authority |
-|---|------|----------|-----------|
-| 1 | **Project Owner / Business Owner** | **Yes** | Scope · business rules · revenue model · V1 boundaries |
-| 2 | **Administrator** | **Yes** | Operational governance · platform administration · rule enforcement |
-| 3 | **External Operations Stakeholder** | **Optional** | Only if formally appointed |
-
-**Note:** Project Owner and Business Owner are the **same role**. No separate mandatory Business Owner signature.
+| Scope baseline | [`../../../FINAL_SCOPE_BASELINE.md`](../../../FINAL_SCOPE_BASELINE.md) |
+| Approval register | `STAKEHOLDER_APPROVAL_REGISTER.md` (EVD-002-REGISTER-001) |
+| Approval record | `APPROVAL_RECORD.md` |
+| Evidence checklist | `EVIDENCE_CHECKLIST.md` |
+| **Closure artifact** | `BLOCKER_002_CLOSURE_RECORD.md` |
 
 ## Current status
 
 | Field | Value |
 |-------|-------|
-| **Status** | **Under Review** — 1/2 required approvals |
-| **Closed** | **No** |
+| **Status** | **Closed** |
+| **Closed** | **Yes** — 2026-07-25 |
+| **Approvals** | **2 / 2** — Project Owner / Business Owner ✓ · Administrator ✓ |
 
-## Closure criteria
+## Closure criteria (complete)
 
-- [ ] `EVIDENCE_CHECKLIST.md` complete
-- [ ] `APPROVAL_RECORD.md` — **Approved** (2/2 required attestations)
-- [ ] Project Owner / Business Owner — **Approved**
-- [ ] Administrator Governance Acceptance — **Approved**
-- [ ] Trackers updated per GOV-BEMF-001
+- [x] `EVIDENCE_CHECKLIST.md` complete
+- [x] `APPROVAL_RECORD.md` — **Approved**
+- [x] Project Owner / Business Owner — **Approved**
+- [x] Administrator Governance Acceptance — **Approved**
+- [x] `BLOCKER_002_CLOSURE_RECORD.md` filed
+- [x] Trackers updated per GOV-BEMF-001

@@ -3,7 +3,8 @@
 | Field | Value |
 |-------|-------|
 | **Document ID** | GOV-RBCS-001 |
-| **Version** | 3.2 |
+| **Version** | 3.3 |
+| **Blockers closed** | **1 / 7** |
 | **Last updated** | 2026-07-25 |
 | **Gate** | **B — NOT READY — CODING BLOCKED** |
 | **Role correction** | GOV-BLOCKER-002-ROLE-CORR-001 |
@@ -44,14 +45,14 @@
 | Blocker | Description | Status | Owner | Closure artifact | Evidence received | Approved date |
 |---------|-------------|--------|-------|------------------|-------------------|---------------|
 | BLOCKER-001 | Design approval | **Ready for Approval** | Design Lead + Product Owner | `DESIGN_APPROVAL_SIGNOFF_v1.0` | Package + `CLOSURE_READINESS.md` | — |
-| BLOCKER-002 | Stakeholder approval | **Under Review** | Project Owner / Business Owner | `STAKEHOLDER_APPROVAL_REGISTER` | 1/2 (PO/BO ✓; Administrator pending) | 2026-07-25 (partial) |
+| BLOCKER-002 | Stakeholder approval | **Closed** | Project Owner / Business Owner | `BLOCKER_002_CLOSURE_RECORD.md` | 2/2 complete | 2026-07-25 |
 | BLOCKER-003 | Vendor readiness | **Open** | Technical Lead / Integration Lead | `VENDOR_READINESS_DOSSIER_v1.0` | `CLOSURE_READINESS.md` prepared | — |
 | BLOCKER-004 | Cloud readiness | **Open** | Technical Architect + DevOps Lead | `CLOUD_READINESS_DECISION_RECORD_v1.0` | `CLOSURE_READINESS.md` prepared | — |
 | BLOCKER-005 | Finance configuration | **Ready for Approval** | Finance + Business Operations | `FINANCE_RULE_MATRIX_v1.0` | Package + `CLOSURE_READINESS.md` | — |
 | BLOCKER-006 | Compliance approval | **Under Review** | Legal / Compliance Officer | `COMPLIANCE_APPROVAL_PACK_v1.0` | Project Owner proceed auth; Legal pending | 2026-07-25 (partial) |
 | BLOCKER-007 | Payment.js validation | **Open** | Technical Lead + Finance Ops | `PAYMENT_JS_VALIDATION_REPORT_v1.0` | `CLOSURE_READINESS.md` prepared | — |
 
-**Summary:** 0 Closed · 3 Open · 2 Ready for Approval · **2 Under Review** · **Phase 1:** 0 / 2 closed
+**Summary:** **1 Closed** · 3 Open · 2 Ready for Approval · 1 Under Review · **Phase 1:** **1 / 2** closed
 
 ---
 
@@ -81,17 +82,16 @@
 
 ### BLOCKER-002 — Stakeholder Approval
 
-**Status:** **UNDER REVIEW** — 1/2 required (GOV-BLOCKER-002-ROLE-CORR-001)  
+**Status:** **CLOSED** — 2026-07-25  
 **Package:** `evidence/BLOCKER-002-stakeholder/STAKEHOLDER_APPROVAL_PACKAGE.md` v1.1  
-**Scope baseline:** `FINAL_SCOPE_BASELINE.md` v1.0 — **Approved by Project Owner / Business Owner**
+**Closure artifact:** `BLOCKER_002_CLOSURE_RECORD.md`
 
-| Approver | Signed |
-|----------|--------|
-| Project Owner / Business Owner | **Yes — 2026-07-25** |
-| Administrator | No |
-| External Operations Stakeholder | N/A (not appointed) |
+| Approver | Signed | Date |
+|----------|--------|------|
+| Project Owner / Business Owner | **Yes** | 2026-07-25 |
+| Administrator | **Yes** | 2026-07-25 |
 
-**Not closed until:** Administrator Governance Acceptance + full checklist per GOV-BEMF-001
+**Closed per GOV-BEMF-001.** Does not authorize implementation.
 
 ---
 

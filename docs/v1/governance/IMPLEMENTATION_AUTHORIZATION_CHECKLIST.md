@@ -22,7 +22,7 @@ Checklist for **Gate A — READY FOR IMPLEMENTATION** authorization. All items m
 
 | # | Requirement | Status | Evidence reference |
 |---|-------------|--------|-------------------|
-| P-01 | Product scope frozen | **Partial** — Project Owner approved; BO/Ops pending | `FINAL_SCOPE_BASELINE.md` v1.0 |
+| P-01 | Product scope frozen | **Approved** — BLOCKER-002 Closed | `FINAL_SCOPE_BASELINE.md` v1.0 |
 | P-02 | Architecture approved | **Validated** — sign-off pending | ADR-001 → ADR-032; `FINAL_ARCHITECTURE_CONSISTENCY_REVIEW.md` |
 | P-03 | Engineering standards defined | **Confirmed** | Engineering standards baseline |
 | P-04 | Current gate = B (coding blocked) | **Confirmed** | `FINAL_IMPLEMENTATION_GATE_REPORT.md` |
@@ -37,7 +37,7 @@ Checklist for **Gate A — READY FOR IMPLEMENTATION** authorization. All items m
 | # | Blocker | Evidence complete | Approved | Archived | Status |
 |---|---------|-------------------|----------|----------|--------|
 | C-01 | BLOCKER-001 Design | Package prepared | No | No | **Ready for Approval** |
-| C-02 | BLOCKER-002 Stakeholder | Package prepared | No | No | **Ready for Approval** |
+| C-02 | BLOCKER-002 Stakeholder | Complete | Yes | Yes | **Closed** |
 | C-03 | BLOCKER-003 Vendors | No | No | No | **Pending** |
 | C-04 | BLOCKER-004 Cloud | No | No | No | **Pending** |
 | C-05 | BLOCKER-005 Finance | Package prepared | No | No | **Ready for Approval** |
@@ -55,7 +55,7 @@ Checklist for **Gate A — READY FOR IMPLEMENTATION** authorization. All items m
 | A-01 | Architecture baseline accepted | Technical Architect | **Validated** — KHAD-V1-FACR-001; TA signature pending | ADR register + FACR |
 | A-02 | Scope baseline accepted | Product Owner | **Pending** | `FINAL_SCOPE_BASELINE.md` v1.0 — available; signature pending |
 | A-03 | Design package approved | Design Lead + Product Owner | **Pending** | `evidence/BLOCKER-001-design/` |
-| A-04 | Stakeholder register complete | Program Sponsor | **Pending** | `evidence/BLOCKER-002-stakeholder/` |
+| A-04 | Stakeholder register complete | Project Owner / Business Owner | **Complete** | `evidence/BLOCKER-002-stakeholder/BLOCKER_002_CLOSURE_RECORD.md` |
 | A-05 | Vendor readiness confirmed | Technical Lead | **Pending** | `evidence/BLOCKER-003-vendors/` |
 | A-06 | Cloud decisions approved | Technical Architect + Ops | **Pending** | `evidence/BLOCKER-004-cloud/` |
 | A-07 | Finance rules approved | Finance | **Pending** | `evidence/BLOCKER-005-finance/` |
