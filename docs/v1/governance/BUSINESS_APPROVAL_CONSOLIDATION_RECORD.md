@@ -36,7 +36,7 @@ Controls: user/provider approval workflows · verification governance · subscri
 
 | Blocker | PO/BO Decision | Official status |
 |---------|----------------|-----------------|
-| **BLOCKER-001** Design | **APPROVED** — `theme(1).mp4` · `ic-khadamati(1).jpg` | **Open** |
+| **BLOCKER-001** Design | **APPROVED** — `theme.mp4` · `khadamatiLogo.jpg` | **Open** |
 | **BLOCKER-002** Stakeholder | **APPROVED** | **Closed** |
 | **BLOCKER-003** Vendors | **PARTIAL** — SMS · email · storage approved; **maps excluded V1** | **Open** |
 | **BLOCKER-004** Cloud | **APPROVED** (business direction) | **Open** |
@@ -50,8 +50,8 @@ Controls: user/provider approval workflows · verification governance · subscri
 
 | Asset / topic | Record |
 |---------------|--------|
-| Theme video `theme(1).mp4` | `evidence/BLOCKER-001-design/DESIGN_ASSET_REFERENCE.md` |
-| Logo `ic-khadamati(1).jpg` | Same + `LOGO_REFINEMENT_SPECIFICATION.md` |
+| Theme video `theme.mp4` | `evidence/BLOCKER-001-design/DESIGN_ASSET_REFERENCE.md` |
+| Logo `khadamatiLogo.jpg` | Same + `LOGO_REFINEMENT_SPECIFICATION.md` |
 | Surfaces & features | `DESIGN_GOVERNANCE_RECORD.md` |
 | Lebanon defaults (+961 · USD) | Configurable — not hardcoded |
 

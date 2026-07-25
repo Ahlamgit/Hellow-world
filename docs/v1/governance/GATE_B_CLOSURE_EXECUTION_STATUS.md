@@ -52,7 +52,7 @@ Closure preparation ≠ closure validation ≠ blocker closure ≠ Gate A ≠ im
 
 | Blocker | Missing |
 |---------|---------|
-| **001** | Binary archive: `theme(1).mp4`, `ic-khadamati(1).jpg`; refined logo package; Design Lead sign-off; `DESIGN_APPROVAL_SIGNOFF_v1.0` |
+| **001** | Binary archive: `theme.mp4`, `khadamatiLogo.jpg`; refined logo package; Design Lead sign-off; `DESIGN_APPROVAL_SIGNOFF_v1.0` |
 | **003** | Vendor names/contracts; sandbox results; completed security review; `VENDOR_READINESS_DOSSIER_v1.0`; IL + TA signatures |
 | **004** | Hosting provider decision; RPO/RTO values; TA + DevOps signatures; `CLOUD_READINESS_DECISION_RECORD_v1.0` |
 | **005** | Technical Architect validation sign-off on admin configuration model; confirm no hardcoded financial values |

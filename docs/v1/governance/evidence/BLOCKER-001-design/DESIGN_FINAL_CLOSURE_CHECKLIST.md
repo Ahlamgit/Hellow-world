@@ -35,8 +35,8 @@ Evidence ≠ closure. Design Lead sign-off required before CLOSED.
 
 | # | File | Required location | Archived | Verified |
 |---|------|-------------------|----------|----------|
-| 1 | `theme(1).mp4` | `reference-assets/theme(1).mp4` | ☐ **Missing** | ☐ |
-| 2 | `ic-khadamati(1).jpg` | `reference-assets/ic-khadamati(1).jpg` | ☐ **Missing** | ☐ |
+| 1 | `theme.mp4` | `reference-assets/theme.mp4` | ☐ **Missing** | ☐ |
+| 2 | `khadamatiLogo.jpg` | `reference-assets/khadamatiLogo.jpg` | ☐ **Missing** | ☐ |
 
 **Verification result (2026-07-25):** Binary assets **not present** in repository — upload required before closure.
 

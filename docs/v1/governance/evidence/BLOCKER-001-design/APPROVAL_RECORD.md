@@ -10,7 +10,7 @@
 | **Organization** | KHADAMATI |
 | **Date** | **2026-07-25** |
 | **Version Reviewed** | `BUSINESS_APPROVAL_RECORD.md` v1.2 · `DESIGN_GOVERNANCE_RECORD.md` · `DESIGN_ASSET_REFERENCE.md` |
-| **Comments** | PO/BO design **APPROVED**: `theme(1).mp4` visual direction; `ic-khadamati(1).jpg` brand reference; logo refinement per spec; Customer/Provider/Admin surfaces. Design Lead + asset archival pending. |
+| **Comments** | PO/BO design **APPROVED**: `theme.mp4` visual direction; `khadamatiLogo.jpg` brand reference; logo refinement per spec; Customer/Provider/Admin surfaces. Design Lead + asset archival pending. |
 | **Signature / Confirmation** | **Recorded — 2026-07-25** |
 
 ### Decision options

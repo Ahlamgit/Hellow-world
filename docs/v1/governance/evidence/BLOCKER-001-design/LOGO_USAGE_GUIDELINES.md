@@ -5,7 +5,7 @@
 | **Document ID** | EVD-001-LOGO-GUIDE-001 |
 | **Version** | 1.0 |
 | **Date** | 2026-07-25 |
-| **Original reference** | `ic-khadamati(1).jpg` |
+| **Original reference** | `khadamatiLogo.jpg` |
 | **Status** | **Approved guidelines** — refined assets pending |
 
 ```text

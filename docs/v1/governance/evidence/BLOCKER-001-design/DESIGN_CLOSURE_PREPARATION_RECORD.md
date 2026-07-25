@@ -16,8 +16,8 @@
 
 | # | Required evidence | Document / location | Prepared | Archived | Approved |
 |---|-------------------|---------------------|----------|----------|----------|
-| 1 | Theme video `theme(1).mp4` | `reference-assets/theme(1).mp4` | ☑ manifest | ☐ | ☑ PO/BO |
-| 2 | Logo reference `ic-khadamati(1).jpg` | `reference-assets/ic-khadamati(1).jpg` | ☑ manifest | ☐ | ☑ PO/BO |
+| 1 | Theme video `theme.mp4` | `reference-assets/theme.mp4` | ☑ manifest | ☐ | ☑ PO/BO |
+| 2 | Logo reference `khadamatiLogo.jpg` | `reference-assets/khadamatiLogo.jpg` | ☑ manifest | ☐ | ☑ PO/BO |
 | 3 | Refined KHADAMATI logo package | Per `LOGO_REFINEMENT_SPECIFICATION.md` | ☑ spec | ☐ | ☐ |
 | 4 | Customer app design approval | `DESIGN_APPROVAL_RECORD.md` §2 | ☑ | ☑ | ☑ PO/BO |
 | 5 | Provider experience approval | `DESIGN_APPROVAL_RECORD.md` §3 | ☑ | ☑ | ☑ PO/BO |
@@ -32,7 +32,7 @@
 
 ## Remaining actions (human)
 
-1. Upload `theme(1).mp4` and `ic-khadamati(1).jpg` to `reference-assets/`
+1. Upload `theme.mp4` and `khadamatiLogo.jpg` to `reference-assets/`
 2. Deliver refined logo package per specification
 3. Design Lead attestation on RTL/LTR and design system
 4. File `DESIGN_APPROVAL_SIGNOFF_v1.0`

@@ -5,7 +5,7 @@
 | **Document ID** | EVD-001-DS-BASELINE-001 |
 | **Version** | 1.0 |
 | **Date** | 2026-07-25 |
-| **Reference** | `theme(1).mp4` · `ic-khadamati(1).jpg` |
+| **Reference** | `theme.mp4` · `khadamatiLogo.jpg` |
 | **Status** | **Baseline approved** — token values finalized at implementation under Gate A |
 | **ADR** | ADR-023 — UI blocked until BLOCKER-001 Closed |
 
@@ -22,7 +22,7 @@ It does NOT authorize component implementation.
 
 | Token | Role | Notes |
 |-------|------|-------|
-| `brand-primary` | Primary actions, key accents | Orange from `ic-khadamati(1).jpg` — exact hex from refined asset |
+| `brand-primary` | Primary actions, key accents | Orange from `khadamatiLogo.jpg` — exact hex from refined asset |
 | `brand-primary-dark` | Pressed / emphasis | Derived from primary |
 | `brand-primary-light` | Subtle highlights | Derived from primary |
 | `neutral-0` → `neutral-900` | Surfaces, text, borders | Light/dark theme scales |
@@ -69,7 +69,7 @@ It does NOT authorize component implementation.
 | `radius-md` | Buttons, inputs |
 | `radius-lg` | Cards |
 | `radius-xl` | Modals, sheets |
-| `shadow-sm/md/lg` | Card hierarchy per `theme(1).mp4` |
+| `shadow-sm/md/lg` | Card hierarchy per `theme.mp4` |
 
 ---
 

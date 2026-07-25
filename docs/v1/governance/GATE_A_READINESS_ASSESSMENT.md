@@ -70,7 +70,7 @@
 
 ### Pending
 
-- Design reference asset archive (`theme(1).mp4`, `ic-khadamati(1).jpg`)
+- Design reference asset archive (`theme.mp4`, `khadamatiLogo.jpg`)
 - Refined logo package + Design Lead sign-off
 - Vendor selection, sandbox, security review (IL + TA)
 - Cloud hosting decision, RPO/RTO (TA + DevOps)

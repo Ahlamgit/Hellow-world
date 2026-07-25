@@ -115,7 +115,7 @@ Defaults only — administrator / configuration layer; **no hardcoding** in appl
 | Document | Purpose |
 |----------|---------|
 | `BUSINESS_APPROVAL_RECORD.md` | PO/BO business approval |
-| `DESIGN_ASSET_REFERENCE.md` | `theme(1).mp4` · `ic-khadamati(1).jpg` |
+| `DESIGN_ASSET_REFERENCE.md` | `theme.mp4` · `khadamatiLogo.jpg` |
 | `LOGO_REFINEMENT_SPECIFICATION.md` | Logo deliverables |
 | `LOGO_USAGE_GUIDELINES.md` | Logo usage rules |
 | `DESIGN_FINAL_SPECIFICATION.md` | Surface and journey specification |

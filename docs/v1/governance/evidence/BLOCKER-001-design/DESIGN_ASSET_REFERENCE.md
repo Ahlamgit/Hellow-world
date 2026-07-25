@@ -3,22 +3,24 @@
 | Field | Value |
 |-------|-------|
 | **Document ID** | EVD-001-ASSETS-001 |
-| **Version** | 1.1 |
+| **Version** | 1.2 |
 | **Date** | 2026-07-25 |
 | **Blocker** | BLOCKER-001 — Design |
-| **Evidence status** | **Approved** — evidence archival pending |
+| **Evidence status** | **Approved** — archive filenames standardized |
 | **Approver (business)** | Project Owner / Business Owner |
 
 ---
 
-## 1. Approved reference assets
+## 1. Approved reference assets (repository archive names)
 
-| Asset | Filename | Purpose | Archive path | On file |
-|-------|----------|---------|--------------|---------|
-| Design theme video | `theme(1).mp4` | Approved mobile application visual direction | `reference-assets/theme(1).mp4` | Pending upload |
-| Brand logo reference | `ic-khadamati(1).jpg` | Official KHADAMATI brand identity reference | `reference-assets/ic-khadamati(1).jpg` | Pending upload |
+| Asset | Archive filename | Archive path | Original delivery name |
+|-------|------------------|--------------|------------------------|
+| Design theme video | `theme.mp4` | `reference-assets/theme.mp4` | `theme.mp4` (PO/BO approved) |
+| Brand logo reference | `khadamatiLogo.jpg` | `reference-assets/khadamatiLogo.jpg` | `khadamatiLogo.jpg` (PO/BO approved) |
 
-**Rule:** Do **not** redesign the logo in governance — document refinement requirements only (`LOGO_REFINEMENT_SPECIFICATION.md`).
+**Same approved content** — filenames standardized for repository and tooling. Identity and visual direction unchanged.
+
+**Rule:** Do **not** redesign the logo — refine only (`LOGO_REFINEMENT_SPECIFICATION.md`).
 
 ---
 
@@ -27,7 +29,7 @@
 | Element | Direction |
 |---------|-----------|
 | Primary brand | **Orange** — marketplace identity per approved theme |
-| Neutrals | Clean minimal palette aligned with `theme(1).mp4` |
+| Neutrals | Clean minimal palette aligned with `theme.mp4` |
 | Semantic colors | Trust-focused; accessible contrast for mobile |
 | Configuration | Design tokens — not hardcoded business values |
 
@@ -67,3 +69,12 @@
 | `BUSINESS_APPROVAL_RECORD.md` | EVD-001-BUSINESS-001 |
 
 **BLOCKER-001 NOT CLOSED** until checklist complete per GOV-BEMF-001.
+
+---
+
+## Document history
+
+| Version | Date | Change |
+|---------|------|--------|
+| 1.1 | 2026-07-25 | Initial asset reference |
+| 1.2 | 2026-07-25 | Standardized archive filenames: `theme.mp4`, `khadamatiLogo.jpg` |

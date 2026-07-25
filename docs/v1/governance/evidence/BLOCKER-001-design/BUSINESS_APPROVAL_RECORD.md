@@ -17,8 +17,8 @@
 
 | Asset | File | Status |
 |-------|------|--------|
-| Design theme video | **`theme(1).mp4`** | **APPROVED** — official V1 visual direction |
-| Brand logo reference | **`ic-khadamati(1).jpg`** | **APPROVED** — official brand identity reference |
+| Design theme video | **`theme.mp4`** | **APPROVED** — official V1 visual direction |
+| Brand logo reference | **`khadamatiLogo.jpg`** | **APPROVED** — official brand identity reference |
 
 Logo must be refined professionally per `LOGO_REFINEMENT_SPECIFICATION.md`. Full design governance: `DESIGN_GOVERNANCE_RECORD.md`.
 

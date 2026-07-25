@@ -6,8 +6,8 @@
 | **Version** | 1.0 |
 | **Date** | 2026-07-25 |
 | **Blocker** | BLOCKER-001 — Design |
-| **Visual reference** | `theme(1).mp4` |
-| **Logo reference** | `ic-khadamati(1).jpg` |
+| **Visual reference** | `theme.mp4` |
+| **Logo reference** | `khadamatiLogo.jpg` |
 | **Business status** | **APPROVED** |
 | **Blocker closure** | **NOT CLOSED** — Design Lead sign-off pending |
 
@@ -24,8 +24,8 @@ It does NOT authorize UI implementation (ADR-023).
 |---------|-------|
 | Application name (English) | **KHADAMATI** |
 | Application name (Arabic) | **خدماتي** |
-| Logo | `ic-khadamati(1).jpg` — **approved; do not replace or redesign** |
-| Theme reference | `theme(1).mp4` — primary visual direction |
+| Logo | `khadamatiLogo.jpg` — **approved; do not replace or redesign** |
+| Theme reference | `theme.mp4` — primary visual direction |
 | Market baseline | Lebanon launch · multi-region architecture ready |
 | Languages | Arabic **RTL** · English **LTR** |
 
@@ -105,7 +105,7 @@ It does NOT authorize UI implementation (ADR-023).
 
 ## 6. Theme and visual direction
 
-Derived from approved reference `theme(1).mp4`:
+Derived from approved reference `theme.mp4`:
 
 | Attribute | Direction |
 |-----------|-----------|
@@ -136,8 +136,8 @@ Per `LOGO_REFINEMENT_SPECIFICATION.md` and `LOGO_USAGE_GUIDELINES.md`:
 
 | Item | Status |
 |------|--------|
-| `theme(1).mp4` archived to `reference-assets/` | Pending upload |
-| `ic-khadamati(1).jpg` archived to `reference-assets/` | Pending upload |
+| `theme.mp4` archived to `reference-assets/` | Pending upload |
+| `khadamatiLogo.jpg` archived to `reference-assets/` | Pending upload |
 | Refined logo package | Pending Design Lead |
 | `DESIGN_APPROVAL_SIGNOFF.md` signed | Pending Design Lead |
 

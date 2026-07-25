@@ -27,8 +27,8 @@ This signoff is required before BLOCKER-001 may be marked CLOSED.
 | `LOGO_REFINEMENT_SPECIFICATION.md` | 1.1 | ☑ |
 | `LOGO_USAGE_GUIDELINES.md` | 1.0 | ☑ |
 | `DESIGN_ASSET_REFERENCE.md` | 1.1 | ☑ |
-| Reference `theme(1).mp4` | — | ☐ Pending archive |
-| Reference `ic-khadamati(1).jpg` | — | ☐ Pending archive |
+| Reference `theme.mp4` | — | ☐ Pending archive |
+| Reference `khadamatiLogo.jpg` | — | ☐ Pending archive |
 | Refined logo package | — | ☐ Pending delivery |
 
 ---
@@ -38,8 +38,8 @@ This signoff is required before BLOCKER-001 may be marked CLOSED.
 I confirm that:
 
 - [ ] The design evidence package aligns with approved business direction
-- [ ] `theme(1).mp4` is the authoritative visual reference
-- [ ] `ic-khadamati(1).jpg` identity is preserved per refinement specification
+- [ ] `theme.mp4` is the authoritative visual reference
+- [ ] `khadamatiLogo.jpg` identity is preserved per refinement specification
 - [ ] Customer, Provider, and Administrator surfaces are specified per `DESIGN_FINAL_SPECIFICATION.md`
 - [ ] Design system baseline is sufficient for Gate A UI planning (implementation still blocked until blocker Closed)
 - [ ] Reference assets are archived in `reference-assets/` OR exception documented below

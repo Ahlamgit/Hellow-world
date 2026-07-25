@@ -3,10 +3,9 @@
 | Field | Value |
 |-------|-------|
 | **Document ID** | GOV-IACL-001 |
-| **Version** | 1.11 |
-| **Evidence finalization** | GOV-GATE-B-FINALIZE-001 |
-| **Closure execution** | GOV-GATE-B-CLOSURE-EXEC-001 |
-| **Gate A readiness** | GOV-GATE-A-READINESS-ASSESS-001 (~25%) |
+| **Version** | 1.12 |
+| **Final closure** | GOV-GATE-B-FINAL-CLOSURE-001 |
+| **Gate A readiness** | GOV-GATE-A-READINESS-ASSESS-001 (~35%) |
 | **Evidence completion** | GOV-GATE-B-EVIDENCE-001 |
 | **Gate** | B — NOT READY — CODING BLOCKED |
 | **Last updated** | 2026-07-25 |

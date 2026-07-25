@@ -48,8 +48,8 @@
 
 ## Blocker Register
 
-| Blocker | Description | Status | Owner | Closure validation report | Closure artifact | Evidence received | Approved date |
-|---------|-------------|--------|-------|-------------------------|------------------|-------------------|---------------|
+| Blocker | Description | Status | Owner | Final closure checklist | Evidence | Validation | Closed |
+|---------|-------------|--------|-------|-------------------------|----------|------------|--------|
 | BLOCKER-001 | Design approval | **READY FOR CLOSURE VALIDATION** | Design Lead | `DESIGN_FINAL_CLOSURE_CHECKLIST.md` | Partial — assets missing | Design Lead ☐ | ❌ |
 | BLOCKER-002 | Stakeholder approval | **CLOSED** | Project Owner / Business Owner | `BLOCKER_002_CLOSURE_RECORD.md` | Complete | ☑ | ✅ |
 | BLOCKER-003 | Vendor readiness | **READY FOR CLOSURE VALIDATION** | IL + TA | `VENDOR_FINAL_VALIDATION_CHECKLIST.md` | Partial | IL + TA ☐ | ❌ |
@@ -66,7 +66,8 @@
 
 ### BLOCKER-001 — Design
 
-**Status:** **UNDER REVIEW** — PO/BO business design **APPROVED** 2026-07-25 (v1.1: reference video/assets theme, Lebanon baseline, multi-region, three surfaces approved)  
+**Status:** **READY FOR CLOSURE VALIDATION** — PO/BO business design **APPROVED** 2026-07-25  
+**Final checklist:** `DESIGN_FINAL_CLOSURE_CHECKLIST.md`  
 **Package:** `evidence/BLOCKER-001-design/DESIGN_APPROVAL_PACKAGE.md` (EVD-001-PKG-001 v1.0)  
 **Business approval:** `BUSINESS_APPROVAL_RECORD.md`  
 **Evidence trio:** `README.md` · `APPROVAL_RECORD.md` · `EVIDENCE_CHECKLIST.md`

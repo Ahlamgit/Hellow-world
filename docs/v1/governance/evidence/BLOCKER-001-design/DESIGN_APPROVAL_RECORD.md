@@ -17,8 +17,8 @@
 | Element | Value |
 |---------|-------|
 | Application name | **KHADAMATI** / **خدماتي** |
-| Logo reference | `ic-khadamati(1).jpg` — **approved; refine only** |
-| Theme reference | `theme(1).mp4` — authoritative visual direction |
+| Logo reference | `khadamatiLogo.jpg` — **approved; refine only** |
+| Theme reference | `theme.mp4` — authoritative visual direction |
 
 **Specification:** `DESIGN_FINAL_SPECIFICATION.md` · `DESIGN_SYSTEM_BASELINE.md`
 
@@ -28,8 +28,8 @@
 
 | Input | Reference | Decision |
 |-------|-----------|----------|
-| Reference theme video | `theme(1).mp4` | **APPROVED** |
-| KHADAMATI logo reference | `ic-khadamati(1).jpg` | **APPROVED** |
+| Reference theme video | `theme.mp4` | **APPROVED** |
+| KHADAMATI logo reference | `khadamatiLogo.jpg` | **APPROVED** |
 | Logo refinement to match mobile design system | `LOGO_REFINEMENT_SPECIFICATION.md` | **APPROVED** |
 
 **Logo requirements:** Modern marketplace appearance · mobile-first · clean icon adaptation · Arabic-friendly branding · consistent across Customer / Provider / Administrator experiences. **Do not redesign** — refine only.
@@ -78,8 +78,8 @@
 
 | Item | Status |
 |------|--------|
-| Archive `theme(1).mp4` to `reference-assets/` | **Pending** |
-| Archive `ic-khadamati(1).jpg` to `reference-assets/` | **Pending** |
+| Archive `theme.mp4` to `reference-assets/` | **Pending** |
+| Archive `khadamatiLogo.jpg` to `reference-assets/` | **Pending** |
 | Refined logo package (per spec) | **Pending** |
 | `DESIGN_APPROVAL_SIGNOFF.md` | **Pending** Design Lead |
 | `DESIGN_FINAL_SPECIFICATION.md` | ☑ On file |

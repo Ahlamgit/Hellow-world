@@ -13,7 +13,7 @@
 
 ## 1. Execution summary
 
-Gate B evidence **finalization** completed per approved design theme (`theme(1).mp4`) and logo (`ic-khadamati(1).jpg`). All artifacts are governance documentation only.
+Gate B evidence **finalization** completed per approved design theme (`theme.mp4`) and logo (`khadamatiLogo.jpg`). All artifacts are governance documentation only.
 
 **No blockers marked CLOSED** without required signatures and technical validation.
 

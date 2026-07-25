@@ -5,12 +5,12 @@
 | **Document ID** | EVD-001-LOGO-001 |
 | **Version** | 1.1 |
 | **Date** | 2026-07-25 |
-| **Original logo reference** | `ic-khadamati(1).jpg` |
-| **Visual direction reference** | `theme(1).mp4` |
+| **Original logo reference** | `khadamatiLogo.jpg` |
+| **Visual direction reference** | `theme.mp4` |
 | **Status** | **Specification approved** — refined deliverables pending Design Lead |
 
 ```text
-APPROVED: ic-khadamati(1).jpg — do NOT replace. do NOT redesign identity.
+APPROVED: khadamatiLogo.jpg — do NOT replace. do NOT redesign identity.
 ONLY refine for digital usage per this specification.
 ```
 
@@ -20,11 +20,11 @@ ONLY refine for digital usage per this specification.
 
 | Attribute | Detail |
 |-----------|--------|
-| File | `ic-khadamati(1).jpg` |
+| File | `khadamatiLogo.jpg` |
 | Brand | KHADAMATI / خدماتي |
 | Identity elements | Orange brand color · home/service symbol · marketplace tool metaphor |
 | Approval | Project Owner / Business Owner — 2026-07-25 |
-| Archive target | `reference-assets/ic-khadamati(1).jpg` |
+| Archive target | `reference-assets/khadamatiLogo.jpg` |
 
 ---
 
@@ -66,7 +66,7 @@ ONLY refine for digital usage per this specification.
 | Rule | Detail |
 |------|--------|
 | Identity | Preserve symbol concept and orange brand color |
-| Alignment | Must align with `theme(1).mp4` visual direction |
+| Alignment | Must align with `theme.mp4` visual direction |
 | Surfaces | Same brand system across Customer, Provider, Administrator |
 | Guidelines | Follow `LOGO_USAGE_GUIDELINES.md` for all placements |
 

@@ -16,8 +16,8 @@
 | Item | Verified | Evidence | Gap |
 |------|----------|----------|-----|
 | Reference theme video approved | ✅ | `DESIGN_APPROVAL_RECORD.md` | — |
-| `theme(1).mp4` archived | ❌ | `reference-assets/` | File not in repository |
-| `ic-khadamati(1).jpg` archived | ❌ | `reference-assets/` | File not in repository |
+| `theme.mp4` archived | ❌ | `reference-assets/` | File not in repository |
+| `khadamatiLogo.jpg` archived | ❌ | `reference-assets/` | File not in repository |
 | Logo refinement specification | ✅ | `LOGO_REFINEMENT_SPECIFICATION.md` | — |
 | Customer / Provider / Admin approvals | ✅ | `DESIGN_APPROVAL_RECORD.md` | — |
 | RTL/LTR requirements documented | ✅ | `DESIGN_GOVERNANCE_RECORD.md` | Design Lead attestation pending |
