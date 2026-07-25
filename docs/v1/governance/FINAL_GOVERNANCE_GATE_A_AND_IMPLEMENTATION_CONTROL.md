@@ -350,5 +350,7 @@ No exceptions. No shortcuts. No coding before Gate A. **Documentation ≠ approv
 | 1.5 | 2026-07-25 | Sprint 0 wave alignment (GOV-READINESS-PROMPT-001); Gate A checklist |
 | 1.6 | 2026-07-25 | Sprint 0 waves per GOV-GA-IMPL-AUTH-PROMPT-001; authorization sequence |
 | 1.7 | 2026-07-25 | Apex prompt GOV-MASTER-IMPL-AUTH-001; provider availability calendar rule |
-| 1.8 | 2026-07-25 | Apex prompt v1.1 — expanded role, Sprint 0 waves, blocker dashboard, agent behaviour | Informal status summaries for gate and implementation authorization decisions.  
+| 1.8 | 2026-07-25 | Apex prompt v1.1 — expanded role, Sprint 0 waves, blocker dashboard, agent behaviour |
+
+**Supersedes:** Informal status summaries for gate and implementation authorization decisions.  
 **Subordinate to:** `MASTER_IMPLEMENTATION_PROMPT_v1.0.md`, ADRs, `FINAL_SCOPE_BASELINE.md`.
