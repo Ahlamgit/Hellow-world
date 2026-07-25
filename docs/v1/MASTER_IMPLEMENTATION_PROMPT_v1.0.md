@@ -11,7 +11,7 @@
 **Execution standards (post–Gate A):** [`IMPLEMENTATION_EXECUTION_STANDARDS.md`](./IMPLEMENTATION_EXECUTION_STANDARDS.md) — preparation only; coding still **BLOCKED**  
 **Implementation authorization:** [`governance/IMPLEMENTATION_AUTHORIZATION_CHECKLIST.md`](./governance/IMPLEMENTATION_AUTHORIZATION_CHECKLIST.md) — Gate B→A checklist; coding **BLOCKED**  
 **Supersedes conflicting statements** in earlier draft docs where this prompt / ADRs / scope baseline are more specific.  
-**Companion:** [FEATURE_TRACEABILITY_MATRIX.md](./FEATURE_TRACEABILITY_MATRIX.md) · [ARCHITECTURE_AUDIT_FINAL.md](./ARCHITECTURE_AUDIT_FINAL.md) · [QUESTIONS-REQUIRING-BUSINESS-DECISION.md](./QUESTIONS-REQUIRING-BUSINESS-DECISION.md) · ADR-001…029
+**Companion:** [FEATURE_TRACEABILITY_MATRIX.md](./FEATURE_TRACEABILITY_MATRIX.md) · [ARCHITECTURE_AUDIT_FINAL.md](./ARCHITECTURE_AUDIT_FINAL.md) · [QUESTIONS-REQUIRING-BUSINESS-DECISION.md](./QUESTIONS-REQUIRING-BUSINESS-DECISION.md) · ADR-001…030
 
 **Do not start implementation** until the Execution Plan §3 checklist is complete and the Implementation Gate Report is amended to **READY**.
 
@@ -450,7 +450,7 @@ Create an ADR or request clarification.
 
 Do **NOT** start coding until completed and approved:
 
-- [x] Architecture decisions (ADR-001…029) — documented / approved  
+- [x] Architecture decisions (ADR-001…030) — documented / approved  
 - [x] **Scope baseline frozen** — [`FINAL_SCOPE_BASELINE.md`](./FINAL_SCOPE_BASELINE.md)  
 - [ ] **BLOCKER-002** — Scope + stakeholder sign-off — **READY FOR APPROVAL** (signatures pending)  
 - [ ] **BLOCKER-001** — Design assets + UI/UX specification (ADR-023) — **READY FOR APPROVAL** (signatures pending; not Completed)  

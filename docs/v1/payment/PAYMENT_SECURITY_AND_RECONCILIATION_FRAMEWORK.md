@@ -1,13 +1,13 @@
 # KHADAMATI V1 — Payment Security & Reconciliation Framework
 
 **Document ID:** KHAD-V1-PAYMENT-SECURITY-RECON  
-**Version:** 1.1  
+**Version:** 1.2  
 **Date:** 2026-07-25  
 **Role:** Payment Architecture & Financial Integrity Architect  
 **Status:** Architecture preparation — **Implementation BLOCKED**  
 
 **Sources:**  
-Master Prompt v1.0 · [`PAYMENT_JS_MOBILE_VALIDATION_REPORT.md`](./PAYMENT_JS_MOBILE_VALIDATION_REPORT.md) · [`AREEBA_IXOPAY_VENDOR_VALIDATION_CHECKLIST.md`](./AREEBA_IXOPAY_VENDOR_VALIDATION_CHECKLIST.md) · ADR-004 · ADR-013 · ADR-025 · **ADR-029** · [`../workflows/23-PAYMENT-FLOW.md`](../workflows/23-PAYMENT-FLOW.md) · [`../vendors/INTEGRATION_CONTRACT_SPECIFICATION.md`](../vendors/INTEGRATION_CONTRACT_SPECIFICATION.md)
+Master Prompt v1.0 · [`PAYMENT_JS_MOBILE_VALIDATION_REPORT.md`](./PAYMENT_JS_MOBILE_VALIDATION_REPORT.md) · [`AREEBA_IXOPAY_VENDOR_VALIDATION_CHECKLIST.md`](./AREEBA_IXOPAY_VENDOR_VALIDATION_CHECKLIST.md) · ADR-004 · ADR-013 · ADR-025 · **ADR-029** · **ADR-030** · [`../workflows/23-PAYMENT-FLOW.md`](../workflows/23-PAYMENT-FLOW.md) · [`../vendors/INTEGRATION_CONTRACT_SPECIFICATION.md`](../vendors/INTEGRATION_CONTRACT_SPECIFICATION.md)
 
 ```text
 DO NOT write production code.
@@ -93,6 +93,35 @@ Commission calculation uses Admin financial rules (ADR-013) — **not** hardcode
 **Principle:** *Financial complexity is internal; customer payment experience remains simple.* (FTM: `BR-PAY-16`)
 
 This section does not reduce ledger, audit, or reconciliation requirements in §§1–9 below.
+
+---
+
+# 1B. Domain State Ownership (ADR-030)
+
+Booking, payment, ledger, and settlement are **separate domains** — each with its own state machine. They must not share one overloaded status field.
+
+| Domain | Owns | Example states (conceptual) |
+|--------|------|----------------------------|
+| **Booking** | Service lifecycle | Requested → Confirmed → Awaiting Payment → Paid → In Progress → Completed / Cancelled |
+| **Payment** | Gateway lifecycle | Pending → Processing → Paid / Failed / Cancelled / Refunded |
+| **Ledger** | Financial facts | Entry posted; balances derived; commission lines; reversals only |
+| **Settlement** | Provider payout lifecycle | Eligible → Batched → Processing → Processed / Failed |
+
+**Cross-domain sequence:**
+
+```text
+Booking Confirmed → Payment Requested → Payment Successful → Ledger Entry Created
+  → Service Completed → Settlement Eligible → Settlement Processed
+```
+
+| Rule | Requirement |
+|------|-------------|
+| Payment success ≠ service completion | Booking may be Paid before Completed |
+| Service completion ≠ settlement done | Settlement follows policy; may be async/batched |
+| Settlement does not modify payment history | New ledger facts only; no rewrite of payment records |
+| Ledger immutability | ADR-004 — corrections via reversing entries |
+
+**Visibility:** Customers see booking + payment status; providers see bookings + earnings summary; Finance Admin sees all domains (see ADR-029, ADR-030). FTM: `BR-PAY-17`.
 
 ---
 
@@ -232,7 +261,7 @@ No commercial FX or fee schedules defined here.
 | BLOCKER-007 | Mobile/Payment.js validation still **IN VALIDATION** |
 | BLOCKER-003 | Payment vendor sandbox / credentials Pending |
 | BLOCKER-005 | Commission/settlement **values** Pending — not this doc |
-| ADR-013 / ADR-025 / **ADR-029** | Financial rules Admin-configurable; vendor behind port; simplified customer/provider UX |
+| ADR-013 / ADR-025 / **ADR-029** / **ADR-030** | Financial rules Admin-configurable; vendor behind port; simplified UX; separate domain states |
 
 This document does **not** authorize payment module coding.
 
@@ -248,9 +277,10 @@ This document does **not** authorize payment module coding.
 
 ---
 
-**End of Payment Security & Reconciliation Framework v1.1**
+**End of Payment Security & Reconciliation Framework v1.2**
 
 | Version | Date | Change |
 |---------|------|--------|
 | 1.0 | 2026-07-24 | Initial framework |
 | 1.1 | 2026-07-25 | ADR-029 experience vs internal layer; BR-PAY-16 principle |
+| 1.2 | 2026-07-25 | ADR-030 domain state ownership; BR-PAY-17 principle |

@@ -31,3 +31,4 @@
 | [ADR-027](./ADR-027-store-product-catalog-advertising.md) | Store promotional catalog (no e-commerce) | **Accepted** |
 | [ADR-028](./ADR-028-unified-provider-capability-model.md) | Unified Provider + capability model; service-first UX | **Accepted** |
 | [ADR-029](./ADR-029-simplified-payment-experience-ledger-control.md) | Simplified customer/provider payment UX; internal ledger control | **Accepted Architecture Direction** |
+| [ADR-030](./ADR-030-booking-payment-financial-state-separation.md) | Booking / payment / ledger / settlement state separation | **Accepted Architecture Direction** |
