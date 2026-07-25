@@ -3,7 +3,7 @@
 | Field | Value |
 |-------|-------|
 | **Document ID** | GOV-RBCS-001 |
-| **Version** | 3.0 |
+| **Version** | 3.1 |
 | **Last updated** | 2026-07-25 |
 | **Gate** | B — NOT READY — CODING BLOCKED |
 | **Owner** | Program Governance Manager |
@@ -20,6 +20,7 @@
 | **Gate A authorization record** | `GATE_A_IMPLEMENTATION_AUTHORIZATION_RECORD.md` (GOV-GAIR-001) — Draft, unsigned |
 | **Master governance control** | `FINAL_GOVERNANCE_GATE_A_AND_IMPLEMENTATION_CONTROL.md` (GOV-MASTER-CTRL-001) |
 | **Gate A ceremony preparation** | `GATE_A_CEREMONY_PREPARATION_PACKAGE.md` (GOV-GA-CEREMONY-001) — not schedulable |
+| **Architecture compliance register** | `ARCHITECTURE_COMPLIANCE_AND_IMPLEMENTATION_READINESS_REGISTER.md` (GOV-ARCH-READINESS-001) |
 | **Phase 1 roadmap status** | `PHASE_1_GOVERNANCE_EXECUTION_ROADMAP_STATUS.md` (GOV-P1-ROADMAP-001) |
 
 ---
@@ -243,3 +244,4 @@ Refer to `BLOCKER_CLOSURE_EXECUTION_TRACKER.md` (GOV-BLOCKER-TRACKER-001) for op
 | 2.8 | 2026-07-25 | Phase 1 approval tracking register (GOV-P1-TRACK-001) |
 | 2.9 | 2026-07-25 | Master governance control document (GOV-MASTER-CTRL-001) |
 | 3.0 | 2026-07-25 | Gate A ceremony prep + Phase 1 roadmap execution status |
+| 3.1 | 2026-07-25 | Architecture compliance register (GOV-ARCH-READINESS-001); GOV-IACL-001 v1.2 |

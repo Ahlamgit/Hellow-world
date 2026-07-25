@@ -3,7 +3,7 @@
 | Field | Value |
 |-------|-------|
 | **Document ID** | GOV-MASTER-CTRL-001 |
-| **Version** | 1.0 |
+| **Version** | 1.2 |
 | **Date** | 2026-07-25 |
 | **Owner** | Program Governance Manager · Technical Program Manager |
 | **Gate** | **B — NOT READY — CODING BLOCKED** |
@@ -157,8 +157,10 @@ V1: **booking-scoped chat only**. No public, marketplace, or open social messagi
 
 | Document | ID |
 |----------|-----|
+| `PHASE_1_BLOCKER_APPROVAL_READINESS_REPORT.md` | GOV-P1-READINESS-001 |
 | `PHASE_1_GOVERNANCE_EXECUTION_ROADMAP_STATUS.md` | GOV-P1-ROADMAP-001 |
 | `GATE_A_CEREMONY_PREPARATION_PACKAGE.md` | GOV-GA-CEREMONY-001 |
+| `ARCHITECTURE_COMPLIANCE_AND_IMPLEMENTATION_READINESS_REGISTER.md` | GOV-ARCH-READINESS-001 |
 | `PHASE_1_CLOSURE_EXECUTION_REPORT.md` | GOV-P1-CLOSURE-001 |
 | `PHASE_1_APPROVAL_FINALIZATION_REPORT.md` | GOV-P1-FINAL-001 |
 | `PHASE_1_APPROVAL_EXECUTION_PACK.md` | GOV-P1-EXEC-001 |
@@ -228,10 +230,11 @@ Before implementation authorization, **all** must be true:
 | 1 | **7 / 7 blockers CLOSED** | **Not met** (0/7) |
 | 2 | Architecture **APPROVED** | **Met** |
 | 3 | Scope **FROZEN** + stakeholder evidence | **Pending** (BLOCKER-002) |
-| 4 | GOV-GAIR-001 **signed** (§8) | **Not met** |
-| 5 | GOV-IACL-001 **complete** | **Not met** |
-| 6 | GOV-FIGR-001 amended to Gate A | **Not met** |
-| 7 | Steering review (GOV-BEMF-001 §6) | **Not held** |
+| 4 | **Traceability complete** (FTM — V1 specified) | **Met** (specified); scope baseline file pending |
+| 5 | GOV-GAIR-001 **signed** (§8) | **Not met** |
+| 6 | GOV-IACL-001 **complete** | **Not met** |
+| 7 | GOV-FIGR-001 amended to Gate A | **Not met** |
+| 8 | Steering review (GOV-BEMF-001 §6) | **Not held** |
 
 ---
 
@@ -291,6 +294,8 @@ No exceptions.
 | Version | Date | Change |
 |---------|------|--------|
 | 1.0 | 2026-07-25 | Initial master governance, Gate A readiness, and implementation control document |
+| 1.1 | 2026-07-25 | Gate A ceremony prep + Phase 1 roadmap status references |
+| 1.2 | 2026-07-25 | Traceability Gate A requirement; GOV-ARCH-READINESS-001 reference |
 
 **Supersedes:** Informal status summaries for gate and implementation authorization decisions.  
 **Subordinate to:** `MASTER_IMPLEMENTATION_PROMPT_v1.0.md`, ADRs, `FINAL_SCOPE_BASELINE.md`.

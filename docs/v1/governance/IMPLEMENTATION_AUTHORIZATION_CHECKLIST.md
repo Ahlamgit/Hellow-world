@@ -3,7 +3,7 @@
 | Field | Value |
 |-------|-------|
 | **Document ID** | GOV-IACL-001 |
-| **Version** | 1.0 |
+| **Version** | 1.2 |
 | **Gate** | B — NOT READY — CODING BLOCKED |
 | **Last updated** | 2026-07-25 |
 | **Owner** | Program Governance Manager |
@@ -27,6 +27,8 @@ Checklist for **Gate A — READY FOR IMPLEMENTATION** authorization. All items m
 | P-03 | Engineering standards defined | **Confirmed** | Engineering standards baseline |
 | P-04 | Current gate = B (coding blocked) | **Confirmed** | `FINAL_IMPLEMENTATION_GATE_REPORT.md` |
 | P-05 | Evidence framework active | **Confirmed** | `BLOCKER_EVIDENCE_MANAGEMENT_FRAMEWORK.md` |
+| P-06 | Feature traceability complete (specified, not implemented) | **Confirmed** | `FEATURE_TRACEABILITY_MATRIX.md` (KHAD-V1-FTM) |
+| P-07 | `FINAL_SCOPE_BASELINE.md` available in repository | **Pending** | Restore for BLOCKER-002 review |
 
 ---
 
@@ -34,11 +36,11 @@ Checklist for **Gate A — READY FOR IMPLEMENTATION** authorization. All items m
 
 | # | Blocker | Evidence complete | Approved | Archived | Status |
 |---|---------|-------------------|----------|----------|--------|
-| C-01 | BLOCKER-001 Design | No | No | No | **Pending** |
+| C-01 | BLOCKER-001 Design | Package prepared | No | No | **Ready for Approval** |
 | C-02 | BLOCKER-002 Stakeholder | Package prepared | No | No | **Ready for Approval** |
 | C-03 | BLOCKER-003 Vendors | No | No | No | **Pending** |
 | C-04 | BLOCKER-004 Cloud | No | No | No | **Pending** |
-| C-05 | BLOCKER-005 Finance | No | No | No | **Pending** |
+| C-05 | BLOCKER-005 Finance | Package prepared | No | No | **Ready for Approval** |
 | C-06 | BLOCKER-006 Compliance | Package prepared | No | No | **Ready for Approval** |
 | C-07 | BLOCKER-007 Payment.js | No | No | No | **Pending** |
 
@@ -62,6 +64,7 @@ Checklist for **Gate A — READY FOR IMPLEMENTATION** authorization. All items m
 | A-10 | Gate A review meeting held | Program Sponsor | **Pending** | Meeting minutes |
 | A-11 | No unresolved architecture issues | Technical Architect | **Validated** — KHAD-V1-FACR-001 §9 | FACR + Gate A minutes |
 | A-12 | No unresolved scope changes | Product Owner | **Pending** | Gate A minutes |
+| A-13 | Feature traceability matrix current (V1 features specified) | Product Owner + Technical Architect | **Confirmed** — `Implemented` post–Gate A | `FEATURE_TRACEABILITY_MATRIX.md` |
 
 ---
 
@@ -93,3 +96,4 @@ Checklist for **Gate A — READY FOR IMPLEMENTATION** authorization. All items m
 |---------|------|--------|
 | 1.0 | 2026-07-25 | Initial checklist; linked to evidence framework |
 | 1.1 | 2026-07-25 | Architecture consistency validated (KHAD-V1-FACR-001); ADR-001→032 |
+| 1.2 | 2026-07-25 | Traceability precondition (P-06, A-13); blocker package status sync; scope baseline availability (P-07) |

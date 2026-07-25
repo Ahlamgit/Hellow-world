@@ -3,7 +3,7 @@
 | Field | Value |
 |-------|-------|
 | **Document ID** | GOV-FIGR-001 |
-| **Version** | 3.0 |
+| **Version** | 3.1 |
 | **Report date** | 2026-07-25 |
 | **Prepared by** | Program Governance Manager |
 
@@ -144,3 +144,4 @@ Sprint 0 scope is defined in `SPRINT_0_FOUNDATION_CHARTER.md` (GOV-S0FC-001).
 | 2.7 | 2026-07-25 | Phase 1 approval finalization report (GOV-P1-FINAL-001); Phase 2 preview |
 | 2.8 | 2026-07-25 | Phase 1 approval execution pack (GOV-P1-EXEC-001) |
 | 2.9 | 2026-07-25 | Phase 1 approval tracking register (GOV-P1-TRACK-001) |
+| 3.0 | 2026-07-25 | Master governance control document (GOV-MASTER-CTRL-001) |

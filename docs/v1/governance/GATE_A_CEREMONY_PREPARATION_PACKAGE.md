@@ -39,10 +39,11 @@ This package prepares the **Gate A steering ceremony** required to transition fr
 | 1 | **7 / 7 blockers CLOSED** | **Not met** (0/7) | GOV-RBCS-001 |
 | 2 | Architecture **APPROVED & VALIDATED** | **Met** | KHAD-V1-FACR-001; ADR-001…032 |
 | 3 | Scope **FROZEN** + stakeholder sign-off | **Pending** | BLOCKER-002 |
-| 4 | GOV-IACL-001 **complete** | **Not met** | Checklist all items |
-| 5 | Evidence archived per GOV-BEMF-001 | **Not met** | `governance/evidence/` |
-| 6 | Independent audit recommendation addressed | **Met** (remain Gate B until blockers closed) | GOV-GA-AUDIT-001 |
-| 7 | GOV-FIGR-001 ready for amendment | **Pending** | Gate B current |
+| 4 | **Traceability complete** (FTM — V1 specified) | **Met** | `FEATURE_TRACEABILITY_MATRIX.md` |
+| 5 | GOV-IACL-001 **complete** | **Not met** | Checklist all items |
+| 6 | Evidence archived per GOV-BEMF-001 | **Not met** | `governance/evidence/` |
+| 7 | Independent audit recommendation addressed | **Met** (remain Gate B until blockers closed) | GOV-GA-AUDIT-001 |
+| 8 | GOV-FIGR-001 ready for amendment | **Pending** | Gate B current |
 
 **Ceremony may be scheduled only when row 1 is Met.**
 
