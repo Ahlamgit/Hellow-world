@@ -3,7 +3,7 @@
 | Field | Value |
 |-------|-------|
 | **Document ID** | GOV-FIGR-001 |
-| **Version** | 2.2 |
+| **Version** | 2.3 |
 | **Report date** | 2026-07-25 |
 | **Prepared by** | Program Governance Manager |
 
@@ -17,7 +17,7 @@
 | **Target gate** | A — READY FOR IMPLEMENTATION |
 | **Implementation authorization** | **DENIED** |
 
-KHADAMATI remains blocked for all implementation activity. Seven pre-implementation blockers are open. **Independent Gate A audit:** `FINAL_GATE_A_READINESS_AUDIT_REPORT.md` (GOV-GA-AUDIT-001) — recommendation **remain Gate B**. **Blocker execution:** `FINAL_GATE_A_TRANSITION_AND_BLOCKER_CLOSURE_PACKAGE.md` (GOV-GATC-001). Evidence collection and validation is governed by `BLOCKER_EVIDENCE_MANAGEMENT_FRAMEWORK.md` (GOV-BEMF-001 v1.0). The formal Gate A transition instrument is `GATE_A_IMPLEMENTATION_AUTHORIZATION_RECORD.md` (GOV-GAIR-001) — **Draft, unsigned**; implementation authorization is granted only upon its §8 approval after 7 / 7 blockers closed.
+KHADAMATI remains blocked for all implementation activity. Seven pre-implementation blockers are open. **Operational tracker:** `BLOCKER_CLOSURE_EXECUTION_TRACKER.md` (GOV-BLOCKER-TRACKER-001). **Independent Gate A audit:** `FINAL_GATE_A_READINESS_AUDIT_REPORT.md` (GOV-GA-AUDIT-001) — recommendation **remain Gate B**. Evidence collection and validation is governed by `BLOCKER_EVIDENCE_MANAGEMENT_FRAMEWORK.md` (GOV-BEMF-001 v1.0). The formal Gate A transition instrument is `GATE_A_IMPLEMENTATION_AUTHORIZATION_RECORD.md` (GOV-GAIR-001) — **Draft, unsigned**; implementation authorization is granted only upon its §8 approval after 7 / 7 blockers closed.
 
 ---
 
@@ -137,3 +137,4 @@ Sprint 0 scope is defined in `SPRINT_0_FOUNDATION_CHARTER.md` (GOV-S0FC-001).
 | 2.0 | 2026-07-25 | Gate A preparation package (GOV-FPRG-001) |
 | 2.1 | 2026-07-25 | Gate A transition & blocker execution package (GOV-GATC-001) |
 | 2.2 | 2026-07-25 | Independent Gate A readiness audit (GOV-GA-AUDIT-001) — remain Gate B |
+| 2.3 | 2026-07-25 | Blocker closure execution tracker (GOV-BLOCKER-TRACKER-001) |

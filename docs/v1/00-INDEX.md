@@ -19,6 +19,7 @@
 **Implementation gate:** [FINAL_IMPLEMENTATION_GATE_REPORT.md](./FINAL_IMPLEMENTATION_GATE_REPORT.md)  
 **Pre-implementation review:** [FINAL_PRE_IMPLEMENTATION_READINESS_REVIEW.md](./FINAL_PRE_IMPLEMENTATION_READINESS_REVIEW.md) — points to **GOV-FPRG-001**  
 **Gate A preparation package:** [governance/FINAL_PRE_IMPLEMENTATION_READINESS_AND_GATE_A_PACKAGE.md](./governance/FINAL_PRE_IMPLEMENTATION_READINESS_AND_GATE_A_PACKAGE.md) — **GOV-FPRG-001**  
+**Blocker execution tracker:** [governance/BLOCKER_CLOSURE_EXECUTION_TRACKER.md](./governance/BLOCKER_CLOSURE_EXECUTION_TRACKER.md) — **GOV-BLOCKER-TRACKER-001** (operational)  
 **Gate A readiness audit:** [governance/FINAL_GATE_A_READINESS_AUDIT_REPORT.md](./governance/FINAL_GATE_A_READINESS_AUDIT_REPORT.md) — **GOV-GA-AUDIT-001** (recommendation: remain Gate B)  
 **Gate A transition & blocker execution:** [governance/FINAL_GATE_A_TRANSITION_AND_BLOCKER_CLOSURE_PACKAGE.md](./governance/FINAL_GATE_A_TRANSITION_AND_BLOCKER_CLOSURE_PACKAGE.md) — **GOV-GATC-001**  
 **Execution standards (after Gate A):** [IMPLEMENTATION_EXECUTION_STANDARDS.md](./IMPLEMENTATION_EXECUTION_STANDARDS.md) — prepared; coding **BLOCKED** until Gate A  

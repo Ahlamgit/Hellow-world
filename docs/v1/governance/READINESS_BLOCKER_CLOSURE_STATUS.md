@@ -3,7 +3,7 @@
 | Field | Value |
 |-------|-------|
 | **Document ID** | GOV-RBCS-001 |
-| **Version** | 2.1 |
+| **Version** | 2.2 |
 | **Last updated** | 2026-07-25 |
 | **Gate** | B — NOT READY — CODING BLOCKED |
 | **Owner** | Program Governance Manager |
@@ -11,6 +11,7 @@
 | **Gate A preparation package** | `FINAL_PRE_IMPLEMENTATION_READINESS_AND_GATE_A_PACKAGE.md` (GOV-FPRG-001) |
 | **Gate A transition & blocker execution** | `FINAL_GATE_A_TRANSITION_AND_BLOCKER_CLOSURE_PACKAGE.md` (GOV-GATC-001) |
 | **Gate A readiness audit** | `FINAL_GATE_A_READINESS_AUDIT_REPORT.md` (GOV-GA-AUDIT-001) — **remain Gate B** |
+| **Blocker execution tracker** | `BLOCKER_CLOSURE_EXECUTION_TRACKER.md` (GOV-BLOCKER-TRACKER-001) — **operational** |
 | **Gate A authorization record** | `GATE_A_IMPLEMENTATION_AUTHORIZATION_RECORD.md` (GOV-GAIR-001) — Draft, unsigned |
 
 ---
@@ -188,7 +189,7 @@
 | 3 | Distribute design approval package — `DESIGN_APPROVAL_PACKAGE.md` (BLOCKER-001) | Design Lead + Product Owner | Immediate |
 | 4 | Schedule finance policy sign-off — `FINANCE_POLICY_APPROVAL_PACKAGE.md` (BLOCKER-005) | Finance + Business Owner | Immediate |
 
-Refer to `FINAL_GATE_A_TRANSITION_AND_BLOCKER_CLOSURE_PACKAGE.md` (GOV-GATC-001) for execution phases, `BLOCKER_CLOSURE_EXECUTION_PLAN.md` for requirements detail, and `BLOCKER_EVIDENCE_MANAGEMENT_FRAMEWORK.md` for submission workflow.
+Refer to `BLOCKER_CLOSURE_EXECUTION_TRACKER.md` (GOV-BLOCKER-TRACKER-001) for operational tracking, `FINAL_GATE_A_TRANSITION_AND_BLOCKER_CLOSURE_PACKAGE.md` (GOV-GATC-001) for execution phases, and `BLOCKER_EVIDENCE_MANAGEMENT_FRAMEWORK.md` for submission workflow.
 
 **Gate A transition:** When all seven blockers are **Closed**, complete `IMPLEMENTATION_AUTHORIZATION_CHECKLIST.md` and obtain §8 signatures on `GATE_A_IMPLEMENTATION_AUTHORIZATION_RECORD.md` (GOV-GAIR-001) before declaring Gate A.
 
@@ -212,3 +213,4 @@ Refer to `FINAL_GATE_A_TRANSITION_AND_BLOCKER_CLOSURE_PACKAGE.md` (GOV-GATC-001)
 | 1.9 | 2026-07-25 | Linked Gate A preparation package (GOV-FPRG-001) |
 | 2.0 | 2026-07-25 | Linked Gate A transition & blocker execution package (GOV-GATC-001) |
 | 2.1 | 2026-07-25 | Independent Gate A readiness audit (GOV-GA-AUDIT-001) — 0/7 closed |
+| 2.2 | 2026-07-25 | Operational blocker execution tracker (GOV-BLOCKER-TRACKER-001) |
