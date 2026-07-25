@@ -3,7 +3,7 @@
 | Field | Value |
 |-------|-------|
 | **Document ID** | GOV-MASTER-CTRL-001 |
-| **Version** | 1.4 |
+| **Version** | 1.5 |
 | **Date** | 2026-07-25 |
 | **Owner** | Program Governance Manager · Technical Program Manager |
 | **Gate** | **B — NOT READY — CODING BLOCKED** |
@@ -244,12 +244,12 @@ Before implementation authorization, **all** must be true:
 
 | Wave | Allowed (after Gate A) | Blocker / gate |
 |------|------------------------|----------------|
-| **Wave 1** | Repository setup · CI/CD foundation · Backend skeleton | Gate A |
-| **Wave 2** | Authentication foundation · RBAC foundation · **Audit foundation** · Migration **framework/tooling** (not business schema) · Logging foundation | Gate A |
-| **Wave 3** | Localization foundation · Logging · **Observability** | Gate A |
-| **Wave 4** | Design system · Application shells | Gate A **and** BLOCKER-001 **Closed** |
+| **Wave 1** | Repository foundation · CI/CD · backend skeleton · authentication foundation · RBAC foundation | Gate A |
+| **Wave 2** | Localization framework · logging foundation · audit foundation · security foundation | Gate A |
+| **Wave 3** | Migration framework **ONLY** — no business schema · no domain tables | Gate A + BLOCKER-006 for domain schema later |
+| **Wave 4** | Design system · application shells · UI foundation | Gate A **and** BLOCKER-001 **Closed** |
 
-**Sprint 0 exclusions (never before Gate A):** Payment · booking completion · settlement · production deployment · feature expansion · **business domain schema creation**
+**Sprint 0 exclusions (never before Gate A):** Payment · booking completion · settlement · wallets · withdrawals · production deployment · business database schema · feature expansion
 
 | Migration rule | Detail |
 |----------------|--------|
@@ -331,7 +331,7 @@ Every governance execution response **must** include (in order):
 | 7 | **Files Created/Updated** | *(paths or None)* |
 | 8 | **Next Allowed Action** | Phase 1 human approvals; no coding |
 
-**Canonical prompt:** `KHADAMATI_GOVERNANCE_CONTROL_PROMPT.md` (GOV-CONTROL-PROMPT-001 v1.1)
+**Canonical prompts:** GOV-CONTROL-PROMPT-001 · GOV-READINESS-PROMPT-001 (`GOVERNANCE_CONTROLLED_IMPLEMENTATION_READINESS_PROMPT.md`)
 
 No exceptions. No shortcuts. No coding before Gate A. **Documentation ≠ approval.**
 
@@ -346,6 +346,7 @@ No exceptions. No shortcuts. No coding before Gate A. **Documentation ≠ approv
 | 1.2 | 2026-07-25 | Traceability Gate A requirement; GOV-ARCH-READINESS-001 reference |
 | 1.3 | 2026-07-25 | Sprint 0 waves; design/finance/compliance governance; GOV-CONTROL-PROMPT-001 response format |
 | 1.4 | 2026-07-25 | Sprint 0 migration framework vs business schema; payment ADR refs; doc≠approval rule |
+| 1.5 | 2026-07-25 | Sprint 0 wave alignment (GOV-READINESS-PROMPT-001); Gate A checklist |
 
 **Supersedes:** Informal status summaries for gate and implementation authorization decisions.  
 **Subordinate to:** `MASTER_IMPLEMENTATION_PROMPT_v1.0.md`, ADRs, `FINAL_SCOPE_BASELINE.md`.

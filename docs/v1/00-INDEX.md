@@ -28,6 +28,7 @@
 **Phase 1 approval tracking:** [governance/PHASE_1_APPROVAL_TRACKING_REGISTER.md](./governance/PHASE_1_APPROVAL_TRACKING_REGISTER.md) — **GOV-P1-TRACK-001**  
 **Gate A readiness audit:** [governance/FINAL_GATE_A_READINESS_AUDIT_REPORT.md](./governance/FINAL_GATE_A_READINESS_AUDIT_REPORT.md) — **GOV-GA-AUDIT-001** (recommendation: remain Gate B)  
 **Governance control prompt:** [governance/KHADAMATI_GOVERNANCE_CONTROL_PROMPT.md](./governance/KHADAMATI_GOVERNANCE_CONTROL_PROMPT.md) — **GOV-CONTROL-PROMPT-001**  
+**Implementation readiness prompt:** [governance/GOVERNANCE_CONTROLLED_IMPLEMENTATION_READINESS_PROMPT.md](./governance/GOVERNANCE_CONTROLLED_IMPLEMENTATION_READINESS_PROMPT.md) — **GOV-READINESS-PROMPT-001**  
 **Gate A ceremony preparation:** [governance/GATE_A_CEREMONY_PREPARATION_PACKAGE.md](./governance/GATE_A_CEREMONY_PREPARATION_PACKAGE.md) — **GOV-GA-CEREMONY-001**  
 **Architecture compliance & readiness:** [governance/ARCHITECTURE_COMPLIANCE_AND_IMPLEMENTATION_READINESS_REGISTER.md](./governance/ARCHITECTURE_COMPLIANCE_AND_IMPLEMENTATION_READINESS_REGISTER.md) — **GOV-ARCH-READINESS-001**  
 **Gate A transition & blocker execution:** [governance/FINAL_GATE_A_TRANSITION_AND_BLOCKER_CLOSURE_PACKAGE.md](./governance/FINAL_GATE_A_TRANSITION_AND_BLOCKER_CLOSURE_PACKAGE.md) — **GOV-GATC-001**  

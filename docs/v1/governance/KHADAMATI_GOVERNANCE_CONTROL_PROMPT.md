@@ -81,6 +81,7 @@ Until Gate A authorization:
 | GOV-BLOCKER-TRACKER-001 | Blocker execution tracker |
 | GOV-ARCH-READINESS-001 | Architecture compliance register |
 | GOV-P1-TRACK-001 | Phase 1 approval tracking (live) |
+| GOV-READINESS-PROMPT-001 | Governance-controlled implementation readiness prompt |
 
 ---
 
