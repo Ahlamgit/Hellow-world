@@ -3,8 +3,8 @@
 | Field | Value |
 |-------|-------|
 | **Document ID** | GOV-IREP-001 |
-| **Version** | 1.1 |
-| **Status** | Active — Gate B phase only |
+| **Version** | 1.2 |
+| **Status** | Active — Gate B phase; Sprint 0 planned |
 | **Last updated** | 2026-07-25 |
 | **Prepared by** | Program Readiness Manager |
 
@@ -78,9 +78,28 @@ This plan defines **what the program may execute now** (readiness phase) versus 
 
 ---
 
-### Phase 2 — Foundation Implementation (POST Gate A ONLY)
+### Phase 2 — Sprint 0 Foundation (POST Gate A)
 
-**Not authorized until Gate A.**
+**Entry criteria:** Gate A declared; `SPRINT_0_FOUNDATION_CHARTER.md` (GOV-S0FC-001) active.
+
+**Objective:** Platform foundations per Sprint 0 allowed list — **not** product features.
+
+**Authorized workstreams:** See `SPRINT_0_FOUNDATION_CHARTER.md` § Allowed.
+
+**Gate dependencies within Sprint 0:**
+
+- A1–A6, A9–A10: After Sprint 0 kickoff (Gate A)
+- A7–A8 (design system, app shells): **BLOCKER-001 Closed** (ADR-023)
+
+**Prohibited in Sprint 0:** Payment, booking completion, settlement, production deployment, feature expansion.
+
+**Exit criteria:** Sprint 0 exit checklist in charter.
+
+---
+
+### Phase 3 — Feature Implementation (POST Sprint 0)
+
+**Not authorized until Sprint 0 exit criteria met.**
 
 Planned sequence (subject to Gate A approval):
 
@@ -165,3 +184,4 @@ Phase 4 (sequential): BLOCKER-007
 |---------|------|--------|
 | 1.0 | — | Initial readiness execution plan |
 | 1.1 | 2026-07-25 | Refocused on Phase 0 blocker closure; Phase 2 explicitly gated |
+| 1.2 | 2026-07-25 | Added Sprint 0 Foundation Charter (GOV-S0FC-001); Phase 2/3 split |

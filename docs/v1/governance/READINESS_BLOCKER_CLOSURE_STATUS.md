@@ -3,7 +3,7 @@
 | Field | Value |
 |-------|-------|
 | **Document ID** | GOV-RBCS-001 |
-| **Version** | 1.6 |
+| **Version** | 1.7 |
 | **Last updated** | 2026-07-25 |
 | **Gate** | B — NOT READY — CODING BLOCKED |
 | **Owner** | Program Governance Manager |
@@ -169,9 +169,9 @@
 | Blocker | Depends on | Dependency met? |
 |---------|------------|-----------------|
 | BLOCKER-007 | BLOCKER-003, BLOCKER-005 | No |
-| UI implementation (post Gate A) | BLOCKER-001 | No |
+| BLOCKER-001 | Design approval | **Ready for Approval** | Blocks **Sprint 0** workstreams A7, A8 (ADR-023) |
 | Settlement implementation (post Gate A) | BLOCKER-005 | No |
-| Data lifecycle implementation (post Gate A) | BLOCKER-006 | No |
+| Domain schema (post Sprint 0 Wave 2) | BLOCKER-006 | No |
 
 ---
 
@@ -201,3 +201,4 @@ Refer to `BLOCKER_CLOSURE_EXECUTION_PLAN.md` for phase sequencing and `BLOCKER_E
 | 1.4 | 2026-07-25 | BLOCKER-005 → Ready for Approval; finance policy package prepared |
 | 1.5 | 2026-07-25 | BLOCKER-001 → Ready for Approval; design approval package prepared |
 | 1.6 | 2026-07-25 | BLOCKER-006 → Ready for Approval; compliance approval package prepared |
+| 1.7 | 2026-07-25 | Sprint 0 charter referenced; implementation still blocked (Gate B) |
