@@ -11,7 +11,7 @@
 | **Owner** | Program Execution Manager |
 | **Gate** | **B — NOT READY — CODING BLOCKED** |
 | **Previous gate note** | Gate A transition activities recorded; authorization state unchanged |
-| **Blockers closed** | **2 / 7** (BLOCKER-001, BLOCKER-002) |
+| **Blockers closed** | **3 / 7** (001, 002, 005) |
 | **Business consolidation** | GOV-BUSINESS-APPROVAL-001 v1.2 |
 | **Role correction** | GOV-BLOCKER-002-ROLE-CORR-001 |
 | **Status** | **Active — Gate A transition execution** |
@@ -59,7 +59,7 @@ This tracker is the **operational working document** for closing BLOCKER-001 thr
 
 ## 2. Master blocker dashboard
 
-**Last updated:** 2026-07-25 · **Progress:** **2 / 7 Closed** (BLOCKER-001 ✓ · BLOCKER-002 ✓)
+**Last updated:** 2026-07-25 · **Progress:** **3 / 7 Closed** (001 ✓ · 002 ✓ · 005 ✓)
 
 **Master closure status:** [GATE_B_CLOSURE_EXECUTION_STATUS.md](./GATE_B_CLOSURE_EXECUTION_STATUS.md) (GOV-GATE-B-CLOSURE-001 v1.1) · [GOV-GATE-B-CLOSURE-EXEC-001](./GATE_B_FINAL_CLOSURE_EXECUTION_RECORD.md)
 
@@ -70,8 +70,8 @@ This tracker is the **operational working document** for closing BLOCKER-001 thr
 | **BLOCKER-001** | Design | Design Lead | **CLOSED** | `DESIGN_FINAL_CLOSURE_CHECKLIST.md` | ☑ | Ahlam ☑ | ☑ |
 | **BLOCKER-002** | Stakeholder | PO/BO | **CLOSED** | — | ☑ | ☑ | ☑ |
 | **BLOCKER-003** | Vendors | IL + TA | **READY FOR CLOSURE VALIDATION** | `VENDOR_FINAL_VALIDATION_CHECKLIST.md` | ☐ | IL + TA ☐ | ☐ |
-| **BLOCKER-004** | Cloud | TA + DevOps | **READY FOR CLOSURE VALIDATION** | `CLOUD_FINAL_VALIDATION_CHECKLIST.md` | ☐ | TA + DevOps ☐ | ☐ |
-| **BLOCKER-005** | Finance | TA | **READY FOR CLOSURE VALIDATION** | `ADMIN_FINANCE_CONFIGURATION_FINAL_APPROVAL.md` | ☐ | TA ☐ | ☐ |
+| **BLOCKER-004** | Cloud | TA + DevOps | **READY FOR CLOSURE VALIDATION** | `CLOUD_FINAL_VALIDATION_CHECKLIST.md` | Partial — **localhost dev approved** | TA + DevOps ☐ | ☐ |
+| **BLOCKER-005** | Finance | TA | **CLOSED** | `ADMIN_FINANCE_CONFIGURATION_FINAL_APPROVAL.md` | ☑ | Ahlam ☑ | ☑ |
 | **BLOCKER-006** | Compliance | Legal + TA | **READY FOR CLOSURE VALIDATION** | `LEGAL_COMPLIANCE_FINALIZATION_CHECKLIST.md` | ☐ | Legal + TA ☐ | ☐ |
 | **BLOCKER-007** | Payment.js | IL + TA | **READY FOR CLOSURE VALIDATION** | `AREEBA_IXOPAY_FINAL_VALIDATION_CHECKLIST.md` | ☐ | IL + TA ☐ | ☐ |
 

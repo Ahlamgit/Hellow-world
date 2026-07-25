@@ -21,11 +21,11 @@
 | BLOCKER-002 Stakeholder | **CLOSED** | ☑ | ☑ | ☑ | ✅ |
 | BLOCKER-003 Vendors | **READY FOR CLOSURE VALIDATION** | Partial | ☐ | IL + TA ☐ | ❌ |
 | BLOCKER-004 Cloud | **READY FOR CLOSURE VALIDATION** | Partial | ☐ | TA + DevOps ☐ | ❌ |
-| BLOCKER-005 Finance | **READY FOR CLOSURE VALIDATION** | ☑ | ☐ | TA ☐ | ❌ |
+| BLOCKER-005 Finance | **CLOSED** | ☑ | ☑ | Ahlam ☑ | ✅ |
 | BLOCKER-006 Compliance | **READY FOR CLOSURE VALIDATION** | Partial | ☐ | Legal + TA ☐ | ❌ |
 | BLOCKER-007 Payment.js | **READY FOR CLOSURE VALIDATION** | Partial | ☐ | IL + TA ☐ | ❌ |
 
-**Blockers closed:** **2 / 7** (29%)
+**Blockers closed:** **3 / 7** (43%)
 
 ---
 
@@ -33,7 +33,7 @@
 
 | # | Requirement | Status |
 |---|-------------|--------|
-| 1 | **7 / 7 blockers CLOSED** | ❌ **2 / 7** |
+| 1 | **7 / 7 blockers CLOSED** | ❌ **3 / 7** |
 | 2 | **GOV-IACL-001 complete** | ❌ Partial — final checklists filed; validations pending |
 | 3 | **GOV-GAIR-001 ready for signature** | ❌ Draft — unsigned |
 | 4 | **Architecture unchanged** (ADR-001 → ADR-032) | ✅ |

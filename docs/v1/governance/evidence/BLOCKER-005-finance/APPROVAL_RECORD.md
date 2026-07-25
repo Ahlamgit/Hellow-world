@@ -4,20 +4,19 @@
 |-------|-------|
 | **Document ID** | EVD-005-APPROVAL-001 |
 | **Blocker ID** | BLOCKER-005 — Finance |
-| **Decision** | **Partially Approved** — PO/BO business model |
-| **Approver Name** | **Project Owner / Business Owner** |
-| **Role** | Project Owner / Business Owner (unified) |
+| **Decision** | **Approved** |
+| **Approver Name** | **Ahlam** |
+| **Role** | Project Owner / Business Owner · Technical Architect |
 | **Organization** | KHADAMATI |
 | **Date** | **2026-07-25** |
-| **Version Reviewed** | `FINANCE_POLICY_APPROVAL_PACKAGE.md` v1.0 · `BUSINESS_APPROVAL_RECORD.md` v1.1 |
-| **Comments** | PO/BO business finance **APPROVED**: marketplace commission model (configurable); provider and store/service advertising subscriptions; administrator pricing configuration post-implementation; no new pricing features. Finance matrix and Finance attestation still required. |
+| **Comments** | Admin-configurable pricing confirmed. **No financial business values hardcoded.** |
 | **Signature / Confirmation** | **Recorded — 2026-07-25** |
 
 ### Decision options
 
 - [ ] **Pending**
-- [x] **Partially Approved** (business — closure pending)
-- [ ] **Approved** (full closure)
+- [ ] **Partially Approved**
+- [x] **Approved** (full closure)
 - [ ] **Rejected**
 
 ---
@@ -26,8 +25,7 @@
 
 | Approver | Role | Decision | Signature / Date |
 |----------|------|----------|------------------|
-| **Project Owner / Business Owner** | Business finance approval | **Approved** | **2026-07-25** |
-| | Finance Owner | **Pending** | |
-| | Technical Architect | **Pending** | |
+| **Ahlam** | Project Owner / Business Owner | **Approved** | **2026-07-25** |
+| **Ahlam** | Technical Architect | **Approved** | **2026-07-25** |
 
-**BLOCKER-005 NOT CLOSED** per GOV-BEMF-001.
+**BLOCKER-005 CLOSED** per `BLOCKER_005_CLOSURE_RECORD.md`.
