@@ -3,10 +3,11 @@
 | Field | Value |
 |-------|-------|
 | **Document ID** | GOV-S0FC-001 |
-| **Version** | 1.0 |
+| **Version** | 1.1 |
 | **Sprint** | Sprint 0 — Foundation |
 | **Status** | **Planned — gated execution** |
 | **Gate (program)** | B — NOT READY — CODING BLOCKED |
+| **Gate A authorization record** | `GATE_A_IMPLEMENTATION_AUTHORIZATION_RECORD.md` (GOV-GAIR-001) — Draft, unsigned |
 | **Prepared by** | Program Governance Manager |
 | **Date** | 2026-07-25 |
 
@@ -70,9 +71,9 @@ Sprint 0 workstreams **must not** violate program gates or ADRs.
 
 | Condition | Requirement |
 |-----------|-------------|
-| **Full Sprint 0 (all workstreams)** | Gate A — **READY FOR IMPLEMENTATION** + all blockers **Closed** |
+| **Full Sprint 0 (all workstreams)** | Gate A — **READY FOR IMPLEMENTATION** per `GATE_A_IMPLEMENTATION_AUTHORIZATION_RECORD.md` (GOV-GAIR-001 §8 signed) + all blockers **Closed** |
 | **Partial Sprint 0 (A1–A6, A9–A10 only)** | Explicit program waiver **or** Gate A with BLOCKER-001/006 still open — **not recommended** |
-| **Current state (2026-07-25)** | Gate B — **Sprint 0 coding not authorized** until Gate A or documented waiver |
+| **Current state (2026-07-25)** | Gate B — **Sprint 0 coding not authorized** until GOV-GAIR-001 signed or documented waiver |
 
 **Ready for approval (not closed):** BLOCKER-001, 002, 005, 006 — signatures pending.
 
@@ -194,6 +195,7 @@ The following remain **prohibited** in Sprint 0 regardless of engineering readin
 
 | Document | Relevance |
 |----------|-----------|
+| `GATE_A_IMPLEMENTATION_AUTHORIZATION_RECORD.md` | Formal Gate A transition; Sprint 0 authorization |
 | `FINAL_IMPLEMENTATION_GATE_REPORT.md` | Gate status |
 | `IMPLEMENTATION_READINESS_EXECUTION_PLAN.md` | Phase model |
 | `BLOCKER_CLOSURE_EXECUTION_PLAN.md` | Blocker order |
@@ -206,11 +208,14 @@ The following remain **prohibited** in Sprint 0 regardless of engineering readin
 
 ## Authorization Record
 
+Sprint 0 implementation authorization is granted through `GATE_A_IMPLEMENTATION_AUTHORIZATION_RECORD.md` (GOV-GAIR-001) §8 — not through this charter alone.
+
 | Field | Value |
 |-------|-------|
-| Sprint 0 coding authorized | **No** (Gate B — pending Gate A or waiver) |
-| Sprint 0 plan approved | **This charter v1.0** |
-| Authorized by | — |
+| Sprint 0 coding authorized | **No** (Gate B — pending GOV-GAIR-001 §8 signatures) |
+| Sprint 0 plan approved | **This charter v1.1** |
+| Gate A authorization record | GOV-GAIR-001 v1.0 — Draft, unsigned |
+| Authorized by | — (see GOV-GAIR-001 §8) |
 | Date | — |
 
 ---
@@ -220,3 +225,4 @@ The following remain **prohibited** in Sprint 0 regardless of engineering readin
 | Version | Date | Change |
 |---------|------|--------|
 | 1.0 | 2026-07-25 | Initial Sprint 0 foundation charter |
+| 1.1 | 2026-07-25 | Linked Gate A authorization record (GOV-GAIR-001); Sprint 0 coding still blocked |

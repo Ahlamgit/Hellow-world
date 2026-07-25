@@ -3,7 +3,7 @@
 | Field | Value |
 |-------|-------|
 | **Document ID** | GOV-FIGR-001 |
-| **Version** | 1.7 |
+| **Version** | 1.8 |
 | **Report date** | 2026-07-25 |
 | **Prepared by** | Program Governance Manager |
 
@@ -17,7 +17,7 @@
 | **Target gate** | A — READY FOR IMPLEMENTATION |
 | **Implementation authorization** | **DENIED** |
 
-KHADAMATI remains blocked for all implementation activity. Seven pre-implementation blockers are open. Closure execution is governed by `BLOCKER_CLOSURE_EXECUTION_PLAN.md` (GOV-BCEP-001). Evidence collection and validation is governed by `BLOCKER_EVIDENCE_MANAGEMENT_FRAMEWORK.md` (GOV-BEMF-001 v1.0).
+KHADAMATI remains blocked for all implementation activity. Seven pre-implementation blockers are open. Closure execution is governed by `BLOCKER_CLOSURE_EXECUTION_PLAN.md` (GOV-BCEP-001). Evidence collection and validation is governed by `BLOCKER_EVIDENCE_MANAGEMENT_FRAMEWORK.md` (GOV-BEMF-001 v1.0). The formal Gate A transition instrument is `GATE_A_IMPLEMENTATION_AUTHORIZATION_RECORD.md` (GOV-GAIR-001) — **Draft, unsigned**; implementation authorization is granted only upon its §8 approval after 7 / 7 blockers closed.
 
 ---
 
@@ -105,7 +105,8 @@ Sprint 0 scope is defined in `SPRINT_0_FOUNDATION_CHARTER.md` (GOV-S0FC-001).
 3. Update `READINESS_BLOCKER_CLOSURE_STATUS.md` within one business day of each submission or approval.
 4. Complete `IMPLEMENTATION_AUTHORIZATION_CHECKLIST.md`.
 5. When all seven blockers show **Closed** with evidence archived, convene Gate A readiness review (framework §6).
-6. Upon Gate A approval, update this report to **Gate A — READY FOR IMPLEMENTATION** and authorize **Sprint 0** per `SPRINT_0_FOUNDATION_CHARTER.md`.
+6. Complete `IMPLEMENTATION_AUTHORIZATION_CHECKLIST.md` and obtain §8 signatures on `GATE_A_IMPLEMENTATION_AUTHORIZATION_RECORD.md` (GOV-GAIR-001).
+7. Upon Gate A approval, update this report to **Gate A — READY FOR IMPLEMENTATION** and authorize **Sprint 0** per `SPRINT_0_FOUNDATION_CHARTER.md`.
 
 ---
 
@@ -131,3 +132,4 @@ Sprint 0 scope is defined in `SPRINT_0_FOUNDATION_CHARTER.md` (GOV-S0FC-001).
 | 1.5 | 2026-07-25 | BLOCKER-001 design approval package prepared — Ready for Approval |
 | 1.6 | 2026-07-25 | BLOCKER-006 compliance approval package prepared — Ready for Approval |
 | 1.7 | 2026-07-25 | Sprint 0 Foundation Charter added; coding still Gate B blocked |
+| 1.8 | 2026-07-25 | Gate A authorization record (GOV-GAIR-001) prepared; Gate B unchanged — 0/7 closed |

@@ -3,7 +3,7 @@
 | Field | Value |
 |-------|-------|
 | **Document ID** | GOV-BCEP-001 |
-| **Version** | 1.1 |
+| **Version** | 1.5 |
 | **Status** | Active |
 | **Gate** | B — NOT READY (CODING BLOCKED) |
 | **Target Gate** | A — READY FOR IMPLEMENTATION |
@@ -23,6 +23,7 @@ This plan is derived from and subordinate to:
 - `FINAL_IMPLEMENTATION_GATE_REPORT.md`
 - `FINAL_PRE_IMPLEMENTATION_READINESS_REVIEW.md`
 - `IMPLEMENTATION_AUTHORIZATION_CHECKLIST.md`
+- `GATE_A_IMPLEMENTATION_AUTHORIZATION_RECORD.md` (GOV-GAIR-001)
 - `BLOCKER_EVIDENCE_MANAGEMENT_FRAMEWORK.md`
 - `READINESS_BLOCKER_CLOSURE_STATUS.md`
 - `IMPLEMENTATION_READINESS_EXECUTION_PLAN.md`
@@ -54,7 +55,7 @@ Move KHADAMATI from **Gate B: NOT READY — CODING BLOCKED** to **Gate A: READY 
 | Blocker | Description | Current Status | Required Closure Evidence | Owner |
 |---------|-------------|----------------|---------------------------|-------|
 | BLOCKER-001 | Design approval | **Ready for Approval** | Signed design approval package + `DESIGN_APPROVAL_PACKAGE.md` (see §2.1) | Design Lead + Product Owner |
-| BLOCKER-002 | Stakeholder approval | **Open — Pending** | Multi-function sign-off register (see §2.2) | Program Sponsor |
+| BLOCKER-002 | Stakeholder approval | **Ready for Approval** | Multi-function sign-off register (see §2.2) | Program Sponsor |
 | BLOCKER-003 | Vendor readiness | **Open — Pending** | Vendor readiness dossier per integration (see §2.3) | Technical Lead / Integration Lead |
 | BLOCKER-004 | Cloud readiness | **Open — Pending** | Cloud decision record + approvals (see §2.4) | Technical Architect + DevOps Lead |
 | BLOCKER-005 | Finance configuration | **Ready for Approval** | Approved finance rule matrix + `FINANCE_POLICY_APPROVAL_PACKAGE.md` (see §2.5) | Finance + Business Operations |
@@ -63,7 +64,7 @@ Move KHADAMATI from **Gate B: NOT READY — CODING BLOCKED** to **Gate A: READY 
 
 **Aggregate gate position:** **Gate B — NOT READY — CODING BLOCKED**
 
-No implementation work (coding, schema, UI build, deployment) may proceed until Gate A is formally recorded in `FINAL_IMPLEMENTATION_GATE_REPORT.md`.
+No implementation work (coding, schema, UI build, deployment) may proceed until Gate A is formally recorded in `FINAL_IMPLEMENTATION_GATE_REPORT.md` and signed in `GATE_A_IMPLEMENTATION_AUTHORIZATION_RECORD.md` (GOV-GAIR-001).
 
 ---
 
@@ -298,7 +299,7 @@ Phase 4 — Payment validation (sequential)
 | Compliance | `COMPLIANCE_APPROVAL_PACK_v1.0` | Legal / Compliance | **Pending** |
 | Payment | `PAYMENT_JS_VALIDATION_REPORT_v1.0` | Technical Lead + Finance Ops | **Pending** |
 
-**Gate A criteria:** All rows **Approved** with dated signatures and artifact references recorded in `FINAL_IMPLEMENTATION_GATE_REPORT.md`.
+**Gate A criteria:** All rows **Approved** with dated signatures and artifact references recorded in `FINAL_IMPLEMENTATION_GATE_REPORT.md` and `GATE_A_IMPLEMENTATION_AUTHORIZATION_RECORD.md` (GOV-GAIR-001 §8).
 
 ---
 
@@ -352,7 +353,7 @@ Phase 4 — Payment validation (sequential)
 | **Current Gate** | **B — NOT READY — CODING BLOCKED** |
 | **Required action** | **Close blockers only** — collect and approve evidence per §2 |
 | **Implementation authorization** | **Not granted** |
-| **Next program milestone** | All seven blockers closed → Gate A review → update `FINAL_IMPLEMENTATION_GATE_REPORT.md` |
+| **Next program milestone** | All seven blockers closed → Gate A review → sign GOV-GAIR-001 → update `FINAL_IMPLEMENTATION_GATE_REPORT.md` |
 
 ---
 
@@ -365,5 +366,6 @@ Phase 4 — Payment validation (sequential)
 | 1.2 | 2026-07-25 | Finance Governance Manager | BLOCKER-005 finance policy package — Ready for Approval |
 | 1.3 | 2026-07-25 | Product Design Governance Manager | BLOCKER-001 design approval package — Ready for Approval |
 | 1.4 | 2026-07-25 | Compliance Governance Manager | BLOCKER-006 compliance approval package — Ready for Approval |
+| 1.5 | 2026-07-25 | Program Governance Manager | Gate A authorization record (GOV-GAIR-001) linked; BLOCKER-002 status aligned |
 
-**Related documents:** `BLOCKER_EVIDENCE_MANAGEMENT_FRAMEWORK.md`, `IMPLEMENTATION_AUTHORIZATION_CHECKLIST.md`
+**Related documents:** `BLOCKER_EVIDENCE_MANAGEMENT_FRAMEWORK.md`, `IMPLEMENTATION_AUTHORIZATION_CHECKLIST.md`, `GATE_A_IMPLEMENTATION_AUTHORIZATION_RECORD.md`

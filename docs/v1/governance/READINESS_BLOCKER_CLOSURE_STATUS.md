@@ -3,11 +3,12 @@
 | Field | Value |
 |-------|-------|
 | **Document ID** | GOV-RBCS-001 |
-| **Version** | 1.7 |
+| **Version** | 1.8 |
 | **Last updated** | 2026-07-25 |
 | **Gate** | B — NOT READY — CODING BLOCKED |
 | **Owner** | Program Governance Manager |
 | **Evidence framework** | `BLOCKER_EVIDENCE_MANAGEMENT_FRAMEWORK.md` (GOV-BEMF-001) |
+| **Gate A authorization record** | `GATE_A_IMPLEMENTATION_AUTHORIZATION_RECORD.md` (GOV-GAIR-001) — Draft, unsigned |
 
 ---
 
@@ -186,6 +187,8 @@
 
 Refer to `BLOCKER_CLOSURE_EXECUTION_PLAN.md` for phase sequencing and `BLOCKER_EVIDENCE_MANAGEMENT_FRAMEWORK.md` for submission and approval workflow.
 
+**Gate A transition:** When all seven blockers are **Closed**, complete `IMPLEMENTATION_AUTHORIZATION_CHECKLIST.md` and obtain §8 signatures on `GATE_A_IMPLEMENTATION_AUTHORIZATION_RECORD.md` (GOV-GAIR-001) before declaring Gate A.
+
 **Evidence repository:** `docs/v1/governance/evidence/`
 
 ---
@@ -202,3 +205,4 @@ Refer to `BLOCKER_CLOSURE_EXECUTION_PLAN.md` for phase sequencing and `BLOCKER_E
 | 1.5 | 2026-07-25 | BLOCKER-001 → Ready for Approval; design approval package prepared |
 | 1.6 | 2026-07-25 | BLOCKER-006 → Ready for Approval; compliance approval package prepared |
 | 1.7 | 2026-07-25 | Sprint 0 charter referenced; implementation still blocked (Gate B) |
+| 1.8 | 2026-07-25 | Linked Gate A authorization record (GOV-GAIR-001); Gate B unchanged — 0/7 closed |
