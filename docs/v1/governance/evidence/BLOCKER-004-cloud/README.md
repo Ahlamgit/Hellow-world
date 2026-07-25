@@ -42,7 +42,7 @@ Collect and archive cloud hosting, budget, backup, and disaster-recovery decisio
 
 | Field | Value |
 |-------|-------|
-| **Status** | **Open** |
+| **Status** | **Under Review** — PO/BO business **APPROVED** |
 | **Evidence package** | Structure prepared — decisions and signatures pending |
 | **Closed** | **No** |
 

@@ -9,8 +9,8 @@
 | **Role** | Project Owner / Business Owner (unified) |
 | **Organization** | KHADAMATI |
 | **Date** | **2026-07-25** |
-| **Version Reviewed** | `DESIGN_APPROVAL_PACKAGE.md` v1.0 · `BUSINESS_APPROVAL_RECORD.md` v1.1 |
-| **Comments** | PO/BO business design **APPROVED**: KHADAMATI reference video/assets theme; Customer mobile app; Provider app/dashboard; Admin web portal; Lebanon baseline; multi-region ready; no redesign without governance. Design Lead attestation and asset archival still required for closure. |
+| **Version Reviewed** | `BUSINESS_APPROVAL_RECORD.md` v1.2 · `DESIGN_GOVERNANCE_RECORD.md` · `DESIGN_ASSET_REFERENCE.md` |
+| **Comments** | PO/BO design **APPROVED**: `theme(1).mp4` visual direction; `ic-khadamati(1).jpg` brand reference; logo refinement per spec; Customer/Provider/Admin surfaces. Design Lead + asset archival pending. |
 | **Signature / Confirmation** | **Recorded — 2026-07-25** |
 
 ### Decision options

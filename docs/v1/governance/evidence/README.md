@@ -25,8 +25,8 @@ Each blocker folder contains a **standard evidence trio**:
 |--------|---------|--------|
 | `BLOCKER-001-design/` | Design approval | Under Review — PO/BO approved |
 | `BLOCKER-002-stakeholder/` | Stakeholder approval | **Closed** |
-| `BLOCKER-003-vendors/` | Vendor readiness | Open |
-| `BLOCKER-004-cloud/` | Cloud readiness | Open |
+| `BLOCKER-003-vendors/` | Vendor readiness | Under Review — PO/BO partial |
+| `BLOCKER-004-cloud/` | Cloud readiness | Under Review — PO/BO approved |
 | `BLOCKER-005-finance/` | Finance configuration | Under Review — PO/BO approved |
 | `BLOCKER-006-compliance/` | Compliance approval | Under Review — PO/BO direction approved |
 | `BLOCKER-007-payment/` | Payment.js validation | Under Review — PO/BO approved |

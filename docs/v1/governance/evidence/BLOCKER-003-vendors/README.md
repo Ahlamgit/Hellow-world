@@ -21,7 +21,7 @@ Document vendor evaluation, selection decisions, contract references, and sandbo
 | Payment | `payment/` |
 | SMS | `sms/` |
 | Email | `email/` |
-| Maps | `maps/` |
+| Maps | `maps/` — **V1 EXCLUDED** per `MAPS_V1_EXCLUSION_RECORD.md` |
 | OCR / Face | `ocr-face/` |
 | Storage | `storage/` |
 
@@ -43,7 +43,7 @@ Plus: `APPROVAL_RECORD.md`, `EVIDENCE_CHECKLIST.md`
 
 | Field | Value |
 |-------|-------|
-| **Status** | **Open** |
+| **Status** | **Under Review** — PO/BO partial (SMS · email · storage approved; maps **excluded V1**) |
 | **Closed** | **No** |
 
 ## Closure criteria
