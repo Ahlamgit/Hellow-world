@@ -99,6 +99,7 @@ Controlled Feature Delivery     ← NOT AUTHORIZED
 | Readiness phases | `governance/IMPLEMENTATION_READINESS_EXECUTION_PLAN.md` | GOV-IREP-001 |
 | Sprint 0 scope | `governance/SPRINT_0_FOUNDATION_CHARTER.md` | GOV-S0FC-001 |
 | **This package** | `governance/FINAL_PRE_IMPLEMENTATION_READINESS_AND_GATE_A_PACKAGE.md` | **GOV-FPRG-001** |
+| Blocker execution runbook | `governance/FINAL_GATE_A_TRANSITION_AND_BLOCKER_CLOSURE_PACKAGE.md` | **GOV-GATC-001** |
 
 ---
 

@@ -3,12 +3,12 @@
 | Field | Value |
 |-------|-------|
 | **Document ID** | GOV-BCEP-001 |
-| **Version** | 1.5 |
+| **Version** | 1.6 |
 | **Status** | Active |
 | **Gate** | B — NOT READY (CODING BLOCKED) |
 | **Target Gate** | A — READY FOR IMPLEMENTATION |
 | **Product Scope** | FROZEN |
-| **Architecture** | APPROVED (ADR-001 → ADR-028) |
+| **Architecture** | APPROVED (ADR-001 → ADR-032) — KHAD-V1-FACR-001 validated |
 | **Engineering Standards** | DEFINED |
 | **Prepared by** | Program Governance Manager |
 | **Date** | 2026-07-25 |
@@ -21,14 +21,15 @@ This plan is derived from and subordinate to:
 
 - `MASTER_IMPLEMENTATION_PROMPT_v1.0.md`
 - `FINAL_IMPLEMENTATION_GATE_REPORT.md`
-- `FINAL_PRE_IMPLEMENTATION_READINESS_REVIEW.md`
+- `FINAL_GATE_A_TRANSITION_AND_BLOCKER_CLOSURE_PACKAGE.md` (GOV-GATC-001)
+- `FINAL_PRE_IMPLEMENTATION_READINESS_AND_GATE_A_PACKAGE.md` (GOV-FPRG-001)
 - `IMPLEMENTATION_AUTHORIZATION_CHECKLIST.md`
 - `GATE_A_IMPLEMENTATION_AUTHORIZATION_RECORD.md` (GOV-GAIR-001)
 - `BLOCKER_EVIDENCE_MANAGEMENT_FRAMEWORK.md`
 - `READINESS_BLOCKER_CLOSURE_STATUS.md`
 - `IMPLEMENTATION_READINESS_EXECUTION_PLAN.md`
 - `FEATURE_TRACEABILITY_MATRIX.md`
-- ADR-001 through ADR-028
+- ADR-001 through ADR-032
 
 **Explicit exclusions from this plan:**
 
@@ -290,7 +291,7 @@ Phase 4 — Payment validation (sequential)
 
 | Requirement | Evidence | Approved By | Status |
 |-------------|----------|-------------|--------|
-| Architecture | ADR-001 → ADR-028; architecture baseline docs | Technical Architect | **Pending** |
+| Architecture | ADR-001 → ADR-032; KHAD-V1-FACR-001 | Technical Architect | **Validated** — signature pending |
 | Scope | Frozen scope sign-off; `FEATURE_TRACEABILITY_MATRIX.md` | Product Owner | **Pending** |
 | Design | `DESIGN_APPROVAL_SIGNOFF_v1.0` + assets | Design Lead + Product Owner | **Pending** |
 | Vendors | `VENDOR_READINESS_DOSSIER_v1.0` | Technical Lead | **Pending** |
@@ -367,5 +368,6 @@ Phase 4 — Payment validation (sequential)
 | 1.3 | 2026-07-25 | Product Design Governance Manager | BLOCKER-001 design approval package — Ready for Approval |
 | 1.4 | 2026-07-25 | Compliance Governance Manager | BLOCKER-006 compliance approval package — Ready for Approval |
 | 1.5 | 2026-07-25 | Program Governance Manager | Gate A authorization record (GOV-GAIR-001) linked; BLOCKER-002 status aligned |
+| 1.6 | 2026-07-25 | Program Governance Manager | Gate A transition execution package (GOV-GATC-001); ADR-032; FACR validated |
 
-**Related documents:** `BLOCKER_EVIDENCE_MANAGEMENT_FRAMEWORK.md`, `IMPLEMENTATION_AUTHORIZATION_CHECKLIST.md`, `GATE_A_IMPLEMENTATION_AUTHORIZATION_RECORD.md`
+**Related documents:** `BLOCKER_EVIDENCE_MANAGEMENT_FRAMEWORK.md`, `IMPLEMENTATION_AUTHORIZATION_CHECKLIST.md`, `GATE_A_IMPLEMENTATION_AUTHORIZATION_RECORD.md`, `FINAL_GATE_A_TRANSITION_AND_BLOCKER_CLOSURE_PACKAGE.md`

@@ -28,6 +28,7 @@ This record is the **official governance instrument** authorizing transition fro
 - ADR-001 through ADR-032
 - `FINAL_ARCHITECTURE_CONSISTENCY_REVIEW.md` (KHAD-V1-FACR-001)
 - `FINAL_PRE_IMPLEMENTATION_READINESS_AND_GATE_A_PACKAGE.md` (GOV-FPRG-001)
+- `FINAL_GATE_A_TRANSITION_AND_BLOCKER_CLOSURE_PACKAGE.md` (GOV-GATC-001)
 
 **This document does not authorize:** production code, database schema, migrations, infrastructure, cloud resources, vendor selection, feature implementation, architecture changes, or scope changes until formally signed and all entry criteria are met.
 

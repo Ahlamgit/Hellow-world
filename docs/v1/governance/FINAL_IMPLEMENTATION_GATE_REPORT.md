@@ -3,7 +3,7 @@
 | Field | Value |
 |-------|-------|
 | **Document ID** | GOV-FIGR-001 |
-| **Version** | 2.0 |
+| **Version** | 2.1 |
 | **Report date** | 2026-07-25 |
 | **Prepared by** | Program Governance Manager |
 
@@ -17,7 +17,7 @@
 | **Target gate** | A — READY FOR IMPLEMENTATION |
 | **Implementation authorization** | **DENIED** |
 
-KHADAMATI remains blocked for all implementation activity. Seven pre-implementation blockers are open. **Gate A preparation package:** `FINAL_PRE_IMPLEMENTATION_READINESS_AND_GATE_A_PACKAGE.md` (GOV-FPRG-001). Closure execution is governed by `BLOCKER_CLOSURE_EXECUTION_PLAN.md` (GOV-BCEP-001). Evidence collection and validation is governed by `BLOCKER_EVIDENCE_MANAGEMENT_FRAMEWORK.md` (GOV-BEMF-001 v1.0). The formal Gate A transition instrument is `GATE_A_IMPLEMENTATION_AUTHORIZATION_RECORD.md` (GOV-GAIR-001) — **Draft, unsigned**; implementation authorization is granted only upon its §8 approval after 7 / 7 blockers closed.
+KHADAMATI remains blocked for all implementation activity. Seven pre-implementation blockers are open. **Blocker execution:** `FINAL_GATE_A_TRANSITION_AND_BLOCKER_CLOSURE_PACKAGE.md` (GOV-GATC-001). **Readiness prep:** `FINAL_PRE_IMPLEMENTATION_READINESS_AND_GATE_A_PACKAGE.md` (GOV-FPRG-001). Evidence collection and validation is governed by `BLOCKER_EVIDENCE_MANAGEMENT_FRAMEWORK.md` (GOV-BEMF-001 v1.0). The formal Gate A transition instrument is `GATE_A_IMPLEMENTATION_AUTHORIZATION_RECORD.md` (GOV-GAIR-001) — **Draft, unsigned**; implementation authorization is granted only upon its §8 approval after 7 / 7 blockers closed.
 
 ---
 
@@ -135,3 +135,4 @@ Sprint 0 scope is defined in `SPRINT_0_FOUNDATION_CHARTER.md` (GOV-S0FC-001).
 | 1.8 | 2026-07-25 | Gate A authorization record (GOV-GAIR-001) prepared; Gate B unchanged — 0/7 closed |
 | 1.9 | 2026-07-25 | Final architecture consistency review (KHAD-V1-FACR-001); ADR-001→032 |
 | 2.0 | 2026-07-25 | Gate A preparation package (GOV-FPRG-001) |
+| 2.1 | 2026-07-25 | Gate A transition & blocker execution package (GOV-GATC-001) |

@@ -90,6 +90,8 @@
 
 ---
 
+## 3. Remaining Risks
+
 | Risk | Severity | Mitigation |
 |------|----------|------------|
 | Design assets delayed | High | ADR-023 hard gate |
