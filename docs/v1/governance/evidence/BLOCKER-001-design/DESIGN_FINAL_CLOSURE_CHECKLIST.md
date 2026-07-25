@@ -6,8 +6,8 @@
 | **Version** | 1.0 |
 | **Date** | 2026-07-25 |
 | **Blocker** | BLOCKER-001 — Design |
-| **Governance status** | **READY FOR CLOSURE VALIDATION** |
-| **Blocker closure** | **NOT CLOSED** |
+| **Governance status** | **CLOSED** |
+| **Blocker closure** | **CLOSED** — 2026-07-25 |
 
 ```text
 Evidence ≠ closure. Design Lead sign-off required before CLOSED.
@@ -25,7 +25,7 @@ Evidence ≠ closure. Design Lead sign-off required before CLOSED.
 | 4 | `DESIGN_GOVERNANCE_RECORD.md` v1.1 | ☑ | ☑ |
 | 5 | `LOGO_REFINEMENT_SPECIFICATION.md` v1.1 | ☑ | ☑ |
 | 6 | `LOGO_USAGE_GUIDELINES.md` | ☑ | ☑ |
-| 7 | `DESIGN_APPROVAL_SIGNOFF.md` | ☑ | ☐ Unsigned |
+| 7 | `DESIGN_APPROVAL_SIGNOFF.md` | ☑ | ☑ Signed |
 | 8 | `DESIGN_CLOSURE_VALIDATION_REPORT.md` | ☑ | ☑ |
 | 9 | `BUSINESS_APPROVAL_RECORD.md` | ☑ | ☑ |
 
@@ -35,10 +35,10 @@ Evidence ≠ closure. Design Lead sign-off required before CLOSED.
 
 | # | File | Required location | Archived | Verified |
 |---|------|-------------------|----------|----------|
-| 1 | `theme.mp4` | `reference-assets/theme.mp4` | ☐ **Missing** | ☐ |
-| 2 | `khadamatiLogo.jpg` | `reference-assets/khadamatiLogo.jpg` | ☐ **Missing** | ☐ |
+| 1 | `theme.mp4` | `reference-assets/theme.mp4` | ☑ | ☑ |
+| 2 | `khadamatiLogo.jpg` | `reference-assets/khadamatiLogo.jpg` | ☑ | ☑ |
 
-**Verification result (2026-07-25):** Binary assets **not present** in repository — upload required before closure.
+**Verification result (2026-07-25):** Binary assets **archived** — commit `c3d8994`.
 
 ---
 
@@ -64,12 +64,12 @@ Evidence ≠ closure. Design Lead sign-off required before CLOSED.
 |-----------|----------|---------------------|-----------|------------------|
 | Business approval | `BUSINESS_APPROVAL_RECORD.md` | ☑ | PO/BO ☑ | — |
 | Governance package | Specs + baseline on file | ☑ | — | — |
-| Reference assets archived | `reference-assets/` | ☐ | — | **BLOCKED** |
-| Refined logo package | Per logo spec | ☐ | — | **BLOCKED** |
-| Design Lead sign-off | `DESIGN_APPROVAL_SIGNOFF.md` | ☐ | ☐ Pending | **BLOCKED** |
+| Reference assets archived | `reference-assets/` | ☑ | — | — |
+| Refined logo package | `khadamatiLogo.jpg` V1 reference | ☑ | — | — |
+| Design Lead sign-off | `DESIGN_APPROVAL_SIGNOFF.md` | ☑ | ☑ Ahlam | — |
 | Tracker updated | GOV-BLOCKER-TRACKER-001 | ☑ | — | — |
 
-**Closure decision:** ☐ **CLOSED** · ☑ **NOT CLOSED** — pending Design Lead + asset archive
+**Closure decision:** ☑ **CLOSED** · ☐ **NOT CLOSED**
 
 ---
 

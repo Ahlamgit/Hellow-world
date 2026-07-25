@@ -3,15 +3,15 @@
 | Field | Value |
 |-------|-------|
 | **Document ID** | EVD-001-SIGNOFF-001 |
-| **Version** | 1.0 |
+| **Version** | 1.1 |
 | **Date** | 2026-07-25 |
 | **Blocker** | BLOCKER-001 — Design |
-| **Closure artifact** | `DESIGN_APPROVAL_SIGNOFF_v1.0` (this document upon signature) |
-| **Status** | **READY FOR SIGNATURE** — blocker **NOT CLOSED** |
+| **Closure artifact** | `DESIGN_APPROVAL_SIGNOFF_v1.0` |
+| **Status** | **APPROVED** — Design Lead sign-off recorded |
 
 ```text
-Documentation ≠ blocker closure.
-This signoff is required before BLOCKER-001 may be marked CLOSED.
+Documentation ≠ implementation authorization.
+BLOCKER-001 closure review still required per GOV-BEMF-001.
 ```
 
 ---
@@ -23,13 +23,13 @@ This signoff is required before BLOCKER-001 may be marked CLOSED.
 | `DESIGN_APPROVAL_RECORD.md` | 1.2 | ☑ |
 | `DESIGN_FINAL_SPECIFICATION.md` | 1.0 | ☑ |
 | `DESIGN_SYSTEM_BASELINE.md` | 1.0 | ☑ |
-| `DESIGN_GOVERNANCE_RECORD.md` | 1.0 | ☑ |
+| `DESIGN_GOVERNANCE_RECORD.md` | 1.1 | ☑ |
 | `LOGO_REFINEMENT_SPECIFICATION.md` | 1.1 | ☑ |
 | `LOGO_USAGE_GUIDELINES.md` | 1.0 | ☑ |
-| `DESIGN_ASSET_REFERENCE.md` | 1.1 | ☑ |
-| Reference `theme.mp4` | — | ☐ Pending archive |
-| Reference `khadamatiLogo.jpg` | — | ☐ Pending archive |
-| Refined logo package | — | ☐ Pending delivery |
+| `DESIGN_ASSET_REFERENCE.md` | 1.2 | ☑ |
+| Reference `theme.mp4` | — | ☑ Archived |
+| Reference `khadamatiLogo.jpg` | — | ☑ Archived |
+| Refined logo package | — | ☑ **Approved** — V1 reference asset `khadamatiLogo.jpg` |
 
 ---
 
@@ -37,37 +37,38 @@ This signoff is required before BLOCKER-001 may be marked CLOSED.
 
 I confirm that:
 
-- [ ] The design evidence package aligns with approved business direction
-- [ ] `theme.mp4` is the authoritative visual reference
-- [ ] `khadamatiLogo.jpg` identity is preserved per refinement specification
-- [ ] Customer, Provider, and Administrator surfaces are specified per `DESIGN_FINAL_SPECIFICATION.md`
-- [ ] Design system baseline is sufficient for Gate A UI planning (implementation still blocked until blocker Closed)
-- [ ] Reference assets are archived in `reference-assets/` OR exception documented below
-- [ ] Refined logo package meets `LOGO_REFINEMENT_SPECIFICATION.md` deliverables
+- [x] The design evidence package aligns with approved business direction
+- [x] `theme.mp4` is the authoritative visual reference
+- [x] `khadamatiLogo.jpg` identity is preserved per refinement specification
+- [x] Customer, Provider, and Administrator surfaces are specified per `DESIGN_FINAL_SPECIFICATION.md`
+- [x] Design system baseline is sufficient for Gate A UI planning (implementation still blocked until Gate A)
+- [x] Reference assets are archived in `reference-assets/`
+- [x] Refined logo package — **V1 approved reference:** `khadamatiLogo.jpg` (identity preserved; additional export formats per `LOGO_REFINEMENT_SPECIFICATION.md` §3 at UI implementation kickoff)
 
 **Exception notes (if any):**
 
 ```text
-[None — or document approved exception]
+Design Lead accepts khadamatiLogo.jpg as approved V1 brand reference.
+Supplementary deliverables (SVG master, platform icon sets) to be produced during Sprint 0 UI wave — not a Gate B blocker.
 ```
 
 | Field | Value |
 |-------|-------|
-| **Design Lead name** | |
-| **Signature** | |
-| **Date** | |
-| **Decision** | ☐ **Approved** · ☐ **Rejected** (attach remediation notes) |
+| **Design Lead name** | **Ahlam** |
+| **Signature** | **Approved** (recorded 2026-07-25) |
+| **Date** | **2026-07-25** |
+| **Decision** | ☑ **Approved** · ☐ **Rejected** |
 
 ---
 
-## 3. Project Owner / Business Owner acknowledgment (if required by program)
+## 3. Project Owner / Business Owner acknowledgment
 
 | Field | Value |
 |-------|-------|
-| **Name** | |
-| **Signature** | |
-| **Date** | |
-| **Decision** | ☐ **Acknowledged** |
+| **Name** | **Ahlam** (Project Owner / Business Owner) |
+| **Signature** | **Acknowledged** (recorded 2026-07-25) |
+| **Date** | **2026-07-25** |
+| **Decision** | ☑ **Acknowledged** |
 
 ---
 
@@ -75,11 +76,11 @@ I confirm that:
 
 | Criterion | Met? |
 |-----------|------|
-| GOV-BEMF-001 evidence checklist complete | ☐ |
-| `APPROVAL_RECORD.md` updated to **Approved** | ☐ |
-| Tracker updated (GOV-BLOCKER-TRACKER-001) | ☐ |
+| GOV-BEMF-001 evidence checklist complete | ☑ |
+| `APPROVAL_RECORD.md` updated to **Approved** | ☑ |
+| Tracker updated (GOV-BLOCKER-TRACKER-001) | ☑ |
 
-**Until all criteria met:** BLOCKER-001 remains **NOT CLOSED**. UI implementation remains **BLOCKED** (ADR-023).
+**BLOCKER-001:** **APPROVED** — eligible for **CLOSED** status upon tracker closure event. **UI implementation remains BLOCKED** until Gate A (ADR-023).
 
 ---
 
@@ -88,3 +89,4 @@ I confirm that:
 | Version | Date | Change |
 |---------|------|--------|
 | 1.0 | 2026-07-25 | Signoff template — awaiting Design Lead signature |
+| 1.1 | 2026-07-25 | Design Lead + PO/BO approval recorded; assets archived |
