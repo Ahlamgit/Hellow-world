@@ -3,7 +3,7 @@
 | Field | Value |
 |-------|-------|
 | **Document ID** | GOV-RBCS-001 |
-| **Version** | 1.3 |
+| **Version** | 1.4 |
 | **Last updated** | 2026-07-25 |
 | **Gate** | B — NOT READY — CODING BLOCKED |
 | **Owner** | Program Governance Manager |
@@ -32,11 +32,11 @@
 | BLOCKER-002 | Stakeholder approval | **Ready for Approval** | Program Sponsor | `STAKEHOLDER_APPROVAL_REGISTER_v1.0` | Package prepared | — |
 | BLOCKER-003 | Vendor readiness | **Open** | Technical Lead / Integration Lead | `VENDOR_READINESS_DOSSIER_v1.0` | No | — |
 | BLOCKER-004 | Cloud readiness | **Open** | Technical Architect + DevOps Lead | `CLOUD_READINESS_DECISION_RECORD_v1.0` | No | — |
-| BLOCKER-005 | Finance configuration | **Open** | Finance + Business Operations | `FINANCE_RULE_MATRIX_v1.0` | No | — |
+| BLOCKER-005 | Finance configuration | **Ready for Approval** | Finance + Business Operations | `FINANCE_RULE_MATRIX_v1.0` | Package prepared | — |
 | BLOCKER-006 | Compliance approval | **Open** | Legal / Compliance Officer | `COMPLIANCE_APPROVAL_PACK_v1.0` | No | — |
 | BLOCKER-007 | Payment.js validation | **Open** | Technical Lead + Finance Ops | `PAYMENT_JS_VALIDATION_REPORT_v1.0` | No | — |
 
-**Summary:** 0 Closed · 6 Open · 1 Ready for Approval · 0 Under Review
+**Summary:** 0 Closed · 5 Open · 2 Ready for Approval · 0 Under Review
 
 ---
 
@@ -108,16 +108,20 @@
 
 ### BLOCKER-005 — Finance Configuration
 
-| Rule domain | Defined | Approved |
-|-------------|---------|----------|
-| Commission rules | No | No |
-| Subscription plans | No | No |
-| Withdrawal rules | No | No |
-| Settlement rules | No | No |
-| Cancellation rules | No | No |
-| Refund rules | No | No |
+**Status:** **READY FOR APPROVAL** (signatures and values pending)  
+**Package:** `evidence/BLOCKER-005-finance/FINANCE_POLICY_APPROVAL_PACKAGE.md` (EVD-005-PKG-001 v1.0)  
+**Financial architecture:** **APPROVED** · **Finance values:** **NOT APPROVED**
 
-**Constraint:** Admin configurable; no hardcoding.
+| Rule domain | Structure in package | Values approved | Signed |
+|-------------|-------------------|-----------------|--------|
+| Commission rules | Yes | Pending Business Decision | No |
+| Subscription plans | Yes | Pending Business Decision | No |
+| Cancellation rules | Yes | Pending Business Decision | No |
+| Refund rules | Yes | Pending Finance Decision | No |
+| Withdrawal rules | Yes | Pending Vendor/Finance Decision | No |
+| Settlement rules | Yes | Pending Finance Decision | No |
+
+**Constraint:** Admin configurable; no hardcoding. Closure requires `FINANCE_RULE_MATRIX_v1.0.md` from approved values.
 
 ---
 
@@ -168,7 +172,7 @@
 | 1 | **Distribute and obtain signatures on `STAKEHOLDER_APPROVAL_PACKAGE.md` (BLOCKER-002)** | Program Sponsor | Immediate |
 | 2 | Initiate compliance approval pack (BLOCKER-006) | Legal / Compliance | TBD |
 | 3 | Schedule design approval review (BLOCKER-001) | Design Lead | TBD |
-| 4 | Schedule finance rule workshop (BLOCKER-005) | Finance | TBD |
+| 4 | Schedule finance policy sign-off — `FINANCE_POLICY_APPROVAL_PACKAGE.md` (BLOCKER-005) | Finance + Business Owner | Immediate |
 
 Refer to `BLOCKER_CLOSURE_EXECUTION_PLAN.md` for phase sequencing and `BLOCKER_EVIDENCE_MANAGEMENT_FRAMEWORK.md` for submission and approval workflow.
 
@@ -184,3 +188,4 @@ Refer to `BLOCKER_CLOSURE_EXECUTION_PLAN.md` for phase sequencing and `BLOCKER_E
 | 1.1 | 2026-07-25 | Aligned with GOV-BCEP-001; no blockers closed |
 | 1.2 | 2026-07-25 | Linked GOV-BEMF-001 evidence framework; repository structure defined |
 | 1.3 | 2026-07-25 | BLOCKER-002 → Ready for Approval; stakeholder package prepared |
+| 1.4 | 2026-07-25 | BLOCKER-005 → Ready for Approval; finance policy package prepared |

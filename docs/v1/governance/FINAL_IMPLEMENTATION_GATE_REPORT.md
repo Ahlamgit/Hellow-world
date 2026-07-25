@@ -3,7 +3,7 @@
 | Field | Value |
 |-------|-------|
 | **Document ID** | GOV-FIGR-001 |
-| **Version** | 1.3 |
+| **Version** | 1.4 |
 | **Report date** | 2026-07-25 |
 | **Prepared by** | Program Governance Manager |
 
@@ -54,7 +54,8 @@ KHADAMATI remains blocked for all implementation activity. Seven pre-implementat
 | Requirement | Evidence | Approved By | Status |
 |-------------|----------|-------------|--------|
 | Architecture | ADR-001 → ADR-028 | Technical Architect | **Pending** |
-| Stakeholder | Stakeholder approval package | Program Sponsor | **Ready for Approval** |
+| Scope | Frozen scope + traceability matrix | Product Owner | **Pending** |
+| Stakeholder | `STAKEHOLDER_APPROVAL_PACKAGE.md` | Product / Business / Operations Owners | **Ready for Approval** |
 | Design | Design approval package | Design Lead + Product Owner | **Pending** |
 | Vendors | Vendor readiness dossier | Technical Lead | **Pending** |
 | Cloud | Cloud readiness decision record | Technical Architect + Ops | **Pending** |
@@ -112,3 +113,4 @@ KHADAMATI remains blocked for all implementation activity. Seven pre-implementat
 | 1.0 | — | Initial gate assessment (Gate B) |
 | 1.1 | 2026-07-25 | Updated for blocker closure execution plan; status reaffirmed Gate B |
 | 1.2 | 2026-07-25 | Linked evidence management framework (GOV-BEMF-001); Gate B unchanged |
+| 1.3 | 2026-07-25 | BLOCKER-002 stakeholder package prepared — Ready for Approval; 0/7 closed |
