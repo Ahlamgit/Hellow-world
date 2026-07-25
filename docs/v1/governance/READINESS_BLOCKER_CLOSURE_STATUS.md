@@ -3,7 +3,8 @@
 | Field | Value |
 |-------|-------|
 | **Document ID** | GOV-RBCS-001 |
-| **Version** | 3.8 |
+| **Version** | 3.9 |
+| **Closure execution** | `GATE_B_CLOSURE_EXECUTION_STATUS.md` (GOV-GATE-B-CLOSURE-001) |
 | **Evidence completion** | `GATE_B_EVIDENCE_COMPLETION_REPORT.md` (GOV-GATE-B-EVIDENCE-001) |
 | **Blockers closed** | **1 / 7** |
 | **Last updated** | 2026-07-25 |

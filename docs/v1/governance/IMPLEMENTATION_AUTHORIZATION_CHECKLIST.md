@@ -3,7 +3,8 @@
 | Field | Value |
 |-------|-------|
 | **Document ID** | GOV-IACL-001 |
-| **Version** | 1.8 |
+| **Version** | 1.9 |
+| **Closure execution** | GOV-GATE-B-CLOSURE-001 |
 | **Evidence completion** | GOV-GATE-B-EVIDENCE-001 |
 | **Gate** | B — NOT READY — CODING BLOCKED |
 | **Last updated** | 2026-07-25 |

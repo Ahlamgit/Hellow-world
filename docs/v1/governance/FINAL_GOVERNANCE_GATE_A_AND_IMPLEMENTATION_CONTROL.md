@@ -4,7 +4,8 @@
 |-------|-------|
 | **Document ID** | GOV-MASTER-CTRL-001 |
 | **Apex authorization prompt** | GOV-MASTER-IMPL-AUTH-001 v1.1 (`MASTER_GOVERNANCE_CONTROLLED_IMPLEMENTATION_AUTHORIZATION_PROMPT.md`) |
-| **Version** | 2.1 |
+| **Version** | 2.2 |
+| **Closure execution** | GOV-GATE-B-CLOSURE-001 |
 | **Evidence completion** | GOV-GATE-B-EVIDENCE-001 |
 | **Date** | 2026-07-25 |
 | **Owner** | Program Governance Manager · Technical Program Manager |
@@ -190,7 +191,7 @@ Each folder: `README.md` · `APPROVAL_RECORD.md` · `EVIDENCE_CHECKLIST.md`
 
 **Progress:** **1 / 7 CLOSED** · **6 / 7 Evidence Prepared** (human/technical approval pending)
 
-**Report:** `GATE_B_EVIDENCE_COMPLETION_REPORT.md` (GOV-GATE-B-EVIDENCE-001)
+**Report:** `GATE_B_CLOSURE_EXECUTION_STATUS.md` (GOV-GATE-B-CLOSURE-001)
 
 ---
 
