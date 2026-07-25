@@ -10,8 +10,8 @@
 | **Organization** | KHADAMATI |
 | **Date** | **2026-07-25** |
 | **Approval type** | Business compliance governance direction |
-| **Version Reviewed** | `COMPLIANCE_APPROVAL_PACKAGE.md` · `BUSINESS_APPROVAL_RECORD.md` |
-| **Comments** | Compliance governance direction approved. **Retention durations NOT approved** — pending Legal. Full §10 signatures pending. |
+| **Version Reviewed** | `COMPLIANCE_APPROVAL_PACKAGE.md` · `BUSINESS_APPROVAL_RECORD.md` v1.1 |
+| **Comments** | PO/BO compliance governance direction **APPROVED**: data protection approach; retention policy process. **Retention durations NOT approved** — pending Legal. Legal + TA signatures pending. |
 | **Signature / Confirmation** | **Recorded — 2026-07-25** |
 
 ### Decision options

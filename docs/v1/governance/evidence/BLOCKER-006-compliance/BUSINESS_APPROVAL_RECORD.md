@@ -3,33 +3,52 @@
 | Field | Value |
 |-------|-------|
 | **Document ID** | EVD-006-BUSINESS-001 |
+| **Version** | 1.1 |
 | **Blocker** | BLOCKER-006 — Compliance |
 | **Decision** | **APPROVED** (compliance governance direction) |
 | **Approver** | Project Owner / Business Owner |
 | **Date** | 2026-07-25 |
-| **Blocker closure** | **NOT CLOSED** — Legal retention values · full §10 signatures pending |
+| **Consolidation** | [BUSINESS_APPROVAL_CONSOLIDATION_RECORD.md](../../BUSINESS_APPROVAL_CONSOLIDATION_RECORD.md) |
+| **Blocker closure** | **NOT CLOSED** — Legal retention values · Legal + TA signatures pending |
 
 ---
 
-## Approved compliance governance direction
+## Approved (business direction)
+
+| Area | Status |
+|------|--------|
+| Compliance governance direction | **Approved** |
+| Data protection approach | **Approved** (framework — Legal validates) |
+| Retention policy **process** | **Approved** (durations pending Legal) |
+
+---
+
+## Approved compliance governance rules
 
 | Rule | Confirmation |
 |------|--------------|
 | Administrator manages compliance workflows | ☑ |
-| Project Owner approves business compliance decisions | ☑ |
+| Project Owner / Business Owner approves business compliance decisions | ☑ |
 | Technical implementation follows approved policies | ☑ |
 | Audit evidence must be maintained | ☑ |
 
 ---
 
-## Retention values
+## Retention values — NOT APPROVED HERE
 
-**Legal-specific retention durations are NOT approved in this record.**
+**Do NOT invent retention periods.**
 
-Retention values remain **pending Legal / Compliance** per `DATA_RETENTION_POLICY.md` — engineering must not assume durations.
+| Item | Status |
+|------|--------|
+| Legal retention durations | **Pending Legal / Compliance** |
+| Final retention values | **Pending** |
+| Legal signature | **Pending** |
+| Technical Architect signature | **Pending** |
+
+Engineering must not assume durations per `DATA_RETENTION_POLICY.md`.
 
 ---
 
 ## Closure note
 
-Business compliance direction approved. **BLOCKER-006 remains open** until Legal completes retention table and full compliance signatures per `COMPLIANCE_APPROVAL_PACKAGE.md` §10.
+PO/BO compliance governance direction approved. **BLOCKER-006 remains open** until Legal completes retention table, required signatures, and `COMPLIANCE_APPROVAL_PACK_v1.0` per GOV-BEMF-001.

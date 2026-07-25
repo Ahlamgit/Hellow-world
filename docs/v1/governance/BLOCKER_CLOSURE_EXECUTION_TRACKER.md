@@ -3,13 +3,13 @@
 | Field | Value |
 |-------|-------|
 | **Document ID** | GOV-BLOCKER-TRACKER-001 |
-| **Version** | 2.2 |
+| **Version** | 2.3 |
 | **Date** | 2026-07-25 |
 | **Owner** | Program Execution Manager |
 | **Gate** | **B — NOT READY — CODING BLOCKED** |
 | **Previous gate note** | Gate A transition activities recorded; authorization state unchanged |
-| **Blockers closed** | **1 / 7** |
-| **Business consolidation** | GOV-BUSINESS-APPROVAL-001 — PO/BO approvals recorded for 001, 005, 006, 007 (not auto-closed) |
+| **Blockers closed** | **1 / 7** (BLOCKER-002); **6 / 7** pending evidence validation |
+| **Business consolidation** | GOV-BUSINESS-APPROVAL-001 v1.1 — PO/BO business approvals **APPROVED** for 001, 002, 005, 006, 007 |
 | **Role correction** | GOV-BLOCKER-002-ROLE-CORR-001 |
 | **Status** | **Active — Gate A transition execution** |
 
@@ -60,13 +60,13 @@ This tracker is the **operational working document** for closing BLOCKER-001 thr
 
 | ID | Name | Owner | Current status | Required evidence | Gate impact |
 |----|------|-------|----------------|-------------------|-------------|
-| **BLOCKER-001** | Design | Design Lead + PO/BO | **Under Review** — PO/BO business **approved** | `BUSINESS_APPROVAL_RECORD.md` ✓ · Design Lead + assets · `DESIGN_APPROVAL_SIGNOFF_v1.0` | Blocks **all UI** (ADR-023); Sprint 0 Wave 4 |
+| **BLOCKER-001** | Design | Design Lead + PO/BO | **Under Review** — PO/BO **APPROVED** | `BUSINESS_APPROVAL_RECORD.md` v1.1 ✓ · reference assets · Design Lead · `DESIGN_APPROVAL_SIGNOFF_v1.0` | Blocks **all UI** (ADR-023); Sprint 0 Wave 4 |
 | **BLOCKER-002** | Stakeholder | Project Owner / Business Owner | **Closed** | `BLOCKER_002_CLOSURE_RECORD.md` · 2/2 approvals | **Closed** — 2026-07-25 |
 | **BLOCKER-003** | Vendors | Integration Lead | **Open** — `CLOSURE_READINESS.md` prepared | Vendor evaluation · Selected vendors · Sandbox · `VENDOR_READINESS_DOSSIER_v1.0` | Blocks **integrations** |
 | **BLOCKER-004** | Cloud | Technical Architect + DevOps Lead | **Open** — `CLOSURE_READINESS.md` prepared | Hosting · Budget · Backup/DR · `CLOUD_READINESS_DECISION_RECORD_v1.0` | Blocks **environment planning** |
-| **BLOCKER-005** | Finance | Finance + PO/BO | **Under Review** — PO/BO business **approved** | `BUSINESS_APPROVAL_RECORD.md` ✓ · Finance matrix · Finance attestation · `FINANCE_RULE_MATRIX_v1.0` | Blocks **settlement/payment rules** |
-| **BLOCKER-006** | Compliance | Legal + Technical Architect | **Under Review** — PO/BO direction **approved** | `BUSINESS_APPROVAL_RECORD.md` ✓ · Retention (Legal) · Legal + TA signatures · `COMPLIANCE_APPROVAL_PACK_v1.0` | Blocks **data lifecycle / domain schema** |
-| **BLOCKER-007** | Payment.js validation | PO/BO + Technical Architect | **Under Review** — PO/BO business **approved** | `BUSINESS_APPROVAL_RECORD.md` ✓ · Sandbox · Webhook · `PAYMENT_JS_VALIDATION_REPORT_v1.0` | Blocks **booking payment** |
+| **BLOCKER-005** | Finance | Finance + PO/BO | **Under Review** — PO/BO **APPROVED** | `BUSINESS_APPROVAL_RECORD.md` v1.1 ✓ · Finance matrix · Finance attestation | Blocks **settlement/payment rules** |
+| **BLOCKER-006** | Compliance | Legal + Technical Architect | **Under Review** — PO/BO direction **APPROVED** | `BUSINESS_APPROVAL_RECORD.md` v1.1 ✓ · Legal retention (not invented) · Legal + TA signatures | Blocks **data lifecycle / domain schema** |
+| **BLOCKER-007** | Payment.js validation | PO/BO + Technical Architect | **Under Review** — PO/BO **APPROVED** | `BUSINESS_APPROVAL_RECORD.md` v1.1 ✓ · sandbox · webhook · TA attestation | Blocks **booking payment** |
 
 ### Evidence package paths
 
@@ -344,13 +344,14 @@ If a blocker is **delayed** beyond agreed target:
 
 ### Immediate execution focus
 
-1. Complete BLOCKER-006 — Legal retention values (do not invent) + Legal/TA signatures  
-2. Complete BLOCKER-001 — Design Lead attestation + assets + closure artifact  
-3. Complete BLOCKER-005 — Finance matrix + Finance attestation  
-4. Execute BLOCKER-003 vendor validation + BLOCKER-004 cloud validation  
-5. Execute BLOCKER-007 sandbox/webhook/TA validation (after 003/005 dependencies)  
+1. **BLOCKER-001** — evidence completion (reference assets, Design Lead, signoff)  
+2. **BLOCKER-003** — vendor validation (dossier, integration, TA approval)  
+3. **BLOCKER-004** — cloud validation (hosting, security, backup/DR, DevOps)  
+4. **BLOCKER-005** — finance evidence completion (matrix, Finance attestation)  
+5. **BLOCKER-006** — legal finalization (retention values — **do not invent** — Legal + TA)  
+6. **BLOCKER-007** — technical payment validation (sandbox, webhook, TA)  
 
-**Business consolidation:** [BUSINESS_APPROVAL_CONSOLIDATION_RECORD.md](./BUSINESS_APPROVAL_CONSOLIDATION_RECORD.md) (GOV-BUSINESS-APPROVAL-001)
+**Business consolidation:** [BUSINESS_APPROVAL_CONSOLIDATION_RECORD.md](./BUSINESS_APPROVAL_CONSOLIDATION_RECORD.md) (GOV-BUSINESS-APPROVAL-001 v1.1) — PO/BO business approvals **APPROVED** for 001, 002, 005, 006, 007; **documentation ≠ approval ≠ closure**.
 
 ---
 
@@ -361,6 +362,7 @@ If a blocker is **delayed** beyond agreed target:
 | 2026-07-25 | — | Tracker initialized — 0 / 7 closed | Program Execution Manager |
 | 2026-07-25 | BLOCKER-002 | **CLOSED** — 2/2 PO/BO + Administrator | Program Execution Manager |
 | 2026-07-25 | 001, 005, 006, 007 | PO/BO business approvals recorded (GOV-BUSINESS-APPROVAL-001); blockers remain open | Program Execution Manager |
+| 2026-07-25 | 001, 005, 006, 007 | GOV-BUSINESS-APPROVAL-001 **v1.1** — expanded business evidence; remaining validation matrix | Program Execution Manager |
 
 *Add a row within 1 business day of any blocker status change.*
 
@@ -383,5 +385,6 @@ If a blocker is **delayed** beyond agreed target:
 | 2.0 | 2026-07-25 | BLOCKER-002 closed; 1/7; Gate B |
 | 2.1 | 2026-07-25 | Role correction sync (GOV-BLOCKER-002-ROLE-CORR-001) |
 | 2.2 | 2026-07-25 | GOV-BUSINESS-APPROVAL-001 — PO/BO business approvals for 001, 005, 006, 007 |
+| 2.3 | 2026-07-25 | GOV-BUSINESS-APPROVAL-001 v1.1 — expanded evidence; remaining blocking items matrix |
 
 **Sync with:** GOV-RBCS-001 on every closure event.

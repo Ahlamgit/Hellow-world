@@ -4,8 +4,8 @@
 
 | # | Item | Evidence on file | Approved |
 |---|------|------------------|----------|
-| 1 | `BUSINESS_APPROVAL_RECORD.md` — PO/BO design direction | ☑ | ☑ |
-| 2 | Logo assets approved | ☐ | ☐ |
+| 1 | `BUSINESS_APPROVAL_RECORD.md` v1.1 — PO/BO design direction (theme, surfaces, principles) | ☑ | ☑ |
+| 2 | Reference video/assets archived | ☐ | ☐ |
 | 3 | Design system approved | ☐ | ☐ |
 | 4 | UI/UX specification approved | ☐ | ☐ |
 | 5 | Design Lead attestation | ☐ | ☐ |

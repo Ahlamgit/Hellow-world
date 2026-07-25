@@ -45,15 +45,15 @@
 
 | Blocker | Description | Status | Owner | Closure artifact | Evidence received | Approved date |
 |---------|-------------|--------|-------|------------------|-------------------|---------------|
-| BLOCKER-001 | Design approval | **Under Review** — PO/BO business approved | Design Lead + PO/BO | `DESIGN_APPROVAL_SIGNOFF_v1.0` | Package + `BUSINESS_APPROVAL_RECORD.md` | 2026-07-25 (partial) |
+| BLOCKER-001 | Design approval | **Under Review** — PO/BO **APPROVED** | Design Lead + PO/BO | `DESIGN_APPROVAL_SIGNOFF_v1.0` | `BUSINESS_APPROVAL_RECORD.md` v1.1 | 2026-07-25 (business) |
 | BLOCKER-002 | Stakeholder approval | **Closed** | Project Owner / Business Owner | `BLOCKER_002_CLOSURE_RECORD.md` | 2/2 complete | 2026-07-25 |
 | BLOCKER-003 | Vendor readiness | **Open** | Technical Lead / Integration Lead | `VENDOR_READINESS_DOSSIER_v1.0` | `CLOSURE_READINESS.md` prepared | — |
 | BLOCKER-004 | Cloud readiness | **Open** | Technical Architect + DevOps Lead | `CLOUD_READINESS_DECISION_RECORD_v1.0` | `CLOSURE_READINESS.md` prepared | — |
-| BLOCKER-005 | Finance configuration | **Under Review** — PO/BO business approved | Finance + PO/BO | `FINANCE_RULE_MATRIX_v1.0` | Package + `BUSINESS_APPROVAL_RECORD.md` | 2026-07-25 (partial) |
-| BLOCKER-006 | Compliance approval | **Under Review** — PO/BO direction approved | Legal + Technical Architect | `COMPLIANCE_APPROVAL_PACK_v1.0` | `BUSINESS_APPROVAL_RECORD.md`; Legal pending | 2026-07-25 (partial) |
-| BLOCKER-007 | Payment.js validation | **Under Review** — PO/BO business approved | PO/BO + Technical Architect | `PAYMENT_JS_VALIDATION_REPORT_v1.0` | `BUSINESS_APPROVAL_RECORD.md`; sandbox pending | 2026-07-25 (partial) |
+| BLOCKER-005 | Finance configuration | **Under Review** — PO/BO **APPROVED** | Finance + PO/BO | `FINANCE_RULE_MATRIX_v1.0` | `BUSINESS_APPROVAL_RECORD.md` v1.1 | 2026-07-25 (business) |
+| BLOCKER-006 | Compliance approval | **Under Review** — PO/BO direction **APPROVED** | Legal + Technical Architect | `COMPLIANCE_APPROVAL_PACK_v1.0` | `BUSINESS_APPROVAL_RECORD.md` v1.1; Legal pending | 2026-07-25 (business) |
+| BLOCKER-007 | Payment.js validation | **Under Review** — PO/BO **APPROVED** | PO/BO + Technical Architect | `PAYMENT_JS_VALIDATION_REPORT_v1.0` | `BUSINESS_APPROVAL_RECORD.md` v1.1; technical pending | 2026-07-25 (business) |
 
-**Summary:** **1 Closed** · 2 Open · 4 Under Review · **Phase 1:** **1 / 2** closed
+**Summary:** **1 Closed** · 2 Open · 4 Under Review · **PO/BO business approvals:** 001, 002, 005, 006, 007 **APPROVED** · **6 blockers** pending evidence closure toward Gate A
 
 ---
 
@@ -61,7 +61,7 @@
 
 ### BLOCKER-001 — Design
 
-**Status:** **UNDER REVIEW** — PO/BO business design **approved** 2026-07-25; Design Lead + assets pending  
+**Status:** **UNDER REVIEW** — PO/BO business design **APPROVED** 2026-07-25 (v1.1: reference video/assets theme, Lebanon baseline, multi-region, three surfaces approved)  
 **Package:** `evidence/BLOCKER-001-design/DESIGN_APPROVAL_PACKAGE.md` (EVD-001-PKG-001 v1.0)  
 **Business approval:** `BUSINESS_APPROVAL_RECORD.md`  
 **Evidence trio:** `README.md` · `APPROVAL_RECORD.md` · `EVIDENCE_CHECKLIST.md`
@@ -258,3 +258,4 @@ Refer to `BLOCKER_CLOSURE_EXECUTION_TRACKER.md` (GOV-BLOCKER-TRACKER-001) for op
 | 3.2 | 2026-07-25 | BLOCKER-002 closed; 1/7; role correction |
 | 3.3 | 2026-07-25 | Gate B reaffirmed; tracker sync |
 | 3.4 | 2026-07-25 | GOV-BUSINESS-APPROVAL-001 — PO/BO business approvals for 001, 005, 006, 007 |
+| 3.5 | 2026-07-25 | GOV-BUSINESS-APPROVAL-001 v1.1 — expanded business evidence; remaining validation matrix |

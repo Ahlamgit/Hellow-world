@@ -47,6 +47,15 @@ Checklist for **Gate A — READY FOR IMPLEMENTATION** authorization. All items m
 
 **Rule:** No item may be marked complete without evidence per `BLOCKER_EVIDENCE_MANAGEMENT_FRAMEWORK.md` §1.3.
 
+### Remaining blocking items (post–business approval)
+
+1. BLOCKER-001 — evidence completion  
+2. BLOCKER-003 — vendor validation  
+3. BLOCKER-004 — cloud validation  
+4. BLOCKER-005 — finance evidence completion  
+5. BLOCKER-006 — legal finalization (retention values — Legal only)  
+6. BLOCKER-007 — technical payment validation  
+
 ---
 
 ## Gate A Authorization Checklist
@@ -100,3 +109,4 @@ Checklist for **Gate A — READY FOR IMPLEMENTATION** authorization. All items m
 | 1.2 | 2026-07-25 | Traceability precondition (P-06, A-13); blocker package status sync; scope baseline availability (P-07) |
 | 1.3 | 2026-07-25 | BLOCKER-002 closed; 1/7 |
 | 1.4 | 2026-07-25 | GOV-BUSINESS-APPROVAL-001 — PO/BO partial approvals for 001, 005, 006, 007 |
+| 1.5 | 2026-07-25 | GOV-BUSINESS-APPROVAL-001 v1.1 — remaining blocking items matrix |

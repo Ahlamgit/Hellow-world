@@ -9,8 +9,8 @@
 | **Role** | Project Owner / Business Owner (unified) |
 | **Organization** | KHADAMATI |
 | **Date** | **2026-07-25** |
-| **Version Reviewed** | `FINANCE_POLICY_APPROVAL_PACKAGE.md` v1.0 · `BUSINESS_APPROVAL_RECORD.md` |
-| **Comments** | Commission model and subscription pricing approved at business level. Finance matrix values and Finance attestation still required. |
+| **Version Reviewed** | `FINANCE_POLICY_APPROVAL_PACKAGE.md` v1.0 · `BUSINESS_APPROVAL_RECORD.md` v1.1 |
+| **Comments** | PO/BO business finance **APPROVED**: marketplace commission model (configurable); provider and store/service advertising subscriptions; administrator pricing configuration post-implementation; no new pricing features. Finance matrix and Finance attestation still required. |
 | **Signature / Confirmation** | **Recorded — 2026-07-25** |
 
 ### Decision options

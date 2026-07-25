@@ -153,7 +153,7 @@ Gate B remains until Gate A ceremony (7/7 blockers + GOV-GAIR-001 §8).
 | Date | Action | Owner | Result | Next step |
 |------|--------|-------|--------|-----------|
 | 2026-07-25 | BLOCKER-002 **CLOSED** — Administrator Governance Acceptance | Governance Architect | 2/2 approvals; `BLOCKER_002_CLOSURE_RECORD.md` filed | BLOCKER-006 compliance finalization |
-| 2026-07-25 | GOV-BUSINESS-APPROVAL-001 — PO/BO business approvals recorded (001, 005, 006, 007) | Governance Architect | Evidence updated; blockers not auto-closed | Complete evidence validation per blocker |
+| 2026-07-25 | GOV-BUSINESS-APPROVAL-001 v1.1 — expanded PO/BO evidence (design, finance, compliance direction, payment flow) | Governance Architect | Recorded; blockers not auto-closed | Execute remaining non-business validation per consolidation §5 |
 | — | Schedule Legal retention workshop (BLOCKER-006 §2) | Legal / Compliance Officer | *Pending* | Complete retention table before Legal/TA signatures |
 
 ---
@@ -227,6 +227,7 @@ No code. No implementation. No architecture changes.
 | 1.0 | 2026-07-25 | Initial Phase 1 approval tracking register — campaign open |
 | 1.1 | 2026-07-25 | Scope baseline restored; BLOCKER-002 register + BLOCKER-006 policy docs prepared |
 | 1.2 | 2026-07-25 | BLOCKER-002 closed sync; GOV-BUSINESS-APPROVAL-001 PO/BO direction for BLOCKER-006 |
+| 1.3 | 2026-07-25 | GOV-BUSINESS-APPROVAL-001 v1.1 — expanded business approval evidence sync |
 
 Amend §2, §3, §4, and §5 within **1 business day** of any distribution, signature, or escalation event.
 

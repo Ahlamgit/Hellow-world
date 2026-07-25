@@ -9,8 +9,8 @@
 | **Role** | Project Owner / Business Owner (unified) |
 | **Organization** | KHADAMATI |
 | **Date** | **2026-07-25** |
-| **Version Reviewed** | `BUSINESS_APPROVAL_RECORD.md` · payment frameworks |
-| **Comments** | Business payment flow approved. Technical sandbox, webhook, and validation evidence still required. |
+| **Version Reviewed** | `BUSINESS_APPROVAL_RECORD.md` v1.1 · payment frameworks |
+| **Comments** | PO/BO business payment flow **APPROVED**: booking → Areeba IXOPAY Payment.js → confirmation → ledger; provider settlement per financial architecture. Sandbox, webhook, and technical validation evidence still required. |
 | **Signature / Confirmation** | **Recorded — 2026-07-25** |
 
 ### Decision options
