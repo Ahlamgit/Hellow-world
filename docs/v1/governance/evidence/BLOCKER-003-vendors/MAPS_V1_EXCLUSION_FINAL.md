@@ -3,7 +3,7 @@
 | Field | Value |
 |-------|-------|
 | **Document ID** | EVD-003-MAPS-EXCL-FINAL-001 |
-| **Version** | 1.0 |
+| **Version** | 1.1 |
 | **Date** | 2026-07-25 |
 | **Supersedes** | `MAPS_V1_EXCLUSION_RECORD.md` (v1.2) — canonical final statement |
 | **Decision** | **NOT APPROVED FOR V1** |
@@ -18,9 +18,9 @@ Future versions may consider maps/location ONLY under separate governance approv
 
 ## 1. Final decision
 
-Maps and location capabilities are **intentionally excluded** from KHADAMATI V1 scope.
+Maps and location capabilities are **intentionally excluded** from KHADAMATI V1 **release** scope.
 
-Architecture may remain **future-ready** through ports/adapters patterns. **V1 implementation must contain NO maps or geolocation dependency.**
+**Localhost-only dev exception:** `MAPS_LOCALHOST_TESTING_EXCEPTION.md` — PO will order removal of map features before launch.
 
 ---
 
@@ -68,7 +68,9 @@ Maps and location **may be considered in future product versions only**, subject
 | `VENDOR_APPROVAL_MATRIX.md` | Vendor category matrix |
 | `FINAL_SCOPE_BASELINE.md` | Scope freeze (BLOCKER-002) |
 
-**BLOCKER-003 NOT CLOSED** until vendor dossier, security review, and IL + TA signatures per `VENDOR_CLOSURE_VALIDATION_REPORT.md`.
+**BLOCKER-003 CLOSED** — see `BLOCKER_003_CLOSURE_RECORD.md`.
+
+**Localhost testing updates (v1.1):** local storage · SMS pass · maps dev exception — `VENDOR_LOCALHOST_TESTING_STRATEGY.md` · `MAPS_LOCALHOST_TESTING_EXCEPTION.md`
 
 ---
 
@@ -77,3 +79,4 @@ Maps and location **may be considered in future product versions only**, subject
 | Version | Date | Change |
 |---------|------|--------|
 | 1.0 | 2026-07-25 | Final maps V1 exclusion statement — Gate B evidence finalization |
+| 1.1 | 2026-07-25 | Addendum: localhost dev exception does NOT change V1 release exclusion |
