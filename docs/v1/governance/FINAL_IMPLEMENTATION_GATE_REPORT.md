@@ -17,7 +17,7 @@
 | **Target gate** | A — READY FOR IMPLEMENTATION |
 | **Implementation authorization** | **DENIED** |
 
-KHADAMATI remains blocked for all implementation activity. **Master control:** `FINAL_GOVERNANCE_GATE_A_AND_IMPLEMENTATION_CONTROL.md` (GOV-MASTER-CTRL-001) — **REMAIN GATE B**. Seven pre-implementation blockers are open. **Phase 1 tracking:** GOV-P1-TRACK-001. **Operational tracker:** GOV-BLOCKER-TRACKER-001. **Audit:** GOV-GA-AUDIT-001 — remain Gate B. Gate A instrument GOV-GAIR-001 — Draft, unsigned; authorization only after 7/7 blockers closed.
+KHADAMATI remains blocked. **Architecture compliance:** GOV-ARCH-READINESS-001 — PASS. **Master control:** GOV-MASTER-CTRL-001 — REMAIN GATE B. **Phase 1:** GOV-P1-TRACK-001 (0/6 signatures). **Ceremony:** GOV-GA-CEREMONY-001 — not schedulable. **0/7 closed**; GOV-GAIR-001 unsigned.
 
 ---
 
@@ -145,3 +145,4 @@ Sprint 0 scope is defined in `SPRINT_0_FOUNDATION_CHARTER.md` (GOV-S0FC-001).
 | 2.8 | 2026-07-25 | Phase 1 approval execution pack (GOV-P1-EXEC-001) |
 | 2.9 | 2026-07-25 | Phase 1 approval tracking register (GOV-P1-TRACK-001) |
 | 3.0 | 2026-07-25 | Master governance control document (GOV-MASTER-CTRL-001) |
+| 3.1 | 2026-07-25 | Architecture compliance register (GOV-ARCH-READINESS-001); traceability in GOV-IACL-001 |

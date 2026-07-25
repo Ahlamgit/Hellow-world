@@ -3,7 +3,7 @@
 | Field | Value |
 |-------|-------|
 | **Document ID** | GOV-MASTER-CTRL-001 |
-| **Version** | 1.2 |
+| **Version** | 1.3 |
 | **Date** | 2026-07-25 |
 | **Owner** | Program Governance Manager · Technical Program Manager |
 | **Gate** | **B — NOT READY — CODING BLOCKED** |
@@ -178,7 +178,7 @@ Each folder: `README.md` · `APPROVAL_RECORD.md` · `EVIDENCE_CHECKLIST.md`
 | ID | Name | Status | Owner | Evidence |
 |----|------|--------|-------|----------|
 | **BLOCKER-001** | Design | **Ready for Approval** | Design Lead + PO | `evidence/BLOCKER-001-design/` |
-| **BLOCKER-002** | Stakeholder | **Ready for Signature** | Program Sponsor | `evidence/BLOCKER-002-stakeholder/` |
+| **BLOCKER-002** | Stakeholder | **Ready for Approval** | Program Sponsor | `evidence/BLOCKER-002-stakeholder/` |
 | **BLOCKER-003** | Vendors | **Open** | Integration Lead | `evidence/BLOCKER-003-vendors/` |
 | **BLOCKER-004** | Cloud | **Open** | Architect + DevOps | `evidence/BLOCKER-004-cloud/` |
 | **BLOCKER-005** | Finance | **Ready for Approval** | Finance + Business Ops | `evidence/BLOCKER-005-finance/` |
@@ -242,15 +242,53 @@ Before implementation authorization, **all** must be true:
 
 ### Sprint 0 (after Gate A only — GOV-S0FC-001)
 
-| Allowed | Not allowed |
-|---------|-------------|
-| Foundation, repository setup | Payment implementation |
-| CI/CD foundation | Booking completion |
-| Backend skeleton | Settlement |
-| Auth + RBAC foundation | Production deployment |
-| Migration tooling, logging, localization | Feature expansion |
+| Wave | Allowed (after Gate A) | Blocker / gate |
+|------|------------------------|----------------|
+| **Wave 1** | Repository setup · CI/CD foundation · Backend skeleton | Gate A |
+| **Wave 2** | Authentication foundation · RBAC foundation · Migration tooling · Logging foundation | Gate A |
+| **Wave 3** | Localization foundation | Gate A |
+| **Wave 4** | Design system · Application shells | Gate A **and** BLOCKER-001 **Closed** |
 
-### Conditional implementation gates
+**Sprint 0 exclusions (never before Gate A):** Payment · booking completion · settlement · production deployment · feature expansion
+
+| Also not allowed in Sprint 0 | Reference |
+|------------------------------|-----------|
+| Customer/provider wallet UI | Finance governance |
+| Manual financial adjustments | ADR-013 |
+| Gateway split payment · instant withdrawal | Scope / finance exclusions |
+
+---
+
+## 10.1 Design governance (BLOCKER-001)
+
+| Before BLOCKER-001 Closed | After BLOCKER-001 Closed (and Gate A) |
+|---------------------------|--------------------------------------|
+| No Flutter UI implementation | Design system allowed |
+| No React UI implementation | App shells allowed |
+| No design system code | UI foundations allowed |
+| Governance packages only | ADR-023 satisfied |
+
+---
+
+## 10.2 Finance governance (BLOCKER-005)
+
+Customer experience remains simple (ADR-029). Internal: ledger, commission, settlement, reporting.
+
+**V1 excludes (governance):** customer wallet · provider wallet UI · manual financial adjustments · gateway split payment · instant withdrawal
+
+---
+
+## 10.3 Compliance governance (BLOCKER-006)
+
+**Data classification categories (approval pending):** Personal · Identity/KYC · Financial · Operational · Audit
+
+**Retention periods:** **PENDING LEGAL / COMPLIANCE APPROVAL** — never invent durations.
+
+**Access control:** RBAC · least privilege · audit logging · Admin web only · MFA required · no mobile admin app.
+
+---
+
+## 10.4 Conditional implementation gates
 
 | Activity | Requires |
 |----------|----------|
@@ -275,17 +313,22 @@ Before implementation authorization, **all** must be true:
 
 ## 12. Standard execution response format
 
-Every governance execution response **must** state:
+Every governance execution response **must** include:
 
 | Field | Current value |
 |-------|---------------|
-| **Current Gate** | **Gate B — NOT READY — CODING BLOCKED** |
-| **Implementation** | **Not Authorized** |
-| **Blockers** | **Closed 0 / 7** |
-| **Changes** | **Governance only** |
-| **Next Allowed Action** | Execute Phase 1 approval campaign (GOV-P1-EXEC-001, GOV-P1-TRACK-001); collect BLOCKER-002 signatures; schedule BLOCKER-006 legal retention workshop |
+| **Current Gate** | Gate B — NOT READY — CODING BLOCKED |
+| **Implementation Status** | NOT AUTHORIZED |
+| **Blockers** | Closed 0 / 7 |
+| **Executed Action** | *(describe governance action completed)* |
+| **Files Created/Updated** | *(list paths or None)* |
+| **Architecture Impact** | None — architecture APPROVED & VALIDATED; no ADR changes |
+| **Scope Impact** | None — scope FROZEN; no feature additions |
+| **Next Allowed Action** | Phase 1 approval campaign; human signatures required |
 
-No exceptions.
+**Canonical control prompt:** `KHADAMATI_GOVERNANCE_CONTROL_PROMPT.md` (GOV-CONTROL-PROMPT-001)
+
+No exceptions. No shortcuts. No coding before Gate A.
 
 ---
 
@@ -296,6 +339,7 @@ No exceptions.
 | 1.0 | 2026-07-25 | Initial master governance, Gate A readiness, and implementation control document |
 | 1.1 | 2026-07-25 | Gate A ceremony prep + Phase 1 roadmap status references |
 | 1.2 | 2026-07-25 | Traceability Gate A requirement; GOV-ARCH-READINESS-001 reference |
+| 1.3 | 2026-07-25 | Sprint 0 waves; design/finance/compliance governance; GOV-CONTROL-PROMPT-001 response format |
 
 **Supersedes:** Informal status summaries for gate and implementation authorization decisions.  
 **Subordinate to:** `MASTER_IMPLEMENTATION_PROMPT_v1.0.md`, ADRs, `FINAL_SCOPE_BASELINE.md`.
