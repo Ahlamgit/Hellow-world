@@ -4,7 +4,7 @@
 |-------|-------|
 | **Document ID** | EVD-002-PKG-001 |
 | **Blocker** | BLOCKER-002 — Stakeholder Approval |
-| **Version** | 1.0 |
+| **Version** | 1.1 |
 | **Status** | **READY FOR APPROVAL** (signatures pending) |
 | **Gate** | B — NOT READY — CODING BLOCKED |
 | **Prepared by** | Program Governance Manager |
@@ -101,7 +101,7 @@ Provider
 | Payments | Payment capture via approved payment approach | ☐ Approved |
 | Ledger | Financial source of truth (per ADRs) | ☐ Approved |
 
-**Approver attestation (§1):** ☐ Product Owner ☐ Business Owner ☐ Operations Owner
+**Approver attestation (§1):** ☐ Project Owner / Business Owner ☐ Administrator
 
 ---
 
@@ -128,7 +128,7 @@ Provider
 | **Inventory management** | **No — excluded** | ☐ Exclusion acknowledged |
 | **Fulfilment workflow** | **No — excluded** | ☐ Exclusion acknowledged |
 
-**Approver attestation (§2):** ☐ Product Owner ☐ Business Owner ☐ Operations Owner
+**Approver attestation (§2):** ☐ Project Owner / Business Owner ☐ Administrator
 
 ---
 
@@ -161,7 +161,7 @@ Review
 
 **Operations note:** Fulfilment, delivery, and product-shipping workflows are **out of scope** (see §5).
 
-**Approver attestation (§3):** ☐ Product Owner ☐ Business Owner ☐ Operations Owner
+**Approver attestation (§3):** ☐ Project Owner / Business Owner ☐ Administrator
 
 ---
 
@@ -178,7 +178,7 @@ Stakeholders confirm the following financial architecture principles (no impleme
 
 **Cross-reference:** Detailed finance rules require separate closure of **BLOCKER-005** (`FINANCE_RULE_MATRIX_v1.0`). This section confirms stakeholder alignment with the **model**, not individual rate values.
 
-**Approver attestation (§4):** ☐ Product Owner ☐ Business Owner ☐ Operations Owner
+**Approver attestation (§4):** ☐ Project Owner / Business Owner ☐ Administrator
 
 ---
 
@@ -203,19 +203,21 @@ Stakeholders are requested to **explicitly approve** the following **V1 exclusio
 | Exclusions are **accepted** for V1 implementation planning | ☐ Confirmed |
 | No implicit inclusion of excluded features via future phases without approval | ☐ Confirmed |
 
-**Approver attestation (§5):** ☐ Product Owner ☐ Business Owner ☐ Operations Owner
+**Approver attestation (§5):** ☐ Project Owner / Business Owner ☐ Administrator
 
 ---
 
 ## 6. Approval Record
 
-**BLOCKER-002 status:** **READY FOR APPROVAL** — not **Closed** until all required signatures exist.
+**BLOCKER-002 status:** **UNDER REVIEW** — not **Closed** until all **required** signatures exist.
+
+**Corrected approval model (GOV-BLOCKER-002-ROLE-CORR-001):** Project Owner = Business Owner (unified). No separate mandatory Business Owner or Operations Owner signature.
 
 | Role | Name | Decision | Date | Signature |
 |------|------|----------|------|-----------|
-| Product Owner | | **Pending** | | |
-| Business Owner | | **Pending** | | |
-| Operations Owner | | **Pending** | | |
+| **Project Owner / Business Owner** | Project Owner | **Approved** | 2026-07-25 | Recorded |
+| **Administrator** | | **Pending** | | |
+| External Operations Stakeholder *(optional — if appointed)* | | **N/A** | | |
 
 ### Decision values
 
@@ -227,9 +229,9 @@ Stakeholders are requested to **explicitly approve** the following **V1 exclusio
 
 | Role | Comments |
 |------|----------|
-| Product Owner | |
-| Business Owner | |
-| Operations Owner | |
+| Project Owner / Business Owner | Scope baseline v1.0 accepted; Gate A transition authorized |
+| Administrator | |
+| External Operations Stakeholder | Not appointed |
 
 ---
 
@@ -237,9 +239,9 @@ Stakeholders are requested to **explicitly approve** the following **V1 exclusio
 
 | Item | Status |
 |------|--------|
-| **BLOCKER-002** | **READY FOR APPROVAL** |
-| **Evidence package** | Prepared — `STAKEHOLDER_APPROVAL_PACKAGE.md` (this document) |
-| **Signatures** | **Not received** |
+| **BLOCKER-002** | **UNDER REVIEW** — 1/2 required |
+| **Evidence package** | `STAKEHOLDER_APPROVAL_PACKAGE.md` v1.1 (this document) |
+| **Signatures** | **1 / 2 required** (PO/BO ✓; Administrator pending) |
 | **BLOCKER-002 Closed** | **No** |
 | **Gate** | **B — NOT READY — CODING BLOCKED** |
 | **Closed blockers** | **0 / 7** |
@@ -247,11 +249,10 @@ Stakeholders are requested to **explicitly approve** the following **V1 exclusio
 
 ### Closure criteria (all required)
 
-- [ ] Product Owner — signed §6
-- [ ] Business Owner — signed §6
-- [ ] Operations Owner — signed §6
+- [x] Project Owner / Business Owner — signed §6
+- [ ] Administrator — Governance Acceptance signed §6
 - [ ] Package archived in `evidence/BLOCKER-002-stakeholder/`
-- [ ] `STAKEHOLDER_APPROVAL_REGISTER_v1.0.md` completed from this package
+- [ ] `STAKEHOLDER_APPROVAL_REGISTER.md` completed
 - [ ] `READINESS_BLOCKER_CLOSURE_STATUS.md` updated to **Closed**
 - [ ] Approval records filed per `BLOCKER_EVIDENCE_MANAGEMENT_FRAMEWORK.md`
 
@@ -261,6 +262,7 @@ Stakeholders are requested to **explicitly approve** the following **V1 exclusio
 
 | Version | Date | Author | Change |
 |---------|------|--------|--------|
-| 1.0 | 2026-07-25 | Program Governance Manager | Initial stakeholder approval package — ready for signature |
+| 1.0 | 2026-07-25 | Program Governance Manager | Initial stakeholder approval package |
+| 1.1 | 2026-07-25 | Program Governance Manager | Role ownership correction — PO/BO unified; Administrator required (GOV-BLOCKER-002-ROLE-CORR-001) |
 
-**Distribution:** Product Owner, Business Owner, Operations Owner, Program Sponsor, Program Governance Manager
+**Distribution:** Project Owner / Business Owner, Administrator, Program Governance Manager

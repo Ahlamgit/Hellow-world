@@ -71,21 +71,22 @@ Gate B remains in effect until Gate A is formally declared.
 **Closure artifact:** `STAKEHOLDER_APPROVAL_REGISTER_v1.0`  
 **Current status:** **READY FOR SIGNATURE** — **not Closed**
 
-### 2.1 Approval participants
+### 2.1 Approval participants (corrected — GOV-BLOCKER-002-ROLE-CORR-001)
 
 | Role | Required action | Status |
 |------|-----------------|--------|
-| **Product Owner** | Review package §1–§5; confirm scope, surfaces, discovery model; sign §6 | **Pending** |
-| **Business Owner** | Review financial model alignment §4; confirm business commitments; sign §6 | **Pending** |
-| **Operations Owner** | Review operational workflows; confirm operational feasibility; sign §6 | **Pending** |
-| **Program Sponsor** | Distribute package; escalate non-response; attest program authorization | **Pending** |
-| **Program Governance Manager** | Receive signed package; validate evidence; archive; update trackers | **Pending** |
+| **Project Owner / Business Owner** | Review package §1–§5; scope, business rules, revenue model, V1 boundaries; sign §6 | **Approved** — 2026-07-25 |
+| **Administrator** | Accept operational governance, platform administration, rule enforcement; sign §6 | **Pending** |
+| **External Operations Stakeholder** | Operational validation *(only if appointed)* | **N/A** |
+| **Program Governance Manager** | Validate evidence; archive; update trackers | **Pending** |
+
+**Note:** Project Owner = Business Owner. No separate Business Owner or Operations Owner signature required.
 
 ### 2.2 Pre-distribution prerequisite
 
 | Prerequisite | Status | Owner |
 |--------------|--------|-------|
-| `FINAL_SCOPE_BASELINE.md` available to all approvers | **Missing from repo** — restore before distribution | Program Governance Manager |
+| `FINAL_SCOPE_BASELINE.md` available to all approvers | **Restored** v1.0 — approved by PO/BO | Program Governance Manager |
 | Package EVD-002-PKG-001 distributed to approvers | **Not confirmed** | Program Sponsor |
 
 ### 2.3 Approval evidence checklist
@@ -95,18 +96,17 @@ Each item must be evidenced before BLOCKER-002 → **Closed**.
 | # | Item | Reviewer | Evidence location | Done |
 |---|------|----------|-------------------|------|
 | 1 | Stakeholder package reviewed | All approvers | `STAKEHOLDER_APPROVAL_PACKAGE.md` | ☐ |
-| 2 | Scope reviewed against `FINAL_SCOPE_BASELINE.md` | PO, BO | Package §1 + baseline | ☐ |
-| 3 | V1 exclusions acknowledged | PO, BO, Ops | Package §5 | ☐ |
-| 4 | Provider model acknowledged (unified capability) | PO, BO | Package §1.4 | ☐ |
-| 5 | Booking flow acknowledged | PO, Ops | Package §3 | ☐ |
-| 6 | Payment experience acknowledged (ledger model; not rate values) | BO, Ops | Package §4 | ☐ |
-| 7 | Signature collected — Product Owner | PO | Package §6 | ☐ |
-| 8 | Signature collected — Business Owner | BO | Package §6 | ☐ |
-| 9 | Signature collected — Operations Owner | Ops | Package §6 | ☐ |
-| 10 | `APPROVAL_RECORD.md` signed — **Approved** | Program Governance | `APPROVAL_RECORD.md` | ☐ |
-| 11 | `EVIDENCE_CHECKLIST.md` complete | Program Governance | `EVIDENCE_CHECKLIST.md` | ☐ |
-| 12 | Approval archived | Program Governance | `evidence/BLOCKER-002-stakeholder/` | ☐ |
-| 13 | `STAKEHOLDER_APPROVAL_REGISTER_v1.0` filed | Program Governance | Same folder | ☐ |
+| 2 | Scope reviewed against `FINAL_SCOPE_BASELINE.md` | PO/BO | Package §1 + baseline | ☑ |
+| 3 | V1 exclusions acknowledged | PO/BO, Administrator | Package §5 | ☐ |
+| 4 | Provider model acknowledged (unified capability) | PO/BO | Package §1.4 | ☑ |
+| 5 | Booking flow acknowledged | PO/BO, Administrator | Package §3 | ☐ |
+| 6 | Payment experience acknowledged (ledger model; not rate values) | PO/BO | Package §4 | ☑ |
+| 7 | Signature — Project Owner / Business Owner | PO/BO | Package §6 | ☑ |
+| 8 | Signature — Administrator Governance Acceptance | Administrator | Package §6 | ☐ |
+| 9 | `APPROVAL_RECORD.md` signed — **Approved** (2/2) | Program Governance | `APPROVAL_RECORD.md` | ☐ |
+| 10 | `EVIDENCE_CHECKLIST.md` complete | Program Governance | `EVIDENCE_CHECKLIST.md` | ☐ |
+| 11 | Approval archived | Program Governance | `evidence/BLOCKER-002-stakeholder/` | ☐ |
+| 12 | `STAKEHOLDER_APPROVAL_REGISTER.md` filed | Program Governance | Same folder | ☐ |
 
 ### 2.4 Signature collection instructions
 
@@ -121,12 +121,14 @@ Each item must be evidenced before BLOCKER-002 → **Closed**.
 **BLOCKER-002 cannot close until all evidence is complete:**
 
 - [ ] All §2.3 checklist items checked
-- [ ] All three §6 signatures received (no verbal approval)
-- [ ] `APPROVAL_RECORD.md` — Decision: **Approved**
-- [ ] `STAKEHOLDER_APPROVAL_REGISTER_v1.0` archived
+- [ ] Both required §6 signatures received (PO/BO + Administrator)
+- [ ] `APPROVAL_RECORD.md` — Decision: **Approved** (2/2)
+- [ ] `STAKEHOLDER_APPROVAL_REGISTER.md` archived
 - [ ] GOV-RBCS-001 and GOV-BLOCKER-TRACKER-001 updated within **1 business day**
 
-**Status after this pack:** **OPEN** — ready for signature collection, **not Closed**.
+**Status after this pack:** **UNDER REVIEW** — 1/2 required approvals, **not Closed**.
+
+**Role model:** GOV-BLOCKER-002-ROLE-CORR-001 — see `BLOCKER_002_ROLE_OWNERSHIP_CORRECTION_REPORT.md`
 
 ---
 

@@ -56,31 +56,28 @@ Does NOT close blockers · does NOT authorize implementation.
 | Standard evidence trio | **Present** (`README.md`, `APPROVAL_RECORD.md`, `EVIDENCE_CHECKLIST.md`) |
 | Closure artifact defined | `STAKEHOLDER_APPROVAL_REGISTER_v1.0` |
 
-### 2.2 Stakeholder approval readiness
+### 2.2 Stakeholder approval readiness (corrected model)
 
-| Approver | Package §6 | `APPROVAL_RECORD.md` | Ready to sign? |
-|----------|------------|----------------------|----------------|
-| Product Owner | **Pending** | Not signed | **Yes** — after scope baseline available |
-| Business Owner | **Pending** | Not signed | **Yes** — after scope baseline available |
-| Operations Owner | **Pending** | Not signed | **Yes** — after scope baseline available |
+| Approver | Package §6 | `APPROVAL_RECORD.md` | Status |
+|----------|------------|----------------------|--------|
+| Project Owner / Business Owner | **Approved** | Recorded | **Complete** — 2026-07-25 |
+| Administrator | **Pending** | Not signed | **Pending** |
+| External Operations Stakeholder | N/A | N/A | **Not required** |
 
 ### 2.3 Missing signatures
 
 | Signature | Location | Status |
 |-----------|----------|--------|
-| Product Owner | Package §6 | **Missing** |
-| Business Owner | Package §6 | **Missing** |
-| Operations Owner | Package §6 | **Missing** |
-| All attestations | `APPROVAL_RECORD.md` (EVD-002-APPROVAL-001) | **Pending** |
+| Administrator Governance Acceptance | Package §6 | **Missing** |
+| Full blocker approval (2/2) | `APPROVAL_RECORD.md` | **Partial** |
 
 ### 2.4 Missing artifacts
 
 | Artifact | Status |
 |----------|--------|
-| `STAKEHOLDER_APPROVAL_REGISTER_v1.0` | **Not filed** |
-| `FINAL_SCOPE_BASELINE.md` in repository | **Missing** — must be restored before/during review |
-| Completed `EVIDENCE_CHECKLIST.md` (6/6) | **Not complete** (0/6) |
-| Subfolder attestations | **Not filed** |
+| `STAKEHOLDER_APPROVAL_REGISTER.md` | **In progress** — 1/2 |
+| `FINAL_SCOPE_BASELINE.md` in repository | **Restored** — approved by PO/BO |
+| Completed `EVIDENCE_CHECKLIST.md` | **Partial** (3/8) |
 
 ### 2.5 Closure conditions
 

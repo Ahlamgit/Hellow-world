@@ -102,7 +102,7 @@ No verbal approval · No automatic closure · No assumption.
 | `APPROVAL_RECORD.md` | Signed approval record |
 | `EVIDENCE_CHECKLIST.md` | Closure checklist |
 
-**Approvers:** Product Owner · Business Owner · Operations Owner
+**Approvers:** Project Owner / Business Owner · Administrator · *(optional)* External Operations Stakeholder
 
 ---
 

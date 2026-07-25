@@ -4,35 +4,41 @@
 |-------|-------|
 | **Document ID** | EVD-002-APPROVAL-001 |
 | **Blocker ID** | BLOCKER-002 — Stakeholder |
-| **Decision** | **Approved** |
-| **Approver Name** | **Project Owner** |
-| **Role** | Project Owner (acting as Product Owner authority) |
+| **Role model** | GOV-BLOCKER-002-ROLE-CORR-001 |
+| **Decision** | **Partially Approved** — 1/2 required |
+| **Approver Name** | **Project Owner / Business Owner** |
+| **Role** | Project Owner / Business Owner (unified) |
 | **Organization** | KHADAMATI |
 | **Date** | **2026-07-25** |
-| **Approval type** | **Human authorization** |
-| **Version Reviewed** | `STAKEHOLDER_APPROVAL_PACKAGE.md` v1.0 · `FINAL_SCOPE_BASELINE.md` v1.0 |
-| **Comments** | Approved to proceed with Gate A transition activities. Scope baseline v1.0 accepted. Business Owner and Operations Owner signatures still required for BLOCKER-002 closure per GOV-BEMF-001. |
-| **Signature / Confirmation** | **Recorded — Project Owner human authorization (2026-07-25)** |
+| **Approval type** | Human authorization |
+| **Version Reviewed** | `STAKEHOLDER_APPROVAL_PACKAGE.md` v1.1 · `FINAL_SCOPE_BASELINE.md` v1.0 |
+| **Comments** | Scope baseline v1.0 accepted. Business vision, V1 boundaries, and revenue model approved under unified Project Owner / Business Owner authority. **Administrator Governance Acceptance still required** for BLOCKER-002 closure. |
+| **Signature / Confirmation** | **Recorded — 2026-07-25** |
 
 ### Decision options
 
 - [ ] **Pending**
-- [x] **Approved**
+- [x] **Partially Approved** (1/2 required complete)
+- [ ] **Approved** (2/2 required complete)
 - [ ] **Rejected**
 
 ### Closure note
 
-**BLOCKER-002 is NOT Closed.** This record captures Project Owner approval (1/3 required stakeholder signatures). Full closure requires Business Owner and Operations Owner signatures, completed checklist, and tracker update.
+**BLOCKER-002 is NOT Closed.** Required: Administrator Governance Acceptance + completed checklist + tracker update.
 
 ---
 
-## Attestation
+## Attestation (required)
 
 | Approver | Role | Decision | Signature / Date |
 |----------|------|----------|------------------|
-| **Project Owner** | Product Owner authority | **Approved** | **2026-07-25** |
-| | Business Owner | **Pending** | |
-| | Operations Owner | **Pending** | |
-| | Program Sponsor | **Pending** | |
+| **Project Owner / Business Owner** | Unified business authority | **Approved** | **2026-07-25** |
+| **Administrator** | Platform governance acceptance | **Pending** | |
 
-**Approvals received:** **1 / 3**
+## Attestation (optional)
+
+| Approver | Role | Decision | Signature / Date |
+|----------|------|----------|------------------|
+| External Operations Stakeholder | Only if appointed | **N/A** | — |
+
+**Required approvals received:** **1 / 2**

@@ -5,9 +5,8 @@
 | **Document ID** | GOV-RBCS-001 |
 | **Version** | 3.2 |
 | **Last updated** | 2026-07-25 |
-| **Gate** | **Gate A TRANSITION IN PROGRESS** |
-| **Previous gate** | B — NOT READY — CODING BLOCKED |
-| **Human authorization** | **Received** — Project Owner (GOV-GA-HUMAN-AUTH-001) |
+| **Gate** | **B — NOT READY — CODING BLOCKED** |
+| **Role correction** | GOV-BLOCKER-002-ROLE-CORR-001 |
 | **Owner** | Program Governance Manager |
 | **Evidence framework** | `BLOCKER_EVIDENCE_MANAGEMENT_FRAMEWORK.md` (GOV-BEMF-001) |
 | **Gate A preparation package** | `FINAL_PRE_IMPLEMENTATION_READINESS_AND_GATE_A_PACKAGE.md` (GOV-FPRG-001) |
@@ -45,7 +44,7 @@
 | Blocker | Description | Status | Owner | Closure artifact | Evidence received | Approved date |
 |---------|-------------|--------|-------|------------------|-------------------|---------------|
 | BLOCKER-001 | Design approval | **Ready for Approval** | Design Lead + Product Owner | `DESIGN_APPROVAL_SIGNOFF_v1.0` | Package + `CLOSURE_READINESS.md` | — |
-| BLOCKER-002 | Stakeholder approval | **Under Review** | Program Sponsor | `STAKEHOLDER_APPROVAL_REGISTER` | 1/3 signatures (Project Owner ✓) | 2026-07-25 (partial) |
+| BLOCKER-002 | Stakeholder approval | **Under Review** | Project Owner / Business Owner | `STAKEHOLDER_APPROVAL_REGISTER` | 1/2 (PO/BO ✓; Administrator pending) | 2026-07-25 (partial) |
 | BLOCKER-003 | Vendor readiness | **Open** | Technical Lead / Integration Lead | `VENDOR_READINESS_DOSSIER_v1.0` | `CLOSURE_READINESS.md` prepared | — |
 | BLOCKER-004 | Cloud readiness | **Open** | Technical Architect + DevOps Lead | `CLOUD_READINESS_DECISION_RECORD_v1.0` | `CLOSURE_READINESS.md` prepared | — |
 | BLOCKER-005 | Finance configuration | **Ready for Approval** | Finance + Business Operations | `FINANCE_RULE_MATRIX_v1.0` | Package + `CLOSURE_READINESS.md` | — |
@@ -82,18 +81,17 @@
 
 ### BLOCKER-002 — Stakeholder Approval
 
-**Status:** **UNDER REVIEW** — Project Owner approved 2026-07-25 (1/3 signatures)  
-**Package:** `evidence/BLOCKER-002-stakeholder/STAKEHOLDER_APPROVAL_PACKAGE.md` (EVD-002-PKG-001 v1.0)  
-**Human authorization:** GOV-GA-HUMAN-AUTH-001  
-**Scope baseline:** `FINAL_SCOPE_BASELINE.md` v1.0 — **Approved by Project Owner**
+**Status:** **UNDER REVIEW** — 1/2 required (GOV-BLOCKER-002-ROLE-CORR-001)  
+**Package:** `evidence/BLOCKER-002-stakeholder/STAKEHOLDER_APPROVAL_PACKAGE.md` v1.1  
+**Scope baseline:** `FINAL_SCOPE_BASELINE.md` v1.0 — **Approved by Project Owner / Business Owner**
 
-| Approver | Package received | Signed |
-|----------|------------------|--------|
-| Project Owner | Yes | **Yes — 2026-07-25** |
-| Business Owner | Under review | No |
-| Operations Owner | Under review | No |
+| Approver | Signed |
+|----------|--------|
+| Project Owner / Business Owner | **Yes — 2026-07-25** |
+| Administrator | No |
+| External Operations Stakeholder | N/A (not appointed) |
 
-**Not closed until:** Business Owner + Operations Owner signatures + full checklist per GOV-BEMF-001
+**Not closed until:** Administrator Governance Acceptance + full checklist per GOV-BEMF-001
 
 ---
 

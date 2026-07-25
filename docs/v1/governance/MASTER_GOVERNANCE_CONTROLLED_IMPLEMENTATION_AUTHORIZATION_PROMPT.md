@@ -306,7 +306,7 @@ All blockers must be **closed** before Gate A.
 | ID | Blocker | Status |
 |----|---------|--------|
 | BLOCKER-001 | Design | Open |
-| BLOCKER-002 | Stakeholder | Ready for Approval |
+| BLOCKER-002 | Stakeholder | Under Review (1/2 — PO/BO ✓; Administrator pending) |
 | BLOCKER-003 | Vendors | Open |
 | BLOCKER-004 | Cloud | Open |
 | BLOCKER-005 | Finance | Ready for Approval |

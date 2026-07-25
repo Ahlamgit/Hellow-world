@@ -179,7 +179,7 @@ Each folder: `README.md` · `APPROVAL_RECORD.md` · `EVIDENCE_CHECKLIST.md`
 | ID | Name | Status | Owner | Evidence |
 |----|------|--------|-------|----------|
 | **BLOCKER-001** | Design | **Ready for Approval** | Design Lead + PO | `evidence/BLOCKER-001-design/` |
-| **BLOCKER-002** | Stakeholder | **Ready for Approval** | Program Sponsor | `evidence/BLOCKER-002-stakeholder/` |
+| **BLOCKER-002** | Stakeholder | **Under Review** | Project Owner / Business Owner | `evidence/BLOCKER-002-stakeholder/` — **1/2 approvals** |
 | **BLOCKER-003** | Vendors | **Open** | Integration Lead | `evidence/BLOCKER-003-vendors/` |
 | **BLOCKER-004** | Cloud | **Open** | Architect + DevOps | `evidence/BLOCKER-004-cloud/` |
 | **BLOCKER-005** | Finance | **Ready for Approval** | Finance + Business Ops | `evidence/BLOCKER-005-finance/` |

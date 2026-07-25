@@ -8,7 +8,7 @@
 | **Owner** | Program Governance Manager |
 | **Campaign** | Phase 1 — BLOCKER-002 & BLOCKER-006 approval collection |
 | **Companion** | GOV-P1-EXEC-001 (execution pack) |
-| **Gate** | **Gate A TRANSITION IN PROGRESS** |
+| **Gate** | **B — NOT READY — CODING BLOCKED** |
 | **Blockers closed** | **0 / 7** |
 | **Human authorization** | Project Owner — 2026-07-25 (GOV-GA-HUMAN-AUTH-001) |
 | **Implementation** | **NOT AUTHORIZED** |
@@ -68,26 +68,27 @@ Gate B remains until Gate A ceremony (7/7 blockers + GOV-GAIR-001 §8).
 
 ## 2. BLOCKER-002 — Approval Register
 
-**Package:** `evidence/BLOCKER-002-stakeholder/STAKEHOLDER_APPROVAL_PACKAGE.md` (EVD-002-PKG-001)  
-**Blocker status:** **READY FOR SIGNATURE** · **Closed:** No  
-**Approvals received:** **0 / 3**
+**Package:** `evidence/BLOCKER-002-stakeholder/STAKEHOLDER_APPROVAL_PACKAGE.md` v1.1 (EVD-002-PKG-001)  
+**Role model:** GOV-BLOCKER-002-ROLE-CORR-001  
+**Blocker status:** **UNDER REVIEW** · **Closed:** No  
+**Approvals received:** **1 / 2** required
 
 | Role | Person | Package reviewed | Decision | Date | Signature | Status |
 |------|--------|------------------|----------|------|-----------|--------|
-| **Project Owner** | Project Owner | Yes | **Approved** | 2026-07-25 | Recorded | **Complete** |
-| **Business Owner** | — | No | **Pending** | — | — | **Open** |
-| **Operations Owner** | — | No | **Pending** | — | — | **Open** |
+| **Project Owner / Business Owner** | Project Owner | Yes | **Approved** | 2026-07-25 | Recorded | **Complete** |
+| **Administrator** | — | No | **Pending** | — | — | **Open** |
+| External Operations Stakeholder *(optional)* | — | N/A | N/A | — | — | **Not required** |
 
 ### BLOCKER-002 supporting records
 
 | Record | Location | Status |
 |--------|----------|--------|
-| `APPROVAL_RECORD.md` (EVD-002-APPROVAL-001) | `evidence/BLOCKER-002-stakeholder/` | **Approved** — Project Owner (partial) |
+| `APPROVAL_RECORD.md` (EVD-002-APPROVAL-001) | `evidence/BLOCKER-002-stakeholder/` | **Partial** — 1/2 |
 | `EVIDENCE_CHECKLIST.md` | Same folder | **3 / 8** complete |
-| `STAKEHOLDER_APPROVAL_REGISTER.md` (EVD-002-REGISTER-001) | Same folder | **1/3 signatures** |
-| `FINAL_SCOPE_BASELINE.md` in repo | `docs/v1/FINAL_SCOPE_BASELINE.md` | **Approved by Project Owner** |
+| `STAKEHOLDER_APPROVAL_REGISTER.md` (EVD-002-REGISTER-001) | Same folder | **1/2 required** |
+| `FINAL_SCOPE_BASELINE.md` in repo | `docs/v1/FINAL_SCOPE_BASELINE.md` | **Approved by PO/BO** |
 
-**Campaign owner:** Program Sponsor
+**Campaign owner:** Project Owner / Business Owner
 
 ---
 
@@ -125,9 +126,10 @@ Gate B remains until Gate A ceremony (7/7 blockers + GOV-GAIR-001 §8).
 
 | Blocker | Required evidence | Owner | Status |
 |---------|-------------------|-------|--------|
-| **002** | Signed stakeholder approvals (§6 × 3) | Program Sponsor | **Pending** |
-| **002** | Scope confirmation vs `FINAL_SCOPE_BASELINE.md` | Product Owner / Business Owner | **Pending** |
-| **002** | V1 exclusions acknowledged | PO / BO / Operations | **Pending** |
+| **002** | Signed stakeholder approvals (§6 × 2 required) | Project Owner / Business Owner | **1/2** |
+| **002** | Scope confirmation vs `FINAL_SCOPE_BASELINE.md` | Project Owner / Business Owner | **Complete** |
+| **002** | V1 exclusions acknowledged | PO/BO + Administrator | **Partial** |
+| **002** | Administrator Governance Acceptance | Administrator | **Pending** |
 | **002** | `APPROVAL_RECORD.md` → **Approved** | Program Governance Manager | **Pending** |
 | **002** | `STAKEHOLDER_APPROVAL_REGISTER.md` filed | Program Governance Manager | **Prepared** — signatures pending |
 | **002** | Tracker update (GOV-RBCS-001, GOV-BLOCKER-TRACKER-001) | Program Governance Manager | **Pending** |
@@ -149,7 +151,8 @@ Gate B remains until Gate A ceremony (7/7 blockers + GOV-GAIR-001 §8).
 
 | Date | Action | Owner | Result | Next step |
 |------|--------|-------|--------|-----------|
-| 2026-07-25 | Project Owner human authorization — Gate A transition | Governance Transition Manager | GOV-GA-HUMAN-AUTH-001 filed; BLOCKER-002 1/3; BLOCKER-006 proceed auth | BO + Ops signatures; Legal retention workshop |
+| 2026-07-25 | BLOCKER-002 role ownership correction (GOV-BLOCKER-002-ROLE-CORR-001) | Governance Architect | PO/BO unified; Administrator required; 1/2 | Administrator signature |
+| 2026-07-25 | Project Owner / Business Owner approval recorded | Governance Transition Manager | Scope baseline accepted | Administrator Governance Acceptance |
 | — | Distribute `STAKEHOLDER_APPROVAL_PACKAGE.md` + scope baseline + GOV-P1-EXEC-001 | Program Sponsor | *Pending* | Collect §6 signatures |
 | — | Schedule Legal retention workshop (BLOCKER-006 §2) | Legal / Compliance Officer | *Pending* | Complete retention table before §10 signatures |
 | — | Distribute `COMPLIANCE_APPROVAL_PACKAGE.md` | Legal / Compliance Officer | *Pending* | Collect §10 signatures after §2 complete |
@@ -162,7 +165,7 @@ A blocker is **CLOSED** only when **all** criteria are met (GOV-BEMF-001 · GOV-
 
 | # | Rule | BLOCKER-002 | BLOCKER-006 |
 |---|------|-------------|-------------|
-| 1 | **Required approvers signed** | ☐ 0/3 | ☐ 0/3 |
+| 1 | **Required approvers signed** | ☐ 1/2 | ☐ 0/3 |
 | 2 | **Evidence checklist completed** | ☐ | ☐ |
 | 3 | **Approval record marked Approved** | ☐ | ☐ |
 | 4 | **Evidence archived** (closure artifact + signed records) | ☐ | ☐ |
