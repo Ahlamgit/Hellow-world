@@ -3,7 +3,7 @@
 | Field | Value |
 |-------|-------|
 | **Document ID** | GOV-RBCS-001 |
-| **Version** | 2.4 |
+| **Version** | 2.5 |
 | **Last updated** | 2026-07-25 |
 | **Gate** | B — NOT READY — CODING BLOCKED |
 | **Owner** | Program Governance Manager |
@@ -12,7 +12,8 @@
 | **Gate A transition & blocker execution** | `FINAL_GATE_A_TRANSITION_AND_BLOCKER_CLOSURE_PACKAGE.md` (GOV-GATC-001) |
 | **Gate A readiness audit** | `FINAL_GATE_A_READINESS_AUDIT_REPORT.md` (GOV-GA-AUDIT-001) — **remain Gate B** |
 | **Blocker execution tracker** | `BLOCKER_CLOSURE_EXECUTION_TRACKER.md` (GOV-BLOCKER-TRACKER-001) — **operational** |
-| **Phase 1 readiness** | `PHASE_1_BLOCKER_APPROVAL_READINESS_REPORT.md` (GOV-P1-READINESS-001) — distribute & sign; **0 / 2 Phase 1 closed** |
+| **Phase 1 readiness** | `PHASE_1_BLOCKER_APPROVAL_READINESS_REPORT.md` (GOV-P1-READINESS-001) |
+| **Phase 1 closure review** | `PHASE_1_CLOSURE_EXECUTION_REPORT.md` (GOV-P1-CLOSURE-001) — BLOCKER-002 READY · BLOCKER-006 BLOCKED |
 | **Gate A authorization record** | `GATE_A_IMPLEMENTATION_AUTHORIZATION_RECORD.md` (GOV-GAIR-001) — Draft, unsigned |
 
 ---
@@ -230,3 +231,4 @@ Refer to `BLOCKER_CLOSURE_EXECUTION_TRACKER.md` (GOV-BLOCKER-TRACKER-001) for op
 | 2.2 | 2026-07-25 | Operational blocker execution tracker (GOV-BLOCKER-TRACKER-001) |
 | 2.3 | 2026-07-25 | Standard evidence trio in all seven blocker folders; 0/7 closed — Gate B unchanged |
 | 2.4 | 2026-07-25 | Phase 1 approval readiness report (GOV-P1-READINESS-001); Phase 1 execution authorized, not complete |
+| 2.5 | 2026-07-25 | Phase 1 closure execution report (GOV-P1-CLOSURE-001); 0/7 closed — Gate B unchanged |
