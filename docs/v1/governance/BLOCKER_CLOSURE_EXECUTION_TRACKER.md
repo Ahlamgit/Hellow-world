@@ -3,15 +3,15 @@
 | Field | Value |
 |-------|-------|
 | **Document ID** | GOV-BLOCKER-TRACKER-001 |
-| **Version** | 3.1 |
+| **Version** | 3.2 |
 | **Final closure** | `GATE_B_FINAL_CLOSURE_STATUS.md` (GOV-GATE-B-FINAL-CLOSURE-001) |
 | **Closure execution** | GOV-GATE-B-CLOSURE-EXEC-001 v1.0 |
 | **Closure validation** | `GATE_B_FINAL_CLOSURE_EXECUTION_RECORD.md` · `GATE_A_READINESS_ASSESSMENT.md` |
 | **Date** | 2026-07-25 |
 | **Owner** | Program Execution Manager |
-| **Gate** | **B — NOT READY — CODING BLOCKED** |
-| **Previous gate note** | Gate A transition activities recorded; authorization state unchanged |
-| **Blockers closed** | **7 / 7** (localhost testing track) |
+| **Gate** | **Gate A — LOCALHOST DEVELOPMENT AUTHORIZED** |
+| **GOV-GAIR-001** | Signed v2.0 — 2026-07-25 |
+| **Blockers closed** | **7 / 7** |
 | **Business consolidation** | GOV-BUSINESS-APPROVAL-001 v1.2 |
 | **Role correction** | GOV-BLOCKER-002-ROLE-CORR-001 |
 | **Status** | **Active — Gate A transition execution** |
