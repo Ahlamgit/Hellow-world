@@ -11,7 +11,7 @@
 **Execution standards (post–Gate A):** [`IMPLEMENTATION_EXECUTION_STANDARDS.md`](./IMPLEMENTATION_EXECUTION_STANDARDS.md) — preparation only; coding still **BLOCKED**  
 **Implementation authorization:** [`governance/IMPLEMENTATION_AUTHORIZATION_CHECKLIST.md`](./governance/IMPLEMENTATION_AUTHORIZATION_CHECKLIST.md) — Gate B→A checklist; coding **BLOCKED**  
 **Supersedes conflicting statements** in earlier draft docs where this prompt / ADRs / scope baseline are more specific.  
-**Companion:** [FEATURE_TRACEABILITY_MATRIX.md](./FEATURE_TRACEABILITY_MATRIX.md) · [ARCHITECTURE_AUDIT_FINAL.md](./ARCHITECTURE_AUDIT_FINAL.md) · [QUESTIONS-REQUIRING-BUSINESS-DECISION.md](./QUESTIONS-REQUIRING-BUSINESS-DECISION.md) · ADR-001…030
+**Companion:** [FEATURE_TRACEABILITY_MATRIX.md](./FEATURE_TRACEABILITY_MATRIX.md) · [ARCHITECTURE_AUDIT_FINAL.md](./ARCHITECTURE_AUDIT_FINAL.md) · [QUESTIONS-REQUIRING-BUSINESS-DECISION.md](./QUESTIONS-REQUIRING-BUSINESS-DECISION.md) · ADR-001…031
 
 **Do not start implementation** until the Execution Plan §3 checklist is complete and the Implementation Gate Report is amended to **READY**.
 
@@ -366,6 +366,10 @@ Required: Idempotency, webhook verification, payment state management, failure h
 
 See [ADR-029](./adr/ADR-029-simplified-payment-experience-ledger-control.md) and `payment/PAYMENT_SECURITY_AND_RECONCILIATION_FRAMEWORK.md`.
 
+**Domain state separation (ADR-030):** Booking, payment, ledger, and settlement each own **independent state models** — no single shared status field across domains. Payment success ≠ service completion; service completion ≠ settlement completed; settlement does not modify payment history. See [ADR-030](./adr/ADR-030-booking-payment-financial-state-separation.md).
+
+**Failure, retry, and recovery (ADR-031):** Payment processing is **event-driven, idempotent, auditable, and recoverable**. Booking advances to paid only on validated payment outcomes — never from unverified events. Customers see Processing / Success / Failed / Action required only. See [ADR-031](./adr/ADR-031-payment-failure-retry-and-recovery-strategy.md) and `payment/PAYMENT_SECURITY_AND_RECONCILIATION_FRAMEWORK.md` §§2–3.
+
 ## 10. Subscription System
 
 Craftsman subscriptions: plans, duration, payment, activation, expiry, renewal status, access restrictions — **configurable**.
@@ -450,7 +454,7 @@ Create an ADR or request clarification.
 
 Do **NOT** start coding until completed and approved:
 
-- [x] Architecture decisions (ADR-001…030) — documented / approved  
+- [x] Architecture decisions (ADR-001…031) — documented / approved  
 - [x] **Scope baseline frozen** — [`FINAL_SCOPE_BASELINE.md`](./FINAL_SCOPE_BASELINE.md)  
 - [ ] **BLOCKER-002** — Scope + stakeholder sign-off — **READY FOR APPROVAL** (signatures pending)  
 - [ ] **BLOCKER-001** — Design assets + UI/UX specification (ADR-023) — **READY FOR APPROVAL** (signatures pending; not Completed)  

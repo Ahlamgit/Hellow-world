@@ -2,7 +2,7 @@
 
 **Document ID:** KHAD-V1-FTM  
 **Status:** Aligned to **Final Scope Baseline v1.0** (Scope Frozen)  
-**Source:** Master Implementation Prompt v1.0 · ADR-001…030 · FINAL_SCOPE_BASELINE.md  
+**Source:** Master Implementation Prompt v1.0 · ADR-001…031 · FINAL_SCOPE_BASELINE.md  
 **Rule:** No proposal feature may disappear silently. Status values: `Specified` · `Deferred (ADR)` · `Blocked (Q-*)` · `Implemented` (post-coding) · **`Out of V1`** (see Scope Baseline §8)
 
 > **Scope freeze:** Features marked Included in [`FINAL_SCOPE_BASELINE.md`](./FINAL_SCOPE_BASELINE.md) are the only authorized V1 build targets. Additions require Change Control ([`IMPLEMENTATION_READINESS_EXECUTION_PLAN.md`](./IMPLEMENTATION_READINESS_EXECUTION_PLAN.md) §4).  
@@ -205,6 +205,7 @@
 | BR-PAY-15 | No hardcoded commission/cancel/refund/withdrawal/settlement values | policy | — | code review gate | — | Specified |
 | BR-PAY-16 | **Financial complexity internal; simple customer payment UX** (ADR-029) | payment, ledger | payments, ledger_entries | customer: status APIs only; ledger internal | CUS: status only; CRF: earnings summary; ADM: full finance | Specified |
 | BR-PAY-17 | **Separate state ownership: booking / payment / ledger / settlement** (ADR-030) | booking, payment, ledger | bookings, payments, ledger_entries, settlement_batches | per-domain status APIs — no unified mega-status | CUS: booking + payment; CRF: booking + earnings; ADM: all domains | Specified |
+| BR-PAY-18 | **Payment failure, retry, recovery — event-driven, idempotent, recoverable** (ADR-031) | payment, worker, ledger | payments, payment_webhooks, ledger_entries | idempotent pay + webhook; reconcile worker | CUS: Processing/Success/Failed/Action; ADM: failures + recon queue | Specified |
 
 ---
 

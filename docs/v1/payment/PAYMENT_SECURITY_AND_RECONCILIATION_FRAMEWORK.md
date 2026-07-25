@@ -1,13 +1,13 @@
 # KHADAMATI V1 — Payment Security & Reconciliation Framework
 
 **Document ID:** KHAD-V1-PAYMENT-SECURITY-RECON  
-**Version:** 1.2  
+**Version:** 1.3  
 **Date:** 2026-07-25  
 **Role:** Payment Architecture & Financial Integrity Architect  
 **Status:** Architecture preparation — **Implementation BLOCKED**  
 
 **Sources:**  
-Master Prompt v1.0 · [`PAYMENT_JS_MOBILE_VALIDATION_REPORT.md`](./PAYMENT_JS_MOBILE_VALIDATION_REPORT.md) · [`AREEBA_IXOPAY_VENDOR_VALIDATION_CHECKLIST.md`](./AREEBA_IXOPAY_VENDOR_VALIDATION_CHECKLIST.md) · ADR-004 · ADR-013 · ADR-025 · **ADR-029** · **ADR-030** · [`../workflows/23-PAYMENT-FLOW.md`](../workflows/23-PAYMENT-FLOW.md) · [`../vendors/INTEGRATION_CONTRACT_SPECIFICATION.md`](../vendors/INTEGRATION_CONTRACT_SPECIFICATION.md)
+Master Prompt v1.0 · [`PAYMENT_JS_MOBILE_VALIDATION_REPORT.md`](./PAYMENT_JS_MOBILE_VALIDATION_REPORT.md) · [`AREEBA_IXOPAY_VENDOR_VALIDATION_CHECKLIST.md`](./AREEBA_IXOPAY_VENDOR_VALIDATION_CHECKLIST.md) · ADR-004 · ADR-013 · ADR-025 · **ADR-029** · **ADR-030** · **ADR-031** · [`../workflows/23-PAYMENT-FLOW.md`](../workflows/23-PAYMENT-FLOW.md) · [`../vendors/INTEGRATION_CONTRACT_SPECIFICATION.md`](../vendors/INTEGRATION_CONTRACT_SPECIFICATION.md)
 
 ```text
 DO NOT write production code.
@@ -126,6 +126,8 @@ Booking Confirmed → Payment Requested → Payment Successful → Ledger Entry 
 ---
 
 # 2. Payment Failure Scenarios
+
+*Normative architecture: [ADR-031](../adr/ADR-031-payment-failure-retry-and-recovery-strategy.md). FTM: `BR-PAY-18`.*
 
 | Scenario | Required handling |
 |----------|-------------------|
@@ -261,7 +263,7 @@ No commercial FX or fee schedules defined here.
 | BLOCKER-007 | Mobile/Payment.js validation still **IN VALIDATION** |
 | BLOCKER-003 | Payment vendor sandbox / credentials Pending |
 | BLOCKER-005 | Commission/settlement **values** Pending — not this doc |
-| ADR-013 / ADR-025 / **ADR-029** / **ADR-030** | Financial rules Admin-configurable; vendor behind port; simplified UX; separate domain states |
+| ADR-013 / ADR-025 / **ADR-029** / **ADR-030** / **ADR-031** | Financial rules Admin-configurable; vendor behind port; simplified UX; separate domain states; failure/retry/recovery |
 
 This document does **not** authorize payment module coding.
 
@@ -277,10 +279,11 @@ This document does **not** authorize payment module coding.
 
 ---
 
-**End of Payment Security & Reconciliation Framework v1.2**
+**End of Payment Security & Reconciliation Framework v1.3**
 
 | Version | Date | Change |
 |---------|------|--------|
 | 1.0 | 2026-07-24 | Initial framework |
 | 1.1 | 2026-07-25 | ADR-029 experience vs internal layer; BR-PAY-16 principle |
 | 1.2 | 2026-07-25 | ADR-030 domain state ownership; BR-PAY-17 principle |
+| 1.3 | 2026-07-25 | ADR-031 failure/retry/recovery; BR-PAY-18 principle |
