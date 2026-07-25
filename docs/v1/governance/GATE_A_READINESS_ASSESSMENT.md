@@ -4,7 +4,7 @@
 |-------|-------|
 | **Document ID** | GOV-GATE-A-READINESS-ASSESS-001 |
 | **Version** | 1.2 |
-| **Gate A readiness** | **~35%** — final closure checklists filed; signatures pending |
+| **Gate A readiness** | **~38%** — BLOCKER-001 closed; 2/7 |
 | **Date** | 2026-07-25 |
 | **Authority** | GOV-GATE-B-FINAL-CLOSURE-001 |
 | **Current gate** | **B — NOT READY — CODING BLOCKED** |
@@ -17,7 +17,7 @@
 
 | Blocker | Governance status | Evidence | Validation | Signature | Closed? |
 |---------|-------------------|----------|------------|-----------|---------|
-| BLOCKER-001 Design | **READY FOR CLOSURE VALIDATION** | Partial | ☐ | Design Lead ☐ | ❌ |
+| BLOCKER-001 Design | **CLOSED** | ☑ | ☑ | Ahlam ☑ | ✅ |
 | BLOCKER-002 Stakeholder | **CLOSED** | ☑ | ☑ | ☑ | ✅ |
 | BLOCKER-003 Vendors | **READY FOR CLOSURE VALIDATION** | Partial | ☐ | IL + TA ☐ | ❌ |
 | BLOCKER-004 Cloud | **READY FOR CLOSURE VALIDATION** | Partial | ☐ | TA + DevOps ☐ | ❌ |
@@ -25,7 +25,7 @@
 | BLOCKER-006 Compliance | **READY FOR CLOSURE VALIDATION** | Partial | ☐ | Legal + TA ☐ | ❌ |
 | BLOCKER-007 Payment.js | **READY FOR CLOSURE VALIDATION** | Partial | ☐ | IL + TA ☐ | ❌ |
 
-**Blockers closed:** **1 / 7** (14%)
+**Blockers closed:** **2 / 7** (29%)
 
 ---
 
@@ -33,7 +33,7 @@
 
 | # | Requirement | Status |
 |---|-------------|--------|
-| 1 | **7 / 7 blockers CLOSED** | ❌ **1 / 7** |
+| 1 | **7 / 7 blockers CLOSED** | ❌ **2 / 7** |
 | 2 | **GOV-IACL-001 complete** | ❌ Partial — final checklists filed; validations pending |
 | 3 | **GOV-GAIR-001 ready for signature** | ❌ Draft — unsigned |
 | 4 | **Architecture unchanged** (ADR-001 → ADR-032) | ✅ |
@@ -86,7 +86,7 @@
 
 | Dimension | Weight | Complete | Score |
 |-----------|--------|----------|-------|
-| Blocker closure (7 required) | 50% | 1/7 | **7.1%** |
+| Blocker closure (7 required) | 50% | 2/7 | **14.3%** |
 | GOV-IACL-001 | 15% | Partial — checklists filed | **~12%** |
 | GOV-GAIR-001 §8 | 15% | Not signed | **0%** |
 | Architecture & scope frozen | 10% | Yes | **10%** |

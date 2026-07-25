@@ -36,11 +36,11 @@ Checklist for **Gate A — READY FOR IMPLEMENTATION** authorization. All items m
 
 ---
 
-## Blocker Closure Checklist (1 / 7)
+## Blocker Closure Checklist (2 / 7)
 
 | # | Blocker | Evidence complete | Approved | Archived | Status |
 |---|---------|-------------------|----------|----------|--------|
-| C-01 | BLOCKER-001 Design | Final checklist filed | Yes (PO/BO) | No | **READY FOR CLOSURE VALIDATION** — Design Lead pending |
+| C-01 | BLOCKER-001 Design | Complete | Yes | Yes | **Closed** |
 | C-02 | BLOCKER-002 Stakeholder | Complete | Yes | Yes | **Closed** |
 | C-03 | BLOCKER-003 Vendors | Final checklist filed | Yes (PO/BO) | No | **READY FOR CLOSURE VALIDATION** — IL + TA pending |
 | C-04 | BLOCKER-004 Cloud | Final checklist filed | Yes (PO/BO) | No | **READY FOR CLOSURE VALIDATION** — TA + DevOps pending |

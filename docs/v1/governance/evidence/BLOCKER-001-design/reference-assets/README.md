@@ -1,26 +1,10 @@
 # Reference assets — BLOCKER-001
 
-Approved reference files (PO/BO 2026-07-25). **Repository archive names:**
+Approved reference files (PO/BO 2026-07-25). **Archived 2026-07-25** (commit `c3d8994`):
 
-| File | Original approved name | Status |
-|------|------------------------|--------|
-| `theme.mp4` | `theme(1).mp4` | Place file here |
-| `khadamatiLogo.jpg` | `ic-khadamati(1).jpg` | Place file here |
+| File | Status |
+|------|--------|
+| `theme.mp4` | ☑ Archived |
+| `khadamatiLogo.jpg` | ☑ Archived — V1 approved brand reference |
 
-**Folder path (from repo root):**
-
-```text
-docs/v1/governance/evidence/BLOCKER-001-design/reference-assets/
-```
-
-**Windows example:**
-
-```text
-C:\Users\Ahlam\khadamati-v1\docs\v1\governance\evidence\BLOCKER-001-design\reference-assets\
-    theme.mp4
-    khadamatiLogo.jpg
-```
-
-See `../DESIGN_ASSET_REFERENCE.md` (EVD-001-ASSETS-001 v1.2) · `../DESIGN_FINAL_CLOSURE_CHECKLIST.md` §2.
-
-**Do not implement UI until BLOCKER-001 Closed (ADR-023).**
+**BLOCKER-001 CLOSED** 2026-07-25. **UI implementation still requires Gate A** (ADR-023).

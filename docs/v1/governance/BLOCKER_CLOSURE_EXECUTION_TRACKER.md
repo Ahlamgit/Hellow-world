@@ -3,7 +3,7 @@
 | Field | Value |
 |-------|-------|
 | **Document ID** | GOV-BLOCKER-TRACKER-001 |
-| **Version** | 3.0 |
+| **Version** | 3.1 |
 | **Final closure** | `GATE_B_FINAL_CLOSURE_STATUS.md` (GOV-GATE-B-FINAL-CLOSURE-001) |
 | **Closure execution** | GOV-GATE-B-CLOSURE-EXEC-001 v1.0 |
 | **Closure validation** | `GATE_B_FINAL_CLOSURE_EXECUTION_RECORD.md` · `GATE_A_READINESS_ASSESSMENT.md` |
@@ -11,7 +11,7 @@
 | **Owner** | Program Execution Manager |
 | **Gate** | **B — NOT READY — CODING BLOCKED** |
 | **Previous gate note** | Gate A transition activities recorded; authorization state unchanged |
-| **Blockers closed** | **1 / 7** (BLOCKER-002); **6 / 7** pending evidence validation |
+| **Blockers closed** | **2 / 7** (BLOCKER-001, BLOCKER-002) |
 | **Business consolidation** | GOV-BUSINESS-APPROVAL-001 v1.2 |
 | **Role correction** | GOV-BLOCKER-002-ROLE-CORR-001 |
 | **Status** | **Active — Gate A transition execution** |
@@ -59,7 +59,7 @@ This tracker is the **operational working document** for closing BLOCKER-001 thr
 
 ## 2. Master blocker dashboard
 
-**Last updated:** 2026-07-25 · **Progress:** **1 / 7 Closed** (BLOCKER-002 ✓)
+**Last updated:** 2026-07-25 · **Progress:** **2 / 7 Closed** (BLOCKER-001 ✓ · BLOCKER-002 ✓)
 
 **Master closure status:** [GATE_B_CLOSURE_EXECUTION_STATUS.md](./GATE_B_CLOSURE_EXECUTION_STATUS.md) (GOV-GATE-B-CLOSURE-001 v1.1) · [GOV-GATE-B-CLOSURE-EXEC-001](./GATE_B_FINAL_CLOSURE_EXECUTION_RECORD.md)
 
@@ -67,7 +67,7 @@ This tracker is the **operational working document** for closing BLOCKER-001 thr
 
 | ID | Name | Owner | Governance status | Final closure checklist | Validation | Signature | Closed |
 |----|------|-------|-------------------|-------------------------|------------|-----------|--------|
-| **BLOCKER-001** | Design | Design Lead | **READY FOR CLOSURE VALIDATION** | `DESIGN_FINAL_CLOSURE_CHECKLIST.md` | ☐ | Design Lead ☐ | ☐ |
+| **BLOCKER-001** | Design | Design Lead | **CLOSED** | `DESIGN_FINAL_CLOSURE_CHECKLIST.md` | ☑ | Ahlam ☑ | ☑ |
 | **BLOCKER-002** | Stakeholder | PO/BO | **CLOSED** | — | ☑ | ☑ | ☑ |
 | **BLOCKER-003** | Vendors | IL + TA | **READY FOR CLOSURE VALIDATION** | `VENDOR_FINAL_VALIDATION_CHECKLIST.md` | ☐ | IL + TA ☐ | ☐ |
 | **BLOCKER-004** | Cloud | TA + DevOps | **READY FOR CLOSURE VALIDATION** | `CLOUD_FINAL_VALIDATION_CHECKLIST.md` | ☐ | TA + DevOps ☐ | ☐ |
@@ -407,5 +407,6 @@ If a blocker is **delayed** beyond agreed target:
 | 2.8 | 2026-07-25 | GOV-GATE-B-CLOSURE-EXEC-001 — closure validation reports; status ladder READY FOR APPROVAL (001, 003–007) |
 | 2.9 | 2026-07-25 | GOV-GATE-B-FINALIZE-001 — design system baseline, signoff pack, cross-blocker evidence finalization |
 | 3.0 | 2026-07-25 | GOV-GATE-B-FINAL-CLOSURE-001 — final closure checklists; READY FOR CLOSURE VALIDATION ladder |
+| 3.1 | 2026-07-25 | BLOCKER-001 **CLOSED** — Design Lead (Ahlam) sign-off; assets archived |
 
 **Sync with:** GOV-RBCS-001 on every closure event.

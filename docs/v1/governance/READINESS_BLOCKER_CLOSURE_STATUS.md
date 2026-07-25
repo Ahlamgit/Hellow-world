@@ -8,7 +8,7 @@
 | **Closure execution** | `GATE_B_FINAL_CLOSURE_EXECUTION_RECORD.md` (GOV-GATE-B-CLOSURE-EXEC-001) |
 | **Gate A readiness** | `GATE_A_READINESS_ASSESSMENT.md` (GOV-GATE-A-READINESS-ASSESS-001) |
 | **Evidence completion** | `GATE_B_EVIDENCE_COMPLETION_REPORT.md` (GOV-GATE-B-EVIDENCE-001) |
-| **Blockers closed** | **1 / 7** |
+| **Blockers closed** | **2 / 7** |
 | **Last updated** | 2026-07-25 |
 | **Gate** | **B — NOT READY — CODING BLOCKED** |
 | **Business consolidation** | `BUSINESS_APPROVAL_CONSOLIDATION_RECORD.md` (GOV-BUSINESS-APPROVAL-001 v1.2) |
@@ -50,7 +50,7 @@
 
 | Blocker | Description | Status | Owner | Final closure checklist | Evidence | Validation | Closed |
 |---------|-------------|--------|-------|-------------------------|----------|------------|--------|
-| BLOCKER-001 | Design approval | **READY FOR CLOSURE VALIDATION** | Design Lead | `DESIGN_FINAL_CLOSURE_CHECKLIST.md` | Partial — assets missing | Design Lead ☐ | ❌ |
+| BLOCKER-001 | Design approval | **CLOSED** | Ahlam (Design Lead) | `BLOCKER_001_CLOSURE_RECORD.md` | Complete | ☑ | ✅ |
 | BLOCKER-002 | Stakeholder approval | **CLOSED** | Project Owner / Business Owner | `BLOCKER_002_CLOSURE_RECORD.md` | Complete | ☑ | ✅ |
 | BLOCKER-003 | Vendor readiness | **READY FOR CLOSURE VALIDATION** | IL + TA | `VENDOR_FINAL_VALIDATION_CHECKLIST.md` | Partial | IL + TA ☐ | ❌ |
 | BLOCKER-004 | Cloud readiness | **READY FOR CLOSURE VALIDATION** | TA + DevOps | `CLOUD_FINAL_VALIDATION_CHECKLIST.md` | Partial | TA + DevOps ☐ | ❌ |
@@ -58,7 +58,7 @@
 | BLOCKER-006 | Compliance approval | **READY FOR CLOSURE VALIDATION** | Legal + TA | `LEGAL_COMPLIANCE_FINALIZATION_CHECKLIST.md` | Partial — retention pending | Legal + TA ☐ | ❌ |
 | BLOCKER-007 | Payment.js validation | **READY FOR CLOSURE VALIDATION** | IL + TA | `AREEBA_IXOPAY_FINAL_VALIDATION_CHECKLIST.md` | Partial — sandbox pending | IL + TA ☐ | ❌ |
 
-**Summary:** **1 Closed** · **6 READY FOR CLOSURE VALIDATION** · signatures and technical validation pending
+**Summary:** **2 Closed** (001, 002) · **5 READY FOR CLOSURE VALIDATION** · signatures pending
 
 ---
 
