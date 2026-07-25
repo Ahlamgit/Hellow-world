@@ -15,8 +15,8 @@
 
 | Asset | Archive filename | Archive path | Original delivery name |
 |-------|------------------|--------------|------------------------|
-| Design theme video | `theme.mp4` | `reference-assets/theme.mp4` | `theme.mp4` (PO/BO approved) |
-| Brand logo reference | `khadamatiLogo.jpg` | `reference-assets/khadamatiLogo.jpg` | `khadamatiLogo.jpg` (PO/BO approved) |
+| Design theme video | `theme.mp4` | `reference-assets/theme.mp4` | `theme(1).mp4` (PO/BO approved) |
+| Brand logo reference | `khadamatiLogo.jpg` | `reference-assets/khadamatiLogo.jpg` | `ic-khadamati(1).jpg` (PO/BO approved) |
 
 **Same approved content** — filenames standardized for repository and tooling. Identity and visual direction unchanged.
 
