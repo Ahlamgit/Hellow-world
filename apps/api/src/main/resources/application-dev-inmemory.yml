@@ -1,0 +1,14 @@
+# Use when Docker/PostgreSQL is not installed (localhost Sprint 0 only).
+# Run: mvn spring-boot:run -Dspring-boot.run.profiles=dev-inmemory
+
+spring:
+  datasource:
+    url: jdbc:h2:file:./.data/khadamati;MODE=PostgreSQL;DB_CLOSE_DELAY=-1
+    username: sa
+    password:
+    driver-class-name: org.h2.Driver
+  jpa:
+    hibernate:
+      ddl-auto: validate
+  flyway:
+    enabled: true

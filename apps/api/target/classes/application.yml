@@ -1,0 +1,52 @@
+spring:
+  application:
+    name: khadamati-api
+  profiles:
+    active: ${SPRING_PROFILES_ACTIVE:dev}
+  datasource:
+    url: ${DATABASE_URL:jdbc:postgresql://localhost:5432/khadamati}
+    username: ${DATABASE_USERNAME:khadamati}
+    password: ${DATABASE_PASSWORD:khadamati_dev}
+  jpa:
+    open-in-view: false
+    hibernate:
+      ddl-auto: validate
+    properties:
+      hibernate:
+        jdbc:
+          time_zone: UTC
+  flyway:
+    enabled: true
+    locations: classpath:db/migration
+
+server:
+  port: ${API_PORT:8080}
+
+management:
+  endpoints:
+    web:
+      exposure:
+        include: health,info
+  endpoint:
+    health:
+      show-details: when_authorized
+
+khadamati:
+  dev-mode: ${DEV_MODE:true}
+  mock-otp-code: ${MOCK_OTP_CODE:000000}
+  jwt:
+    secret: ${JWT_SECRET:localhost-dev-secret-change-me-min-32-chars}
+    access-ttl-minutes: ${JWT_ACCESS_TTL_MINUTES:15}
+    refresh-ttl-days: ${JWT_REFRESH_TTL_DAYS:7}
+  storage:
+    path: ${STORAGE_PATH:./storage}
+  market:
+    code: ${DEFAULT_MARKET_CODE:LB}
+    currency: ${DEFAULT_CURRENCY:USD}
+    default-locale: ${DEFAULT_LOCALE:ar}
+    timezone: ${DEFAULT_TIMEZONE:Asia/Beirut}
+    phone-country-code: ${DEFAULT_PHONE_COUNTRY_CODE:961}
+
+logging:
+  pattern:
+    level: "%5p [${spring.application.name:},%X{requestId:-}]"

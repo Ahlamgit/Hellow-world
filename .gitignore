@@ -8,8 +8,7 @@ storage/*
 !storage/.gitkeep
 uploads/
 
-# Java / Maven
-target/
+.gitignore
 *.class
 *.jar
 *.war

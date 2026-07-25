@@ -25,9 +25,11 @@ docs/v1/               Governance, ADRs, scope
 | Maven | 3.8+ |
 | Node.js | 22+ |
 | Flutter | 3.x stable |
-| Docker | For PostgreSQL + Redis (optional for API) |
+| Docker | PostgreSQL + Redis (recommended) — or use `dev-inmemory` API profile without Docker |
 
 ## Quick start (localhost)
+
+### Option A — With Docker (recommended)
 
 ### 1. Environment
 
@@ -49,6 +51,21 @@ mvn spring-boot:run
 ```
 
 Health: http://localhost:8080/health
+
+### Option B — Without Docker (Windows / no PostgreSQL yet)
+
+Skip `docker compose`. Use an in-memory H2 database for the API (Sprint 0 localhost only):
+
+**PowerShell:**
+
+```powershell
+cd apps\api
+mvn spring-boot:run "-Dspring-boot.run.profiles=dev-inmemory"
+```
+
+Then open http://localhost:8080/health — you should see `{"status":"UP",...}`.
+
+Web and mobile apps do **not** need Docker.
 
 ### 4. Web apps
 
