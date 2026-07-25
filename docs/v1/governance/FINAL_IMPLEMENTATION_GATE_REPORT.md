@@ -45,11 +45,11 @@ KHADAMATI remains blocked for all implementation activity. Seven pre-implementat
 | BLOCKER-003 Vendor readiness | **Open** | `VENDOR_READINESS_DOSSIER_v1.0` | Blocks integrations |
 | BLOCKER-004 Cloud readiness | **Open** | `CLOUD_READINESS_DECISION_RECORD_v1.0` | Blocks environment planning execution |
 | BLOCKER-005 Finance configuration | **Ready for Approval** | `FINANCE_POLICY_APPROVAL_PACKAGE.md` → `FINANCE_RULE_MATRIX_v1.0` | Blocks settlement/payment rules |
-| BLOCKER-006 Compliance approval | **Open** | `COMPLIANCE_APPROVAL_PACK_v1.0` | Blocks data lifecycle implementation |
+| BLOCKER-006 Compliance approval | **Ready for Approval** | `COMPLIANCE_APPROVAL_PACKAGE.md` → `COMPLIANCE_APPROVAL_PACK_v1.0` | Blocks data lifecycle implementation |
 | BLOCKER-007 Payment.js validation | **Open** | `PAYMENT_JS_VALIDATION_REPORT_v1.0` | Blocks booking payment implementation |
 
 **Blockers closed:** 0 / 7  
-**Ready for approval:** 3 (BLOCKER-001, BLOCKER-002, BLOCKER-005 — signatures/assets/values pending)
+**Ready for approval:** 4 (BLOCKER-001, 002, 005, 006 — signatures/values/legal decisions pending)
 
 ---
 
@@ -64,7 +64,7 @@ KHADAMATI remains blocked for all implementation activity. Seven pre-implementat
 | Vendors | Vendor readiness dossier | Technical Lead | **Pending** |
 | Cloud | Cloud readiness decision record | Technical Architect + Ops | **Pending** |
 | Finance | `FINANCE_POLICY_APPROVAL_PACKAGE.md` | Business / Finance / Operations Owners | **Ready for Approval** |
-| Compliance | Compliance approval pack | Legal / Compliance | **Pending** |
+| Compliance | `COMPLIANCE_APPROVAL_PACKAGE.md` | Legal / Compliance + Business + Technical Architect | **Ready for Approval** |
 | Payment | Payment.js validation report | Technical Lead + Finance Ops | **Pending** |
 
 ---
@@ -120,3 +120,4 @@ KHADAMATI remains blocked for all implementation activity. Seven pre-implementat
 | 1.3 | 2026-07-25 | BLOCKER-002 stakeholder package prepared — Ready for Approval; 0/7 closed |
 | 1.4 | 2026-07-25 | BLOCKER-005 finance policy package prepared — Ready for Approval |
 | 1.5 | 2026-07-25 | BLOCKER-001 design approval package prepared — Ready for Approval |
+| 1.6 | 2026-07-25 | BLOCKER-006 compliance approval package prepared — Ready for Approval |

@@ -58,7 +58,7 @@ Move KHADAMATI from **Gate B: NOT READY — CODING BLOCKED** to **Gate A: READY 
 | BLOCKER-003 | Vendor readiness | **Open — Pending** | Vendor readiness dossier per integration (see §2.3) | Technical Lead / Integration Lead |
 | BLOCKER-004 | Cloud readiness | **Open — Pending** | Cloud decision record + approvals (see §2.4) | Technical Architect + DevOps Lead |
 | BLOCKER-005 | Finance configuration | **Ready for Approval** | Approved finance rule matrix + `FINANCE_POLICY_APPROVAL_PACKAGE.md` (see §2.5) | Finance + Business Operations |
-| BLOCKER-006 | Compliance approval | **Open — Pending** | Compliance sign-off pack (see §2.6) | Legal / Compliance Officer |
+| BLOCKER-006 | Compliance approval | **Ready for Approval** | Compliance sign-off pack + `COMPLIANCE_APPROVAL_PACKAGE.md` (see §2.6) | Legal / Compliance Officer |
 | BLOCKER-007 | Payment.js validation | **Open — Pending** | Payment validation report (see §2.7) | Technical Lead + Finance Ops |
 
 **Aggregate gate position:** **Gate B — NOT READY — CODING BLOCKED**
@@ -224,6 +224,8 @@ No implementation work (coding, schema, UI build, deployment) may proceed until 
 
 **Closure artifact:** `COMPLIANCE_APPROVAL_PACK_v1.0`
 
+**Evidence package:** `COMPLIANCE_APPROVAL_PACKAGE.md` (EVD-006-PKG-001) — **READY FOR APPROVAL**; retention durations remain *Pending Legal / Compliance Approval*.
+
 **Dependency note:** Required before KYC, chat, ledger, and account deletion implementation.
 
 ---
@@ -362,5 +364,6 @@ Phase 4 — Payment validation (sequential)
 | 1.1 | 2026-07-25 | Program Governance Manager | Linked evidence management framework (GOV-BEMF-001) |
 | 1.2 | 2026-07-25 | Finance Governance Manager | BLOCKER-005 finance policy package — Ready for Approval |
 | 1.3 | 2026-07-25 | Product Design Governance Manager | BLOCKER-001 design approval package — Ready for Approval |
+| 1.4 | 2026-07-25 | Compliance Governance Manager | BLOCKER-006 compliance approval package — Ready for Approval |
 
 **Related documents:** `BLOCKER_EVIDENCE_MANAGEMENT_FRAMEWORK.md`, `IMPLEMENTATION_AUTHORIZATION_CHECKLIST.md`
