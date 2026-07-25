@@ -122,6 +122,8 @@ When ALL seven = Closed:
 
 ### Phase 1 — Governance alignment (start immediately)
 
+**Readiness validation:** `PHASE_1_BLOCKER_APPROVAL_READINESS_REPORT.md` (GOV-P1-READINESS-001) — packages ready for distribution; **0 / 2 closed**
+
 | Action | Owner | Deliverable | Blocks |
 |--------|-------|-------------|--------|
 | Distribute stakeholder package; collect §6 signatures | Program Sponsor | `STAKEHOLDER_APPROVAL_REGISTER_v1.0` | Program authorization |

@@ -35,11 +35,11 @@ Checklist for **Gate A — READY FOR IMPLEMENTATION** authorization. All items m
 | # | Blocker | Evidence complete | Approved | Archived | Status |
 |---|---------|-------------------|----------|----------|--------|
 | C-01 | BLOCKER-001 Design | No | No | No | **Pending** |
-| C-02 | BLOCKER-002 Stakeholder | No | No | No | **Pending** |
+| C-02 | BLOCKER-002 Stakeholder | Package prepared | No | No | **Ready for Approval** |
 | C-03 | BLOCKER-003 Vendors | No | No | No | **Pending** |
 | C-04 | BLOCKER-004 Cloud | No | No | No | **Pending** |
 | C-05 | BLOCKER-005 Finance | No | No | No | **Pending** |
-| C-06 | BLOCKER-006 Compliance | No | No | No | **Pending** |
+| C-06 | BLOCKER-006 Compliance | Package prepared | No | No | **Ready for Approval** |
 | C-07 | BLOCKER-007 Payment.js | No | No | No | **Pending** |
 
 **Rule:** No item may be marked complete without evidence per `BLOCKER_EVIDENCE_MANAGEMENT_FRAMEWORK.md` §1.3.

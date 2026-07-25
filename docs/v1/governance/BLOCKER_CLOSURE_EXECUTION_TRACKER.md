@@ -3,7 +3,7 @@
 | Field | Value |
 |-------|-------|
 | **Document ID** | GOV-BLOCKER-TRACKER-001 |
-| **Version** | 1.1 |
+| **Version** | 1.2 |
 | **Date** | 2026-07-25 |
 | **Owner** | Program Execution Manager |
 | **Gate** | **B — NOT READY — CODING BLOCKED** |
@@ -38,7 +38,7 @@ This tracker is the **operational working document** for closing BLOCKER-001 thr
 | GOV-GATC-001 | Phase execution & Gate A ceremony |
 | GOV-GA-AUDIT-001 | Independent readiness audit |
 
-**Evidence repository:** `docs/v1/governance/evidence/`
+**Phase 1 readiness:** `PHASE_1_BLOCKER_APPROVAL_READINESS_REPORT.md` (GOV-P1-READINESS-001) — **ready for approval execution**; Phase 1 **not complete**
 
 ---
 
@@ -196,10 +196,12 @@ Execute per GOV-GATC-001. Update this tracker as each blocker closes.
 
 ### Phase 1 — Governance alignment
 
-| Close | Owner | Status |
-|-------|-------|--------|
-| **BLOCKER-002** Stakeholder | Program Sponsor | ☐ Not closed |
-| **BLOCKER-006** Compliance | Legal / Compliance | ☐ Not closed |
+**Readiness validation:** GOV-P1-READINESS-001 (2026-07-25) — packages **ready for distribution**; **0 / 2 closed**
+
+| Close | Owner | Distribution | Signatures | Status |
+|-------|-------|--------------|------------|--------|
+| **BLOCKER-002** Stakeholder | Program Sponsor | Package ready | §6 pending (PO, BO, Ops) | ☐ Not closed |
+| **BLOCKER-006** Compliance | Legal / Compliance | Package ready | §10 pending; §2 retention values pending | ☐ Not closed |
 
 **Phase 1 complete:** ☐
 
@@ -348,5 +350,6 @@ If a blocker is **delayed** beyond agreed target:
 |---------|------|--------|
 | 1.0 | 2026-07-25 | Initial operational blocker closure execution tracker |
 | 1.1 | 2026-07-25 | Standard evidence trio (`README.md`, `APPROVAL_RECORD.md`, `EVIDENCE_CHECKLIST.md`) in all seven blocker folders |
+| 1.2 | 2026-07-25 | Phase 1 approval readiness report (GOV-P1-READINESS-001); Phase 1 not complete |
 
 **Sync with:** GOV-RBCS-001 on every closure event.

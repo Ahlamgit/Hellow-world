@@ -3,7 +3,7 @@
 | Field | Value |
 |-------|-------|
 | **Document ID** | GOV-FIGR-001 |
-| **Version** | 2.4 |
+| **Version** | 2.5 |
 | **Report date** | 2026-07-25 |
 | **Prepared by** | Program Governance Manager |
 
@@ -17,7 +17,7 @@
 | **Target gate** | A — READY FOR IMPLEMENTATION |
 | **Implementation authorization** | **DENIED** |
 
-KHADAMATI remains blocked for all implementation activity. Seven pre-implementation blockers are open. **Operational tracker:** `BLOCKER_CLOSURE_EXECUTION_TRACKER.md` (GOV-BLOCKER-TRACKER-001). **Independent Gate A audit:** `FINAL_GATE_A_READINESS_AUDIT_REPORT.md` (GOV-GA-AUDIT-001) — recommendation **remain Gate B**. Evidence collection and validation is governed by `BLOCKER_EVIDENCE_MANAGEMENT_FRAMEWORK.md` (GOV-BEMF-001 v1.0). The formal Gate A transition instrument is `GATE_A_IMPLEMENTATION_AUTHORIZATION_RECORD.md` (GOV-GAIR-001) — **Draft, unsigned**; implementation authorization is granted only upon its §8 approval after 7 / 7 blockers closed.
+KHADAMATI remains blocked for all implementation activity. Seven pre-implementation blockers are open. **Phase 1 readiness:** `PHASE_1_BLOCKER_APPROVAL_READINESS_REPORT.md` (GOV-P1-READINESS-001) — BLOCKER-002 and BLOCKER-006 ready for distribution/signatures; **Phase 1 not complete**. **Operational tracker:** `BLOCKER_CLOSURE_EXECUTION_TRACKER.md` (GOV-BLOCKER-TRACKER-001). **Independent Gate A audit:** `FINAL_GATE_A_READINESS_AUDIT_REPORT.md` (GOV-GA-AUDIT-001) — recommendation **remain Gate B**. Evidence collection and validation is governed by `BLOCKER_EVIDENCE_MANAGEMENT_FRAMEWORK.md` (GOV-BEMF-001 v1.0). The formal Gate A transition instrument is `GATE_A_IMPLEMENTATION_AUTHORIZATION_RECORD.md` (GOV-GAIR-001) — **Draft, unsigned**; implementation authorization is granted only upon its §8 approval after 7 / 7 blockers closed.
 
 ---
 
@@ -139,3 +139,4 @@ Sprint 0 scope is defined in `SPRINT_0_FOUNDATION_CHARTER.md` (GOV-S0FC-001).
 | 2.2 | 2026-07-25 | Independent Gate A readiness audit (GOV-GA-AUDIT-001) — remain Gate B |
 | 2.3 | 2026-07-25 | Blocker closure execution tracker (GOV-BLOCKER-TRACKER-001) |
 | 2.4 | 2026-07-25 | Standard evidence trio prepared in all seven blocker folders; Gate B unchanged — 0/7 closed |
+| 2.5 | 2026-07-25 | Phase 1 approval readiness report (GOV-P1-READINESS-001); Gate B unchanged |

@@ -3,7 +3,7 @@
 | Field | Value |
 |-------|-------|
 | **Document ID** | GOV-RBCS-001 |
-| **Version** | 2.3 |
+| **Version** | 2.4 |
 | **Last updated** | 2026-07-25 |
 | **Gate** | B — NOT READY — CODING BLOCKED |
 | **Owner** | Program Governance Manager |
@@ -12,6 +12,7 @@
 | **Gate A transition & blocker execution** | `FINAL_GATE_A_TRANSITION_AND_BLOCKER_CLOSURE_PACKAGE.md` (GOV-GATC-001) |
 | **Gate A readiness audit** | `FINAL_GATE_A_READINESS_AUDIT_REPORT.md` (GOV-GA-AUDIT-001) — **remain Gate B** |
 | **Blocker execution tracker** | `BLOCKER_CLOSURE_EXECUTION_TRACKER.md` (GOV-BLOCKER-TRACKER-001) — **operational** |
+| **Phase 1 readiness** | `PHASE_1_BLOCKER_APPROVAL_READINESS_REPORT.md` (GOV-P1-READINESS-001) — distribute & sign; **0 / 2 Phase 1 closed** |
 | **Gate A authorization record** | `GATE_A_IMPLEMENTATION_AUTHORIZATION_RECORD.md` (GOV-GAIR-001) — Draft, unsigned |
 
 ---
@@ -41,7 +42,7 @@
 | BLOCKER-006 | Compliance approval | **Ready for Approval** | Legal / Compliance Officer | `COMPLIANCE_APPROVAL_PACK_v1.0` | Package prepared | — |
 | BLOCKER-007 | Payment.js validation | **Open** | Technical Lead + Finance Ops | `PAYMENT_JS_VALIDATION_REPORT_v1.0` | No | — |
 
-**Summary:** 0 Closed · 3 Open · 4 Ready for Approval · 0 Under Review
+**Summary:** 0 Closed · 3 Open · 4 Ready for Approval · 0 Under Review · **Phase 1:** 0 / 2 closed (GOV-P1-READINESS-001)
 
 ---
 
@@ -71,7 +72,7 @@
 
 ### BLOCKER-002 — Stakeholder Approval
 
-**Status:** **READY FOR APPROVAL** (signatures pending)  
+**Status:** **READY FOR APPROVAL** (signatures pending) · **Phase 1 readiness:** **PASS** (distribution) per GOV-P1-READINESS-001  
 **Package:** `evidence/BLOCKER-002-stakeholder/STAKEHOLDER_APPROVAL_PACKAGE.md` (EVD-002-PKG-001 v1.0)  
 **Evidence trio:** `README.md` · `APPROVAL_RECORD.md` · `EVIDENCE_CHECKLIST.md`
 
@@ -145,7 +146,7 @@
 
 ### BLOCKER-006 — Compliance
 
-**Status:** **READY FOR APPROVAL** (signatures and legal values pending)  
+**Status:** **READY FOR APPROVAL** (signatures and legal values pending) · **Phase 1 readiness:** **PASS** (distribution); **FAIL** (closure — §2 retention pending) per GOV-P1-READINESS-001  
 **Package:** `evidence/BLOCKER-006-compliance/COMPLIANCE_APPROVAL_PACKAGE.md` (EVD-006-PKG-001 v1.0)  
 **Evidence trio:** `README.md` · `APPROVAL_RECORD.md` · `EVIDENCE_CHECKLIST.md`
 
@@ -228,3 +229,4 @@ Refer to `BLOCKER_CLOSURE_EXECUTION_TRACKER.md` (GOV-BLOCKER-TRACKER-001) for op
 | 2.1 | 2026-07-25 | Independent Gate A readiness audit (GOV-GA-AUDIT-001) — 0/7 closed |
 | 2.2 | 2026-07-25 | Operational blocker execution tracker (GOV-BLOCKER-TRACKER-001) |
 | 2.3 | 2026-07-25 | Standard evidence trio in all seven blocker folders; 0/7 closed — Gate B unchanged |
+| 2.4 | 2026-07-25 | Phase 1 approval readiness report (GOV-P1-READINESS-001); Phase 1 execution authorized, not complete |
