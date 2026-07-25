@@ -1,0 +1,173 @@
+# KHADAMATI Platform — Version 1 Architecture Pack
+
+**Document Status:** Draft — Aligned to Master Prompt v1.0  
+**Version:** 1.1.0-DRAFT  
+**Date:** 2026-07-24  
+**Classification:** Internal — Architecture & Product Discovery  
+**Stack Decision (Fixed):** Spring Boot 3.x / Java 21 / PostgreSQL / Flyway / React+MUI / Flutter / JWT / Areeba IXOPAY Payment.js  
+**Controlling brief:** [MASTER_IMPLEMENTATION_PROMPT_v1.0.md](./MASTER_IMPLEMENTATION_PROMPT_v1.0.md)  
+**Final scope baseline (frozen):** [FINAL_SCOPE_BASELINE.md](./FINAL_SCOPE_BASELINE.md)  
+**Implementation readiness plan:** [IMPLEMENTATION_READINESS_EXECUTION_PLAN.md](./IMPLEMENTATION_READINESS_EXECUTION_PLAN.md) — **B) NOT READY**; tracks BLOCKER-001…007  
+**Blocker closure status:** [READINESS_BLOCKER_CLOSURE_STATUS.md](./READINESS_BLOCKER_CLOSURE_STATUS.md) — active closure (0/7)  
+**Blocker evidence repository:** [governance/evidence/README.md](./governance/evidence/README.md) — standard trio per `BLOCKER-001-design/` … `BLOCKER-007-payment/`  
+**Stakeholder sign-off:** [governance/STAKEHOLDER_SIGN_OFF_PACKAGE.md](./governance/STAKEHOLDER_SIGN_OFF_PACKAGE.md) — BLOCKER-002 **READY FOR APPROVAL**  
+**Implementation authorization:** [governance/IMPLEMENTATION_AUTHORIZATION_CHECKLIST.md](./governance/IMPLEMENTATION_AUTHORIZATION_CHECKLIST.md) — Gate B→A; coding **BLOCKED**  
+**Finance Lebanon config:** [config/FINANCE_LEBANON_INITIAL_CONFIGURATION.md](./config/FINANCE_LEBANON_INITIAL_CONFIGURATION.md) · [governance/FINANCE_POLICY_APPROVAL_MATRIX.md](./governance/FINANCE_POLICY_APPROVAL_MATRIX.md) · [governance/FINANCE_POLICY_LIFECYCLE.md](./governance/FINANCE_POLICY_LIFECYCLE.md) — BLOCKER-005 **IN PREPARATION**  
+**Cloud infrastructure:** [infra/CLOUD_INFRASTRUCTURE_DECISION.md](./infra/CLOUD_INFRASTRUCTURE_DECISION.md) · [infra/CLOUD_SIZING_AND_COST_FRAMEWORK.md](./infra/CLOUD_SIZING_AND_COST_FRAMEWORK.md) · [infra/PRODUCTION_OPERATIONS_READINESS.md](./infra/PRODUCTION_OPERATIONS_READINESS.md) — BLOCKER-004 **IN PREPARATION**  
+**Vendor integration:** [vendors/VENDOR_INTEGRATION_READINESS_MATRIX.md](./vendors/VENDOR_INTEGRATION_READINESS_MATRIX.md) · [vendors/VENDOR_EVALUATION_MATRIX.md](./vendors/VENDOR_EVALUATION_MATRIX.md) · [vendors/INTEGRATION_CONTRACT_SPECIFICATION.md](./vendors/INTEGRATION_CONTRACT_SPECIFICATION.md) · [vendors/VENDOR_RISK_AND_SLA_ASSESSMENT.md](./vendors/VENDOR_RISK_AND_SLA_ASSESSMENT.md) — BLOCKER-003 **IN PREPARATION**  
+**Compliance & retention:** [compliance/RETENTION_AND_DATA_GOVERNANCE_FRAMEWORK.md](./compliance/RETENTION_AND_DATA_GOVERNANCE_FRAMEWORK.md) · [compliance/RETENTION_POLICY_DECISIONS.md](./compliance/RETENTION_POLICY_DECISIONS.md) — BLOCKER-006 **IN PREPARATION**  
+**Design foundation:** [design/DESIGN_APPROVAL_RECORD.md](./design/DESIGN_APPROVAL_RECORD.md) · [design/BRAND_IDENTITY_SPECIFICATION.md](./design/BRAND_IDENTITY_SPECIFICATION.md) · [design/UI_UX_SPECIFICATION.md](./design/UI_UX_SPECIFICATION.md) · [design/DESIGN_SYSTEM_TOKENS.md](./design/DESIGN_SYSTEM_TOKENS.md) · [design/COLOR_REFERENCE.md](./design/COLOR_REFERENCE.md) · [design/assets/LOGO_ASSET_PACKAGE.md](./design/assets/LOGO_ASSET_PACKAGE.md)  
+**Implementation gate:** [FINAL_IMPLEMENTATION_GATE_REPORT.md](./FINAL_IMPLEMENTATION_GATE_REPORT.md)  
+**Pre-implementation review:** [FINAL_PRE_IMPLEMENTATION_READINESS_REVIEW.md](./FINAL_PRE_IMPLEMENTATION_READINESS_REVIEW.md) — points to **GOV-FPRG-001**  
+**Gate A preparation package:** [governance/FINAL_PRE_IMPLEMENTATION_READINESS_AND_GATE_A_PACKAGE.md](./governance/FINAL_PRE_IMPLEMENTATION_READINESS_AND_GATE_A_PACKAGE.md) — **GOV-FPRG-001**  
+**Blocker execution tracker:** [governance/BLOCKER_CLOSURE_EXECUTION_TRACKER.md](./governance/BLOCKER_CLOSURE_EXECUTION_TRACKER.md) — **GOV-BLOCKER-TRACKER-001** (operational)  
+**Phase 1 approval readiness:** [governance/PHASE_1_BLOCKER_APPROVAL_READINESS_REPORT.md](./governance/PHASE_1_BLOCKER_APPROVAL_READINESS_REPORT.md) — **GOV-P1-READINESS-001**  
+**Phase 1 closure execution:** [governance/PHASE_1_CLOSURE_EXECUTION_REPORT.md](./governance/PHASE_1_CLOSURE_EXECUTION_REPORT.md) — **GOV-P1-CLOSURE-001**  
+**Phase 1 approval finalization:** [governance/PHASE_1_APPROVAL_FINALIZATION_REPORT.md](./governance/PHASE_1_APPROVAL_FINALIZATION_REPORT.md) — **GOV-P1-FINAL-001**  
+**Phase 1 approval execution:** [governance/PHASE_1_APPROVAL_EXECUTION_PACK.md](./governance/PHASE_1_APPROVAL_EXECUTION_PACK.md) — **GOV-P1-EXEC-001**  
+**Phase 1 approval tracking:** [governance/PHASE_1_APPROVAL_TRACKING_REGISTER.md](./governance/PHASE_1_APPROVAL_TRACKING_REGISTER.md) — **GOV-P1-TRACK-001**  
+**Gate A readiness audit:** [governance/FINAL_GATE_A_READINESS_AUDIT_REPORT.md](./governance/FINAL_GATE_A_READINESS_AUDIT_REPORT.md) — **GOV-GA-AUDIT-001** (recommendation: remain Gate B)  
+**Governance & implementation control:** [governance/FINAL_GOVERNANCE_GATE_A_AND_IMPLEMENTATION_CONTROL.md](./governance/FINAL_GOVERNANCE_GATE_A_AND_IMPLEMENTATION_CONTROL.md) — **GOV-MASTER-CTRL-001**  
+**Master implementation authorization (apex):** [governance/MASTER_GOVERNANCE_CONTROLLED_IMPLEMENTATION_AUTHORIZATION_PROMPT.md](./governance/MASTER_GOVERNANCE_CONTROLLED_IMPLEMENTATION_AUTHORIZATION_PROMPT.md) — **GOV-MASTER-IMPL-AUTH-001**  
+**Gate A readiness execution:** [governance/GATE_A_READINESS_EXECUTION_MASTER_PROMPT.md](./governance/GATE_A_READINESS_EXECUTION_MASTER_PROMPT.md) — **GOV-GA-READINESS-EXEC-001**  
+**BLOCKER-002 role correction:** [governance/BLOCKER_002_ROLE_OWNERSHIP_CORRECTION_REPORT.md](./governance/BLOCKER_002_ROLE_OWNERSHIP_CORRECTION_REPORT.md) — **GOV-BLOCKER-002-ROLE-CORR-001**  
+**BLOCKER-002 closure:** [governance/BLOCKER_002_CLOSURE_EXECUTION_REPORT.md](./governance/BLOCKER_002_CLOSURE_EXECUTION_REPORT.md) — **GOV-BLOCKER-002-CLOSURE-001**  
+**Implementation readiness prompt:** [governance/GOVERNANCE_CONTROLLED_IMPLEMENTATION_READINESS_PROMPT.md](./governance/GOVERNANCE_CONTROLLED_IMPLEMENTATION_READINESS_PROMPT.md) — **GOV-READINESS-PROMPT-001**  
+**Gate A implementation authorization prompt:** [governance/GATE_A_CONTROLLED_IMPLEMENTATION_AUTHORIZATION_PROMPT.md](./governance/GATE_A_CONTROLLED_IMPLEMENTATION_AUTHORIZATION_PROMPT.md) — **GOV-GA-IMPL-AUTH-PROMPT-001**  
+**Gate A ceremony preparation:** [governance/GATE_A_CEREMONY_PREPARATION_PACKAGE.md](./governance/GATE_A_CEREMONY_PREPARATION_PACKAGE.md) — **GOV-GA-CEREMONY-001**  
+**Architecture compliance & readiness:** [governance/ARCHITECTURE_COMPLIANCE_AND_IMPLEMENTATION_READINESS_REGISTER.md](./governance/ARCHITECTURE_COMPLIANCE_AND_IMPLEMENTATION_READINESS_REGISTER.md) — **GOV-ARCH-READINESS-001**  
+**Gate A transition & blocker execution:** [governance/FINAL_GATE_A_TRANSITION_AND_BLOCKER_CLOSURE_PACKAGE.md](./governance/FINAL_GATE_A_TRANSITION_AND_BLOCKER_CLOSURE_PACKAGE.md) — **GOV-GATC-001**  
+**Execution standards (after Gate A):** [IMPLEMENTATION_EXECUTION_STANDARDS.md](./IMPLEMENTATION_EXECUTION_STANDARDS.md) — prepared; coding **BLOCKED** until Gate A  
+**Payment.js validation:** [payment/PAYMENT_JS_MOBILE_VALIDATION_REPORT.md](./payment/PAYMENT_JS_MOBILE_VALIDATION_REPORT.md) · [payment/AREEBA_IXOPAY_VENDOR_VALIDATION_CHECKLIST.md](./payment/AREEBA_IXOPAY_VENDOR_VALIDATION_CHECKLIST.md) · [payment/PAYMENT_SECURITY_AND_RECONCILIATION_FRAMEWORK.md](./payment/PAYMENT_SECURITY_AND_RECONCILIATION_FRAMEWORK.md) · [ADR-029](./adr/ADR-029-simplified-payment-experience-ledger-control.md) — BLOCKER-007 **IN VALIDATION**  
+**Feature Traceability:** [FEATURE_TRACEABILITY_MATRIX.md](./FEATURE_TRACEABILITY_MATRIX.md)  
+**Architecture consistency review:** [FINAL_ARCHITECTURE_CONSISTENCY_REVIEW.md](./FINAL_ARCHITECTURE_CONSISTENCY_REVIEW.md) — **validated 2026-07-25** (KHAD-V1-FACR-001)  
+**ADRs:** [adr/README.md](./adr/README.md) (001–032)  
+**Admin configurable finance rules:** [architecture/47-ADMIN-CONFIGURABLE-FINANCIAL-RULES.md](./architecture/47-ADMIN-CONFIGURABLE-FINANCIAL-RULES.md) · [ADR-013](./adr/ADR-013-admin-configurable-financial-business-rules.md)  
+**Alignment changelog:** [ALIGNMENT_CHANGELOG_MASTER_PROMPT_v1.md](./ALIGNMENT_CHANGELOG_MASTER_PROMPT_v1.md)  
+
+---
+
+## Purpose
+
+This pack is the **complete discovery and architecture deliverable** for KHADAMATI Version 1 (MVP+).
+
+It is intentionally **implementation-free**. No application code, UI templates, or schema scripts are produced until this pack is approved and design assets (UI video, screenshots, branding, UX) are uploaded.
+
+**This is a new platform version.** Prior KHADAMATI implementations (ASP.NET / SQL Server / native mobile) must not be treated as validated business truth. Any carry-forward assumption is either re-validated here or listed under **Questions Requiring Business Decision**.
+
+---
+
+## Approval Gate
+
+| Gate | Owner | Outcome Required |
+|------|-------|------------------|
+| Business rules & open questions | Product / Business | Decisions recorded |
+| Architecture & NFRs | Solution Architecture | Approved |
+| Security & compliance posture | Security / Compliance | Approved |
+| Scope & roadmap (V1 vs V2) | Product + Engineering | Approved |
+| UI/UX assets | Design | Uploaded (post-approval) |
+
+**Implementation begins only after all gates pass.**
+
+---
+
+## Document Map (45 Deliverables)
+
+| # | Deliverable | Document |
+|---|-------------|----------|
+| 1 | Functional Requirements Specification | [requirements/01-FUNCTIONAL-REQUIREMENTS.md](./requirements/01-FUNCTIONAL-REQUIREMENTS.md) |
+| 2 | Business Requirements | [requirements/02-BUSINESS-REQUIREMENTS.md](./requirements/02-BUSINESS-REQUIREMENTS.md) |
+| 3 | System Scope | [requirements/03-SYSTEM-SCOPE.md](./requirements/03-SYSTEM-SCOPE.md) |
+| 4 | Actors | [requirements/04-ACTORS.md](./requirements/04-ACTORS.md) |
+| 5 | Use Cases | [requirements/05-USE-CASES.md](./requirements/05-USE-CASES.md) |
+| 6 | User Stories | [requirements/06-USER-STORIES.md](./requirements/06-USER-STORIES.md) |
+| 7 | Acceptance Criteria | [requirements/07-ACCEPTANCE-CRITERIA.md](./requirements/07-ACCEPTANCE-CRITERIA.md) |
+| 8 | Complete Module Breakdown | [architecture/08-MODULE-BREAKDOWN.md](./architecture/08-MODULE-BREAKDOWN.md) |
+| 9 | System Architecture | [architecture/09-SYSTEM-ARCHITECTURE.md](./architecture/09-SYSTEM-ARCHITECTURE.md) |
+| 10 | Backend Architecture | [architecture/10-BACKEND-ARCHITECTURE.md](./architecture/10-BACKEND-ARCHITECTURE.md) |
+| 11 | Frontend Architecture | [architecture/11-FRONTEND-ARCHITECTURE.md](./architecture/11-FRONTEND-ARCHITECTURE.md) |
+| 12 | Flutter Architecture | [architecture/12-FLUTTER-ARCHITECTURE.md](./architecture/12-FLUTTER-ARCHITECTURE.md) |
+| 13 | Database Architecture | [architecture/13-DATABASE-ARCHITECTURE.md](./architecture/13-DATABASE-ARCHITECTURE.md) |
+| 14 | ER Diagram | [architecture/14-ER-DIAGRAM.md](./architecture/14-ER-DIAGRAM.md) |
+| 15 | Entity Relationship Mapping | [architecture/15-ENTITY-RELATIONSHIP-MAPPING.md](./architecture/15-ENTITY-RELATIONSHIP-MAPPING.md) |
+| 16 | API Design | [architecture/16-API-DESIGN.md](./architecture/16-API-DESIGN.md) |
+| 17 | Folder Structure | [standards/17-FOLDER-STRUCTURE.md](./standards/17-FOLDER-STRUCTURE.md) |
+| 18 | Coding Standards | [standards/18-CODING-STANDARDS.md](./standards/18-CODING-STANDARDS.md) |
+| 19 | Naming Conventions | [standards/19-NAMING-CONVENTIONS.md](./standards/19-NAMING-CONVENTIONS.md) |
+| 20 | Security Architecture | [standards/20-SECURITY-ARCHITECTURE.md](./standards/20-SECURITY-ARCHITECTURE.md) |
+| 21 | Authentication Flow | [workflows/21-AUTHENTICATION-FLOW.md](./workflows/21-AUTHENTICATION-FLOW.md) |
+| 22 | Authorization Flow | [workflows/22-AUTHORIZATION-FLOW.md](./workflows/22-AUTHORIZATION-FLOW.md) |
+| 23 | Payment Flow (Areeba IXOPAY Payment.js) | [workflows/23-PAYMENT-FLOW.md](./workflows/23-PAYMENT-FLOW.md) |
+| 24 | Booking Lifecycle | [workflows/24-BOOKING-LIFECYCLE.md](./workflows/24-BOOKING-LIFECYCLE.md) |
+| 25 | Notification Flow | [workflows/25-NOTIFICATION-FLOW.md](./workflows/25-NOTIFICATION-FLOW.md) |
+| 26 | Subscription Workflow | [workflows/26-SUBSCRIPTION-WORKFLOW.md](./workflows/26-SUBSCRIPTION-WORKFLOW.md) |
+| 27 | Commission Workflow | [workflows/27-COMMISSION-WORKFLOW.md](./workflows/27-COMMISSION-WORKFLOW.md) |
+| 28 | Craftsman Approval Workflow | [workflows/28-CRAFTSMAN-APPROVAL-WORKFLOW.md](./workflows/28-CRAFTSMAN-APPROVAL-WORKFLOW.md) |
+| 29 | Identity Verification Workflow | [workflows/29-IDENTITY-VERIFICATION-WORKFLOW.md](./workflows/29-IDENTITY-VERIFICATION-WORKFLOW.md) |
+| 30 | Advertisement Workflow | [workflows/30-ADVERTISEMENT-WORKFLOW.md](./workflows/30-ADVERTISEMENT-WORKFLOW.md) |
+| 31 | Quality Follow-up Workflow | [workflows/31-QUALITY-FOLLOWUP-WORKFLOW.md](./workflows/31-QUALITY-FOLLOWUP-WORKFLOW.md) |
+| 32 | Reporting Architecture | [devops/32-REPORTING-ARCHITECTURE.md](./devops/32-REPORTING-ARCHITECTURE.md) |
+| 33 | Logging Strategy | [devops/33-LOGGING-STRATEGY.md](./devops/33-LOGGING-STRATEGY.md) |
+| 34 | Error Handling Strategy | [devops/34-ERROR-HANDLING-STRATEGY.md](./devops/34-ERROR-HANDLING-STRATEGY.md) |
+| 35 | Testing Strategy | [devops/35-TESTING-STRATEGY.md](./devops/35-TESTING-STRATEGY.md) |
+| 36 | Deployment Architecture | [devops/36-DEPLOYMENT-ARCHITECTURE.md](./devops/36-DEPLOYMENT-ARCHITECTURE.md) |
+| 37 | CI/CD Pipeline | [devops/37-CICD-PIPELINE.md](./devops/37-CICD-PIPELINE.md) |
+| 38 | Environment Configuration | [devops/38-ENVIRONMENT-CONFIGURATION.md](./devops/38-ENVIRONMENT-CONFIGURATION.md) |
+| 39 | Configuration Management | [devops/39-CONFIGURATION-MANAGEMENT.md](./devops/39-CONFIGURATION-MANAGEMENT.md) |
+| 40 | Development Roadmap | [planning/40-DEVELOPMENT-ROADMAP.md](./planning/40-DEVELOPMENT-ROADMAP.md) |
+| 41 | Milestones | [planning/41-MILESTONES.md](./planning/41-MILESTONES.md) |
+| 42 | Sprint Breakdown | [planning/42-SPRINT-BREAKDOWN.md](./planning/42-SPRINT-BREAKDOWN.md) |
+| 43 | Risks | [planning/43-RISKS.md](./planning/43-RISKS.md) |
+| 44 | Technical Recommendations | [planning/44-TECHNICAL-RECOMMENDATIONS.md](./planning/44-TECHNICAL-RECOMMENDATIONS.md) |
+| 45 | Future Version 2 Roadmap | [planning/45-FUTURE-V2-ROADMAP.md](./planning/45-FUTURE-V2-ROADMAP.md) |
+
+**Cross-cutting:** [QUESTIONS-REQUIRING-BUSINESS-DECISION.md](./QUESTIONS-REQUIRING-BUSINESS-DECISION.md)  
+**Final architecture audit:** [ARCHITECTURE_AUDIT_FINAL.md](./ARCHITECTURE_AUDIT_FINAL.md)  
+**Final readiness report:** [FINAL_ARCHITECTURE_READINESS_REPORT.md](./FINAL_ARCHITECTURE_READINESS_REPORT.md)  
+**Implementation gate report:** [FINAL_IMPLEMENTATION_GATE_REPORT.md](./FINAL_IMPLEMENTATION_GATE_REPORT.md)  
+**Decisions complete:** [FINAL_ARCHITECTURE_DECISIONS_COMPLETE.md](./FINAL_ARCHITECTURE_DECISIONS_COMPLETE.md)  
+**Readiness pack:** [readiness/](./readiness/)  
+**Master prompt v1.0 (controlling):** [MASTER_IMPLEMENTATION_PROMPT_v1.0.md](./MASTER_IMPLEMENTATION_PROMPT_v1.0.md)  
+**Feature Traceability Matrix:** [FEATURE_TRACEABILITY_MATRIX.md](./FEATURE_TRACEABILITY_MATRIX.md)  
+**ADRs:** [adr/README.md](./adr/README.md)  
+**Full prompt (earlier composite):** [FULL_PROMPT_INCLUDING_DESIGN.md](./FULL_PROMPT_INCLUDING_DESIGN.md)
+
+---
+
+## Fixed Technology Constraints (Non-Negotiable for V1)
+
+| Area | Choice |
+|------|--------|
+| Backend | Spring Boot 3.x, Java 21, Maven |
+| Security | Spring Security, JWT |
+| Persistence | Spring Data JPA, PostgreSQL, Flyway |
+| API | REST, OpenAPI |
+| Admin Portal | React + TypeScript + Material UI |
+| Store Dashboard | React + TypeScript + Material UI |
+| Customer App | Flutter |
+| Craftsman App | Flutter |
+| Payments | Areeba IXOPAY Payment.js **only** (abstraction layer required) |
+
+---
+
+## How Ambiguity Is Handled
+
+Wherever a business rule is not explicitly provided or cannot be derived from industry-standard marketplace patterns without inventing product policy, the document:
+
+1. States what is **known / required**
+2. States what is **out of inventable scope**
+3. Adds an entry to **Questions Requiring Business Decision** with an ID (`Q-xxx`)
+
+No invented commission rates, fee models, KYC thresholds, settlement cadences, or locale defaults are presented as final.
+
+---
+
+## Suggested Review Order
+
+1. Scope + Actors + Open Questions  
+2. Business & Functional Requirements  
+3. Workflows (Booking, Payment, Approval, Identity, Commission)  
+4. System / Backend / DB Architecture  
+5. Security & Authz  
+6. Roadmap / Milestones / Risks  
+7. Frontend & Flutter (after UI assets arrive — architecture only until then)
