@@ -19,6 +19,21 @@
     "loading": "جاري التحميل...",
     "error": "حدث خطأ ما",
     "retry": "حاول مرة أخرى",
-    "language": "اللغة"
+    "language": "اللغة",
+    "signOut": "تسجيل الخروج"
+  },
+  "login": {
+    "title": "تسجيل الدخول إلى خدماتي",
+    "subtitle": "اختر نوع حسابك",
+    "customer": "عميل",
+    "customerDesc": "احجز الخدمات وأدرها",
+    "craftsman": "حرفي",
+    "craftsmanDesc": "مزود خدمة فردي",
+    "store": "متجر",
+    "storeDesc": "لوحة أعمال الخدمات",
+    "admin": "مسؤول",
+    "adminDesc": "عمليات المنصة (MFA عند الإطلاق)",
+    "continue": "متابعة",
+    "shellNote": "هيكل Sprint 0 — مسار مؤقت"
   }
 }

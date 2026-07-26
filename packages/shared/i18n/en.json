@@ -19,6 +19,21 @@
     "loading": "Loading...",
     "error": "Something went wrong",
     "retry": "Try again",
-    "language": "Language"
+    "language": "Language",
+    "signOut": "Sign out"
+  },
+  "login": {
+    "title": "Sign in to KHADAMATI",
+    "subtitle": "Choose your account type",
+    "customer": "Customer",
+    "customerDesc": "Book and manage services",
+    "craftsman": "Craftsman",
+    "craftsmanDesc": "Individual service provider",
+    "store": "Store",
+    "storeDesc": "Service business dashboard",
+    "admin": "Admin",
+    "adminDesc": "Platform operations (MFA required at launch)",
+    "continue": "Continue",
+    "shellNote": "Sprint 0 shell — placeholder"
   }
 }

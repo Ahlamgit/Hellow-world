@@ -8,7 +8,9 @@ storage/*
 !storage/.gitkeep
 uploads/
 
-.gitignore
+# Java / Maven
+target/
+apps/api/.data/
 *.class
 *.jar
 *.war
