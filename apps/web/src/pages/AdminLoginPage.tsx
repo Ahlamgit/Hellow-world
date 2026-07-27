@@ -7,37 +7,39 @@ import {
   TextField,
   Typography,
 } from '@mui/material';
-import ArrowBackIcon from '@mui/icons-material/ArrowBack';
 import { useTranslation } from 'react-i18next';
-import { Link, useNavigate, useSearchParams } from 'react-router-dom';
+import { useNavigate, useSearchParams } from 'react-router-dom';
 import { useAuth } from '../auth/AuthContext';
 import { resolvePostLoginPath, sanitizeReturnUrl } from '../auth/redirects';
-import { PublicHeader } from '../components/PublicHeader';
 
-export function LoginPage() {
+const DEFAULT_ADMIN_PHONE = '+96170000000';
+
+export function AdminLoginPage() {
   const { t } = useTranslation();
   const navigate = useNavigate();
   const [params] = useSearchParams();
-  const { login } = useAuth();
+  const { adminLogin } = useAuth();
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
+  const [otpCode, setOtpCode] = useState('');
   const [error, setError] = useState<string | null>(null);
   const [submitting, setSubmitting] = useState(false);
 
   const returnUrl = sanitizeReturnUrl(params.get('returnUrl'));
-  const bookingIntent = params.get('intent') === 'book' || (returnUrl?.includes('/book') ?? false);
 
   const onSubmit = async (event: React.FormEvent) => {
     event.preventDefault();
     setError(null);
     setSubmitting(true);
     try {
-      const portal = await login(email.trim(), password);
-      navigate(resolvePostLoginPath(portal, returnUrl), { replace: true });
+      await adminLogin(email.trim(), password, otpCode.trim(), DEFAULT_ADMIN_PHONE);
+      navigate(resolvePostLoginPath('admin', returnUrl), { replace: true });
     } catch (err) {
       const message = err instanceof Error ? err.message : 'LOGIN_FAILED';
-      if (message === 'ADMIN_PORTAL_REQUIRED') {
-        setError(t('login.useAdminPortal'));
+      if (message === 'NOT_ADMIN') {
+        setError(t('login.notAdminAccount'));
+      } else if (message === 'INVALID_OTP') {
+        setError(t('login.invalidOtp'));
       } else {
         setError(t('login.invalidCredentials'));
       }
@@ -47,24 +49,13 @@ export function LoginPage() {
   };
 
   return (
-    <Box sx={{ minHeight: '100vh', bgcolor: 'background.default' }}>
-      <PublicHeader />
-      <Container maxWidth="sm" sx={{ py: 6 }}>
-        <Button component={Link} to="/" startIcon={<ArrowBackIcon />} sx={{ mb: 3 }}>
-          {t('login.browseWithout')}
-        </Button>
-
-        {bookingIntent && (
-          <Alert severity="info" sx={{ mb: 3 }}>
-            {t('login.authRequiredForBooking')}
-          </Alert>
-        )}
-
-        <Typography variant="h4" component="h1" sx={{ fontWeight: 800 }} align="center">
-          {t('login.title')}
+    <Box sx={{ minHeight: '100vh', bgcolor: 'grey.900', color: 'grey.100' }}>
+      <Container maxWidth="sm" sx={{ py: 8 }}>
+        <Typography variant="h4" component="h1" sx={{ fontWeight: 800, mb: 1 }}>
+          {t('login.adminTitle')}
         </Typography>
-        <Typography color="text.secondary" align="center" sx={{ mb: 4 }}>
-          {t('login.subtitle')}
+        <Typography color="grey.400" sx={{ mb: 4 }}>
+          {t('login.adminSubtitle')}
         </Typography>
 
         <Box component="form" onSubmit={onSubmit} sx={{ display: 'grid', gap: 2 }}>
@@ -72,23 +63,32 @@ export function LoginPage() {
           <TextField
             label={t('login.email')}
             type="email"
-            autoComplete="email"
             required
             value={email}
             onChange={(e) => setEmail(e.target.value)}
             fullWidth
+            sx={{ '& .MuiInputBase-root': { bgcolor: 'grey.800' } }}
           />
           <TextField
             label={t('login.password')}
             type="password"
-            autoComplete="current-password"
             required
             value={password}
             onChange={(e) => setPassword(e.target.value)}
             fullWidth
+            sx={{ '& .MuiInputBase-root': { bgcolor: 'grey.800' } }}
+          />
+          <TextField
+            label={t('login.otp')}
+            required
+            value={otpCode}
+            onChange={(e) => setOtpCode(e.target.value)}
+            helperText={t('login.otpHint')}
+            fullWidth
+            sx={{ '& .MuiInputBase-root': { bgcolor: 'grey.800' } }}
           />
           <Button type="submit" variant="contained" size="large" disabled={submitting}>
-            {submitting ? t('common.loading') : t('login.submit')}
+            {submitting ? t('common.loading') : t('login.adminSubmit')}
           </Button>
         </Box>
       </Container>

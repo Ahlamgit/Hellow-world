@@ -1,21 +1,19 @@
 import { Paper, Typography } from '@mui/material';
 import { useTranslation } from 'react-i18next';
-import type { ActorType } from '../auth/actor';
+import type { PortalRole } from '../auth/types';
 
 type ShellPageProps = {
-  actor: ActorType;
+  portal: PortalRole;
   titleKey: string;
 };
 
-export function ShellPage({ actor, titleKey }: ShellPageProps) {
+export function ShellPage({ portal, titleKey }: ShellPageProps) {
   const { t } = useTranslation();
   return (
     <Paper sx={{ p: 3 }}>
-      <Typography variant="h5">
-        {t(titleKey)}
-      </Typography>
+      <Typography variant="h5">{t(titleKey)}</Typography>
       <Typography color="text.secondary">
-        {t('app.tagline')} — {t(`login.${actor}`)}
+        {t('app.tagline')} — {t(`roles.${portal}`)}
       </Typography>
       <Typography variant="caption" sx={{ mt: 2, display: 'block' }}>
         {t('login.shellNote')}

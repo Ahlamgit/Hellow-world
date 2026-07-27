@@ -18,6 +18,8 @@ import MenuIcon from '@mui/icons-material/Menu';
 import CloseIcon from '@mui/icons-material/Close';
 import { Link as RouterLink, useLocation, useNavigate } from 'react-router-dom';
 import { useTranslation } from 'react-i18next';
+import { useAuth } from '../auth/AuthContext';
+import { portalDashboardPath } from '../auth/redirects';
 
 const navLinks = [
   { to: '/', key: 'home' },
@@ -30,6 +32,7 @@ export function PublicHeader() {
   const { t, i18n } = useTranslation();
   const location = useLocation();
   const navigate = useNavigate();
+  const { isAuthenticated, portal, logout } = useAuth();
   const [mobileOpen, setMobileOpen] = useState(false);
 
   const toggleLanguage = () => {
@@ -113,9 +116,27 @@ export function PublicHeader() {
               <IconButton onClick={toggleLanguage} aria-label={t('common.language')} color="inherit">
                 <LanguageIcon />
               </IconButton>
-              <Button component={RouterLink} to="/login" variant="contained" color="primary">
-                {t('nav.signIn')}
-              </Button>
+              {isAuthenticated && portal ? (
+                <>
+                  <Button component={RouterLink} to={portalDashboardPath(portal)} variant="outlined" color="primary">
+                    {t('nav.myAccount')}
+                  </Button>
+                  <Button
+                    variant="text"
+                    color="inherit"
+                    onClick={() => {
+                      logout();
+                      navigate('/');
+                    }}
+                  >
+                    {t('common.signOut')}
+                  </Button>
+                </>
+              ) : (
+                <Button component={RouterLink} to="/login" variant="contained" color="primary">
+                  {t('nav.signIn')}
+                </Button>
+              )}
             </Box>
           </Toolbar>
         </Container>
@@ -154,9 +175,15 @@ export function PublicHeader() {
           </List>
           <Divider />
           <Box sx={{ p: 2 }}>
-            <Button fullWidth variant="contained" onClick={() => goTo('/login')}>
-              {t('nav.signIn')}
-            </Button>
+            {isAuthenticated && portal ? (
+              <Button fullWidth variant="contained" onClick={() => goTo(portalDashboardPath(portal))}>
+                {t('nav.myAccount')}
+              </Button>
+            ) : (
+              <Button fullWidth variant="contained" onClick={() => goTo('/login')}>
+                {t('nav.signIn')}
+              </Button>
+            )}
           </Box>
         </Box>
       </Drawer>

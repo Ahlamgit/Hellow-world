@@ -7,6 +7,9 @@ import java.util.concurrent.ConcurrentHashMap;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
+import jakarta.annotation.PostConstruct;
+
+import com.khadamati.api.auth.AuthenticationFailedException;
 import com.khadamati.api.auth.dto.AuthTokensResponse;
 import com.khadamati.api.auth.dto.LoginRequest;
 import com.khadamati.api.auth.dto.OtpVerifyRequest;
@@ -46,10 +49,25 @@ public class AuthService {
         return tokensFor(request.email(), request.role());
     }
 
+    @PostConstruct
+    void seedDevUsers() {
+        if (!appProperties.devMode()) {
+            return;
+        }
+        seedUser("customer@khadamati.local", "password123", Role.CUSTOMER);
+        seedUser("provider@khadamati.local", "password123", Role.CRAFTSMAN);
+        seedUser("store@khadamati.local", "password123", Role.STORE);
+        seedUser("admin@khadamati.local", "password123", Role.ADMIN);
+    }
+
+    private void seedUser(String email, String password, Role role) {
+        users.put(email, new InMemoryUser(email, passwordEncoder.encode(password), role));
+    }
+
     public AuthTokensResponse login(LoginRequest request) {
         InMemoryUser user = users.get(request.email());
         if (user == null || !passwordEncoder.matches(request.password(), user.passwordHash())) {
-            throw new IllegalArgumentException("Invalid credentials");
+            throw new AuthenticationFailedException("Invalid credentials");
         }
         return tokensFor(user.email(), user.role());
     }

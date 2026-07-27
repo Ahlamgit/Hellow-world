@@ -11,6 +11,8 @@ import org.springframework.stereotype.Service;
 import com.khadamati.api.config.AppProperties;
 import com.khadamati.api.rbac.Role;
 
+import io.jsonwebtoken.Claims;
+import io.jsonwebtoken.JwtException;
 import io.jsonwebtoken.Jwts;
 import io.jsonwebtoken.security.Keys;
 
@@ -33,6 +35,22 @@ public class JwtService {
 
     public String createRefreshToken(String subject, Role role) {
         return buildToken(subject, role, refreshTtlDays * 86_400_000L, "refresh");
+    }
+
+    public Claims parseAccessToken(String token) {
+        Claims claims = Jwts.parser()
+                .verifyWith(secretKey)
+                .build()
+                .parseSignedClaims(token)
+                .getPayload();
+        if (!"access".equals(claims.get("type", String.class))) {
+            throw new JwtException("Invalid token type");
+        }
+        return claims;
+    }
+
+    public Role roleFromClaims(Claims claims) {
+        return Role.valueOf(claims.get("role", String.class));
     }
 
     private String buildToken(String subject, Role role, long ttlMillis, String tokenType) {

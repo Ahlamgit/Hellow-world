@@ -34,7 +34,14 @@ npm run dev
 
 http://localhost:5173
 
-**Windows:** If `npm run dev` fails with `Cannot find native binding` / `@rolldown/binding-win32-x64-msvc`, delete `node_modules` and `package-lock.json` in the repo root and in `apps/web`, then run `npm install` from the repo root (`npm run dev:web`).
+**Dev test accounts** (API must be running on port 8080):
+
+| Role | Email | Password |
+|------|-------|----------|
+| Customer | `customer@khadamati.local` | `password123` |
+| Provider | `provider@khadamati.local` | `password123` |
+| Store | `store@khadamati.local` | `password123` |
+| Admin (MFA at `/admin/login`, OTP `000000`) | `admin@khadamati.local` | `password123` |
 
 ### Mobile (one codebase → Android + iOS)
 

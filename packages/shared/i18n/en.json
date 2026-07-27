@@ -11,6 +11,7 @@
     "categories": "Categories",
     "howItWorks": "How it works",
     "signIn": "Sign in",
+    "myAccount": "My account",
     "bookings": "Bookings",
     "messages": "Messages",
     "profile": "Profile",
@@ -21,6 +22,12 @@
     "users": "Users",
     "finance": "Finance",
     "menu": "Menu"
+  },
+  "roles": {
+    "customer": "Customer",
+    "provider": "Provider",
+    "store": "Store",
+    "admin": "Admin"
   },
   "home": {
     "heroTitle": "Find trusted services near you",
@@ -39,10 +46,17 @@
     "title": "All services",
     "subtitle": "Explore available services — sign in to book",
     "viewDetails": "View details",
-    "signInToBook": "Sign in to book",
+    "signInToBook": "Book service",
+    "bookService": "Continue booking",
     "fromPrice": "Price set by provider",
     "rating": "{{rating}} · {{count}} reviews",
     "noResults": "No services match your search"
+  },
+  "booking": {
+    "title": "Book this service",
+    "authenticated": "You are signed in. Booking checkout will be available in the next sprint.",
+    "placeholder": "Sprint 0 — booking API and payment flow are not enabled yet.",
+    "customerAccountRequired": "Booking requires a customer account. Sign out and sign in as a customer."
   },
   "categories": {
     "title": "Service categories",
@@ -75,18 +89,24 @@
   },
   "login": {
     "title": "Sign in to KHADAMATI",
-    "subtitle": "Choose your account type to continue",
-    "customer": "Customer",
-    "customerDesc": "Book and manage services",
-    "craftsman": "Craftsman",
-    "craftsmanDesc": "Individual service provider",
-    "store": "Store",
-    "storeDesc": "Service business dashboard",
-    "admin": "Admin",
-    "adminDesc": "Platform operations",
-    "continue": "Continue",
-    "shellNote": "Sprint 0 — booking flows coming next",
-    "browseWithout": "Continue browsing without signing in"
+    "subtitle": "Use your account email and password",
+    "email": "Email",
+    "password": "Password",
+    "submit": "Sign in",
+    "invalidCredentials": "Invalid email or password",
+    "useAdminPortal": "Admin accounts must sign in at /admin/login",
+    "authRequiredTitle": "Sign in required",
+    "authRequiredForBooking": "You need to sign in to book this service. Your booking will continue after login.",
+    "continueToSignIn": "Continue to sign in",
+    "browseWithout": "Continue browsing without signing in",
+    "shellNote": "Protected area — authenticated session required",
+    "adminTitle": "Admin sign in",
+    "adminSubtitle": "Web-only access with multi-factor verification",
+    "adminSubmit": "Verify and sign in",
+    "otp": "Verification code",
+    "otpHint": "Dev mode: use 000000",
+    "invalidOtp": "Invalid verification code",
+    "notAdminAccount": "This account is not authorized for admin access"
   },
   "footer": {
     "rights": "© KHADAMATI · Lebanon",

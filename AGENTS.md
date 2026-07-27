@@ -20,7 +20,9 @@ Admin is **web-only** (ADR-006). Mobile: Customer, Craftsman, Store.
 
 1. **PostgreSQL + Redis:** `docker compose up -d` (optional; API has `dev-inmemory` profile)
 2. **API:** `cd apps/api && mvn spring-boot:run`
-3. **Web:** `cd apps/web && npm run dev` → http://localhost:5173/login
+3. **Web:** `cd apps/web && npm run dev` → http://localhost:5173 (proxies `/api` to port 8080)
+
+Web auth uses `POST /api/v1/auth/login` (JWT). Dev seed users are documented in README. Admin MFA: `/admin/login` (OTP `000000` in dev).
 
 ### Lint / test / build
 
