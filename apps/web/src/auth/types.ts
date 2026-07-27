@@ -15,3 +15,21 @@ export type AuthTokensResponse = {
   tokenType: string;
   role: ApiRole;
 };
+
+export type LoginApiResponse = {
+  status: 'SUCCESS' | 'ROLE_SELECTION_REQUIRED';
+  tokens: AuthTokensResponse | null;
+  availableRoles: ApiRole[];
+};
+
+export type RegisterPayload = {
+  firstName: string;
+  lastName: string;
+  phoneE164: string;
+  email: string;
+  password: string;
+  confirmPassword: string;
+  role: 'CUSTOMER' | 'CRAFTSMAN' | 'STORE';
+  acceptTerms: boolean;
+  acceptPrivacy: boolean;
+};

@@ -23,7 +23,7 @@ export function PublicFooter() {
             <MuiLink component={Link} to="/how-it-works" color="inherit" underline="hover">
               {t('nav.howItWorks')}
             </MuiLink>
-            <MuiLink component={Link} to="/login" color="inherit" underline="hover">
+            <MuiLink component={Link} to="/register?type=provider" color="inherit" underline="hover">
               {t('footer.providers')}
             </MuiLink>
           </Box>

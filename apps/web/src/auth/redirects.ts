@@ -60,3 +60,10 @@ export function sanitizeReturnUrl(value: string | null): string | null {
   }
   return value;
 }
+
+export function withReturnUrl(path: string, returnUrl: string | null): string {
+  if (!returnUrl) {
+    return path;
+  }
+  return `${path}?returnUrl=${encodeURIComponent(returnUrl)}`;
+}

@@ -11,6 +11,9 @@ import { ServiceDetailPage } from './pages/ServiceDetailPage';
 import { CategoriesPage } from './pages/CategoriesPage';
 import { HowItWorksPage } from './pages/HowItWorksPage';
 import { LoginPage } from './pages/LoginPage';
+import { SelectAccountPage } from './pages/SelectAccountPage';
+import { RegisterPage } from './pages/RegisterPage';
+import { ForgotPasswordPage } from './pages/ForgotPasswordPage';
 import { AdminLoginPage } from './pages/AdminLoginPage';
 import { BookServicePage } from './pages/BookServicePage';
 import { ShellPage } from './pages/ShellPage';
@@ -57,6 +60,30 @@ function App() {
               element={
                 <GuestOnly>
                   <LoginPage />
+                </GuestOnly>
+              }
+            />
+            <Route
+              path="/login/select-account"
+              element={
+                <GuestOnly>
+                  <SelectAccountPage />
+                </GuestOnly>
+              }
+            />
+            <Route
+              path="/register"
+              element={
+                <GuestOnly>
+                  <RegisterPage />
+                </GuestOnly>
+              }
+            />
+            <Route
+              path="/forgot-password"
+              element={
+                <GuestOnly>
+                  <ForgotPasswordPage />
                 </GuestOnly>
               }
             />

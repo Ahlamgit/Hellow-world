@@ -7,7 +7,10 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.khadamati.api.auth.dto.AuthTokensResponse;
+import com.khadamati.api.auth.dto.ForgotPasswordRequest;
+import com.khadamati.api.auth.dto.LoginCompleteRequest;
 import com.khadamati.api.auth.dto.LoginRequest;
+import com.khadamati.api.auth.dto.LoginResponse;
 import com.khadamati.api.auth.dto.OtpRequest;
 import com.khadamati.api.auth.dto.OtpVerifyRequest;
 import com.khadamati.api.auth.dto.RegisterRequest;
@@ -27,12 +30,31 @@ public class AuthController {
 
     @PostMapping("/register")
     public ResponseEntity<AuthTokensResponse> register(@Valid @RequestBody RegisterRequest request) {
+        if (!request.passwordsMatch()) {
+            throw new IllegalArgumentException("Password and confirm password must match");
+        }
         return ResponseEntity.ok(authService.register(request));
     }
 
     @PostMapping("/login")
-    public ResponseEntity<AuthTokensResponse> login(@Valid @RequestBody LoginRequest request) {
+    public ResponseEntity<LoginResponse> login(@Valid @RequestBody LoginRequest request) {
         return ResponseEntity.ok(authService.login(request));
+    }
+
+    @PostMapping("/login/complete")
+    public ResponseEntity<AuthTokensResponse> completeLogin(@Valid @RequestBody LoginCompleteRequest request) {
+        return ResponseEntity.ok(authService.completeLogin(request));
+    }
+
+    @PostMapping("/admin/login")
+    public ResponseEntity<AuthTokensResponse> adminLogin(@Valid @RequestBody LoginRequest request) {
+        return ResponseEntity.ok(authService.adminLogin(request));
+    }
+
+    @PostMapping("/password/forgot")
+    public ResponseEntity<Void> forgotPassword(@Valid @RequestBody ForgotPasswordRequest request) {
+        authService.forgotPassword(request);
+        return ResponseEntity.accepted().build();
     }
 
     @PostMapping("/otp/request")

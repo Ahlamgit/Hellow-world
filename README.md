@@ -36,12 +36,13 @@ http://localhost:5173
 
 **Dev test accounts** (API must be running on port 8080):
 
-| Role | Email | Password |
-|------|-------|----------|
-| Customer | `customer@khadamati.local` | `password123` |
-| Provider | `provider@khadamati.local` | `password123` |
-| Store | `store@khadamati.local` | `password123` |
-| Admin (MFA at `/admin/login`, OTP `000000`) | `admin@khadamati.local` | `password123` |
+| Role | Email | Password | Notes |
+|------|-------|----------|-------|
+| Customer | `customer@khadamati.local` | `password123` | |
+| Provider | `provider@khadamati.local` | `password123` | |
+| Store | `store@khadamati.local` | `password123` | |
+| Multi-type | `multi@khadamati.local` | `password123` | Customer + Provider (account picker after login) |
+| Admin | `admin@khadamati.local` | `password123` | `/admin/login` + OTP `000000` |
 
 ### Mobile (one codebase → Android + iOS)
 

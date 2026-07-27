@@ -5,10 +5,6 @@ import {
   Button,
   Chip,
   Container,
-  Dialog,
-  DialogActions,
-  DialogContent,
-  DialogTitle,
   Link,
   Typography,
 } from '@mui/material';
@@ -17,6 +13,7 @@ import VerifiedIcon from '@mui/icons-material/Verified';
 import { Link as RouterLink, useNavigate, useParams } from 'react-router-dom';
 import { useTranslation } from 'react-i18next';
 import { useAuth } from '../auth/AuthContext';
+import { BookingAuthPrompt } from '../components/auth/BookingAuthPrompt';
 import { getServiceById } from '../data/sampleServices';
 
 export function ServiceDetailPage() {
@@ -50,11 +47,6 @@ export function ServiceDetailPage() {
       return;
     }
     setAuthDialogOpen(true);
-  };
-
-  const continueToLogin = () => {
-    setAuthDialogOpen(false);
-    navigate(`/login?returnUrl=${encodeURIComponent(bookPath)}&intent=book`);
   };
 
   return (
@@ -100,18 +92,7 @@ export function ServiceDetailPage() {
         )}
       </Box>
 
-      <Dialog open={authDialogOpen} onClose={() => setAuthDialogOpen(false)}>
-        <DialogTitle>{t('login.authRequiredTitle')}</DialogTitle>
-        <DialogContent>
-          <Typography>{t('login.authRequiredForBooking')}</Typography>
-        </DialogContent>
-        <DialogActions>
-          <Button onClick={() => setAuthDialogOpen(false)}>{t('common.back')}</Button>
-          <Button variant="contained" onClick={continueToLogin}>
-            {t('login.continueToSignIn')}
-          </Button>
-        </DialogActions>
-      </Dialog>
+      <BookingAuthPrompt open={authDialogOpen} onClose={() => setAuthDialogOpen(false)} returnUrl={bookPath} />
     </Container>
   );
 }
