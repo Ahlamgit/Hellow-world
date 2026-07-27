@@ -16,28 +16,24 @@ import { useTranslation } from 'react-i18next';
 import { Link, useNavigate, useSearchParams } from 'react-router-dom';
 import { useAuth } from '../auth/AuthContext';
 import { fetchLegalDocument } from '../auth/legalApi';
-import {
-  clearPendingRegistration,
-  loadPendingRegistration,
-  savePendingRegistration,
-} from '../auth/pendingRegistration';
+import { savePendingRegistration } from '../auth/pendingRegistration';
 import {
   registerTypeToApiRole,
   validateConfirmPassword,
   validatePassword,
   type RegisterAccountType,
 } from '../auth/passwordValidation';
-import { resolvePostLoginPath, sanitizeReturnUrl, withReturnUrl } from '../auth/redirects';
+import { sanitizeReturnUrl, withReturnUrl } from '../auth/redirects';
 import { AuthPageLayout } from '../components/auth/AuthPageLayout';
 import { PasswordField } from '../components/auth/PasswordField';
 
-type Step = 'type' | 'form' | 'legal' | 'otp';
+type Step = 'type' | 'form' | 'legal';
 
 export function RegisterPage() {
   const { t, i18n } = useTranslation();
   const navigate = useNavigate();
   const [params] = useSearchParams();
-  const { register, verifyRegistrationOtp } = useAuth();
+  const { register } = useAuth();
 
   const returnUrl = sanitizeReturnUrl(params.get('returnUrl'));
   const initialType = params.get('type') as RegisterAccountType | null;
@@ -55,7 +51,6 @@ export function RegisterPage() {
   const [acceptPrivacy, setAcceptPrivacy] = useState(false);
   const [termsVersion, setTermsVersion] = useState('');
   const [privacyVersion, setPrivacyVersion] = useState('');
-  const [otpCode, setOtpCode] = useState('');
   const [error, setError] = useState<string | null>(null);
   const [submitting, setSubmitting] = useState(false);
 
@@ -121,29 +116,9 @@ export function RegisterPage() {
         phoneE164: pending.phoneE164,
         returnUrl: returnUrl ?? undefined,
       });
-      setStep('otp');
+      navigate('/register/verify', { replace: true });
     } catch (err) {
       setError(err instanceof Error ? err.message : t('common.error'));
-    } finally {
-      setSubmitting(false);
-    }
-  };
-
-  const onOtpSubmit = async (event: React.FormEvent) => {
-    event.preventDefault();
-    const stored = loadPendingRegistration();
-    if (!stored) {
-      navigate('/register', { replace: true });
-      return;
-    }
-    setError(null);
-    setSubmitting(true);
-    try {
-      const portal = await verifyRegistrationOtp(stored.email, stored.role, otpCode.trim());
-      clearPendingRegistration();
-      navigate(resolvePostLoginPath(portal, stored.returnUrl ?? returnUrl), { replace: true });
-    } catch {
-      setError(t('login.invalidOtp'));
     } finally {
       setSubmitting(false);
     }
@@ -156,9 +131,7 @@ export function RegisterPage() {
       ? t('auth.chooseAccountType')
       : step === 'form'
         ? t('auth.registerSubtitle')
-        : step === 'legal'
-          ? t('legal.reviewBeforeContinue')
-          : t('auth.otpSubtitle');
+        : t('legal.reviewBeforeContinue');
 
   return (
     <AuthPageLayout maxWidth="md">
@@ -261,27 +234,6 @@ export function RegisterPage() {
             {submitting ? t('common.loading') : t('auth.createAccount')}
           </Button>
           <Button size="small" onClick={() => setStep('form')}>{t('common.back')}</Button>
-        </Box>
-      )}
-
-      {step === 'otp' && (
-        <Box
-          component="form"
-          onSubmit={onOtpSubmit}
-          sx={{ p: 3, borderRadius: 3, border: 1, borderColor: 'divider', bgcolor: 'background.paper', display: 'grid', gap: 2 }}
-        >
-          <Typography>{t('auth.otpSubtitle')}</Typography>
-          <TextField
-            label={t('login.otp')}
-            required
-            value={otpCode}
-            onChange={(e) => setOtpCode(e.target.value)}
-            helperText={t('login.otpHint')}
-            fullWidth
-          />
-          <Button type="submit" variant="contained" size="large" disabled={submitting}>
-            {submitting ? t('common.loading') : t('auth.activateAccount')}
-          </Button>
         </Box>
       )}
 

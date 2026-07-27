@@ -15,6 +15,6 @@ public record RegisterPendingResponse(
                 email,
                 role,
                 phoneE164,
-                "Verify your phone to activate your account");
+                "Verification code sent. Enter the code to activate your account.");
     }
 }

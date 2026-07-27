@@ -10,10 +10,10 @@ type RequireRoleProps = {
 };
 
 export function RequireRole({ roles, loginPath = '/login' }: RequireRoleProps) {
-  const { isAuthenticated, portal, isLoading } = useAuth();
+  const { authStatus, isAuthenticated, portal } = useAuth();
   const location = useLocation();
 
-  if (isLoading) {
+  if (authStatus === 'INITIALIZING') {
     return (
       <Box sx={{ display: 'flex', justifyContent: 'center', py: 8 }}>
         <CircularProgress />
@@ -31,12 +31,12 @@ export function RequireRole({ roles, loginPath = '/login' }: RequireRoleProps) {
 }
 
 export function GuestOnly({ children }: { children: React.ReactNode }) {
-  const { isAuthenticated, portal, isLoading } = useAuth();
+  const { authStatus, isAuthenticated, portal } = useAuth();
   const location = useLocation();
   const params = new URLSearchParams(location.search);
   const returnUrl = sanitizeReturnUrl(params.get('returnUrl'));
 
-  if (isLoading) {
+  if (authStatus === 'INITIALIZING') {
     return (
       <Box sx={{ display: 'flex', justifyContent: 'center', py: 8 }}>
         <CircularProgress />

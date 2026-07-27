@@ -1,7 +1,10 @@
 package com.khadamati.api.common;
 
+import com.khadamati.api.auth.AccountPendingVerificationException;
 import com.khadamati.api.auth.AdminPortalRequiredException;
 import com.khadamati.api.auth.AuthenticationFailedException;
+import com.khadamati.api.auth.VerificationAttemptsExceededException;
+import com.khadamati.api.auth.VerificationCodeExpiredException;
 
 import java.util.Map;
 
@@ -22,6 +25,30 @@ public class ApiExceptionHandler {
     @ExceptionHandler(AuthenticationFailedException.class)
     public ResponseEntity<Map<String, String>> handleAuthenticationFailed(AuthenticationFailedException ex) {
         return ResponseEntity.status(HttpStatus.UNAUTHORIZED).body(Map.of("error", ex.getMessage()));
+    }
+
+    @ExceptionHandler(AccountPendingVerificationException.class)
+    public ResponseEntity<Map<String, Object>> handlePendingVerification(AccountPendingVerificationException ex) {
+        return ResponseEntity.status(HttpStatus.UNAUTHORIZED).body(Map.of(
+                "error", ex.getMessage(),
+                "code", "ACCOUNT_PENDING_VERIFICATION",
+                "email", ex.email(),
+                "role", ex.role().name(),
+                "phoneE164", ex.phoneE164()));
+    }
+
+    @ExceptionHandler(VerificationCodeExpiredException.class)
+    public ResponseEntity<Map<String, String>> handleCodeExpired(VerificationCodeExpiredException ex) {
+        return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(Map.of(
+                "error", ex.getMessage(),
+                "code", "VERIFICATION_CODE_EXPIRED"));
+    }
+
+    @ExceptionHandler(VerificationAttemptsExceededException.class)
+    public ResponseEntity<Map<String, String>> handleAttemptsExceeded(VerificationAttemptsExceededException ex) {
+        return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(Map.of(
+                "error", ex.getMessage(),
+                "code", "VERIFICATION_ATTEMPTS_EXCEEDED"));
     }
 
     @ExceptionHandler(IllegalArgumentException.class)

@@ -10,8 +10,10 @@ import {
 import ArrowBackIcon from '@mui/icons-material/ArrowBack';
 import { useTranslation } from 'react-i18next';
 import { Link, useNavigate, useSearchParams } from 'react-router-dom';
+import { AuthRequestError } from '../auth/authApi';
 import { useAuth } from '../auth/AuthContext';
 import { savePendingLogin } from '../auth/pendingLogin';
+import { savePendingRegistration } from '../auth/pendingRegistration';
 import { resolvePostLoginPath, sanitizeReturnUrl, withReturnUrl } from '../auth/redirects';
 import { AuthPageLayout } from '../components/auth/AuthPageLayout';
 import { PasswordField } from '../components/auth/PasswordField';
@@ -46,6 +48,16 @@ export function LoginPage() {
       }
       navigate(resolvePostLoginPath(result.portal, returnUrl), { replace: true });
     } catch (err) {
+      if (err instanceof AuthRequestError && err.code === 'ACCOUNT_PENDING_VERIFICATION') {
+        savePendingRegistration({
+          email: err.body.email ?? identifier.trim().toLowerCase(),
+          role: err.body.role!,
+          phoneE164: err.body.phoneE164 ?? '',
+        });
+        setError(t('auth.accountNeedsVerification'));
+        navigate('/register/verify', { replace: true });
+        return;
+      }
       const message = err instanceof Error ? err.message : 'LOGIN_FAILED';
       if (message === 'ADMIN_PORTAL_REQUIRED') {
         setError(t('login.useAdminPortal'));

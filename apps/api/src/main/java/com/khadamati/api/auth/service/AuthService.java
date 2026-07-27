@@ -10,6 +10,7 @@ import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import com.khadamati.api.auth.AccountPendingVerificationException;
 import com.khadamati.api.auth.AdminPortalRequiredException;
 import com.khadamati.api.auth.AuthenticationFailedException;
 import com.khadamati.api.auth.dto.AuthTokensResponse;
@@ -20,11 +21,14 @@ import com.khadamati.api.auth.dto.LoginResponse;
 import com.khadamati.api.auth.dto.OtpVerifyRequest;
 import com.khadamati.api.auth.dto.RegisterPendingResponse;
 import com.khadamati.api.auth.dto.RegisterRequest;
+import com.khadamati.api.auth.dto.RegisterResendOtpRequest;
 import com.khadamati.api.auth.dto.RegisterVerifyOtpRequest;
+import com.khadamati.api.auth.dto.SessionResponse;
 import com.khadamati.api.config.AppProperties;
 import com.khadamati.api.integration.ports.SmsSenderPort;
 import com.khadamati.api.legal.LegalDocumentService;
 import com.khadamati.api.rbac.Role;
+import com.khadamati.api.user.AccountStatus;
 import com.khadamati.api.user.UserEntity;
 import com.khadamati.api.user.UserRepository;
 
@@ -39,6 +43,7 @@ public class AuthService {
     private final SmsSenderPort smsSenderPort;
     private final AppProperties appProperties;
     private final LegalDocumentService legalDocumentService;
+    private final VerificationCodeService verificationCodeService;
 
     public AuthService(
             UserRepository userRepository,
@@ -46,13 +51,15 @@ public class AuthService {
             JwtService jwtService,
             SmsSenderPort smsSenderPort,
             AppProperties appProperties,
-            LegalDocumentService legalDocumentService) {
+            LegalDocumentService legalDocumentService,
+            VerificationCodeService verificationCodeService) {
         this.userRepository = userRepository;
         this.passwordEncoder = passwordEncoder;
         this.jwtService = jwtService;
         this.smsSenderPort = smsSenderPort;
         this.appProperties = appProperties;
         this.legalDocumentService = legalDocumentService;
+        this.verificationCodeService = verificationCodeService;
     }
 
     @Transactional
@@ -83,6 +90,7 @@ public class AuthService {
         user.setPasswordHash(passwordEncoder.encode(request.password()));
         user.setPhoneVerified(false);
         user.setActive(false);
+        user.setAccountStatus(AccountStatus.PENDING_VERIFICATION);
         user.setCreatedAt(now);
         user.setUpdatedAt(now);
         userRepository.save(user);
@@ -93,9 +101,20 @@ public class AuthService {
                 request.privacyVersion(),
                 request.language());
 
-        requestOtp(normalizedPhone);
+        verificationCodeService.sendRegistrationCode(normalizedPhone);
 
         return RegisterPendingResponse.otpRequired(normalizedEmail, request.role(), normalizedPhone);
+    }
+
+    @Transactional
+    public void resendRegistrationOtp(RegisterResendOtpRequest request) {
+        String email = normalizeEmail(request.email());
+        UserEntity user = userRepository.findByEmailAndRole(email, request.role())
+                .orElseThrow(() -> new AuthenticationFailedException("Invalid credentials"));
+        if (user.getAccountStatus() != AccountStatus.PENDING_VERIFICATION) {
+            throw new IllegalArgumentException("Account is already activated");
+        }
+        verificationCodeService.sendRegistrationCode(user.getPhoneE164());
     }
 
     @Transactional
@@ -104,19 +123,34 @@ public class AuthService {
         UserEntity user = userRepository.findByEmailAndRole(email, request.role())
                 .orElseThrow(() -> new AuthenticationFailedException("Invalid credentials"));
 
-        if (!verifyOtp(user.getPhoneE164(), request.otpCode())) {
-            throw new AuthenticationFailedException("Invalid verification code");
+        if (user.getAccountStatus() == AccountStatus.ACTIVE) {
+            return tokensFor(user);
         }
+        if (user.getAccountStatus() != AccountStatus.PENDING_VERIFICATION) {
+            throw new AuthenticationFailedException("Authentication required.");
+        }
+
+        verificationCodeService.verifyRegistrationCode(user.getPhoneE164(), request.otpCode());
 
         user.setPhoneVerified(true);
         user.setActive(true);
+        user.setAccountStatus(AccountStatus.ACTIVE);
         user.setUpdatedAt(Instant.now());
         userRepository.save(user);
 
         return tokensFor(user);
     }
 
+    public SessionResponse getSession(String email, Role role) {
+        UserEntity user = userRepository.findByEmailAndRole(normalizeEmail(email), role)
+                .orElseThrow(() -> new AuthenticationFailedException("Authentication required."));
+        ensureActive(user);
+        return toSessionResponse(user);
+    }
+
     public LoginResponse login(LoginRequest request) {
+        rejectPendingAccountsWithValidPassword(request.identifier(), request.password());
+
         List<UserEntity> matches = authenticatePublicUsers(request.identifier(), request.password());
         if (matches.isEmpty()) {
             if (hasValidAdminCredentials(request.identifier(), request.password())) {
@@ -135,6 +169,8 @@ public class AuthService {
 
     public AuthTokensResponse completeLogin(LoginCompleteRequest request) {
         validatePublicRole(request.role());
+        rejectPendingAccountsWithValidPassword(request.identifier(), request.password());
+
         UserEntity user = authenticatePublicUsers(request.identifier(), request.password()).stream()
                 .filter(u -> u.getRole() == request.role())
                 .findFirst()
@@ -160,19 +196,35 @@ public class AuthService {
     }
 
     public void requestOtp(String phoneE164) {
-        String otp = appProperties.devMode() ? appProperties.mockOtpCode() : UUID.randomUUID().toString().substring(0, 6);
-        smsSenderPort.sendOtp(normalizePhone(phoneE164), otp);
+        verificationCodeService.sendRegistrationCode(normalizePhone(phoneE164));
     }
 
     public boolean verifyOtp(OtpVerifyRequest request) {
-        return verifyOtp(request.phoneE164(), request.otpCode());
+        if (appProperties.devMode()
+                && appProperties.mockOtpCode().equals(request.otpCode().trim())) {
+            return true;
+        }
+        try {
+            verificationCodeService.verifyRegistrationCode(request.phoneE164(), request.otpCode());
+            return true;
+        } catch (AuthenticationFailedException
+                | com.khadamati.api.auth.VerificationCodeExpiredException
+                | com.khadamati.api.auth.VerificationAttemptsExceededException ex) {
+            return false;
+        }
     }
 
-    private boolean verifyOtp(String phoneE164, String otpCode) {
-        if (appProperties.devMode()) {
-            return appProperties.mockOtpCode().equals(otpCode);
+    private void rejectPendingAccountsWithValidPassword(String identifier, String password) {
+        for (UserEntity user : findByIdentifier(identifier)) {
+            if (isAdminRole(user.getRole())) {
+                continue;
+            }
+            if (user.getAccountStatus() == AccountStatus.PENDING_VERIFICATION
+                    && passwordEncoder.matches(password, user.getPasswordHash())) {
+                throw new AccountPendingVerificationException(
+                        user.getEmail(), user.getRole(), user.getPhoneE164());
+            }
         }
-        return false;
     }
 
     private List<UserEntity> authenticatePublicUsers(String identifier, String password) {
@@ -182,7 +234,7 @@ public class AuthService {
             if (isAdminRole(user.getRole())) {
                 continue;
             }
-            if (!user.isActive()) {
+            if (user.getAccountStatus() != AccountStatus.ACTIVE) {
                 continue;
             }
             if (passwordEncoder.matches(password, user.getPasswordHash())) {
@@ -219,8 +271,12 @@ public class AuthService {
     }
 
     private void ensureActive(UserEntity user) {
-        if (!user.isActive()) {
-            throw new AuthenticationFailedException("Account is not activated. Complete phone verification.");
+        if (user.getAccountStatus() != AccountStatus.ACTIVE || !user.isActive()) {
+            if (user.getAccountStatus() == AccountStatus.PENDING_VERIFICATION) {
+                throw new AccountPendingVerificationException(
+                        user.getEmail(), user.getRole(), user.getPhoneE164());
+            }
+            throw new AuthenticationFailedException("Authentication required.");
         }
     }
 
@@ -229,6 +285,16 @@ public class AuthService {
                 jwtService.createAccessToken(user.getEmail(), user.getRole(), user.getId()),
                 jwtService.createRefreshToken(user.getEmail(), user.getRole(), user.getId()),
                 user.getRole());
+    }
+
+    private SessionResponse toSessionResponse(UserEntity user) {
+        return new SessionResponse(
+                user.getEmail(),
+                user.getRole(),
+                user.getAccountStatus(),
+                user.getFirstName(),
+                user.getLastName(),
+                user.getPhoneE164());
     }
 
     private static String normalizeEmail(String email) {

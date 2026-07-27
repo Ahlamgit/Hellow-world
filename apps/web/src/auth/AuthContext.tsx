@@ -8,23 +8,34 @@ import {
   type ReactNode,
 } from 'react';
 import {
+  AuthRequestError,
   completeLoginRequest,
   adminLoginRequest,
   isAdminApiRole,
   loginRequest,
   registerRequest,
+  sessionRequest,
   verifyOtpRequest,
+  verifyRegistrationOtpRequest,
 } from './authApi';
-import { verifyRegistrationOtpRequest } from './legalApi';
 import { apiRoleToPortal, portalDashboardPath } from './redirects';
 import { clearSession, isAccessTokenExpired, loadSession, saveSession } from './session';
-import type { ApiRole, AuthSession, PortalRole, RegisterPayload, RegisterPendingResponse } from './types';
+import type {
+  ApiRole,
+  AuthSession,
+  AuthStatus,
+  PortalRole,
+  RegisterPayload,
+  RegisterPendingResponse,
+  SessionInfo,
+} from './types';
 
 export type LoginFlowResult =
   | { status: 'SUCCESS'; portal: PortalRole }
   | { status: 'ROLE_SELECTION_REQUIRED'; roles: ApiRole[] };
 
 type AuthContextValue = {
+  authStatus: AuthStatus;
   session: AuthSession | null;
   portal: PortalRole | null;
   isAuthenticated: boolean;
@@ -35,36 +46,78 @@ type AuthContextValue = {
   verifyRegistrationOtp: (email: string, role: ApiRole, otpCode: string) => Promise<PortalRole>;
   adminLogin: (email: string, password: string, otpCode: string, phoneE164: string) => Promise<void>;
   logout: () => void;
-  establishSession: (email: string, tokens: { accessToken: string; refreshToken: string; role: ApiRole }) => PortalRole;
+  refreshSession: () => Promise<boolean>;
 };
 
 const AuthContext = createContext<AuthContextValue | null>(null);
 
-function subjectFromToken(accessToken: string): string {
-  try {
-    const payload = JSON.parse(atob(accessToken.split('.')[1])) as { sub?: string };
-    return payload.sub ?? '';
-  } catch {
-    return '';
-  }
+function sessionFromTokens(
+  tokens: { accessToken: string; refreshToken: string; role: ApiRole },
+  sessionInfo: SessionInfo,
+): AuthSession {
+  return {
+    email: sessionInfo.email,
+    accessToken: tokens.accessToken,
+    refreshToken: tokens.refreshToken,
+    role: sessionInfo.role,
+    accountStatus: sessionInfo.accountStatus,
+    firstName: sessionInfo.firstName,
+    lastName: sessionInfo.lastName,
+    phoneE164: sessionInfo.phoneE164,
+  };
 }
 
 export function AuthProvider({ children }: { children: ReactNode }) {
   const [session, setSession] = useState<AuthSession | null>(null);
-  const [isLoading, setIsLoading] = useState(true);
+  const [authStatus, setAuthStatus] = useState<AuthStatus>('INITIALIZING');
 
-  useEffect(() => {
-    const stored = loadSession();
-    if (stored && !isAccessTokenExpired(stored.accessToken)) {
-      setSession(stored);
-    } else if (stored) {
-      clearSession();
-    }
-    setIsLoading(false);
+  const logout = useCallback(() => {
+    clearSession();
+    setSession(null);
+    setAuthStatus('UNAUTHENTICATED');
   }, []);
 
+  const refreshSession = useCallback(async (): Promise<boolean> => {
+    const stored = loadSession();
+    if (!stored || isAccessTokenExpired(stored.accessToken)) {
+      logout();
+      return false;
+    }
+    try {
+      const sessionInfo = await sessionRequest(stored.accessToken);
+      if (sessionInfo.accountStatus !== 'ACTIVE') {
+        logout();
+        return false;
+      }
+      const nextSession: AuthSession = {
+        ...stored,
+        email: sessionInfo.email,
+        role: sessionInfo.role,
+        accountStatus: sessionInfo.accountStatus,
+        firstName: sessionInfo.firstName,
+        lastName: sessionInfo.lastName,
+        phoneE164: sessionInfo.phoneE164,
+      };
+      saveSession(nextSession);
+      setSession(nextSession);
+      setAuthStatus('AUTHENTICATED');
+      return true;
+    } catch {
+      logout();
+      return false;
+    }
+  }, [logout]);
+
+  useEffect(() => {
+    void refreshSession().finally(() => {
+      if (loadSession() === null) {
+        setAuthStatus('UNAUTHENTICATED');
+      }
+    });
+  }, [refreshSession]);
+
   const establishSession = useCallback(
-    (fallbackEmail: string, tokens: { accessToken: string; refreshToken: string; role: ApiRole }): PortalRole => {
+    async (tokens: { accessToken: string; refreshToken: string; role: ApiRole }): Promise<PortalRole> => {
       if (isAdminApiRole(tokens.role)) {
         throw new Error('ADMIN_PORTAL_REQUIRED');
       }
@@ -72,24 +125,24 @@ export function AuthProvider({ children }: { children: ReactNode }) {
       if (!portal) {
         throw new Error('UNSUPPORTED_ROLE');
       }
-      const sessionEmail = subjectFromToken(tokens.accessToken) || fallbackEmail.trim().toLowerCase();
-      const nextSession: AuthSession = {
-        email: sessionEmail,
-        accessToken: tokens.accessToken,
-        refreshToken: tokens.refreshToken,
-        role: tokens.role,
-      };
+      const sessionInfo = await sessionRequest(tokens.accessToken);
+      if (sessionInfo.accountStatus !== 'ACTIVE') {
+        throw new AuthRequestError({
+          error: 'Your account needs verification.',
+          code: 'ACCOUNT_PENDING_VERIFICATION',
+          email: sessionInfo.email,
+          role: sessionInfo.role,
+          phoneE164: sessionInfo.phoneE164,
+        });
+      }
+      const nextSession = sessionFromTokens(tokens, sessionInfo);
       saveSession(nextSession);
       setSession(nextSession);
+      setAuthStatus('AUTHENTICATED');
       return portal;
     },
     [],
   );
-
-  const logout = useCallback(() => {
-    clearSession();
-    setSession(null);
-  }, []);
 
   const login = useCallback(async (identifier: string, password: string): Promise<LoginFlowResult> => {
     const response = await loginRequest(identifier, password);
@@ -99,7 +152,7 @@ export function AuthProvider({ children }: { children: ReactNode }) {
     if (!response.tokens) {
       throw new Error('LOGIN_FAILED');
     }
-    const portal = establishSession(identifier.includes('@') ? identifier.trim().toLowerCase() : identifier.trim(), {
+    const portal = await establishSession({
       accessToken: response.tokens.accessToken,
       refreshToken: response.tokens.refreshToken,
       role: response.tokens.role,
@@ -110,10 +163,7 @@ export function AuthProvider({ children }: { children: ReactNode }) {
   const completeLogin = useCallback(
     async (identifier: string, password: string, role: ApiRole): Promise<PortalRole> => {
       const tokens = await completeLoginRequest(identifier, password, role);
-      return establishSession(
-        identifier.includes('@') ? identifier.trim().toLowerCase() : identifier.trim(),
-        tokens,
-      );
+      return establishSession(tokens);
     },
     [establishSession],
   );
@@ -125,7 +175,7 @@ export function AuthProvider({ children }: { children: ReactNode }) {
   const verifyRegistrationOtp = useCallback(
     async (email: string, role: ApiRole, otpCode: string): Promise<PortalRole> => {
       const tokens = await verifyRegistrationOtpRequest(email, role, otpCode);
-      return establishSession(email.trim().toLowerCase(), tokens);
+      return establishSession(tokens);
     },
     [establishSession],
   );
@@ -139,23 +189,23 @@ export function AuthProvider({ children }: { children: ReactNode }) {
     if (!valid) {
       throw new Error('INVALID_OTP');
     }
-    const nextSession: AuthSession = {
-      email: subjectFromToken(tokens.accessToken) || email.trim().toLowerCase(),
-      accessToken: tokens.accessToken,
-      refreshToken: tokens.refreshToken,
-      role: tokens.role,
-    };
+    const sessionInfo = await sessionRequest(tokens.accessToken);
+    const nextSession = sessionFromTokens(tokens, sessionInfo);
     saveSession(nextSession);
     setSession(nextSession);
+    setAuthStatus('AUTHENTICATED');
   }, []);
 
   const portal = session ? apiRoleToPortal(session.role) : null;
+  const isLoading = authStatus === 'INITIALIZING';
+  const isAuthenticated = authStatus === 'AUTHENTICATED' && session !== null && portal !== null;
 
   const value = useMemo<AuthContextValue>(
     () => ({
+      authStatus,
       session,
       portal,
-      isAuthenticated: session !== null && portal !== null,
+      isAuthenticated,
       isLoading,
       login,
       completeLogin,
@@ -163,9 +213,22 @@ export function AuthProvider({ children }: { children: ReactNode }) {
       verifyRegistrationOtp,
       adminLogin,
       logout,
-      establishSession,
+      refreshSession,
     }),
-    [session, portal, isLoading, login, completeLogin, register, verifyRegistrationOtp, adminLogin, logout, establishSession],
+    [
+      authStatus,
+      session,
+      portal,
+      isAuthenticated,
+      isLoading,
+      login,
+      completeLogin,
+      register,
+      verifyRegistrationOtp,
+      adminLogin,
+      logout,
+      refreshSession,
+    ],
   );
 
   return <AuthContext.Provider value={value}>{children}</AuthContext.Provider>;

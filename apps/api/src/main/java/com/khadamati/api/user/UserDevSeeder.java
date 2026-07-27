@@ -11,6 +11,7 @@ import org.springframework.stereotype.Component;
 import com.khadamati.api.config.AppProperties;
 import com.khadamati.api.legal.LegalDocumentService;
 import com.khadamati.api.rbac.Role;
+import com.khadamati.api.user.AccountStatus;
 
 @Component
 public class UserDevSeeder implements ApplicationRunner {
@@ -59,6 +60,7 @@ public class UserDevSeeder implements ApplicationRunner {
         user.setPasswordHash(passwordEncoder.encode("password123"));
         user.setPhoneVerified(true);
         user.setActive(true);
+        user.setAccountStatus(AccountStatus.ACTIVE);
         user.setCreatedAt(now);
         user.setUpdatedAt(now);
         userRepository.save(user);

@@ -13,6 +13,7 @@ import {
 } from '@mui/material';
 import { useTranslation } from 'react-i18next';
 import { Link } from 'react-router-dom';
+import { portalDashboardPath } from '../../auth/redirects';
 import { useAuth } from '../../auth/AuthContext';
 import {
   acceptLegalDocuments,
@@ -93,7 +94,7 @@ export function LegalComplianceGate({ portal }: LegalComplianceGateProps) {
     return null;
   }
 
-  const returnUrl = `/${portal}`;
+  const returnUrl = portalDashboardPath(portal);
 
   return (
     <Dialog open fullScreen>

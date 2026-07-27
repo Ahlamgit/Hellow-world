@@ -1,5 +1,3 @@
-import type { ApiRole } from './types';
-
 export type LegalDocumentType = 'TERMS' | 'PRIVACY';
 
 export type LegalDocument = {
@@ -104,19 +102,3 @@ export async function publishLegalDocument(
   return (await response.json()) as LegalDocument;
 }
 
-export async function verifyRegistrationOtpRequest(
-  email: string,
-  role: ApiRole,
-  otpCode: string,
-): Promise<import('./types').AuthTokensResponse> {
-  const response = await fetch(`${API_BASE}/auth/register/verify-otp`, {
-    method: 'POST',
-    headers: { 'Content-Type': 'application/json' },
-    body: JSON.stringify({ email, role, otpCode }),
-  });
-  if (!response.ok) {
-    const body = (await response.json().catch(() => ({}))) as { error?: string };
-    throw new Error(body.error ?? 'Verification failed');
-  }
-  return (await response.json()) as import('./types').AuthTokensResponse;
-}

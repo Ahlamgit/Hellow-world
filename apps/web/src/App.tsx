@@ -14,20 +14,29 @@ import { HowItWorksPage } from './pages/HowItWorksPage';
 import { LoginPage } from './pages/LoginPage';
 import { SelectAccountPage } from './pages/SelectAccountPage';
 import { RegisterPage } from './pages/RegisterPage';
+import { RegisterVerifyPage } from './pages/RegisterVerifyPage';
 import { ForgotPasswordPage } from './pages/ForgotPasswordPage';
 import { LegalDocumentPage } from './pages/legal/LegalDocumentPage';
 import { AdminLegalPage } from './pages/admin/AdminLegalPage';
 import { AdminLoginPage } from './pages/AdminLoginPage';
 import { BookServicePage } from './pages/BookServicePage';
+import { LegacyCustomerRedirect } from './pages/LegacyCustomerRedirect';
 import { ShellPage } from './pages/ShellPage';
 import type { PortalRole } from './auth/types';
+
+function portalRoutePath(portal: PortalRole): string {
+  if (portal === 'customer') {
+    return 'home';
+  }
+  return portal;
+}
 
 function portalRoutes(
   portal: PortalRole,
   pages: { path: string; titleKey: string; element?: ReactNode }[],
 ) {
   return (
-    <Route key={portal} path={portal}>
+    <Route key={portal} path={portalRoutePath(portal)}>
       <Route element={<RequireRole roles={[portal]} loginPath={portal === 'admin' ? '/admin/login' : '/login'} />}>
         <Route element={<RoleShell portal={portal} />}>
           {pages.map((page) => (
@@ -87,6 +96,7 @@ function App() {
                 </GuestOnly>
               }
             />
+            <Route path="/register/verify" element={<RegisterVerifyPage />} />
             <Route
               path="/forgot-password"
               element={
@@ -125,6 +135,8 @@ function App() {
               { path: 'finance', titleKey: 'nav.finance' },
               { path: 'settings', titleKey: 'nav.settings' },
             ])}
+
+            <Route path="/customer/*" element={<LegacyCustomerRedirect />} />
 
             <Route path="*" element={<Navigate to="/" replace />} />
           </Routes>

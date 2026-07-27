@@ -20,7 +20,7 @@ export function apiRoleToPortal(role: ApiRole): PortalRole | null {
 export function portalDashboardPath(portal: PortalRole): string {
   switch (portal) {
     case 'customer':
-      return '/customer';
+      return '/home';
     case 'provider':
       return '/provider';
     case 'store':
@@ -36,7 +36,7 @@ export function portalCanAccessPath(portal: PortalRole, path: string): boolean {
   }
 
   if (portal === 'customer') {
-    return path.startsWith('/customer') || /^\/services\/[^/]+\/book$/.test(path);
+    return path.startsWith('/customer') || path.startsWith('/home') || /^\/services\/[^/]+\/book$/.test(path);
   }
   if (portal === 'provider') {
     return path.startsWith('/provider');

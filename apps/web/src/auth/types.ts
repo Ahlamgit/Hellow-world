@@ -1,12 +1,29 @@
+export type AuthStatus = 'INITIALIZING' | 'AUTHENTICATED' | 'UNAUTHENTICATED';
+
+export type AccountStatus = 'PENDING_VERIFICATION' | 'ACTIVE' | 'DISABLED';
+
 export type ApiRole = 'CUSTOMER' | 'CRAFTSMAN' | 'STORE' | 'ADMIN' | 'FINANCE_ADMIN' | 'SUPER_ADMIN';
 
 export type PortalRole = 'customer' | 'provider' | 'store' | 'admin';
 
+export type SessionInfo = {
+  email: string;
+  role: ApiRole;
+  accountStatus: AccountStatus;
+  firstName: string;
+  lastName: string;
+  phoneE164: string;
+};
+
 export type AuthSession = {
+  email: string;
   accessToken: string;
   refreshToken: string;
   role: ApiRole;
-  email: string;
+  accountStatus: AccountStatus;
+  firstName: string;
+  lastName: string;
+  phoneE164: string;
 };
 
 export type AuthTokensResponse = {
@@ -43,4 +60,12 @@ export type RegisterPendingResponse = {
   role: ApiRole;
   phoneE164: string;
   message: string;
+};
+
+export type AuthErrorBody = {
+  error?: string;
+  code?: string;
+  email?: string;
+  role?: ApiRole;
+  phoneE164?: string;
 };

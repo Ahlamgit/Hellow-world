@@ -16,6 +16,7 @@ import { Outlet, useNavigate } from 'react-router-dom';
 import { useTranslation } from 'react-i18next';
 import { useAuth } from '../auth/AuthContext';
 import { LegalComplianceGate } from '../components/legal/LegalComplianceGate';
+import { portalDashboardPath } from '../auth/redirects';
 import type { PortalRole } from '../auth/types';
 
 const drawerWidth = 240;
@@ -58,7 +59,7 @@ export function RoleShell({ portal }: RoleShellProps) {
   const { t, i18n } = useTranslation();
   const navigate = useNavigate();
   const { logout } = useAuth();
-  const basePath = `/${portal}`;
+  const basePath = portalDashboardPath(portal);
   const navItems = navByPortal[portal];
 
   const toggleLanguage = () => {

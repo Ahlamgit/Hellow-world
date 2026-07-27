@@ -1,6 +1,7 @@
 package com.khadamati.api.auth.service;
 
 import java.time.Instant;
+import java.util.UUID;
 import java.util.Date;
 
 import javax.crypto.SecretKey;
@@ -60,6 +61,14 @@ public class JwtService {
 
     public Role roleFromClaims(Claims claims) {
         return Role.valueOf(claims.get("role", String.class));
+    }
+
+    public UUID userIdFromClaims(Claims claims) {
+        String userId = claims.get("userId", String.class);
+        if (userId == null || userId.isBlank()) {
+            return null;
+        }
+        return UUID.fromString(userId);
     }
 
     private String buildToken(String subject, Role role, java.util.UUID userId, long ttlMillis, String tokenType) {
