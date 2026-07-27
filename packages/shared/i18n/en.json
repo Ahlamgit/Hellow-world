@@ -19,7 +19,8 @@
     "analytics": "Analytics",
     "settings": "Settings",
     "users": "Users",
-    "finance": "Finance"
+    "finance": "Finance",
+    "menu": "Menu"
   },
   "home": {
     "heroTitle": "Find trusted services near you",
@@ -69,7 +70,8 @@
     "retry": "Try again",
     "language": "Language",
     "signOut": "Sign out",
-    "back": "Back"
+    "back": "Back",
+    "close": "Close"
   },
   "login": {
     "title": "Sign in to KHADAMATI",

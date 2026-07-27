@@ -1,4 +1,4 @@
-import { useState, type ReactNode } from 'react';
+import { useMemo, type ReactNode } from 'react';
 import { CssBaseline } from '@mui/material';
 import { ThemeProvider } from '@mui/material/styles';
 import { CacheProvider } from '@emotion/react';
@@ -12,15 +12,17 @@ export function AppProviders({ children }: { children: ReactNode }) {
   const { i18n } = useTranslation();
   const isRtl = i18n.language === 'ar';
   const theme = isRtl ? khadamatiThemeRtl : khadamatiTheme;
-  const [cache] = useState(() =>
-    createCache({
-      key: isRtl ? 'muirtl' : 'muiltr',
-      stylisPlugins: isRtl ? [prefixer, rtlPlugin] : [prefixer],
-    }),
+  const cache = useMemo(
+    () =>
+      createCache({
+        key: isRtl ? 'muirtl' : 'muiltr',
+        stylisPlugins: isRtl ? [prefixer, rtlPlugin] : [prefixer],
+      }),
+    [isRtl],
   );
 
   return (
-    <CacheProvider value={cache}>
+    <CacheProvider key={i18n.language} value={cache}>
       <ThemeProvider theme={theme}>
         <CssBaseline />
         {children}

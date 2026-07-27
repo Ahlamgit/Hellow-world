@@ -15,16 +15,18 @@ import type { ActorType } from './auth/actor';
 
 function actorRoutes(actor: ActorType, pages: { path: string; titleKey: string }[]) {
   return (
-    <Route element={<RequireActor actor={actor} />}>
-      <Route element={<ActorShell actor={actor} />}>
-        {pages.map((page) => (
-          <Route
-            key={page.path || 'index'}
-            index={page.path === ''}
-            path={page.path || undefined}
-            element={<ShellPage actor={actor} titleKey={page.titleKey} />}
-          />
-        ))}
+    <Route key={actor} path={actor}>
+      <Route element={<RequireActor actor={actor} />}>
+        <Route element={<ActorShell actor={actor} />}>
+          {pages.map((page) => (
+            <Route
+              key={page.path || 'index'}
+              index={page.path === ''}
+              path={page.path || undefined}
+              element={<ShellPage actor={actor} titleKey={page.titleKey} />}
+            />
+          ))}
+        </Route>
       </Route>
     </Route>
   );
