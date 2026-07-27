@@ -39,15 +39,23 @@ public class JwtAuthenticationFilter extends OncePerRequestFilter {
             try {
                 Claims claims = jwtService.parseAccessToken(token);
                 Role role = jwtService.roleFromClaims(claims);
-                var authentication = new UsernamePasswordAuthenticationToken(
-                        claims.getSubject(),
-                        null,
-                        List.of(new SimpleGrantedAuthority("ROLE_" + role.name())));
-                SecurityContextHolder.getContext().setAuthentication(authentication);
+                if (isAdminRole(role) && !jwtService.isMfaVerified(claims)) {
+                    SecurityContextHolder.clearContext();
+                } else {
+                    var authentication = new UsernamePasswordAuthenticationToken(
+                            claims.getSubject(),
+                            null,
+                            List.of(new SimpleGrantedAuthority("ROLE_" + role.name())));
+                    SecurityContextHolder.getContext().setAuthentication(authentication);
+                }
             } catch (JwtException | IllegalArgumentException ignored) {
                 SecurityContextHolder.clearContext();
             }
         }
         filterChain.doFilter(request, response);
+    }
+
+    private static boolean isAdminRole(Role role) {
+        return role == Role.ADMIN || role == Role.FINANCE_ADMIN || role == Role.SUPER_ADMIN;
     }
 }

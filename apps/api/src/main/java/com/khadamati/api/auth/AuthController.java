@@ -71,11 +71,6 @@ public class AuthController {
         return ResponseEntity.ok(authService.completeLogin(request));
     }
 
-    @PostMapping("/admin/login")
-    public ResponseEntity<AuthTokensResponse> adminLogin(@Valid @RequestBody LoginRequest request) {
-        return ResponseEntity.ok(authService.adminLogin(request));
-    }
-
     @PostMapping("/password/forgot")
     public ResponseEntity<Void> forgotPassword(@Valid @RequestBody ForgotPasswordRequest request) {
         authService.forgotPassword(request);

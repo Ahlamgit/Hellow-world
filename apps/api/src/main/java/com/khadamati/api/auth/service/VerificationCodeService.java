@@ -8,12 +8,12 @@ import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import com.khadamati.api.auth.AuthenticationFailedException;
+import com.khadamati.api.auth.VerificationAttemptsExceededException;
 import com.khadamati.api.auth.VerificationCodeEntity;
 import com.khadamati.api.auth.VerificationCodeExpiredException;
-import com.khadamati.api.auth.VerificationAttemptsExceededException;
 import com.khadamati.api.auth.VerificationCodeRepository;
 import com.khadamati.api.auth.VerificationPurpose;
-import com.khadamati.api.auth.AuthenticationFailedException;
 import com.khadamati.api.config.AppProperties;
 import com.khadamati.api.integration.ports.SmsSenderPort;
 
@@ -41,8 +41,18 @@ public class VerificationCodeService {
 
     @Transactional
     public void sendRegistrationCode(String phoneE164) {
+        sendCode(phoneE164, VerificationPurpose.REGISTRATION);
+    }
+
+    @Transactional
+    public void verifyRegistrationCode(String phoneE164, String otpCode) {
+        verifyCode(phoneE164, VerificationPurpose.REGISTRATION, otpCode);
+    }
+
+    @Transactional
+    public void sendCode(String phoneE164, VerificationPurpose purpose) {
         String normalizedPhone = normalizePhone(phoneE164);
-        consumeActiveCodes(normalizedPhone, VerificationPurpose.REGISTRATION);
+        consumeActiveCodes(normalizedPhone, purpose);
 
         String code = generateCode();
         Instant now = Instant.now();
@@ -50,7 +60,7 @@ public class VerificationCodeService {
         VerificationCodeEntity entity = new VerificationCodeEntity();
         entity.setId(UUID.randomUUID());
         entity.setPhoneE164(normalizedPhone);
-        entity.setPurpose(VerificationPurpose.REGISTRATION);
+        entity.setPurpose(purpose);
         entity.setCodeHash(passwordEncoder.encode(code));
         entity.setExpiresAt(now.plus(CODE_TTL));
         entity.setAttemptCount(0);
@@ -62,11 +72,11 @@ public class VerificationCodeService {
     }
 
     @Transactional
-    public void verifyRegistrationCode(String phoneE164, String otpCode) {
+    public void verifyCode(String phoneE164, VerificationPurpose purpose, String otpCode) {
         String normalizedPhone = normalizePhone(phoneE164);
         VerificationCodeEntity active = verificationCodeRepository
                 .findFirstByPhoneE164AndPurposeAndConsumedAtIsNullOrderByCreatedAtDesc(
-                        normalizedPhone, VerificationPurpose.REGISTRATION)
+                        normalizedPhone, purpose)
                 .orElseThrow(() -> new AuthenticationFailedException("Invalid verification code"));
 
         Instant now = Instant.now();

@@ -179,16 +179,6 @@ public class AuthService {
         return tokensFor(user);
     }
 
-    public AuthTokensResponse adminLogin(LoginRequest request) {
-        UserEntity user = findByIdentifier(request.identifier()).stream()
-                .filter(u -> isAdminRole(u.getRole()))
-                .filter(u -> passwordEncoder.matches(request.password(), u.getPasswordHash()))
-                .findFirst()
-                .orElseThrow(() -> new AuthenticationFailedException("Invalid credentials"));
-        ensureActive(user);
-        return tokensFor(user);
-    }
-
     public void forgotPassword(ForgotPasswordRequest request) {
         if (findByIdentifier(request.identifier()).isEmpty()) {
             throw new AuthenticationFailedException("No account found for this identifier");

@@ -1,0 +1,9 @@
+package com.khadamati.api.auth.dto;
+
+import jakarta.validation.constraints.Email;
+import jakarta.validation.constraints.NotBlank;
+
+public record AdminVerifyMfaRequest(
+        @NotBlank @Email String email,
+        @NotBlank String otpCode
+) {}

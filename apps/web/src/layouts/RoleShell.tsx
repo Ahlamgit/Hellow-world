@@ -15,6 +15,7 @@ import LogoutIcon from '@mui/icons-material/Logout';
 import { Outlet, useNavigate } from 'react-router-dom';
 import { useTranslation } from 'react-i18next';
 import { useAuth } from '../auth/AuthContext';
+import { useAdminAuth } from '../auth/AdminAuthContext';
 import { LegalComplianceGate } from '../components/legal/LegalComplianceGate';
 import { portalDashboardPath } from '../auth/redirects';
 import type { PortalRole } from '../auth/types';
@@ -58,7 +59,8 @@ type RoleShellProps = {
 export function RoleShell({ portal }: RoleShellProps) {
   const { t, i18n } = useTranslation();
   const navigate = useNavigate();
-  const { logout } = useAuth();
+  const { logout: publicLogout } = useAuth();
+  const { logout: adminLogout, session: adminSession } = useAdminAuth();
   const basePath = portalDashboardPath(portal);
   const navItems = navByPortal[portal];
 
@@ -70,16 +72,26 @@ export function RoleShell({ portal }: RoleShellProps) {
   };
 
   const signOut = () => {
-    logout();
+    if (portal === 'admin') {
+      adminLogout();
+      navigate('/admin/login', { replace: true });
+      return;
+    }
+    publicLogout();
     navigate('/login', { replace: true });
   };
+
+  const portalLabel =
+    portal === 'admin' && adminSession
+      ? `${adminSession.firstName} ${adminSession.lastName}`.trim()
+      : t(`roles.${portal}`);
 
   return (
     <Box sx={{ display: 'flex' }}>
       <AppBar position="fixed" sx={{ zIndex: (theme) => theme.zIndex.drawer + 1 }}>
         <Toolbar>
           <Typography variant="h6" sx={{ flexGrow: 1 }}>
-            {t('app.name')} — {t(`roles.${portal}`)}
+            {t('app.name')} — {portalLabel}
           </Typography>
           <IconButton color="inherit" onClick={toggleLanguage} aria-label={t('common.language')}>
             <LanguageIcon />

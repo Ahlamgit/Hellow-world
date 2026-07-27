@@ -1,6 +1,7 @@
 import { Paper, Typography } from '@mui/material';
 import { useTranslation } from 'react-i18next';
 import { useAuth } from '../auth/AuthContext';
+import { useAdminAuth } from '../auth/AdminAuthContext';
 import type { PortalRole } from '../auth/types';
 
 type ShellPageProps = {
@@ -10,7 +11,9 @@ type ShellPageProps = {
 
 export function ShellPage({ portal, titleKey }: ShellPageProps) {
   const { t } = useTranslation();
-  const { session } = useAuth();
+  const { session: publicSession } = useAuth();
+  const { session: adminSession } = useAdminAuth();
+  const session = portal === 'admin' ? adminSession : publicSession;
   const displayName = session ? `${session.firstName} ${session.lastName}`.trim() : '';
 
   return (

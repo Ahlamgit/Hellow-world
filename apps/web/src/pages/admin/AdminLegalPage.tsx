@@ -17,7 +17,7 @@ import {
   Typography,
 } from '@mui/material';
 import { useTranslation } from 'react-i18next';
-import { useAuth } from '../../auth/AuthContext';
+import { useAdminAuth } from '../../auth/AdminAuthContext';
 import {
   listAdminLegalDocuments,
   publishLegalDocument,
@@ -27,7 +27,7 @@ import {
 
 export function AdminLegalPage() {
   const { t } = useTranslation();
-  const { session } = useAuth();
+  const { session } = useAdminAuth();
 
   const [documents, setDocuments] = useState<LegalDocument[]>([]);
   const [documentType, setDocumentType] = useState<LegalDocumentType>('TERMS');

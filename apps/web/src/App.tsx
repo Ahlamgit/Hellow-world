@@ -3,7 +3,9 @@ import { BrowserRouter, Navigate, Route, Routes } from 'react-router-dom';
 import './i18n';
 import { AppProviders } from './theme/AppProviders';
 import { AuthProvider } from './auth/AuthContext';
+import { AdminAuthProvider } from './auth/AdminAuthContext';
 import { RequireRole, GuestOnly } from './auth/RequireRole';
+import { AdminGuestOnly, RequireAdmin } from './auth/RequireAdmin';
 import { PublicLayout } from './layouts/PublicLayout';
 import { RoleShell } from './layouts/RoleShell';
 import { HomePage } from './pages/HomePage';
@@ -37,7 +39,7 @@ function portalRoutes(
 ) {
   return (
     <Route key={portal} path={portalRoutePath(portal)}>
-      <Route element={<RequireRole roles={[portal]} loginPath={portal === 'admin' ? '/admin/login' : '/login'} />}>
+      <Route element={<RequireRole roles={[portal]} loginPath="/login" />}>
         <Route element={<RoleShell portal={portal} />}>
           {pages.map((page) => (
             <Route
@@ -59,7 +61,8 @@ function App() {
   return (
     <AppProviders>
       <AuthProvider>
-        <BrowserRouter>
+        <AdminAuthProvider>
+          <BrowserRouter>
           <Routes>
             <Route element={<PublicLayout />}>
               <Route index element={<HomePage />} />
@@ -105,7 +108,14 @@ function App() {
                 </GuestOnly>
               }
             />
-            <Route path="/admin/login" element={<AdminLoginPage />} />
+            <Route
+              path="/admin/login"
+              element={
+                <AdminGuestOnly>
+                  <AdminLoginPage />
+                </AdminGuestOnly>
+              }
+            />
 
             <Route path="/legal/terms" element={<LegalDocumentPage type="terms" />} />
             <Route path="/legal/privacy" element={<LegalDocumentPage type="privacy" />} />
@@ -128,19 +138,24 @@ function App() {
               { path: 'analytics', titleKey: 'nav.analytics' },
               { path: 'settings', titleKey: 'nav.settings' },
             ])}
-            {portalRoutes('admin', [
-              { path: '', titleKey: 'nav.dashboard' },
-              { path: 'legal', titleKey: 'legal.adminTitle', element: <AdminLegalPage /> },
-              { path: 'users', titleKey: 'nav.users' },
-              { path: 'finance', titleKey: 'nav.finance' },
-              { path: 'settings', titleKey: 'nav.settings' },
-            ])}
+
+            <Route path="/admin" element={<RequireAdmin />}>
+              <Route element={<RoleShell portal="admin" />}>
+                <Route index element={<Navigate to="dashboard" replace />} />
+                <Route path="dashboard" element={<ShellPage portal="admin" titleKey="nav.dashboard" />} />
+                <Route path="legal" element={<AdminLegalPage />} />
+                <Route path="users" element={<ShellPage portal="admin" titleKey="nav.users" />} />
+                <Route path="finance" element={<ShellPage portal="admin" titleKey="nav.finance" />} />
+                <Route path="settings" element={<ShellPage portal="admin" titleKey="nav.settings" />} />
+              </Route>
+            </Route>
 
             <Route path="/customer/*" element={<LegacyCustomerRedirect />} />
 
             <Route path="*" element={<Navigate to="/" replace />} />
           </Routes>
-        </BrowserRouter>
+          </BrowserRouter>
+        </AdminAuthProvider>
       </AuthProvider>
     </AppProviders>
   );

@@ -26,7 +26,7 @@ export function portalDashboardPath(portal: PortalRole): string {
     case 'store':
       return '/store';
     case 'admin':
-      return '/admin';
+      return '/admin/dashboard';
   }
 }
 

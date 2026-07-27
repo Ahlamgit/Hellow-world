@@ -10,12 +10,10 @@ import {
 import {
   AuthRequestError,
   completeLoginRequest,
-  adminLoginRequest,
   isAdminApiRole,
   loginRequest,
   registerRequest,
   sessionRequest,
-  verifyOtpRequest,
   verifyRegistrationOtpRequest,
 } from './authApi';
 import { apiRoleToPortal, portalDashboardPath } from './redirects';
@@ -44,7 +42,6 @@ type AuthContextValue = {
   completeLogin: (identifier: string, password: string, role: ApiRole) => Promise<PortalRole>;
   register: (payload: RegisterPayload) => Promise<RegisterPendingResponse>;
   verifyRegistrationOtp: (email: string, role: ApiRole, otpCode: string) => Promise<PortalRole>;
-  adminLogin: (email: string, password: string, otpCode: string, phoneE164: string) => Promise<void>;
   logout: () => void;
   refreshSession: () => Promise<boolean>;
 };
@@ -79,7 +76,7 @@ export function AuthProvider({ children }: { children: ReactNode }) {
 
   const refreshSession = useCallback(async (): Promise<boolean> => {
     const stored = loadSession();
-    if (!stored || isAccessTokenExpired(stored.accessToken)) {
+    if (!stored || isAccessTokenExpired(stored.accessToken) || isAdminApiRole(stored.role)) {
       logout();
       return false;
     }
@@ -180,22 +177,6 @@ export function AuthProvider({ children }: { children: ReactNode }) {
     [establishSession],
   );
 
-  const adminLogin = useCallback(async (email: string, password: string, otpCode: string, phoneE164: string) => {
-    const tokens = await adminLoginRequest(email, password);
-    if (!isAdminApiRole(tokens.role)) {
-      throw new Error('NOT_ADMIN');
-    }
-    const valid = await verifyOtpRequest(phoneE164, otpCode);
-    if (!valid) {
-      throw new Error('INVALID_OTP');
-    }
-    const sessionInfo = await sessionRequest(tokens.accessToken);
-    const nextSession = sessionFromTokens(tokens, sessionInfo);
-    saveSession(nextSession);
-    setSession(nextSession);
-    setAuthStatus('AUTHENTICATED');
-  }, []);
-
   const portal = session ? apiRoleToPortal(session.role) : null;
   const isLoading = authStatus === 'INITIALIZING';
   const isAuthenticated = authStatus === 'AUTHENTICATED' && session !== null && portal !== null;
@@ -211,7 +192,6 @@ export function AuthProvider({ children }: { children: ReactNode }) {
       completeLogin,
       register,
       verifyRegistrationOtp,
-      adminLogin,
       logout,
       refreshSession,
     }),
@@ -225,7 +205,6 @@ export function AuthProvider({ children }: { children: ReactNode }) {
       completeLogin,
       register,
       verifyRegistrationOtp,
-      adminLogin,
       logout,
       refreshSession,
     ],

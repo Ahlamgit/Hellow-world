@@ -1,8 +1,8 @@
 package com.khadamati.api.auth.service;
 
 import java.time.Instant;
-import java.util.UUID;
 import java.util.Date;
+import java.util.UUID;
 
 import javax.crypto.SecretKey;
 
@@ -29,22 +29,20 @@ public class JwtService {
         this.refreshTtlDays = appProperties.jwt().refreshTtlDays();
     }
 
-    public String createAccessToken(String subject, Role role, java.util.UUID userId) {
-        return buildToken(subject, role, userId, accessTtlMinutes * 60_000L, "access");
+    public String createAccessToken(String subject, Role role, UUID userId) {
+        return createAccessToken(subject, role, userId, false);
     }
 
-    public String createRefreshToken(String subject, Role role, java.util.UUID userId) {
-        return buildToken(subject, role, userId, refreshTtlDays * 86_400_000L, "refresh");
+    public String createAccessToken(String subject, Role role, UUID userId, boolean mfaVerified) {
+        return buildToken(subject, role, userId, accessTtlMinutes * 60_000L, "access", mfaVerified);
     }
 
-    /** @deprecated use overload with userId */
-    public String createAccessToken(String subject, Role role) {
-        return buildToken(subject, role, null, accessTtlMinutes * 60_000L, "access");
+    public String createRefreshToken(String subject, Role role, UUID userId) {
+        return createRefreshToken(subject, role, userId, false);
     }
 
-    /** @deprecated use overload with userId */
-    public String createRefreshToken(String subject, Role role) {
-        return buildToken(subject, role, null, refreshTtlDays * 86_400_000L, "refresh");
+    public String createRefreshToken(String subject, Role role, UUID userId, boolean mfaVerified) {
+        return buildToken(subject, role, userId, refreshTtlDays * 86_400_000L, "refresh", mfaVerified);
     }
 
     public Claims parseAccessToken(String token) {
@@ -63,6 +61,10 @@ public class JwtService {
         return Role.valueOf(claims.get("role", String.class));
     }
 
+    public boolean isMfaVerified(Claims claims) {
+        return Boolean.TRUE.equals(claims.get("mfaVerified", Boolean.class));
+    }
+
     public UUID userIdFromClaims(Claims claims) {
         String userId = claims.get("userId", String.class);
         if (userId == null || userId.isBlank()) {
@@ -71,11 +73,18 @@ public class JwtService {
         return UUID.fromString(userId);
     }
 
-    private String buildToken(String subject, Role role, java.util.UUID userId, long ttlMillis, String tokenType) {
+    private String buildToken(
+            String subject,
+            Role role,
+            UUID userId,
+            long ttlMillis,
+            String tokenType,
+            boolean mfaVerified) {
         Instant now = Instant.now();
         var claims = new java.util.HashMap<String, Object>();
         claims.put("role", role.name());
         claims.put("type", tokenType);
+        claims.put("mfaVerified", mfaVerified);
         if (userId != null) {
             claims.put("userId", userId.toString());
         }

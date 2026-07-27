@@ -129,31 +129,6 @@ export async function forgotPasswordRequest(identifier: string): Promise<void> {
   }
 }
 
-export async function adminLoginRequest(identifier: string, password: string): Promise<AuthTokensResponse> {
-  const response = await fetch(`${API_BASE}/auth/admin/login`, {
-    method: 'POST',
-    headers: { 'Content-Type': 'application/json' },
-    body: JSON.stringify({ identifier: identifier.trim(), password }),
-  });
-  if (!response.ok) {
-    throw await parseAuthError(response);
-  }
-  return (await response.json()) as AuthTokensResponse;
-}
-
-export async function verifyOtpRequest(phoneE164: string, otpCode: string): Promise<boolean> {
-  const response = await fetch(`${API_BASE}/auth/otp/verify`, {
-    method: 'POST',
-    headers: { 'Content-Type': 'application/json' },
-    body: JSON.stringify({ phoneE164, otpCode }),
-  });
-  if (!response.ok) {
-    throw await parseAuthError(response);
-  }
-  const body = (await response.json()) as { key: string; value: boolean };
-  return body.value;
-}
-
 export function isAdminApiRole(role: ApiRole): boolean {
   return role === 'ADMIN' || role === 'FINANCE_ADMIN' || role === 'SUPER_ADMIN';
 }
