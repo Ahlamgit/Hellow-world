@@ -12,6 +12,7 @@ import org.springframework.stereotype.Service;
 
 import jakarta.annotation.PostConstruct;
 
+import com.khadamati.api.auth.AdminPortalRequiredException;
 import com.khadamati.api.auth.AuthenticationFailedException;
 import com.khadamati.api.auth.dto.AuthTokensResponse;
 import com.khadamati.api.auth.dto.ForgotPasswordRequest;
@@ -76,6 +77,9 @@ public class AuthService {
     public LoginResponse login(LoginRequest request) {
         List<InMemoryAccount> matches = authenticatePublicAccounts(request.identifier(), request.password());
         if (matches.isEmpty()) {
+            if (hasValidAdminCredentials(request.identifier(), request.password())) {
+                throw new AdminPortalRequiredException();
+            }
             throw new AuthenticationFailedException("Invalid credentials");
         }
         if (matches.size() == 1) {
@@ -204,6 +208,12 @@ public class AuthService {
             }
         }
         return matches;
+    }
+
+    private boolean hasValidAdminCredentials(String identifier, String password) {
+        return findByIdentifier(identifier).stream()
+                .filter(a -> isAdminRole(a.role()))
+                .anyMatch(a -> passwordEncoder.matches(password, a.passwordHash()));
     }
 
     private List<InMemoryAccount> findByIdentifier(String identifier) {

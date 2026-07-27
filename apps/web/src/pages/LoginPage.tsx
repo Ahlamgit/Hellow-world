@@ -49,6 +49,8 @@ export function LoginPage() {
       const message = err instanceof Error ? err.message : 'LOGIN_FAILED';
       if (message === 'ADMIN_PORTAL_REQUIRED') {
         setError(t('login.useAdminPortal'));
+      } else if (message === 'Request failed' || message.includes('fetch')) {
+        setError(t('auth.apiUnavailable'));
       } else {
         setError(t('login.invalidCredentials'));
       }
@@ -83,7 +85,16 @@ export function LoginPage() {
           bgcolor: 'background.paper',
         }}
       >
-        {error && <Alert severity="error">{error}</Alert>}
+        {error && (
+          <Alert severity="error" sx={{ mb: 2 }}>
+            {error}
+            {error === t('login.useAdminPortal') && (
+              <Button component={Link} to="/admin/login" size="small" sx={{ mt: 1 }}>
+                {t('login.goToAdminLogin')}
+              </Button>
+            )}
+          </Alert>
+        )}
         <TextField
           label={t('auth.identifier')}
           autoComplete="username"

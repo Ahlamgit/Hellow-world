@@ -23,7 +23,11 @@ export async function loginRequest(identifier: string, password: string): Promis
     body: JSON.stringify({ identifier: identifier.trim(), password }),
   });
   if (!response.ok) {
-    throw new Error(await parseError(response));
+    const err = await parseError(response);
+    if (err === 'Admin accounts must sign in at the admin portal' || err === 'ADMIN_PORTAL_REQUIRED') {
+      throw new Error('ADMIN_PORTAL_REQUIRED');
+    }
+    throw new Error(err);
   }
   return (await response.json()) as LoginApiResponse;
 }

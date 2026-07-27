@@ -126,7 +126,7 @@ export function HomePage() {
           <Typography variant="h6" sx={{ fontWeight: 700, mb: 1 }}>
             {t('home.ctaProvider')}
           </Typography>
-          <Button component={Link} to="/login" variant="contained" sx={{ bgcolor: 'background.paper', color: 'primary.main', mt: 1 }}>
+          <Button component={Link} to="/register?type=provider" variant="contained" sx={{ bgcolor: 'background.paper', color: 'primary.main', mt: 1 }}>
             {t('home.ctaProviderLink')}
           </Button>
         </Box>

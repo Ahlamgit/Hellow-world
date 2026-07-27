@@ -1,5 +1,6 @@
 package com.khadamati.api.common;
 
+import com.khadamati.api.auth.AdminPortalRequiredException;
 import com.khadamati.api.auth.AuthenticationFailedException;
 
 import java.util.Map;
@@ -12,6 +13,11 @@ import org.springframework.web.bind.annotation.RestControllerAdvice;
 
 @RestControllerAdvice
 public class ApiExceptionHandler {
+
+    @ExceptionHandler(AdminPortalRequiredException.class)
+    public ResponseEntity<Map<String, String>> handleAdminPortalRequired(AdminPortalRequiredException ex) {
+        return ResponseEntity.status(HttpStatus.FORBIDDEN).body(Map.of("error", "ADMIN_PORTAL_REQUIRED"));
+    }
 
     @ExceptionHandler(AuthenticationFailedException.class)
     public ResponseEntity<Map<String, String>> handleAuthenticationFailed(AuthenticationFailedException ex) {
