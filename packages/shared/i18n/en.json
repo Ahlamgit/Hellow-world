@@ -1,10 +1,16 @@
 {
   "app": {
     "name": "KHADAMATI",
-    "tagline": "Your services marketplace"
+    "nameAr": "خدماتي",
+    "tagline": "Your trusted service marketplace in Lebanon",
+    "taglineAr": "سوق الخدمات الموثوق في لبنان"
   },
   "nav": {
     "home": "Home",
+    "browse": "Browse services",
+    "categories": "Categories",
+    "howItWorks": "How it works",
+    "signIn": "Sign in",
     "bookings": "Bookings",
     "messages": "Messages",
     "profile": "Profile",
@@ -15,16 +21,59 @@
     "users": "Users",
     "finance": "Finance"
   },
+  "home": {
+    "heroTitle": "Find trusted services near you",
+    "heroSubtitle": "Book plumbers, electricians, cleaners, and more — verified providers, simple booking.",
+    "searchPlaceholder": "What service do you need?",
+    "searchButton": "Search",
+    "featuredTitle": "Popular services",
+    "categoriesTitle": "Browse by category",
+    "ctaProvider": "Are you a service provider?",
+    "ctaProviderLink": "Join as provider",
+    "trustVerified": "Verified providers",
+    "trustBooking": "Confirm then pay",
+    "trustSupport": "Booking support"
+  },
+  "services": {
+    "title": "All services",
+    "subtitle": "Explore available services — sign in to book",
+    "viewDetails": "View details",
+    "signInToBook": "Sign in to book",
+    "fromPrice": "Price set by provider",
+    "rating": "{{rating}} · {{count}} reviews",
+    "noResults": "No services match your search"
+  },
+  "categories": {
+    "title": "Service categories",
+    "plumbing": "Plumbing",
+    "electrical": "Electrical",
+    "cleaning": "Cleaning",
+    "ac": "AC & cooling",
+    "painting": "Painting",
+    "moving": "Moving"
+  },
+  "howItWorks": {
+    "title": "How KHADAMATI works",
+    "step1Title": "Discover",
+    "step1Desc": "Search services and compare verified providers.",
+    "step2Title": "Book",
+    "step2Desc": "Choose a time that works — provider confirms your request.",
+    "step3Title": "Pay securely",
+    "step3Desc": "Pay after confirmation through our secure checkout.",
+    "step4Title": "Rate & review",
+    "step4Desc": "Share feedback to keep quality high."
+  },
   "common": {
     "loading": "Loading...",
     "error": "Something went wrong",
     "retry": "Try again",
     "language": "Language",
-    "signOut": "Sign out"
+    "signOut": "Sign out",
+    "back": "Back"
   },
   "login": {
     "title": "Sign in to KHADAMATI",
-    "subtitle": "Choose your account type",
+    "subtitle": "Choose your account type to continue",
     "customer": "Customer",
     "customerDesc": "Book and manage services",
     "craftsman": "Craftsman",
@@ -32,8 +81,14 @@
     "store": "Store",
     "storeDesc": "Service business dashboard",
     "admin": "Admin",
-    "adminDesc": "Platform operations (MFA required at launch)",
+    "adminDesc": "Platform operations",
     "continue": "Continue",
-    "shellNote": "Sprint 0 shell — placeholder"
+    "shellNote": "Sprint 0 — booking flows coming next",
+    "browseWithout": "Continue browsing without signing in"
+  },
+  "footer": {
+    "rights": "© KHADAMATI · Lebanon",
+    "explore": "Explore",
+    "providers": "For providers"
   }
 }

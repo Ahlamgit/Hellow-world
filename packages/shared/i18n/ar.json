@@ -1,10 +1,16 @@
 {
   "app": {
-    "name": "خدماتي",
-    "tagline": "سوق الخدمات الخاص بك"
+    "name": "KHADAMATI",
+    "nameAr": "خدماتي",
+    "tagline": "Your trusted service marketplace in Lebanon",
+    "taglineAr": "سوق الخدمات الموثوق في لبنان"
   },
   "nav": {
     "home": "الرئيسية",
+    "browse": "تصفح الخدمات",
+    "categories": "الفئات",
+    "howItWorks": "كيف يعمل",
+    "signIn": "تسجيل الدخول",
     "bookings": "الحجوزات",
     "messages": "الرسائل",
     "profile": "الملف الشخصي",
@@ -15,16 +21,59 @@
     "users": "المستخدمون",
     "finance": "المالية"
   },
+  "home": {
+    "heroTitle": "اعثر على خدمات موثوقة قريبة منك",
+    "heroSubtitle": "احجز سباكة، كهرباء، تنظيف والمزيد — مزودون معتمدون وحجز بسيط.",
+    "searchPlaceholder": "ما الخدمة التي تحتاجها؟",
+    "searchButton": "بحث",
+    "featuredTitle": "خدمات شائعة",
+    "categoriesTitle": "تصفح حسب الفئة",
+    "ctaProvider": "هل أنت مزود خدمة؟",
+    "ctaProviderLink": "انضم كمزود",
+    "trustVerified": "مزودون معتمدون",
+    "trustBooking": "تأكيد ثم الدفع",
+    "trustSupport": "دعم الحجز"
+  },
+  "services": {
+    "title": "جميع الخدمات",
+    "subtitle": "استكشف الخدمات المتاحة — سجّل الدخول للحجز",
+    "viewDetails": "عرض التفاصيل",
+    "signInToBook": "سجّل الدخول للحجز",
+    "fromPrice": "السعر يحدده المزود",
+    "rating": "{{rating}} · {{count}} تقييم",
+    "noResults": "لا توجد خدمات مطابقة"
+  },
+  "categories": {
+    "title": "فئات الخدمات",
+    "plumbing": "سباكة",
+    "electrical": "كهرباء",
+    "cleaning": "تنظيف",
+    "ac": "تكييف",
+    "painting": "دهان",
+    "moving": "نقل"
+  },
+  "howItWorks": {
+    "title": "كيف تعمل خدماتي",
+    "step1Title": "اكتشف",
+    "step1Desc": "ابحث عن الخدمات وقارن المزودين المعتمدين.",
+    "step2Title": "احجز",
+    "step2Desc": "اختر الوقت المناسب — يؤكد المزود طلبك.",
+    "step3Title": "ادفع بأمان",
+    "step3Desc": "ادفع بعد التأكيد عبر الدفع الآمن.",
+    "step4Title": "قيّم",
+    "step4Desc": "شارك ملاحظاتك للحفاظ على الجودة."
+  },
   "common": {
     "loading": "جاري التحميل...",
     "error": "حدث خطأ ما",
     "retry": "حاول مرة أخرى",
     "language": "اللغة",
-    "signOut": "تسجيل الخروج"
+    "signOut": "تسجيل الخروج",
+    "back": "رجوع"
   },
   "login": {
     "title": "تسجيل الدخول إلى خدماتي",
-    "subtitle": "اختر نوع حسابك",
+    "subtitle": "اختر نوع حسابك للمتابعة",
     "customer": "عميل",
     "customerDesc": "احجز الخدمات وأدرها",
     "craftsman": "حرفي",
@@ -32,8 +81,14 @@
     "store": "متجر",
     "storeDesc": "لوحة أعمال الخدمات",
     "admin": "مسؤول",
-    "adminDesc": "عمليات المنصة (MFA عند الإطلاق)",
+    "adminDesc": "عمليات المنصة",
     "continue": "متابعة",
-    "shellNote": "هيكل Sprint 0 — مسار مؤقت"
+    "shellNote": "Sprint 0 — مسارات الحجز قريباً",
+    "browseWithout": "متابعة التصفح دون تسجيل الدخول"
+  },
+  "footer": {
+    "rights": "© خدماتي · لبنان",
+    "explore": "استكشف",
+    "providers": "للمزودين"
   }
 }

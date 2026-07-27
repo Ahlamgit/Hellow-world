@@ -11,7 +11,7 @@ export function ShellPage({ actor, titleKey }: ShellPageProps) {
   const { t } = useTranslation();
   return (
     <Paper sx={{ p: 3 }}>
-      <Typography variant="h5" gutterBottom>
+      <Typography variant="h5">
         {t(titleKey)}
       </Typography>
       <Typography color="text.secondary">

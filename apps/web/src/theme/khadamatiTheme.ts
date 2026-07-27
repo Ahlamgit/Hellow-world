@@ -8,6 +8,7 @@ export const khadamatiTheme = createTheme({
       main: tokens.brand.primary,
       dark: tokens.brand.primaryDark,
       light: tokens.brand.primaryLight,
+      contrastText: '#FFFFFF',
     },
     success: { main: tokens.semantic.success },
     warning: { main: tokens.semantic.warning },

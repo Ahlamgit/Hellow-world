@@ -1,22 +1,14 @@
-import {
-  Box,
-  Button,
-  Card,
-  CardActionArea,
-  CardContent,
-  Container,
-  IconButton,
-  Typography,
-} from '@mui/material';
+import { Box, Button, Card, CardActionArea, CardContent, Container, Typography } from '@mui/material';
 import PersonOutlinedIcon from '@mui/icons-material/PersonOutlined';
 import HandymanOutlinedIcon from '@mui/icons-material/HandymanOutlined';
 import StorefrontOutlinedIcon from '@mui/icons-material/StorefrontOutlined';
 import AdminPanelSettingsOutlinedIcon from '@mui/icons-material/AdminPanelSettingsOutlined';
-import LanguageIcon from '@mui/icons-material/Language';
+import ArrowBackIcon from '@mui/icons-material/ArrowBack';
 import { useTranslation } from 'react-i18next';
-import { useNavigate } from 'react-router-dom';
+import { Link, useNavigate } from 'react-router-dom';
 import type { ActorType } from '../auth/actor';
 import { saveActor } from '../auth/actor';
+import { PublicHeader } from '../components/PublicHeader';
 
 const actors: { type: ActorType; icon: React.ReactNode }[] = [
   { type: 'customer', icon: <PersonOutlinedIcon fontSize="large" color="primary" /> },
@@ -26,7 +18,7 @@ const actors: { type: ActorType; icon: React.ReactNode }[] = [
 ];
 
 export function LoginPage() {
-  const { t, i18n } = useTranslation();
+  const { t } = useTranslation();
   const navigate = useNavigate();
 
   const selectActor = (actor: ActorType) => {
@@ -34,50 +26,42 @@ export function LoginPage() {
     navigate(`/${actor}`);
   };
 
-  const toggleLanguage = () => {
-    const next = i18n.language === 'ar' ? 'en' : 'ar';
-    void i18n.changeLanguage(next);
-    document.documentElement.dir = next === 'ar' ? 'rtl' : 'ltr';
-    document.documentElement.lang = next;
-  };
-
   return (
-    <Container maxWidth="md" sx={{ py: 6 }}>
-      <Box sx={{ display: 'flex', justifyContent: 'flex-end', mb: 2 }}>
-        <IconButton onClick={toggleLanguage} aria-label={t('common.language')}>
-          <LanguageIcon />
-        </IconButton>
-      </Box>
-      <Typography variant="h4" component="h1" gutterBottom align="center">
-        {t('login.title')}
-      </Typography>
-      <Typography color="text.secondary" align="center" sx={{ mb: 4 }}>
-        {t('login.subtitle')}
-      </Typography>
-      <Box
-        sx={{
-          display: 'grid',
-          gridTemplateColumns: { xs: '1fr', sm: '1fr 1fr' },
-          gap: 2,
-        }}
-      >
-        {actors.map(({ type, icon }) => (
-          <Card key={type} variant="outlined">
-            <CardActionArea onClick={() => selectActor(type)}>
-              <CardContent sx={{ textAlign: 'center', py: 3 }}>
-                <Box sx={{ mb: 1 }}>{icon}</Box>
-                <Typography variant="h6">{t(`login.${type}`)}</Typography>
-                <Typography variant="body2" color="text.secondary">
-                  {t(`login.${type}Desc`)}
-                </Typography>
-                <Button sx={{ mt: 2 }} variant="contained" size="small">
-                  {t('login.continue')}
-                </Button>
-              </CardContent>
-            </CardActionArea>
-          </Card>
-        ))}
-      </Box>
-    </Container>
+    <Box sx={{ minHeight: '100vh', bgcolor: 'background.default' }}>
+      <PublicHeader />
+      <Container maxWidth="sm" sx={{ py: 6 }}>
+        <Button component={Link} to="/" startIcon={<ArrowBackIcon />} sx={{ mb: 3 }}>
+          {t('login.browseWithout')}
+        </Button>
+        <Typography variant="h4" component="h1" sx={{ fontWeight: 800 }} align="center">
+          {t('login.title')}
+        </Typography>
+        <Typography color="text.secondary" align="center" sx={{ mb: 4 }}>
+          {t('login.subtitle')}
+        </Typography>
+        <Box sx={{ display: 'grid', gap: 2 }}>
+          {actors.map(({ type, icon }) => (
+            <Card key={type} variant="outlined" sx={{ borderRadius: 3 }}>
+              <CardActionArea onClick={() => selectActor(type)}>
+                <CardContent sx={{ display: 'flex', alignItems: 'center', gap: 2, py: 2.5 }}>
+                  <Box sx={{ bgcolor: 'primary.light', borderRadius: 2, p: 1.5, display: 'flex' }}>{icon}</Box>
+                  <Box sx={{ flex: 1 }}>
+                    <Typography variant="h6" sx={{ fontWeight: 700 }}>
+                      {t(`login.${type}`)}
+                    </Typography>
+                    <Typography variant="body2" color="text.secondary">
+                      {t(`login.${type}Desc`)}
+                    </Typography>
+                  </Box>
+                  <Typography color="primary.main" sx={{ fontWeight: 700 }}>
+                    {t('login.continue')} →
+                  </Typography>
+                </CardContent>
+              </CardActionArea>
+            </Card>
+          ))}
+        </Box>
+      </Container>
+    </Box>
   );
 }
