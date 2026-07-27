@@ -11,7 +11,6 @@ import { useTranslation } from 'react-i18next';
 import { Link, useNavigate, useSearchParams } from 'react-router-dom';
 import { useAuth } from '../auth/AuthContext';
 import { resolvePostLoginPath, sanitizeReturnUrl } from '../auth/redirects';
-import { AuthPageLayout } from '../components/auth/AuthPageLayout';
 import { PasswordField } from '../components/auth/PasswordField';
 
 const DEFAULT_ADMIN_PHONE = '+96170000000';
