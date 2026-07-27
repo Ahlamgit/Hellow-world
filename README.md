@@ -32,7 +32,9 @@ npm install
 npm run dev
 ```
 
-http://localhost:5173/login
+http://localhost:5173
+
+**Windows:** If `npm run dev` fails with `Cannot find native binding` / `@rolldown/binding-win32-x64-msvc`, delete `node_modules` and `package-lock.json` in the repo root and in `apps/web`, then run `npm install` from the repo root (`npm run dev:web`).
 
 ### Mobile (one codebase → Android + iOS)
 
