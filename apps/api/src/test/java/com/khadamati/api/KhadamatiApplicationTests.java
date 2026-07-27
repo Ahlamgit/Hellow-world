@@ -32,4 +32,12 @@ class KhadamatiApplicationTests {
                 .andExpect(status().isOk())
                 .andExpect(jsonPath("$.currency").value("USD"));
     }
+
+    @Test
+    void publicLegalTermsAreAvailable() throws Exception {
+        mockMvc.perform(get("/api/v1/legal/terms"))
+                .andExpect(status().isOk())
+                .andExpect(jsonPath("$.version").value("1.0"))
+                .andExpect(jsonPath("$.documentType").value("TERMS"));
+    }
 }

@@ -13,7 +13,9 @@ import com.khadamati.api.auth.dto.LoginRequest;
 import com.khadamati.api.auth.dto.LoginResponse;
 import com.khadamati.api.auth.dto.OtpRequest;
 import com.khadamati.api.auth.dto.OtpVerifyRequest;
+import com.khadamati.api.auth.dto.RegisterPendingResponse;
 import com.khadamati.api.auth.dto.RegisterRequest;
+import com.khadamati.api.auth.dto.RegisterVerifyOtpRequest;
 import com.khadamati.api.auth.service.AuthService;
 
 import jakarta.validation.Valid;
@@ -29,11 +31,16 @@ public class AuthController {
     }
 
     @PostMapping("/register")
-    public ResponseEntity<AuthTokensResponse> register(@Valid @RequestBody RegisterRequest request) {
+    public ResponseEntity<RegisterPendingResponse> register(@Valid @RequestBody RegisterRequest request) {
         if (!request.passwordsMatch()) {
             throw new IllegalArgumentException("Password and confirm password must match");
         }
         return ResponseEntity.ok(authService.register(request));
+    }
+
+    @PostMapping("/register/verify-otp")
+    public ResponseEntity<AuthTokensResponse> verifyRegistrationOtp(@Valid @RequestBody RegisterVerifyOtpRequest request) {
+        return ResponseEntity.ok(authService.verifyRegistrationOtp(request));
     }
 
     @PostMapping("/login")

@@ -1,16 +1,14 @@
 package com.khadamati.api.auth.service;
 
+import java.time.Instant;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Locale;
-import java.util.Map;
 import java.util.UUID;
-import java.util.concurrent.ConcurrentHashMap;
 
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
-
-import jakarta.annotation.PostConstruct;
+import org.springframework.transaction.annotation.Transactional;
 
 import com.khadamati.api.auth.AdminPortalRequiredException;
 import com.khadamati.api.auth.AuthenticationFailedException;
@@ -20,62 +18,106 @@ import com.khadamati.api.auth.dto.LoginCompleteRequest;
 import com.khadamati.api.auth.dto.LoginRequest;
 import com.khadamati.api.auth.dto.LoginResponse;
 import com.khadamati.api.auth.dto.OtpVerifyRequest;
+import com.khadamati.api.auth.dto.RegisterPendingResponse;
 import com.khadamati.api.auth.dto.RegisterRequest;
+import com.khadamati.api.auth.dto.RegisterVerifyOtpRequest;
 import com.khadamati.api.config.AppProperties;
 import com.khadamati.api.integration.ports.SmsSenderPort;
+import com.khadamati.api.legal.LegalDocumentService;
 import com.khadamati.api.rbac.Role;
+import com.khadamati.api.user.UserEntity;
+import com.khadamati.api.user.UserRepository;
 
-/**
- * In-memory auth foundation for Sprint 0 — replaced with persisted users post domain schema.
- */
 @Service
 public class AuthService {
 
     private static final List<Role> PUBLIC_ROLES = List.of(Role.CUSTOMER, Role.CRAFTSMAN, Role.STORE);
 
-    private final Map<String, InMemoryAccount> accountsById = new ConcurrentHashMap<>();
-    private final Map<String, String> emailRoleIndex = new ConcurrentHashMap<>();
-    private final Map<String, String> phoneRoleIndex = new ConcurrentHashMap<>();
+    private final UserRepository userRepository;
     private final PasswordEncoder passwordEncoder;
     private final JwtService jwtService;
     private final SmsSenderPort smsSenderPort;
     private final AppProperties appProperties;
+    private final LegalDocumentService legalDocumentService;
 
     public AuthService(
+            UserRepository userRepository,
             PasswordEncoder passwordEncoder,
             JwtService jwtService,
             SmsSenderPort smsSenderPort,
-            AppProperties appProperties) {
+            AppProperties appProperties,
+            LegalDocumentService legalDocumentService) {
+        this.userRepository = userRepository;
         this.passwordEncoder = passwordEncoder;
         this.jwtService = jwtService;
         this.smsSenderPort = smsSenderPort;
         this.appProperties = appProperties;
+        this.legalDocumentService = legalDocumentService;
     }
 
-    public AuthTokensResponse register(RegisterRequest request) {
+    @Transactional
+    public RegisterPendingResponse register(RegisterRequest request) {
         validatePublicRole(request.role());
         if (!request.passwordsMatch()) {
             throw new IllegalArgumentException("Password and confirm password must match");
         }
+        if (!request.acceptTerms() || !request.acceptPrivacy()) {
+            throw new IllegalArgumentException("Legal acceptance is required");
+        }
+
         String normalizedEmail = normalizeEmail(request.email());
         String normalizedPhone = normalizePhone(request.phoneE164());
         ensureUniqueForRole(normalizedEmail, normalizedPhone, request.role());
 
-        String id = UUID.randomUUID().toString();
-        InMemoryAccount account = new InMemoryAccount(
-                id,
-                normalizedEmail,
-                normalizedPhone,
-                request.firstName().trim(),
-                request.lastName().trim(),
-                passwordEncoder.encode(request.password()),
-                request.role());
-        storeAccount(account);
-        return tokensFor(account);
+        legalDocumentService.validateRegistrationVersions(
+                request.termsVersion(), request.privacyVersion(), request.language());
+
+        Instant now = Instant.now();
+        UserEntity user = new UserEntity();
+        user.setId(UUID.randomUUID());
+        user.setEmail(normalizedEmail);
+        user.setPhoneE164(normalizedPhone);
+        user.setRole(request.role());
+        user.setFirstName(request.firstName().trim());
+        user.setLastName(request.lastName().trim());
+        user.setPasswordHash(passwordEncoder.encode(request.password()));
+        user.setPhoneVerified(false);
+        user.setActive(false);
+        user.setCreatedAt(now);
+        user.setUpdatedAt(now);
+        userRepository.save(user);
+
+        legalDocumentService.recordAcceptances(
+                user,
+                request.termsVersion(),
+                request.privacyVersion(),
+                request.language());
+
+        requestOtp(normalizedPhone);
+
+        return RegisterPendingResponse.otpRequired(normalizedEmail, request.role(), normalizedPhone);
+    }
+
+    @Transactional
+    public AuthTokensResponse verifyRegistrationOtp(RegisterVerifyOtpRequest request) {
+        String email = normalizeEmail(request.email());
+        UserEntity user = userRepository.findByEmailAndRole(email, request.role())
+                .orElseThrow(() -> new AuthenticationFailedException("Invalid credentials"));
+
+        if (!verifyOtp(user.getPhoneE164(), request.otpCode())) {
+            throw new AuthenticationFailedException("Invalid verification code");
+        }
+
+        user.setPhoneVerified(true);
+        user.setActive(true);
+        user.setUpdatedAt(Instant.now());
+        userRepository.save(user);
+
+        return tokensFor(user);
     }
 
     public LoginResponse login(LoginRequest request) {
-        List<InMemoryAccount> matches = authenticatePublicAccounts(request.identifier(), request.password());
+        List<UserEntity> matches = authenticatePublicUsers(request.identifier(), request.password());
         if (matches.isEmpty()) {
             if (hasValidAdminCredentials(request.identifier(), request.password())) {
                 throw new AdminPortalRequiredException();
@@ -83,34 +125,35 @@ public class AuthService {
             throw new AuthenticationFailedException("Invalid credentials");
         }
         if (matches.size() == 1) {
-            return LoginResponse.success(tokensFor(matches.getFirst()));
+            UserEntity user = matches.getFirst();
+            ensureActive(user);
+            return LoginResponse.success(tokensFor(user));
         }
-        List<Role> roles = matches.stream().map(InMemoryAccount::role).distinct().toList();
+        List<Role> roles = matches.stream().map(UserEntity::getRole).distinct().toList();
         return LoginResponse.roleSelectionRequired(roles);
     }
 
     public AuthTokensResponse completeLogin(LoginCompleteRequest request) {
         validatePublicRole(request.role());
-        List<InMemoryAccount> matches = authenticatePublicAccounts(request.identifier(), request.password());
-        InMemoryAccount account = matches.stream()
-                .filter(a -> a.role() == request.role())
+        UserEntity user = authenticatePublicUsers(request.identifier(), request.password()).stream()
+                .filter(u -> u.getRole() == request.role())
                 .findFirst()
                 .orElseThrow(() -> new AuthenticationFailedException("Invalid credentials"));
-        return tokensFor(account);
+        ensureActive(user);
+        return tokensFor(user);
     }
 
     public AuthTokensResponse adminLogin(LoginRequest request) {
-        List<InMemoryAccount> matches = findByIdentifier(request.identifier());
-        InMemoryAccount account = matches.stream()
-                .filter(a -> isAdminRole(a.role()))
-                .filter(a -> passwordEncoder.matches(request.password(), a.passwordHash()))
+        UserEntity user = findByIdentifier(request.identifier()).stream()
+                .filter(u -> isAdminRole(u.getRole()))
+                .filter(u -> passwordEncoder.matches(request.password(), u.getPasswordHash()))
                 .findFirst()
                 .orElseThrow(() -> new AuthenticationFailedException("Invalid credentials"));
-        return tokensFor(account);
+        ensureActive(user);
+        return tokensFor(user);
     }
 
     public void forgotPassword(ForgotPasswordRequest request) {
-        // Sprint 0 — acknowledge request; email/SMS reset flow comes with persisted users.
         if (findByIdentifier(request.identifier()).isEmpty()) {
             throw new AuthenticationFailedException("No account found for this identifier");
         }
@@ -122,89 +165,28 @@ public class AuthService {
     }
 
     public boolean verifyOtp(OtpVerifyRequest request) {
+        return verifyOtp(request.phoneE164(), request.otpCode());
+    }
+
+    private boolean verifyOtp(String phoneE164, String otpCode) {
         if (appProperties.devMode()) {
-            return appProperties.mockOtpCode().equals(request.otpCode());
+            return appProperties.mockOtpCode().equals(otpCode);
         }
         return false;
     }
 
-    @PostConstruct
-    void seedDevUsers() {
-        if (!appProperties.devMode()) {
-            return;
-        }
-        seedAccount(
-                "customer@khadamati.local",
-                "+96170000001",
-                "Dev",
-                "Customer",
-                "password123",
-                Role.CUSTOMER);
-        seedAccount(
-                "provider@khadamati.local",
-                "+96170000002",
-                "Dev",
-                "Provider",
-                "password123",
-                Role.CRAFTSMAN);
-        seedAccount(
-                "store@khadamati.local",
-                "+96170000003",
-                "Dev",
-                "Store",
-                "password123",
-                Role.STORE);
-        seedAccount(
-                "multi@khadamati.local",
-                "+96170000099",
-                "Dev",
-                "Multi",
-                "password123",
-                Role.CUSTOMER);
-        seedAccount(
-                "multi@khadamati.local",
-                "+96170000099",
-                "Dev",
-                "Multi",
-                "password123",
-                Role.CRAFTSMAN);
-        seedAccount(
-                "admin@khadamati.local",
-                "+96170000000",
-                "Dev",
-                "Admin",
-                "password123",
-                Role.ADMIN);
-    }
-
-    private void seedAccount(
-            String email, String phone, String firstName, String lastName, String password, Role role) {
-        String normalizedEmail = normalizeEmail(email);
-        String normalizedPhone = normalizePhone(phone);
-        if (emailRoleIndex.containsKey(roleKey(normalizedEmail, role))) {
-            return;
-        }
-        String id = UUID.randomUUID().toString();
-        InMemoryAccount account = new InMemoryAccount(
-                id,
-                normalizedEmail,
-                normalizedPhone,
-                firstName,
-                lastName,
-                passwordEncoder.encode(password),
-                role);
-        storeAccount(account);
-    }
-
-    private List<InMemoryAccount> authenticatePublicAccounts(String identifier, String password) {
-        List<InMemoryAccount> candidates = findByIdentifier(identifier);
-        List<InMemoryAccount> matches = new ArrayList<>();
-        for (InMemoryAccount account : candidates) {
-            if (isAdminRole(account.role())) {
+    private List<UserEntity> authenticatePublicUsers(String identifier, String password) {
+        List<UserEntity> candidates = findByIdentifier(identifier);
+        List<UserEntity> matches = new ArrayList<>();
+        for (UserEntity user : candidates) {
+            if (isAdminRole(user.getRole())) {
                 continue;
             }
-            if (passwordEncoder.matches(password, account.passwordHash())) {
-                matches.add(account);
+            if (!user.isActive()) {
+                continue;
+            }
+            if (passwordEncoder.matches(password, user.getPasswordHash())) {
+                matches.add(user);
             }
         }
         return matches;
@@ -212,48 +194,41 @@ public class AuthService {
 
     private boolean hasValidAdminCredentials(String identifier, String password) {
         return findByIdentifier(identifier).stream()
-                .filter(a -> isAdminRole(a.role()))
-                .anyMatch(a -> passwordEncoder.matches(password, a.passwordHash()));
+                .filter(u -> isAdminRole(u.getRole()))
+                .anyMatch(u -> passwordEncoder.matches(password, u.getPasswordHash()));
     }
 
-    private List<InMemoryAccount> findByIdentifier(String identifier) {
+    private List<UserEntity> findByIdentifier(String identifier) {
         String trimmed = identifier.trim();
         if (trimmed.contains("@")) {
-            String email = normalizeEmail(trimmed);
-            return accountsById.values().stream()
-                    .filter(a -> a.email().equals(email))
-                    .toList();
+            return userRepository.findByEmail(normalizeEmail(trimmed));
         }
-        String phone = normalizePhone(trimmed);
-        return accountsById.values().stream()
-                .filter(a -> a.phoneE164().equals(phone))
-                .toList();
+        return userRepository.findByPhoneE164(normalizePhone(trimmed));
     }
 
     private void ensureUniqueForRole(String email, String phone, Role role) {
-        if (emailRoleIndex.containsKey(roleKey(email, role))) {
+        if (userRepository.findByEmailAndRole(email, role).isPresent()) {
             throw new IllegalArgumentException("An account of this type already exists for this email");
         }
-        if (phoneRoleIndex.containsKey(roleKey(phone, role))) {
-            throw new IllegalArgumentException("An account of this type already exists for this phone number");
+        userRepository.findByPhoneE164(phone).stream()
+                .filter(u -> u.getRole() == role)
+                .findFirst()
+                .ifPresent(u -> {
+                    throw new IllegalArgumentException("An account of this type already exists for this phone number");
+                });
+    }
+
+    private void ensureActive(UserEntity user) {
+        if (!user.isActive()) {
+            throw new AuthenticationFailedException("Account is not activated. Complete phone verification.");
         }
     }
 
-    private void storeAccount(InMemoryAccount account) {
-        accountsById.put(account.id(), account);
-        emailRoleIndex.put(roleKey(account.email(), account.role()), account.id());
-        phoneRoleIndex.put(roleKey(account.phoneE164(), account.role()), account.id());
-    }
-
-    private AuthTokensResponse tokensFor(InMemoryAccount account) {
+    private AuthTokensResponse tokensFor(UserEntity user) {
         return AuthTokensResponse.bearer(
-                jwtService.createAccessToken(account.email(), account.role()),
-                jwtService.createRefreshToken(account.email(), account.role()),
-                account.role());
-    }
-
-    private static String roleKey(String key, Role role) {
-        return key + "|" + role.name();
+                jwtService.createAccessToken(user.getEmail(), user.getRole(), user.getId()),
+                jwtService.createRefreshToken(user.getEmail(), user.getRole(), user.getId()),
+                user.getRole());
     }
 
     private static String normalizeEmail(String email) {
@@ -277,13 +252,4 @@ public class AuthService {
     private static boolean isAdminRole(Role role) {
         return role == Role.ADMIN || role == Role.FINANCE_ADMIN || role == Role.SUPER_ADMIN;
     }
-
-    private record InMemoryAccount(
-            String id,
-            String email,
-            String phoneE164,
-            String firstName,
-            String lastName,
-            String passwordHash,
-            Role role) {}
 }

@@ -3,6 +3,7 @@ import type {
   AuthTokensResponse,
   LoginApiResponse,
   RegisterPayload,
+  RegisterPendingResponse,
 } from './types';
 
 const API_BASE = import.meta.env.VITE_API_URL ?? '/api/v1';
@@ -48,7 +49,7 @@ export async function completeLoginRequest(
   return (await response.json()) as AuthTokensResponse;
 }
 
-export async function registerRequest(payload: RegisterPayload): Promise<AuthTokensResponse> {
+export async function registerRequest(payload: RegisterPayload): Promise<RegisterPendingResponse> {
   const response = await fetch(`${API_BASE}/auth/register`, {
     method: 'POST',
     headers: { 'Content-Type': 'application/json' },
@@ -57,7 +58,7 @@ export async function registerRequest(payload: RegisterPayload): Promise<AuthTok
   if (!response.ok) {
     throw new Error(await parseError(response));
   }
-  return (await response.json()) as AuthTokensResponse;
+  return (await response.json()) as RegisterPendingResponse;
 }
 
 export async function forgotPasswordRequest(identifier: string): Promise<void> {

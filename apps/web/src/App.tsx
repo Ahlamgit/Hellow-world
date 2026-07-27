@@ -1,3 +1,4 @@
+import type { ReactNode } from 'react';
 import { BrowserRouter, Navigate, Route, Routes } from 'react-router-dom';
 import './i18n';
 import { AppProviders } from './theme/AppProviders';
@@ -14,12 +15,17 @@ import { LoginPage } from './pages/LoginPage';
 import { SelectAccountPage } from './pages/SelectAccountPage';
 import { RegisterPage } from './pages/RegisterPage';
 import { ForgotPasswordPage } from './pages/ForgotPasswordPage';
+import { LegalDocumentPage } from './pages/legal/LegalDocumentPage';
+import { AdminLegalPage } from './pages/admin/AdminLegalPage';
 import { AdminLoginPage } from './pages/AdminLoginPage';
 import { BookServicePage } from './pages/BookServicePage';
 import { ShellPage } from './pages/ShellPage';
 import type { PortalRole } from './auth/types';
 
-function portalRoutes(portal: PortalRole, pages: { path: string; titleKey: string }[]) {
+function portalRoutes(
+  portal: PortalRole,
+  pages: { path: string; titleKey: string; element?: ReactNode }[],
+) {
   return (
     <Route key={portal} path={portal}>
       <Route element={<RequireRole roles={[portal]} loginPath={portal === 'admin' ? '/admin/login' : '/login'} />}>
@@ -29,7 +35,9 @@ function portalRoutes(portal: PortalRole, pages: { path: string; titleKey: strin
               key={page.path || 'index'}
               index={page.path === ''}
               path={page.path || undefined}
-              element={<ShellPage portal={portal} titleKey={page.titleKey} />}
+              element={
+                page.element ?? <ShellPage portal={portal} titleKey={page.titleKey} />
+              }
             />
           ))}
         </Route>
@@ -89,6 +97,9 @@ function App() {
             />
             <Route path="/admin/login" element={<AdminLoginPage />} />
 
+            <Route path="/legal/terms" element={<LegalDocumentPage type="terms" />} />
+            <Route path="/legal/privacy" element={<LegalDocumentPage type="privacy" />} />
+
             {portalRoutes('customer', [
               { path: '', titleKey: 'nav.home' },
               { path: 'bookings', titleKey: 'nav.bookings' },
@@ -109,6 +120,7 @@ function App() {
             ])}
             {portalRoutes('admin', [
               { path: '', titleKey: 'nav.dashboard' },
+              { path: 'legal', titleKey: 'legal.adminTitle', element: <AdminLegalPage /> },
               { path: 'users', titleKey: 'nav.users' },
               { path: 'finance', titleKey: 'nav.finance' },
               { path: 'settings', titleKey: 'nav.settings' },

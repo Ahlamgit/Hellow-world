@@ -15,9 +15,10 @@ import {
   registerRequest,
   verifyOtpRequest,
 } from './authApi';
+import { verifyRegistrationOtpRequest } from './legalApi';
 import { apiRoleToPortal, portalDashboardPath } from './redirects';
 import { clearSession, isAccessTokenExpired, loadSession, saveSession } from './session';
-import type { ApiRole, AuthSession, PortalRole, RegisterPayload } from './types';
+import type { ApiRole, AuthSession, PortalRole, RegisterPayload, RegisterPendingResponse } from './types';
 
 export type LoginFlowResult =
   | { status: 'SUCCESS'; portal: PortalRole }
@@ -30,7 +31,8 @@ type AuthContextValue = {
   isLoading: boolean;
   login: (identifier: string, password: string) => Promise<LoginFlowResult>;
   completeLogin: (identifier: string, password: string, role: ApiRole) => Promise<PortalRole>;
-  register: (payload: RegisterPayload) => Promise<PortalRole>;
+  register: (payload: RegisterPayload) => Promise<RegisterPendingResponse>;
+  verifyRegistrationOtp: (email: string, role: ApiRole, otpCode: string) => Promise<PortalRole>;
   adminLogin: (email: string, password: string, otpCode: string, phoneE164: string) => Promise<void>;
   logout: () => void;
   establishSession: (email: string, tokens: { accessToken: string; refreshToken: string; role: ApiRole }) => PortalRole;
@@ -116,10 +118,14 @@ export function AuthProvider({ children }: { children: ReactNode }) {
     [establishSession],
   );
 
-  const register = useCallback(
-    async (payload: RegisterPayload): Promise<PortalRole> => {
-      const tokens = await registerRequest(payload);
-      return establishSession(payload.email.trim().toLowerCase(), tokens);
+  const register = useCallback(async (payload: RegisterPayload): Promise<RegisterPendingResponse> => {
+    return registerRequest(payload);
+  }, []);
+
+  const verifyRegistrationOtp = useCallback(
+    async (email: string, role: ApiRole, otpCode: string): Promise<PortalRole> => {
+      const tokens = await verifyRegistrationOtpRequest(email, role, otpCode);
+      return establishSession(email.trim().toLowerCase(), tokens);
     },
     [establishSession],
   );
@@ -154,11 +160,12 @@ export function AuthProvider({ children }: { children: ReactNode }) {
       login,
       completeLogin,
       register,
+      verifyRegistrationOtp,
       adminLogin,
       logout,
       establishSession,
     }),
-    [session, portal, isLoading, login, completeLogin, register, adminLogin, logout, establishSession],
+    [session, portal, isLoading, login, completeLogin, register, verifyRegistrationOtp, adminLogin, logout, establishSession],
   );
 
   return <AuthContext.Provider value={value}>{children}</AuthContext.Provider>;

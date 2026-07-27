@@ -15,6 +15,7 @@ import LogoutIcon from '@mui/icons-material/Logout';
 import { Outlet, useNavigate } from 'react-router-dom';
 import { useTranslation } from 'react-i18next';
 import { useAuth } from '../auth/AuthContext';
+import { LegalComplianceGate } from '../components/legal/LegalComplianceGate';
 import type { PortalRole } from '../auth/types';
 
 const drawerWidth = 240;
@@ -42,6 +43,7 @@ const navByPortal: Record<PortalRole, NavItem[]> = {
   ],
   admin: [
     { key: 'dashboard', path: '' },
+    { key: 'legal', path: 'legal' },
     { key: 'users', path: 'users' },
     { key: 'finance', path: 'finance' },
     { key: 'settings', path: 'settings' },
@@ -108,6 +110,7 @@ export function RoleShell({ portal }: RoleShellProps) {
       </Drawer>
       <Box component="main" sx={{ flexGrow: 1, p: 3 }}>
         <Toolbar />
+        {portal !== 'admin' && <LegalComplianceGate portal={portal} />}
         <Outlet />
       </Box>
     </Box>

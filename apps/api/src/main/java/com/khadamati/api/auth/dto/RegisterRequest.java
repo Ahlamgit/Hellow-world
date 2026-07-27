@@ -20,7 +20,10 @@ public record RegisterRequest(
         @NotBlank String confirmPassword,
         @NotNull Role role,
         @AssertTrue(message = "Terms must be accepted") boolean acceptTerms,
-        @AssertTrue(message = "Privacy policy must be accepted") boolean acceptPrivacy
+        @AssertTrue(message = "Privacy policy must be accepted") boolean acceptPrivacy,
+        @NotBlank String termsVersion,
+        @NotBlank String privacyVersion,
+        @NotBlank String language
 ) {
     public boolean passwordsMatch() {
         return password.equals(confirmPassword);

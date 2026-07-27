@@ -21,6 +21,7 @@
     "settings": "الإعدادات",
     "users": "المستخدمون",
     "finance": "المالية",
+    "legal": "قانوني",
     "menu": "القائمة"
   },
   "roles": {
@@ -149,6 +150,8 @@
     "providerDesc": "قدّم خدماتك كمزود فردي",
     "storeDesc": "أدر متجر أو نشاط خدمات",
     "apiUnavailable": "تعذّر الاتصال بالخادم. شغّل API على http://localhost:8080 ثم أعد المحاولة.",
+    "activateAccount": "تفعيل الحساب",
+    "otpSubtitle": "أدخل رمز التحقق المرسل إلى هاتفك (التطوير: 000000)",
     "passwordError": {
       "required": "كلمة المرور مطلوبة",
       "minLength": "8 أحرف على الأقل",
@@ -160,5 +163,36 @@
     "rights": "© خدماتي · لبنان",
     "explore": "استكشف",
     "providers": "للمزودين"
+  },
+  "legal": {
+    "version": "الإصدار {{version}}",
+    "lastUpdated": "آخر تحديث: {{date}}",
+    "loadError": "تعذّر تحميل المستند. تأكد من تشغيل API.",
+    "reviewBeforeContinue": "مراجعة وقبول المستندات القانونية",
+    "reviewPrompt": "قبل المتابعة، يرجى مراجعة شروط وأحكام خدماتي وسياسة الخصوصية.",
+    "viewTerms": "عرض الشروط والأحكام",
+    "viewPrivacy": "عرض سياسة الخصوصية",
+    "acceptTermsLabel": "أوافق على الشروط والأحكام",
+    "acceptPrivacyLabel": "أقرّ بسياسة الخصوصية",
+    "adminTitle": "المستندات القانونية",
+    "updateRequiredTitle": "تم تحديث المستندات القانونية",
+    "updateRequiredBody": "حدّثنا مستنداتنا القانونية. يرجى مراجعة وقبول الإصدارات الأحدث للمتابعة في استخدام خدماتي.",
+    "continueAfterAccept": "متابعة",
+    "complianceCheckError": "تعذّر التحقق من الامتثال القانوني. أعد المحاولة أو سجّل الخروج.",
+    "adminPublishTitle": "نشر إصدار جديد",
+    "adminDocumentType": "نوع المستند",
+    "adminTerms": "الشروط والأحكام",
+    "adminPrivacy": "سياسة الخصوصية",
+    "adminVersion": "الإصدار",
+    "adminLanguage": "اللغة",
+    "adminDocTitle": "العنوان",
+    "adminContent": "المحتوى",
+    "adminContentHint": "استخدم ## للعناوين. النص المؤقت مقبول حتى تنهي القسم القانوني المحتوى.",
+    "adminPublish": "نشر الإصدار",
+    "adminPublishSuccess": "تم نشر الإصدار. سيُطلب من المستخدمين قبول الإصدار الجديد.",
+    "adminLoadError": "تعذّر تحميل سجل المستندات القانونية.",
+    "adminHistoryTitle": "سجل الإصدارات",
+    "adminActive": "نشط",
+    "adminActiveYes": "نعم"
   }
 }

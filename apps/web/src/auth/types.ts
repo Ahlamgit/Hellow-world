@@ -32,4 +32,15 @@ export type RegisterPayload = {
   role: 'CUSTOMER' | 'CRAFTSMAN' | 'STORE';
   acceptTerms: boolean;
   acceptPrivacy: boolean;
+  termsVersion: string;
+  privacyVersion: string;
+  language: string;
+};
+
+export type RegisterPendingResponse = {
+  status: string;
+  email: string;
+  role: ApiRole;
+  phoneE164: string;
+  message: string;
 };
