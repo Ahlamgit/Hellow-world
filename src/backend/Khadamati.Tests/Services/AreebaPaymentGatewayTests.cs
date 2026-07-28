@@ -2,6 +2,8 @@ using System.Net;
 using System.Text;
 using System.Text.Json;
 using FluentAssertions;
+using Khadamati.Application.DTOs.Payments;
+using Khadamati.Infrastructure.Services.Payments;
 using Khadamati.Infrastructure.Services.Payments.Areeba;
 using Microsoft.Extensions.Logging.Abstractions;
 using Microsoft.Extensions.Options;
@@ -10,122 +12,101 @@ namespace Khadamati.Tests.Services;
 
 public class AreebaPaymentGatewayTests
 {
-    private const string BaseUrl = "https://sandbox.areeba.example/v1";
+    private const string BaseUrl = "https://areeba.ixopaysandbox.com";
 
     [Fact]
-    public async Task CreateSessionAsync_SuccessfulResponse_ReturnsSession()
+    public async Task InitialisePaymentAsync_ReturnsPaymentJsConfiguration()
     {
-        var handler = new StubHandler(_ =>
-            JsonResponse(HttpStatusCode.OK, new { sessionId = "sess_123", checkoutUrl = "https://pay.example/checkout/sess_123" }));
-        var gateway = CreateGateway(handler);
+        var gateway = CreateGateway(new StubHandler(_ => new HttpResponseMessage(HttpStatusCode.NotFound)));
 
-        var result = await gateway.CreateSessionAsync(new Application.DTOs.Payments.PaymentSessionRequest
+        var result = await gateway.InitialisePaymentAsync(new PaymentInitializationRequest
         {
             PaymentId = Guid.NewGuid(),
+            AttemptId = Guid.NewGuid(),
+            MerchantTransactionId = "merchant-txn-1",
             Amount = 100m,
             Currency = "USD",
-            Description = "Test booking",
+        });
+
+        result.PublicIntegrationKey.Should().Be("public_key_test");
+        result.PaymentJsScriptUrl.Should().Contain("payment.1.3.min.js");
+        result.Provider.Should().Be(AreebaPaymentGateway.ProviderNameConst);
+        result.CheckoutUrl.Should().BeNull();
+    }
+
+    [Fact]
+    public async Task AuthorizeAsync_SuccessfulDebit_ReturnsProviderUuid()
+    {
+        var handler = new StubHandler(_ => JsonResponse(HttpStatusCode.OK, new
+        {
+            success = true,
+            uuid = "uuid_123",
+            returnType = "FINISHED",
+        }));
+        var gateway = CreateGateway(handler);
+
+        var result = await gateway.AuthorizeAsync(new PaymentAuthorizationRequest
+        {
+            AttemptId = Guid.NewGuid(),
+            PaymentId = Guid.NewGuid(),
+            MerchantTransactionId = "merchant-txn-1",
+            TransactionToken = "token_123",
+            Amount = 100m,
+            Currency = "USD",
             CustomerEmail = "customer@test.com",
         });
 
-        result.SessionId.Should().Be("sess_123");
-        result.CheckoutUrl.Should().Contain("sess_123");
-        result.Provider.Should().Be(AreebaPaymentGateway.ProviderNameConst);
+        result.IsAccepted.Should().BeTrue();
+        result.ProviderUuid.Should().Be("uuid_123");
+        result.ReturnType.Should().Be("FINISHED");
     }
 
     [Fact]
-    public async Task CreateSessionAsync_FailedResponse_Throws()
+    public async Task AuthorizeAsync_FailedDebit_ReturnsFailure()
     {
-        var handler = new StubHandler(_ => JsonResponse(HttpStatusCode.BadRequest, new { error = "invalid" }));
+        var handler = new StubHandler(_ => JsonResponse(HttpStatusCode.OK, new
+        {
+            success = false,
+            uuid = "uuid_fail",
+            returnType = "ERROR",
+            errors = new[] { new { errorMessage = "Transaction declined" } },
+        }));
         var gateway = CreateGateway(handler);
 
-        var act = () => gateway.CreateSessionAsync(new Application.DTOs.Payments.PaymentSessionRequest
+        var result = await gateway.AuthorizeAsync(new PaymentAuthorizationRequest
         {
+            AttemptId = Guid.NewGuid(),
             PaymentId = Guid.NewGuid(),
+            MerchantTransactionId = "merchant-txn-1",
+            TransactionToken = "token_123",
             Amount = 100m,
             Currency = "USD",
+            CustomerEmail = "customer@test.com",
         });
 
-        await act.Should().ThrowAsync<Application.Common.ApplicationException>()
-            .WithMessage("*Failed to create Areeba payment session*");
+        result.IsAccepted.Should().BeFalse();
+        result.FailureReason.Should().Contain("declined");
     }
 
     [Fact]
-    public async Task CreateSessionAsync_InvalidResponse_Throws()
-    {
-        var handler = new StubHandler(_ => new HttpResponseMessage(HttpStatusCode.OK)
-        {
-            Content = new StringContent("{}", Encoding.UTF8, "application/json"),
-        });
-        var gateway = CreateGateway(handler);
-
-        var act = () => gateway.CreateSessionAsync(new Application.DTOs.Payments.PaymentSessionRequest
-        {
-            PaymentId = Guid.NewGuid(),
-            Amount = 100m,
-            Currency = "USD",
-        });
-
-        await act.Should().ThrowAsync<Application.Common.ApplicationException>()
-            .WithMessage("*missing session id or checkout url*");
-    }
-
-    [Fact]
-    public async Task CreateSessionAsync_Timeout_Throws()
+    public async Task AuthorizeAsync_Timeout_ReturnsFailure()
     {
         var handler = new StubHandler(_ => throw new TaskCanceledException());
         var gateway = CreateGateway(handler);
 
-        var act = () => gateway.CreateSessionAsync(new Application.DTOs.Payments.PaymentSessionRequest
+        var result = await gateway.AuthorizeAsync(new PaymentAuthorizationRequest
         {
+            AttemptId = Guid.NewGuid(),
             PaymentId = Guid.NewGuid(),
+            MerchantTransactionId = "merchant-txn-1",
+            TransactionToken = "token_123",
             Amount = 100m,
             Currency = "USD",
+            CustomerEmail = "customer@test.com",
         });
 
-        await act.Should().ThrowAsync<Application.Common.ApplicationException>()
-            .WithMessage("*timed out*");
-    }
-
-    [Fact]
-    public async Task VerifyAsync_SuccessfulPayment_ReturnsVerified()
-    {
-        var handler = new StubHandler(request =>
-        {
-            request.RequestUri!.AbsolutePath.Should().Contain("txn_ok");
-            return JsonResponse(HttpStatusCode.OK, new
-            {
-                sessionId = "txn_ok",
-                transactionId = "areeba_txn_1",
-                status = "paid",
-                amount = 100m,
-                currency = "USD",
-            });
-        });
-        var gateway = CreateGateway(handler);
-
-        var result = await gateway.VerifyAsync("txn_ok", 100m, "USD");
-
-        result.IsSuccessful.Should().BeTrue();
-        result.TransactionReference.Should().Be("areeba_txn_1");
-    }
-
-    [Fact]
-    public async Task VerifyAsync_FailedPayment_ReturnsFailure()
-    {
-        var handler = new StubHandler(_ => JsonResponse(HttpStatusCode.OK, new
-        {
-            sessionId = "txn_fail",
-            status = "failed",
-            amount = 100m,
-            currency = "USD",
-        }));
-        var gateway = CreateGateway(handler);
-
-        var result = await gateway.VerifyAsync("txn_fail", 100m, "USD");
-
-        result.IsSuccessful.Should().BeFalse();
-        result.FailureReason.Should().Contain("failed");
+        result.IsAccepted.Should().BeFalse();
+        result.FailureReason.Should().Contain("timed out");
     }
 
     [Fact]
@@ -133,14 +114,15 @@ public class AreebaPaymentGatewayTests
     {
         var handler = new StubHandler(_ => JsonResponse(HttpStatusCode.OK, new
         {
-            sessionId = "txn_amt",
-            status = "paid",
-            amount = 50m,
+            uuid = "uuid_123",
+            result = "OK",
+            returnType = "FINISHED",
+            amount = "50.00",
             currency = "USD",
         }));
         var gateway = CreateGateway(handler);
 
-        var result = await gateway.VerifyAsync("txn_amt", 100m, "USD");
+        var result = await gateway.VerifyAsync("uuid_123", 100m, "USD");
 
         result.IsSuccessful.Should().BeFalse();
         result.FailureReason.Should().Contain("mismatch");
@@ -151,14 +133,15 @@ public class AreebaPaymentGatewayTests
     {
         var handler = new StubHandler(_ => JsonResponse(HttpStatusCode.OK, new
         {
-            sessionId = "txn_cur",
-            status = "paid",
-            amount = 100m,
+            uuid = "uuid_123",
+            result = "OK",
+            returnType = "FINISHED",
+            amount = "100.00",
             currency = "LBP",
         }));
         var gateway = CreateGateway(handler);
 
-        var result = await gateway.VerifyAsync("txn_cur", 100m, "USD");
+        var result = await gateway.VerifyAsync("uuid_123", 100m, "USD");
 
         result.IsSuccessful.Should().BeFalse();
         result.FailureReason.Should().Contain("mismatch");
@@ -170,33 +153,31 @@ public class AreebaPaymentGatewayTests
         var handler = new StubHandler(_ => new HttpResponseMessage(HttpStatusCode.NotFound));
         var gateway = CreateGateway(handler);
 
-        var result = await gateway.VerifyAsync("missing_txn", 100m, "USD");
+        var result = await gateway.VerifyAsync("missing", 100m, "USD");
 
         result.IsSuccessful.Should().BeFalse();
         result.FailureReason.Should().Contain("not found");
     }
 
     [Theory]
-    [InlineData("paid", true)]
-    [InlineData("captured", true)]
-    [InlineData("success", true)]
-    [InlineData("completed", true)]
-    [InlineData("failed", false)]
-    public async Task VerifyAsync_StatusMapping_Works(string status, bool expectedSuccess)
+    [InlineData("FINISHED", "OK", true)]
+    [InlineData("PENDING", "PENDING", false)]
+    [InlineData("ERROR", "ERROR", false)]
+    public async Task VerifyAsync_ReturnTypeMapping_Works(string returnType, string result, bool expectedSuccess)
     {
         var handler = new StubHandler(_ => JsonResponse(HttpStatusCode.OK, new
         {
-            sessionId = "txn_status",
-            status,
-            amount = 100m,
+            uuid = "uuid_status",
+            returnType,
+            result,
+            amount = "100.00",
             currency = "USD",
-            transactionId = "txn_1",
         }));
         var gateway = CreateGateway(handler);
 
-        var result = await gateway.VerifyAsync("txn_status", 100m, "USD");
+        var verification = await gateway.VerifyAsync("uuid_status", 100m, "USD");
 
-        result.IsSuccessful.Should().Be(expectedSuccess);
+        verification.IsSuccessful.Should().Be(expectedSuccess);
     }
 
     private static AreebaPaymentGateway CreateGateway(HttpMessageHandler handler)
@@ -204,8 +185,10 @@ public class AreebaPaymentGatewayTests
         var factory = new StubHttpClientFactory(handler);
         var options = Options.Create(new AreebaOptions
         {
-            MerchantId = "merchant_test",
-            SecretKey = "secret_test",
+            PublicIntegrationKey = "public_key_test",
+            ApiKey = "api_key_test",
+            ApiUser = "api_user",
+            ApiPassword = "api_password",
             ApiBaseUrl = BaseUrl,
         });
         return new AreebaPaymentGateway(factory, options, NullLogger<AreebaPaymentGateway>.Instance);

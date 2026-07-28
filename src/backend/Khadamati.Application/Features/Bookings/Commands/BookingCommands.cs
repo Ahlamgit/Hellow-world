@@ -11,6 +11,7 @@ public record GetAvailableSlotsQuery(Guid CraftsmanId, Guid ServiceId, DateTime 
 public record CreateBookingCommand(Guid CustomerId, CreateBookingDto Request) : IRequest<BookingDto>;
 public record ConfirmBookingCommand(Guid BookingId, Guid UserId, ConfirmBookingDto Request) : IRequest<BookingDto>;
 public record InitiatePaymentCommand(Guid BookingId, Guid UserId, InitiatePaymentDto Request) : IRequest<BookingPaymentDto>;
+public record AuthorizePaymentCommand(Guid BookingId, Guid UserId, AuthorizePaymentDto Request) : IRequest<AuthorizePaymentResultDto>;
 public record ConfirmPaymentCommand(Guid BookingId, Guid UserId, ConfirmPaymentDto Request) : IRequest<BookingDto>;
 public record AcceptBookingCommand(Guid BookingId, Guid CraftsmanId) : IRequest<BookingDto>;
 public record RejectBookingCommand(Guid BookingId, Guid CraftsmanId, RejectBookingDto Request) : IRequest<BookingDto>;
@@ -72,6 +73,14 @@ public class InitiatePaymentCommandHandler : IRequestHandler<InitiatePaymentComm
     public InitiatePaymentCommandHandler(IBookingService service) => _service = service;
     public Task<BookingPaymentDto> Handle(InitiatePaymentCommand request, CancellationToken ct) =>
         _service.InitiatePaymentAsync(request.BookingId, request.UserId, request.Request, ct);
+}
+
+public class AuthorizePaymentCommandHandler : IRequestHandler<AuthorizePaymentCommand, AuthorizePaymentResultDto>
+{
+    private readonly IBookingService _service;
+    public AuthorizePaymentCommandHandler(IBookingService service) => _service = service;
+    public Task<AuthorizePaymentResultDto> Handle(AuthorizePaymentCommand request, CancellationToken ct) =>
+        _service.AuthorizePaymentAsync(request.BookingId, request.UserId, request.Request, ct);
 }
 
 public class ConfirmPaymentCommandHandler : IRequestHandler<ConfirmPaymentCommand, BookingDto>

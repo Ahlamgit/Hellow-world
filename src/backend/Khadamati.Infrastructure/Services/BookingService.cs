@@ -201,28 +201,23 @@ public class BookingService : IBookingService
         if (existing is { Status: PaymentStatus.Completed })
             throw new ConflictException("Payment already completed.");
 
-        if (existing is { Status: PaymentStatus.Pending or PaymentStatus.Processing })
+        if (existing is { Status: PaymentStatus.Pending or PaymentStatus.Processing or PaymentStatus.AwaitingGatewayConfirmation })
         {
             if (_paymentGateway.SupportsClientSideConfirmation &&
                 !string.IsNullOrWhiteSpace(existing.TransactionReference))
             {
-                return MapPaymentDto(existing, existing.TransactionReference);
+                var existingAttempt = await _paymentAttemptService.GetActiveAttemptAsync(existing.Id, cancellationToken);
+                return MapPaymentDto(existing, existingAttempt, sessionIdOverride: existing.TransactionReference);
             }
 
-            if (!_paymentGateway.SupportsClientSideConfirmation)
+            if (_paymentGateway.RequiresClientAuthorizationHandoff)
             {
                 if (await _paymentAttemptService.HasCompletedAttemptAsync(existing.Id, cancellationToken))
                     throw new ConflictException("Payment already completed.");
 
                 var activeAttempt = await _paymentAttemptService.GetActiveAttemptAsync(existing.Id, cancellationToken);
                 if (activeAttempt is not null)
-                {
-                    return MapPaymentDto(
-                        existing,
-                        activeAttempt.SessionId,
-                        activeAttempt.CheckoutUrl,
-                        activeAttempt.Provider);
-                }
+                    return MapPaymentDto(existing, activeAttempt);
             }
         }
         else if (existing is not null)
@@ -247,29 +242,116 @@ public class BookingService : IBookingService
             await SaveBookingChangesAsync(cancellationToken);
         }
 
-        var customer = await _unitOfWork.Repository<User>().GetByIdAsync(userId, cancellationToken);
-        var session = await _paymentGateway.CreateSessionAsync(new PaymentSessionRequest
-        {
-            PaymentId = payment.Id,
-            Amount = payment.Amount,
-            Currency = payment.Currency,
-            Description = $"Booking {booking.BookingReference}",
-            CustomerEmail = customer?.Email ?? string.Empty,
-        }, cancellationToken);
-
-        await _paymentAttemptService.CreateAttemptAsync(
+        var attempt = await _paymentAttemptService.CreateAttemptAsync(
             payment.Id,
             _paymentGateway.ProviderName,
-            session,
+            string.Empty,
             payment.Amount,
             payment.Currency,
             cancellationToken);
 
+        var customer = await _unitOfWork.Repository<User>().GetByIdAsync(userId, cancellationToken);
+        var initialization = await _paymentGateway.InitialisePaymentAsync(new PaymentInitializationRequest
+        {
+            PaymentId = payment.Id,
+            AttemptId = attempt.Id,
+            MerchantTransactionId = attempt.MerchantTransactionId,
+            Amount = payment.Amount,
+            Currency = payment.Currency,
+            Description = $"Booking {booking.BookingReference}",
+            CustomerEmail = customer?.Email ?? string.Empty,
+            CustomerFirstName = customer?.Profile?.FirstName,
+            CustomerLastName = customer?.Profile?.LastName,
+        }, cancellationToken);
+
+        attempt.CheckoutUrl = initialization.CheckoutUrl;
+        attempt.SessionId = initialization.SessionId ?? attempt.MerchantTransactionId;
+        attempt.Status = PaymentAttemptStatus.Processing;
+        await _unitOfWork.SaveChangesAsync(cancellationToken);
+
         payment.Status = PaymentStatus.Processing;
-        payment.TransactionReference = session.SessionId;
+        payment.TransactionReference = initialization.SessionId ?? attempt.MerchantTransactionId;
         _unitOfWork.Repository<BookingPayment>().Update(payment);
         await SaveBookingChangesAsync(cancellationToken);
-        return MapPaymentDto(payment, session.SessionId, session.CheckoutUrl, session.Provider);
+
+        return MapPaymentDto(payment, attempt, initialization);
+    }
+
+    public async Task<AuthorizePaymentResultDto> AuthorizePaymentAsync(
+        Guid bookingId, Guid userId, AuthorizePaymentDto dto, CancellationToken cancellationToken = default)
+    {
+        if (!_paymentGateway.RequiresClientAuthorizationHandoff)
+            throw new ConflictException("Payment authorization handoff is not required for the active provider.");
+
+        var booking = await GetBookingForCustomerAsync(bookingId, userId, cancellationToken);
+        if (booking.Status != ServiceRequestStatus.AwaitingPayment)
+            throw new ConflictException("Booking is not awaiting payment.");
+
+        var payment = await _repository.GetPaymentByBookingIdAsync(bookingId, cancellationToken)
+            ?? throw new NotFoundException("Payment not found.");
+
+        if (payment.Status == PaymentStatus.Completed)
+            throw new ConflictException("Payment already completed.");
+
+        var attempt = await _paymentAttemptService.GetByIdAsync(dto.AttemptId, cancellationToken)
+            ?? throw new NotFoundException("Payment attempt not found.");
+
+        if (attempt.BookingPaymentId != payment.Id)
+            throw new ConflictException("Payment attempt does not belong to this booking.");
+
+        if (attempt.Status == PaymentAttemptStatus.Completed)
+            throw new ConflictException("Payment attempt is already completed.");
+
+        var customer = await _unitOfWork.Repository<User>().GetByIdAsync(userId, cancellationToken);
+        var authorization = await _paymentGateway.AuthorizeAsync(new PaymentAuthorizationRequest
+        {
+            AttemptId = attempt.Id,
+            PaymentId = payment.Id,
+            MerchantTransactionId = attempt.MerchantTransactionId,
+            TransactionToken = dto.TransactionToken,
+            Amount = payment.Amount,
+            Currency = payment.Currency,
+            Description = $"Booking {booking.BookingReference}",
+            CustomerEmail = customer?.Email ?? string.Empty,
+            CustomerFirstName = customer?.Profile?.FirstName,
+            CustomerLastName = customer?.Profile?.LastName,
+        }, cancellationToken);
+
+        await _paymentAttemptService.ApplyAuthorizationResultAsync(attempt, authorization, dto.TransactionToken, cancellationToken);
+
+        if (!authorization.IsAccepted)
+        {
+            payment.Status = PaymentStatus.Failed;
+            payment.FailureReason = authorization.FailureReason;
+            _unitOfWork.Repository<BookingPayment>().Update(payment);
+            await SaveBookingChangesAsync(cancellationToken);
+
+            return new AuthorizePaymentResultDto
+            {
+                AttemptId = attempt.Id,
+                Status = attempt.Status.ToString(),
+                ProviderUuid = authorization.ProviderUuid,
+                ReturnType = authorization.ReturnType,
+                RedirectUrl = authorization.RedirectUrl,
+                Message = authorization.FailureReason,
+            };
+        }
+
+        payment.Status = PaymentStatus.AwaitingGatewayConfirmation;
+        payment.TransactionReference = authorization.ProviderUuid ?? payment.TransactionReference;
+        payment.FailureReason = null;
+        _unitOfWork.Repository<BookingPayment>().Update(payment);
+        await SaveBookingChangesAsync(cancellationToken);
+
+        return new AuthorizePaymentResultDto
+        {
+            AttemptId = attempt.Id,
+            Status = attempt.Status.ToString(),
+            ProviderUuid = authorization.ProviderUuid,
+            ReturnType = authorization.ReturnType,
+            RedirectUrl = authorization.RedirectUrl,
+            Message = "Payment authorization accepted. Awaiting gateway confirmation.",
+        };
     }
 
     public async Task<BookingDto> ConfirmPaymentAsync(Guid bookingId, Guid userId, ConfirmPaymentDto dto, CancellationToken cancellationToken = default)
@@ -284,7 +366,9 @@ public class BookingService : IBookingService
         var payment = await _repository.GetPaymentByBookingIdAsync(bookingId, cancellationToken)
             ?? throw new NotFoundException("Payment not found.");
 
-        if (payment.Status != PaymentStatus.Pending && payment.Status != PaymentStatus.Processing)
+        if (payment.Status != PaymentStatus.Pending &&
+            payment.Status != PaymentStatus.Processing &&
+            payment.Status != PaymentStatus.AwaitingGatewayConfirmation)
             throw new ConflictException("Payment cannot be confirmed.");
 
         return await FinalizePaymentAsync(booking, payment, dto.TransactionReference, userId, cancellationToken);
@@ -306,7 +390,9 @@ public class BookingService : IBookingService
         if (booking.Status != ServiceRequestStatus.AwaitingPayment)
             throw new ConflictException("Booking is not awaiting payment.");
 
-        if (payment.Status != PaymentStatus.Pending && payment.Status != PaymentStatus.Processing)
+        if (payment.Status != PaymentStatus.Pending &&
+            payment.Status != PaymentStatus.Processing &&
+            payment.Status != PaymentStatus.AwaitingGatewayConfirmation)
             throw new ConflictException("Payment cannot be confirmed.");
 
         return await FinalizePaymentAsync(booking, payment, transactionReference, payment.PayerUserId, cancellationToken);
@@ -665,22 +751,42 @@ public class BookingService : IBookingService
         string.IsNullOrWhiteSpace(status) ? null :
         Enum.TryParse<ServiceRequestStatus>(status, true, out var s) ? s : null;
 
-    private static BookingPaymentDto MapPaymentDto(
-        BookingPayment p,
-        string? sessionId = null,
-        string? checkoutUrl = null,
-        string? provider = null) => new()
+    private static BookingPaymentDto MapPaymentSummaryDto(BookingPayment payment) => new()
     {
-        Id = p.Id,
-        Amount = p.Amount,
-        Currency = p.Currency,
-        Status = p.Status.ToString(),
-        PaymentMethod = p.PaymentMethod,
-        TransactionReference = p.Status == PaymentStatus.Completed ? p.TransactionReference : null,
-        SessionId = sessionId ?? (p.Status != PaymentStatus.Completed ? p.TransactionReference : null),
-        CheckoutUrl = checkoutUrl,
-        Provider = provider,
-        PaidAt = p.PaidAt
+        Id = payment.Id,
+        Amount = payment.Amount,
+        Currency = payment.Currency,
+        Status = payment.Status.ToString(),
+        PaymentMethod = payment.PaymentMethod,
+        TransactionReference = payment.TransactionReference,
+        SessionId = payment.TransactionReference,
+        PaidAt = payment.PaidAt,
+    };
+
+    private BookingPaymentDto MapPaymentDto(
+        BookingPayment payment,
+        BookingPaymentAttempt? attempt = null,
+        PaymentInitializationDto? initialization = null,
+        string? sessionIdOverride = null) => new()
+    {
+        Id = payment.Id,
+        AttemptId = attempt?.Id,
+        MerchantTransactionId = attempt?.MerchantTransactionId,
+        Amount = payment.Amount,
+        Currency = payment.Currency,
+        Status = payment.Status.ToString(),
+        PaymentMethod = payment.PaymentMethod,
+        TransactionReference = payment.Status == PaymentStatus.Completed ? payment.TransactionReference : null,
+        SessionId = sessionIdOverride ?? initialization?.SessionId ?? attempt?.SessionId ?? payment.TransactionReference,
+        CheckoutUrl = initialization?.CheckoutUrl ?? attempt?.CheckoutUrl,
+        Provider = initialization?.Provider ?? attempt?.Provider ?? _paymentGateway.ProviderName,
+        PublicIntegrationKey = initialization?.PublicIntegrationKey,
+        PaymentJsScriptUrl = initialization?.PaymentJsScriptUrl,
+        RequiresClientAuthorizationHandoff = _paymentGateway.RequiresClientAuthorizationHandoff,
+        SupportsClientSideConfirmation = _paymentGateway.SupportsClientSideConfirmation,
+        ReturnType = attempt?.ReturnType,
+        RedirectUrl = attempt?.RedirectUrl,
+        PaidAt = payment.PaidAt,
     };
 
     private static BookingDto MapToDto(ServiceRequest b) => new()
@@ -707,7 +813,7 @@ public class BookingService : IBookingService
         CancellationReason = b.CancellationReason,
         CustomerRating = b.CustomerRating,
         CustomerReview = b.CustomerReview,
-        Payment = b.Payment != null ? MapPaymentDto(b.Payment) : null,
+        Payment = b.Payment != null ? MapPaymentSummaryDto(b.Payment) : null,
         StatusHistory = b.StatusHistory?.Select(h => new BookingStatusHistoryDto
         {
             OldStatus = h.OldStatus?.ToString(),

@@ -5,7 +5,6 @@ using Khadamati.Application.DTOs.Payments;
 using Khadamati.Application.Interfaces;
 using Khadamati.Domain.Entities;
 using Khadamati.Domain.Enums;
-using Khadamati.Domain.Interfaces;
 using Khadamati.Infrastructure.Data;
 using Khadamati.Infrastructure.Repositories;
 using Khadamati.Infrastructure.Services.Payments;
@@ -21,20 +20,17 @@ namespace Khadamati.Tests.Services;
 public class AreebaWebhookServiceTests : IDisposable
 {
     private readonly ApplicationDbContext _context;
-    private readonly PaymentAttemptRepository _attemptRepository;
     private readonly IPaymentAttemptService _paymentAttemptService;
     private readonly Mock<IPaymentGateway> _paymentGateway = new();
     private readonly Mock<IBookingService> _bookingService = new();
     private readonly Mock<IAuditService> _auditService = new();
-    private readonly IUnitOfWork _unitOfWork;
-    private readonly AreebaWebhookSignatureValidator _signatureValidator;
     private readonly AreebaWebhookService _service;
     private readonly Guid _bookingId = Guid.NewGuid();
     private readonly Guid _paymentId = Guid.NewGuid();
     private readonly Guid _attemptId = Guid.NewGuid();
-    private const string SessionId = "areeba_sess_123";
-    private const string EventId = "evt_123";
-    private const string RawBody = """{"eventId":"evt_123","sessionId":"areeba_sess_123","status":"paid"}""";
+    private const string Uuid = "areeba_uuid_123";
+    private const string MerchantTransactionId = "merchant_txn_123";
+    private const string RawBody = """{"result":"OK","uuid":"areeba_uuid_123","merchantTransactionId":"merchant_txn_123","amount":"120.00","currency":"USD","transactionType":"DEBIT"}""";
 
     public AreebaWebhookServiceTests()
     {
@@ -42,26 +38,22 @@ public class AreebaWebhookServiceTests : IDisposable
             .UseInMemoryDatabase(Guid.NewGuid().ToString())
             .Options);
 
-        _attemptRepository = new PaymentAttemptRepository(_context);
-        _paymentAttemptService = new PaymentAttemptService(_attemptRepository);
-
+        _paymentAttemptService = new PaymentAttemptService(new PaymentAttemptRepository(_context));
         SeedAttempt();
 
         var env = new Mock<IHostEnvironment>();
         env.Setup(e => e.EnvironmentName).Returns("Development");
-        _signatureValidator = new AreebaWebhookSignatureValidator(
-            Options.Create(new AreebaOptions { WebhookSecret = "webhook_secret" }),
+        var signatureValidator = new AreebaWebhookSignatureValidator(
+            Options.Create(new AreebaOptions { SharedSecret = "shared_secret" }),
             env.Object,
             NullLogger<AreebaWebhookSignatureValidator>.Instance);
 
-        _unitOfWork = new UnitOfWork(_context);
-
         _service = new AreebaWebhookService(
-            _signatureValidator,
+            signatureValidator,
             _paymentAttemptService,
             _paymentGateway.Object,
             _bookingService.Object,
-            _unitOfWork,
+            new UnitOfWork(_context),
             _auditService.Object,
             NullLogger<AreebaWebhookService>.Instance);
     }
@@ -69,30 +61,26 @@ public class AreebaWebhookServiceTests : IDisposable
     [Fact]
     public async Task ProcessWebhookAsync_ValidSignature_ConfirmsPayment()
     {
-        var signature = PaymentWebhookService.ComputeHmacSha256Hex("webhook_secret", RawBody);
-        _paymentGateway.Setup(g => g.VerifyAsync(SessionId, 120m, "USD", It.IsAny<CancellationToken>()))
-            .ReturnsAsync(new PaymentVerificationResult { IsSuccessful = true, TransactionReference = "txn_1" });
-        _bookingService.Setup(s => s.ConfirmPaymentFromWebhookAsync(SessionId, It.IsAny<CancellationToken>()))
+        var context = BuildContext(RawBody);
+        _paymentGateway.Setup(g => g.VerifyAsync(Uuid, 120m, "USD", It.IsAny<CancellationToken>()))
+            .ReturnsAsync(new PaymentVerificationResult { IsSuccessful = true, TransactionReference = Uuid });
+        _bookingService.Setup(s => s.ConfirmPaymentFromWebhookAsync(Uuid, It.IsAny<CancellationToken>()))
             .ReturnsAsync(new BookingDto { Id = _bookingId });
 
-        var result = await _service.ProcessWebhookAsync(
-            new AreebaWebhookDto { EventId = EventId, SessionId = SessionId, Status = "paid" },
-            signature,
-            RawBody);
+        var result = await _service.ProcessWebhookAsync(context);
 
         result.Processed.Should().BeTrue();
         var attempt = await _context.BookingPaymentAttempts.SingleAsync();
         attempt.Status.Should().Be(PaymentAttemptStatus.Completed);
-        attempt.ProviderTransactionId.Should().Be("txn_1");
     }
 
     [Fact]
     public async Task ProcessWebhookAsync_InvalidSignature_ThrowsUnauthorized()
     {
-        var act = () => _service.ProcessWebhookAsync(
-            new AreebaWebhookDto { EventId = EventId, SessionId = SessionId, Status = "paid" },
-            "invalid",
-            RawBody);
+        var context = BuildContext(RawBody);
+        context.Signature = "invalid";
+
+        var act = () => _service.ProcessWebhookAsync(context);
 
         await act.Should().ThrowAsync<UnauthorizedException>();
     }
@@ -100,39 +88,25 @@ public class AreebaWebhookServiceTests : IDisposable
     [Fact]
     public async Task ProcessWebhookAsync_DuplicateWebhook_IsIgnored()
     {
-        var signature = PaymentWebhookService.ComputeHmacSha256Hex("webhook_secret", RawBody);
-        _paymentGateway.Setup(g => g.VerifyAsync(SessionId, 120m, "USD", It.IsAny<CancellationToken>()))
-            .ReturnsAsync(new PaymentVerificationResult { IsSuccessful = true, TransactionReference = "txn_1" });
-        _bookingService.Setup(s => s.ConfirmPaymentFromWebhookAsync(SessionId, It.IsAny<CancellationToken>()))
+        var context = BuildContext(RawBody);
+        _paymentGateway.Setup(g => g.VerifyAsync(Uuid, 120m, "USD", It.IsAny<CancellationToken>()))
+            .ReturnsAsync(new PaymentVerificationResult { IsSuccessful = true, TransactionReference = Uuid });
+        _bookingService.Setup(s => s.ConfirmPaymentFromWebhookAsync(Uuid, It.IsAny<CancellationToken>()))
             .ReturnsAsync(new BookingDto { Id = _bookingId });
 
-        await _service.ProcessWebhookAsync(
-            new AreebaWebhookDto { EventId = EventId, SessionId = SessionId, Status = "paid" },
-            signature,
-            RawBody);
-
-        var second = await _service.ProcessWebhookAsync(
-            new AreebaWebhookDto { EventId = EventId, SessionId = SessionId, Status = "paid" },
-            signature,
-            RawBody);
+        await _service.ProcessWebhookAsync(context);
+        var second = await _service.ProcessWebhookAsync(context);
 
         second.Processed.Should().BeTrue();
         second.Message.Should().Contain("Duplicate");
-        _bookingService.Verify(
-            s => s.ConfirmPaymentFromWebhookAsync(SessionId, It.IsAny<CancellationToken>()),
-            Times.Once);
+        _bookingService.Verify(s => s.ConfirmPaymentFromWebhookAsync(Uuid, It.IsAny<CancellationToken>()), Times.Once);
     }
 
     [Fact]
     public async Task ProcessWebhookAsync_UnknownPaymentAttempt_ReturnsNotFound()
     {
-        var body = """{"eventId":"evt_unknown","sessionId":"missing","status":"paid"}""";
-        var signature = PaymentWebhookService.ComputeHmacSha256Hex("webhook_secret", body);
-
-        var result = await _service.ProcessWebhookAsync(
-            new AreebaWebhookDto { EventId = "evt_unknown", SessionId = "missing", Status = "paid" },
-            signature,
-            body);
+        var body = """{"result":"OK","uuid":"unknown","merchantTransactionId":"missing","amount":"120.00","currency":"USD"}""";
+        var result = await _service.ProcessWebhookAsync(BuildContext(body));
 
         result.Processed.Should().BeFalse();
         result.Message.Should().Contain("not found");
@@ -146,55 +120,55 @@ public class AreebaWebhookServiceTests : IDisposable
         attempt.CompletedAt = DateTime.UtcNow.AddMinutes(-5);
         await _context.SaveChangesAsync();
 
-        await _context.PaymentWebhookEvents.AddAsync(new PaymentWebhookEvent
-        {
-            Provider = AreebaPaymentGateway.ProviderNameConst,
-            WebhookEventId = "evt_delayed",
-            BookingPaymentAttemptId = attempt.Id,
-            ProcessedAt = DateTime.UtcNow,
-            EventStatus = "paid",
-        });
-        await _context.SaveChangesAsync();
-
-        var body = """{"eventId":"evt_delayed_new","sessionId":"areeba_sess_123","status":"paid"}""";
-        var signature = PaymentWebhookService.ComputeHmacSha256Hex("webhook_secret", body);
-
-        var result = await _service.ProcessWebhookAsync(
-            new AreebaWebhookDto { EventId = "evt_delayed_new", SessionId = SessionId, Status = "paid" },
-            signature,
-            body);
+        var body = """{"result":"OK","uuid":"areeba_uuid_123","merchantTransactionId":"merchant_txn_123","amount":"120.00","currency":"USD"}""";
+        var result = await _service.ProcessWebhookAsync(BuildContext(body));
 
         result.Processed.Should().BeTrue();
         result.Message.Should().Contain("already completed");
-        _bookingService.Verify(
-            s => s.ConfirmPaymentFromWebhookAsync(It.IsAny<string>(), It.IsAny<CancellationToken>()),
-            Times.Never);
+        _bookingService.Verify(s => s.ConfirmPaymentFromWebhookAsync(It.IsAny<string>(), It.IsAny<CancellationToken>()), Times.Never);
     }
 
     [Fact]
     public async Task ProcessWebhookAsync_CompletedAttemptCannotBeOverwritten()
     {
-        var signature = PaymentWebhookService.ComputeHmacSha256Hex("webhook_secret", RawBody);
-        _paymentGateway.Setup(g => g.VerifyAsync(SessionId, 120m, "USD", It.IsAny<CancellationToken>()))
-            .ReturnsAsync(new PaymentVerificationResult { IsSuccessful = true, TransactionReference = "txn_1" });
-        _bookingService.Setup(s => s.ConfirmPaymentFromWebhookAsync(SessionId, It.IsAny<CancellationToken>()))
+        var context = BuildContext(RawBody);
+        _paymentGateway.Setup(g => g.VerifyAsync(Uuid, 120m, "USD", It.IsAny<CancellationToken>()))
+            .ReturnsAsync(new PaymentVerificationResult { IsSuccessful = true, TransactionReference = Uuid });
+        _bookingService.Setup(s => s.ConfirmPaymentFromWebhookAsync(Uuid, It.IsAny<CancellationToken>()))
             .ReturnsAsync(new BookingDto { Id = _bookingId });
 
-        await _service.ProcessWebhookAsync(
-            new AreebaWebhookDto { EventId = EventId, SessionId = SessionId, Status = "paid" },
-            signature,
-            RawBody);
+        await _service.ProcessWebhookAsync(context);
 
         var attempt = await _context.BookingPaymentAttempts.SingleAsync();
-        attempt.Status = PaymentAttemptStatus.Completed;
-        attempt.ProviderTransactionId = "txn_1";
-        attempt.CompletedAt = DateTime.UtcNow;
-
         await _paymentAttemptService.MarkAttemptFailedAsync(attempt, "should not apply");
-        await _paymentAttemptService.MarkAttemptCompletedAsync(attempt, "txn_overwrite");
+        await _paymentAttemptService.MarkAttemptCompletedAsync(attempt, Uuid, "evt");
 
         attempt.Status.Should().Be(PaymentAttemptStatus.Completed);
-        attempt.ProviderTransactionId.Should().Be("txn_1");
+        attempt.ProviderUuid.Should().Be(Uuid);
+    }
+
+    private AreebaWebhookContext BuildContext(string rawBody)
+    {
+        var payload = System.Text.Json.JsonSerializer.Deserialize<AreebaWebhookDto>(
+            rawBody,
+            new System.Text.Json.JsonSerializerOptions { PropertyNameCaseInsensitive = true })!;
+        var signature = AreebaWebhookSignatureValidator.ComputeSignature("shared_secret", new AreebaWebhookContext
+        {
+            RawBody = rawBody,
+            ContentType = "application/json; charset=utf-8",
+            DateHeader = "Mon, 01 Jan 2024 00:00:00 GMT",
+            RequestUri = "/api/v1/webhooks/areeba",
+        });
+
+        return new AreebaWebhookContext
+        {
+            Payload = payload,
+            RawBody = rawBody,
+            Signature = signature,
+            ContentType = "application/json; charset=utf-8",
+            DateHeader = "Mon, 01 Jan 2024 00:00:00 GMT",
+            RequestUri = "/api/v1/webhooks/areeba",
+        };
     }
 
     private void SeedAttempt()
@@ -207,7 +181,7 @@ public class AreebaWebhookServiceTests : IDisposable
             PayeeUserId = Guid.NewGuid(),
             Amount = 120m,
             Currency = "USD",
-            Status = PaymentStatus.Processing,
+            Status = PaymentStatus.AwaitingGatewayConfirmation,
             PaymentMethod = "Card",
         });
 
@@ -216,10 +190,12 @@ public class AreebaWebhookServiceTests : IDisposable
             Id = _attemptId,
             BookingPaymentId = _paymentId,
             Provider = AreebaPaymentGateway.ProviderNameConst,
-            SessionId = SessionId,
+            MerchantTransactionId = MerchantTransactionId,
+            SessionId = MerchantTransactionId,
+            ProviderUuid = Uuid,
             Amount = 120m,
             Currency = "USD",
-            Status = PaymentAttemptStatus.Processing,
+            Status = PaymentAttemptStatus.AwaitingGatewayConfirmation,
         });
 
         _context.SaveChanges();

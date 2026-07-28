@@ -118,6 +118,17 @@ public class BookingsController : ControllerBase
         return Ok(ApiResponse<BookingPaymentDto>.Ok(result, "Payment initiated."));
     }
 
+    /// <summary>Authorize payment using a provider token (Payment.js).</summary>
+    [HttpPost("{id:guid}/payment/authorize")]
+    [HasPermission(PermissionCodes.BookingsCreate)]
+    [SwaggerOperation(Summary = "Authorize payment", Description = "Submits a provider transaction token for server-side authorization.")]
+    public async Task<IActionResult> AuthorizePayment(Guid id, [FromBody] AuthorizePaymentDto request, CancellationToken cancellationToken)
+    {
+        var userId = _currentUser.UserId ?? throw new UnauthorizedException("Not authenticated.");
+        var result = await _mediator.Send(new AuthorizePaymentCommand(id, userId, request), cancellationToken);
+        return Ok(ApiResponse<AuthorizePaymentResultDto>.Ok(result, result.Message ?? "Payment authorization submitted."));
+    }
+
     /// <summary>Confirm payment after gateway success.</summary>
     [HttpPost("{id:guid}/payment/confirm")]
     [HasPermission(PermissionCodes.BookingsCreate)]

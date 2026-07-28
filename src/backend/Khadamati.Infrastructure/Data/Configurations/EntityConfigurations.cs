@@ -375,15 +375,26 @@ public class BookingPaymentAttemptConfiguration : IEntityTypeConfiguration<Booki
         builder.ToTable("BookingPaymentAttempts");
         builder.HasKey(a => a.Id);
         builder.HasIndex(a => a.SessionId);
+        builder.HasIndex(a => a.MerchantTransactionId);
+        builder.HasIndex(a => a.ProviderUuid);
         builder.HasIndex(a => new { a.BookingPaymentId, a.Status });
         builder.Property(a => a.Provider).HasMaxLength(50).IsRequired();
         builder.Property(a => a.SessionId).HasMaxLength(200).IsRequired();
         builder.Property(a => a.ProviderTransactionId).HasMaxLength(200);
+        builder.Property(a => a.ProviderUuid).HasMaxLength(200);
+        builder.Property(a => a.MerchantTransactionId).HasMaxLength(200).IsRequired();
+        builder.Property(a => a.TransactionToken).HasMaxLength(500);
         builder.Property(a => a.Amount).HasPrecision(18, 2);
         builder.Property(a => a.Currency).HasMaxLength(3).IsRequired();
         builder.Property(a => a.Status).HasConversion<int>();
+        builder.Property(a => a.GatewayStatus).HasMaxLength(50);
+        builder.Property(a => a.ReturnType).HasMaxLength(50);
+        builder.Property(a => a.RedirectUrl).HasMaxLength(500);
+        builder.Property(a => a.ThreeDSReference).HasMaxLength(200);
         builder.Property(a => a.CheckoutUrl).HasMaxLength(500);
         builder.Property(a => a.FailureReason).HasMaxLength(500);
+        builder.Property(a => a.RetryReason).HasMaxLength(500);
+        builder.Property(a => a.WebhookEventId).HasMaxLength(200);
     }
 }
 

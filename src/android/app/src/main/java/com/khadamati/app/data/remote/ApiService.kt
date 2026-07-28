@@ -90,6 +90,12 @@ interface ApiService {
         @Body request: InitiatePaymentRequestDto,
     ): ApiResponse<BookingPaymentDto>
 
+    @POST("bookings/{id}/payment/authorize")
+    suspend fun authorizePayment(
+        @retrofit2.http.Path("id") id: String,
+        @Body request: com.khadamati.app.data.remote.dto.AuthorizePaymentRequestDto,
+    ): ApiResponse<Any?>
+
     @POST("bookings/{id}/payment/confirm")
     suspend fun confirmPayment(
         @retrofit2.http.Path("id") id: String,

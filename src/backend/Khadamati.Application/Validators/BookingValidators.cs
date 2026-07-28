@@ -35,6 +35,15 @@ public class ConfirmPaymentValidator : AbstractValidator<ConfirmPaymentDto>
     }
 }
 
+public class AuthorizePaymentValidator : AbstractValidator<AuthorizePaymentDto>
+{
+    public AuthorizePaymentValidator()
+    {
+        RuleFor(x => x.AttemptId).NotEmpty();
+        RuleFor(x => x.TransactionToken).NotEmpty().MaximumLength(500);
+    }
+}
+
 public class RejectBookingValidator : AbstractValidator<RejectBookingDto>
 {
     public RejectBookingValidator()
