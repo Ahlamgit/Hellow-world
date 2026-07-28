@@ -15,23 +15,40 @@ public class DevelopmentPaymentGateway : IPaymentGateway
 
     public bool SupportsClientSideConfirmation => true;
 
-    public Task<PaymentSessionDto> CreateSessionAsync(PaymentSessionRequest request, CancellationToken cancellationToken = default)
+    public bool RequiresClientAuthorizationHandoff => false;
+
+    public Task<PaymentInitializationDto> InitialisePaymentAsync(
+        PaymentInitializationRequest request,
+        CancellationToken cancellationToken = default)
     {
         var sessionId = $"KHD-{request.PaymentId:N}";
         var baseUrl = _configuration["Payment:CheckoutBaseUrl"] ?? "http://localhost:5173/pay";
         var checkoutUrl = $"{baseUrl}?session={sessionId}&amount={request.Amount:F2}&currency={request.Currency}";
 
-        return Task.FromResult(new PaymentSessionDto
+        return Task.FromResult(new PaymentInitializationDto
         {
+            AttemptId = request.AttemptId,
+            MerchantTransactionId = request.MerchantTransactionId,
+            Provider = ProviderName,
+            Amount = request.Amount,
+            Currency = request.Currency,
             SessionId = sessionId,
             CheckoutUrl = checkoutUrl,
-            Provider = ProviderName,
         });
     }
 
-    public Task<PaymentVerificationResult> VerifyAsync(string sessionId, decimal expectedAmount, string currency, CancellationToken cancellationToken = default)
+    public Task<PaymentAuthorizationResult> AuthorizeAsync(
+        PaymentAuthorizationRequest request,
+        CancellationToken cancellationToken = default) =>
+        throw new NotSupportedException("Development gateway does not require authorization handoff.");
+
+    public Task<PaymentVerificationResult> VerifyAsync(
+        string providerReference,
+        decimal expectedAmount,
+        string currency,
+        CancellationToken cancellationToken = default)
     {
-        if (string.IsNullOrWhiteSpace(sessionId) || !sessionId.StartsWith("KHD-", StringComparison.OrdinalIgnoreCase))
+        if (string.IsNullOrWhiteSpace(providerReference) || !providerReference.StartsWith("KHD-", StringComparison.OrdinalIgnoreCase))
         {
             return Task.FromResult(new PaymentVerificationResult
             {
@@ -43,7 +60,7 @@ public class DevelopmentPaymentGateway : IPaymentGateway
         return Task.FromResult(new PaymentVerificationResult
         {
             IsSuccessful = true,
-            TransactionReference = sessionId,
+            TransactionReference = providerReference,
         });
     }
 }

@@ -155,13 +155,18 @@ data class BookingDto(
 
 data class BookingPaymentDto(
     val id: String,
+    val attemptId: String? = null,
     val amount: Double,
     val currency: String,
     val status: String,
     val paymentMethod: String,
     val sessionId: String? = null,
     val checkoutUrl: String? = null,
+    val requiresClientAuthorizationHandoff: Boolean = false,
+    val supportsClientSideConfirmation: Boolean = false,
 )
+
+data class AuthorizePaymentRequestDto(val attemptId: String, val transactionToken: String)
 
 data class CancelBookingRequestDto(val reason: String)
 data class RescheduleBookingRequestDto(val newScheduledAt: String, val reason: String? = null)

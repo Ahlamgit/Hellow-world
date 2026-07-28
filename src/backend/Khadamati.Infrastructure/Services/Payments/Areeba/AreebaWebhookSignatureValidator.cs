@@ -1,6 +1,7 @@
 using System.Security.Cryptography;
 using System.Text;
 using Khadamati.Application.Common;
+using Khadamati.Application.DTOs.Payments;
 using Khadamati.Application.Interfaces;
 using Khadamati.Infrastructure.Services.Payments.Areeba;
 using Microsoft.Extensions.Hosting;
@@ -25,36 +26,57 @@ public class AreebaWebhookSignatureValidator : IAreebaWebhookSignatureValidator
         _logger = logger;
     }
 
-    public void Validate(string? signature, string rawBody)
+    public void Validate(AreebaWebhookContext context)
     {
-        var secret = _options.WebhookSecret;
+        var secret = _options.SharedSecret;
         var requireSecret = _environment.IsProduction() || _environment.IsStaging();
 
         if (string.IsNullOrWhiteSpace(secret))
         {
             if (requireSecret)
-                throw new UnauthorizedException("Areeba webhook secret is not configured.");
-            _logger.LogWarning("Areeba webhook secret not configured — signature validation skipped in {Environment}.", _environment.EnvironmentName);
+                throw new UnauthorizedException("Areeba shared secret is not configured.");
+            _logger.LogWarning(
+                "Areeba shared secret not configured — signature validation skipped in {Environment}.",
+                _environment.EnvironmentName);
             return;
         }
 
-        if (string.IsNullOrWhiteSpace(signature))
+        if (string.IsNullOrWhiteSpace(context.Signature))
             throw new UnauthorizedException("Invalid webhook signature.");
 
-        var computed = PaymentWebhookService.ComputeHmacSha256Hex(secret, rawBody);
-        if (!FixedTimeEqualsHex(computed, signature))
+        var computed = ComputeSignature(secret, context);
+        if (!FixedTimeEqualsBase64(computed, context.Signature))
             throw new UnauthorizedException("Invalid webhook signature.");
     }
 
-    private static bool FixedTimeEqualsHex(string left, string right)
+    public static string ComputeSignature(string sharedSecret, AreebaWebhookContext context)
     {
-        var normalizedLeft = left.Trim().ToLowerInvariant();
-        var normalizedRight = right.Trim().ToLowerInvariant();
-        if (normalizedLeft.Length != normalizedRight.Length)
-            return false;
+        var bodyHash = Convert.ToHexString(SHA512.HashData(Encoding.UTF8.GetBytes(context.RawBody))).ToLowerInvariant();
+        var message = string.Join('\n', new[]
+        {
+            "POST",
+            bodyHash,
+            context.ContentType ?? "application/json; charset=utf-8",
+            context.DateHeader ?? string.Empty,
+            context.RequestUri,
+        });
 
-        var leftBytes = Encoding.UTF8.GetBytes(normalizedLeft);
-        var rightBytes = Encoding.UTF8.GetBytes(normalizedRight);
-        return CryptographicOperations.FixedTimeEquals(leftBytes, rightBytes);
+        using var hmac = new HMACSHA512(Encoding.UTF8.GetBytes(sharedSecret));
+        return Convert.ToBase64String(hmac.ComputeHash(Encoding.UTF8.GetBytes(message)));
+    }
+
+    private static bool FixedTimeEqualsBase64(string left, string right)
+    {
+        try
+        {
+            var leftBytes = Convert.FromBase64String(left.Trim());
+            var rightBytes = Convert.FromBase64String(right.Trim());
+            return leftBytes.Length == rightBytes.Length &&
+                   CryptographicOperations.FixedTimeEquals(leftBytes, rightBytes);
+        }
+        catch (FormatException)
+        {
+            return false;
+        }
     }
 }

@@ -69,9 +69,12 @@ public class IntegrationReadinessServiceTests
         var config = new ConfigurationBuilder().AddInMemoryCollection(new Dictionary<string, string?>
         {
             ["Payment:Provider"] = "Areeba",
-            ["Payment:Areeba:MerchantId"] = "merchant",
-            ["Payment:Areeba:SecretKey"] = "secret",
-            ["Payment:Areeba:ApiBaseUrl"] = "https://sandbox.areeba.example/v1",
+            ["Payment:Areeba:PublicIntegrationKey"] = "public",
+            ["Payment:Areeba:ApiKey"] = "api-key",
+            ["Payment:Areeba:ApiUser"] = "api-user",
+            ["Payment:Areeba:ApiPassword"] = "api-password",
+            ["Payment:Areeba:SharedSecret"] = "shared-secret",
+            ["Payment:Areeba:ApiBaseUrl"] = "https://areeba.ixopaysandbox.com",
             ["Push:Provider"] = "Development",
             ["Email:Provider"] = "Development",
             ["Sms:Provider"] = "Development",
@@ -85,7 +88,7 @@ public class IntegrationReadinessServiceTests
     }
 
     [Fact]
-    public void GetReport_AreebaMissingMerchant_IsMisconfigured()
+    public void GetReport_AreebaMissingPublicKey_IsMisconfigured()
     {
         var config = new ConfigurationBuilder().AddInMemoryCollection(new Dictionary<string, string?>
         {
@@ -96,6 +99,6 @@ public class IntegrationReadinessServiceTests
             .Single(p => p.Category == "Payment");
 
         payment.Status.Should().Be("Misconfigured");
-        payment.MissingSettings.Should().Contain("Payment:Areeba:MerchantId");
+        payment.MissingSettings.Should().Contain("Payment:Areeba:PublicIntegrationKey");
     }
 }

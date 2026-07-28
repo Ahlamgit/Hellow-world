@@ -15,7 +15,7 @@ public class PaymentAttemptService : IPaymentAttemptService
     public async Task<BookingPaymentAttempt> CreateAttemptAsync(
         Guid bookingPaymentId,
         string provider,
-        PaymentSessionDto session,
+        string merchantTransactionId,
         decimal amount,
         string currency,
         CancellationToken cancellationToken = default)
@@ -27,11 +27,15 @@ public class PaymentAttemptService : IPaymentAttemptService
         {
             BookingPaymentId = bookingPaymentId,
             Provider = provider,
-            SessionId = session.SessionId,
+            MerchantTransactionId = string.IsNullOrWhiteSpace(merchantTransactionId)
+                ? Guid.NewGuid().ToString("N")
+                : merchantTransactionId,
+            SessionId = string.IsNullOrWhiteSpace(merchantTransactionId)
+                ? Guid.NewGuid().ToString("N")
+                : merchantTransactionId,
             Amount = amount,
             Currency = currency,
-            Status = PaymentAttemptStatus.Processing,
-            CheckoutUrl = session.CheckoutUrl,
+            Status = PaymentAttemptStatus.Pending,
         };
 
         await _repository.AddAttemptAsync(attempt, cancellationToken);
@@ -39,8 +43,17 @@ public class PaymentAttemptService : IPaymentAttemptService
         return attempt;
     }
 
+    public Task<BookingPaymentAttempt?> GetByIdAsync(Guid attemptId, CancellationToken cancellationToken = default) =>
+        _repository.GetByIdAsync(attemptId, cancellationToken);
+
     public Task<BookingPaymentAttempt?> GetBySessionIdAsync(string sessionId, CancellationToken cancellationToken = default) =>
         _repository.GetBySessionIdAsync(sessionId, cancellationToken);
+
+    public Task<BookingPaymentAttempt?> GetByMerchantTransactionIdAsync(string merchantTransactionId, CancellationToken cancellationToken = default) =>
+        _repository.GetByMerchantTransactionIdAsync(merchantTransactionId, cancellationToken);
+
+    public Task<BookingPaymentAttempt?> GetByProviderUuidAsync(string providerUuid, CancellationToken cancellationToken = default) =>
+        _repository.GetByProviderUuidAsync(providerUuid, cancellationToken);
 
     public Task<BookingPaymentAttempt?> GetActiveAttemptAsync(Guid bookingPaymentId, CancellationToken cancellationToken = default) =>
         _repository.GetActiveAttemptAsync(bookingPaymentId, cancellationToken);
@@ -73,9 +86,45 @@ public class PaymentAttemptService : IPaymentAttemptService
         return true;
     }
 
+    public async Task ApplyAuthorizationResultAsync(
+        BookingPaymentAttempt attempt,
+        PaymentAuthorizationResult result,
+        string? transactionToken,
+        CancellationToken cancellationToken = default)
+    {
+        if (attempt.Status == PaymentAttemptStatus.Completed)
+            return;
+
+        attempt.TransactionToken = transactionToken;
+        attempt.ProviderUuid = result.ProviderUuid ?? attempt.ProviderUuid;
+        attempt.GatewayStatus = result.GatewayStatus;
+        attempt.ReturnType = result.ReturnType;
+        attempt.RedirectUrl = result.RedirectUrl;
+        attempt.SessionId = result.ProviderUuid ?? attempt.SessionId;
+
+        if (!result.IsAccepted)
+        {
+            attempt.Status = PaymentAttemptStatus.Failed;
+            attempt.FailureReason = result.FailureReason;
+            attempt.FailedAt = DateTime.UtcNow;
+        }
+        else if (string.Equals(result.ReturnType, "REDIRECT", StringComparison.OrdinalIgnoreCase))
+        {
+            attempt.Status = PaymentAttemptStatus.Processing;
+            attempt.ThreeDSReference = result.RedirectUrl;
+        }
+        else
+        {
+            attempt.Status = PaymentAttemptStatus.AwaitingGatewayConfirmation;
+        }
+
+        await _repository.SaveChangesAsync(cancellationToken);
+    }
+
     public async Task MarkAttemptCompletedAsync(
         BookingPaymentAttempt attempt,
         string? providerTransactionId,
+        string? webhookEventId,
         CancellationToken cancellationToken = default)
     {
         if (attempt.Status == PaymentAttemptStatus.Completed)
@@ -83,8 +132,11 @@ public class PaymentAttemptService : IPaymentAttemptService
 
         attempt.Status = PaymentAttemptStatus.Completed;
         attempt.ProviderTransactionId = providerTransactionId ?? attempt.ProviderTransactionId;
+        attempt.ProviderUuid = providerTransactionId ?? attempt.ProviderUuid;
+        attempt.WebhookEventId = webhookEventId ?? attempt.WebhookEventId;
         attempt.CompletedAt = DateTime.UtcNow;
         attempt.FailureReason = null;
+        attempt.TransactionToken = null;
         await _repository.SaveChangesAsync(cancellationToken);
     }
 
@@ -98,7 +150,8 @@ public class PaymentAttemptService : IPaymentAttemptService
 
         attempt.Status = PaymentAttemptStatus.Failed;
         attempt.FailureReason = failureReason;
-        attempt.CompletedAt = DateTime.UtcNow;
+        attempt.FailedAt = DateTime.UtcNow;
+        attempt.TransactionToken = null;
         await _repository.SaveChangesAsync(cancellationToken);
     }
 }

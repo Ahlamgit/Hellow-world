@@ -55,17 +55,20 @@ public class IntegrationReadinessService : IIntegrationReadinessService
         if (provider.Equals("Areeba", StringComparison.OrdinalIgnoreCase))
         {
             var missing = MissingWhenEmpty(
-                ("Payment:Areeba:MerchantId", "Payment:Areeba:MerchantId"),
-                ("Payment:Areeba:SecretKey", "Payment:Areeba:SecretKey"),
+                ("Payment:Areeba:PublicIntegrationKey", "Payment:Areeba:PublicIntegrationKey"),
+                ("Payment:Areeba:ApiKey", "Payment:Areeba:ApiKey"),
+                ("Payment:Areeba:ApiUser", "Payment:Areeba:ApiUser"),
+                ("Payment:Areeba:ApiPassword", "Payment:Areeba:ApiPassword"),
+                ("Payment:Areeba:SharedSecret", "Payment:Areeba:SharedSecret"),
                 ("Payment:Areeba:ApiBaseUrl", "Payment:Areeba:ApiBaseUrl"));
 
             var warnings = new List<string>();
-            if (string.IsNullOrWhiteSpace(_configuration["Payment:Areeba:WebhookSecret"]))
-                warnings.Add("Payment:Areeba:WebhookSecret is not set — webhooks will not be signature-validated.");
             if (string.IsNullOrWhiteSpace(_configuration["Payment:Areeba:CallbackUrl"]))
                 warnings.Add("Payment:Areeba:CallbackUrl is not set.");
             if (string.IsNullOrWhiteSpace(_configuration["Payment:Areeba:SuccessUrl"]))
                 warnings.Add("Payment:Areeba:SuccessUrl is not set.");
+            if (string.IsNullOrWhiteSpace(_configuration["Payment:Areeba:CancelUrl"]))
+                warnings.Add("Payment:Areeba:CancelUrl is not set.");
             if (string.IsNullOrWhiteSpace(_configuration["Payment:Areeba:FailureUrl"]))
                 warnings.Add("Payment:Areeba:FailureUrl is not set.");
 

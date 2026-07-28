@@ -7,5 +7,6 @@ public enum PaymentStatus
     Completed = 3,
     Failed = 4,
     Refunded = 5,
-    Cancelled = 6
+    Cancelled = 6,
+    AwaitingGatewayConfirmation = 7
 }

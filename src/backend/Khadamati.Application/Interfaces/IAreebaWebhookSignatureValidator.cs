@@ -1,6 +1,8 @@
+using Khadamati.Application.DTOs.Payments;
+
 namespace Khadamati.Application.Interfaces;
 
 public interface IAreebaWebhookSignatureValidator
 {
-    void Validate(string? signature, string rawBody);
+    void Validate(AreebaWebhookContext context);
 }

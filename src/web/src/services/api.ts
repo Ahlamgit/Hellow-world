@@ -179,6 +179,8 @@ export interface TimeSlot {
 
 export interface BookingPayment {
   id: string;
+  attemptId?: string;
+  merchantTransactionId?: string;
   amount: number;
   currency: string;
   status: string;
@@ -187,7 +189,22 @@ export interface BookingPayment {
   sessionId?: string;
   checkoutUrl?: string;
   provider?: string;
+  publicIntegrationKey?: string;
+  paymentJsScriptUrl?: string;
+  requiresClientAuthorizationHandoff?: boolean;
+  supportsClientSideConfirmation?: boolean;
+  returnType?: string;
+  redirectUrl?: string;
   paidAt?: string;
+}
+
+export interface AuthorizePaymentResult {
+  attemptId: string;
+  status: string;
+  providerUuid?: string;
+  returnType?: string;
+  redirectUrl?: string;
+  message?: string;
 }
 
 export interface Booking {
@@ -304,6 +321,8 @@ export const bookingsApi = {
     api.post<ApiResponse<Booking>>(`/bookings/${id}/confirm`, { notes }),
   initiatePayment: (id: string, paymentMethod: string) =>
     api.post<ApiResponse<BookingPayment>>(`/bookings/${id}/payment`, { paymentMethod }),
+  authorizePayment: (id: string, attemptId: string, transactionToken: string) =>
+    api.post<ApiResponse<AuthorizePaymentResult>>(`/bookings/${id}/payment/authorize`, { attemptId, transactionToken }),
   confirmPayment: (id: string, transactionReference: string) =>
     api.post<ApiResponse<Booking>>(`/bookings/${id}/payment/confirm`, { transactionReference }),
   accept: (id: string) => api.post<ApiResponse<Booking>>(`/bookings/${id}/accept`),

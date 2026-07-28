@@ -1,3 +1,4 @@
+using System.Globalization;
 using Khadamati.Application.Common;
 using Khadamati.Application.DTOs.Payments;
 using Khadamati.Application.Interfaces;
@@ -38,30 +39,31 @@ public class AreebaWebhookService : IAreebaWebhookService
     }
 
     public async Task<PaymentWebhookResultDto> ProcessWebhookAsync(
-        AreebaWebhookDto payload,
-        string? signature,
-        string rawBody,
+        AreebaWebhookContext context,
         CancellationToken cancellationToken = default)
     {
-        _signatureValidator.Validate(signature, rawBody);
+        _signatureValidator.Validate(context);
 
-        var eventId = payload.EventId?.Trim();
-        if (string.IsNullOrWhiteSpace(eventId))
-            return new PaymentWebhookResultDto { Processed = false, Message = "Missing webhook event id." };
+        var payload = context.Payload;
+        var uuid = payload.Uuid?.Trim();
+        if (string.IsNullOrWhiteSpace(uuid))
+            return new PaymentWebhookResultDto { Processed = false, Message = "Missing transaction uuid." };
 
-        var sessionReference = ResolveSessionReference(payload);
-        if (string.IsNullOrWhiteSpace(sessionReference))
-            return new PaymentWebhookResultDto { Processed = false, Message = "Missing payment session reference." };
+        var merchantTransactionId = payload.MerchantTransactionId?.Trim();
+        var attempt = !string.IsNullOrWhiteSpace(merchantTransactionId)
+            ? await _paymentAttemptService.GetByMerchantTransactionIdAsync(merchantTransactionId, cancellationToken)
+            : null;
+        attempt ??= await _paymentAttemptService.GetByProviderUuidAsync(uuid, cancellationToken);
 
-        var attempt = await _paymentAttemptService.GetBySessionIdAsync(sessionReference, cancellationToken);
         if (attempt is null)
         {
-            _logger.LogWarning("Areeba webhook for unknown session {SessionReference}", sessionReference);
+            _logger.LogWarning("Areeba webhook for unknown transaction {Uuid}", uuid);
             return new PaymentWebhookResultDto { Processed = false, Message = "Payment attempt not found." };
         }
 
+        var eventId = BuildWebhookEventId(uuid, payload.Result, payload.TransactionType);
         if (!await _paymentAttemptService.TryRegisterWebhookEventAsync(
-                AreebaPaymentGateway.ProviderNameConst, eventId, attempt.Id, payload.Status, cancellationToken))
+                AreebaPaymentGateway.ProviderNameConst, eventId, attempt.Id, payload.Result, cancellationToken))
         {
             _logger.LogInformation("Duplicate Areeba webhook event {EventId} ignored", eventId);
             return new PaymentWebhookResultDto
@@ -83,18 +85,48 @@ public class AreebaWebhookService : IAreebaWebhookService
             };
         }
 
-        var status = payload.Status?.ToLowerInvariant() ?? string.Empty;
-        if (status is not ("paid" or "captured" or "success" or "completed"))
+        var result = payload.Result?.ToUpperInvariant() ?? string.Empty;
+        if (result is "PENDING")
         {
-            var failureReason = payload.FailureReason ?? $"Ignored status: {payload.Status}";
+            attempt.GatewayStatus = payload.Result;
+            attempt.ProviderUuid = uuid;
+            attempt.Status = PaymentAttemptStatus.AwaitingGatewayConfirmation;
+            await _paymentAttemptService.ApplyAuthorizationResultAsync(
+                attempt,
+                new PaymentAuthorizationResult
+                {
+                    IsAccepted = true,
+                    ProviderUuid = uuid,
+                    GatewayStatus = payload.Result,
+                    ReturnType = "PENDING",
+                },
+                attempt.TransactionToken,
+                cancellationToken);
+
+            return new PaymentWebhookResultDto
+            {
+                Processed = true,
+                Message = "Pending webhook recorded.",
+                BookingId = attempt.BookingPayment?.ServiceRequestId,
+            };
+        }
+
+        if (result is not ("OK" or "SUCCESS"))
+        {
+            var failureReason = payload.Message ?? payload.AdapterMessage ?? $"Ignored result: {payload.Result}";
             await _paymentAttemptService.MarkAttemptFailedAsync(attempt, failureReason, cancellationToken);
             await UpdateBookingPaymentFailureAsync(attempt.BookingPaymentId, failureReason, cancellationToken);
             return new PaymentWebhookResultDto { Processed = false, Message = failureReason };
         }
 
-        var verification = await _paymentGateway.VerifyAsync(
-            sessionReference, attempt.Amount, attempt.Currency, cancellationToken);
+        if (!TryValidateAmountAndCurrency(payload, attempt, out var mismatchReason))
+        {
+            await _paymentAttemptService.MarkAttemptFailedAsync(attempt, mismatchReason, cancellationToken);
+            await UpdateBookingPaymentFailureAsync(attempt.BookingPaymentId, mismatchReason, cancellationToken);
+            return new PaymentWebhookResultDto { Processed = false, Message = mismatchReason };
+        }
 
+        var verification = await _paymentGateway.VerifyAsync(uuid, attempt.Amount, attempt.Currency, cancellationToken);
         if (!verification.IsSuccessful)
         {
             var reason = verification.FailureReason ?? "Payment verification failed.";
@@ -111,11 +143,11 @@ public class AreebaWebhookService : IAreebaWebhookService
         }
 
         await _paymentAttemptService.MarkAttemptCompletedAsync(
-            attempt, verification.TransactionReference ?? payload.TransactionId, cancellationToken);
+            attempt, verification.TransactionReference ?? uuid, eventId, cancellationToken);
 
         try
         {
-            var booking = await _bookingService.ConfirmPaymentFromWebhookAsync(sessionReference, cancellationToken);
+            var booking = await _bookingService.ConfirmPaymentFromWebhookAsync(uuid, cancellationToken);
             await _auditService.LogSecurityEventAsync(
                 booking.CustomerId,
                 "AreebaWebhookPaymentConfirmed",
@@ -142,6 +174,30 @@ public class AreebaWebhookService : IAreebaWebhookService
         }
     }
 
+    private static string BuildWebhookEventId(string uuid, string? result, string? transactionType) =>
+        $"{uuid}:{result ?? "unknown"}:{transactionType ?? "unknown"}";
+
+    private static bool TryValidateAmountAndCurrency(AreebaWebhookDto payload, BookingPaymentAttempt attempt, out string reason)
+    {
+        if (!string.IsNullOrWhiteSpace(payload.Amount) &&
+            decimal.TryParse(payload.Amount, NumberStyles.Number, CultureInfo.InvariantCulture, out var amount) &&
+            amount != attempt.Amount)
+        {
+            reason = "Payment amount mismatch.";
+            return false;
+        }
+
+        if (!string.IsNullOrWhiteSpace(payload.Currency) &&
+            !string.Equals(payload.Currency, attempt.Currency, StringComparison.OrdinalIgnoreCase))
+        {
+            reason = "Payment currency mismatch.";
+            return false;
+        }
+
+        reason = string.Empty;
+        return true;
+    }
+
     private async Task UpdateBookingPaymentFailureAsync(Guid bookingPaymentId, string reason, CancellationToken cancellationToken)
     {
         var payment = await _unitOfWork.Repository<BookingPayment>().GetByIdAsync(bookingPaymentId, cancellationToken);
@@ -152,14 +208,5 @@ public class AreebaWebhookService : IAreebaWebhookService
         payment.FailureReason = reason;
         _unitOfWork.Repository<BookingPayment>().Update(payment);
         await _unitOfWork.SaveChangesAsync(cancellationToken);
-    }
-
-    private static string? ResolveSessionReference(AreebaWebhookDto payload)
-    {
-        if (!string.IsNullOrWhiteSpace(payload.SessionId))
-            return payload.SessionId.Trim();
-        if (!string.IsNullOrWhiteSpace(payload.TransactionId))
-            return payload.TransactionId.Trim();
-        return payload.MerchantReference?.Trim();
     }
 }

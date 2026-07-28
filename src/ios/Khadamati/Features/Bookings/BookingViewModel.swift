@@ -139,13 +139,20 @@ final class BookingViewModel: ObservableObject {
                 body: ["paymentMethod": "Card"],
                 requiresAuth: true
             )
-            let sessionId = paymentResponse.data.sessionId ?? paymentResponse.data.transactionReference ?? ""
-            let _: ApiResponse<Booking> = try await apiClient.request(
-                url: APIEndpoints.Bookings.confirmPayment(bookingId),
-                method: .post,
-                body: ["transactionReference": sessionId],
-                requiresAuth: true
-            )
+            let payment = paymentResponse.data
+            if payment.requiresClientAuthorizationHandoff == true {
+                errorMessage = "Complete card payment on the web checkout using Payment.js."
+                return
+            }
+            if payment.supportsClientSideConfirmation == true {
+                let sessionId = payment.sessionId ?? payment.transactionReference ?? ""
+                let _: ApiResponse<Booking> = try await apiClient.request(
+                    url: APIEndpoints.Bookings.confirmPayment(bookingId),
+                    method: .post,
+                    body: ["transactionReference": sessionId],
+                    requiresAuth: true
+                )
+            }
             await loadBookings()
         } catch {
             errorMessage = error.localizedDescription

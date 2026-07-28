@@ -86,6 +86,7 @@ enum APIEndpoints {
         static func detail(_ id: UUID) -> URL { baseURL.appendingPathComponent("bookings/\(id.uuidString)") }
         static func confirm(_ id: UUID) -> URL { baseURL.appendingPathComponent("bookings/\(id.uuidString)/confirm") }
         static func payment(_ id: UUID) -> URL { baseURL.appendingPathComponent("bookings/\(id.uuidString)/payment") }
+        static func authorizePayment(_ id: UUID) -> URL { baseURL.appendingPathComponent("bookings/\(id.uuidString)/payment/authorize") }
         static func confirmPayment(_ id: UUID) -> URL { baseURL.appendingPathComponent("bookings/\(id.uuidString)/payment/confirm") }
         static func accept(_ id: UUID) -> URL { baseURL.appendingPathComponent("bookings/\(id.uuidString)/accept") }
         static func reject(_ id: UUID) -> URL { baseURL.appendingPathComponent("bookings/\(id.uuidString)/reject") }

@@ -25,8 +25,8 @@ public class AreebaWebhookValidator : AbstractValidator<AreebaWebhookDto>
 {
     public AreebaWebhookValidator()
     {
-        RuleFor(x => x.EventId).NotEmpty().MaximumLength(200);
-        RuleFor(x => x.Status).NotEmpty().MaximumLength(50);
+        RuleFor(x => x.Uuid).NotEmpty().MaximumLength(200);
+        RuleFor(x => x.Result).NotEmpty().MaximumLength(50);
     }
 }
 
@@ -34,7 +34,8 @@ public class ProcessAreebaWebhookCommandValidator : AbstractValidator<ProcessAre
 {
     public ProcessAreebaWebhookCommandValidator()
     {
-        RuleFor(x => x.RawBody).NotEmpty();
-        RuleFor(x => x.Payload).NotNull();
+        RuleFor(x => x.Context).NotNull();
+        RuleFor(x => x.Context.RawBody).NotEmpty();
+        RuleFor(x => x.Context.Payload).NotNull();
     }
 }

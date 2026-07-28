@@ -13,6 +13,8 @@ import {
 import { servicesApi, usersApi } from '../services/api';
 import { getApiErrorMessage } from '../utils/apiError';
 import { DEFAULT_CURRENCY, formatCurrency } from '../config/platform';
+import { PaymentJsCheckout } from '../components/PaymentJsCheckout';
+import type { BookingPayment } from '../services/api';
 
 const CANCELLABLE_STATUSES = new Set(['Pending', 'AwaitingPayment', 'Confirmed', 'Rescheduled']);
 
@@ -687,27 +689,43 @@ export function BookingPaymentPage() {
   const { t } = useTranslation();
   const navigate = useNavigate();
   const [loading, setLoading] = useState(false);
-  const [sessionId, setSessionId] = useState<string | null>(null);
-  const [checkoutUrl, setCheckoutUrl] = useState<string | null>(null);
-  const [amount, setAmount] = useState<number | null>(null);
+  const [payment, setPayment] = useState<BookingPayment | null>(null);
+  const [statusMessage, setStatusMessage] = useState<string | null>(null);
 
   const initiate = async () => {
     if (!id) return;
     setLoading(true);
+    setStatusMessage(null);
     try {
       const { data } = await bookingsApi.initiatePayment(id, 'Card');
-      const payment = data.data;
-      setSessionId(payment.sessionId ?? null);
-      setCheckoutUrl(payment.checkoutUrl ?? null);
-      setAmount(payment.amount);
+      setPayment(data.data);
+    } finally { setLoading(false); }
+  };
+
+  const authorize = async (transactionToken: string) => {
+    if (!id || !payment?.attemptId) return;
+    setLoading(true);
+    setStatusMessage(null);
+    try {
+      const { data } = await bookingsApi.authorizePayment(id, payment.attemptId, transactionToken);
+      const result = data.data;
+      if (result.redirectUrl) {
+        window.location.href = result.redirectUrl;
+        return;
+      }
+      setStatusMessage(result.message ?? t('booking.paymentAwaitingConfirmation'));
+      const refreshed = await bookingsApi.get(id);
+      if (refreshed.data.data.status !== 'AwaitingPayment') {
+        navigate(`/bookings/${id}`);
+      }
     } finally { setLoading(false); }
   };
 
   const confirm = async () => {
-    if (!id || !sessionId) return;
+    if (!id || !payment?.sessionId) return;
     setLoading(true);
     try {
-      await bookingsApi.confirmPayment(id, sessionId);
+      await bookingsApi.confirmPayment(id, payment.sessionId);
       navigate(`/bookings/${id}`);
     } finally { setLoading(false); }
   };
@@ -717,24 +735,28 @@ export function BookingPaymentPage() {
       <Typography variant="h4" sx={{ fontWeight: 700 }} gutterBottom>{t('booking.payment')}</Typography>
       <Card><CardContent>
         <Typography gutterBottom>{t('booking.paymentPending')}</Typography>
-        {amount != null && <Typography sx={{ mb: 2, fontWeight: 600 }}>{formatCurrency(amount)}</Typography>}
-        {!sessionId ? (
+        {payment?.amount != null && <Typography sx={{ mb: 2, fontWeight: 600 }}>{formatCurrency(payment.amount)}</Typography>}
+        {!payment ? (
           <Button variant="contained" fullWidth onClick={initiate} disabled={loading}>
             {loading ? <CircularProgress size={24} /> : t('booking.startPayment')}
           </Button>
+        ) : payment.requiresClientAuthorizationHandoff && payment.publicIntegrationKey ? (
+          <PaymentJsCheckout payment={payment} loading={loading} onAuthorize={authorize} />
         ) : (
           <Box sx={{ display: 'flex', flexDirection: 'column', gap: 1 }}>
-            {checkoutUrl && (
-              <Button variant="outlined" href={checkoutUrl} target="_blank" rel="noreferrer">
+            {payment.checkoutUrl && (
+              <Button variant="outlined" href={payment.checkoutUrl} target="_blank" rel="noreferrer">
                 {t('booking.openCheckout')}
               </Button>
             )}
-            <Typography variant="caption" color="text.secondary">Session: {sessionId}</Typography>
-            <Button variant="contained" fullWidth onClick={confirm} disabled={loading}>
-              {loading ? <CircularProgress size={24} /> : t('booking.confirmPayment')}
-            </Button>
+            {payment.supportsClientSideConfirmation && (
+              <Button variant="contained" fullWidth onClick={confirm} disabled={loading || !payment.sessionId}>
+                {loading ? <CircularProgress size={24} /> : t('booking.confirmPayment')}
+              </Button>
+            )}
           </Box>
         )}
+        {statusMessage && <Alert sx={{ mt: 2 }} severity="info">{statusMessage}</Alert>}
       </CardContent></Card>
     </Container>
   );

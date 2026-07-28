@@ -48,6 +48,22 @@ public class ConfirmPaymentDto
     public string TransactionReference { get; set; } = string.Empty;
 }
 
+public class AuthorizePaymentDto
+{
+    public Guid AttemptId { get; set; }
+    public string TransactionToken { get; set; } = string.Empty;
+}
+
+public class AuthorizePaymentResultDto
+{
+    public Guid AttemptId { get; set; }
+    public string Status { get; set; } = string.Empty;
+    public string? ProviderUuid { get; set; }
+    public string? ReturnType { get; set; }
+    public string? RedirectUrl { get; set; }
+    public string? Message { get; set; }
+}
+
 public class RejectBookingDto
 {
     public string Reason { get; set; } = string.Empty;
@@ -67,6 +83,8 @@ public class RescheduleBookingDto
 public class BookingPaymentDto
 {
     public Guid Id { get; set; }
+    public Guid? AttemptId { get; set; }
+    public string? MerchantTransactionId { get; set; }
     public decimal Amount { get; set; }
     public string Currency { get; set; } = PlatformDefaults.Currency;
     public string Status { get; set; } = string.Empty;
@@ -75,6 +93,12 @@ public class BookingPaymentDto
     public string? SessionId { get; set; }
     public string? CheckoutUrl { get; set; }
     public string? Provider { get; set; }
+    public string? PublicIntegrationKey { get; set; }
+    public string? PaymentJsScriptUrl { get; set; }
+    public bool RequiresClientAuthorizationHandoff { get; set; }
+    public bool SupportsClientSideConfirmation { get; set; }
+    public string? ReturnType { get; set; }
+    public string? RedirectUrl { get; set; }
     public DateTime? PaidAt { get; set; }
 }
 

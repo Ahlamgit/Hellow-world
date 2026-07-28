@@ -32,8 +32,15 @@ class BookingRepository(private val apiService: ApiService) {
     suspend fun pay(id: String) {
         val payment = apiService.initiatePayment(id, com.khadamati.app.data.remote.dto.InitiatePaymentRequestDto("Card")).data
             ?: error("Payment initiation failed")
-        val sessionId = payment.sessionId ?: error("Missing payment session")
-        apiService.confirmPayment(id, com.khadamati.app.data.remote.dto.ConfirmPaymentRequestDto(sessionId))
+
+        if (payment.requiresClientAuthorizationHandoff) {
+            error("Card payment must be completed on the web checkout using Payment.js.")
+        }
+
+        if (payment.supportsClientSideConfirmation) {
+            val sessionId = payment.sessionId ?: error("Missing payment session")
+            apiService.confirmPayment(id, com.khadamati.app.data.remote.dto.ConfirmPaymentRequestDto(sessionId))
+        }
     }
 
     suspend fun accept(id: String) { apiService.acceptBooking(id) }

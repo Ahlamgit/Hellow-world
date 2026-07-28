@@ -141,7 +141,10 @@ public class BookingRepository : IBookingRepository
         var attempt = await _context.BookingPaymentAttempts
             .Include(a => a.BookingPayment)
             .FirstOrDefaultAsync(
-                a => a.SessionId == transactionReference || a.ProviderTransactionId == transactionReference,
+                a => a.SessionId == transactionReference ||
+                     a.ProviderTransactionId == transactionReference ||
+                     a.ProviderUuid == transactionReference ||
+                     a.MerchantTransactionId == transactionReference,
                 cancellationToken);
         return attempt?.BookingPayment;
     }

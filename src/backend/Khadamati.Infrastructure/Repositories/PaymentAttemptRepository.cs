@@ -11,15 +11,37 @@ public class PaymentAttemptRepository
 
     public PaymentAttemptRepository(ApplicationDbContext context) => _context = context;
 
+    public Task<BookingPaymentAttempt?> GetByIdAsync(Guid attemptId, CancellationToken cancellationToken = default) =>
+        _context.BookingPaymentAttempts
+            .Include(a => a.BookingPayment)
+            .FirstOrDefaultAsync(a => a.Id == attemptId, cancellationToken);
+
     public Task<BookingPaymentAttempt?> GetBySessionIdAsync(string sessionId, CancellationToken cancellationToken = default) =>
         _context.BookingPaymentAttempts
             .Include(a => a.BookingPayment)
-            .FirstOrDefaultAsync(a => a.SessionId == sessionId || a.ProviderTransactionId == sessionId, cancellationToken);
+            .FirstOrDefaultAsync(a =>
+                a.SessionId == sessionId ||
+                a.ProviderTransactionId == sessionId ||
+                a.ProviderUuid == sessionId ||
+                a.MerchantTransactionId == sessionId,
+                cancellationToken);
+
+    public Task<BookingPaymentAttempt?> GetByMerchantTransactionIdAsync(string merchantTransactionId, CancellationToken cancellationToken = default) =>
+        _context.BookingPaymentAttempts
+            .Include(a => a.BookingPayment)
+            .FirstOrDefaultAsync(a => a.MerchantTransactionId == merchantTransactionId, cancellationToken);
+
+    public Task<BookingPaymentAttempt?> GetByProviderUuidAsync(string providerUuid, CancellationToken cancellationToken = default) =>
+        _context.BookingPaymentAttempts
+            .Include(a => a.BookingPayment)
+            .FirstOrDefaultAsync(a => a.ProviderUuid == providerUuid, cancellationToken);
 
     public Task<BookingPaymentAttempt?> GetActiveAttemptAsync(Guid bookingPaymentId, CancellationToken cancellationToken = default) =>
         _context.BookingPaymentAttempts
             .Where(a => a.BookingPaymentId == bookingPaymentId &&
-                        (a.Status == PaymentAttemptStatus.Pending || a.Status == PaymentAttemptStatus.Processing))
+                        (a.Status == PaymentAttemptStatus.Pending ||
+                         a.Status == PaymentAttemptStatus.Processing ||
+                         a.Status == PaymentAttemptStatus.AwaitingGatewayConfirmation))
             .OrderByDescending(a => a.CreatedAt)
             .FirstOrDefaultAsync(cancellationToken);
 

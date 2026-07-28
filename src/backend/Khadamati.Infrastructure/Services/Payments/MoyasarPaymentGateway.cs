@@ -42,19 +42,22 @@ public class MoyasarPaymentGateway : IPaymentGateway
 
     public bool SupportsClientSideConfirmation => true;
 
+    public bool RequiresClientAuthorizationHandoff => false;
+
     private bool IsConfigured =>
         !string.IsNullOrWhiteSpace(_configuration["Payment:Moyasar:SecretKey"]);
 
     private string ApiBaseUrl =>
         _configuration["Payment:Moyasar:ApiBaseUrl"]?.TrimEnd('/') ?? "https://api.moyasar.com/v1";
 
-    public async Task<PaymentSessionDto> CreateSessionAsync(
-        PaymentSessionRequest request, CancellationToken cancellationToken = default)
+    public async Task<PaymentInitializationDto> InitialisePaymentAsync(
+        PaymentInitializationRequest request,
+        CancellationToken cancellationToken = default)
     {
         if (!IsConfigured)
         {
             _logger.LogWarning("Moyasar secret key not configured — using development checkout session.");
-            return await _fallback.CreateSessionAsync(request, cancellationToken);
+            return await _fallback.InitialisePaymentAsync(request, cancellationToken);
         }
 
         var devSessionId = $"KHD-{request.PaymentId:N}";
@@ -74,6 +77,7 @@ public class MoyasarPaymentGateway : IPaymentGateway
             {
                 ["payment_id"] = request.PaymentId.ToString(),
                 ["session_id"] = devSessionId,
+                ["attempt_id"] = request.AttemptId.ToString(),
             },
         };
 
@@ -101,21 +105,33 @@ public class MoyasarPaymentGateway : IPaymentGateway
 
         _logger.LogInformation("Moyasar invoice {InvoiceId} created for payment {PaymentId}", invoice.Id, request.PaymentId);
 
-        return new PaymentSessionDto
+        return new PaymentInitializationDto
         {
+            AttemptId = request.AttemptId,
+            MerchantTransactionId = request.MerchantTransactionId,
+            Provider = ProviderName,
+            Amount = request.Amount,
+            Currency = request.Currency,
             SessionId = invoice.Id,
             CheckoutUrl = invoice.Url,
-            Provider = ProviderName,
         };
     }
 
-    public async Task<PaymentVerificationResult> VerifyAsync(
-        string sessionId, decimal expectedAmount, string currency, CancellationToken cancellationToken = default)
-    {
-        if (!IsConfigured || sessionId.StartsWith("KHD-", StringComparison.OrdinalIgnoreCase))
-            return await _fallback.VerifyAsync(sessionId, expectedAmount, currency, cancellationToken);
+    public Task<PaymentAuthorizationResult> AuthorizeAsync(
+        PaymentAuthorizationRequest request,
+        CancellationToken cancellationToken = default) =>
+        throw new NotSupportedException("Moyasar gateway does not require authorization handoff.");
 
-        var invoice = await FetchInvoiceAsync(sessionId, cancellationToken);
+    public async Task<PaymentVerificationResult> VerifyAsync(
+        string providerReference,
+        decimal expectedAmount,
+        string currency,
+        CancellationToken cancellationToken = default)
+    {
+        if (!IsConfigured || providerReference.StartsWith("KHD-", StringComparison.OrdinalIgnoreCase))
+            return await _fallback.VerifyAsync(providerReference, expectedAmount, currency, cancellationToken);
+
+        var invoice = await FetchInvoiceAsync(providerReference, cancellationToken);
         if (invoice is null)
         {
             return new PaymentVerificationResult
@@ -142,7 +158,7 @@ public class MoyasarPaymentGateway : IPaymentGateway
         return new PaymentVerificationResult
         {
             IsSuccessful = true,
-            TransactionReference = invoice.Id ?? sessionId,
+            TransactionReference = invoice.Id ?? providerReference,
         };
     }
 

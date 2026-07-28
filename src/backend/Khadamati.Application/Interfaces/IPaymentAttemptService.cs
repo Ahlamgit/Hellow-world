@@ -9,12 +9,18 @@ public interface IPaymentAttemptService
     Task<BookingPaymentAttempt> CreateAttemptAsync(
         Guid bookingPaymentId,
         string provider,
-        PaymentSessionDto session,
+        string merchantTransactionId,
         decimal amount,
         string currency,
         CancellationToken cancellationToken = default);
 
+    Task<BookingPaymentAttempt?> GetByIdAsync(Guid attemptId, CancellationToken cancellationToken = default);
+
     Task<BookingPaymentAttempt?> GetBySessionIdAsync(string sessionId, CancellationToken cancellationToken = default);
+
+    Task<BookingPaymentAttempt?> GetByMerchantTransactionIdAsync(string merchantTransactionId, CancellationToken cancellationToken = default);
+
+    Task<BookingPaymentAttempt?> GetByProviderUuidAsync(string providerUuid, CancellationToken cancellationToken = default);
 
     Task<BookingPaymentAttempt?> GetActiveAttemptAsync(Guid bookingPaymentId, CancellationToken cancellationToken = default);
 
@@ -27,9 +33,16 @@ public interface IPaymentAttemptService
         string? eventStatus,
         CancellationToken cancellationToken = default);
 
+    Task ApplyAuthorizationResultAsync(
+        BookingPaymentAttempt attempt,
+        PaymentAuthorizationResult result,
+        string? transactionToken,
+        CancellationToken cancellationToken = default);
+
     Task MarkAttemptCompletedAsync(
         BookingPaymentAttempt attempt,
         string? providerTransactionId,
+        string? webhookEventId,
         CancellationToken cancellationToken = default);
 
     Task MarkAttemptFailedAsync(

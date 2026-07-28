@@ -20,6 +20,7 @@ struct Booking: Codable, Identifiable {
 
 struct BookingPayment: Codable {
     let id: UUID
+    let attemptId: UUID?
     let amount: Decimal
     let currency: String
     let status: String
@@ -27,6 +28,8 @@ struct BookingPayment: Codable {
     let sessionId: String?
     let transactionReference: String?
     let checkoutUrl: String?
+    let requiresClientAuthorizationHandoff: Bool?
+    let supportsClientSideConfirmation: Bool?
 }
 
 struct CraftsmanOption: Codable, Identifiable {

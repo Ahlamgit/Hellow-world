@@ -5,8 +5,6 @@ namespace Khadamati.Application.Interfaces;
 public interface IAreebaWebhookService
 {
     Task<PaymentWebhookResultDto> ProcessWebhookAsync(
-        AreebaWebhookDto payload,
-        string? signature,
-        string rawBody,
+        AreebaWebhookContext context,
         CancellationToken cancellationToken = default);
 }
